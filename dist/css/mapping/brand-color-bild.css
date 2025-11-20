@@ -3,72 +3,72 @@
  */
 
 :root[data-brand-color="bild"] {
-  --global-core-core-color-primary: #de0000; /** Bild: 046; SpoBi: 016 current css calls this variable main tenant color */
-  --global-core-core-color-secondary: #ffffff; /** Bild&SpoBi Tone 100 */
-  --global-core-core-color-secondary-dark: #242629; /** Bild: 015 ; SpoBi: 010 */
-  --global-core-core-color-tertiary: #242629; /** Bild: 015 ; SpoBi: 010 */
-  --global-core-core-color-tertiary-dark: #ffffff; /** Bild&SpoBi: 100 */
-  --global-attention-accent-color-primary: #de0000; /** Bild: Tone 046 ; SpoBi: 016 This variable is used on small UI elements such as the background color for kickers. */
-  --global-attention-accent-color-primary-dark: #ffffff; /** Bild: 100 ; SpoBi: 098 */
-  --global-surface-surface-color-primary: #ffffff; /** Bild: 100 ; SpoBi: 100 */
-  --global-surface-surface-color-primary-dark: #242629; /** Bild: 015 ; SpoBi: 010 */
-  --global-surface-surface-color-secondary: #f2f5f5; /** Bild: 096 ; SpoBi: 098 */
-  --global-surface-surface-color-secondary-dark: #2b3038; /** Bild: 020 ; SpoBi: 016 */
-  --global-surface-surface-color-tertiary: #e8edf0; /** Bild: 093 ; SpoBi: 081 */
-  --global-surface-surface-color-tertiary-dark: #333d40; /** Bild: 025 ; SpoBi: 029 */
-  --global-surface-surface-color-quartenary: #cfd4d9; /** Bild: 085 ; SpoBi: 085 */
-  --global-surface-surface-color-quartenary-dark: #4a5259; /** Bild: 035 ; SpoBi: 035 */
-  --global-state-color-primary-active: #de0000; /** Bild: 046 ; SpoBi: 029 */
-  --global-state-color-primary-active-dark: #de0000; /** Bild: 046 ; SpoBi: 098 */
-  --global-text-text-color-primary: #242629; /** Bild & SpoBi: Tone 015 */
-  --global-text-text-color-primary-dark: #e8edf0; /** Bild & SpoBi: Tone 093 */
-  --global-text-text-color-secondary: #8c9196; /** Bild & SpoBi: Tone 060 */
-  --global-text-text-color-secondary-dark: #8c9196; /** Bild & SpoBi: Tone 060 */
-  --global-text-headline-color-primary: #242629; /** Bild: 015 ; SpoBi: 016 */
-  --global-text-headline-color-primary-dark: #ffffff; /** Bild&SpoBi: Tone 100 */
-  --global-text-kicker-text-color-on-bg: #ffffff; /** This variable is used on kicker texts that are on top of a color that is different from the outer color of the overall user interface. Bild & SpoBi: Tone 100 */
-  --global-text-kicker-text-color-on-surface: #de0000; /** This variable is used for the color of kicker texts that are not no top of a different color of the overall user interface. Bild: 046 ; SpoBi: 060 */
-  --global-text-kicker-text-color-on-surface-dark: #8c9196; /** Use this variable for kicker texts that are directly on top of the color of the overall user interface. Bild & SpoBi tone 060. */
-  --global-text-kicker-bg-color-on-surface: #de0000; /** Use this variable for the color immediately behind the bounding box of the kicker text element. Bild: 046 ; SpoBi: 029 */
-  --global-text-kicker-bg-color-on-surface-dark: #8c9196; /** Use this variable for the dark mode color of the background immediately around the kicker text element. Bild: 060 ; SpoBi: 060 */
-  --component-avatar-avatar-label-color: #242629; /** 09-2025 css --article-author-name-color // Bild: 015; SpoBi: 045 */
-  --component-avatar-avatar-label-color-dark: #ffffff; /** 09-2025 css --article-author-name-color // Bild: 100; SpoBi: 093 */
-  --component-avatar-avatar-label-color-hover: #de0000; /** This variable is used for decorating the avatar text's underline color. Bild: 046; SpoBi: 029 */
-  --component-chip-color-active: #de0000;
-  --component-breaking-news-breaking-news-top-title-text-color: #1c1c1c; /** This variable is used for the color of the "breaking" word in the "breaking news" horizontally animated headlines strip. Bild: 010 ; SpoBi: 081 */
-  --component-breaking-news-breaking-news-bottom-title-text-color: #1c1c1c; /** This variable is used for the color of the "News" word in the breaking news horizontal animated headlines strip. Bild: 010 ; SpoBi: 100 */
-  --component-breaking-news-breaking-news-title-surface-color: #fc8226; /** This variable is used for the background color of the "Breaking News" title. Bild: 067 ; SpoBi: 016 */
-  --component-breaking-news-breaking-news-surface-color: #242629; /** This variable is used on the breaking news strip that has horizontally animated headlines. Bild: 015 ; SpoBi: 081 */
-  --component-breaking-news-breaking-news-surface-color-dark: #e8edf0; /** This variable is for the background color of the horizontally animated strip with headlines for breaking news on dark mode.  Bild: 093 ; SpoBi: 081 */
-  --component-breaking-news-breaking-news-text-content-color: #ffffff; /** This variable is used on the text for headlines in the horizontally animated breaking news strip. Bild: 100 ; SpoBi: 015 */
-  --component-breaking-news-breaking-news-text-content-color-dark: #242629; /** This variable is used on the text for headlines in the horizontally animated breaking news strip on dark mode. Bild&SpoBi: 015 */
-  --component-button-primary-brand-button-primary-bg-color-idle: #de0000; /** Bild: 046 ; SpoBi: 029 */
-  --component-button-primary-brand-button-primary-bg-color-hover: #b00003; /** Bild: 035 ; SpoBi: 016 */
-  --component-button-primary-brand-button-primary-bg-color-idle-dark: #de0000; /** This variable controls the primary button idle color for two brands in dark mode. Bild: 046 ; SpoBi: 038 */
-  --component-button-primary-brand-button-primary-bg-color-hover-dark: #b00003; /** This variable stores colors for the hover state of primary buttons for two brands in dark mode. Bild: 035 ; SpoBi: 029 */
-  --component-button-primary-neutral-button-primary-bg-color-idle: #242629; /** Bild & SpoBi: Tone 015 */
-  --component-button-primary-neutral-button-primary-bg-color-hover: #4a5259; /** Bild & SpoBi: Tone 035 */
-  --component-button-primary-neutral-button-primary-bg-color-idle-dark: #ffffff; /** Bild & SpoBi: Tone 100 */
-  --component-button-primary-neutral-button-primary-bg-color-hover-dark: #e8edf0; /** Bild: 093 ; SpoBi: 081 */
-  --component-menu-menu-link-lane-surface-color: #ffffff; /** This variable is used for making possible the default color difference between the Bild and SportBild link lanes inside the menu component. */
-  --component-menu-menu-link-lane-surface-color-dark: #242629; /** This variable is used for making possible the default color difference between the Bild and SportBild link lanes inside the menu component on Dark mode. */
-  --component-menu-menu-link-lane-label-color: #4a5259; /** This variable is used for making possible the default color difference between the Bild and SportBild link lane labels inside the menu component. */
-  --component-menu-menu-link-lane-label-color-active: #242629; /** This variable is used for making possible the active color difference between the Bild and SportBild link lane labels inside the menu component. */
-  --component-menu-menu-link-lane-label-color-dark: #8c9196;
-  --component-menu-menu-link-color-border-active: #de0000;
-  --component-menu-menu-link-color-border-active-dark: #ffffff;
-  --component-menu-app-bottom-tab-bar-bg-color: #ffffff;
-  --component-menu-app-top-bar-bg-color-dark: #333d40;
-  --component-menu-app-bottom-tab-bar-bg-dark: #333d40;
-  --component-menu-app-top-bar-surface-color: #ffffff;
-  --component-menu-app-top-bar-icon-color: #4a5259;
-  --component-menu-app-top-bar-icon-color-dark: #8c9196;
-  --component-menu-app-top-bar-text-color: #242629;
-  --component-menu-app-top-bar-text-color-dark: #e8edf0;
-  --component-menu-app-tob-bar-tab-nav-bottom-border: #e8edf0;
-  --component-menu-app-tob-bar-tab-nav-bottom-border-dark: #4a5259;
-  --component-menu-app-tob-bar-tab-nav-bottom-border-active: #de0000;
-  --component-menu-app-tob-bar-tab-nav-bottom-border-active-dark: #ffffff;
+  --global-core-core-color-primary: rgba(222, 0, 0, 1); /** Bild: 046; SpoBi: 016 current css calls this variable main tenant color */
+  --global-core-core-color-secondary: rgba(255, 255, 255, 1); /** Bild&SpoBi Tone 100 */
+  --global-core-core-color-secondary-dark: rgba(36, 38, 41, 1); /** Bild: 015 ; SpoBi: 010 */
+  --global-core-core-color-tertiary: rgba(36, 38, 41, 1); /** Bild: 015 ; SpoBi: 010 */
+  --global-core-core-color-tertiary-dark: rgba(255, 255, 255, 1); /** Bild&SpoBi: 100 */
+  --global-attention-accent-color-primary: rgba(222, 0, 0, 1); /** Bild: Tone 046 ; SpoBi: 016 This variable is used on small UI elements such as the background color for kickers. */
+  --global-attention-accent-color-primary-dark: rgba(255, 255, 255, 1); /** Bild: 100 ; SpoBi: 098 */
+  --global-surface-surface-color-primary: rgba(255, 255, 255, 1); /** Bild: 100 ; SpoBi: 100 */
+  --global-surface-surface-color-primary-dark: rgba(36, 38, 41, 1); /** Bild: 015 ; SpoBi: 010 */
+  --global-surface-surface-color-secondary: rgba(242, 245, 245, 1); /** Bild: 096 ; SpoBi: 098 */
+  --global-surface-surface-color-secondary-dark: rgba(43, 48, 56, 1); /** Bild: 020 ; SpoBi: 016 */
+  --global-surface-surface-color-tertiary: rgba(232, 237, 240, 1); /** Bild: 093 ; SpoBi: 081 */
+  --global-surface-surface-color-tertiary-dark: rgba(51, 61, 64, 1); /** Bild: 025 ; SpoBi: 029 */
+  --global-surface-surface-color-quartenary: rgba(207, 212, 217, 1); /** Bild: 085 ; SpoBi: 085 */
+  --global-surface-surface-color-quartenary-dark: rgba(74, 82, 89, 1); /** Bild: 035 ; SpoBi: 035 */
+  --global-state-color-primary-active: rgba(222, 0, 0, 1); /** Bild: 046 ; SpoBi: 029 */
+  --global-state-color-primary-active-dark: rgba(222, 0, 0, 1); /** Bild: 046 ; SpoBi: 098 */
+  --global-text-text-color-primary: rgba(36, 38, 41, 1); /** Bild & SpoBi: Tone 015 */
+  --global-text-text-color-primary-dark: rgba(232, 237, 240, 1); /** Bild & SpoBi: Tone 093 */
+  --global-text-text-color-secondary: rgba(140, 145, 150, 1); /** Bild & SpoBi: Tone 060 */
+  --global-text-text-color-secondary-dark: rgba(140, 145, 150, 1); /** Bild & SpoBi: Tone 060 */
+  --global-text-headline-color-primary: rgba(36, 38, 41, 1); /** Bild: 015 ; SpoBi: 016 */
+  --global-text-headline-color-primary-dark: rgba(255, 255, 255, 1); /** Bild&SpoBi: Tone 100 */
+  --global-text-kicker-text-color-on-bg: rgba(255, 255, 255, 1); /** This variable is used on kicker texts that are on top of a color that is different from the outer color of the overall user interface. Bild & SpoBi: Tone 100 */
+  --global-text-kicker-text-color-on-surface: rgba(222, 0, 0, 1); /** This variable is used for the color of kicker texts that are not no top of a different color of the overall user interface. Bild: 046 ; SpoBi: 060 */
+  --global-text-kicker-text-color-on-surface-dark: rgba(140, 145, 150, 1); /** Use this variable for kicker texts that are directly on top of the color of the overall user interface. Bild & SpoBi tone 060. */
+  --global-text-kicker-bg-color-on-surface: rgba(222, 0, 0, 1); /** Use this variable for the color immediately behind the bounding box of the kicker text element. Bild: 046 ; SpoBi: 029 */
+  --global-text-kicker-bg-color-on-surface-dark: rgba(140, 145, 150, 1); /** Use this variable for the dark mode color of the background immediately around the kicker text element. Bild: 060 ; SpoBi: 060 */
+  --component-avatar-avatar-label-color: rgba(36, 38, 41, 1); /** 09-2025 css --article-author-name-color // Bild: 015; SpoBi: 045 */
+  --component-avatar-avatar-label-color-dark: rgba(255, 255, 255, 1); /** 09-2025 css --article-author-name-color // Bild: 100; SpoBi: 093 */
+  --component-avatar-avatar-label-color-hover: rgba(222, 0, 0, 1); /** This variable is used for decorating the avatar text's underline color. Bild: 046; SpoBi: 029 */
+  --component-chip-color-active: rgba(222, 0, 0, 1);
+  --component-breaking-news-breaking-news-top-title-text-color: rgba(28, 28, 28, 1); /** This variable is used for the color of the "breaking" word in the "breaking news" horizontally animated headlines strip. Bild: 010 ; SpoBi: 081 */
+  --component-breaking-news-breaking-news-bottom-title-text-color: rgba(28, 28, 28, 1); /** This variable is used for the color of the "News" word in the breaking news horizontal animated headlines strip. Bild: 010 ; SpoBi: 100 */
+  --component-breaking-news-breaking-news-title-surface-color: rgba(252, 130, 38, 1); /** This variable is used for the background color of the "Breaking News" title. Bild: 067 ; SpoBi: 016 */
+  --component-breaking-news-breaking-news-surface-color: rgba(36, 38, 41, 1); /** This variable is used on the breaking news strip that has horizontally animated headlines. Bild: 015 ; SpoBi: 081 */
+  --component-breaking-news-breaking-news-surface-color-dark: rgba(232, 237, 240, 1); /** This variable is for the background color of the horizontally animated strip with headlines for breaking news on dark mode.  Bild: 093 ; SpoBi: 081 */
+  --component-breaking-news-breaking-news-text-content-color: rgba(255, 255, 255, 1); /** This variable is used on the text for headlines in the horizontally animated breaking news strip. Bild: 100 ; SpoBi: 015 */
+  --component-breaking-news-breaking-news-text-content-color-dark: rgba(36, 38, 41, 1); /** This variable is used on the text for headlines in the horizontally animated breaking news strip on dark mode. Bild&SpoBi: 015 */
+  --component-button-primary-brand-button-primary-bg-color-idle: rgba(222, 0, 0, 1); /** Bild: 046 ; SpoBi: 029 */
+  --component-button-primary-brand-button-primary-bg-color-hover: rgba(176, 0, 3, 1); /** Bild: 035 ; SpoBi: 016 */
+  --component-button-primary-brand-button-primary-bg-color-idle-dark: rgba(222, 0, 0, 1); /** This variable controls the primary button idle color for two brands in dark mode. Bild: 046 ; SpoBi: 038 */
+  --component-button-primary-brand-button-primary-bg-color-hover-dark: rgba(176, 0, 3, 1); /** This variable stores colors for the hover state of primary buttons for two brands in dark mode. Bild: 035 ; SpoBi: 029 */
+  --component-button-primary-neutral-button-primary-bg-color-idle: rgba(36, 38, 41, 1); /** Bild & SpoBi: Tone 015 */
+  --component-button-primary-neutral-button-primary-bg-color-hover: rgba(74, 82, 89, 1); /** Bild & SpoBi: Tone 035 */
+  --component-button-primary-neutral-button-primary-bg-color-idle-dark: rgba(255, 255, 255, 1); /** Bild & SpoBi: Tone 100 */
+  --component-button-primary-neutral-button-primary-bg-color-hover-dark: rgba(232, 237, 240, 1); /** Bild: 093 ; SpoBi: 081 */
+  --component-menu-menu-link-lane-surface-color: rgba(255, 255, 255, 1); /** This variable is used for making possible the default color difference between the Bild and SportBild link lanes inside the menu component. */
+  --component-menu-menu-link-lane-surface-color-dark: rgba(36, 38, 41, 1); /** This variable is used for making possible the default color difference between the Bild and SportBild link lanes inside the menu component on Dark mode. */
+  --component-menu-menu-link-lane-label-color: rgba(74, 82, 89, 1); /** This variable is used for making possible the default color difference between the Bild and SportBild link lane labels inside the menu component. */
+  --component-menu-menu-link-lane-label-color-active: rgba(36, 38, 41, 1); /** This variable is used for making possible the active color difference between the Bild and SportBild link lane labels inside the menu component. */
+  --component-menu-menu-link-lane-label-color-dark: rgba(140, 145, 150, 1);
+  --component-menu-menu-link-color-border-active: rgba(222, 0, 0, 1);
+  --component-menu-menu-link-color-border-active-dark: rgba(255, 255, 255, 1);
+  --component-menu-app-bottom-tab-bar-bg-color: rgba(255, 255, 255, 1);
+  --component-menu-app-top-bar-bg-color-dark: rgba(51, 61, 64, 1);
+  --component-menu-app-bottom-tab-bar-bg-dark: rgba(51, 61, 64, 1);
+  --component-menu-app-top-bar-surface-color: rgba(255, 255, 255, 1);
+  --component-menu-app-top-bar-icon-color: rgba(74, 82, 89, 1);
+  --component-menu-app-top-bar-icon-color-dark: rgba(140, 145, 150, 1);
+  --component-menu-app-top-bar-text-color: rgba(36, 38, 41, 1);
+  --component-menu-app-top-bar-text-color-dark: rgba(232, 237, 240, 1);
+  --component-menu-app-tob-bar-tab-nav-bottom-border: rgba(232, 237, 240, 1);
+  --component-menu-app-tob-bar-tab-nav-bottom-border-dark: rgba(74, 82, 89, 1);
+  --component-menu-app-tob-bar-tab-nav-bottom-border-active: rgba(222, 0, 0, 1);
+  --component-menu-app-tob-bar-tab-nav-bottom-border-active-dark: rgba(255, 255, 255, 1);
   --component-teaser-teaser-title-background-gradient-start: rgba(0, 0, 0, 0.7);
   --component-teaser-teaser-title-background-gradient-stop: rgba(0, 0, 0, 0);
 }
