@@ -1,9 +1,0 @@
-/**
- * BASE Layer - Index File
- * Importiert alle Token-Dateien dieser Layer
- */
-
-@import './primitive-color-value.css';
-@import './primitive-font-value.css';
-@import './primitive-size-value.css';
-@import './primitive-space-value.css';
