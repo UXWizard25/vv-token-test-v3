@@ -101,23 +101,42 @@ dist/
 └── manifest.json   ✅ Übersicht aller Dateien
 ```
 
+## ✅ CI/CD Integration
+
+### GitHub Actions Workflow
+- ✅ Automatischer Build bei Push auf `src/design-tokens/`
+- ✅ Manueller Trigger über GitHub UI (`workflow_dispatch`)
+- ✅ Build-Artifacts werden gespeichert (30 Tage)
+- ✅ Detaillierte Build-Summary im GitHub UI
+- ✅ Optional: Auto-Commit der generierten Dateien
+- ✅ Release-Workflow bei Git-Tags
+
+**Workflow-Datei:** `.github/workflows/build-tokens.yml`
+
+**Features:**
+- Clean Build Option
+- Commit Outputs Option
+- Build-Statistiken
+- Error Handling & Notifications
+- Artifact Upload (dist/, tokens/, logs)
+- GitHub Release bei Tags
+
 ## 🎯 Nächste Schritte
 
 1. **Semantic Layer Probleme lösen**
    - Token-Kollisionen beheben
    - Referenz-Auflösung optimieren
+   - Filter-Logik für Token-Export
 
-2. **Dokumentation erweitern**
-   - Verwendungsbeispiele für jedes Format
-   - Integration in verschiedene Frameworks
-
-3. **CI/CD Integration**
-   - Automatischer Build bei Figma-Updates
-   - Versionierung der generierten Tokens
-
-4. **Testing**
+2. **Testing**
    - Unit Tests für Preprocessing
    - Integration Tests für Build-Process
+   - E2E Tests für CI/CD Pipeline
+
+3. **Erweiterungen**
+   - NPM Package veröffentlichen
+   - CDN Integration
+   - Design System Website
 
 ---
 

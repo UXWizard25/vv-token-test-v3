@@ -9,6 +9,7 @@ Eine vollständige Token-Pipeline basierend auf **Style Dictionary** für das BI
 - [Installation](#installation)
 - [Verwendung](#verwendung)
 - [Output-Struktur](#output-struktur)
+- [CI/CD Integration](#cicd-integration)
 - [Konfiguration](#konfiguration)
 - [Entwicklung](#entwicklung)
 
@@ -270,6 +271,100 @@ const Button = styled.button`
   color: ${tokens['semantic-core-corefgonprimary']};
 `;
 ```
+
+---
+
+## 🔄 CI/CD Integration
+
+Die Token-Pipeline ist vollständig in GitHub Actions integriert für automatische Builds und Deployments.
+
+### Automatischer Build
+
+Der Build wird automatisch getriggert bei:
+- ✅ Push auf `main`, `develop` oder `claude/**` Branches
+- ✅ Änderungen in `src/design-tokens/` (Figma-Exports)
+- ✅ Änderungen in `scripts/` oder `build-config/`
+- ✅ Änderungen in `package.json`
+
+```yaml
+# Automatisch bei Push
+git add src/design-tokens/
+git commit -m "Update design tokens from Figma"
+git push
+# → Build startet automatisch
+```
+
+### Manueller Build
+
+**Via GitHub UI:**
+1. Gehe zu **Actions** Tab
+2. Wähle **"Build Design Tokens"**
+3. Klicke **"Run workflow"**
+4. Optionen:
+   - **Clean Build**: Kompletter Neustart (löscht node_modules)
+   - **Commit Outputs**: Committed generierte Dateien zurück
+
+**Via GitHub CLI:**
+```bash
+# Standard Build
+gh workflow run build-tokens.yml
+
+# Mit Optionen
+gh workflow run build-tokens.yml \
+  -f clean_build=true \
+  -f commit_outputs=true
+```
+
+### Build-Artifacts
+
+Generierte Token-Dateien werden als Artifacts gespeichert:
+- **Name**: `design-tokens-{commit-sha}`
+- **Retention**: 30 Tage
+- **Inhalt**: Alle generierten Dateien (CSS, SCSS, JS, JSON)
+
+**Download:**
+Actions → Build Run → Artifacts → Download
+
+### Release Workflow
+
+Bei Git-Tags wird automatisch ein Release erstellt:
+
+```bash
+# Release erstellen
+git tag v1.0.0
+git push origin v1.0.0
+
+# → GitHub Release mit ZIP/TAR.GZ Archives wird erstellt
+```
+
+### Build Summary
+
+Nach jedem Build zeigt GitHub Actions eine detaillierte Zusammenfassung:
+- ✅ Build-Status und Statistiken
+- 📊 Anzahl erfolgreicher Builds
+- 📁 Liste generierter Dateien
+- 📈 File-Zählung pro Format
+
+### Konfiguration
+
+Die Workflow-Datei: `.github/workflows/build-tokens.yml`
+
+**Branch-Filter anpassen:**
+```yaml
+on:
+  push:
+    branches:
+      - main
+      - your-branch
+```
+
+**Auto-Commit aktivieren:**
+Setze in der Workflow-Datei:
+```yaml
+if: github.ref == 'refs/heads/main'
+```
+
+Mehr Details: [.github/workflows/README.md](.github/workflows/README.md)
 
 ---
 
