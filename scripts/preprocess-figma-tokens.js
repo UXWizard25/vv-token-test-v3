@@ -164,7 +164,13 @@ function processCollection(collection, aliasLookup) {
         if (processedValue !== null) {
           const tokenObject = {
             value: processedValue,
-            type: TYPE_MAPPING[variable.resolvedType] || 'other'
+            type: TYPE_MAPPING[variable.resolvedType] || 'other',
+            $extensions: {
+              'com.figma': {
+                collectionName: collection.name,
+                variableId: variable.id
+              }
+            }
           };
 
           if (variable.description) {
