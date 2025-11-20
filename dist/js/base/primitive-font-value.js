@@ -39,6 +39,7 @@ export const letterspacingLetterspace2 = 2; // This variable is a primitive for 
 export const letterspacingLetterspace1 = 1; // This variable is a primitive for use in creating semantic text styles that need to use a positive letter spacing value of 1.
 export const letterspacingLetterspace05 = 0.5; // This variable is a primitive for use in creating semantic text styles that need to use a slight positive letter spacing value of 0.5.
 export const letterspacingLetterspace025 = 0.25; // This variable is a primitive for use in creating semantic text styles that need to use a subtle positive letter spacing value of 0.25.
+export const letterspacingLetterspace0 = 0; // This variable is a primitive for use in creating semantic text styles that need to use a default letter spacing value of 0.
 export const letterspacingLetterspace025 = -0.25; // This variable is a primitive for use in creating semantic text styles that need to use a subtle small letter spacing value of -0.25.
 export const letterspacingLetterspace05 = -0.5; // This variable is a primitive for use in creating semantic variables that need to use a subtle negative letter spacing value of -0.5.
 export const letterspacingLetterspace1 = -1; // This variable is a primitive for use in creating semantic variables that need to use a negative letter spacing value of -1.

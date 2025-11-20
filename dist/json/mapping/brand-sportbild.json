@@ -272,8 +272,11 @@
     },
     "Visibilty": {
       "hideOnBILD": true,
+      "hideOnSportBILD": false,
       "hideOnAdvertorial": true,
-      "onlySportBILD": true
+      "onlyBILD": false,
+      "onlySportBILD": true,
+      "onlyAdvertorial": false
     }
   },
   "Component": {

@@ -1,6 +1,5 @@
 /**
- * MAPPING Layer - JavaScript Index
- * Exportiert alle Token-Objekte dieser Layer
+ * MAPPING - JavaScript Index
  */
 
 import brand_advertorial from './brand-advertorial.js';

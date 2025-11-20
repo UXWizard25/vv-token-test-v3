@@ -49,6 +49,7 @@
     "letterSpace1": 1,
     "letterSpace0_5": 0.5,
     "letterSpace0_25": 0.25,
+    "letterSpace-0": 0,
     "letterSpace-0_25": -0.25,
     "letterSpace-0_5": -0.5,
     "letterSpace-1": -1,

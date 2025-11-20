@@ -1,6 +1,5 @@
 /**
- * BASE Layer - JavaScript Index
- * Exportiert alle Token-Objekte dieser Layer
+ * BASE - JavaScript Index
  */
 
 import primitive_color_value from './primitive-color-value.js';

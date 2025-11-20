@@ -1,0 +1,686 @@
+{
+  "Semantic": {
+    "Border": {
+      "BorderRadius": {
+        "borderRadiusNone": 0,
+        "borderRadiusXS": 2,
+        "borderRadiusSM": 4,
+        "borderRadiusMD": 8,
+        "borderRadiusLG": 16,
+        "borderRadiusXL": 24,
+        "borderRadiusFull": 9999
+      },
+      "BorderWidth": {
+        "BorderWidthHairline": 0.33,
+        "BorderWidthThin": 1,
+        "BorderWidthThick": 2
+      }
+    },
+    "Layout": {
+      "canvasWidthSizeWeb": 320,
+      "canvasHeightSizeWeb": 568,
+      "canvasWidthSizeApp": 320,
+      "canvasHeightSizeApp": 568,
+      "Breakpoints": {
+        "breakpointMinWidthSize": 320,
+        "breakpointMaxWidthSize": 389
+      },
+      "ContentWidth": {
+        "contentMaxWidthMedium": 700,
+        "contentMaxWidthFull": 1024
+      },
+      "Grid": {
+        "Responsive": {
+          "gridSpaceRespSM": 6,
+          "gridSpaceRespBase": 12,
+          "gridSpaceRespLG": 24,
+          "gridSpaceRespXL": 48,
+          "pageInlineSpace": 0
+        },
+        "Constant": {
+          "gridSpaceConstSM": 12,
+          "gridSpaceConstLG": 16
+        },
+        "LayoutGuide": {
+          "LayoutGuideGridColums": 4
+        }
+      },
+      "Section": {
+        "sectionSpaceSM": 24,
+        "sectionSpaceBase": 36,
+        "sectionSpaceLG": 72,
+        "paragraphEndSpace": 16
+      }
+    },
+    "Space": {
+      "Gap": {
+        "Responsive": {
+          "gapSpaceResp2XS": 2,
+          "gapSpaceRespXS": 4,
+          "gapSpaceRespSM": 8,
+          "gapSpaceRespMD": 12,
+          "gapSpaceRespLG": 16,
+          "gapSpaceRespXL": 24,
+          "gapSpaceResp2XL": 32,
+          "gapSpaceResp3XL": 48
+        },
+        "Constant": {
+          "gapSpaceConst2XS": 2,
+          "gapSpaceConstXS": 4,
+          "gapSpaceConstSM": 8,
+          "gapSpaceConstMD": 12,
+          "gapSpaceConstLG": 16,
+          "gapSpaceConstXL": 24,
+          "gapSpaceConst2XL": 32,
+          "gapSpaceConst3XL": 48
+        }
+      },
+      "Inline": {
+        "Responsive": {
+          "inlineSpaceRespSM": 8,
+          "inlineSpaceRespMD": 12,
+          "inlineSpaceRespLG": 16,
+          "inlineSpaceRespXL": 24,
+          "inlineSpaceResp2XL": 32
+        },
+        "Constant": {
+          "inlineSpaceConst3XS": 2,
+          "inlineSpaceConst2XS": 4,
+          "inlineSpaceConstXS": 6,
+          "inlineSpaceConstSM": 8,
+          "inlineSpaceConstMD": 12,
+          "inlineSpaceConstLG": 16,
+          "inlineSpaceConstXL": 24,
+          "inlineSpaceConst2XL": 32
+        }
+      },
+      "Stack": {
+        "Responsive": {
+          "stackSpaceRespSM": 8,
+          "stackSpaceRespMD": 12,
+          "stackSpaceRespLG": 16,
+          "stackSpaceRespXL": 24,
+          "stackSpaceResp2XL": 32
+        },
+        "Constant": {
+          "stackSpaceConst3XS": 2,
+          "stackSpaceConst2XS": 4,
+          "stackSpaceConstXS": 6,
+          "stackSpaceConstSM": 8,
+          "stackSpaceConstMD": 12,
+          "stackSpaceConstLG": 16,
+          "stackSpaceConstXL": 24,
+          "stackSpaceConst2XL": 32
+        }
+      }
+    },
+    "Size": {
+      "Responsive": {
+        "sizeResp4XS": 12,
+        "sizeResp3XS": 16,
+        "sizeResp2XS": 24,
+        "sizeRespXS": 32,
+        "sizeRespSM": 40,
+        "sizeRespMD": 48,
+        "sizeRespLG": 56,
+        "sizeRespXL": 64,
+        "sizeResp2XL": 72,
+        "sizeResp3XL": 96,
+        "sizeResp4XL": 148
+      },
+      "Constant": {
+        "sizeConst4XS": 8,
+        "sizeConst3XS": 16,
+        "sizeConst2XS": 24,
+        "sizeConstXS": 32,
+        "sizeConstSM": 40,
+        "sizeConstMD": 48,
+        "sizeConstLG": 56,
+        "sizeConstXL": 64,
+        "sizeConst2XL": 72,
+        "sizeConst3XL": 96,
+        "sizeConst4XL": 148
+      }
+    },
+    "Typography": {
+      "FontFamily": {
+        "bodyFontFamily": "Gotham XNarrow",
+        "calloutFontFamily": "Gotham",
+        "displayFontFamily": "Gotham",
+        "footnoteFontFamily": "Gotham XNarrow",
+        "headlineFontFamily": "Gotham Condensed",
+        "kickerFontFamily": "Gotham XNarrow",
+        "labelFontFamily": "Gotham XNarrow",
+        "subheadlineFontFamily": "Gotham Condensed",
+        "titleFontFamily": "Gotham",
+        "quoteFontFamily": "Gotham"
+      },
+      "FontSize": {
+        "Body": {
+          "bodyFontSize": 21
+        },
+        "Callout": {
+          "callout1FontSize": 18
+        },
+        "Display": {
+          "Display1FontSize": 40,
+          "Display2FontSize": 36,
+          "Display3FontSize": 28
+        },
+        "Footnote": {
+          "footnote1FontSize": 16,
+          "footnote2FontSize": 12
+        },
+        "Headline": {
+          "Headline1FontSize": 48,
+          "Headline2FontSize": 40,
+          "Headline3FontSize": 28,
+          "Headline4FontSize": 22
+        },
+        "Kicker": {
+          "Kicker1FontSize": 18,
+          "Kicker2FontSize": 18,
+          "Kicker3FontSize": 16,
+          "Kicker4FontSize": 14
+        },
+        "Label": {
+          "label1FontSize": 17,
+          "label1FontSizeResponsive": 10,
+          "label2FontSize": 15,
+          "label3FontSize": 12,
+          "label4FontSize": 8
+        },
+        "Subheadline": {
+          "subheadline1FontSize": 24
+        },
+        "Title": {
+          "title1FontSize": 22,
+          "title2FontSize": 16
+        },
+        "Quote": {
+          "quoteFontSize": 16
+        }
+      },
+      "FontWeight": {
+        "Body": {
+          "bodyFontWeightBook": 400,
+          "bodyFontWeightBold": 700
+        },
+        "Callout": {
+          "calloutFontWeight": 800
+        },
+        "Display": {
+          "displayFontWeight": 800
+        },
+        "Footnote": {
+          "footnoteFontWeightBold": 700,
+          "footnoteFontWeightBook": 400
+        },
+        "Headline": {
+          "headline1FontWeight": 700,
+          "headline1FontWeightST": "700",
+          "headline2FontWeight": 700,
+          "headline3FontWeight": 700,
+          "headline4FontWeight": 600
+        },
+        "Kicker": {
+          "kickerFontWeight": 700,
+          "kickerFontWeightST": "700"
+        },
+        "Label": {
+          "labelFontWeightBook": 400,
+          "labelFontWeightBold": 700
+        },
+        "Subheadline": {
+          "subheadlineFontWeight": 700
+        },
+        "Title": {
+          "titleFontWeight": 800
+        },
+        "Quote": {
+          "quoteFontWeight": 800
+        }
+      },
+      "LineHeight": {
+        "Body": {
+          "bodyLineHeight": 28
+        },
+        "Callout": {
+          "calloutLineHeight": 18
+        },
+        "Display": {
+          "display1LineHeight": 40,
+          "display2LineHeight": 36,
+          "display3LineHeight": 28
+        },
+        "Footnote": {
+          "footnote1LineHeight": 21,
+          "footnote2LineHeight": 15.6
+        },
+        "Headline": {
+          "Headline1LineHeight": 48,
+          "Headline2LineHeight": 40,
+          "Headline3LineHeight": 28,
+          "headline4LineHeight": 22
+        },
+        "Kicker": {
+          "Kicker1LineHeight": 19.8,
+          "Kicker2LineHeight": 19.8,
+          "Kicker3LineHeight": 17.6,
+          "Kicker4LineHeight": 15.4
+        },
+        "Label": {
+          "label1LineHeight": 17,
+          "label1ResponsiveLineHeight": 10,
+          "label2LineHeight": 16,
+          "label3LineHeight": 14.4,
+          "label4LineHeight": 10
+        },
+        "Subheadline": {
+          "subheadline1LineHeight": 24
+        },
+        "Title": {
+          "title1LineHeight": 22,
+          "title2LineHeight": 17.6
+        },
+        "Quote": {
+          "quoteLineHeight": 16
+        }
+      },
+      "LetterSpacing": {
+        "letterSpacingPositiveLG": 2,
+        "letterSpacingPositiveMD": 1,
+        "letterSpacingPositiveSM": 0.5,
+        "letterSpacingPositiveXS": 0.25,
+        "letterSpacingNone": 0,
+        "letterSpacingNegativeXS": -0.25,
+        "letterSpacingNegativeSM": -0.5,
+        "letterSpacingNegativeMD": -1,
+        "letterSpacingNegativeLG": -2,
+        "display": {
+          "display1LetterSpacing": -0.5,
+          "display2LetterSpacing": -0.5,
+          "display3LetterSpacing": -0.5
+        }
+      }
+    },
+    "Visibility": {
+      "Boolean": {
+        "visilbleDesktopOnly": false,
+        "visilbleTabletOnly": false,
+        "visilbleMobileOnly": true,
+        "visilbleAbove600px": false,
+        "visilbleBelow600px": true,
+        "hideOnDesktop": true,
+        "hideOnMobile": false
+      },
+      "VariantSwitch": {
+        "bpSpecificWeb": "xs/sm",
+        "bpSpecificApp": "compact",
+        "changeOnLG": "xs/sm/md",
+        "changeOnMD": "xs/sm"
+      }
+    }
+  },
+  "Component": {
+    "Accordion": {
+      "accordionLabelFontFamily": "Gotham XNarrow"
+    },
+    "Avatar": {
+      "avatarArticleSize": 48,
+      "avatarAuthorPageSize": 96,
+      "avatarLabelFontSize": 16,
+      "avatarLabelLineHeight": 21,
+      "avatarFontFamily": "Gotham XNarrow",
+      "avatarLaneGapSpace": 16,
+      "appAvatarFontFamily": "Gotham"
+    },
+    "Article": {
+      "articleKickerFontSize": 18,
+      "articleHeadlineFontSize": 40,
+      "articleImageCaptionFontSize": 16,
+      "articleImageCaptionLineHeight": 19.5,
+      "articleMetaFontSize": 12,
+      "articleMetaFontFamily": "Gotham",
+      "articleTopMarginSpace": 8,
+      "aricleMobile1ColGridImageMarginSpace": 0,
+      "articleHeadingsStackSpace": 12,
+      "articleHeadingsInlineSpace": 16,
+      "articleContentStackSpace": 16,
+      "articleContentInlineSpace": 16,
+      "articleGalleryATeaserWidth": 145,
+      "articleImageSourceFontSize": 16,
+      "articleImageSourceLineHeight": 21,
+      "articleImageContainerStackSpace": 8,
+      "articleImageLandscapeInlineSpace": 0,
+      "articleImagePortaitInlineSpace": 0,
+      "articleInfoboxInlineSpace": 16,
+      "articleInfoboxStackSpace": 16
+    },
+    "AudioPlayer": {
+      "audioPlayerFontSize": 16
+    },
+    "Badge": {
+      "adLabelBadgeHeightSize": 30,
+      "BadgesInnerStackSpace": 2,
+      "BadgesInnerInlineSpace": 4
+    },
+    "Breadcrumb": {
+      "breadcrumbFontFamily": "Gotham XNarrow",
+      "breadcrumbFontSize": 15,
+      "breadcrumbLineHeight": 15,
+      "breadcrumb&ArrowLeftInlineSpace1": 3,
+      "breadcrumb&ArrowRightInlineSpace2": 5,
+      "breadcrumbInlineSpace": 12,
+      "breadcrumbFontWeight": 700,
+      "breadcrumbStackSpace": 14
+    },
+    "BreakingNews": {
+      "breakingNewsContainerHeightSize": 56,
+      "breakingNewsBadgeInlineSpace": 6,
+      "breakingNewsBadgeTitelsStackSpace": 0,
+      "breakingNewsBadgeUpperTitleFontSize": 13,
+      "breakingNewsBadgeUpperTitleLineHeight": 13,
+      "breakingNewsBadgeLowerTitleFontSize": 23,
+      "breakingNewsBadgeLowerTitleLineHeight": 21,
+      "breakingNewsScrollingTextFontSize": 21,
+      "breakingNewsScrollingTextLineHeight": 24
+    },
+    "Button": {
+      "buttonLabelFontSize": 15,
+      "buttonLabelLineHeight": 15,
+      "buttonContentGapSpace": 6,
+      "buttonInlineSpace": 16,
+      "buttonStackSpace": 6,
+      "buttonBorderWidthSize": 2,
+      "buttonContentMinHeightSize": 24,
+      "partnerLinkButtonLabelFontSize": 16,
+      "partnerLinkButtonInlineSpace": 8,
+      "partnerLinkButtonLabelHeightSize": 48,
+      "buttonBorderRadius": 8
+    },
+    "Cards": {
+      "searchResultCardImageWidthSize": 216,
+      "searchResultCardImageHeightSizeStacked": 189,
+      "newstickerImageCardWidthSize": 206
+    },
+    "Carousel": {
+      "galleryTeaserTitleBottomSpace": 28,
+      "galleryTeaserAppGapSpace": 0,
+      "appEpaperCarouselItemDefaultWidth": 144,
+      "appEpaperCarouselItemFocusWidth": 182,
+      "appEpaperCarouseBeilageItemWidth": 110,
+      "standardTeaserGalleryTeaserWidthWeb": 145,
+      "standardTeaserGalleryTeaserWidthApp": 280
+    },
+    "Chips": {
+      "chipsFontSize": 16,
+      "chipsInlineSpace": 12,
+      "chipsStackSpace": 8
+    },
+    "Datepicker": {
+      "datepickerItemDayWidthSize": 44,
+      "datepickerItemYearWidthSize": 77,
+      "datepickerItemHeightSize": 44
+    },
+    "Drawers": {
+      "mobileMenuDrawerStackSpace": 20,
+      "mobileMenuDrawerLeftInlineSpace": 20,
+      "mobileMenuDrawerRightInlineSpace": 16,
+      "mobileMenuDrawerMaxWidthSize": 400
+    },
+    "Dropdown": {
+      "dropDownItemStackSpace": 8,
+      "dropDownItemInlineSpace": 12,
+      "DropDownBorderRadius": 4
+    },
+    "Footer": {
+      "footerFontFamily": "Gotham XNarrow",
+      "footerFontSize": 11,
+      "footerLineHeight": 14,
+      "footerFontSizeUserOfferPages": 18,
+      "footerLineHeightUserOfferPages": 26
+    },
+    "Icon": {
+      "iconSize": 24,
+      "iconSizeEmbeddMedia": 40
+    },
+    "InfoElement": {
+      "infoElementTeaserBadgeMarginSpace": 4,
+      "infoElementTeaserImageHeightSize": 80,
+      "infoElementTeaserImageWidthSize": 80,
+      "infoElementTeaserBadgeHeightSize": 16
+    },
+    "Inputfield": {
+      "inputFieldFontSize": 16,
+      "inputFieldFontFamily": "Gotham XNarrow",
+      "inputFieldInlineSpace": 16,
+      "inputFieldStackSpace": 6,
+      "inputFieldMessageGapSpace": 4,
+      "inputFieldIMessageInlineSpace": 16,
+      "inputFieldMiniLabelInlineSpace": 4,
+      "inputFieldHeightSize": 36,
+      "heyInputContainerInlineSpace": 8
+    },
+    "Liveticker": {
+      "liveTickerAppCardHeightSize": 96,
+      "liveTickerAppCardWidthSize": 250,
+      "timeStampFontFamily": "Gotham XNarrow",
+      "liveTickerheadlineFontWeight": 600,
+      "liveTickerHeadlinesFontSize": 22,
+      "liveTickerTimeStampFontSize": 14,
+      "liveTickerTime&HeadlineStackSpace": 4,
+      "liveTickerSliderItemWidthMaxSize": 257
+    },
+    "Mediaplayer": {
+      "audioPlayerHeaderStackSpace": 56,
+      "podcastPlayButtonSize": 48,
+      "vidPlayerBottomBarGapSpace": 0,
+      "videoTimeBadgeFontFamily": "Gotham XNarrow",
+      "vidPlayerControlButtonSize": 42,
+      "vidPlayerControlButtonIconSizeHover": 28,
+      "vidPlayerTimecodeFontSize": 14,
+      "vidPlayerTimecodeContainerMinWidthSize": 45,
+      "vidPlayerProgressBarContainerHeightSize": 24,
+      "vidPlayerUnmuteButtonWidthSize": 220
+    },
+    "Menu": {
+      "menuLinkLaneHeightSize": 48,
+      "menuLogoDefaultSize": 56,
+      "menuLogoScrolledSize": 56,
+      "menuUtillinkItemHeightSize": 48,
+      "menuItemUtilFontSize": 12,
+      "menuItemFontSize": 15,
+      "menuSpecialNaviItemHeightSize": 48,
+      "menuItemSpace": 8,
+      "menuLinkItemInlineSpace": 4,
+      "menuItemUtilStackSpace": 10,
+      "subNavBarHeightSize": 42,
+      "menuUtilityLinksContainerHeightSize": 56,
+      "menuTopStackSpace": 8,
+      "menuBottomStackSpace": 8,
+      "menuLeftInlineSpace": 8,
+      "menuRightInlineSpace": 0,
+      "menuUtilityLinksGapSpace": 24,
+      "menuUtilityLinksDividerHeightSize": 40,
+      "menuShadowVisibility": "rgba(0, 0, 0, 0.1)",
+      "heyInputShadowVisibility": "rgba(0, 0, 0, 0)",
+      "iOSappTopBarHeightSize": 44,
+      "iOSappTopBarLeftInlineSpace": 12,
+      "iOSappTopBarRightInlineSpace": 16,
+      "appTopbarTitleFontSize": 12,
+      "appTopbarStageTitleHeight": 14
+    },
+    "Newsticker": {
+      "newsTickerAppCardHeightSize": 116,
+      "newsTickerAppCardWidthSize": 250,
+      "newsTickerTimeFontFamily": "Gotham XNarrow",
+      "newsTickerTimeFontWeight": 700,
+      "newsTickerTimeFontSize": 16,
+      "newsTickerTimeLineHeight": 20.8,
+      "newsTickerBadgesInlineSpace": 8,
+      "newsTickerEntriesStackSpace": 22,
+      "newsTickerEntriesLeftInlineSpace": 22,
+      "newsTickerContentStackSpace": 4,
+      "newsTickerKickerInnerInlineSpace": 4,
+      "newsTickerKickerInnerStackSpace": 2,
+      "newsTickerTime&KickerStackSpace": 4,
+      "newsTickerTitlesInlineSpace": 18,
+      "newsTickerSkeletonBottomSpace": 64,
+      "newsTickerRedDotSize": 12,
+      "newsTickerLineInlineSpace": 6
+    },
+    "Pagination": {
+      "galleryPaginationItemHeightSize": 4,
+      "galleryPaginationContainerWebInlineSpace": 8,
+      "galleryPaginationContainerAppInlineSpace": 12,
+      "galleryPaginationContainerStackSpace": 12,
+      "scrollBarThicknessSize": 8
+    },
+    "Paywall": {
+      "paywallCardMaxWidthSize": 346,
+      "paywallCardPriceTagFontSize": 64,
+      "paywallCardPriceTagLineHeight": 64,
+      "paywallCardPriceNoteFontSize": 40,
+      "paywallCardPriceNoteLineHeight": 40,
+      "paywallContainerGapSpace": -48,
+      "paywallHeaderBottomStackSpace": 80
+    },
+    "Quotes": {
+      "quoteContainerInlineSpace": 16,
+      "quoteContentGapSpace": 16,
+      "quoteContainerStackSpace": 16,
+      "quoteQuotationMarksFontSize": 28
+    },
+    "RadioButtons": {
+      "radioSelectorSize": 20,
+      "radioSelectorDotActiveSize": 12
+    },
+    "Search": {
+      "searchResultBadgeHeightSize": 18
+    },
+    "SectionTitle": {
+      "sectionTitleInnerStackBottomSpace": 12,
+      "sectionTitle&ArrowInlineSpace": 5,
+      "sectionTitle&ArrowInlineSpaceActive": 5,
+      "sectionTitleHeightSize": 32
+    },
+    "Separators": {
+      "separatorThicknessSize": 2
+    },
+    "Skeletons": {
+      "headlinesSkeletonImagePlaceholderMaxWidth": 282,
+      "articleSkeletonImageInlineSpace": 12,
+      "articleSkeletonTextInlineSpace": 0,
+      "articleTextSkeletonHeightSize": 270
+    },
+    "SpecialNavi": {
+      "specialNaviInlineSpace": 24
+    },
+    "Sliders": {
+      "sliderProgressBarIdleHeightSize": 4,
+      "sliderProgressBarHoverHeightSize": 8,
+      "sliderProgressInactiveHeightSize": 2,
+      "vidPlayerProgressBarHeightSize": 12
+    },
+    "Spinners": {
+      "videoSpinnerSize": 40,
+      "videoSpinnerSize0_5x": 20,
+      "videoSpinnerStrokeSize": 2
+    },
+    "Tabs": {
+      "tabLabelFontSize": 16,
+      "tabLabelFontSizeLine": 12,
+      "iosTabbarHeightSize": 49,
+      "androidTabbarHeightSize": 56,
+      "appsTabsLabelFontSize": 11,
+      "appsTabsLabelLineHeight": 14.4,
+      "topBarTabItemHeightSize": 44
+    },
+    "Table": {
+      "tableColumnWidthSize0_5x": 40,
+      "tableColumnWidthSize0_75x": 56,
+      "tableColumnWidthSize1x": 80,
+      "tableColumnWidthSize1_5x": 120,
+      "tableColumnWidthSize2x": 140,
+      "tableColumnWidthSize2_5x": 180,
+      "tableColumnWidthSize3x": 200,
+      "tableItemMaxWidthSize": 224
+    },
+    "Teaser": {
+      "aTeaser": {
+        "aTeaserKickerFontSize": 16,
+        "aTeaserKickerLineHeight": 16,
+        "aTeaserHeadlineFontSize": 28,
+        "aTeaserHeadlineLineHeight": 28,
+        "aTeaserTitleInlineSpace": 8
+      },
+      "bTeaser": {
+        "bTeaserTitleInlineSpace": 8
+      },
+      "bildPlay": {
+        "bildPlayTeaserWidthSize": 145
+      },
+      "mQTeaser": {
+        "mQTeaserHeadlineFontSize": 22,
+        "mQTeaserHeadlineLineHeight": 22,
+        "mQTeaserHeadlineFontWeight": 600,
+        "mqTeaserTitleInlineSpace": 8
+      },
+      "teaserBadgesHeightSizeLG": 32,
+      "teaserBadgesHeightSizeSM": 24,
+      "teaserBadgesMarginSpace": 8,
+      "TeaserKickerBgInlineSpace": 6,
+      "teaserKickerBgStackSpace": 2,
+      "qTeaser": {
+        "quadKickerFontSize": 18,
+        "quadHeadlineFontSize": 48,
+        "quadHeadlineLineHeight": 48,
+        "qTeaserTitleInlineSpace": 8
+      },
+      "teaserLayoutGridSpace": 12,
+      "stdTeaser": {
+        "stdTeaserBadgesMarginSpace": 4,
+        "stdTeaserImageTitleGapSpace": 4,
+        "stdTeaserKickerHeadlineStackSpace": 2
+      },
+      "superA": {
+        "superATeaserTitleInlineSpace": 16
+      },
+      "teaserTitleInlineLeftSpace": 12,
+      "teaserTitleStackSpace": 4,
+      "teaserTitleGapSpace": 4,
+      "teaserTitleBottomStackSpace": 12
+    },
+    "ToggleSwitch": {
+      "appToggleItemLabelFontSize": 14,
+      "appToggleItemLabelLineHeight": 14.1
+    },
+    "Video": {
+      "videoBadgeTimeLineHeight": 21,
+      "videoTimeBadgeFontSize": 16,
+      "verticalVideoMockHeadlineFontSize": 22,
+      "videoFrameInlineSpace": 0,
+      "videoRedPlayIconHeightSize": 10,
+      "videoRedPlayIconWidthSize": 8,
+      "videoSkeletonContainerHeight": 180,
+      "videoTimeBadgeSize": 24,
+      "videoTimeBadgeCornerSize": 2,
+      "videoAdBadgeFontSize": 14
+    },
+    "_DSysDocs": {
+      "specsFontFamily": "Gotham",
+      "1columnMobile": 320,
+      "DSysDocsWidthSize": 320,
+      "dsCaptionStackSpace0_5x": 4,
+      "dsCaptionStackSpace1x": 8,
+      "dsMainContainerSpace": 0,
+      "foundationsBannerHeightSize": 80,
+      "mainContentStageSize": 320,
+      "thinBannerVerticalHeightSize": 558,
+      "bildDesignFrameSpace": 12,
+      "docHeaderHeightSize": 144
+    }
+  },
+  "breakpointName": "xs"
+}

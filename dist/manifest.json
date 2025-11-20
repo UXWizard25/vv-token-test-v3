@@ -1,5 +1,5 @@
 {
-  "generated": "2025-11-20T17:34:42.881Z",
+  "generated": "2025-11-20T22:16:36.072Z",
   "version": "1.0.0",
   "platforms": {
     "css": {
@@ -45,18 +45,9 @@
         },
         "semantic": {
           "files": [
-            "breakpoint-lg-global.css",
-            "breakpoint-lg.css",
-            "breakpoint-md-global.css",
-            "breakpoint-md.css",
-            "breakpoint-sm-global.css",
-            "breakpoint-sm.css",
-            "breakpoint-xs-global.css",
-            "breakpoint-xs.css",
-            "color-dark-global.css",
-            "color-dark.css",
-            "color-light-global.css",
-            "color-light.css"
+            "advertorial",
+            "bild",
+            "sportbild"
           ],
           "path": "dist/css/semantic/"
         }
@@ -93,12 +84,9 @@
         },
         "semantic": {
           "files": [
-            "breakpoint-lg.scss",
-            "breakpoint-md.scss",
-            "breakpoint-sm.scss",
-            "breakpoint-xs.scss",
-            "color-dark.scss",
-            "color-light.scss"
+            "advertorial",
+            "bild",
+            "sportbild"
           ],
           "path": "dist/scss/semantic/"
         }
@@ -135,12 +123,9 @@
         },
         "semantic": {
           "files": [
-            "breakpoint-lg.js",
-            "breakpoint-md.js",
-            "breakpoint-sm.js",
-            "breakpoint-xs.js",
-            "color-dark.js",
-            "color-light.js"
+            "advertorial",
+            "bild",
+            "sportbild"
           ],
           "path": "dist/js/semantic/"
         }
@@ -177,12 +162,9 @@
         },
         "semantic": {
           "files": [
-            "breakpoint-lg.json",
-            "breakpoint-md.json",
-            "breakpoint-sm.json",
-            "breakpoint-xs.json",
-            "color-dark.json",
-            "color-light.json"
+            "advertorial",
+            "bild",
+            "sportbild"
           ],
           "path": "dist/json/semantic/"
         }
@@ -190,12 +172,12 @@
     }
   },
   "statistics": {
-    "totalFiles": 90,
+    "totalFiles": 72,
     "byPlatform": {
-      "css": 36,
-      "scss": 18,
-      "js": 18,
-      "json": 18
+      "css": 27,
+      "scss": 15,
+      "js": 15,
+      "json": 15
     }
   }
 }

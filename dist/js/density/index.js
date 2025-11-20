@@ -1,6 +1,5 @@
 /**
- * DENSITY Layer - JavaScript Index
- * Exportiert alle Token-Objekte dieser Layer
+ * DENSITY - JavaScript Index
  */
 
 import density_compact from './density-compact.js';

@@ -1,0 +1,8 @@
+/**
+ * BREAKPOINTS - CSS Index
+ */
+
+@import './breakpoint-advertorial-lg.css';
+@import './breakpoint-advertorial-md.css';
+@import './breakpoint-advertorial-sm.css';
+@import './breakpoint-advertorial-xs.css';

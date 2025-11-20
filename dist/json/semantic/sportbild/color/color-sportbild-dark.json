@@ -1,0 +1,305 @@
+{
+  "Semantic": {
+    "Core": {
+      "coreColorPrimary": "#0a264f",
+      "coreColorSecondary": "#081729",
+      "coreColorTertiary": "#ffffff",
+      "coreColorSecondaryConstant": "#ffffff",
+      "coreColorTertiaryConstant": "#081729"
+    },
+    "Attention": {
+      "accentColorPrimary": "#f7fafc",
+      "accentColorPrimaryConstant": "#174582",
+      "attentionColorSuccessPrimary": "#00c273",
+      "attentionColorSuccessSecondary": "#006e3d",
+      "attentionColorExtraLow": "#333d40",
+      "attentionColorLow": "#ffbf00",
+      "attentionColorMedium": "#fc8226",
+      "attentionColorHigh": "#de0000"
+    },
+    "Border": {
+      "borderColorLowContrast": "#4a5259",
+      "borderColorLowContrastConstant": "#e8edf0",
+      "borderColorMediumContrast": "#666b70",
+      "borderColorHighContrast": "#ffffff",
+      "borderColorSuccess": "#00c273",
+      "borderColorWarning": "#de0000",
+      "borderColorPrimaryDisabled": "#333d40",
+      "borderColorSecondaryDisabled": "#4a5259"
+    },
+    "Icon": {
+      "iconColorPrimary": "#8c9196",
+      "iconColorPrimaryConstant": "#4a5259",
+      "iconColorInverse": "#4a5259",
+      "iconColorSecondaryConstant": "#8c9196",
+      "iconColorConstantOnDark": "#f2f5f5",
+      "iconColorSuccess": "#00c273"
+    },
+    "Overlay": {
+      "overlayScrimBlack": "rgba(0, 0, 0, 0.7)",
+      "overlayScrimWhite": "rgba(255, 255, 255, 0.7)"
+    },
+    "State": {
+      "colorPrimaryActive": "#174582",
+      "colorSecondaryActive": "#f2f5f5",
+      "colorSecondaryActiveInverse": "#242629",
+      "colorTertiaryActive": "#00c273",
+      "colorPrimaryDisabled": "#333d40",
+      "colorSecondaryDisabled": "#4a5259",
+      "colorTertiaryDisabled": "#666b70"
+    },
+    "Surface": {
+      "surfaceColorPrimary": "#081729",
+      "surfaceColorPrimaryInverse": "#ffffff",
+      "surfaceColorPrimaryConstantLight": "#ffffff",
+      "surfaceColorPrimaryConstantDark": "#081729",
+      "surfaceColorSecondary": "#0a264f",
+      "surfaceColorTertiary": "#174582",
+      "surfaceColorTertiaryInverse": "#bdc9db",
+      "surfaceColorQuartenary": "#4a5259",
+      "surfaceColorQuartenaryInverse": "#cfd4d9",
+      "surfaceColorSuccess": "#cff5e3",
+      "surfaceColorPrimaryGradientStop": "rgba(36, 38, 41, 0)",
+      "surfaceColorSecondaryGradientStop": "rgba(43, 48, 56, 0)",
+      "surfaceColorTertiaryGradientStop": "rgba(51, 61, 64, 0)"
+    },
+    "Heading": {
+      "headlineColorPrimary": "#ffffff",
+      "headlineColorWhiteConst": "#ffffff",
+      "kickerTextColorOnSurface": "#8c9196",
+      "kickerTextColorOnRed": "#ffffff",
+      "kickerTextColorOnDarkBg": "rgba(255, 255, 255, 0.8)",
+      "kickerTextColorOnBrightBg": "rgba(0, 0, 0, 0.7)"
+    },
+    "Text": {
+      "textColorPrimary": "#e8edf0",
+      "textColorPrimaryConstant": "#242629",
+      "textColorPrimaryInverse": "#242629",
+      "textColorPrimaryInverseConstant": "#e8edf0",
+      "textColorSecondary": "#8c9196",
+      "textColorMuted": "#cfd4d9",
+      "textColorOnDarkSurface": "#ffffff",
+      "textColorAccent": "#f7fafc",
+      "textColorAccentConstant": "#174582",
+      "textColorSuccessConstant": "#006e3d",
+      "textColorAttentionHigh": "#de0000",
+      "textColorAttentionMedium": "#fc8226"
+    },
+    "Label": {
+      "labelColorPrimary": "#e8edf0",
+      "labelColorPrimaryInverse": "#242629",
+      "labelColorPrimaryConstant": "#242629",
+      "labelColorPrimaryInverseConstant": "#e8edf0",
+      "labelColorSecondary": "#cfd4d9",
+      "labelColorTertiary": "#8c9196",
+      "labelColorDisabled": "#4a5259"
+    },
+    "LayerOpacity": {
+      "layerOpacity00": 0,
+      "layerOpacity05": 5,
+      "layerOpacity10": 10,
+      "layerOpacity20": 20,
+      "layerOpacity30": 30,
+      "layerOpacity40": 40,
+      "layerOpacity50": 50,
+      "layerOpacity60": 60,
+      "layerOpacity70": 70,
+      "layerOpacity80": 80,
+      "layerOpacity90": 90,
+      "layerOpacity100": 100
+    }
+  },
+  "Component": {
+    "Avatar": {
+      "avatarLabelColor": "#e8edf0",
+      "avatarLabelColorHover": "#174582"
+    },
+    "Alert": {
+      "alertSurfaceColor": "#333d40",
+      "alertSurfaceColorConstant": "#ffffff"
+    },
+    "Breadcrumb": {
+      "breadcrumbTextColorIdle": "#f2f5f5",
+      "breadcrumbTextColorHover": "#ffffff"
+    },
+    "BreakingNews": {
+      "breakingNewsTopTitleTextColor": "#ffbf00",
+      "breakingNewsBottomTitleTextColor": "#ffffff",
+      "breakingNewsTitleSurfaceColor": "#0a264f",
+      "breakingNewsSurfaceColor": "#ffbf00",
+      "breakingNewsTextContentColor": "#242629"
+    },
+    "Button": {
+      "Primary": {
+        "buttonPrimaryLabelColor": "#ffffff",
+        "buttonPrimaryNeutralBgColorIdle": "#ffffff",
+        "buttonPrimaryNeutralBgColorHover": "#bdc9db",
+        "buttonPrimaryBrandBgColorIdle": "#305999",
+        "buttonPrimaryBrandBgColorHover": "#174582",
+        "buttonPrimarySuccessColorIdle": "#17995c",
+        "buttonPrimarySuccessColorHover": "#006e3d"
+      },
+      "Secondary": {
+        "buttonSecondaryLabelColor": "#e8edf0",
+        "buttonSecondaryBgColorIdle": "#4a5259",
+        "buttonSecondaryBgColorHover": "rgba(207, 212, 217, 0.5)"
+      },
+      "Tertiary": {
+        "buttonTertiaryLabelColor": "#f2f5f5",
+        "buttonTertiaryBorderColorIdle": "#4a5259",
+        "buttonTertiaryBorderColorHover": "#ffffff",
+        "buttonTertiarySuccessBgColorHover": "rgba(0, 156, 89, 0.5)",
+        "buttonTertiarySuccessBorderColor": "#17995c"
+      },
+      "Ghost": {
+        "buttonGhostBgColorHover": "rgba(207, 212, 217, 0.5)"
+      },
+      "buttonLiveTickerLoadNewSurfaceColor": "#081729",
+      "buttonLiveTickerLoadNewLabelColor": "#f2f5f5"
+    },
+    "Card": {
+      "cardSurfaceBgColor": "#0a264f"
+    },
+    "Chips": {
+      "chipsBgColorIdle": "#4a5259",
+      "chipsBgColorActive": "#ffffff",
+      "chipsBgColorHover": "#cfd4d9",
+      "chipsLabelColorIdle": "#ffffff",
+      "chipsLabelColorHover": "#081729"
+    },
+    "Dropdown": {
+      "dropdownBgColorIdle": "#174582",
+      "dropdownBgColorHover": "#4a5259"
+    },
+    "Empties": {
+      "emptiesLogoColor": "#2b3038",
+      "emptiesBgColor": "#174582"
+    },
+    "Foldout": {
+      "foldoutLabelColorIdle": "#cfd4d9",
+      "foldoutLabelColorActive": "#f2f5f5"
+    },
+    "Gallery": {
+      "appImageLightboxGalleryBgColor": "#000000"
+    },
+    "Hey": {
+      "heyDrawerSurfaceColor": "#174582",
+      "heyFavInputFieldSurfaceColor": "#4a5259",
+      "heyIconUtilColor": "#ffffff",
+      "heySeparatorColor": "#666b70",
+      "heyTextColor": "#e8edf0"
+    },
+    "InputField": {
+      "inputFieldBorderColorIdle": "#8c9196",
+      "inputFieldBorderColorActive": "#e8edf0",
+      "inputFieldBorderColorDark": "#cfd4d9",
+      "inputFieldBorderColorDarkActive": "#ffffff",
+      "inputFieldBgColorDarkLowContrast": "#333d40",
+      "inputFieldBgColorDarkMediumContrast": "#4a5259",
+      "inputFieldBgColorDarkHighContrast": "#e8edf0"
+    },
+    "Kicker": {
+      "Standard": {
+        "kickerBgColorOnSurface": "#8c9196"
+      },
+      "Partner": {
+        "kickerBzBgColor": "#e3001c",
+        "kickerFitbookBgColor": "#ff96b8",
+        "kickerPetbookBgColor": "#badb91",
+        "kickerMyhomebookBgColor": "#66cccc",
+        "kickerTravelbookBgColor": "#8ff0ed",
+        "kickerTechbookBgColor": "#94e3ff",
+        "kickerKaufberaterBgColor": "#54476e",
+        "kickerCobiBgColor": "#db241c",
+        "kickerAubiBgColor": "#f00000",
+        "kickerSpobiBgColor": "#174582"
+      }
+    },
+    "Mediaplayer": {
+      "vidPlayerControlsAutoplayButtonBgColor": "rgba(0, 0, 0, 0.2)",
+      "vidPlayerControlButtonsBgHoverColor": "rgba(222, 0, 0, 0.8)",
+      "vidPlayerControlButtonsBgColorHover": "rgba(0, 0, 0, 0.2)",
+      "vidPlayerControlButtonsBgColorPressed": "rgba(0, 0, 0, 0.05)",
+      "vidPlayerOverlayScrimColor": "rgba(0, 0, 0, 0.5)",
+      "audioPlayerPlayButtonBgColor": "rgba(255, 255, 255, 0.3)",
+      "vidPlayerTooltipBgColor": "rgba(0, 0, 0, 0.7)",
+      "vidPlayerProgressBarPreloadBgColor": "rgba(255, 255, 255, 0.3)",
+      "vidPlayerUnmuteButtonBgColor": "rgba(0, 0, 0, 0.2)",
+      "vidPlayerUnmuteButtonBgColorHover": "rgba(0, 0, 0, 0.35)"
+    },
+    "Menu": {
+      "menuSurfaceColor": "#081729",
+      "menuScrolledSurfaceGradientColor": "rgba(36, 38, 41, 0.95)",
+      "menuLinkLaneSurfaceColor": "#0a264f",
+      "menuLinkLaneLabelColor": "#adb5ba",
+      "menuLinkLaneLabelColorActive": "#f7fafc",
+      "appTopBarSurfaceColor": "#0a264f",
+      "appTopBarIconColor": "#8c9196",
+      "appTopBarTextColorPrimary": "#e8edf0",
+      "appTobBarTabNavBottomBorder": "#174582",
+      "appTobBarTabNavBottomBorderActive": "#ffffff"
+    },
+    "MenuItem": {
+      "menuItemLabelColorPrimary": "#8c9196",
+      "menuItemLabelColorPrimaryActive": "#f2f5f5",
+      "menuItemLabelColorSecondary": "#ffffff",
+      "menuItemBorderColorActive": "#f7fafc"
+    },
+    "PartnerLinks": {
+      "partnerLinksBgColorIdle": "#333d40",
+      "partnerLinksBgColorActive": "#8c9196",
+      "partnerLinksBorderColorIdle": "#cfd4d9",
+      "partnerLinksBorderColorActive": "#e8edf0",
+      "partnerLinksContainerBorderColor": "#4a5259"
+    },
+    "Newsticker": {
+      "newsTickerTimestampColor": "#8c9196",
+      "newsTickerBadgeIconsColor": "#8c9196"
+    },
+    "Pagination": {
+      "paginationElementColorDefault": "#8c9196",
+      "paginationElementColorActive": "#f7fafc",
+      "galleryPaginationElementActiveOpacity": 100,
+      "scrollBarTrackBgColor": "rgba(255, 255, 255, 0.1)",
+      "scrollBarThumbBgColor": "#8c9196"
+    },
+    "Selection": {
+      "selectionBorderColor": "#8c9196"
+    },
+    "Slider": {
+      "sliderButtonOpacity": 90,
+      "sliderTrackBgColor": "rgba(255, 255, 255, 0.35)"
+    },
+    "SocialShareButton": {
+      "socialShareButtonLabelColorDefault": "#ffffff",
+      "socialShareButtonLabelColorActive": "#ffffff",
+      "socialShareButtonBgColorDefault": "#4a5259",
+      "socialShareButtonBgColorActive": "#333d40"
+    },
+    "Subheader": {
+      "subheadersColor": "#e8edf0"
+    },
+    "Tab": {
+      "tabBgColorHover": "#333d40",
+      "tabLabelColorActive": "#f2f5f5",
+      "tabLabelColorDefault": "#ffffff",
+      "appBottomTabBarBgColor": "#0a264f"
+    },
+    "Teaser": {
+      "teaserHoverOpacity": 80,
+      "teaserTitleBackgroundGradientStart": "rgba(10, 38, 79, 0.7)",
+      "teaserTitleBackgroundGradientStop": "rgba(10, 38, 79, 0)"
+    },
+    "TextLink": {
+      "textLinkColorPrimary": "#8c9196",
+      "textLinkColorSecondary": "#cfd4d9",
+      "textLinkColorSecondaryActive": "#e8edf0"
+    },
+    "_DSysDoc": {
+      "dsDocSpacingItemBgColor": "rgba(255, 255, 255, 0.2)",
+      "dsDocSpacingItemBorderColor": "rgba(255, 255, 255, 0.8)",
+      "_DSysDocs_labelTextSurfaceColorPrimaryPrimitiveName": "BILD010",
+      "_DSysDocs_labelTextColorMode": "(Dark Mode)"
+    }
+  }
+}

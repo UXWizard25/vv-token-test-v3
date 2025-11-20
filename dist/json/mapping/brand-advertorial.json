@@ -273,6 +273,9 @@
     "Visibilty": {
       "hideOnBILD": true,
       "hideOnSportBILD": true,
+      "hideOnAdvertorial": false,
+      "onlyBILD": false,
+      "onlySportBILD": false,
       "onlyAdvertorial": true
     }
   },

@@ -25,4 +25,5 @@ export const space1x = 8;
 export const space075x = 6;
 export const space05x = 4;
 export const space025x = 2;
+export const space0x = 0;
 export const space025x = -2;
