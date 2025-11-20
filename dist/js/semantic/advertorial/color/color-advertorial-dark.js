@@ -184,8 +184,7 @@ export const semanticLabelLabelcolortertiary = "#8c9196";
 // Disabled label tone indicating inactive or unavailable states in UI elements.
 // Behavior: Dynamic — lighter gray in Light mode, darker neutral in Dark mode.
 export const semanticLabelLabelcolordisabled = "#4a5259";
-export const semanticLayeropacityLayeropacity00 =
-  "UNRESOLVED_NO_VALUE__Opacity_opacity00";
+export const semanticLayeropacityLayeropacity00 = 0;
 export const semanticLayeropacityLayeropacity05 = 5;
 export const semanticLayeropacityLayeropacity10 = 10;
 export const semanticLayeropacityLayeropacity20 = 20;
@@ -198,18 +197,14 @@ export const semanticLayeropacityLayeropacity80 = 80;
 export const semanticLayeropacityLayeropacity90 = 90;
 export const semanticLayeropacityLayeropacity100 = 100;
 export const componentAvatarAvatarlabelcolor = "#ffffff"; // 09-2025 css --article-author-name-color
-export const componentAvatarAvatarlabelcolorhover =
-  "UNRESOLVED_CIRCULAR_REF__Component_Avatar_avatarLabelColorHover"; // 09-2025 css --article-author-name-color
+export const componentAvatarAvatarlabelcolorhover = "#de0000"; // 09-2025 css --article-author-name-color
 export const componentAlertAlertsurfacecolor = "#333d40"; // On marketing offer surfaces this variable is usually not used. The alertSurfaceConstant variables should be used. This token changes color between light and dark modes. L:100 / D:025
 export const componentAlertAlertsurfacecolorconstant = "#ffffff"; // On marketing offer surfaces this variable is  used.
 export const componentBreadcrumbBreadcrumbtextcoloridle = "#f2f5f5"; // Use this token on breadcrumbs that are in their default idle state. This token changes color between light and dark modes. L:035 / D:096
 export const componentBreadcrumbBreadcrumbtextcolorhover = "#ffffff"; // Use this token on breadcrumbs that the user's pointer is hovering on or clicked on. This token changes color between light and dark modes. L:015 / D:100
-export const componentBreakingnewsBreakingnewstoptitletextcolor =
-  "UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsTopTitleTextColor";
-export const componentBreakingnewsBreakingnewsbottomtitletextcolor =
-  "UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsBottomTitleTextColor";
-export const componentBreakingnewsBreakingnewstitlesurfacecolor =
-  "UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsTitleSurfaceColor";
+export const componentBreakingnewsBreakingnewstoptitletextcolor = "#1c1c1c";
+export const componentBreakingnewsBreakingnewsbottomtitletextcolor = "#1c1c1c";
+export const componentBreakingnewsBreakingnewstitlesurfacecolor = "#fc8226";
 export const componentBreakingnewsBreakingnewssurfacecolor = "#e8edf0";
 export const componentBreakingnewsBreakingnewstextcontentcolor = "#242629";
 export const componentButtonPrimaryButtonprimarylabelcolor = "#ffffff";
@@ -335,9 +330,9 @@ export const componentTabTablabelcolordefault = "#ffffff";
 export const componentTabAppbottomtabbarbgcolor = "#333d40";
 export const componentTeaserTeaserhoveropacity = 80; // When users hover over graphical teasers the image reduces opacity to 80%.
 export const componentTeaserTeasertitlebackgroundgradientstart =
-  "UNRESOLVED_CIRCULAR_REF__Component_Teaser_teaserTitleBackgroundGradientStart";
+  "rgba(0, 0, 0, 0.7)";
 export const componentTeaserTeasertitlebackgroundgradientstop =
-  "UNRESOLVED_CIRCULAR_REF__Component_Teaser_teaserTitleBackgroundGradientStop";
+  "rgba(0, 0, 0, 0)";
 export const componentTextlinkTextlinkcolorprimary = "#8c9196";
 export const componentTextlinkTextlinkcolorsecondary = "#cfd4d9";
 export const componentTextlinkTextlinkcolorsecondaryactive = "#e8edf0";

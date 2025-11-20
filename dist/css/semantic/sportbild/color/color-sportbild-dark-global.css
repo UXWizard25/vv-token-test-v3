@@ -285,7 +285,7 @@
    * Behavior: Dynamic — lighter gray in Light mode, darker neutral in Dark mode.
    */
   --semantic-label-label-color-disabled: #4a5259;
-  --semantic-layer-opacity-layer-opacity00: UNRESOLVED_NO_VALUE__Opacity_opacity00;
+  --semantic-layer-opacity-layer-opacity00: 0;
   --semantic-layer-opacity-layer-opacity05: 5;
   --semantic-layer-opacity-layer-opacity10: 10;
   --semantic-layer-opacity-layer-opacity20: 20;
@@ -298,14 +298,14 @@
   --semantic-layer-opacity-layer-opacity90: 90;
   --semantic-layer-opacity-layer-opacity100: 100;
   --component-avatar-avatar-label-color: #e8edf0; /** 09-2025 css --article-author-name-color */
-  --component-avatar-avatar-label-color-hover: UNRESOLVED_CIRCULAR_REF__Component_Avatar_avatarLabelColorHover; /** 09-2025 css --article-author-name-color */
+  --component-avatar-avatar-label-color-hover: #174582; /** 09-2025 css --article-author-name-color */
   --component-alert-alert-surface-color: #333d40; /** On marketing offer surfaces this variable is usually not used. The alertSurfaceConstant variables should be used. This token changes color between light and dark modes. L:100 / D:025 */
   --component-alert-alert-surface-color-constant: #ffffff; /** On marketing offer surfaces this variable is  used. */
   --component-breadcrumb-breadcrumb-text-color-idle: #f2f5f5; /** Use this token on breadcrumbs that are in their default idle state. This token changes color between light and dark modes. L:035 / D:096 */
   --component-breadcrumb-breadcrumb-text-color-hover: #ffffff; /** Use this token on breadcrumbs that the user's pointer is hovering on or clicked on. This token changes color between light and dark modes. L:015 / D:100 */
-  --component-breaking-news-breaking-news-top-title-text-color: UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsTopTitleTextColor;
-  --component-breaking-news-breaking-news-bottom-title-text-color: UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsBottomTitleTextColor;
-  --component-breaking-news-breaking-news-title-surface-color: UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsTitleSurfaceColor;
+  --component-breaking-news-breaking-news-top-title-text-color: #ffbf00;
+  --component-breaking-news-breaking-news-bottom-title-text-color: #ffffff;
+  --component-breaking-news-breaking-news-title-surface-color: #0a264f;
   --component-breaking-news-breaking-news-surface-color: #ffbf00;
   --component-breaking-news-breaking-news-text-content-color: #242629;
   --component-button-primary-button-primary-label-color: #ffffff;
@@ -411,8 +411,8 @@
   --component-tab-tab-label-color-default: #ffffff;
   --component-tab-app-bottom-tab-bar-bg-color: #0a264f;
   --component-teaser-teaser-hover-opacity: 80; /** When users hover over graphical teasers the image reduces opacity to 80%. */
-  --component-teaser-teaser-title-background-gradient-start: UNRESOLVED_CIRCULAR_REF__Component_Teaser_teaserTitleBackgroundGradientStart;
-  --component-teaser-teaser-title-background-gradient-stop: UNRESOLVED_CIRCULAR_REF__Component_Teaser_teaserTitleBackgroundGradientStop;
+  --component-teaser-teaser-title-background-gradient-start: rgba(10, 38, 79, 0.7);
+  --component-teaser-teaser-title-background-gradient-stop: rgba(10, 38, 79, 0);
   --component-text-link-text-link-color-primary: #8c9196;
   --component-text-link-text-link-color-secondary: #cfd4d9;
   --component-text-link-text-link-color-secondary-active: #e8edf0;

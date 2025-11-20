@@ -2,7 +2,7 @@
   "Semantic": {
     "Border": {
       "BorderRadius": {
-        "borderRadiusNone": "UNRESOLVED_NO_VALUE__size0x",
+        "borderRadiusNone": 0,
         "borderRadiusXS": 2,
         "borderRadiusSM": 4,
         "borderRadiusMD": 8,
@@ -35,7 +35,7 @@
           "gridSpaceRespBase": 12,
           "gridSpaceRespLG": 32,
           "gridSpaceRespXL": 64,
-          "pageInlineSpace": "UNRESOLVED_NO_VALUE__space0x"
+          "pageInlineSpace": 0
         },
         "Constant": {
           "gridSpaceConstSM": 12,
@@ -292,7 +292,7 @@
         "letterSpacingPositiveMD": 1,
         "letterSpacingPositiveSM": 0.5,
         "letterSpacingPositiveXS": 0.25,
-        "letterSpacingNone": "UNRESOLVED_NO_VALUE__LetterSpacing_letterSpace-0",
+        "letterSpacingNone": 0,
         "letterSpacingNegativeXS": -0.25,
         "letterSpacingNegativeSM": -0.25,
         "letterSpacingNegativeMD": -1,
@@ -306,8 +306,11 @@
     },
     "Visibility": {
       "Boolean": {
+        "visilbleDesktopOnly": false,
         "visilbleTabletOnly": true,
+        "visilbleMobileOnly": false,
         "visilbleAbove600px": true,
+        "visilbleBelow600px": false,
         "hideOnDesktop": true,
         "hideOnMobile": true
       },
@@ -321,14 +324,14 @@
   },
   "Component": {
     "Accordion": {
-      "accordionLabelFontFamily": "UNRESOLVED_CIRCULAR_REF__Component_Accordion_accordionLabelFontFamily"
+      "accordionLabelFontFamily": "Inter"
     },
     "Avatar": {
       "avatarArticleSize": 48,
       "avatarAuthorPageSize": 130,
       "avatarLabelFontSize": 13,
       "avatarLabelLineHeight": 21,
-      "avatarFontFamily": "UNRESOLVED_CIRCULAR_REF__Component_Avatar_avatarFontFamily",
+      "avatarFontFamily": "Inter",
       "avatarLaneGapSpace": 24,
       "appAvatarFontFamily": "AntennaCond"
     },
@@ -472,6 +475,7 @@
     "Mediaplayer": {
       "audioPlayerHeaderStackSpace": 56,
       "podcastPlayButtonSize": 48,
+      "vidPlayerBottomBarGapSpace": 0,
       "videoTimeBadgeFontFamily": "Inter",
       "vidPlayerControlButtonSize": 42,
       "vidPlayerControlButtonIconSizeHover": 28,
@@ -486,7 +490,7 @@
       "menuLogoScrolledSize": 56,
       "menuUtillinkItemHeightSize": 48,
       "menuItemUtilFontSize": 12,
-      "menuItemFontSize": "UNRESOLVED_CIRCULAR_REF__Component_Menu_menuItemFontSize",
+      "menuItemFontSize": 18,
       "menuSpecialNaviItemHeightSize": 48,
       "menuItemSpace": 8,
       "menuLinkItemInlineSpace": 4,
@@ -496,7 +500,7 @@
       "menuTopStackSpace": 8,
       "menuBottomStackSpace": 8,
       "menuLeftInlineSpace": 8,
-      "menuRightInlineSpace": "UNRESOLVED_NO_VALUE__space0x",
+      "menuRightInlineSpace": 0,
       "menuUtilityLinksGapSpace": 24,
       "menuUtilityLinksDividerHeightSize": 40,
       "menuShadowVisibility": "rgba(0, 0, 0, 0.1)",
@@ -522,6 +526,7 @@
       "newsTickerKickerInnerStackSpace": 2,
       "newsTickerTime&KickerStackSpace": 6,
       "newsTickerTitlesInlineSpace": 24,
+      "newsTickerSkeletonBottomSpace": 0,
       "newsTickerRedDotSize": 14,
       "newsTickerLineInlineSpace": 7
     },
@@ -611,7 +616,7 @@
         "aTeaserTitleInlineSpace": 16
       },
       "bTeaser": {
-        "bTeaserTitleInlineSpace": "UNRESOLVED_CIRCULAR_REF__Component_Teaser_bTeaser_bTeaserTitleInlineSpace"
+        "bTeaserTitleInlineSpace": 16
       },
       "bildPlay": {
         "bildPlayTeaserWidthSize": 169
@@ -642,7 +647,7 @@
       "superA": {
         "superATeaserTitleInlineSpace": 24
       },
-      "teaserTitleInlineLeftSpace": "UNRESOLVED_NO_VALUE__space0x",
+      "teaserTitleInlineLeftSpace": 0,
       "teaserTitleStackSpace": 4,
       "teaserTitleGapSpace": 4,
       "teaserTitleBottomStackSpace": 16

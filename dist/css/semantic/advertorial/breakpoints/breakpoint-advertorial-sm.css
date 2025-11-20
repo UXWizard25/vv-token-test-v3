@@ -3,7 +3,7 @@
  */
 
 :root[data-breakpoints="sm"] {
-  --semantic-border-border-radius-border-radius-none: UNRESOLVED_NO_VALUE__size0x; /** 0-0-0-0 – no corner rounding. Used as default for flat layouts, content modules, images, and teaser elements. */
+  --semantic-border-border-radius-border-radius-none: 0; /** 0-0-0-0 – no corner rounding. Used as default for flat layouts, content modules, images, and teaser elements. */
   --semantic-border-border-radius-border-radius-xs: 2; /** 2-2-2-2 use for corner rounding on very small UI elements such as tooltips and badges. */
   --semantic-border-border-radius-border-radius-sm: 4; /** 4-4-4-4 – use for corner rounding on compact components like checkboxes or small input controls. */
   --semantic-border-border-radius-border-radius-md: 8; /** 8-8-8-8 – Standard radius for buttons, chips, input fields, and medium-sized interactive elements. */
@@ -49,7 +49,7 @@
   --semantic-layout-grid-responsive-grid-space-resp-base: 12; /** 12-12-12-16 – use for side paddings and gutters in responsive layouts */
   --semantic-layout-grid-responsive-grid-space-resp-lg: 24; /** 24-24-32-32 – use for side paddings and gutters in responsive layouts */
   --semantic-layout-grid-responsive-grid-space-resp-xl: 48; /** 48-48-64-64 – use for side paddings and gutters in responsive layouts */
-  --semantic-layout-grid-responsive-page-inline-space: UNRESOLVED_NO_VALUE__space0x; /** 0-0-0-16 – This token is used on the main homepages content container, ensuring full-width layout (no horizontal padding) on mobile and tablet breakpoints. */
+  --semantic-layout-grid-responsive-page-inline-space: 0; /** 0-0-0-16 – This token is used on the main homepages content container, ensuring full-width layout (no horizontal padding) on mobile and tablet breakpoints. */
   --semantic-layout-grid-constant-grid-space-const-sm: 12; /** 12-12-12-12 – use for fixed side paddings and gutters */
   --semantic-layout-grid-constant-grid-space-const-lg: 16; /** 16-16-16-16 – use for fixed side paddings and gutters */
   --semantic-layout-grid-layout-guide-layout-guide-grid-colums: 4; /** Used to set the column count in Figma Layout guide Grids */
@@ -201,7 +201,7 @@
   --semantic-typography-letter-spacing-letter-spacing-positive-md: 1; /** 1 | 1 | 1 | 1 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
   --semantic-typography-letter-spacing-letter-spacing-positive-sm: 0.5; /** 0.5 | 0.5 | 0.5 | 0.5 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
   --semantic-typography-letter-spacing-letter-spacing-positive-xs: 0.25; /** 0.25 | 0.25 | 0.25 | 0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
-  --semantic-typography-letter-spacing-letter-spacing-none: UNRESOLVED_NO_VALUE__LetterSpacing_letterSpace-0; /** 0 | 0 | 0 | 0 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+  --semantic-typography-letter-spacing-letter-spacing-none: 0; /** 0 | 0 | 0 | 0 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
   --semantic-typography-letter-spacing-letter-spacing-negative-xs: -0.25; /** -0.25 | -0.25 | -0.25 | -0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. This letter spacing was only found in large titles on iOS mobile app large title component. */
   --semantic-typography-letter-spacing-letter-spacing-negative-sm: -0.5; /** -0.5 | -0.5 | -0.25 | -0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
   --semantic-typography-letter-spacing-letter-spacing-negative-md: -1; /** -1 | -1 | -1 | -1 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
@@ -209,19 +209,23 @@
   --semantic-typography-letter-spacing-display-display1-letter-spacing: -0.5; /** -0.5 | -0.5 | -1 | -2 | This variable is used for the letter spacing parameter of the display1 text style. On smaller devices the value is smaller than on larger devices. On desktop devices the letter spacing is further reduced for making the text style more compact. */
   --semantic-typography-letter-spacing-display-display2-letter-spacing: -0.5; /** -0.5 | -0.5 | -1 | -1 | This variable is used for the letter spacing parameter of the display2 text style. On smaller devices the value is smaller than on larger devices. */
   --semantic-typography-letter-spacing-display-display3-letter-spacing: -0.5; /** -0.5 | -0.5 | -1 | -1 | This variable is used for the letter spacing parameter of the display3 text style. On smaller devices the value is smaller than on larger devices. */
+  --semantic-visibility-boolean-visilble-desktop-only: false; /** Use for showing elements on desktop viewport sizes only */
+  --semantic-visibility-boolean-visilble-tablet-only: false; /** Use for showing elements on tablet viewport sizes only */
   --semantic-visibility-boolean-visilble-mobile-only: true; /** Use for showing elements on mobile viewport sizes only */
+  --semantic-visibility-boolean-visilble-above600px: false; /** Use for showing elements on viewport sizes above 600 px */
   --semantic-visibility-boolean-visilble-below600px: true; /** Use for showing elements on viewport sizes below 600 px */
   --semantic-visibility-boolean-hide-on-desktop: true; /** Use for hiding elements on desktop viewport sizes only */
+  --semantic-visibility-boolean-hide-on-mobile: false; /** Use for hiding elements on mobile viewport sizes */
   --semantic-visibility-variant-switch-bp-specific-web: xs/sm;
   --semantic-visibility-variant-switch-bp-specific-app: compact;
   --semantic-visibility-variant-switch-change-on-lg: xs/sm/md;
   --semantic-visibility-variant-switch-change-on-md: xs/sm; /** This variable is used for controlling size changes across device sizes on some components such as the vertical newsticker cards and the search results cards. Both have cards that change layouts at different breakpoints. */
-  --component-accordion-accordion-label-font-family: UNRESOLVED_CIRCULAR_REF__Component_Accordion_accordionLabelFontFamily; /** This variable exists specifically for changing the accordion font family across brands. It is subject to review. Bild: GothamXNarrow, SpoBi: Inter, Ads: LucindaGrande */
+  --component-accordion-accordion-label-font-family: Lucida Grande; /** This variable exists specifically for changing the accordion font family across brands. It is subject to review. Bild: GothamXNarrow, SpoBi: Inter, Ads: LucindaGrande */
   --component-avatar-avatar-article-size: 48; /** This variable is used for setting the size of avatar images in article pages. It references the sizeConstMD variable from the "generic" semantic collection. Its value is 48 across devices. */
   --component-avatar-avatar-author-page-size: 96; /** 96 - 96 - 130 - 130 This variable is used for controlling the size of the avatar image on author pages. */
   --component-avatar-avatar-label-font-size: 13; /** This variable is used on avatar names in article pages. Bild: 16 - 16 - 16 - 18; SpoBi&Ads: 13 - 13 - 13 - 15 */
   --component-avatar-avatar-label-line-height: 21; /** This variable is used for controlling the line height of avatar texts. Its values influence the stacking space between avatar texts. 21 - 21 - 21 - 23 */
-  --component-avatar-avatar-font-family: UNRESOLVED_CIRCULAR_REF__Component_Avatar_avatarFontFamily; /** This variable is used in avatar text styles. It receives values from the Brand Tokens Collection. Bild: GothamXNarrow; SpoBi: Inter; Ads: LucidaGrande */
+  --component-avatar-avatar-font-family: Lucida Grande; /** This variable is used in avatar text styles. It receives values from the Brand Tokens Collection. Bild: GothamXNarrow; SpoBi: Inter; Ads: LucidaGrande */
   --component-avatar-avatar-lane-gap-space: 16; /** This variable is used for setting the inline space between multiple avatars that are horizontally placed in a lane when an article has multiple authors. 16 - 16 - 24 - 24 */
   --component-avatar-app-avatar-font-family: Lucida Grande; /** This variable is used for setting the font of avatars on iOS and Android platforms. This is subject to review. */
   --component-article-article-kicker-font-size: 16; /** This variable is used to control the font size of kickers in the heading section of article pages. 18 - 18 - 22 - 30 */
@@ -231,7 +235,7 @@
   --component-article-article-meta-font-size: 12; /** This variable is used on the font size of article day&time stamp that usually shows up along with the article author avatars. On app versions this variable is used for the avatar names. 12 - 12 - 14 - 16 */
   --component-article-article-meta-font-family: Lucida Grande; /** This variable is used on the font size of article day&time stamp that usually shows up along with the article author avatars. On app versions this variable is used for the avatar names. This variable references variables from the branding collection. */
   --component-article-article-top-margin-space: 8; /** 8 | 8 | 12 | 16 - This space variable is used at the top edge of the article main content bounding box. */
-  --component-article-aricle-mobile1-col-grid-image-margin-space: UNRESOLVED_NO_VALUE__space0x;
+  --component-article-aricle-mobile1-col-grid-image-margin-space: 0;
   --component-article-article-headings-stack-space: 12; /** 12 | 12 | 12 | 16 - This spacing variable is used for the space between article page heading kickers, headlines and subheadlines. XS&SM need review; correct value might be 8 */
   --component-article-article-headings-inline-space: 16; /** 16 | 16 | 72 | 16 - This variable is used for the left and right space within the article page headings container which holds the article page kicker, headline and subheadline. */
   --component-article-article-content-stack-space: 16; /** 16 - 16 - 24 - 32 - This variable creates the vertical spacing between different article body elements such as avatars, media players, corssheadings, paragraphs, field sets, images, tables, quotes, videos, social embeds, etc. */
@@ -240,8 +244,8 @@
   --component-article-article-image-source-font-size: 13; /** NMT CSS --article-figure-meta-font-size */
   --component-article-article-image-source-line-height: 19;
   --component-article-article-image-container-stack-space: 8;
-  --component-article-article-image-landscape-inline-space: UNRESOLVED_NO_VALUE__space0x;
-  --component-article-article-image-portait-inline-space: UNRESOLVED_NO_VALUE__space0x;
+  --component-article-article-image-landscape-inline-space: 0;
+  --component-article-article-image-portait-inline-space: 0;
   --component-article-article-infobox-inline-space: 16;
   --component-article-article-infobox-stack-space: 16;
   --component-audio-player-audio-player-font-size: 16; /** This variable is used in the text style dedicated to audio player labels for elapsed time, reproduction speed and short functionality description text. 16 - 16 - 16 - 18 */
@@ -258,7 +262,7 @@
   --component-breadcrumb-breadcrumb-stack-space: 14;
   --component-breaking-news-breaking-news-container-height-size: 56;
   --component-breaking-news-breaking-news-badge-inline-space: 6;
-  --component-breaking-news-breaking-news-badge-titels-stack-space: UNRESOLVED_NO_VALUE__space0x;
+  --component-breaking-news-breaking-news-badge-titels-stack-space: 0;
   --component-breaking-news-breaking-news-badge-upper-title-font-size: 13;
   --component-breaking-news-breaking-news-badge-upper-title-line-height: 13;
   --component-breaking-news-breaking-news-badge-lower-title-font-size: 23;
@@ -280,7 +284,7 @@
   --component-cards-search-result-card-image-height-size-stacked: 189;
   --component-cards-newsticker-image-card-width-size: 206;
   --component-carousel-gallery-teaser-title-bottom-space: 28; /** This token is used to create more bottom padding space on system teaser headlines inside the gallery to avoid overlapping with the pagination. */
-  --component-carousel-gallery-teaser-app-gap-space: UNRESOLVED_NO_VALUE__space0x; /** This token is used to create more bottom padding space on system teaser headlines inside the gallery to avoid overlapping with the pagination. */
+  --component-carousel-gallery-teaser-app-gap-space: 0; /** This token is used to create more bottom padding space on system teaser headlines inside the gallery to avoid overlapping with the pagination. */
   --component-carousel-app-epaper-carousel-item-default-width: 144;
   --component-carousel-app-epaper-carousel-item-focus-width: 182;
   --component-carousel-app-epaper-carouse-beilage-item-width: 110;
@@ -329,6 +333,7 @@
   --component-liveticker-live-ticker-slider-item-width-max-size: 257;
   --component-mediaplayer-audio-player-header-stack-space: 56;
   --component-mediaplayer-podcast-play-button-size: 48;
+  --component-mediaplayer-vid-player-bottom-bar-gap-space: 0;
   --component-mediaplayer-video-time-badge-font-family: Lucida Grande;
   --component-mediaplayer-vid-player-control-button-size: 42;
   --component-mediaplayer-vid-player-control-button-icon-size-hover: 28;
@@ -341,7 +346,7 @@
   --component-menu-menu-logo-scrolled-size: 56;
   --component-menu-menu-utillink-item-height-size: 48;
   --component-menu-menu-item-util-font-size: 12;
-  --component-menu-menu-item-font-size: UNRESOLVED_CIRCULAR_REF__Component_Menu_menuItemFontSize; /** This variable is used on the menu link lane and on the mobile side menu drawer. */
+  --component-menu-menu-item-font-size: 15; /** This variable is used on the menu link lane and on the mobile side menu drawer. */
   --component-menu-menu-special-navi-item-height-size: 48;
   --component-menu-menu-item-space: 8;
   --component-menu-menu-link-item-inline-space: 4;
@@ -351,7 +356,7 @@
   --component-menu-menu-top-stack-space: 8;
   --component-menu-menu-bottom-stack-space: 8;
   --component-menu-menu-left-inline-space: 8;
-  --component-menu-menu-right-inline-space: UNRESOLVED_NO_VALUE__space0x;
+  --component-menu-menu-right-inline-space: 0;
   --component-menu-menu-utility-links-gap-space: 24;
   --component-menu-menu-utility-links-divider-height-size: 40;
   --component-menu-menu-shadow-visibility: rgba(0, 0, 0, 0.1); /** This color type variables are only in this semantic collection for making subtle shadow effects change visibility across device sizes. Shadow alpha: 10 - 10 - 10 - 0 */
@@ -404,6 +409,7 @@
   --component-separators-separator-thickness-size: 2;
   --component-skeletons-headlines-skeleton-image-placeholder-max-width: 282;
   --component-skeletons-article-skeleton-image-inline-space: 12;
+  --component-skeletons-article-skeleton-text-inline-space: 0;
   --component-skeletons-article-text-skeleton-height-size: 270;
   --component-special-navi-special-navi-inline-space: 24;
   --component-sliders-slider-progress-bar-idle-height-size: 4;
@@ -433,7 +439,7 @@
   --component-teaser-a-teaser-a-teaser-headline-font-size: 24; /** This variable references the semantic variables headline3 (XS&SM) and headline2 (MD&LG). 28 - 28 - 48 - 64 */
   --component-teaser-a-teaser-a-teaser-headline-line-height: 24;
   --component-teaser-a-teaser-a-teaser-title-inline-space: 8;
-  --component-teaser-b-teaser-b-teaser-title-inline-space: UNRESOLVED_CIRCULAR_REF__Component_Teaser_bTeaser_bTeaserTitleInlineSpace;
+  --component-teaser-b-teaser-b-teaser-title-inline-space: 8;
   --component-teaser-bild-play-bild-play-teaser-width-size: 145;
   --component-teaser-m-q-teaser-m-q-teaser-headline-font-size: 16; /** XS-headline4FontSize:22 // SM-headline4FontSize:22 // MD-headline3FontSize:36 // LG-headline3FontSize:40 */
   --component-teaser-m-q-teaser-m-q-teaser-headline-line-height: 18.4;
@@ -462,6 +468,7 @@
   --component-video-video-badge-time-line-height: 21;
   --component-video-video-time-badge-font-size: 16; /** 16 - 16 - 18 - 18 -- This variable is used to control the videoTimeBadge text style's font size parameter. The typography style that uses this variable is the videoTimeBadge style. The badge that uses this variable appears on the upper right corner of horizontal videos. */
   --component-video-vertical-video-mock-headline-font-size: 22;
+  --component-video-video-frame-inline-space: 0;
   --component-video-video-red-play-icon-height-size: 10; /** This variable is used for changing the red play icon inside the white square. */
   --component-video-video-red-play-icon-width-size: 8;
   --component-video-video-skeleton-container-height: 180;
@@ -473,7 +480,7 @@
   --component-d-sys-docs-d-sys-docs-width-size: 750;
   --component-d-sys-docs-ds-caption-stack-space0-5x: 4; /** This variable is used in documentation pages that have small caption or lables along with a UI component documented. 4 - 4 - 6 - 8 */
   --component-d-sys-docs-ds-caption-stack-space1x: 8;
-  --component-d-sys-docs-ds-main-container-space: UNRESOLVED_NO_VALUE__space0x; /** This variable is used on documentation pages. This is an alternative variable to the main container max width variable. 0 - 0 - 68 - 68 */
+  --component-d-sys-docs-ds-main-container-space: 0; /** This variable is used on documentation pages. This is an alternative variable to the main container max width variable. 0 - 0 - 68 - 68 */
   --component-d-sys-docs-foundations-banner-height-size: 80; /** This variable is used on documentation pages that have an artistic banner at the top of the page that is related to the foundation topic on the page. 80 - 80 -80 - 140 */
   --component-d-sys-docs-main-content-stage-size: 750; /** This variable is used as a max width size for content blocks. For mobile devices this var references the DSysDocsWidthSize var 320 - 750 - 962 - 1024 */
   --component-d-sys-docs-thin-banner-vertical-height-size: 558; /** This variable is currently used on a thin gallery that appears on desktop websites with petbook and other "books" content. Its height changes to a large height on mobile sites. 558 - 558 - 558 - 186 */

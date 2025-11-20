@@ -184,8 +184,7 @@ export const semanticLabelLabelcolortertiary = "#8c9196";
 // Disabled label tone indicating inactive or unavailable states in UI elements.
 // Behavior: Dynamic — lighter gray in Light mode, darker neutral in Dark mode.
 export const semanticLabelLabelcolordisabled = "#cfd4d9";
-export const semanticLayeropacityLayeropacity00 =
-  "UNRESOLVED_NO_VALUE__Opacity_opacity00";
+export const semanticLayeropacityLayeropacity00 = 0;
 export const semanticLayeropacityLayeropacity05 = 5;
 export const semanticLayeropacityLayeropacity10 = 10;
 export const semanticLayeropacityLayeropacity20 = 20;
@@ -197,24 +196,17 @@ export const semanticLayeropacityLayeropacity70 = 70;
 export const semanticLayeropacityLayeropacity80 = 80;
 export const semanticLayeropacityLayeropacity90 = 90;
 export const semanticLayeropacityLayeropacity100 = 100;
-export const componentAvatarAvatarlabelcolor =
-  "UNRESOLVED_CIRCULAR_REF__Component_Avatar_avatarLabelColor"; // 09-2025 css --article-author-name-color
-export const componentAvatarAvatarlabelcolorhover =
-  "UNRESOLVED_CIRCULAR_REF__Component_Avatar_avatarLabelColorHover"; // 09-2025 css --article-author-name-color
+export const componentAvatarAvatarlabelcolor = "#242629"; // 09-2025 css --article-author-name-color
+export const componentAvatarAvatarlabelcolorhover = "#de0000"; // 09-2025 css --article-author-name-color
 export const componentAlertAlertsurfacecolor = "#ffffff"; // On marketing offer surfaces this variable is usually not used. The alertSurfaceConstant variables should be used. This token changes color between light and dark modes. L:100 / D:025
 export const componentAlertAlertsurfacecolorconstant = "#ffffff"; // On marketing offer surfaces this variable is  used.
 export const componentBreadcrumbBreadcrumbtextcoloridle = "#4a5259"; // Use this token on breadcrumbs that are in their default idle state. This token changes color between light and dark modes. L:035 / D:096
 export const componentBreadcrumbBreadcrumbtextcolorhover = "#242629"; // Use this token on breadcrumbs that the user's pointer is hovering on or clicked on. This token changes color between light and dark modes. L:015 / D:100
-export const componentBreakingnewsBreakingnewstoptitletextcolor =
-  "UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsTopTitleTextColor";
-export const componentBreakingnewsBreakingnewsbottomtitletextcolor =
-  "UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsBottomTitleTextColor";
-export const componentBreakingnewsBreakingnewstitlesurfacecolor =
-  "UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsTitleSurfaceColor";
-export const componentBreakingnewsBreakingnewssurfacecolor =
-  "UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsSurfaceColor";
-export const componentBreakingnewsBreakingnewstextcontentcolor =
-  "UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsTextContentColor";
+export const componentBreakingnewsBreakingnewstoptitletextcolor = "#1c1c1c";
+export const componentBreakingnewsBreakingnewsbottomtitletextcolor = "#1c1c1c";
+export const componentBreakingnewsBreakingnewstitlesurfacecolor = "#fc8226";
+export const componentBreakingnewsBreakingnewssurfacecolor = "#242629";
+export const componentBreakingnewsBreakingnewstextcontentcolor = "#ffffff";
 export const componentButtonPrimaryButtonprimarylabelcolor = "#ffffff";
 export const componentButtonPrimaryButtonprimaryneutralbgcoloridle = "#242629"; // Use this variable on the neutral color primary button. Tone changes between light and dark mode. Light mode Bild & SpoBi: Tone 015 ; Dark mode Bild & SpoBi: Tone 100
 export const componentButtonPrimaryButtonprimaryneutralbgcolorhover = "#4a5259";
@@ -293,21 +285,14 @@ export const componentMediaplayerVidplayerunmutebuttonbgcolorhover =
 export const componentMenuMenusurfacecolor = "#ffffff";
 export const componentMenuMenuscrolledsurfacegradientcolor =
   "rgba(255, 255, 255, 0.95)"; // Used on a thin part at the top of header in navigation menu.
-export const componentMenuMenulinklanesurfacecolor =
-  "UNRESOLVED_CIRCULAR_REF__Component_Menu_menuLinkLaneSurfaceColor";
-export const componentMenuMenulinklanelabelcolor =
-  "UNRESOLVED_CIRCULAR_REF__Component_Menu_menuLinkLaneLabelColor";
-export const componentMenuMenulinklanelabelcoloractive =
-  "UNRESOLVED_CIRCULAR_REF__Component_Menu_menuLinkLaneLabelColorActive";
-export const componentMenuApptopbarsurfacecolor =
-  "UNRESOLVED_CIRCULAR_REF__Component_Menu_appTopBarSurfaceColor";
-export const componentMenuApptopbariconcolor =
-  "UNRESOLVED_CIRCULAR_REF__Component_Menu_appTopBarIconColor";
+export const componentMenuMenulinklanesurfacecolor = "#ffffff";
+export const componentMenuMenulinklanelabelcolor = "#4a5259";
+export const componentMenuMenulinklanelabelcoloractive = "#242629";
+export const componentMenuApptopbarsurfacecolor = "#ffffff";
+export const componentMenuApptopbariconcolor = "#4a5259";
 export const componentMenuApptopbartextcolorprimary = "#242629";
-export const componentMenuApptobbartabnavbottomborder =
-  "UNRESOLVED_CIRCULAR_REF__Component_Menu_appTobBarTabNavBottomBorder";
-export const componentMenuApptobbartabnavbottomborderactive =
-  "UNRESOLVED_CIRCULAR_REF__Component_Menu_appTobBarTabNavBottomBorderActive";
+export const componentMenuApptobbartabnavbottomborder = "#e8edf0";
+export const componentMenuApptobbartabnavbottomborderactive = "#de0000";
 export const componentMenuitemMenuitemlabelcolorprimary = "#4a5259";
 export const componentMenuitemMenuitemlabelcolorprimaryactive = "#242629";
 export const componentMenuitemMenuitemlabelcolorsecondary = "#ffffff"; // The variable can be used on secondary menus that many times show up on dedicated home pages specific to a topic. The menu labels are often times using the color white across color modes.
@@ -342,9 +327,9 @@ export const componentTabTablabelcolordefault = "#4a5259";
 export const componentTabAppbottomtabbarbgcolor = "#ffffff";
 export const componentTeaserTeaserhoveropacity = 80; // When users hover over graphical teasers the image reduces opacity to 80%.
 export const componentTeaserTeasertitlebackgroundgradientstart =
-  "UNRESOLVED_CIRCULAR_REF__Component_Teaser_teaserTitleBackgroundGradientStart";
+  "rgba(0, 0, 0, 0.7)";
 export const componentTeaserTeasertitlebackgroundgradientstop =
-  "UNRESOLVED_CIRCULAR_REF__Component_Teaser_teaserTitleBackgroundGradientStop";
+  "rgba(0, 0, 0, 0)";
 export const componentTextlinkTextlinkcolorprimary = "#242629";
 export const componentTextlinkTextlinkcolorsecondary = "#8c9196";
 export const componentTextlinkTextlinkcolorsecondaryactive = "#242629";

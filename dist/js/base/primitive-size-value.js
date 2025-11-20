@@ -50,3 +50,4 @@ export const size075x = 6;
 export const size05x = 4;
 export const size025x = 2;
 export const size0125x = 1;
+export const size0x = 0;

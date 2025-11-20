@@ -95,7 +95,7 @@
       "labelColorDisabled": "#cfd4d9"
     },
     "LayerOpacity": {
-      "layerOpacity00": "UNRESOLVED_NO_VALUE__Opacity_opacity00",
+      "layerOpacity00": 0,
       "layerOpacity05": 5,
       "layerOpacity10": 10,
       "layerOpacity20": 20,
@@ -111,8 +111,8 @@
   },
   "Component": {
     "Avatar": {
-      "avatarLabelColor": "UNRESOLVED_CIRCULAR_REF__Component_Avatar_avatarLabelColor",
-      "avatarLabelColorHover": "UNRESOLVED_CIRCULAR_REF__Component_Avatar_avatarLabelColorHover"
+      "avatarLabelColor": "#242629",
+      "avatarLabelColorHover": "#de0000"
     },
     "Alert": {
       "alertSurfaceColor": "#ffffff",
@@ -123,11 +123,11 @@
       "breadcrumbTextColorHover": "#242629"
     },
     "BreakingNews": {
-      "breakingNewsTopTitleTextColor": "UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsTopTitleTextColor",
-      "breakingNewsBottomTitleTextColor": "UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsBottomTitleTextColor",
-      "breakingNewsTitleSurfaceColor": "UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsTitleSurfaceColor",
-      "breakingNewsSurfaceColor": "UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsSurfaceColor",
-      "breakingNewsTextContentColor": "UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsTextContentColor"
+      "breakingNewsTopTitleTextColor": "#1c1c1c",
+      "breakingNewsBottomTitleTextColor": "#1c1c1c",
+      "breakingNewsTitleSurfaceColor": "#fc8226",
+      "breakingNewsSurfaceColor": "#242629",
+      "breakingNewsTextContentColor": "#ffffff"
     },
     "Button": {
       "Primary": {
@@ -230,14 +230,14 @@
     "Menu": {
       "menuSurfaceColor": "#ffffff",
       "menuScrolledSurfaceGradientColor": "rgba(255, 255, 255, 0.95)",
-      "menuLinkLaneSurfaceColor": "UNRESOLVED_CIRCULAR_REF__Component_Menu_menuLinkLaneSurfaceColor",
-      "menuLinkLaneLabelColor": "UNRESOLVED_CIRCULAR_REF__Component_Menu_menuLinkLaneLabelColor",
-      "menuLinkLaneLabelColorActive": "UNRESOLVED_CIRCULAR_REF__Component_Menu_menuLinkLaneLabelColorActive",
-      "appTopBarSurfaceColor": "UNRESOLVED_CIRCULAR_REF__Component_Menu_appTopBarSurfaceColor",
-      "appTopBarIconColor": "UNRESOLVED_CIRCULAR_REF__Component_Menu_appTopBarIconColor",
+      "menuLinkLaneSurfaceColor": "#ffffff",
+      "menuLinkLaneLabelColor": "#4a5259",
+      "menuLinkLaneLabelColorActive": "#242629",
+      "appTopBarSurfaceColor": "#ffffff",
+      "appTopBarIconColor": "#4a5259",
       "appTopBarTextColorPrimary": "#242629",
-      "appTobBarTabNavBottomBorder": "UNRESOLVED_CIRCULAR_REF__Component_Menu_appTobBarTabNavBottomBorder",
-      "appTobBarTabNavBottomBorderActive": "UNRESOLVED_CIRCULAR_REF__Component_Menu_appTobBarTabNavBottomBorderActive"
+      "appTobBarTabNavBottomBorder": "#e8edf0",
+      "appTobBarTabNavBottomBorderActive": "#de0000"
     },
     "MenuItem": {
       "menuItemLabelColorPrimary": "#4a5259",
@@ -287,8 +287,8 @@
     },
     "Teaser": {
       "teaserHoverOpacity": 80,
-      "teaserTitleBackgroundGradientStart": "UNRESOLVED_CIRCULAR_REF__Component_Teaser_teaserTitleBackgroundGradientStart",
-      "teaserTitleBackgroundGradientStop": "UNRESOLVED_CIRCULAR_REF__Component_Teaser_teaserTitleBackgroundGradientStop"
+      "teaserTitleBackgroundGradientStart": "rgba(0, 0, 0, 0.7)",
+      "teaserTitleBackgroundGradientStop": "rgba(0, 0, 0, 0)"
     },
     "TextLink": {
       "textLinkColorPrimary": "#242629",

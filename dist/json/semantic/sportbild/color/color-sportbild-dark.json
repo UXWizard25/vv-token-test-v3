@@ -95,7 +95,7 @@
       "labelColorDisabled": "#4a5259"
     },
     "LayerOpacity": {
-      "layerOpacity00": "UNRESOLVED_NO_VALUE__Opacity_opacity00",
+      "layerOpacity00": 0,
       "layerOpacity05": 5,
       "layerOpacity10": 10,
       "layerOpacity20": 20,
@@ -112,7 +112,7 @@
   "Component": {
     "Avatar": {
       "avatarLabelColor": "#e8edf0",
-      "avatarLabelColorHover": "UNRESOLVED_CIRCULAR_REF__Component_Avatar_avatarLabelColorHover"
+      "avatarLabelColorHover": "#174582"
     },
     "Alert": {
       "alertSurfaceColor": "#333d40",
@@ -123,9 +123,9 @@
       "breadcrumbTextColorHover": "#ffffff"
     },
     "BreakingNews": {
-      "breakingNewsTopTitleTextColor": "UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsTopTitleTextColor",
-      "breakingNewsBottomTitleTextColor": "UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsBottomTitleTextColor",
-      "breakingNewsTitleSurfaceColor": "UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsTitleSurfaceColor",
+      "breakingNewsTopTitleTextColor": "#ffbf00",
+      "breakingNewsBottomTitleTextColor": "#ffffff",
+      "breakingNewsTitleSurfaceColor": "#0a264f",
       "breakingNewsSurfaceColor": "#ffbf00",
       "breakingNewsTextContentColor": "#242629"
     },
@@ -287,8 +287,8 @@
     },
     "Teaser": {
       "teaserHoverOpacity": 80,
-      "teaserTitleBackgroundGradientStart": "UNRESOLVED_CIRCULAR_REF__Component_Teaser_teaserTitleBackgroundGradientStart",
-      "teaserTitleBackgroundGradientStop": "UNRESOLVED_CIRCULAR_REF__Component_Teaser_teaserTitleBackgroundGradientStop"
+      "teaserTitleBackgroundGradientStart": "rgba(10, 38, 79, 0.7)",
+      "teaserTitleBackgroundGradientStop": "rgba(10, 38, 79, 0)"
     },
     "TextLink": {
       "textLinkColorPrimary": "#8c9196",

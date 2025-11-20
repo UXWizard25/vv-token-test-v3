@@ -2,7 +2,7 @@
   "Semantic": {
     "Border": {
       "BorderRadius": {
-        "borderRadiusNone": "UNRESOLVED_NO_VALUE__size0x",
+        "borderRadiusNone": 0,
         "borderRadiusXS": 2,
         "borderRadiusSM": 4,
         "borderRadiusMD": 8,
@@ -35,7 +35,7 @@
           "gridSpaceRespBase": 12,
           "gridSpaceRespLG": 24,
           "gridSpaceRespXL": 48,
-          "pageInlineSpace": "UNRESOLVED_NO_VALUE__space0x"
+          "pageInlineSpace": 0
         },
         "Constant": {
           "gridSpaceConstSM": 12,
@@ -292,7 +292,7 @@
         "letterSpacingPositiveMD": 1,
         "letterSpacingPositiveSM": 0.5,
         "letterSpacingPositiveXS": 0.25,
-        "letterSpacingNone": "UNRESOLVED_NO_VALUE__LetterSpacing_letterSpace-0",
+        "letterSpacingNone": 0,
         "letterSpacingNegativeXS": -0.25,
         "letterSpacingNegativeSM": -0.5,
         "letterSpacingNegativeMD": -1,
@@ -306,9 +306,13 @@
     },
     "Visibility": {
       "Boolean": {
+        "visilbleDesktopOnly": false,
+        "visilbleTabletOnly": false,
         "visilbleMobileOnly": true,
+        "visilbleAbove600px": false,
         "visilbleBelow600px": true,
-        "hideOnDesktop": true
+        "hideOnDesktop": true,
+        "hideOnMobile": false
       },
       "VariantSwitch": {
         "bpSpecificWeb": "xs/sm",
@@ -320,14 +324,14 @@
   },
   "Component": {
     "Accordion": {
-      "accordionLabelFontFamily": "UNRESOLVED_CIRCULAR_REF__Component_Accordion_accordionLabelFontFamily"
+      "accordionLabelFontFamily": "Gotham XNarrow"
     },
     "Avatar": {
       "avatarArticleSize": 48,
       "avatarAuthorPageSize": 96,
       "avatarLabelFontSize": 16,
       "avatarLabelLineHeight": 21,
-      "avatarFontFamily": "UNRESOLVED_CIRCULAR_REF__Component_Avatar_avatarFontFamily",
+      "avatarFontFamily": "Gotham XNarrow",
       "avatarLaneGapSpace": 16,
       "appAvatarFontFamily": "Gotham"
     },
@@ -339,7 +343,7 @@
       "articleMetaFontSize": 12,
       "articleMetaFontFamily": "Gotham",
       "articleTopMarginSpace": 8,
-      "aricleMobile1ColGridImageMarginSpace": "UNRESOLVED_NO_VALUE__space0x",
+      "aricleMobile1ColGridImageMarginSpace": 0,
       "articleHeadingsStackSpace": 12,
       "articleHeadingsInlineSpace": 16,
       "articleContentStackSpace": 16,
@@ -348,8 +352,8 @@
       "articleImageSourceFontSize": 16,
       "articleImageSourceLineHeight": 21,
       "articleImageContainerStackSpace": 8,
-      "articleImageLandscapeInlineSpace": "UNRESOLVED_NO_VALUE__space0x",
-      "articleImagePortaitInlineSpace": "UNRESOLVED_NO_VALUE__space0x",
+      "articleImageLandscapeInlineSpace": 0,
+      "articleImagePortaitInlineSpace": 0,
       "articleInfoboxInlineSpace": 16,
       "articleInfoboxStackSpace": 16
     },
@@ -374,7 +378,7 @@
     "BreakingNews": {
       "breakingNewsContainerHeightSize": 56,
       "breakingNewsBadgeInlineSpace": 6,
-      "breakingNewsBadgeTitelsStackSpace": "UNRESOLVED_NO_VALUE__space0x",
+      "breakingNewsBadgeTitelsStackSpace": 0,
       "breakingNewsBadgeUpperTitleFontSize": 13,
       "breakingNewsBadgeUpperTitleLineHeight": 13,
       "breakingNewsBadgeLowerTitleFontSize": 23,
@@ -402,7 +406,7 @@
     },
     "Carousel": {
       "galleryTeaserTitleBottomSpace": 28,
-      "galleryTeaserAppGapSpace": "UNRESOLVED_NO_VALUE__space0x",
+      "galleryTeaserAppGapSpace": 0,
       "appEpaperCarouselItemDefaultWidth": 144,
       "appEpaperCarouselItemFocusWidth": 182,
       "appEpaperCarouseBeilageItemWidth": 110,
@@ -471,6 +475,7 @@
     "Mediaplayer": {
       "audioPlayerHeaderStackSpace": 56,
       "podcastPlayButtonSize": 48,
+      "vidPlayerBottomBarGapSpace": 0,
       "videoTimeBadgeFontFamily": "Gotham XNarrow",
       "vidPlayerControlButtonSize": 42,
       "vidPlayerControlButtonIconSizeHover": 28,
@@ -485,7 +490,7 @@
       "menuLogoScrolledSize": 56,
       "menuUtillinkItemHeightSize": 48,
       "menuItemUtilFontSize": 12,
-      "menuItemFontSize": "UNRESOLVED_CIRCULAR_REF__Component_Menu_menuItemFontSize",
+      "menuItemFontSize": 15,
       "menuSpecialNaviItemHeightSize": 48,
       "menuItemSpace": 8,
       "menuLinkItemInlineSpace": 4,
@@ -495,7 +500,7 @@
       "menuTopStackSpace": 8,
       "menuBottomStackSpace": 8,
       "menuLeftInlineSpace": 8,
-      "menuRightInlineSpace": "UNRESOLVED_NO_VALUE__space0x",
+      "menuRightInlineSpace": 0,
       "menuUtilityLinksGapSpace": 24,
       "menuUtilityLinksDividerHeightSize": 40,
       "menuShadowVisibility": "rgba(0, 0, 0, 0.1)",
@@ -566,6 +571,7 @@
     "Skeletons": {
       "headlinesSkeletonImagePlaceholderMaxWidth": 282,
       "articleSkeletonImageInlineSpace": 12,
+      "articleSkeletonTextInlineSpace": 0,
       "articleTextSkeletonHeightSize": 270
     },
     "SpecialNavi": {
@@ -610,7 +616,7 @@
         "aTeaserTitleInlineSpace": 8
       },
       "bTeaser": {
-        "bTeaserTitleInlineSpace": "UNRESOLVED_CIRCULAR_REF__Component_Teaser_bTeaser_bTeaserTitleInlineSpace"
+        "bTeaserTitleInlineSpace": 8
       },
       "bildPlay": {
         "bildPlayTeaserWidthSize": 145
@@ -654,6 +660,7 @@
       "videoBadgeTimeLineHeight": 21,
       "videoTimeBadgeFontSize": 16,
       "verticalVideoMockHeadlineFontSize": 22,
+      "videoFrameInlineSpace": 0,
       "videoRedPlayIconHeightSize": 10,
       "videoRedPlayIconWidthSize": 8,
       "videoSkeletonContainerHeight": 180,
@@ -667,7 +674,7 @@
       "DSysDocsWidthSize": 750,
       "dsCaptionStackSpace0_5x": 4,
       "dsCaptionStackSpace1x": 8,
-      "dsMainContainerSpace": "UNRESOLVED_NO_VALUE__space0x",
+      "dsMainContainerSpace": 0,
       "foundationsBannerHeightSize": 80,
       "mainContentStageSize": 750,
       "thinBannerVerticalHeightSize": 558,

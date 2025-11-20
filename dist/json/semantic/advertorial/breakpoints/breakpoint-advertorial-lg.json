@@ -2,7 +2,7 @@
   "Semantic": {
     "Border": {
       "BorderRadius": {
-        "borderRadiusNone": "UNRESOLVED_NO_VALUE__size0x",
+        "borderRadiusNone": 0,
         "borderRadiusXS": 2,
         "borderRadiusSM": 4,
         "borderRadiusMD": 8,
@@ -292,7 +292,7 @@
         "letterSpacingPositiveMD": 1,
         "letterSpacingPositiveSM": 0.5,
         "letterSpacingPositiveXS": 0.25,
-        "letterSpacingNone": "UNRESOLVED_NO_VALUE__LetterSpacing_letterSpace-0",
+        "letterSpacingNone": 0,
         "letterSpacingNegativeXS": -0.25,
         "letterSpacingNegativeSM": -0.25,
         "letterSpacingNegativeMD": -1,
@@ -307,7 +307,11 @@
     "Visibility": {
       "Boolean": {
         "visilbleDesktopOnly": true,
+        "visilbleTabletOnly": false,
+        "visilbleMobileOnly": false,
         "visilbleAbove600px": true,
+        "visilbleBelow600px": false,
+        "hideOnDesktop": false,
         "hideOnMobile": true
       },
       "VariantSwitch": {
@@ -320,14 +324,14 @@
   },
   "Component": {
     "Accordion": {
-      "accordionLabelFontFamily": "UNRESOLVED_CIRCULAR_REF__Component_Accordion_accordionLabelFontFamily"
+      "accordionLabelFontFamily": "Lucida Grande"
     },
     "Avatar": {
       "avatarArticleSize": 48,
       "avatarAuthorPageSize": 130,
       "avatarLabelFontSize": 15,
       "avatarLabelLineHeight": 23,
-      "avatarFontFamily": "UNRESOLVED_CIRCULAR_REF__Component_Avatar_avatarFontFamily",
+      "avatarFontFamily": "Lucida Grande",
       "avatarLaneGapSpace": 24,
       "appAvatarFontFamily": "Lucida Grande"
     },
@@ -367,6 +371,7 @@
       "breadcrumbLineHeight": 12,
       "breadcrumb&ArrowLeftInlineSpace1": 3,
       "breadcrumb&ArrowRightInlineSpace2": 5,
+      "breadcrumbInlineSpace": 0,
       "breadcrumbFontWeight": 700,
       "breadcrumbStackSpace": 16
     },
@@ -485,7 +490,7 @@
       "menuLogoScrolledSize": 56,
       "menuUtillinkItemHeightSize": 48,
       "menuItemUtilFontSize": 12,
-      "menuItemFontSize": "UNRESOLVED_CIRCULAR_REF__Component_Menu_menuItemFontSize",
+      "menuItemFontSize": 15,
       "menuSpecialNaviItemHeightSize": 56,
       "menuItemSpace": 8,
       "menuLinkItemInlineSpace": 4,
@@ -493,7 +498,7 @@
       "subNavBarHeightSize": 42,
       "menuUtilityLinksContainerHeightSize": 100,
       "menuTopStackSpace": 12,
-      "menuBottomStackSpace": "UNRESOLVED_NO_VALUE__space0x",
+      "menuBottomStackSpace": 0,
       "menuLeftInlineSpace": 16,
       "menuRightInlineSpace": 16,
       "menuUtilityLinksGapSpace": 32,
@@ -521,6 +526,7 @@
       "newsTickerKickerInnerStackSpace": 2,
       "newsTickerTime&KickerStackSpace": 6,
       "newsTickerTitlesInlineSpace": 30,
+      "newsTickerSkeletonBottomSpace": 0,
       "newsTickerRedDotSize": 16,
       "newsTickerLineInlineSpace": 8
     },
@@ -610,7 +616,7 @@
         "aTeaserTitleInlineSpace": 12
       },
       "bTeaser": {
-        "bTeaserTitleInlineSpace": "UNRESOLVED_CIRCULAR_REF__Component_Teaser_bTeaser_bTeaserTitleInlineSpace"
+        "bTeaserTitleInlineSpace": 8
       },
       "bildPlay": {
         "bildPlayTeaserWidthSize": 193
@@ -641,7 +647,7 @@
       "superA": {
         "superATeaserTitleInlineSpace": 16
       },
-      "teaserTitleInlineLeftSpace": "UNRESOLVED_NO_VALUE__space0x",
+      "teaserTitleInlineLeftSpace": 0,
       "teaserTitleStackSpace": 6,
       "teaserTitleGapSpace": 4,
       "teaserTitleBottomStackSpace": 16

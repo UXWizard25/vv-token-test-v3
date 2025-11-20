@@ -84,6 +84,7 @@ export const partnerComputerbildCobicore = "#db241c";
 export const partnerFitbookFitbookcore = "#ff96b8";
 export const partnerPetbookPetbookcore = "#badb91";
 export const partnerMyhomeMyhomecore = "#66cccc";
+export const opacityOpacity00 = 0;
 export const opacityOpacity05 = 5;
 export const opacityOpacity10 = 10;
 export const opacityOpacity20 = 20;

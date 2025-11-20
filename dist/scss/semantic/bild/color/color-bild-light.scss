@@ -179,7 +179,7 @@ $semantic-label-label-color-tertiary: #8c9196;
 // Disabled label tone indicating inactive or unavailable states in UI elements.
 // Behavior: Dynamic — lighter gray in Light mode, darker neutral in Dark mode.
 $semantic-label-label-color-disabled: #cfd4d9;
-$semantic-layer-opacity-layer-opacity00: UNRESOLVED_NO_VALUE__Opacity_opacity00;
+$semantic-layer-opacity-layer-opacity00: 0;
 $semantic-layer-opacity-layer-opacity05: 5;
 $semantic-layer-opacity-layer-opacity10: 10;
 $semantic-layer-opacity-layer-opacity20: 20;
@@ -191,17 +191,17 @@ $semantic-layer-opacity-layer-opacity70: 70;
 $semantic-layer-opacity-layer-opacity80: 80;
 $semantic-layer-opacity-layer-opacity90: 90;
 $semantic-layer-opacity-layer-opacity100: 100;
-$component-avatar-avatar-label-color: UNRESOLVED_CIRCULAR_REF__Component_Avatar_avatarLabelColor; // 09-2025 css --article-author-name-color
-$component-avatar-avatar-label-color-hover: UNRESOLVED_CIRCULAR_REF__Component_Avatar_avatarLabelColorHover; // 09-2025 css --article-author-name-color
+$component-avatar-avatar-label-color: #242629; // 09-2025 css --article-author-name-color
+$component-avatar-avatar-label-color-hover: #de0000; // 09-2025 css --article-author-name-color
 $component-alert-alert-surface-color: #ffffff; // On marketing offer surfaces this variable is usually not used. The alertSurfaceConstant variables should be used. This token changes color between light and dark modes. L:100 / D:025
 $component-alert-alert-surface-color-constant: #ffffff; // On marketing offer surfaces this variable is  used.
 $component-breadcrumb-breadcrumb-text-color-idle: #4a5259; // Use this token on breadcrumbs that are in their default idle state. This token changes color between light and dark modes. L:035 / D:096
 $component-breadcrumb-breadcrumb-text-color-hover: #242629; // Use this token on breadcrumbs that the user's pointer is hovering on or clicked on. This token changes color between light and dark modes. L:015 / D:100
-$component-breaking-news-breaking-news-top-title-text-color: UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsTopTitleTextColor;
-$component-breaking-news-breaking-news-bottom-title-text-color: UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsBottomTitleTextColor;
-$component-breaking-news-breaking-news-title-surface-color: UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsTitleSurfaceColor;
-$component-breaking-news-breaking-news-surface-color: UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsSurfaceColor;
-$component-breaking-news-breaking-news-text-content-color: UNRESOLVED_CIRCULAR_REF__Component_BreakingNews_breakingNewsTextContentColor;
+$component-breaking-news-breaking-news-top-title-text-color: #1c1c1c;
+$component-breaking-news-breaking-news-bottom-title-text-color: #1c1c1c;
+$component-breaking-news-breaking-news-title-surface-color: #fc8226;
+$component-breaking-news-breaking-news-surface-color: #242629;
+$component-breaking-news-breaking-news-text-content-color: #ffffff;
 $component-button-primary-button-primary-label-color: #ffffff;
 $component-button-primary-button-primary-neutral-bg-color-idle: #242629; // Use this variable on the neutral color primary button. Tone changes between light and dark mode. Light mode Bild & SpoBi: Tone 015 ; Dark mode Bild & SpoBi: Tone 100
 $component-button-primary-button-primary-neutral-bg-color-hover: #4a5259;
@@ -268,14 +268,14 @@ $component-mediaplayer-vid-player-unmute-button-bg-color: rgba(0, 0, 0, 0.2);
 $component-mediaplayer-vid-player-unmute-button-bg-color-hover: rgba(0, 0, 0, 0.35);
 $component-menu-menu-surface-color: #ffffff;
 $component-menu-menu-scrolled-surface-gradient-color: rgba(255, 255, 255, 0.95); // Used on a thin part at the top of header in navigation menu.
-$component-menu-menu-link-lane-surface-color: UNRESOLVED_CIRCULAR_REF__Component_Menu_menuLinkLaneSurfaceColor;
-$component-menu-menu-link-lane-label-color: UNRESOLVED_CIRCULAR_REF__Component_Menu_menuLinkLaneLabelColor;
-$component-menu-menu-link-lane-label-color-active: UNRESOLVED_CIRCULAR_REF__Component_Menu_menuLinkLaneLabelColorActive;
-$component-menu-app-top-bar-surface-color: UNRESOLVED_CIRCULAR_REF__Component_Menu_appTopBarSurfaceColor;
-$component-menu-app-top-bar-icon-color: UNRESOLVED_CIRCULAR_REF__Component_Menu_appTopBarIconColor;
+$component-menu-menu-link-lane-surface-color: #ffffff;
+$component-menu-menu-link-lane-label-color: #4a5259;
+$component-menu-menu-link-lane-label-color-active: #242629;
+$component-menu-app-top-bar-surface-color: #ffffff;
+$component-menu-app-top-bar-icon-color: #4a5259;
 $component-menu-app-top-bar-text-color-primary: #242629;
-$component-menu-app-tob-bar-tab-nav-bottom-border: UNRESOLVED_CIRCULAR_REF__Component_Menu_appTobBarTabNavBottomBorder;
-$component-menu-app-tob-bar-tab-nav-bottom-border-active: UNRESOLVED_CIRCULAR_REF__Component_Menu_appTobBarTabNavBottomBorderActive;
+$component-menu-app-tob-bar-tab-nav-bottom-border: #e8edf0;
+$component-menu-app-tob-bar-tab-nav-bottom-border-active: #de0000;
 $component-menu-item-menu-item-label-color-primary: #4a5259;
 $component-menu-item-menu-item-label-color-primary-active: #242629;
 $component-menu-item-menu-item-label-color-secondary: #ffffff; // The variable can be used on secondary menus that many times show up on dedicated home pages specific to a topic. The menu labels are often times using the color white across color modes.
@@ -305,8 +305,8 @@ $component-tab-tab-label-color-active: #333d40;
 $component-tab-tab-label-color-default: #4a5259;
 $component-tab-app-bottom-tab-bar-bg-color: #ffffff;
 $component-teaser-teaser-hover-opacity: 80; // When users hover over graphical teasers the image reduces opacity to 80%.
-$component-teaser-teaser-title-background-gradient-start: UNRESOLVED_CIRCULAR_REF__Component_Teaser_teaserTitleBackgroundGradientStart;
-$component-teaser-teaser-title-background-gradient-stop: UNRESOLVED_CIRCULAR_REF__Component_Teaser_teaserTitleBackgroundGradientStop;
+$component-teaser-teaser-title-background-gradient-start: rgba(0, 0, 0, 0.7);
+$component-teaser-teaser-title-background-gradient-stop: rgba(0, 0, 0, 0);
 $component-text-link-text-link-color-primary: #242629;
 $component-text-link-text-link-color-secondary: #8c9196;
 $component-text-link-text-link-color-secondary-active: #242629;

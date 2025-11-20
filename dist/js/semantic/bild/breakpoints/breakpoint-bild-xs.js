@@ -2,8 +2,7 @@
  * Do not edit directly, this file was auto-generated.
  */
 
-export const semanticBorderBorderradiusBorderradiusnone =
-  "UNRESOLVED_NO_VALUE__size0x"; // 0-0-0-0 – no corner rounding. Used as default for flat layouts, content modules, images, and teaser elements.
+export const semanticBorderBorderradiusBorderradiusnone = 0; // 0-0-0-0 – no corner rounding. Used as default for flat layouts, content modules, images, and teaser elements.
 export const semanticBorderBorderradiusBorderradiusxs = 2; // 2-2-2-2 use for corner rounding on very small UI elements such as tooltips and badges.
 export const semanticBorderBorderradiusBorderradiussm = 4; // 4-4-4-4 – use for corner rounding on compact components like checkboxes or small input controls.
 export const semanticBorderBorderradiusBorderradiusmd = 8; // 8-8-8-8 – Standard radius for buttons, chips, input fields, and medium-sized interactive elements.
@@ -37,8 +36,7 @@ export const semanticLayoutGridResponsiveGridspacerespsm = 6; // 6-6-6-8 – use
 export const semanticLayoutGridResponsiveGridspacerespbase = 12; // 12-12-12-16 – use for side paddings and gutters in responsive layouts
 export const semanticLayoutGridResponsiveGridspaceresplg = 24; // 24-24-32-32 – use for side paddings and gutters in responsive layouts
 export const semanticLayoutGridResponsiveGridspacerespxl = 48; // 48-48-64-64 – use for side paddings and gutters in responsive layouts
-export const semanticLayoutGridResponsivePageinlinespace =
-  "UNRESOLVED_NO_VALUE__space0x"; // 0-0-0-16 – This token is used on the main homepages content container, ensuring full-width layout (no horizontal padding) on mobile and tablet breakpoints.
+export const semanticLayoutGridResponsivePageinlinespace = 0; // 0-0-0-16 – This token is used on the main homepages content container, ensuring full-width layout (no horizontal padding) on mobile and tablet breakpoints.
 export const semanticLayoutGridConstantGridspaceconstsm = 12; // 12-12-12-12 – use for fixed side paddings and gutters
 export const semanticLayoutGridConstantGridspaceconstlg = 16; // 16-16-16-16 – use for fixed side paddings and gutters
 export const semanticLayoutGridLayoutguideLayoutguidegridcolums = 4; // Used to set the column count in Figma Layout guide Grids
@@ -192,8 +190,7 @@ export const semanticTypographyLetterspacingLetterspacingpositivelg = 2; // 2 | 
 export const semanticTypographyLetterspacingLetterspacingpositivemd = 1; // 1 | 1 | 1 | 1 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes.
 export const semanticTypographyLetterspacingLetterspacingpositivesm = 0.5; // 0.5 | 0.5 | 0.5 | 0.5 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes.
 export const semanticTypographyLetterspacingLetterspacingpositivexs = 0.25; // 0.25 | 0.25 | 0.25 | 0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes.
-export const semanticTypographyLetterspacingLetterspacingnone =
-  "UNRESOLVED_NO_VALUE__LetterSpacing_letterSpace-0"; // 0 | 0 | 0 | 0 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes.
+export const semanticTypographyLetterspacingLetterspacingnone = 0; // 0 | 0 | 0 | 0 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes.
 export const semanticTypographyLetterspacingLetterspacingnegativexs = -0.25; // -0.25 | -0.25 | -0.25 | -0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. This letter spacing was only found in large titles on iOS mobile app large title component.
 export const semanticTypographyLetterspacingLetterspacingnegativesm = -0.5; // -0.5 | -0.5 | -0.25 | -0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes.
 export const semanticTypographyLetterspacingLetterspacingnegativemd = -1; // -1 | -1 | -1 | -1 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes.
@@ -201,21 +198,23 @@ export const semanticTypographyLetterspacingLetterspacingnegativelg = -2; // -2 
 export const semanticTypographyLetterspacingDisplayDisplay1letterspacing = -0.5; // -0.5 | -0.5 | -1 | -2 | This variable is used for the letter spacing parameter of the display1 text style. On smaller devices the value is smaller than on larger devices. On desktop devices the letter spacing is further reduced for making the text style more compact.
 export const semanticTypographyLetterspacingDisplayDisplay2letterspacing = -0.5; // -0.5 | -0.5 | -1 | -1 | This variable is used for the letter spacing parameter of the display2 text style. On smaller devices the value is smaller than on larger devices.
 export const semanticTypographyLetterspacingDisplayDisplay3letterspacing = -0.5; // -0.5 | -0.5 | -1 | -1 | This variable is used for the letter spacing parameter of the display3 text style. On smaller devices the value is smaller than on larger devices.
+export const semanticVisibilityBooleanVisilbledesktoponly = false; // Use for showing elements on desktop viewport sizes only
+export const semanticVisibilityBooleanVisilbletabletonly = false; // Use for showing elements on tablet viewport sizes only
 export const semanticVisibilityBooleanVisilblemobileonly = true; // Use for showing elements on mobile viewport sizes only
+export const semanticVisibilityBooleanVisilbleabove600px = false; // Use for showing elements on viewport sizes above 600 px
 export const semanticVisibilityBooleanVisilblebelow600px = true; // Use for showing elements on viewport sizes below 600 px
 export const semanticVisibilityBooleanHideondesktop = true; // Use for hiding elements on desktop viewport sizes only
+export const semanticVisibilityBooleanHideonmobile = false; // Use for hiding elements on mobile viewport sizes
 export const semanticVisibilityVariantswitchBpspecificweb = "xs/sm";
 export const semanticVisibilityVariantswitchBpspecificapp = "compact";
 export const semanticVisibilityVariantswitchChangeonlg = "xs/sm/md";
 export const semanticVisibilityVariantswitchChangeonmd = "xs/sm"; // This variable is used for controlling size changes across device sizes on some components such as the vertical newsticker cards and the search results cards. Both have cards that change layouts at different breakpoints.
-export const componentAccordionAccordionlabelfontfamily =
-  "UNRESOLVED_CIRCULAR_REF__Component_Accordion_accordionLabelFontFamily"; // This variable exists specifically for changing the accordion font family across brands. It is subject to review. Bild: GothamXNarrow, SpoBi: Inter, Ads: LucindaGrande
+export const componentAccordionAccordionlabelfontfamily = "Gotham XNarrow"; // This variable exists specifically for changing the accordion font family across brands. It is subject to review. Bild: GothamXNarrow, SpoBi: Inter, Ads: LucindaGrande
 export const componentAvatarAvatararticlesize = 48; // This variable is used for setting the size of avatar images in article pages. It references the sizeConstMD variable from the "generic" semantic collection. Its value is 48 across devices.
 export const componentAvatarAvatarauthorpagesize = 96; // 96 - 96 - 130 - 130 This variable is used for controlling the size of the avatar image on author pages.
 export const componentAvatarAvatarlabelfontsize = 16; // This variable is used on avatar names in article pages. Bild: 16 - 16 - 16 - 18; SpoBi&Ads: 13 - 13 - 13 - 15
 export const componentAvatarAvatarlabellineheight = 21; // This variable is used for controlling the line height of avatar texts. Its values influence the stacking space between avatar texts. 21 - 21 - 21 - 23
-export const componentAvatarAvatarfontfamily =
-  "UNRESOLVED_CIRCULAR_REF__Component_Avatar_avatarFontFamily"; // This variable is used in avatar text styles. It receives values from the Brand Tokens Collection. Bild: GothamXNarrow; SpoBi: Inter; Ads: LucidaGrande
+export const componentAvatarAvatarfontfamily = "Gotham XNarrow"; // This variable is used in avatar text styles. It receives values from the Brand Tokens Collection. Bild: GothamXNarrow; SpoBi: Inter; Ads: LucidaGrande
 export const componentAvatarAvatarlanegapspace = 16; // This variable is used for setting the inline space between multiple avatars that are horizontally placed in a lane when an article has multiple authors. 16 - 16 - 24 - 24
 export const componentAvatarAppavatarfontfamily = "Gotham"; // This variable is used for setting the font of avatars on iOS and Android platforms. This is subject to review.
 export const componentArticleArticlekickerfontsize = 18; // This variable is used to control the font size of kickers in the heading section of article pages. 18 - 18 - 22 - 30
@@ -225,8 +224,7 @@ export const componentArticleArticleimagecaptionlineheight = 19.5; // this compo
 export const componentArticleArticlemetafontsize = 12; // This variable is used on the font size of article day&time stamp that usually shows up along with the article author avatars. On app versions this variable is used for the avatar names. 12 - 12 - 14 - 16
 export const componentArticleArticlemetafontfamily = "Gotham"; // This variable is used on the font size of article day&time stamp that usually shows up along with the article author avatars. On app versions this variable is used for the avatar names. This variable references variables from the branding collection.
 export const componentArticleArticletopmarginspace = 8; // 8 | 8 | 12 | 16 - This space variable is used at the top edge of the article main content bounding box.
-export const componentArticleAriclemobile1colgridimagemarginspace =
-  "UNRESOLVED_NO_VALUE__space0x";
+export const componentArticleAriclemobile1colgridimagemarginspace = 0;
 export const componentArticleArticleheadingsstackspace = 12; // 12 | 12 | 12 | 16 - This spacing variable is used for the space between article page heading kickers, headlines and subheadlines. XS&SM need review; correct value might be 8
 export const componentArticleArticleheadingsinlinespace = 16; // 16 | 16 | 72 | 16 - This variable is used for the left and right space within the article page headings container which holds the article page kicker, headline and subheadline.
 export const componentArticleArticlecontentstackspace = 16; // 16 - 16 - 24 - 32 - This variable creates the vertical spacing between different article body elements such as avatars, media players, corssheadings, paragraphs, field sets, images, tables, quotes, videos, social embeds, etc.
@@ -235,10 +233,8 @@ export const componentArticleArticlegalleryateaserwidth = 145; // same as standa
 export const componentArticleArticleimagesourcefontsize = 16; // NMT CSS --article-figure-meta-font-size
 export const componentArticleArticleimagesourcelineheight = 21;
 export const componentArticleArticleimagecontainerstackspace = 8;
-export const componentArticleArticleimagelandscapeinlinespace =
-  "UNRESOLVED_NO_VALUE__space0x";
-export const componentArticleArticleimageportaitinlinespace =
-  "UNRESOLVED_NO_VALUE__space0x";
+export const componentArticleArticleimagelandscapeinlinespace = 0;
+export const componentArticleArticleimageportaitinlinespace = 0;
 export const componentArticleArticleinfoboxinlinespace = 16;
 export const componentArticleArticleinfoboxstackspace = 16;
 export const componentAudioplayerAudioplayerfontsize = 16; // This variable is used in the text style dedicated to audio player labels for elapsed time, reproduction speed and short functionality description text. 16 - 16 - 16 - 18
@@ -255,8 +251,7 @@ export const componentBreadcrumbBreadcrumbfontweight = 700;
 export const componentBreadcrumbBreadcrumbstackspace = 14;
 export const componentBreakingnewsBreakingnewscontainerheightsize = 56;
 export const componentBreakingnewsBreakingnewsbadgeinlinespace = 6;
-export const componentBreakingnewsBreakingnewsbadgetitelsstackspace =
-  "UNRESOLVED_NO_VALUE__space0x";
+export const componentBreakingnewsBreakingnewsbadgetitelsstackspace = 0;
 export const componentBreakingnewsBreakingnewsbadgeuppertitlefontsize = 13;
 export const componentBreakingnewsBreakingnewsbadgeuppertitlelineheight = 13;
 export const componentBreakingnewsBreakingnewsbadgelowertitlefontsize = 23;
@@ -278,8 +273,7 @@ export const componentCardsSearchresultcardimagewidthsize = 216;
 export const componentCardsSearchresultcardimageheightsizestacked = 189;
 export const componentCardsNewstickerimagecardwidthsize = 206;
 export const componentCarouselGalleryteasertitlebottomspace = 28; // This token is used to create more bottom padding space on system teaser headlines inside the gallery to avoid overlapping with the pagination.
-export const componentCarouselGalleryteaserappgapspace =
-  "UNRESOLVED_NO_VALUE__space0x"; // This token is used to create more bottom padding space on system teaser headlines inside the gallery to avoid overlapping with the pagination.
+export const componentCarouselGalleryteaserappgapspace = 0; // This token is used to create more bottom padding space on system teaser headlines inside the gallery to avoid overlapping with the pagination.
 export const componentCarouselAppepapercarouselitemdefaultwidth = 144;
 export const componentCarouselAppepapercarouselitemfocuswidth = 182;
 export const componentCarouselAppepapercarousebeilageitemwidth = 110;
@@ -328,6 +322,7 @@ export const componentLivetickerLivetickertimeHeadlinestackspace = 4;
 export const componentLivetickerLivetickerslideritemwidthmaxsize = 257;
 export const componentMediaplayerAudioplayerheaderstackspace = 56;
 export const componentMediaplayerPodcastplaybuttonsize = 48;
+export const componentMediaplayerVidplayerbottombargapspace = 0;
 export const componentMediaplayerVideotimebadgefontfamily = "Gotham XNarrow";
 export const componentMediaplayerVidplayercontrolbuttonsize = 42;
 export const componentMediaplayerVidplayercontrolbuttoniconsizehover = 28;
@@ -340,8 +335,7 @@ export const componentMenuMenulogodefaultsize = 56;
 export const componentMenuMenulogoscrolledsize = 56;
 export const componentMenuMenuutillinkitemheightsize = 48;
 export const componentMenuMenuitemutilfontsize = 12;
-export const componentMenuMenuitemfontsize =
-  "UNRESOLVED_CIRCULAR_REF__Component_Menu_menuItemFontSize"; // This variable is used on the menu link lane and on the mobile side menu drawer.
+export const componentMenuMenuitemfontsize = 15; // This variable is used on the menu link lane and on the mobile side menu drawer.
 export const componentMenuMenuspecialnaviitemheightsize = 48;
 export const componentMenuMenuitemspace = 8;
 export const componentMenuMenulinkiteminlinespace = 4;
@@ -351,7 +345,7 @@ export const componentMenuMenuutilitylinkscontainerheightsize = 56;
 export const componentMenuMenutopstackspace = 8;
 export const componentMenuMenubottomstackspace = 8;
 export const componentMenuMenuleftinlinespace = 8;
-export const componentMenuMenurightinlinespace = "UNRESOLVED_NO_VALUE__space0x";
+export const componentMenuMenurightinlinespace = 0;
 export const componentMenuMenuutilitylinksgapspace = 24;
 export const componentMenuMenuutilitylinksdividerheightsize = 40;
 export const componentMenuMenushadowvisibility = "rgba(0, 0, 0, 0.1)"; // This color type variables are only in this semantic collection for making subtle shadow effects change visibility across device sizes. Shadow alpha: 10 - 10 - 10 - 0
@@ -404,6 +398,7 @@ export const componentSectiontitleSectiontitleheightsize = 32;
 export const componentSeparatorsSeparatorthicknesssize = 2;
 export const componentSkeletonsHeadlinesskeletonimageplaceholdermaxwidth = 282;
 export const componentSkeletonsArticleskeletonimageinlinespace = 12;
+export const componentSkeletonsArticleskeletontextinlinespace = 0;
 export const componentSkeletonsArticletextskeletonheightsize = 270;
 export const componentSpecialnaviSpecialnaviinlinespace = 24;
 export const componentSlidersSliderprogressbaridleheightsize = 4;
@@ -433,8 +428,7 @@ export const componentTeaserAteaserAteaserkickerlineheight = 16;
 export const componentTeaserAteaserAteaserheadlinefontsize = 28; // This variable references the semantic variables headline3 (XS&SM) and headline2 (MD&LG). 28 - 28 - 48 - 64
 export const componentTeaserAteaserAteaserheadlinelineheight = 28;
 export const componentTeaserAteaserAteasertitleinlinespace = 8;
-export const componentTeaserBteaserBteasertitleinlinespace =
-  "UNRESOLVED_CIRCULAR_REF__Component_Teaser_bTeaser_bTeaserTitleInlineSpace";
+export const componentTeaserBteaserBteasertitleinlinespace = 8;
 export const componentTeaserBildplayBildplayteaserwidthsize = 145;
 export const componentTeaserMqteaserMqteaserheadlinefontsize = 22; // XS-headline4FontSize:22 // SM-headline4FontSize:22 // MD-headline3FontSize:36 // LG-headline3FontSize:40
 export const componentTeaserMqteaserMqteaserheadlinelineheight = 22;
@@ -463,6 +457,7 @@ export const componentToggleswitchApptoggleitemlabellineheight = 14.1; // This v
 export const componentVideoVideobadgetimelineheight = 21;
 export const componentVideoVideotimebadgefontsize = 16; // 16 - 16 - 18 - 18 -- This variable is used to control the videoTimeBadge text style's font size parameter. The typography style that uses this variable is the videoTimeBadge style. The badge that uses this variable appears on the upper right corner of horizontal videos.
 export const componentVideoVerticalvideomockheadlinefontsize = 22;
+export const componentVideoVideoframeinlinespace = 0;
 export const componentVideoVideoredplayiconheightsize = 10; // This variable is used for changing the red play icon inside the white square.
 export const componentVideoVideoredplayiconwidthsize = 8;
 export const componentVideoVideoskeletoncontainerheight = 180;
@@ -474,8 +469,7 @@ export const componentDsysdocs1columnmobile = 320; // This variable is used only
 export const componentDsysdocsDsysdocswidthsize = 320;
 export const componentDsysdocsDscaptionstackspace05x = 4; // This variable is used in documentation pages that have small caption or lables along with a UI component documented. 4 - 4 - 6 - 8
 export const componentDsysdocsDscaptionstackspace1x = 8;
-export const componentDsysdocsDsmaincontainerspace =
-  "UNRESOLVED_NO_VALUE__space0x"; // This variable is used on documentation pages. This is an alternative variable to the main container max width variable. 0 - 0 - 68 - 68
+export const componentDsysdocsDsmaincontainerspace = 0; // This variable is used on documentation pages. This is an alternative variable to the main container max width variable. 0 - 0 - 68 - 68
 export const componentDsysdocsFoundationsbannerheightsize = 80; // This variable is used on documentation pages that have an artistic banner at the top of the page that is related to the foundation topic on the page. 80 - 80 -80 - 140
 export const componentDsysdocsMaincontentstagesize = 320; // This variable is used as a max width size for content blocks. For mobile devices this var references the DSysDocsWidthSize var 320 - 750 - 962 - 1024
 export const componentDsysdocsThinbannerverticalheightsize = 558; // This variable is currently used on a thin gallery that appears on desktop websites with petbook and other "books" content. Its height changes to a large height on mobile sites. 558 - 558 - 558 - 186

@@ -132,6 +132,7 @@
     }
   },
   "Opacity": {
+    "opacity00": 0,
     "opacity05": 5,
     "opacity10": 10,
     "opacity20": 20,
