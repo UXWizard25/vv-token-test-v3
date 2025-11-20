@@ -136,44 +136,9 @@ function createStyleDictionaryConfig(collectionDir, modeName, config) {
     return null;
   }
 
-  // Für nicht-Base-Layer: Lade auch alle Primitive Tokens als Dependencies
+  // Alle Aliase wurden bereits im Preprocessing aufgelöst,
+  // daher müssen keine Dependencies geladen werden
   const sourceFiles = [sourceFile];
-
-  if (layer !== 'base') {
-    // Füge alle Primitive Token-Dateien hinzu, damit Aliase aufgelöst werden können
-    const primitiveCollections = ['colorprimitive', 'spaceprimitive', 'sizeprimitive', 'fontprimitive'];
-
-    primitiveCollections.forEach(primitiveName => {
-      const primitiveFile = path.join(TOKENS_DIR, primitiveName, 'value.json');
-      if (fs.existsSync(primitiveFile)) {
-        sourceFiles.push(primitiveFile);
-      }
-    });
-
-    // Für Semantic Layer: Füge auch Mapping und Density hinzu
-    if (layer === 'semantic') {
-      // Brand Mappings
-      const brandCollections = ['brandtokenmapping', 'brandcolormapping'];
-      brandCollections.forEach(brandName => {
-        const brandDir = path.join(TOKENS_DIR, brandName);
-        if (fs.existsSync(brandDir)) {
-          const brandModes = fs.readdirSync(brandDir).filter(f => f.endsWith('.json'));
-          brandModes.forEach(modeFile => {
-            sourceFiles.push(path.join(brandDir, modeFile));
-          });
-        }
-      });
-
-      // Density
-      const densityDir = path.join(TOKENS_DIR, 'density');
-      if (fs.existsSync(densityDir)) {
-        const densityModes = fs.readdirSync(densityDir).filter(f => f.endsWith('.json'));
-        densityModes.forEach(modeFile => {
-          sourceFiles.push(path.join(densityDir, modeFile));
-        });
-      }
-    }
-  }
 
   // Registriere Custom Transforms
   Object.entries(customConfig.transforms).forEach(([name, transform]) => {

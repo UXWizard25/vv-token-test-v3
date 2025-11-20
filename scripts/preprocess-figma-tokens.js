@@ -138,16 +138,137 @@ function processValue(value, resolvedType, aliasLookup) {
 }
 
 /**
+ * Löst alle Alias-Referenzen rekursiv auf
+ */
+function resolveAliasValue(aliasString, aliasLookup, modeId, visited = new Set()) {
+  // Extrahiere Token-Pfad aus {path.to.token} Syntax
+  const match = aliasString.match(/^\{(.+)\}$/);
+  if (!match) {
+    // Kein Alias, gib Wert zurück
+    return aliasString;
+  }
+
+  const aliasPath = match[1];
+
+  // Zirkuläre Referenz-Erkennung
+  if (visited.has(aliasPath)) {
+    console.warn(`⚠️  Zirkuläre Referenz erkannt: ${aliasPath} - wird als unaufgelöster String beibehalten`);
+    // Entferne geschweifte Klammern, damit Style Dictionary nicht versucht, es aufzulösen
+    return `UNRESOLVED_CIRCULAR_REF__${aliasPath.replace(/\./g, '_')}`;
+  }
+
+  visited.add(aliasPath);
+
+  // Finde das referenzierte Token
+  let referencedToken = null;
+  for (const [id, tokenData] of aliasLookup.entries()) {
+    const tokenPath = tokenData.name
+      .split('/')
+      .filter(part => part && !part.startsWith('_'))
+      .join('.');
+
+    if (tokenPath === aliasPath) {
+      referencedToken = tokenData;
+      break;
+    }
+  }
+
+  if (!referencedToken) {
+    console.warn(`⚠️  Alias-Referenz nicht gefunden: ${aliasPath} - wird als unaufgelöster String beibehalten`);
+    // Entferne geschweifte Klammern, damit Style Dictionary nicht versucht, es aufzulösen
+    return `UNRESOLVED_MISSING_TOKEN__${aliasPath.replace(/\./g, '_')}`;
+  }
+
+  // Hole den Wert für den aktuellen Mode
+  let referencedValue = referencedToken.valuesByMode[modeId];
+
+  // Fallback: Wenn der spezifische Mode nicht existiert, nutze den ersten verfügbaren Mode
+  if (!referencedValue) {
+    const availableModes = Object.keys(referencedToken.valuesByMode);
+    if (availableModes.length > 0) {
+      const fallbackModeId = availableModes[0];
+      referencedValue = referencedToken.valuesByMode[fallbackModeId];
+      // console.log(`   ℹ️  Fallback Mode für ${aliasPath}: ${fallbackModeId}`);
+    }
+  }
+
+  if (!referencedValue) {
+    console.warn(`⚠️  Kein Wert verfügbar: ${aliasPath} - wird als unaufgelöster String beibehalten`);
+    // Entferne geschweifte Klammern, damit Style Dictionary nicht versucht, es aufzulösen
+    return `UNRESOLVED_NO_VALUE__${aliasPath.replace(/\./g, '_')}`;
+  }
+
+  // Wenn der referenzierte Wert selbst ein Alias ist, löse rekursiv auf
+  if (referencedValue.type === 'VARIABLE_ALIAS') {
+    const nestedAliasLookup = aliasLookup.get(referencedValue.id);
+    if (nestedAliasLookup) {
+      const nestedAliasPath = nestedAliasLookup.name
+        .split('/')
+        .filter(part => part && !part.startsWith('_'))
+        .join('.');
+      return resolveAliasValue(`{${nestedAliasPath}}`, aliasLookup, modeId, visited);
+    }
+  }
+
+  // Konvertiere den finalen Wert
+  const processedValue = processDirectValue(referencedValue, referencedToken.resolvedType);
+  return processedValue;
+}
+
+/**
+ * Verarbeitet einen direkten Wert (nicht-Alias)
+ */
+function processDirectValue(value, resolvedType) {
+  switch (resolvedType) {
+    case 'COLOR':
+      return colorToHex(value);
+    case 'FLOAT':
+      return value;
+    case 'STRING':
+      return value;
+    case 'BOOLEAN':
+      return value;
+    default:
+      return value;
+  }
+}
+
+/**
+ * Löst alle Aliase in einem Token-Objekt rekursiv auf
+ */
+function resolveAliasesInTokens(tokens, aliasLookup, modeId) {
+  for (const key in tokens) {
+    const token = tokens[key];
+
+    if (typeof token === 'object' && token !== null) {
+      // Wenn es ein Token-Objekt mit value ist
+      if (token.value !== undefined) {
+        // Prüfe, ob der Wert ein Alias ist
+        if (typeof token.value === 'string' && token.value.match(/^\{.+\}$/)) {
+          const resolvedValue = resolveAliasValue(token.value, aliasLookup, modeId);
+          token.value = resolvedValue;
+        }
+      } else {
+        // Rekursiv für verschachtelte Objekte
+        resolveAliasesInTokens(token, aliasLookup, modeId);
+      }
+    }
+  }
+}
+
+/**
  * Verarbeitet eine Collection und erstellt Token-Objekte für jeden Mode
  */
 function processCollection(collection, aliasLookup) {
   console.log(`  📦 Verarbeite Collection: ${collection.name}`);
 
   const results = {};
+  const modeMetadata = {};
 
   // Initialisiere Objekte für jeden Mode
   collection.modes.forEach(mode => {
     results[mode.name] = {};
+    modeMetadata[mode.name] = mode.modeId;
   });
 
   // Verarbeite jede Variable
@@ -183,13 +304,13 @@ function processCollection(collection, aliasLookup) {
     });
   });
 
-  return results;
+  return { results, modeMetadata };
 }
 
 /**
  * Speichert die verarbeiteten Tokens
  */
-function saveTokens(collectionName, modeTokens) {
+function saveTokens(collectionName, modeTokens, aliasLookup, modeMetadata) {
   // Erstelle Unterverzeichnis für Collection
   // Entferne führenden Unterstrich und bereinige den Namen
   const cleanCollectionName = collectionName
@@ -207,6 +328,12 @@ function saveTokens(collectionName, modeTokens) {
 
   // Speichere jeden Mode als separate Datei
   Object.entries(modeTokens).forEach(([modeName, tokens]) => {
+    // Löse alle Aliase auf
+    const modeId = modeMetadata[modeName];
+    if (modeId) {
+      resolveAliasesInTokens(tokens, aliasLookup, modeId);
+    }
+
     // Bereinige Dateinamen: entferne alle Nicht-Alphanumerische Zeichen außer Bindestriche
     const cleanName = modeName
       .toLowerCase()
@@ -247,8 +374,8 @@ function main() {
   console.log('\n📋 Verarbeite Collections:\n');
 
   figmaData.collections.forEach(collection => {
-    const modeTokens = processCollection(collection, aliasLookup);
-    saveTokens(collection.name, modeTokens);
+    const { results, modeMetadata } = processCollection(collection, aliasLookup);
+    saveTokens(collection.name, results, aliasLookup, modeMetadata);
   });
 
   // Erstelle Index-Datei mit Metadaten
