@@ -1,0 +1,281 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root[data-brand-color="sportbild"] {
+  --global-core-core-color-primary: #0a264f; /** Bild: 046; SpoBi: 016 current css calls this variable main tenant color */
+  --global-core-core-color-secondary: #ffffff; /** Bild&SpoBi Tone 100 */
+  --global-core-core-color-secondary-dark: #081729; /** Bild: 015 ; SpoBi: 010 */
+  --global-core-core-color-tertiary: #081729; /** Bild: 015 ; SpoBi: 010 */
+  --global-core-core-color-tertiary-dark: #ffffff; /** Bild&SpoBi: 100 */
+  --global-attention-accent-color-primary: #174582; /** Bild: Tone 046 ; SpoBi: 016 This variable is used on small UI elements such as the background color for kickers. */
+  --global-attention-accent-color-primary-dark: #f7fafc; /** Bild: 100 ; SpoBi: 098 */
+  --global-surface-surface-color-primary: #ffffff; /** Bild: 100 ; SpoBi: 100 */
+  --global-surface-surface-color-primary-dark: #081729; /** Bild: 015 ; SpoBi: 010 */
+  --global-surface-surface-color-secondary: #f7fafc; /** Bild: 096 ; SpoBi: 098 */
+  --global-surface-surface-color-secondary-dark: #0a264f; /** Bild: 020 ; SpoBi: 016 */
+  --global-surface-surface-color-tertiary: #bdc9db; /** Bild: 093 ; SpoBi: 081 */
+  --global-surface-surface-color-tertiary-dark: #174582; /** Bild: 025 ; SpoBi: 029 */
+  --global-surface-surface-color-quartenary: #cfd4d9; /** Bild: 085 ; SpoBi: 085 */
+  --global-surface-surface-color-quartenary-dark: #4a5259; /** Bild: 035 ; SpoBi: 035 */
+  --global-state-color-primary-active: #174582; /** Bild: 046 ; SpoBi: 029 */
+  --global-state-color-primary-active-dark: #f7fafc; /** Bild: 046 ; SpoBi: 098 */
+  --global-text-text-color-primary: #242629; /** Bild & SpoBi: Tone 015 */
+  --global-text-text-color-primary-dark: #e8edf0; /** Bild & SpoBi: Tone 093 */
+  --global-text-text-color-secondary: #8c9196; /** Bild & SpoBi: Tone 060 */
+  --global-text-text-color-secondary-dark: #8c9196; /** Bild & SpoBi: Tone 060 */
+  --global-text-headline-color-primary: #0a264f; /** Bild: 015 ; SpoBi: 016 */
+  --global-text-headline-color-primary-dark: #ffffff; /** Bild&SpoBi: Tone 100 */
+  --global-text-kicker-text-color-on-bg: #ffffff; /** This variable is used on kicker texts that are on top of a color that is different from the outer color of the overall user interface. Bild & SpoBi: Tone 100 */
+  --global-text-kicker-text-color-on-surface: #8c9196; /** This variable is used for the color of kicker texts that are not no top of a different color of the overall user interface. Bild: 046 ; SpoBi: 060 */
+  --global-text-kicker-text-color-on-surface-dark: #8c9196; /** Use this variable for kicker texts that are directly on top of the color of the overall user interface. Bild & SpoBi tone 060. */
+  --global-text-kicker-bg-color-on-surface: #174582; /** Use this variable for the color immediately behind the bounding box of the kicker text element. Bild: 046 ; SpoBi: 029 */
+  --global-text-kicker-bg-color-on-surface-dark: #8c9196; /** Use this variable for the dark mode color of the background immediately around the kicker text element. Bild: 060 ; SpoBi: 060 */
+  --component-avatar-avatar-label-color: #666b70; /** 09-2025 css --article-author-name-color // Bild: 015; SpoBi: 045 */
+  --component-avatar-avatar-label-color-dark: #e8edf0; /** 09-2025 css --article-author-name-color // Bild: 100; SpoBi: 093 */
+  --component-avatar-avatar-label-color-hover: #174582; /** This variable is used for decorating the avatar text's underline color. Bild: 046; SpoBi: 029 */
+  --component-chip-color-active: #174582;
+  --component-breaking-news-breaking-news-top-title-text-color: #ffbf00; /** This variable is used for the color of the "breaking" word in the "breaking news" horizontally animated headlines strip. Bild: 010 ; SpoBi: 081 */
+  --component-breaking-news-breaking-news-bottom-title-text-color: #ffffff; /** This variable is used for the color of the "News" word in the breaking news horizontal animated headlines strip. Bild: 010 ; SpoBi: 100 */
+  --component-breaking-news-breaking-news-title-surface-color: #0a264f; /** This variable is used for the background color of the "Breaking News" title. Bild: 067 ; SpoBi: 016 */
+  --component-breaking-news-breaking-news-surface-color: #ffbf00; /** This variable is used on the breaking news strip that has horizontally animated headlines. Bild: 015 ; SpoBi: 081 */
+  --component-breaking-news-breaking-news-surface-color-dark: #ffbf00; /** This variable is for the background color of the horizontally animated strip with headlines for breaking news on dark mode.  Bild: 093 ; SpoBi: 081 */
+  --component-breaking-news-breaking-news-text-content-color: #242629; /** This variable is used on the text for headlines in the horizontally animated breaking news strip. Bild: 100 ; SpoBi: 015 */
+  --component-breaking-news-breaking-news-text-content-color-dark: #242629; /** This variable is used on the text for headlines in the horizontally animated breaking news strip on dark mode. Bild&SpoBi: 015 */
+  --component-button-primary-brand-button-primary-bg-color-idle: #174582; /** Bild: 046 ; SpoBi: 029 */
+  --component-button-primary-brand-button-primary-bg-color-hover: #0a264f; /** Bild: 035 ; SpoBi: 016 */
+  --component-button-primary-brand-button-primary-bg-color-idle-dark: #305999; /** This variable controls the primary button idle color for two brands in dark mode. Bild: 046 ; SpoBi: 038 */
+  --component-button-primary-brand-button-primary-bg-color-hover-dark: #174582; /** This variable stores colors for the hover state of primary buttons for two brands in dark mode. Bild: 035 ; SpoBi: 029 */
+  --component-button-primary-neutral-button-primary-bg-color-idle: #242629; /** Bild & SpoBi: Tone 015 */
+  --component-button-primary-neutral-button-primary-bg-color-hover: #4a5259; /** Bild & SpoBi: Tone 035 */
+  --component-button-primary-neutral-button-primary-bg-color-idle-dark: #ffffff; /** Bild & SpoBi: Tone 100 */
+  --component-button-primary-neutral-button-primary-bg-color-hover-dark: #bdc9db; /** Bild: 093 ; SpoBi: 081 */
+  --component-menu-menu-link-lane-surface-color: #0a264f; /** This variable is used for making possible the default color difference between the Bild and SportBild link lanes inside the menu component. */
+  --component-menu-menu-link-lane-surface-color-dark: #0a264f; /** This variable is used for making possible the default color difference between the Bild and SportBild link lanes inside the menu component on Dark mode. */
+  --component-menu-menu-link-lane-label-color: #cfd4d9; /** This variable is used for making possible the default color difference between the Bild and SportBild link lane labels inside the menu component. */
+  --component-menu-menu-link-lane-label-color-active: #ffffff; /** This variable is used for making possible the active color difference between the Bild and SportBild link lane labels inside the menu component. */
+  --component-menu-menu-link-lane-label-color-dark: #adb5ba;
+  --component-menu-menu-link-color-border-active: #0a264f;
+  --component-menu-menu-link-color-border-active-dark: #f7fafc;
+  --component-menu-app-bottom-tab-bar-bg-color: #ffffff;
+  --component-menu-app-top-bar-bg-color-dark: #0a264f;
+  --component-menu-app-bottom-tab-bar-bg-dark: #0a264f;
+  --component-menu-app-top-bar-surface-color: #0a264f;
+  --component-menu-app-top-bar-icon-color: #8c9196;
+  --component-menu-app-top-bar-icon-color-dark: #8c9196;
+  --component-menu-app-top-bar-text-color: #e8edf0;
+  --component-menu-app-top-bar-text-color-dark: #e8edf0;
+  --component-menu-app-tob-bar-tab-nav-bottom-border: #174582;
+  --component-menu-app-tob-bar-tab-nav-bottom-border-dark: #174582;
+  --component-menu-app-tob-bar-tab-nav-bottom-border-active: #cfd4d9;
+  --component-menu-app-tob-bar-tab-nav-bottom-border-active-dark: #ffffff;
+  --component-teaser-teaser-title-background-gradient-start: rgba(10, 38, 79, 0.7);
+  --component-teaser-teaser-title-background-gradient-stop: rgba(10, 38, 79, 0);
+  --bild-alpha-alpha-black0: rgba(0, 0, 0, 0);
+  --bild-alpha-alpha-black05: rgba(0, 0, 0, 0.05);
+  --bild-alpha-alpha-black10: rgba(0, 0, 0, 0.1);
+  --bild-alpha-alpha-black20: rgba(0, 0, 0, 0.2);
+  --bild-alpha-alpha-black30: rgba(0, 0, 0, 0.3);
+  --bild-alpha-alpha-black35: rgba(0, 0, 0, 0.35);
+  --bild-alpha-alpha-black50: rgba(0, 0, 0, 0.5);
+  --bild-alpha-alpha-black60: rgba(0, 0, 0, 0.6); /** Used on elevation effects. */
+  --bild-alpha-alpha-black70: rgba(0, 0, 0, 0.7); /** Used on elevation effects. */
+  --bild-alpha-alpha-black80: rgba(0, 0, 0, 0.8); /** Used on elevation effects. */
+  --bild-alpha-alpha-white10: rgba(255, 255, 255, 0.1);
+  --bild-alpha-alpha-white20: rgba(255, 255, 255, 0.2);
+  --bild-alpha-alpha-white30: rgba(255, 255, 255, 0.3);
+  --bild-alpha-alpha-white35: rgba(255, 255, 255, 0.35);
+  --bild-alpha-alpha-white60: rgba(255, 255, 255, 0.6); /** Used on elevation effects. */
+  --bild-alpha-alpha-white70: rgba(255, 255, 255, 0.7); /** Used on elevation effects. */
+  --bild-alpha-alpha-white80: rgba(255, 255, 255, 0.8); /** Used on elevation effects. */
+  --bild-alpha-alpha-bild-red80: rgba(222, 0, 0, 0.8); /** Used on elevation effects. */
+  --bild-blue-bild-blue: #00b0ff; /** This Blue color was taken from the Weather 2024 project. Tone: 069 */
+  --bild-gray-bild096: #f2f5f5;
+  --bild-gray-bild093: #e8edf0;
+  --bild-gray-bild085: #cfd4d9;
+  --bild-gray-bild085-50: rgba(207, 212, 217, 0.5); /** The 50% opacity on this color makes it equivalent to BILD093. */
+  --bild-gray-bild073: #adb5ba;
+  --bild-gray-bild060: #8c9196;
+  --bild-gray-bild045: #666b70;
+  --bild-gray-bild035: #4a5259;
+  --bild-gray-bild025: #333d40;
+  --bild-gray-bild020: #2b3038;
+  --bild-gray-bild015: #242629;
+  --bild-gray-bild010: #1c1c1c;
+  --bild-green-bild-green093-50: rgba(207, 245, 227, 0.5);
+  --bild-green-bild-green093: #cff5e3;
+  --bild-green-bild-green070: #00c273;
+  --bild-green-bild-green063: #00b066;
+  --bild-green-bild-green056-50: rgba(0, 156, 89, 0.5);
+  --bild-green-bild-green056: #17995c;
+  --bild-green-bild-green040: #006e3d; /** This value of green was found in a text field's text color. */
+  --bild-neutral-bild100: #ffffff;
+  --bild-neutral-bild-black: #000000;
+  --bild-red-bild-red053: #f52e2e;
+  --bild-red-bild-red: #de0000; /** Tone 046 */
+  --bild-red-bild-red035: #b00003;
+  --bild-orange-bild-orange: #fc8226; /** Tone: 067 */
+  --bild-purple-bild-berry: #541a38; /** Tone: 020 */
+  --bild-yellow-bild-yellow: #ffbf00; /** Tone: 081 */
+  --bild-text-labels-bild-red: BILDRed; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild100: BILD100; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild096: BILD096; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild093: BILD093; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild085: BILD085; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild073: BILD073; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild060: BILD060; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild045: BILD045; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild035: BILD035; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild025: BILD025; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild015: BILD015; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild-yellow: BILDYellow; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild-orange: BILDOrange; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild-red053: BILDRed053; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild-red035: BILDRed035; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild-green093: BILDGreen093; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild-green070: BILDGreen070; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild-green063: BILDGreen063; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --sport-bild-alpha-spobi-blue016-0: rgba(10, 38, 79, 0);
+  --sport-bild-alpha-spobi-blue016-70: rgba(10, 38, 79, 0.7);
+  --sport-bild-blue-spobi-blue098: #f7fafc;
+  --sport-bild-blue-spobi-blue081: #bdc9db;
+  --sport-bild-blue-spobi-blue038: #305999;
+  --sport-bild-blue-spobi-blue029: #174582; /** This variable in the current online CSS is called secondary-tenant-color */
+  --sport-bild-blue-spobi-blue016: #0a264f; /** This variable in the current online CSS is called main-tenant-color for the spobi tenant. */
+  --sport-bild-blue-spobi-blue010: #081729;
+  --sport-bild-red-spobi-red: #e62629;
+  --partner-aubi-aubi-core: #f00000;
+  --partner-bz-bz-core: #e3001c;
+  --partner-travelbook-travelbook-core: #8ff0ed;
+  --partner-techbook-techbook-core: #94e3ff;
+  --partner-kaufberater-kaufberater-core: #54476e;
+  --partner-computer-bild-cobi-core: #db241c;
+  --partner-fitbook-fitbook-core: #ff96b8;
+  --partner-petbook-petbook-core: #badb91;
+  --partner-my-home-myhome-core: #66cccc;
+  --opacity-opacity05: 5;
+  --opacity-opacity10: 10;
+  --opacity-opacity20: 20;
+  --opacity-opacity30: 30;
+  --opacity-opacity40: 40;
+  --opacity-opacity50: 50;
+  --opacity-opacity60: 60;
+  --opacity-opacity70: 70;
+  --opacity-opacity80: 80;
+  --opacity-opacity90: 90;
+  --opacity-opacity100: 100;
+  --space20x: 160;
+  --space12x: 96;
+  --space10x: 80;
+  --space9x: 72;
+  --space8-5x: 68;
+  --space8x: 64;
+  --space7-5x: 60;
+  --space6x: 48;
+  --space5x: 40;
+  --space4-5x: 36;
+  --space4x: 32;
+  --space3-5x: 28;
+  --space3x: 24;
+  --space2-75x: 22;
+  --space2-5x: 20;
+  --space2x: 16;
+  --space1-75x: 14;
+  --space1-5x: 12;
+  --space1-25x: 10;
+  --space1x: 8;
+  --space0-75x: 6;
+  --space0-5x: 4;
+  --space0-25x: 2;
+  --space-0-25x: -2;
+  --size168x: 1344;
+  --size128x: 1024;
+  --size124x: 992;
+  --size116-25x: 930;
+  --size100x: 800;
+  --size87-5x: 700;
+  --size80x: 640;
+  --size60x: 480;
+  --size50x: 400;
+  --size40x: 320;
+  --size35x: 280;
+  --size30x: 240;
+  --size27-5x: 220;
+  --size25x: 200;
+  --size22-5x: 180;
+  --size20x: 160;
+  --size18-5x: 148;
+  --size17-5x: 140;
+  --size16-25: 130;
+  --size15x: 120;
+  --size12-5x: 100;
+  --size12x: 96;
+  --size11-5x: 92;
+  --size10x: 80;
+  --size9x: 72;
+  --size8x: 64;
+  --size7x: 56;
+  --size6x: 48;
+  --size5-25x: 42;
+  --size5x: 40;
+  --size4-5x: 36;
+  --size4x: 32;
+  --size3-75x: 30;
+  --size3-5x: 28;
+  --size3-25x: 26;
+  --size3x: 24;
+  --size2-75x: 22;
+  --size2-5x: 20;
+  --size2-25x: 18;
+  --size2x: 16;
+  --size1-75x: 14;
+  --size1-5x: 12;
+  --size1-25x: 10;
+  --size1x: 8;
+  --size0-75x: 6;
+  --size0-5x: 4;
+  --size0-25x: 2;
+  --size0-125x: 1;
+  --font-family-bild-font-family-gotham-cond: Gotham Condensed;
+  --font-family-bild-font-family-gotham-x-narrow: Gotham XNarrow;
+  --font-family-bild-font-family-gotham: Gotham;
+  --font-family-sport-bild-font-family-antenna-extra-cond: AntennaExtraCond;
+  --font-family-sport-bild-font-family-antenna-cond: AntennaCond;
+  --font-family-sport-bild-font-family-inter: Inter;
+  --font-family-advertorial-font-family-lucida-grande: Lucida Grande;
+  --font-weight-1000-ultra-font-weight: 1000;
+  --font-weight-900-extra-black-font-weight: 900;
+  --font-weight-800-black-font-weight: 800;
+  --font-weight-700-black-font-weight: 700; /** 700 is considered black weight because Gotham Condensed is the primary font family (most used in headlines). In other font families 700 is not black weight but bold. */
+  --font-weight-bold-italic-font-weight-st: Bold Italic;
+  --font-weight-black-font-weight-st: Black;
+  --font-weight-600-bold-font-weight: 600;
+  --font-weight-500-medium-font-weight: 500;
+  --font-weight-400-book-font-weight: 400;
+  --font-weight-350-book-font-weight: 350;
+  --font-weight-300-light-font-weight: 300;
+  --font-weight-200-extra-light-font-weight: 200;
+  --font-weight-100-thin-font-weight: 100;
+  --font-weight-string-1000-ultra-font-weight: 1000;
+  --font-weight-string-900-extra-black-font-weight: 900;
+  --font-weight-string-800-black-font-weight: 800;
+  --font-weight-string-700-black-italic-font-weight: Black Italic;
+  --font-weight-string-700-black-font-weight: 700;
+  --font-weight-string-600-bold-italic-font-weight: Bold Italic;
+  --font-weight-string-600-bold-font-weight: 600;
+  --font-weight-string-500-medium-font-weight: 500;
+  --font-weight-string-400-book-font-weight: 400;
+  --font-weight-string-350-book-font-weight: 350;
+  --font-weight-string-200-extra-light-font-weight: 200;
+  --font-weight-string-100-thin-font-weight: 100;
+  --letter-spacing-letter-space3: 3; /** This variable is a primitive for use in creating semantic text styles that need to use a much larger letter spacing value of 3. Text styles that have smaller font sizes should use increasingly positive values for their letter spacings on smaller device sizes. */
+  --letter-spacing-letter-space2: 2; /** This variable is a primitive for use in creating semantic text styles that need to use a large letter spacing value of 2. */
+  --letter-spacing-letter-space1: 1; /** This variable is a primitive for use in creating semantic text styles that need to use a positive letter spacing value of 1. */
+  --letter-spacing-letter-space0-5: 0.5; /** This variable is a primitive for use in creating semantic text styles that need to use a slight positive letter spacing value of 0.5. */
+  --letter-spacing-letter-space0-25: 0.25; /** This variable is a primitive for use in creating semantic text styles that need to use a subtle positive letter spacing value of 0.25. */
+  --letter-spacing-letter-space-0-25: -0.25; /** This variable is a primitive for use in creating semantic text styles that need to use a subtle small letter spacing value of -0.25. */
+  --letter-spacing-letter-space-0-5: -0.5; /** This variable is a primitive for use in creating semantic variables that need to use a subtle negative letter spacing value of -0.5. */
+  --letter-spacing-letter-space-1: -1; /** This variable is a primitive for use in creating semantic variables that need to use a negative letter spacing value of -1. */
+  --letter-spacing-letter-space-2: -2; /** This variable is a primitive for use in creating semantic text styles that need to use a large negative letter spacing value of -2. This is usually reserved for large texts styles that are used on titles or headlines. */
+  --letter-spacing-letter-space-3: -3; /** This variable is a primitive for use in creating semantic text styles that need to use a large negative letter spacing value of -3. Text styles that have larger font sizes should use increasingly negative values for their letter spacings on larger device sizes. */
+}

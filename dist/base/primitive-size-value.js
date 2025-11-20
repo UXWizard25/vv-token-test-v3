@@ -1,0 +1,52 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+export const size168x = 1344;
+export const size128x = 1024;
+export const size124x = 992;
+export const size11625x = 930;
+export const size100x = 800;
+export const size875x = 700;
+export const size80x = 640;
+export const size60x = 480;
+export const size50x = 400;
+export const size40x = 320;
+export const size35x = 280;
+export const size30x = 240;
+export const size275x = 220;
+export const size25x = 200;
+export const size225x = 180;
+export const size20x = 160;
+export const size185x = 148;
+export const size175x = 140;
+export const size1625 = 130;
+export const size15x = 120;
+export const size125x = 100;
+export const size12x = 96;
+export const size115x = 92;
+export const size10x = 80;
+export const size9x = 72;
+export const size8x = 64;
+export const size7x = 56;
+export const size6x = 48;
+export const size525x = 42;
+export const size5x = 40;
+export const size45x = 36;
+export const size4x = 32;
+export const size375x = 30;
+export const size35x = 28;
+export const size325x = 26;
+export const size3x = 24;
+export const size275x = 22;
+export const size25x = 20;
+export const size225x = 18;
+export const size2x = 16;
+export const size175x = 14;
+export const size15x = 12;
+export const size125x = 10;
+export const size1x = 8;
+export const size075x = 6;
+export const size05x = 4;
+export const size025x = 2;
+export const size0125x = 1;

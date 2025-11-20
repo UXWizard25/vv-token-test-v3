@@ -1,0 +1,481 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root[data-brand="advertorial"] {
+  --global-typography-font-family-display-font-family: Lucida Grande; /** Bild: Gotham | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the display text style font family parameter. */
+  --global-typography-font-family-headline-font-family: Lucida Grande; /** Bild: GothamCond | SpoBi: AntennaExtraCond | Ads: LucidaGrande | This variable is used in the headlines text style font family parameter. */
+  --global-typography-font-family-subheadline-font-family: Lucida Grande; /** Bild: GothamCond | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the subheadlines text style font family parameter. */
+  --global-typography-font-family-kicker-font-family: Lucida Grande; /** Bild: GothamXNarrow | SpoBi: AntennaExtraCond | Ads: LucidaGrande | This variable is used in the kickers text styles font family parameter. */
+  --global-typography-font-family-title-font-family: Lucida Grande; /** Bild: Gotham | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the titles text style font family parameter. */
+  --global-typography-font-family-callout-font-family: Lucida Grande; /** Bild: Gotham | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the callouts text style font family parameter. */
+  --global-typography-font-family-body-font-family: Lucida Grande; /** Bild: GothamXNarrow | SpoBi: Inter | Ads: LucidaGrande | This variable is used in the body text style font family parameter. */
+  --global-typography-font-family-footnote-font-family: Lucida Grande; /** Bild: GothamXNarrow | SpoBi: Inter | Ads: LucidaGrande | This variable is used in the footnotes text style font family parameter. */
+  --global-typography-font-family-label-font-family: Lucida Grande; /** Bild: GothamXNarrow | SpoBi: AntennaExtraCond | Ads: LucidaGrande | This variable is used in the labels text styles font family parameter. */
+  --global-typography-font-family-quote-font-family: Lucida Grande; /** Bild: Gotham | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the quotes text style font family parameter. */
+  --global-typography-font-size-display-display1-font-size-xs: 39; /** Bild: 40 | SpoBi: 38 | Ads: 39 | This variable is used in the display1 text style font size parameter for small device sizes. */
+  --global-typography-font-size-display-display1-font-size-sm: 39; /** Bild: 40 | SpoBi: 38 | Ads: 39 | This variable is used in the display1 text style font size parameter for small device sizes. */
+  --global-typography-font-size-display-display1-font-size-md: 70; /** Bild: 72 | SpoBi: 68 | Ads: 70 | This variable is used in the display1 text style font size parameter for medium device sizes. */
+  --global-typography-font-size-display-display1-font-size-lg: 116; /** Bild: 120 | SpoBi: 114 | Ads: 116 | This variable is used in the display1 text style font size parameter for large device sizes. */
+  --global-typography-font-size-display-display2-font-size-xs: 35; /** Bild: 36 | SpoBi: 34 | Ads: 35 | This variable is used in the display2 text style font size parameter for small device sizes. */
+  --global-typography-font-size-display-display2-font-size-sm: 35; /** Bild: 36 | SpoBi: 34 | Ads: 35 | This variable is used in the display2 text style font size parameter for small device sizes. */
+  --global-typography-font-size-display-display2-font-size-md: 41; /** Bild: 42 | SpoBi: 40 | Ads: 41 | This variable is used in the display2 text style font size parameter for medium device sizes. */
+  --global-typography-font-size-display-display2-font-size-lg: 62; /** Bild: 64 | SpoBi: 61 | Ads: 62 | This variable is used in the display2 text style font size parameter for large device sizes. */
+  --global-typography-font-size-display-display3-font-size-xs: 27; /** Bild: 28 | SpoBi: 27 | Ads: 27 | This variable is used in the display3 text style font size parameter for small device sizes. */
+  --global-typography-font-size-display-display3-font-size-sm: 27; /** Bild: 28 | SpoBi: 27 | Ads: 27 | This variable is used in the display3 text style font size parameter for small device sizes. */
+  --global-typography-font-size-display-display3-font-size-md: 31; /** Bild: 32 | SpoBi: 30 | Ads: 31 | This variable is used in the display3 text style font size parameter for medium device sizes. */
+  --global-typography-font-size-display-display3-font-size-lg: 39; /** Bild: 40 | SpoBi: 38 | Ads: 39 | This variable is used in the display3 text style font size parameter for large device sizes. */
+  --global-typography-font-size-headline-headline-text-align: center; /** This variable is used for controlling the alignment of headlines across brands. current online css example var: --headline-text-align-lg */
+  --global-typography-font-size-headline-headline1-font-size-xs: 36; /** Bild: 48 | SpoBi: 42 | Ads: 36 | This variable is used in the headline1 text style font size parameter for small device sizes. */
+  --global-typography-font-size-headline-headline1-font-size-sm: 36; /** Bild: 48 | SpoBi: 42 | Ads: 36 | This variable is used in the headline1 text style font size parameter for small device sizes. */
+  --global-typography-font-size-headline-headline1-font-size-md: 54; /** Bild: 72 | SpoBi: 60 | Ads: 54 | This variable is used in the headline1 text style font size parameter for medium device sizes. */
+  --global-typography-font-size-headline-headline1-font-size-lg: 70; /** Bild: 100 | SpoBi: 80 | Ads: 70 | This variable is used in the headline1 text style font size parameter for large device sizes. */
+  --global-typography-font-size-headline-headline2-font-size-xs: 30; /** Bild: 40 | SpoBi: 42 | Ads: 30 | This variable is used in the headline2 text style font size parameter for small device sizes. */
+  --global-typography-font-size-headline-headline2-font-size-sm: 30; /** Bild: 40 | SpoBi: 42 | Ads: 30 | This variable is used in the headline2 text style font size parameter for small device sizes. */
+  --global-typography-font-size-headline-headline2-font-size-md: 36; /** Bild: 48 | SpoBi: 44 | Ads: 36 | This variable is used in the headline2 text style font size parameter for medium device sizes. */
+  --global-typography-font-size-headline-headline2-font-size-lg: 48; /** Bild: 64 | SpoBi: 50 | Ads: 48 | This variable is used in the headline2 text style font size parameter for large device sizes. */
+  --global-typography-font-size-headline-headline3-font-size-xs: 24; /** Bild: 28 | SpoBi: 30 | Ads: 24 | This variable is used in the headline3 text style font size parameter for small device sizes. */
+  --global-typography-font-size-headline-headline3-font-size-sm: 24; /** Bild: 28 | SpoBi: 30 | Ads: 24 | This variable is used in the headline3 text style font size parameter for small device sizes. */
+  --global-typography-font-size-headline-headline3-font-size-md: 26; /** Bild: 36 | SpoBi: 30 | Ads: 26 | This variable is used in the headline3 text style font size parameter for medium device sizes. */
+  --global-typography-font-size-headline-headline3-font-size-lg: 32; /** Bild: 40 | SpoBi: 34 | Ads: 32 | This variable is used in the headline3 text style font size parameter for large device sizes. */
+  --global-typography-font-size-headline-headline4-font-size-xs: 16; /** Bild: 22 | SpoBi: 21 | Ads: 16 | This variable is used in the headline4 text style font size parameter for small device sizes. */
+  --global-typography-font-size-headline-headline4-font-size-sm: 16; /** Bild: 22 | SpoBi: 21 | Ads: 16 | This variable is used in the headline4 text style font size parameter for small device sizes. */
+  --global-typography-font-size-headline-headline4-font-size-md: 20; /** Bild: 26 | SpoBi: 26 | Ads: 20 | This variable is used in the headline4 text style font size parameter for medium device sizes. */
+  --global-typography-font-size-headline-headline4-font-size-lg: 22; /** Bild: 32 | SpoBi: 26 | Ads: 22 | This variable is used in the headline4 text style font size parameter for large device sizes. */
+  --global-typography-font-size-subheadline-subheadline1-font-size-xs: 18; /** Bild: 24 | SpoBi: 18 | Ads: 18 | This variable is used in the subheadline1 text style font size parameter for small device sizes. */
+  --global-typography-font-size-subheadline-subheadline1-font-size-sm: 18; /** Bild: 24 | SpoBi: 18 | Ads: 18 | This variable is used in the subheadline1 text style font size parameter for small device sizes. */
+  --global-typography-font-size-subheadline-subheadline1-font-size-md: 18; /** Bild: 32 | SpoBi: 22 | Ads: 18 | This variable is used in the subheadline1 text style font size parameter for medium device sizes. */
+  --global-typography-font-size-subheadline-subheadline1-font-size-lg: 28; /** Bild: 36 | SpoBi: 26 | Ads: 28 | This variable is used in the subheadline1 text style font size parameter for large device sizes. */
+  --global-typography-font-size-kicker-kicker1-font-size-xs: 16; /** Bild: 18 | SpoBi: 20 | Ads: 16 | This variable is used in the kicker1 text style font size parameter for small device sizes. Current online css: --kicker-0-font-size-sm */
+  --global-typography-font-size-kicker-kicker1-font-size-sm: 16; /** Bild: 18 | SpoBi: 20 | Ads: 16 | This variable is used in the kicker1 text style font size parameter for small device sizes. Current online css: --kicker-0-font-size-sm */
+  --global-typography-font-size-kicker-kicker1-font-size-md: 18; /** Bild: 22 | SpoBi: 26 | Ads: 18 | This variable is used in the kicker1 text style font size parameter for medium device sizes. Current online css: --kicker-0-font-size-md */
+  --global-typography-font-size-kicker-kicker1-font-size-lg: 25; /** Bild: 30 | SpoBi: 32 | Ads: 25 | This variable is used in the kicker1 text style font size parameter for large device sizes. Current online css: --kicker-0-font-size-lg */
+  --global-typography-font-size-kicker-kicker2-font-size-xs: 16; /** Bild: 18 | SpoBi: 16 | Ads: 16 | This variable is used in the kicker2 text style font size parameter for small device sizes. Current online css: --kicker-1-font-size-sm */
+  --global-typography-font-size-kicker-kicker2-font-size-sm: 16; /** Bild: 18 | SpoBi: 16 | Ads: 16 | This variable is used in the kicker2 text style font size parameter for small device sizes. Current online css: --kicker-1-font-size-sm */
+  --global-typography-font-size-kicker-kicker2-font-size-md: 18; /** Bild: 22 | SpoBi: 26 | Ads: 18 | This variable is used in the kicker2 text style font size parameter for medium device sizes. Current online css: --kicker-1-font-size-md */
+  --global-typography-font-size-kicker-kicker2-font-size-lg: 21; /** Bild: 24 | SpoBi: 26 | Ads: 21 | This variable is used in the kicker2 text style font size parameter for large device sizes. Current online css: --kicker-1-font-size-lg */
+  --global-typography-font-size-kicker-kicker3-font-size-xs: 14; /** Bild: 16 | SpoBi: 16 | Ads: 14 | This variable is used in the kicker3 text style font size parameter for small device sizes. Current online css: --kicker-2-font-size-sm */
+  --global-typography-font-size-kicker-kicker3-font-size-sm: 14; /** Bild: 16 | SpoBi: 16 | Ads: 14 | This variable is used in the kicker3 text style font size parameter for small device sizes. Current online css: --kicker-2-font-size-sm */
+  --global-typography-font-size-kicker-kicker3-font-size-md: 14; /** Bild: 18 | SpoBi: 20 | Ads: 14 | This variable is used in the kicker3 text style font size parameter for medium device sizes. Current online css: --kicker-2-font-size-md */
+  --global-typography-font-size-kicker-kicker3-font-size-lg: 16; /** Bild: 20 | SpoBi: 22 | Ads: 16 | This variable is used in the kicker3 text style font size parameter for large device sizes. Current online css: --kicker-2-font-size-lg */
+  --global-typography-font-size-kicker-kicker4-font-size-xs: 12; /** Bild: 14 | SpoBi: 14 | Ads: 12 | This variable is used in the kicker4 text style font size parameter for small device sizes. Current online css: --kicker-3-font-size-sm */
+  --global-typography-font-size-kicker-kicker4-font-size-sm: 12; /** Bild: 14 | SpoBi: 14 | Ads: 12 | This variable is used in the kicker4 text style font size parameter for small device sizes. Current online css: --kicker-3-font-size-sm */
+  --global-typography-font-size-kicker-kicker4-font-size-md: 14; /** Bild: 16 | SpoBi: 16 | Ads: 14 | This variable is used in the kicker4 text style font size parameter for medium device sizes. Current online css: --kicker-3-font-size-md */
+  --global-typography-font-size-kicker-kicker4-font-size-lg: 14; /** Bild: 16 | SpoBi: 18 | Ads: 14 | This variable is used in the kicker4 text style font size parameter for large device sizes. Current online css: --kicker-3-font-size-lg */
+  --global-typography-font-size-title-title1-font-size-xs: 22; /** Bild 22 | SpoBi 24 | Ads 22 | current online css: --ressort-header-font-size-sm */
+  --global-typography-font-size-title-title1-font-size-sm: 22; /** Bild 22 | SpoBi 24 | Ads 22 | current online css: --ressort-header-font-size-sm */
+  --global-typography-font-size-title-title1-font-size-md: 22; /** Bild 22 | SpoBi 28 | Ads 22 | current online css: --ressort-header-font-size-md */
+  --global-typography-font-size-title-title1-font-size-lg: 28; /** Bild 28 | SpoBi 30 | Ads 28 | current online css: --ressort-header-font-size-lg */
+  --global-typography-font-size-title-title2-font-size-xs: 14; /** Bild 16 | SpoBi 16 | Ads 14 | current online css var: --caption-1-font-size-sm */
+  --global-typography-font-size-title-title2-font-size-sm: 14; /** Bild 16 | SpoBi 16 | Ads 14 | current online css: --caption-1-font-size-sm */
+  --global-typography-font-size-title-title2-font-size-md: 16; /** Bild 18 | SpoBi 18 | Ads 16 | current online css: --caption-1-font-size-md */
+  --global-typography-font-size-title-title2-font-size-lg: 18; /** Bild 20 | SpoBi 20 | Ads 18 | current online css: --caption-1-font-size-lg */
+  --global-typography-font-size-callout-callout1-font-size-xs: 16; /** Bild: 18 | SpoBi: 18 | Ads: 16 | This variable is used in the callout1 text style font size parameter for small device sizes. Current online css: */
+  --global-typography-font-size-callout-callout1-font-size-sm: 16; /** Bild: 18 | SpoBi: 18 | Ads: 16 | This variable is used in the callout1 text style font size parameter for small device sizes. Current online css: */
+  --global-typography-font-size-callout-callout1-font-size-md: 22; /** Bild: 22 | SpoBi: 24 | Ads: 22 | This variable is used in the callout1 text style font size parameter for medium device sizes. Current online css: */
+  --global-typography-font-size-callout-callout1-font-size-lg: 22; /** Bild: 22 | SpoBi: 24 | Ads: 22 | This variable is used in the callout1 text style font size parameter for large device sizes. Current online css: */
+  --global-typography-font-size-body-body-font-size-xs: 17; /** Bild: 21 | SpoBi: 17 | Ads: 17 | This variable is used in the body text style font size parameter for small device sizes. Current online css: --body-font-size */
+  --global-typography-font-size-body-body-font-size-sm: 17; /** Bild: 21 | SpoBi: 17 | Ads: 17 | This variable is used in the body text style font size parameter for small device sizes. Current online css: --body-font-size */
+  --global-typography-font-size-body-body-font-size-md: 17; /** Bild: 21 | SpoBi: 17 | Ads: 17 | This variable is used in the body text style font size parameter for medium device sizes. Current online css: --body-font-size */
+  --global-typography-font-size-body-body-font-size-lg: 17; /** Bild: 21 | SpoBi: 17 | Ads: 17 | This variable is used in the body text style font size parameter for large device sizes. Current online css: --body-font-size */
+  --global-typography-font-size-footnote-footnote1-font-size-xs: 13; /** --footnote-font-size-sm */
+  --global-typography-font-size-footnote-footnote1-font-size-sm: 13; /** --footnote-font-size-sm */
+  --global-typography-font-size-footnote-footnote1-font-size-md: 13;
+  --global-typography-font-size-footnote-footnote1-font-size-lg: 15; /** --footnote-font-size-lg */
+  --global-typography-font-size-footnote-footnote2-font-size-xs: 10;
+  --global-typography-font-size-footnote-footnote2-font-size-sm: 10;
+  --global-typography-font-size-footnote-footnote2-font-size-md: 10;
+  --global-typography-font-size-footnote-footnote2-font-size-lg: 13;
+  --global-typography-font-size-label-label1-font-size: 17;
+  --global-typography-font-size-label-label1-resp-font-size-xs: 10;
+  --global-typography-font-size-label-label1-resp-font-size-sm: 10;
+  --global-typography-font-size-label-label1-resp-font-size-md: 15;
+  --global-typography-font-size-label-label1-resp-font-size-lg: 17;
+  --global-typography-font-size-label-label2-font-size: 15;
+  --global-typography-font-size-label-label3-font-size: 12;
+  --global-typography-font-size-label-label4-font-size: 8;
+  --global-typography-font-size-quote-quote-font-size-xs: 16;
+  --global-typography-font-size-quote-quote-font-size-sm: 16;
+  --global-typography-font-size-quote-quote-font-size-md: 16;
+  --global-typography-font-size-quote-quote-font-size-lg: 18;
+  --global-typography-line-height-display-display1-line-height-xs: 40;
+  --global-typography-line-height-display-display1-line-height-sm: 40;
+  --global-typography-line-height-display-display1-line-height-md: 72;
+  --global-typography-line-height-display-display1-line-height-lg: 120;
+  --global-typography-line-height-display-display2-line-height-xs: 36;
+  --global-typography-line-height-display-display2-line-height-sm: 36;
+  --global-typography-line-height-display-display2-line-height-md: 42;
+  --global-typography-line-height-display-display2-line-height-lg: 64;
+  --global-typography-line-height-display-display3-line-height-xs: 28;
+  --global-typography-line-height-display-display3-line-height-sm: 28;
+  --global-typography-line-height-display-display3-line-height-md: 32;
+  --global-typography-line-height-display-display3-line-height-lg: 40;
+  --global-typography-line-height-headline-headline1-line-height-xs: 37.8;
+  --global-typography-line-height-headline-headline1-line-height-sm: 37.8;
+  --global-typography-line-height-headline-headline1-line-height-md: 56.7;
+  --global-typography-line-height-headline-headline1-line-height-lg: 77;
+  --global-typography-line-height-headline-headline2-line-height-xs: 33;
+  --global-typography-line-height-headline-headline2-line-height-sm: 33;
+  --global-typography-line-height-headline-headline2-line-height-md: 39.6;
+  --global-typography-line-height-headline-headline2-line-height-lg: 52.8;
+  --global-typography-line-height-headline-headline3-line-height-xs: 26.4;
+  --global-typography-line-height-headline-headline3-line-height-sm: 26.4;
+  --global-typography-line-height-headline-headline3-line-height-md: 28.6;
+  --global-typography-line-height-headline-headline3-line-height-lg: 35.2;
+  --global-typography-line-height-headline-headline4-line-height-xs: 18.4;
+  --global-typography-line-height-headline-headline4-line-height-sm: 18.4;
+  --global-typography-line-height-headline-headline4-line-height-md: 19.8;
+  --global-typography-line-height-headline-headline4-line-height-lg: 27.5;
+  --global-typography-line-height-subheadline-subheadline1-line-height-xs: 23.4;
+  --global-typography-line-height-subheadline-subheadline1-line-height-sm: 23.4;
+  --global-typography-line-height-subheadline-subheadline1-line-height-md: 23.4;
+  --global-typography-line-height-subheadline-subheadline1-line-height-lg: 36.4;
+  --global-typography-line-height-kicker-kicker1-line-height-xs: 17.6;
+  --global-typography-line-height-kicker-kicker1-line-height-sm: 17.6;
+  --global-typography-line-height-kicker-kicker1-line-height-md: 19.8;
+  --global-typography-line-height-kicker-kicker1-line-height-lg: 27.5;
+  --global-typography-line-height-kicker-kicker2-line-height-xs: 17.6;
+  --global-typography-line-height-kicker-kicker2-line-height-sm: 17.6;
+  --global-typography-line-height-kicker-kicker2-line-height-md: 19.8;
+  --global-typography-line-height-kicker-kicker2-line-height-lg: 23.1;
+  --global-typography-line-height-kicker-kicker3-line-height-xs: 15.4;
+  --global-typography-line-height-kicker-kicker3-line-height-sm: 15.4;
+  --global-typography-line-height-kicker-kicker3-line-height-md: 15.4;
+  --global-typography-line-height-kicker-kicker3-line-height-lg: 17.6;
+  --global-typography-line-height-kicker-kicker4-line-height-xs: 13.2;
+  --global-typography-line-height-kicker-kicker4-line-height-sm: 13.2;
+  --global-typography-line-height-kicker-kicker4-line-height-md: 15.4;
+  --global-typography-line-height-kicker-kicker4-line-height-lg: 15.4;
+  --global-typography-line-height-title-title1-line-height-xs: 26.4;
+  --global-typography-line-height-title-title1-line-height-sm: 26.4;
+  --global-typography-line-height-title-title1-line-height-md: 26.4;
+  --global-typography-line-height-title-title1-line-height-lg: 33.6;
+  --global-typography-line-height-title-title2-line-height-xs: 16.8;
+  --global-typography-line-height-title-title2-line-height-sm: 16.8;
+  --global-typography-line-height-title-title2-line-height-md: 19.2;
+  --global-typography-line-height-title-title2-line-height-lg: 23.4;
+  --global-typography-line-height-callout-callout1-line-height-xs: 20.8;
+  --global-typography-line-height-callout-callout1-line-height-sm: 20.8;
+  --global-typography-line-height-callout-callout1-line-height-md: 28.6;
+  --global-typography-line-height-callout-callout1-line-height-lg: 28.6;
+  --global-typography-line-height-body-body-line-height-xs: 29.75;
+  --global-typography-line-height-body-body-line-height-sm: 29.75;
+  --global-typography-line-height-body-body-line-height-md: 29.75;
+  --global-typography-line-height-body-body-line-height-lg: 29.75;
+  --global-typography-line-height-footnote-footnote1-line-height-xs: 16.9;
+  --global-typography-line-height-footnote-footnote1-line-height-sm: 16.9;
+  --global-typography-line-height-footnote-footnote1-line-height-md: 16.9;
+  --global-typography-line-height-footnote-footnote1-line-height-lg: 19.5;
+  --global-typography-line-height-footnote-footnote2-line-height-xs: 13;
+  --global-typography-line-height-footnote-footnote2-line-height-sm: 13;
+  --global-typography-line-height-footnote-footnote2-line-height-md: 13;
+  --global-typography-line-height-footnote-footnote2-line-height-lg: 16.9;
+  --global-typography-line-height-label-label1-line-height: 20.4; /** Bild 17 | SpoBi 20.4 | Ads 20.4 | The label 1 text style uses this variable for its line height parameter. */
+  --global-typography-line-height-label-label1-resp-line-height-xs: 10; /** Bild 10 | SpoBi 12 | Ads 10 | The label1 responsive text style uses this variable for its line height parameter. */
+  --global-typography-line-height-label-label1-resp-line-height-sm: 10; /** Bild 10 | SpoBi 12 | Ads 10 | The label1 responsive text style uses this variable for its line height parameter. */
+  --global-typography-line-height-label-label1-resp-line-height-md: 15; /** Bild 15 | SpoBi 18 | Ads 15 | The label1 responsive text style uses this variable for its line height parameter. */
+  --global-typography-line-height-label-label1-resp-line-height-lg: 17; /** Bild 17 | SpoBi 20.4 | Ads 17 | The label1 responsive text style uses this variable for its line height parameter. */
+  --global-typography-line-height-label-label2-line-height: 16; /** Bild 16 | SpoBi 19.2 | Ads 16 | The label 2 text style uses this variable for its line height parameter. */
+  --global-typography-line-height-label-label3-line-height: 14.4; /** Bild 14.4 | SpoBi 14.4 | Ads 14.4 | The label 3 text style uses this variable for its line height parameter. */
+  --global-typography-line-height-label-label4-line-height: 10; /** Bild 10 | SpoBi 10 | Ads 10 | The label 4 text style uses this variable for its line height parameter. */
+  --global-typography-line-height-quote-quote-line-height-xs: 20.8;
+  --global-typography-line-height-quote-quote-line-height-sm: 20.8;
+  --global-typography-line-height-quote-quote-line-height-md: 20.8;
+  --global-typography-line-height-quote-quote-line-height-lg: 23.4;
+  --global-typography-font-weight-display-display-font-weight: 800;
+  --global-typography-font-weight-headline-headline1-font-weight: 700;
+  --global-typography-font-weight-headline-headline1-font-weight-st: 700;
+  --global-typography-font-weight-headline-headline2-font-weight: 700;
+  --global-typography-font-weight-headline-headline2-font-weight-st: 700;
+  --global-typography-font-weight-headline-headline3-font-weight: 700;
+  --global-typography-font-weight-headline-headline3-font-weight-st: 700;
+  --global-typography-font-weight-headline-headline4-font-weight: 600;
+  --global-typography-font-weight-headline-headline4-font-weight-st: 600;
+  --global-typography-font-weight-subheadline-subheadline-font-weight: 700;
+  --global-typography-font-weight-kicker-kicker-font-weight: 700;
+  --global-typography-font-weight-kicker-kicker-font-weight-st: 700;
+  --global-typography-font-weight-title-title-font-weight: 800;
+  --global-typography-font-weight-callout-callout-font-weight: 800;
+  --global-typography-font-weight-body-body-font-weight-book: 400;
+  --global-typography-font-weight-body-body-font-weight-bold: 700;
+  --global-typography-font-weight-footnote-footnote-font-weight-book: 400;
+  --global-typography-font-weight-footnote-footnote-font-weight-bold: 700;
+  --global-typography-font-weight-label-label-font-weight-book: 400;
+  --global-typography-font-weight-label-label-font-weight-bold: 700;
+  --global-typography-font-weight-quote-quote-font-weight: 800;
+  --global-visibilty-hide-on-bild: true;
+  --global-visibilty-hide-on-sport-bild: true;
+  --global-visibilty-only-advertorial: true;
+  --component-button-label-font-weight-st: 600;
+  --component-accordion-accordion-label-font-family: Lucida Grande;
+  --component-article-font-size-article-image-caption-font-size-xs: 13; /** --article-figure-caption-font-size-sm */
+  --component-article-font-size-article-image-caption-font-size-sm: 13; /** --article-figure-caption-font-size-sm */
+  --component-article-font-size-article-image-caption-font-size-md: 13; /** --article-figure-caption-font-size-md */
+  --component-article-font-size-article-image-caption-font-size-lg: 16; /** --article-figure-caption-font-size-lg */
+  --component-article-font-size-article-image-source-font-size-xs: 13; /** --article-figure-meta-font-size-sm */
+  --component-article-font-size-article-image-source-font-size-sm: 13; /** --article-figure-meta-font-size-sm */
+  --component-article-font-size-article-image-source-font-size-md: 13; /** --article-figure-meta-font-size-sm */
+  --component-article-font-size-article-image-source-font-size-lg: 16; /** --article-figure-meta-font-size-lg */
+  --component-article-line-height-article-image-caption-line-height-xs: 19.5; /** --article-figure-caption-line-height-sm ; Bild: 19.5 // SpoBi: 16.9 // Ad: 19.5 */
+  --component-article-line-height-article-image-caption-line-height-sm: 19.5; /** --article-figure-caption-line-height-sm ; Bild: 19.5 // SpoBi: 16.9 // Ad: 19.5 */
+  --component-article-line-height-article-image-caption-line-height-md: 19.5; /** --article-figure-caption-line-height-md ; Bild: 24.75 // SpoBi: 16.9 // Ad: 19.5 */
+  --component-article-line-height-article-image-caption-line-height-lg: 24; /** --article-figure-caption-line-height-lg ; Bild: 24.75 // SpoBi: 19.5 // Ad: 24 */
+  --component-article-line-height-article-image-source-line-height-xs: 19; /** --article-figure-meta-line-height-sm ; Bild: 21 // SpoBi: 17 // Ad: 19 */
+  --component-article-line-height-article-image-source-line-height-sm: 19; /** --article-figure-meta-line-height-sm ; Bild: 21 // SpoBi: 17 // Ad: 19 */
+  --component-article-line-height-article-image-source-line-height-md: 19; /** --article-figure-meta-line-height-sm ; Bild: 21 // SpoBi: 17 // Ad: 19 */
+  --component-article-line-height-article-image-source-line-height-lg: 24; /** --article-figure-meta-line-height-lg ; Bild: 23 // SpoBi: 19 // Ad: 24 */
+  --component-avatar-avatar-font-family: Lucida Grande; /** current css 09-2025 --article-author-font // Bild: GothamXNarrow; SpoBi: Inter; Ads: LucidaGrande */
+  --component-avatar-avatar-font-size-sm: 13; /** 09-2025 css using footnote var for font sizes SM & LG // Bild: 16; SpoBi: 13; Ads: 13 */
+  --component-avatar-avatar-font-size-lg: 15; /** 09-2025 css using footnote var for font sizes SM & LG // Bild: 18; SpoBi: 15; Ads: 15 */
+  --component-breaking-news-breaking-news-content-font-size: 21;
+  --component-footer-footer-link-font-family: Gotham XNarrow;
+  --component-inputfield-input-field-label-font-family: Lucida Grande;
+  --component-media-player-video-time-badge-font-family: Lucida Grande;
+  --component-menu-menu-item-font-size: 15; /** --nav-btn-font-size */
+  --component-menu-menu-item-font-weight: 700;
+  --component-menu-app-top-bar-title-font-size-xs: 12; /** --caption-1-font-size-sm */
+  --component-menu-app-top-bar-title-font-size-sm: 12; /** --caption-1-font-size-sm */
+  --component-menu-app-top-bar-title-font-size-md: 14; /** --caption-1-font-size-md */
+  --component-menu-app-top-bar-title-font-size-lg: 14; /** --caption-1-font-size-lg */
+  --component-menu-app-top-bar-title-line-height-xs: 14;
+  --component-menu-app-top-bar-title-line-height-sm: 14;
+  --component-menu-app-top-bar-title-line-height-md: 17;
+  --component-menu-app-top-bar-title-line-height-lg: 17;
+  --component-breadcrumb-font-family-breadcrumb-font-family: Lucida Grande; /** --breadcrumb-font */
+  --component-breadcrumb-font-weight-breadcrumb-font-weight: 700; /** --breadcrumb-font-size-sm */
+  --component-breadcrumb-font-size-breadcrumb-font-size-xs: 15; /** --breadcrumb-font-size-sm */
+  --component-breadcrumb-font-size-breadcrumb-font-size-sm: 15; /** --breadcrumb-font-size-sm */
+  --component-breadcrumb-font-size-breadcrumb-font-size-md: 15; /** --breadcrumb-font-size-sm */
+  --component-breadcrumb-font-size-breadcrumb-font-size-lg: 12; /** --breadcrumb-font-size-lg */
+  --component-breadcrumb-line-height-breadcrumb-line-height-xs: 15; /** not defined as variable */
+  --component-breadcrumb-line-height-breadcrumb-line-height-sm: 15; /** not defined as variable */
+  --component-breadcrumb-line-height-breadcrumb-line-height-md: 15; /** not defined as variable */
+  --component-breadcrumb-line-height-breadcrumb-line-height-lg: 12; /** not defined as variable */
+  --component-teaser-teaser-title-inline-space-xs: 8; /** --teaser-title-padding-xs */
+  --component-teaser-teaser-title-inline-space-sm: 8; /** --teaser-title-padding-sm */
+  --component-teaser-teaser-title-inline-space-md: 12; /** --teaser-title-padding-md */
+  --component-teaser-teaser-title-inline-space-lg: 12; /** --teaser-title-padding-lg */
+  --component-teaser-quad-q-teaser-title-inline-space-xs: 8;
+  --component-teaser-quad-q-teaser-title-inline-space-sm: 8;
+  --component-teaser-quad-q-teaser-title-inline-space-md: 16;
+  --component-teaser-quad-q-teaser-title-inline-space-lg: 12;
+  --component-teaser-mini-q-mini-q-teaser-title-inline-space-xs: 8;
+  --component-teaser-mini-q-mini-q-teaser-title-inline-space-sm: 8;
+  --component-teaser-mini-q-mini-q-teaser-title-inline-space-md: 8;
+  --component-teaser-mini-q-mini-q-teaser-title-inline-space-lg: 8;
+  --component-teaser-a-teaser-a-teaser-title-inline-space-xs: 8;
+  --component-teaser-a-teaser-a-teaser-title-inline-space-sm: 8;
+  --component-teaser-a-teaser-a-teaser-title-inline-space-md: 12;
+  --component-teaser-a-teaser-a-teaser-title-inline-space-lg: 12;
+  --component-teaser-super-a-super-ateaser-title-inline-space: 16;
+  --component-teaser-2xa-teaser-2xa-teaser-title-inline-space: 8;
+  --component-teaser-b-teaser-b-teaser-title-inline-space: 8;
+  --brand-name: Advertorial;
+  --bild-alpha-alpha-black0: rgba(0, 0, 0, 0);
+  --bild-alpha-alpha-black05: rgba(0, 0, 0, 0.05);
+  --bild-alpha-alpha-black10: rgba(0, 0, 0, 0.1);
+  --bild-alpha-alpha-black20: rgba(0, 0, 0, 0.2);
+  --bild-alpha-alpha-black30: rgba(0, 0, 0, 0.3);
+  --bild-alpha-alpha-black35: rgba(0, 0, 0, 0.35);
+  --bild-alpha-alpha-black50: rgba(0, 0, 0, 0.5);
+  --bild-alpha-alpha-black60: rgba(0, 0, 0, 0.6); /** Used on elevation effects. */
+  --bild-alpha-alpha-black70: rgba(0, 0, 0, 0.7); /** Used on elevation effects. */
+  --bild-alpha-alpha-black80: rgba(0, 0, 0, 0.8); /** Used on elevation effects. */
+  --bild-alpha-alpha-white10: rgba(255, 255, 255, 0.1);
+  --bild-alpha-alpha-white20: rgba(255, 255, 255, 0.2);
+  --bild-alpha-alpha-white30: rgba(255, 255, 255, 0.3);
+  --bild-alpha-alpha-white35: rgba(255, 255, 255, 0.35);
+  --bild-alpha-alpha-white60: rgba(255, 255, 255, 0.6); /** Used on elevation effects. */
+  --bild-alpha-alpha-white70: rgba(255, 255, 255, 0.7); /** Used on elevation effects. */
+  --bild-alpha-alpha-white80: rgba(255, 255, 255, 0.8); /** Used on elevation effects. */
+  --bild-alpha-alpha-bild-red80: rgba(222, 0, 0, 0.8); /** Used on elevation effects. */
+  --bild-blue-bild-blue: #00b0ff; /** This Blue color was taken from the Weather 2024 project. Tone: 069 */
+  --bild-gray-bild096: #f2f5f5;
+  --bild-gray-bild093: #e8edf0;
+  --bild-gray-bild085: #cfd4d9;
+  --bild-gray-bild085-50: rgba(207, 212, 217, 0.5); /** The 50% opacity on this color makes it equivalent to BILD093. */
+  --bild-gray-bild073: #adb5ba;
+  --bild-gray-bild060: #8c9196;
+  --bild-gray-bild045: #666b70;
+  --bild-gray-bild035: #4a5259;
+  --bild-gray-bild025: #333d40;
+  --bild-gray-bild020: #2b3038;
+  --bild-gray-bild015: #242629;
+  --bild-gray-bild010: #1c1c1c;
+  --bild-green-bild-green093-50: rgba(207, 245, 227, 0.5);
+  --bild-green-bild-green093: #cff5e3;
+  --bild-green-bild-green070: #00c273;
+  --bild-green-bild-green063: #00b066;
+  --bild-green-bild-green056-50: rgba(0, 156, 89, 0.5);
+  --bild-green-bild-green056: #17995c;
+  --bild-green-bild-green040: #006e3d; /** This value of green was found in a text field's text color. */
+  --bild-neutral-bild100: #ffffff;
+  --bild-neutral-bild-black: #000000;
+  --bild-red-bild-red053: #f52e2e;
+  --bild-red-bild-red: #de0000; /** Tone 046 */
+  --bild-red-bild-red035: #b00003;
+  --bild-orange-bild-orange: #fc8226; /** Tone: 067 */
+  --bild-purple-bild-berry: #541a38; /** Tone: 020 */
+  --bild-yellow-bild-yellow: #ffbf00; /** Tone: 081 */
+  --bild-text-labels-bild-red: BILDRed; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild100: BILD100; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild096: BILD096; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild093: BILD093; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild085: BILD085; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild073: BILD073; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild060: BILD060; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild045: BILD045; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild035: BILD035; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild025: BILD025; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild015: BILD015; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild-yellow: BILDYellow; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild-orange: BILDOrange; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild-red053: BILDRed053; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild-red035: BILDRed035; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild-green093: BILDGreen093; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild-green070: BILDGreen070; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --bild-text-labels-bild-green063: BILDGreen063; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
+  --sport-bild-alpha-spobi-blue016-0: rgba(10, 38, 79, 0);
+  --sport-bild-alpha-spobi-blue016-70: rgba(10, 38, 79, 0.7);
+  --sport-bild-blue-spobi-blue098: #f7fafc;
+  --sport-bild-blue-spobi-blue081: #bdc9db;
+  --sport-bild-blue-spobi-blue038: #305999;
+  --sport-bild-blue-spobi-blue029: #174582; /** This variable in the current online CSS is called secondary-tenant-color */
+  --sport-bild-blue-spobi-blue016: #0a264f; /** This variable in the current online CSS is called main-tenant-color for the spobi tenant. */
+  --sport-bild-blue-spobi-blue010: #081729;
+  --sport-bild-red-spobi-red: #e62629;
+  --partner-aubi-aubi-core: #f00000;
+  --partner-bz-bz-core: #e3001c;
+  --partner-travelbook-travelbook-core: #8ff0ed;
+  --partner-techbook-techbook-core: #94e3ff;
+  --partner-kaufberater-kaufberater-core: #54476e;
+  --partner-computer-bild-cobi-core: #db241c;
+  --partner-fitbook-fitbook-core: #ff96b8;
+  --partner-petbook-petbook-core: #badb91;
+  --partner-my-home-myhome-core: #66cccc;
+  --opacity-opacity05: 5;
+  --opacity-opacity10: 10;
+  --opacity-opacity20: 20;
+  --opacity-opacity30: 30;
+  --opacity-opacity40: 40;
+  --opacity-opacity50: 50;
+  --opacity-opacity60: 60;
+  --opacity-opacity70: 70;
+  --opacity-opacity80: 80;
+  --opacity-opacity90: 90;
+  --opacity-opacity100: 100;
+  --space20x: 160;
+  --space12x: 96;
+  --space10x: 80;
+  --space9x: 72;
+  --space8-5x: 68;
+  --space8x: 64;
+  --space7-5x: 60;
+  --space6x: 48;
+  --space5x: 40;
+  --space4-5x: 36;
+  --space4x: 32;
+  --space3-5x: 28;
+  --space3x: 24;
+  --space2-75x: 22;
+  --space2-5x: 20;
+  --space2x: 16;
+  --space1-75x: 14;
+  --space1-5x: 12;
+  --space1-25x: 10;
+  --space1x: 8;
+  --space0-75x: 6;
+  --space0-5x: 4;
+  --space0-25x: 2;
+  --space-0-25x: -2;
+  --size168x: 1344;
+  --size128x: 1024;
+  --size124x: 992;
+  --size116-25x: 930;
+  --size100x: 800;
+  --size87-5x: 700;
+  --size80x: 640;
+  --size60x: 480;
+  --size50x: 400;
+  --size40x: 320;
+  --size35x: 280;
+  --size30x: 240;
+  --size27-5x: 220;
+  --size25x: 200;
+  --size22-5x: 180;
+  --size20x: 160;
+  --size18-5x: 148;
+  --size17-5x: 140;
+  --size16-25: 130;
+  --size15x: 120;
+  --size12-5x: 100;
+  --size12x: 96;
+  --size11-5x: 92;
+  --size10x: 80;
+  --size9x: 72;
+  --size8x: 64;
+  --size7x: 56;
+  --size6x: 48;
+  --size5-25x: 42;
+  --size5x: 40;
+  --size4-5x: 36;
+  --size4x: 32;
+  --size3-75x: 30;
+  --size3-5x: 28;
+  --size3-25x: 26;
+  --size3x: 24;
+  --size2-75x: 22;
+  --size2-5x: 20;
+  --size2-25x: 18;
+  --size2x: 16;
+  --size1-75x: 14;
+  --size1-5x: 12;
+  --size1-25x: 10;
+  --size1x: 8;
+  --size0-75x: 6;
+  --size0-5x: 4;
+  --size0-25x: 2;
+  --size0-125x: 1;
+  --font-family-bild-font-family-gotham-cond: Gotham Condensed;
+  --font-family-bild-font-family-gotham-x-narrow: Gotham XNarrow;
+  --font-family-bild-font-family-gotham: Gotham;
+  --font-family-sport-bild-font-family-antenna-extra-cond: AntennaExtraCond;
+  --font-family-sport-bild-font-family-antenna-cond: AntennaCond;
+  --font-family-sport-bild-font-family-inter: Inter;
+  --font-family-advertorial-font-family-lucida-grande: Lucida Grande;
+  --font-weight-1000-ultra-font-weight: 1000;
+  --font-weight-900-extra-black-font-weight: 900;
+  --font-weight-800-black-font-weight: 800;
+  --font-weight-700-black-font-weight: 700; /** 700 is considered black weight because Gotham Condensed is the primary font family (most used in headlines). In other font families 700 is not black weight but bold. */
+  --font-weight-bold-italic-font-weight-st: Bold Italic;
+  --font-weight-black-font-weight-st: Black;
+  --font-weight-600-bold-font-weight: 600;
+  --font-weight-500-medium-font-weight: 500;
+  --font-weight-400-book-font-weight: 400;
+  --font-weight-350-book-font-weight: 350;
+  --font-weight-300-light-font-weight: 300;
+  --font-weight-200-extra-light-font-weight: 200;
+  --font-weight-100-thin-font-weight: 100;
+  --font-weight-string-1000-ultra-font-weight: 1000;
+  --font-weight-string-900-extra-black-font-weight: 900;
+  --font-weight-string-800-black-font-weight: 800;
+  --font-weight-string-700-black-italic-font-weight: Black Italic;
+  --font-weight-string-700-black-font-weight: 700;
+  --font-weight-string-600-bold-italic-font-weight: Bold Italic;
+  --font-weight-string-600-bold-font-weight: 600;
+  --font-weight-string-500-medium-font-weight: 500;
+  --font-weight-string-400-book-font-weight: 400;
+  --font-weight-string-350-book-font-weight: 350;
+  --font-weight-string-200-extra-light-font-weight: 200;
+  --font-weight-string-100-thin-font-weight: 100;
+  --letter-spacing-letter-space3: 3; /** This variable is a primitive for use in creating semantic text styles that need to use a much larger letter spacing value of 3. Text styles that have smaller font sizes should use increasingly positive values for their letter spacings on smaller device sizes. */
+  --letter-spacing-letter-space2: 2; /** This variable is a primitive for use in creating semantic text styles that need to use a large letter spacing value of 2. */
+  --letter-spacing-letter-space1: 1; /** This variable is a primitive for use in creating semantic text styles that need to use a positive letter spacing value of 1. */
+  --letter-spacing-letter-space0-5: 0.5; /** This variable is a primitive for use in creating semantic text styles that need to use a slight positive letter spacing value of 0.5. */
+  --letter-spacing-letter-space0-25: 0.25; /** This variable is a primitive for use in creating semantic text styles that need to use a subtle positive letter spacing value of 0.25. */
+  --letter-spacing-letter-space-0-25: -0.25; /** This variable is a primitive for use in creating semantic text styles that need to use a subtle small letter spacing value of -0.25. */
+  --letter-spacing-letter-space-0-5: -0.5; /** This variable is a primitive for use in creating semantic variables that need to use a subtle negative letter spacing value of -0.5. */
+  --letter-spacing-letter-space-1: -1; /** This variable is a primitive for use in creating semantic variables that need to use a negative letter spacing value of -1. */
+  --letter-spacing-letter-space-2: -2; /** This variable is a primitive for use in creating semantic text styles that need to use a large negative letter spacing value of -2. This is usually reserved for large texts styles that are used on titles or headlines. */
+  --letter-spacing-letter-space-3: -3; /** This variable is a primitive for use in creating semantic text styles that need to use a large negative letter spacing value of -3. Text styles that have larger font sizes should use increasingly negative values for their letter spacings on larger device sizes. */
+}

@@ -1,0 +1,81 @@
+{
+  "generated": "2025-11-20T16:58:19.878Z",
+  "version": "1.0.0",
+  "layers": {
+    "base": {
+      "files": [
+        "primitive-color-value-global.css",
+        "primitive-color-value.css",
+        "primitive-color-value.js",
+        "primitive-color-value.json",
+        "primitive-color-value.scss",
+        "primitive-font-value-global.css",
+        "primitive-font-value.css",
+        "primitive-font-value.js",
+        "primitive-font-value.json",
+        "primitive-font-value.scss",
+        "primitive-size-value-global.css",
+        "primitive-size-value.css",
+        "primitive-size-value.js",
+        "primitive-size-value.json",
+        "primitive-size-value.scss",
+        "primitive-space-value-global.css",
+        "primitive-space-value.css",
+        "primitive-space-value.js",
+        "primitive-space-value.json",
+        "primitive-space-value.scss"
+      ],
+      "path": "dist/base/"
+    },
+    "mapping": {
+      "files": [
+        "brand-advertorial-global.css",
+        "brand-advertorial.css",
+        "brand-advertorial.js",
+        "brand-advertorial.json",
+        "brand-advertorial.scss",
+        "brand-bild-global.css",
+        "brand-bild.css",
+        "brand-bild.js",
+        "brand-bild.json",
+        "brand-bild.scss",
+        "brand-color-bild-global.css",
+        "brand-color-bild.css",
+        "brand-color-bild.js",
+        "brand-color-bild.json",
+        "brand-color-bild.scss",
+        "brand-color-sportbild-global.css",
+        "brand-color-sportbild.css",
+        "brand-color-sportbild.js",
+        "brand-color-sportbild.json",
+        "brand-color-sportbild.scss",
+        "brand-sportbild-global.css",
+        "brand-sportbild.css",
+        "brand-sportbild.js",
+        "brand-sportbild.json",
+        "brand-sportbild.scss"
+      ],
+      "path": "dist/mapping/"
+    },
+    "density": {
+      "files": [
+        "density-compact-global.css",
+        "density-compact.css",
+        "density-compact.js",
+        "density-compact.json",
+        "density-compact.scss",
+        "density-default-global.css",
+        "density-default.css",
+        "density-default.js",
+        "density-default.json",
+        "density-default.scss",
+        "density-spacious-global.css",
+        "density-spacious.css",
+        "density-spacious.js",
+        "density-spacious.json",
+        "density-spacious.scss"
+      ],
+      "path": "dist/density/"
+    }
+  }
+}
