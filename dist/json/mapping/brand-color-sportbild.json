@@ -1,94 +1,94 @@
 {
   "Global": {
     "Core": {
-      "coreColorPrimary": "rgba(10, 38, 79, 1)",
-      "coreColorSecondary": "rgba(255, 255, 255, 1)",
-      "coreColorSecondaryDark": "rgba(8, 23, 41, 1)",
-      "coreColorTertiary": "rgba(8, 23, 41, 1)",
-      "coreColorTertiaryDark": "rgba(255, 255, 255, 1)"
+      "coreColorPrimary": "#0a264f",
+      "coreColorSecondary": "#ffffff",
+      "coreColorSecondaryDark": "#081729",
+      "coreColorTertiary": "#081729",
+      "coreColorTertiaryDark": "#ffffff"
     },
     "Attention": {
-      "accentColorPrimary": "rgba(23, 69, 130, 1)",
-      "accentColorPrimaryDark": "rgba(247, 250, 252, 1)"
+      "accentColorPrimary": "#174582",
+      "accentColorPrimaryDark": "#f7fafc"
     },
     "Surface": {
-      "surfaceColorPrimary": "rgba(255, 255, 255, 1)",
-      "surfaceColorPrimaryDark": "rgba(8, 23, 41, 1)",
-      "surfaceColorSecondary": "rgba(247, 250, 252, 1)",
-      "surfaceColorSecondaryDark": "rgba(10, 38, 79, 1)",
-      "surfaceColorTertiary": "rgba(189, 201, 219, 1)",
-      "surfaceColorTertiaryDark": "rgba(23, 69, 130, 1)",
-      "surfaceColorQuartenary": "rgba(207, 212, 217, 1)",
-      "surfaceColorQuartenaryDark": "rgba(74, 82, 89, 1)"
+      "surfaceColorPrimary": "#ffffff",
+      "surfaceColorPrimaryDark": "#081729",
+      "surfaceColorSecondary": "#f7fafc",
+      "surfaceColorSecondaryDark": "#0a264f",
+      "surfaceColorTertiary": "#bdc9db",
+      "surfaceColorTertiaryDark": "#174582",
+      "surfaceColorQuartenary": "#cfd4d9",
+      "surfaceColorQuartenaryDark": "#4a5259"
     },
     "State": {
-      "colorPrimaryActive": "rgba(23, 69, 130, 1)",
-      "colorPrimaryActiveDark": "rgba(247, 250, 252, 1)"
+      "colorPrimaryActive": "#174582",
+      "colorPrimaryActiveDark": "#f7fafc"
     },
     "Text": {
-      "textColorPrimary": "rgba(36, 38, 41, 1)",
-      "textColorPrimaryDark": "rgba(232, 237, 240, 1)",
-      "textColorSecondary": "rgba(140, 145, 150, 1)",
-      "textColorSecondaryDark": "rgba(140, 145, 150, 1)",
-      "headlineColorPrimary": "rgba(10, 38, 79, 1)",
-      "headlineColorPrimaryDark": "rgba(255, 255, 255, 1)",
-      "kickerTextColorOnBg": "rgba(255, 255, 255, 1)",
-      "kickerTextColorOnSurface": "rgba(140, 145, 150, 1)",
-      "kickerTextColorOnSurfaceDark": "rgba(140, 145, 150, 1)",
-      "kickerBgColorOnSurface": "rgba(23, 69, 130, 1)",
-      "kickerBgColorOnSurfaceDark": "rgba(140, 145, 150, 1)"
+      "textColorPrimary": "#242629",
+      "textColorPrimaryDark": "#e8edf0",
+      "textColorSecondary": "#8c9196",
+      "textColorSecondaryDark": "#8c9196",
+      "headlineColorPrimary": "#0a264f",
+      "headlineColorPrimaryDark": "#ffffff",
+      "kickerTextColorOnBg": "#ffffff",
+      "kickerTextColorOnSurface": "#8c9196",
+      "kickerTextColorOnSurfaceDark": "#8c9196",
+      "kickerBgColorOnSurface": "#174582",
+      "kickerBgColorOnSurfaceDark": "#8c9196"
     }
   },
   "Component": {
     "Avatar": {
-      "avatarLabelColor": "rgba(102, 107, 112, 1)",
-      "avatarLabelColorDark": "rgba(232, 237, 240, 1)",
-      "avatarLabelColorHover": "rgba(23, 69, 130, 1)"
+      "avatarLabelColor": "#666b70",
+      "avatarLabelColorDark": "#e8edf0",
+      "avatarLabelColorHover": "#174582"
     },
-    "chipColorActive": "rgba(23, 69, 130, 1)",
+    "chipColorActive": "#174582",
     "BreakingNews": {
-      "breakingNewsTopTitleTextColor": "rgba(255, 191, 0, 1)",
-      "breakingNewsBottomTitleTextColor": "rgba(255, 255, 255, 1)",
-      "breakingNewsTitleSurfaceColor": "rgba(10, 38, 79, 1)",
-      "breakingNewsSurfaceColor": "rgba(255, 191, 0, 1)",
-      "breakingNewsSurfaceColorDark": "rgba(255, 191, 0, 1)",
-      "breakingNewsTextContentColor": "rgba(36, 38, 41, 1)",
-      "breakingNewsTextContentColorDark": "rgba(36, 38, 41, 1)"
+      "breakingNewsTopTitleTextColor": "#ffbf00",
+      "breakingNewsBottomTitleTextColor": "#ffffff",
+      "breakingNewsTitleSurfaceColor": "#0a264f",
+      "breakingNewsSurfaceColor": "#ffbf00",
+      "breakingNewsSurfaceColorDark": "#ffbf00",
+      "breakingNewsTextContentColor": "#242629",
+      "breakingNewsTextContentColorDark": "#242629"
     },
     "Button": {
       "PrimaryBrand": {
-        "buttonPrimaryBgColorIdle": "rgba(23, 69, 130, 1)",
-        "buttonPrimaryBgColorHover": "rgba(10, 38, 79, 1)",
-        "buttonPrimaryBgColorIdleDark": "rgba(48, 89, 153, 1)",
-        "buttonPrimaryBgColorHoverDark": "rgba(23, 69, 130, 1)"
+        "buttonPrimaryBgColorIdle": "#174582",
+        "buttonPrimaryBgColorHover": "#0a264f",
+        "buttonPrimaryBgColorIdleDark": "#305999",
+        "buttonPrimaryBgColorHoverDark": "#174582"
       },
       "PrimaryNeutral": {
-        "buttonPrimaryBgColorIdle": "rgba(36, 38, 41, 1)",
-        "buttonPrimaryBgColorHover": "rgba(74, 82, 89, 1)",
-        "buttonPrimaryBgColorIdleDark": "rgba(255, 255, 255, 1)",
-        "buttonPrimaryBgColorHoverDark": "rgba(189, 201, 219, 1)"
+        "buttonPrimaryBgColorIdle": "#242629",
+        "buttonPrimaryBgColorHover": "#4a5259",
+        "buttonPrimaryBgColorIdleDark": "#ffffff",
+        "buttonPrimaryBgColorHoverDark": "#bdc9db"
       }
     },
     "Menu": {
-      "menuLinkLaneSurfaceColor": "rgba(10, 38, 79, 1)",
-      "menuLinkLaneSurfaceColorDark": "rgba(10, 38, 79, 1)",
-      "menuLinkLaneLabelColor": "rgba(207, 212, 217, 1)",
-      "menuLinkLaneLabelColorActive": "rgba(255, 255, 255, 1)",
-      "menuLinkLaneLabelColorDark": "rgba(173, 181, 186, 1)",
-      "menuLinkColorBorderActive": "rgba(10, 38, 79, 1)",
-      "menuLinkColorBorderActiveDark": "rgba(247, 250, 252, 1)",
-      "appBottomTabBarBgColor": "rgba(255, 255, 255, 1)",
-      "appTopBarBgColorDark": "rgba(10, 38, 79, 1)",
-      "appBottomTabBarBgDark": "rgba(10, 38, 79, 1)",
-      "appTopBarSurfaceColor": "rgba(10, 38, 79, 1)",
-      "appTopBarIconColor": "rgba(140, 145, 150, 1)",
-      "appTopBarIconColorDark": "rgba(140, 145, 150, 1)",
-      "appTopBarTextColor": "rgba(232, 237, 240, 1)",
-      "appTopBarTextColorDark": "rgba(232, 237, 240, 1)",
-      "appTobBarTabNavBottomBorder": "rgba(23, 69, 130, 1)",
-      "appTobBarTabNavBottomBorderDark": "rgba(23, 69, 130, 1)",
-      "appTobBarTabNavBottomBorderActive": "rgba(207, 212, 217, 1)",
-      "appTobBarTabNavBottomBorderActiveDark": "rgba(255, 255, 255, 1)"
+      "menuLinkLaneSurfaceColor": "#0a264f",
+      "menuLinkLaneSurfaceColorDark": "#0a264f",
+      "menuLinkLaneLabelColor": "#cfd4d9",
+      "menuLinkLaneLabelColorActive": "#ffffff",
+      "menuLinkLaneLabelColorDark": "#adb5ba",
+      "menuLinkColorBorderActive": "#0a264f",
+      "menuLinkColorBorderActiveDark": "#f7fafc",
+      "appBottomTabBarBgColor": "#ffffff",
+      "appTopBarBgColorDark": "#0a264f",
+      "appBottomTabBarBgDark": "#0a264f",
+      "appTopBarSurfaceColor": "#0a264f",
+      "appTopBarIconColor": "#8c9196",
+      "appTopBarIconColorDark": "#8c9196",
+      "appTopBarTextColor": "#e8edf0",
+      "appTopBarTextColorDark": "#e8edf0",
+      "appTobBarTabNavBottomBorder": "#174582",
+      "appTobBarTabNavBottomBorderDark": "#174582",
+      "appTobBarTabNavBottomBorderActive": "#cfd4d9",
+      "appTobBarTabNavBottomBorderActiveDark": "#ffffff"
     },
     "Teaser": {
       "teaserTitleBackgroundGradientStart": "rgba(10, 38, 79, 0.7)",

@@ -21,48 +21,48 @@
       "alphaBILDRed80": "rgba(222, 0, 0, 0.8)"
     },
     "blue": {
-      "BILDBlue": "rgba(0, 176, 255, 1)"
+      "BILDBlue": "#00b0ff"
     },
     "gray": {
-      "BILD096": "rgba(242, 245, 245, 1)",
-      "BILD093": "rgba(232, 237, 240, 1)",
-      "BILD085": "rgba(207, 212, 217, 1)",
+      "BILD096": "#f2f5f5",
+      "BILD093": "#e8edf0",
+      "BILD085": "#cfd4d9",
       "BILD085-50": "rgba(207, 212, 217, 0.5)",
-      "BILD073": "rgba(173, 181, 186, 1)",
-      "BILD060": "rgba(140, 145, 150, 1)",
-      "BILD045": "rgba(102, 107, 112, 1)",
-      "BILD035": "rgba(74, 82, 89, 1)",
-      "BILD025": "rgba(51, 61, 64, 1)",
-      "BILD020": "rgba(43, 48, 56, 1)",
-      "BILD015": "rgba(36, 38, 41, 1)",
-      "BILD010": "rgba(28, 28, 28, 1)"
+      "BILD073": "#adb5ba",
+      "BILD060": "#8c9196",
+      "BILD045": "#666b70",
+      "BILD035": "#4a5259",
+      "BILD025": "#333d40",
+      "BILD020": "#2b3038",
+      "BILD015": "#242629",
+      "BILD010": "#1c1c1c"
     },
     "green": {
       "BILDGreen093-50": "rgba(207, 245, 227, 0.5)",
-      "BILDGreen093": "rgba(207, 245, 227, 1)",
-      "BILDGreen070": "rgba(0, 194, 115, 1)",
-      "BILDGreen063": "rgba(0, 176, 102, 1)",
+      "BILDGreen093": "#cff5e3",
+      "BILDGreen070": "#00c273",
+      "BILDGreen063": "#00b066",
       "BILDGreen056-50": "rgba(0, 156, 89, 0.5)",
-      "BILDGreen056": "rgba(23, 153, 92, 1)",
-      "BILDGreen040": "rgba(0, 110, 61, 1)"
+      "BILDGreen056": "#17995c",
+      "BILDGreen040": "#006e3d"
     },
     "neutral": {
-      "BILD100": "rgba(255, 255, 255, 1)",
-      "BILDBlack": "rgba(0, 0, 0, 1)"
+      "BILD100": "#ffffff",
+      "BILDBlack": "#000000"
     },
     "red": {
-      "BILDRed053": "rgba(245, 46, 46, 1)",
-      "BILDRed": "rgba(222, 0, 0, 1)",
-      "BILDRed035": "rgba(176, 0, 3, 1)"
+      "BILDRed053": "#f52e2e",
+      "BILDRed": "#de0000",
+      "BILDRed035": "#b00003"
     },
     "orange": {
-      "BILDOrange": "rgba(252, 130, 38, 1)"
+      "BILDOrange": "#fc8226"
     },
     "purple": {
-      "BILDBerry": "rgba(84, 26, 56, 1)"
+      "BILDBerry": "#541a38"
     },
     "yellow": {
-      "BILDYellow": "rgba(255, 191, 0, 1)"
+      "BILDYellow": "#ffbf00"
     },
     "TextLabels": {
       "BILDRed": "BILDRed",
@@ -91,44 +91,44 @@
       "spobiBlue016-70": "rgba(10, 38, 79, 0.7)"
     },
     "blue": {
-      "spobiBlue098": "rgba(247, 250, 252, 1)",
-      "spobiBlue081": "rgba(189, 201, 219, 1)",
-      "spobiBlue038": "rgba(48, 89, 153, 1)",
-      "spobiBlue029": "rgba(23, 69, 130, 1)",
-      "spobiBlue016": "rgba(10, 38, 79, 1)",
-      "spobiBlue010": "rgba(8, 23, 41, 1)"
+      "spobiBlue098": "#f7fafc",
+      "spobiBlue081": "#bdc9db",
+      "spobiBlue038": "#305999",
+      "spobiBlue029": "#174582",
+      "spobiBlue016": "#0a264f",
+      "spobiBlue010": "#081729"
     },
     "red": {
-      "spobiRed": "rgba(230, 38, 41, 1)"
+      "spobiRed": "#e62629"
     }
   },
   "Partner": {
     "Aubi": {
-      "aubiCore": "rgba(240, 0, 0, 1)"
+      "aubiCore": "#f00000"
     },
     "Bz": {
-      "bzCore": "rgba(227, 0, 28, 1)"
+      "bzCore": "#e3001c"
     },
     "Travelbook": {
-      "travelbookCore": "rgba(143, 240, 237, 1)"
+      "travelbookCore": "#8ff0ed"
     },
     "Techbook": {
-      "techbookCore": "rgba(148, 227, 255, 1)"
+      "techbookCore": "#94e3ff"
     },
     "Kaufberater": {
-      "kaufberaterCore": "rgba(84, 71, 110, 1)"
+      "kaufberaterCore": "#54476e"
     },
     "ComputerBILD": {
-      "cobiCore": "rgba(219, 36, 28, 1)"
+      "cobiCore": "#db241c"
     },
     "Fitbook": {
-      "fitbookCore": "rgba(255, 150, 184, 1)"
+      "fitbookCore": "#ff96b8"
     },
     "Petbook": {
-      "petbookCore": "rgba(186, 219, 145, 1)"
+      "petbookCore": "#badb91"
     },
     "MyHome": {
-      "myhomeCore": "rgba(102, 204, 204, 1)"
+      "myhomeCore": "#66cccc"
     }
   },
   "Opacity": {

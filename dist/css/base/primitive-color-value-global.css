@@ -21,34 +21,34 @@
   --bild-alpha-alpha-white70: rgba(255, 255, 255, 0.7); /** Used on elevation effects. */
   --bild-alpha-alpha-white80: rgba(255, 255, 255, 0.8); /** Used on elevation effects. */
   --bild-alpha-alpha-bild-red80: rgba(222, 0, 0, 0.8); /** Used on elevation effects. */
-  --bild-blue-bild-blue: rgba(0, 176, 255, 1); /** This Blue color was taken from the Weather 2024 project. Tone: 069 */
-  --bild-gray-bild096: rgba(242, 245, 245, 1);
-  --bild-gray-bild093: rgba(232, 237, 240, 1);
-  --bild-gray-bild085: rgba(207, 212, 217, 1);
+  --bild-blue-bild-blue: #00b0ff; /** This Blue color was taken from the Weather 2024 project. Tone: 069 */
+  --bild-gray-bild096: #f2f5f5;
+  --bild-gray-bild093: #e8edf0;
+  --bild-gray-bild085: #cfd4d9;
   --bild-gray-bild085-50: rgba(207, 212, 217, 0.5); /** The 50% opacity on this color makes it equivalent to BILD093. */
-  --bild-gray-bild073: rgba(173, 181, 186, 1);
-  --bild-gray-bild060: rgba(140, 145, 150, 1);
-  --bild-gray-bild045: rgba(102, 107, 112, 1);
-  --bild-gray-bild035: rgba(74, 82, 89, 1);
-  --bild-gray-bild025: rgba(51, 61, 64, 1);
-  --bild-gray-bild020: rgba(43, 48, 56, 1);
-  --bild-gray-bild015: rgba(36, 38, 41, 1);
-  --bild-gray-bild010: rgba(28, 28, 28, 1);
+  --bild-gray-bild073: #adb5ba;
+  --bild-gray-bild060: #8c9196;
+  --bild-gray-bild045: #666b70;
+  --bild-gray-bild035: #4a5259;
+  --bild-gray-bild025: #333d40;
+  --bild-gray-bild020: #2b3038;
+  --bild-gray-bild015: #242629;
+  --bild-gray-bild010: #1c1c1c;
   --bild-green-bild-green093-50: rgba(207, 245, 227, 0.5);
-  --bild-green-bild-green093: rgba(207, 245, 227, 1);
-  --bild-green-bild-green070: rgba(0, 194, 115, 1);
-  --bild-green-bild-green063: rgba(0, 176, 102, 1);
+  --bild-green-bild-green093: #cff5e3;
+  --bild-green-bild-green070: #00c273;
+  --bild-green-bild-green063: #00b066;
   --bild-green-bild-green056-50: rgba(0, 156, 89, 0.5);
-  --bild-green-bild-green056: rgba(23, 153, 92, 1);
-  --bild-green-bild-green040: rgba(0, 110, 61, 1); /** This value of green was found in a text field's text color. */
-  --bild-neutral-bild100: rgba(255, 255, 255, 1);
-  --bild-neutral-bild-black: rgba(0, 0, 0, 1);
-  --bild-red-bild-red053: rgba(245, 46, 46, 1);
-  --bild-red-bild-red: rgba(222, 0, 0, 1); /** Tone 046 */
-  --bild-red-bild-red035: rgba(176, 0, 3, 1);
-  --bild-orange-bild-orange: rgba(252, 130, 38, 1); /** Tone: 067 */
-  --bild-purple-bild-berry: rgba(84, 26, 56, 1); /** Tone: 020 */
-  --bild-yellow-bild-yellow: rgba(255, 191, 0, 1); /** Tone: 081 */
+  --bild-green-bild-green056: #17995c;
+  --bild-green-bild-green040: #006e3d; /** This value of green was found in a text field's text color. */
+  --bild-neutral-bild100: #ffffff;
+  --bild-neutral-bild-black: #000000;
+  --bild-red-bild-red053: #f52e2e;
+  --bild-red-bild-red: #de0000; /** Tone 046 */
+  --bild-red-bild-red035: #b00003;
+  --bild-orange-bild-orange: #fc8226; /** Tone: 067 */
+  --bild-purple-bild-berry: #541a38; /** Tone: 020 */
+  --bild-yellow-bild-yellow: #ffbf00; /** Tone: 081 */
   --bild-text-labels-bild-red: BILDRed; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
   --bild-text-labels-bild100: BILD100; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
   --bild-text-labels-bild096: BILD096; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
@@ -69,22 +69,22 @@
   --bild-text-labels-bild-green063: BILDGreen063; /** This is a variable used only for documentation purposes in the design system Figma Foundations pages. */
   --sport-bild-alpha-spobi-blue016-0: rgba(10, 38, 79, 0);
   --sport-bild-alpha-spobi-blue016-70: rgba(10, 38, 79, 0.7);
-  --sport-bild-blue-spobi-blue098: rgba(247, 250, 252, 1);
-  --sport-bild-blue-spobi-blue081: rgba(189, 201, 219, 1);
-  --sport-bild-blue-spobi-blue038: rgba(48, 89, 153, 1);
-  --sport-bild-blue-spobi-blue029: rgba(23, 69, 130, 1); /** This variable in the current online CSS is called secondary-tenant-color */
-  --sport-bild-blue-spobi-blue016: rgba(10, 38, 79, 1); /** This variable in the current online CSS is called main-tenant-color for the spobi tenant. */
-  --sport-bild-blue-spobi-blue010: rgba(8, 23, 41, 1);
-  --sport-bild-red-spobi-red: rgba(230, 38, 41, 1);
-  --partner-aubi-aubi-core: rgba(240, 0, 0, 1);
-  --partner-bz-bz-core: rgba(227, 0, 28, 1);
-  --partner-travelbook-travelbook-core: rgba(143, 240, 237, 1);
-  --partner-techbook-techbook-core: rgba(148, 227, 255, 1);
-  --partner-kaufberater-kaufberater-core: rgba(84, 71, 110, 1);
-  --partner-computer-bild-cobi-core: rgba(219, 36, 28, 1);
-  --partner-fitbook-fitbook-core: rgba(255, 150, 184, 1);
-  --partner-petbook-petbook-core: rgba(186, 219, 145, 1);
-  --partner-my-home-myhome-core: rgba(102, 204, 204, 1);
+  --sport-bild-blue-spobi-blue098: #f7fafc;
+  --sport-bild-blue-spobi-blue081: #bdc9db;
+  --sport-bild-blue-spobi-blue038: #305999;
+  --sport-bild-blue-spobi-blue029: #174582; /** This variable in the current online CSS is called secondary-tenant-color */
+  --sport-bild-blue-spobi-blue016: #0a264f; /** This variable in the current online CSS is called main-tenant-color for the spobi tenant. */
+  --sport-bild-blue-spobi-blue010: #081729;
+  --sport-bild-red-spobi-red: #e62629;
+  --partner-aubi-aubi-core: #f00000;
+  --partner-bz-bz-core: #e3001c;
+  --partner-travelbook-travelbook-core: #8ff0ed;
+  --partner-techbook-techbook-core: #94e3ff;
+  --partner-kaufberater-kaufberater-core: #54476e;
+  --partner-computer-bild-cobi-core: #db241c;
+  --partner-fitbook-fitbook-core: #ff96b8;
+  --partner-petbook-petbook-core: #badb91;
+  --partner-my-home-myhome-core: #66cccc;
   --opacity-opacity05: 5;
   --opacity-opacity10: 10;
   --opacity-opacity20: 20;
