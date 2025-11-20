@@ -17,7 +17,8 @@ const TOKENS_DIR = path.join(__dirname, '../tokens');
 const DIST_DIR = path.join(__dirname, '../dist');
 
 /**
- * Mapping von Collection-Namen zu Output-Strukturen
+ * Mapping von Collection-IDs zu Output-Strukturen
+ * Verwendet stabile Collection IDs aus Figma statt Namen für Robustheit bei Umbenennungen
  */
 const COLLECTION_CONFIG = {
   // Semantic Layer - ColorMode (brand-specific)
@@ -26,7 +27,8 @@ const COLLECTION_CONFIG = {
     category: 'color',
     modes: ['light', 'dark'],
     outputPrefix: 'color',
-    figmaCollectionName: 'ColorMode',
+    figmaCollectionId: 'VariableCollectionId:588:1979',
+    figmaCollectionName: 'ColorMode',  // Nur für Logging
     brandSpecific: true,
     brands: ['bild', 'sportbild', 'advertorial']
   },
@@ -37,7 +39,8 @@ const COLLECTION_CONFIG = {
     category: 'breakpoints',
     modes: ['xs-320px', 'sm-390px-compact', 'md-600px', 'lg-1024px-regular'],
     outputPrefix: 'breakpoint',
-    figmaCollectionName: 'BreakpointMode',
+    figmaCollectionId: 'VariableCollectionId:7017:25696',
+    figmaCollectionName: 'BreakpointMode',  // Nur für Logging
     brandSpecific: true,
     brands: ['bild', 'sportbild', 'advertorial'],
     modeMapping: {
@@ -54,7 +57,8 @@ const COLLECTION_CONFIG = {
     category: 'density',
     modes: ['compact', 'default', 'spacious'],
     outputPrefix: 'density',
-    figmaCollectionName: 'Density',
+    figmaCollectionId: 'VariableCollectionId:5695:5841',
+    figmaCollectionName: 'Density',  // Nur für Logging
     brandSpecific: false
   },
 
@@ -64,7 +68,8 @@ const COLLECTION_CONFIG = {
     category: 'brand',
     modes: ['bild', 'sportbild', 'advertorial'],
     outputPrefix: 'brand',
-    figmaCollectionName: 'BrandTokenMapping',
+    figmaCollectionId: 'VariableCollectionId:18038:10593',
+    figmaCollectionName: 'BrandTokenMapping',  // Nur für Logging
     brandSpecific: false
   },
 
@@ -74,7 +79,8 @@ const COLLECTION_CONFIG = {
     category: 'brand-color',
     modes: ['bild', 'sportbild'],
     outputPrefix: 'brand-color',
-    figmaCollectionName: 'BrandColorMapping',
+    figmaCollectionId: 'VariableCollectionId:18212:14495',
+    figmaCollectionName: 'BrandColorMapping',  // Nur für Logging
     brandSpecific: false
   },
 
@@ -84,7 +90,8 @@ const COLLECTION_CONFIG = {
     category: 'color-primitive',
     modes: ['value'],
     outputPrefix: 'primitive-color',
-    figmaCollectionName: '_ColorPrimitive',
+    figmaCollectionId: 'VariableCollectionId:539:2238',
+    figmaCollectionName: '_ColorPrimitive',  // Nur für Logging
     brandSpecific: false
   },
 
@@ -93,7 +100,8 @@ const COLLECTION_CONFIG = {
     category: 'space-primitive',
     modes: ['value'],
     outputPrefix: 'primitive-space',
-    figmaCollectionName: '_SpacePrimitive',
+    figmaCollectionId: 'VariableCollectionId:2726:12077',
+    figmaCollectionName: '_SpacePrimitive',  // Nur für Logging
     brandSpecific: false
   },
 
@@ -102,7 +110,8 @@ const COLLECTION_CONFIG = {
     category: 'size-primitive',
     modes: ['value'],
     outputPrefix: 'primitive-size',
-    figmaCollectionName: '_SizePrimitive',
+    figmaCollectionId: 'VariableCollectionId:4072:1817',
+    figmaCollectionName: '_SizePrimitive',  // Nur für Logging
     brandSpecific: false
   },
 
@@ -111,7 +120,8 @@ const COLLECTION_CONFIG = {
     category: 'font-primitive',
     modes: ['value'],
     outputPrefix: 'primitive-font',
-    figmaCollectionName: '_FontPrimitive',
+    figmaCollectionId: 'VariableCollectionId:470:1450',
+    figmaCollectionName: '_FontPrimitive',  // Nur für Logging
     brandSpecific: false
   }
 };
@@ -124,7 +134,7 @@ const COLLECTION_CONFIG = {
  * @param {string|null} brand - Brand-Name (für brand-spezifische Builds)
  */
 function createStyleDictionaryConfig(collectionDir, modeName, config, brand = null) {
-  const { layer, category, outputPrefix, modeMapping, figmaCollectionName } = config;
+  const { layer, category, outputPrefix, modeMapping, figmaCollectionId, figmaCollectionName } = config;
   const outputMode = modeMapping && modeMapping[modeName] ? modeMapping[modeName] : modeName;
 
   // Brand-spezifische Pfad- und Dateinamen-Anpassung
@@ -146,7 +156,8 @@ function createStyleDictionaryConfig(collectionDir, modeName, config, brand = nu
 
     // Für andere Layer: Nur Tokens der aktuellen Collection exportieren
     if (token.$extensions && token.$extensions['com.figma']) {
-      return token.$extensions['com.figma'].collectionName === figmaCollectionName;
+      // Verwende Collection ID (stabil) statt Name (kann sich ändern)
+      return token.$extensions['com.figma'].collectionId === figmaCollectionId;
     }
 
     // Fallback: Token ohne Metadaten nicht exportieren (verhindert Kollisionen)

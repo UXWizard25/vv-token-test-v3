@@ -23,16 +23,19 @@ const TYPE_MAPPING = {
 };
 
 // Brand-spezifische Collections Konfiguration
+// Verwendet stabile Collection IDs aus Figma statt Namen für Robustheit bei Umbenennungen
 const BRAND_SPECIFIC_COLLECTIONS = {
-  'ColorMode': {
+  'VariableCollectionId:588:1979': {  // ColorMode
+    collectionName: 'ColorMode',  // Nur für Logging
     brandSpecific: true,
     brands: ['bild', 'sportbild', 'advertorial'],
-    brandCollections: ['BrandTokenMapping', 'BrandColorMapping']
+    brandCollectionIds: ['VariableCollectionId:18038:10593', 'VariableCollectionId:18212:14495']  // BrandTokenMapping, BrandColorMapping
   },
-  'BreakpointMode': {
+  'VariableCollectionId:7017:25696': {  // BreakpointMode
+    collectionName: 'BreakpointMode',  // Nur für Logging
     brandSpecific: true,
     brands: ['bild', 'sportbild', 'advertorial'],
-    brandCollections: ['BrandTokenMapping']
+    brandCollectionIds: ['VariableCollectionId:18038:10593']  // BrandTokenMapping
   }
 };
 
@@ -55,7 +58,8 @@ function createAliasLookup(collections) {
     collection.variables.forEach(variable => {
       lookup.set(variable.id, {
         name: variable.name,
-        collectionName: collection.name,
+        collectionId: collection.id,  // Stabile ID
+        collectionName: collection.name,  // Für Logging
         valuesByMode: variable.valuesByMode,
         resolvedType: variable.resolvedType,
         description: variable.description
@@ -72,13 +76,19 @@ function createAliasLookup(collections) {
 function createBrandModeMapping(collections) {
   const brandModeMap = {};
 
+  // Brand Collection IDs
+  const BRAND_COLLECTION_IDS = [
+    'VariableCollectionId:18038:10593',  // BrandTokenMapping
+    'VariableCollectionId:18212:14495'   // BrandColorMapping
+  ];
+
   collections.forEach(collection => {
-    if (collection.name === 'BrandTokenMapping' || collection.name === 'BrandColorMapping') {
-      brandModeMap[collection.name] = {};
+    if (BRAND_COLLECTION_IDS.includes(collection.id)) {
+      brandModeMap[collection.id] = {};
 
       collection.modes.forEach(mode => {
         const brandName = mode.name.toLowerCase();
-        brandModeMap[collection.name][brandName] = mode.modeId;
+        brandModeMap[collection.id][brandName] = mode.modeId;
       });
     }
   });
@@ -223,9 +233,10 @@ function resolveAliasValue(aliasString, aliasLookup, modeId, brandModeMap, targe
   let targetModeId = modeId;
 
   // Wenn das referenzierte Token aus einer Brand-Collection kommt, verwende den Brand-spezifischen Mode
-  if (targetBrand && (referencedToken.collectionName === 'BrandTokenMapping' || referencedToken.collectionName === 'BrandColorMapping')) {
-    if (brandModeMap[referencedToken.collectionName] && brandModeMap[referencedToken.collectionName][targetBrand]) {
-      targetModeId = brandModeMap[referencedToken.collectionName][targetBrand];
+  // Verwende Collection ID (stabil) statt Name (kann sich ändern)
+  if (targetBrand && brandModeMap[referencedToken.collectionId]) {
+    if (brandModeMap[referencedToken.collectionId][targetBrand]) {
+      targetModeId = brandModeMap[referencedToken.collectionId][targetBrand];
     }
   }
 
@@ -338,7 +349,8 @@ function processCollection(collection, aliasLookup) {
             type: TYPE_MAPPING[variable.resolvedType] || 'other',
             $extensions: {
               'com.figma': {
-                collectionName: collection.name,
+                collectionId: collection.id,  // Stabile ID
+                collectionName: collection.name,  // Für Logging
                 variableId: variable.id
               }
             }
@@ -360,7 +372,7 @@ function processCollection(collection, aliasLookup) {
 /**
  * Speichert die verarbeiteten Tokens (brand-aware)
  */
-function saveTokens(collectionName, modeTokens, aliasLookup, modeMetadata, brandModeMap) {
+function saveTokens(collectionId, collectionName, modeTokens, aliasLookup, modeMetadata, brandModeMap) {
   // Erstelle Unterverzeichnis für Collection
   // Entferne führenden Unterstrich und bereinige den Namen
   const cleanCollectionName = collectionName
@@ -376,8 +388,8 @@ function saveTokens(collectionName, modeTokens, aliasLookup, modeMetadata, brand
     fs.mkdirSync(collectionDir, { recursive: true });
   }
 
-  // Prüfe, ob Collection brand-spezifisch ist
-  const brandConfig = BRAND_SPECIFIC_COLLECTIONS[collectionName];
+  // Prüfe, ob Collection brand-spezifisch ist (verwende Collection ID statt Name)
+  const brandConfig = BRAND_SPECIFIC_COLLECTIONS[collectionId];
 
   if (brandConfig && brandConfig.brandSpecific) {
     // Brand-spezifische Collection: Erstelle separate Dateien für jede Brand
@@ -468,7 +480,7 @@ function main() {
 
   figmaData.collections.forEach(collection => {
     const { results, modeMetadata } = processCollection(collection, aliasLookup);
-    saveTokens(collection.name, results, aliasLookup, modeMetadata, brandModeMap);
+    saveTokens(collection.id, collection.name, results, aliasLookup, modeMetadata, brandModeMap);
   });
 
   // Erstelle Index-Datei mit Metadaten
