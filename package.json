@@ -1,0 +1,26 @@
+{
+  "name": "bild-design-system-tokens",
+  "version": "1.0.0",
+  "description": "BILD Design System Token Pipeline mit Style Dictionary",
+  "main": "index.js",
+  "scripts": {
+    "preprocess": "node scripts/preprocess-figma-tokens.js",
+    "build:tokens": "npm run preprocess && node scripts/build-tokens.js",
+    "build": "npm run build:tokens",
+    "watch": "nodemon --watch src/design-tokens --ext json --exec npm run build:tokens",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "design-tokens",
+    "style-dictionary",
+    "figma",
+    "design-system"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "style-dictionary": "^4.2.0",
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {}
+}
