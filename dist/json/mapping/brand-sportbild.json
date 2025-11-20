@@ -1,0 +1,390 @@
+{
+  "Global": {
+    "Typography": {
+      "FontFamily": {
+        "displayFontFamily": "AntennaCond",
+        "headlineFontFamily": "AntennaExtraCond",
+        "subheadlineFontFamily": "AntennaCond",
+        "kickerFontFamily": "AntennaExtraCond",
+        "titleFontFamily": "AntennaCond",
+        "calloutFontFamily": "AntennaCond",
+        "bodyFontFamily": "Inter",
+        "footnoteFontFamily": "Inter",
+        "labelFontFamily": "AntennaExtraCond",
+        "quoteFontFamily": "AntennaCond"
+      },
+      "FontSize": {
+        "Display": {
+          "display1FontSizeXS": 38,
+          "display1FontSizeSM": 38,
+          "display1FontSizeMD": 68,
+          "display1FontSizeLG": 114,
+          "display2FontSizeXS": 34,
+          "display2FontSizeSM": 34,
+          "display2FontSizeMD": 40,
+          "display2FontSizeLG": 61,
+          "display3FontSizeXS": 27,
+          "display3FontSizeSM": 27,
+          "display3FontSizeMD": 30,
+          "display3FontSizeLG": 38
+        },
+        "Headline": {
+          "headlineTextAlign": "left",
+          "headline1FontSizeXS": 42,
+          "headline1FontSizeSM": 42,
+          "headline1FontSizeMD": 60,
+          "headline1FontSizeLG": 80,
+          "headline2FontSizeXS": 42,
+          "headline2FontSizeSM": 42,
+          "headline2FontSizeMD": 44,
+          "headline2FontSizeLG": 50,
+          "headline3FontSizeXS": 30,
+          "headline3FontSizeSM": 30,
+          "headline3FontSizeMD": 30,
+          "headline3FontSizeLG": 34,
+          "headline4FontSizeXS": 21,
+          "headline4FontSizeSM": 21,
+          "headline4FontSizeMD": 26,
+          "headline4FontSizeLG": 26
+        },
+        "Subheadline": {
+          "subheadline1FontSizeXS": 18,
+          "subheadline1FontSizeSM": 18,
+          "subheadline1FontSizeMD": 22,
+          "subheadline1FontSizeLG": 26
+        },
+        "Kicker": {
+          "kicker1FontSizeXS": 20,
+          "kicker1FontSizeSM": 20,
+          "kicker1FontSizeMD": 26,
+          "kicker1FontSizeLG": 32,
+          "kicker2FontSizeXS": 16,
+          "kicker2FontSizeSM": 16,
+          "kicker2FontSizeMD": 26,
+          "kicker2FontSizeLG": 26,
+          "kicker3FontSizeXS": 16,
+          "kicker3FontSizeSM": 16,
+          "kicker3FontSizeMD": 20,
+          "kicker3FontSizeLG": 22,
+          "kicker4FontSizeXS": 14,
+          "kicker4FontSizeSM": 14,
+          "kicker4FontSizeMD": 16,
+          "kicker4FontSizeLG": 18
+        },
+        "Title": {
+          "title1FontSizeXS": 24,
+          "title1FontSizeSM": 24,
+          "title1FontSizeMD": 28,
+          "title1FontSizeLG": 30,
+          "title2FontSizeXS": 16,
+          "title2FontSizeSM": 16,
+          "title2FontSizeMD": 18,
+          "title2FontSizeLG": 20
+        },
+        "Callout": {
+          "callout1FontSizeXS": 18,
+          "callout1FontSizeSM": 18,
+          "callout1FontSizeMD": 24,
+          "callout1FontSizeLG": 24
+        },
+        "Body": {
+          "bodyFontSizeXS": 17,
+          "bodyFontSizeSM": 17,
+          "bodyFontSizeMD": 17,
+          "bodyFontSizeLG": 17
+        },
+        "Footnote": {
+          "footnote1FontSizeXS": 13,
+          "footnote1FontSizeSM": 13,
+          "footnote1FontSizeMD": 13,
+          "footnote1FontSizeLG": 15,
+          "footnote2FontSizeXS": 10,
+          "footnote2FontSizeSM": 10,
+          "footnote2FontSizeMD": 10,
+          "footnote2FontSizeLG": 13
+        },
+        "Label": {
+          "label1FontSize": 17,
+          "label1RespFontSizeXS": 10,
+          "label1RespFontSizeSM": 10,
+          "label1RespFontSizeMD": 15,
+          "label1RespFontSizeLG": 17,
+          "label2FontSize": 15,
+          "label3FontSize": 12,
+          "label4FontSize": 8
+        },
+        "Quote": {
+          "quoteFontSizeXS": 16,
+          "quoteFontSizeSM": 16,
+          "quoteFontSizeMD": 18,
+          "quoteFontSizeLG": 20
+        }
+      },
+      "LineHeight": {
+        "Display": {
+          "display1LineHeightXS": 40,
+          "display1LineHeightSM": 40,
+          "display1LineHeightMD": 72,
+          "display1LineHeightLG": 120,
+          "display2LineHeightXS": 36,
+          "display2LineHeightSM": 36,
+          "display2LineHeightMD": 42,
+          "display2LineHeightLG": 64,
+          "display3LineHeightXS": 28,
+          "display3LineHeightSM": 28,
+          "display3LineHeightMD": 32,
+          "display3LineHeightLG": 40
+        },
+        "Headline": {
+          "headline1LineHeightXS": 42,
+          "headline1LineHeightSM": 42,
+          "headline1LineHeightMD": 69,
+          "headline1LineHeightLG": 88,
+          "headline2LineHeightXS": 42,
+          "headline2LineHeightSM": 42,
+          "headline2LineHeightMD": 50.6,
+          "headline2LineHeightLG": 57.6,
+          "headline3LineHeightXS": 33,
+          "headline3LineHeightSM": 33,
+          "headline3LineHeightMD": 34.5,
+          "headline3LineHeightLG": 39.1,
+          "headline4LineHeightXS": 23.1,
+          "headline4LineHeightSM": 23.1,
+          "headline4LineHeightMD": 28.6,
+          "headline4LineHeightLG": 29.9
+        },
+        "Subheadline": {
+          "subheadline1LineHeightXS": 23.4,
+          "subheadline1LineHeightSM": 23.4,
+          "subheadline1LineHeightMD": 28.6,
+          "subheadline1LineHeightLG": 33.8
+        },
+        "Kicker": {
+          "kicker1LineHeightXS": 22,
+          "kicker1LineHeightSM": 22,
+          "kicker1LineHeightMD": 28.6,
+          "kicker1LineHeightLG": 35.2,
+          "kicker2LineHeightXS": 17.6,
+          "kicker2LineHeightSM": 17.6,
+          "kicker2LineHeightMD": 28.6,
+          "kicker2LineHeightLG": 28.6,
+          "kicker3LineHeightXS": 17.6,
+          "kicker3LineHeightSM": 17.6,
+          "kicker3LineHeightMD": 22,
+          "kicker3LineHeightLG": 24.2,
+          "kicker4LineHeightXS": 15.4,
+          "kicker4LineHeightSM": 15.4,
+          "kicker4LineHeightMD": 17.6,
+          "kicker4LineHeightLG": 19.8
+        },
+        "Title": {
+          "title1LineHeightXS": 26.4,
+          "title1LineHeightSM": 26.4,
+          "title1LineHeightMD": 30.8,
+          "title1LineHeightLG": 33,
+          "title2LineHeightXS": 16.8,
+          "title2LineHeightSM": 20.8,
+          "title2LineHeightMD": 23.4,
+          "title2LineHeightLG": 26
+        },
+        "Callout": {
+          "callout1LineHeightXS": 23.4,
+          "callout1LineHeightSM": 23.4,
+          "callout1LineHeightMD": 31.2,
+          "callout1LineHeightLG": 31.2
+        },
+        "Body": {
+          "bodyLineHeightXS": 28.05,
+          "bodyLineHeightSM": 28.05,
+          "bodyLineHeightMD": 29.75,
+          "bodyLineHeightLG": 28.05
+        },
+        "Footnote": {
+          "footnote1LineHeightXS": 17.03,
+          "footnote1LineHeightSM": 17.03,
+          "footnote1LineHeightMD": 17.03,
+          "footnote1LineHeightLG": 19,
+          "footnote2LineHeightXS": 13,
+          "footnote2LineHeightSM": 13,
+          "footnote2LineHeightMD": 13,
+          "footnote2LineHeightLG": 17.03
+        },
+        "Label": {
+          "label1LineHeight": 20.4,
+          "label1RespLineHeightXS": 12,
+          "label1RespLineHeightSM": 12,
+          "label1RespLineHeightMD": 18,
+          "label1RespLineHeightLG": 20.4,
+          "label2LineHeight": 19.2,
+          "label3LineHeight": 14.4,
+          "label4LineHeight": 10
+        },
+        "Quote": {
+          "quoteLineHeightXS": 20.8,
+          "quoteLineHeightSM": 20.8,
+          "quoteLineHeightMD": 23.4,
+          "quoteLineHeightLG": 26
+        }
+      },
+      "FontWeight": {
+        "Display": {
+          "displayFontWeight": 800
+        },
+        "Headline": {
+          "headline1FontWeight": 700,
+          "headline1FontWeightSt": "Bold Italic",
+          "headline2FontWeight": 700,
+          "headline2FontWeightSt": "Bold Italic",
+          "headline3FontWeight": 700,
+          "headline3FontWeightSt": "Bold Italic",
+          "headline4FontWeight": 700,
+          "headline4FontWeightSt": "Bold Italic"
+        },
+        "Subheadline": {
+          "subheadlineFontWeight": 700
+        },
+        "Kicker": {
+          "kickerFontWeight": 700,
+          "kickerFontWeightST": "Black Italic"
+        },
+        "Title": {
+          "titleFontWeight": 800
+        },
+        "Callout": {
+          "calloutFontWeight": 800
+        },
+        "Body": {
+          "bodyFontWeightBook": 400,
+          "bodyFontWeightBold": 700
+        },
+        "Footnote": {
+          "footnoteFontWeightBook": 400,
+          "footnoteFontWeightBold": 700
+        },
+        "Label": {
+          "labelFontWeightBook": 400,
+          "labelFontWeightBold": 700
+        },
+        "Quote": {
+          "quoteFontWeight": 800
+        }
+      }
+    },
+    "Visibilty": {
+      "hideOnBILD": true,
+      "hideOnAdvertorial": true,
+      "onlySportBILD": true
+    }
+  },
+  "Component": {
+    "buttonLabelFontWeightSt": "Bold Italic",
+    "Accordion": {
+      "accordionLabelFontFamily": "Inter"
+    },
+    "Article": {
+      "FontSize": {
+        "articleImageCaptionFontSizeXS": 13,
+        "articleImageCaptionFontSizeSM": 13,
+        "articleImageCaptionFontSizeMD": 13,
+        "articleImageCaptionFontSizeLG": 15,
+        "articleImageSourceFontSizeXS": 13,
+        "articleImageSourceFontSizeSM": 13,
+        "articleImageSourceFontSizeMD": 13,
+        "articleImageSourceFontSizeLG": 15
+      },
+      "LineHeight": {
+        "articleImageCaptionLineHeightXS": 16.9,
+        "articleImageCaptionLineHeightSM": 16.9,
+        "articleImageCaptionLineHeightMD": 16.9,
+        "articleImageCaptionLineHeightLG": 19.5,
+        "articleImageSourceLineHeightXS": 17,
+        "articleImageSourceLineHeightSM": 17,
+        "articleImageSourceLineHeightMD": 17,
+        "articleImageSourceLineHeightLG": 19
+      }
+    },
+    "Avatar": {
+      "avatarFontFamily": "Inter",
+      "avatarFontSizeSM": 13,
+      "avatarFontSizeLG": 15
+    },
+    "BreakingNews": {
+      "breakingNewsContentFontSize": 26
+    },
+    "Footer": {
+      "FooterLinkFontFamily": "Inter"
+    },
+    "Inputfield": {
+      "inputFieldLabelFontFamily": "Inter"
+    },
+    "MediaPlayer": {
+      "videoTimeBadgeFontFamily": "Inter"
+    },
+    "Menu": {
+      "menuItemFontSize": 18,
+      "menuItemFontWeight": "Black Italic",
+      "appTopBarTitleFontSizeXS": 12,
+      "appTopBarTitleFontSizeSM": 12,
+      "appTopBarTitleFontSizeMD": 13,
+      "appTopBarTitleFontSizeLG": 13,
+      "appTopBarTitleLineHeightXS": 14,
+      "appTopBarTitleLineHeightSM": 14,
+      "appTopBarTitleLineHeightMD": 17,
+      "appTopBarTitleLineHeightLG": 17
+    },
+    "Breadcrumb": {
+      "FontFamily": {
+        "breadcrumbFontFamily": "Inter"
+      },
+      "FontWeight": {
+        "breadcrumbFontWeight": 400
+      },
+      "FontSize": {
+        "breadcrumbFontSizeXS": 14,
+        "breadcrumbFontSizeSM": 14,
+        "breadcrumbFontSizeMD": 14,
+        "breadcrumbFontSizeLG": 11
+      },
+      "LineHeight": {
+        "breadcrumbLineHeightXS": 14,
+        "breadcrumbLineHeightSM": 14,
+        "breadcrumbLineHeightMD": 14,
+        "breadcrumbLineHeightLG": 11
+      }
+    },
+    "Teaser": {
+      "teaserTitleInlineSpaceXS": 12,
+      "teaserTitleInlineSpaceSM": 12,
+      "teaserTitleInlineSpaceMD": 16,
+      "teaserTitleInlineSpaceLG": 16,
+      "Quad": {
+        "qTeaserTitleInlineSpaceXS": 12,
+        "qTeaserTitleInlineSpaceSM": 12,
+        "qTeaserTitleInlineSpaceMD": 24,
+        "qTeaserTitleInlineSpaceLG": 24
+      },
+      "miniQ": {
+        "miniQTeaserTitleInlineSpaceXS": 12,
+        "miniQTeaserTitleInlineSpaceSM": 12,
+        "miniQTeaserTitleInlineSpaceMD": 12,
+        "miniQTeaserTitleInlineSpaceLG": 12
+      },
+      "aTeaser": {
+        "aTeaserTitleInlineSpaceXS": 12,
+        "aTeaserTitleInlineSpaceSM": 12,
+        "aTeaserTitleInlineSpaceMD": 16,
+        "aTeaserTitleInlineSpaceLG": 16
+      },
+      "superA": {
+        "superAteaserTitleInlineSpace": 24
+      },
+      "2xaTeaser": {
+        "2xaTeaserTitleInlineSpace": 16
+      },
+      "bTeaser": {
+        "bTeaserTitleInlineSpace": 16
+      }
+    }
+  },
+  "brandName": "SportBILD"
+}

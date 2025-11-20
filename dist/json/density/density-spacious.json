@@ -1,0 +1,16 @@
+{
+  "Component": {
+    "Button": {
+      "buttonLabelFontSize": 19,
+      "buttonContentGapSpace": 8,
+      "buttonInlineSpace": 24,
+      "buttonStackSpace": 12
+    },
+    "Inputfield": {
+      "inputFieldLabelFontSize": 19,
+      "inputFieldInlineSpace": 16,
+      "inputFieldHeightSize": 48,
+      "inputFieldStackSpace": 12
+    }
+  }
+}

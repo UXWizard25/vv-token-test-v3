@@ -1,0 +1,98 @@
+{
+  "Global": {
+    "Core": {
+      "coreColorPrimary": "#0a264f",
+      "coreColorSecondary": "#ffffff",
+      "coreColorSecondaryDark": "#081729",
+      "coreColorTertiary": "#081729",
+      "coreColorTertiaryDark": "#ffffff"
+    },
+    "Attention": {
+      "accentColorPrimary": "#174582",
+      "accentColorPrimaryDark": "#f7fafc"
+    },
+    "Surface": {
+      "surfaceColorPrimary": "#ffffff",
+      "surfaceColorPrimaryDark": "#081729",
+      "surfaceColorSecondary": "#f7fafc",
+      "surfaceColorSecondaryDark": "#0a264f",
+      "surfaceColorTertiary": "#bdc9db",
+      "surfaceColorTertiaryDark": "#174582",
+      "surfaceColorQuartenary": "#cfd4d9",
+      "surfaceColorQuartenaryDark": "#4a5259"
+    },
+    "State": {
+      "colorPrimaryActive": "#174582",
+      "colorPrimaryActiveDark": "#f7fafc"
+    },
+    "Text": {
+      "textColorPrimary": "#242629",
+      "textColorPrimaryDark": "#e8edf0",
+      "textColorSecondary": "#8c9196",
+      "textColorSecondaryDark": "#8c9196",
+      "headlineColorPrimary": "#0a264f",
+      "headlineColorPrimaryDark": "#ffffff",
+      "kickerTextColorOnBg": "#ffffff",
+      "kickerTextColorOnSurface": "#8c9196",
+      "kickerTextColorOnSurfaceDark": "#8c9196",
+      "kickerBgColorOnSurface": "#174582",
+      "kickerBgColorOnSurfaceDark": "#8c9196"
+    }
+  },
+  "Component": {
+    "Avatar": {
+      "avatarLabelColor": "#666b70",
+      "avatarLabelColorDark": "#e8edf0",
+      "avatarLabelColorHover": "#174582"
+    },
+    "chipColorActive": "#174582",
+    "BreakingNews": {
+      "breakingNewsTopTitleTextColor": "#ffbf00",
+      "breakingNewsBottomTitleTextColor": "#ffffff",
+      "breakingNewsTitleSurfaceColor": "#0a264f",
+      "breakingNewsSurfaceColor": "#ffbf00",
+      "breakingNewsSurfaceColorDark": "#ffbf00",
+      "breakingNewsTextContentColor": "#242629",
+      "breakingNewsTextContentColorDark": "#242629"
+    },
+    "Button": {
+      "PrimaryBrand": {
+        "buttonPrimaryBgColorIdle": "#174582",
+        "buttonPrimaryBgColorHover": "#0a264f",
+        "buttonPrimaryBgColorIdleDark": "#305999",
+        "buttonPrimaryBgColorHoverDark": "#174582"
+      },
+      "PrimaryNeutral": {
+        "buttonPrimaryBgColorIdle": "#242629",
+        "buttonPrimaryBgColorHover": "#4a5259",
+        "buttonPrimaryBgColorIdleDark": "#ffffff",
+        "buttonPrimaryBgColorHoverDark": "#bdc9db"
+      }
+    },
+    "Menu": {
+      "menuLinkLaneSurfaceColor": "#0a264f",
+      "menuLinkLaneSurfaceColorDark": "#0a264f",
+      "menuLinkLaneLabelColor": "#cfd4d9",
+      "menuLinkLaneLabelColorActive": "#ffffff",
+      "menuLinkLaneLabelColorDark": "#adb5ba",
+      "menuLinkColorBorderActive": "#0a264f",
+      "menuLinkColorBorderActiveDark": "#f7fafc",
+      "appBottomTabBarBgColor": "#ffffff",
+      "appTopBarBgColorDark": "#0a264f",
+      "appBottomTabBarBgDark": "#0a264f",
+      "appTopBarSurfaceColor": "#0a264f",
+      "appTopBarIconColor": "#8c9196",
+      "appTopBarIconColorDark": "#8c9196",
+      "appTopBarTextColor": "#e8edf0",
+      "appTopBarTextColorDark": "#e8edf0",
+      "appTobBarTabNavBottomBorder": "#174582",
+      "appTobBarTabNavBottomBorderDark": "#174582",
+      "appTobBarTabNavBottomBorderActive": "#cfd4d9",
+      "appTobBarTabNavBottomBorderActiveDark": "#ffffff"
+    },
+    "Teaser": {
+      "teaserTitleBackgroundGradientStart": "rgba(10, 38, 79, 0.7)",
+      "teaserTitleBackgroundGradientStop": "rgba(10, 38, 79, 0)"
+    }
+  }
+}

@@ -25,7 +25,8 @@ const COLLECTION_CONFIG = {
     layer: 'semantic',
     category: 'color',
     modes: ['light', 'dark'],
-    outputPrefix: 'color'
+    outputPrefix: 'color',
+    figmaCollectionName: 'ColorMode'
   },
 
   // Semantic Layer - BreakpointMode
@@ -34,6 +35,7 @@ const COLLECTION_CONFIG = {
     category: 'breakpoint',
     modes: ['xs-320px', 'sm-390px-compact', 'md-600px', 'lg-1024px-regular'],
     outputPrefix: 'breakpoint',
+    figmaCollectionName: 'BreakpointMode',
     modeMapping: {
       'xs-320px': 'xs',
       'sm-390px-compact': 'sm',
@@ -47,7 +49,8 @@ const COLLECTION_CONFIG = {
     layer: 'density',
     category: 'density',
     modes: ['compact', 'default', 'spacious'],
-    outputPrefix: 'density'
+    outputPrefix: 'density',
+    figmaCollectionName: 'Density'
   },
 
   // Mapping Layer - BrandTokenMapping
@@ -55,7 +58,8 @@ const COLLECTION_CONFIG = {
     layer: 'mapping',
     category: 'brand',
     modes: ['bild', 'sportbild', 'advertorial'],
-    outputPrefix: 'brand'
+    outputPrefix: 'brand',
+    figmaCollectionName: 'BrandTokenMapping'
   },
 
   // Mapping Layer - BrandColorMapping
@@ -63,7 +67,8 @@ const COLLECTION_CONFIG = {
     layer: 'mapping',
     category: 'brand-color',
     modes: ['bild', 'sportbild'],
-    outputPrefix: 'brand-color'
+    outputPrefix: 'brand-color',
+    figmaCollectionName: 'BrandColorMapping'
   },
 
   // Base Layer - Primitives
@@ -71,28 +76,32 @@ const COLLECTION_CONFIG = {
     layer: 'base',
     category: 'color-primitive',
     modes: ['value'],
-    outputPrefix: 'primitive-color'
+    outputPrefix: 'primitive-color',
+    figmaCollectionName: '_ColorPrimitive'
   },
 
   'spaceprimitive': {
     layer: 'base',
     category: 'space-primitive',
     modes: ['value'],
-    outputPrefix: 'primitive-space'
+    outputPrefix: 'primitive-space',
+    figmaCollectionName: '_SpacePrimitive'
   },
 
   'sizeprimitive': {
     layer: 'base',
     category: 'size-primitive',
     modes: ['value'],
-    outputPrefix: 'primitive-size'
+    outputPrefix: 'primitive-size',
+    figmaCollectionName: '_SizePrimitive'
   },
 
   'fontprimitive': {
     layer: 'base',
     category: 'font-primitive',
     modes: ['value'],
-    outputPrefix: 'primitive-font'
+    outputPrefix: 'primitive-font',
+    figmaCollectionName: '_FontPrimitive'
   }
 };
 
@@ -100,8 +109,24 @@ const COLLECTION_CONFIG = {
  * Erstellt eine Style Dictionary Konfiguration für einen spezifischen Mode
  */
 function createStyleDictionaryConfig(collectionDir, modeName, config) {
-  const { layer, category, outputPrefix, modeMapping } = config;
+  const { layer, category, outputPrefix, modeMapping, figmaCollectionName } = config;
   const outputMode = modeMapping && modeMapping[modeName] ? modeMapping[modeName] : modeName;
+
+  // Filter-Funktion: Exportiert nur Tokens der aktuellen Collection
+  const tokenFilter = (token) => {
+    // Für Base-Layer: Keine Filter, da keine Dependencies geladen werden
+    if (layer === 'base') {
+      return true;
+    }
+
+    // Für andere Layer: Nur Tokens der aktuellen Collection exportieren
+    if (token.$extensions && token.$extensions['com.figma']) {
+      return token.$extensions['com.figma'].collectionName === figmaCollectionName;
+    }
+
+    // Fallback: Token ohne Metadaten nicht exportieren (verhindert Kollisionen)
+    return false;
+  };
 
   // Token-Quelldatei
   const sourceFile = path.join(collectionDir, `${modeName}.json`);
@@ -111,44 +136,9 @@ function createStyleDictionaryConfig(collectionDir, modeName, config) {
     return null;
   }
 
-  // Für nicht-Base-Layer: Lade auch alle Primitive Tokens als Dependencies
+  // Alle Aliase wurden bereits im Preprocessing aufgelöst,
+  // daher müssen keine Dependencies geladen werden
   const sourceFiles = [sourceFile];
-
-  if (layer !== 'base') {
-    // Füge alle Primitive Token-Dateien hinzu, damit Aliase aufgelöst werden können
-    const primitiveCollections = ['colorprimitive', 'spaceprimitive', 'sizeprimitive', 'fontprimitive'];
-
-    primitiveCollections.forEach(primitiveName => {
-      const primitiveFile = path.join(TOKENS_DIR, primitiveName, 'value.json');
-      if (fs.existsSync(primitiveFile)) {
-        sourceFiles.push(primitiveFile);
-      }
-    });
-
-    // Für Semantic Layer: Füge auch Mapping und Density hinzu
-    if (layer === 'semantic') {
-      // Brand Mappings
-      const brandCollections = ['brandtokenmapping', 'brandcolormapping'];
-      brandCollections.forEach(brandName => {
-        const brandDir = path.join(TOKENS_DIR, brandName);
-        if (fs.existsSync(brandDir)) {
-          const brandModes = fs.readdirSync(brandDir).filter(f => f.endsWith('.json'));
-          brandModes.forEach(modeFile => {
-            sourceFiles.push(path.join(brandDir, modeFile));
-          });
-        }
-      });
-
-      // Density
-      const densityDir = path.join(TOKENS_DIR, 'density');
-      if (fs.existsSync(densityDir)) {
-        const densityModes = fs.readdirSync(densityDir).filter(f => f.endsWith('.json'));
-        densityModes.forEach(modeFile => {
-          sourceFiles.push(path.join(densityDir, modeFile));
-        });
-      }
-    }
-  }
 
   // Registriere Custom Transforms
   Object.entries(customConfig.transforms).forEach(([name, transform]) => {
@@ -171,18 +161,17 @@ function createStyleDictionaryConfig(collectionDir, modeName, config) {
     }
   });
 
-  const buildPath = `${DIST_DIR}/${layer}/`;
-
   return {
     source: sourceFiles,
     platforms: {
       // CSS Custom Properties
       css: {
         transforms: ['attribute/cti', 'name/kebab', 'color/css'],
-        buildPath: buildPath,
+        buildPath: `${DIST_DIR}/css/${layer}/`,
         files: [{
           destination: `${outputPrefix}-${outputMode}.css`,
           format: 'css/variables',
+          filter: tokenFilter,
           options: {
             selector: `:root[data-${category}="${outputMode}"]`,
             mode: outputMode,
@@ -195,10 +184,11 @@ function createStyleDictionaryConfig(collectionDir, modeName, config) {
       // CSS Custom Properties (global root)
       'css-global': {
         transforms: ['attribute/cti', 'name/kebab', 'color/css'],
-        buildPath: buildPath,
+        buildPath: `${DIST_DIR}/css/${layer}/`,
         files: [{
           destination: `${outputPrefix}-${outputMode}-global.css`,
           format: 'css/variables',
+          filter: tokenFilter,
           options: {
             selector: ':root',
             mode: outputMode,
@@ -211,10 +201,11 @@ function createStyleDictionaryConfig(collectionDir, modeName, config) {
       // SCSS Variables
       scss: {
         transforms: ['attribute/cti', 'name/kebab', 'color/css'],
-        buildPath: buildPath,
+        buildPath: `${DIST_DIR}/scss/${layer}/`,
         files: [{
           destination: `${outputPrefix}-${outputMode}.scss`,
           format: 'scss/variables',
+          filter: tokenFilter,
           options: {
             mode: outputMode,
             layer: layer,
@@ -226,10 +217,11 @@ function createStyleDictionaryConfig(collectionDir, modeName, config) {
       // JavaScript ES6
       js: {
         transforms: ['attribute/cti', 'name/js', 'color/css'],
-        buildPath: buildPath,
+        buildPath: `${DIST_DIR}/js/${layer}/`,
         files: [{
           destination: `${outputPrefix}-${outputMode}.js`,
           format: 'javascript/es6',
+          filter: tokenFilter,
           options: {
             mode: outputMode,
             layer: layer,
@@ -241,10 +233,11 @@ function createStyleDictionaryConfig(collectionDir, modeName, config) {
       // JSON (strukturiert)
       json: {
         transforms: ['attribute/cti', 'name/js', 'color/css'],
-        buildPath: buildPath,
+        buildPath: `${DIST_DIR}/json/${layer}/`,
         files: [{
           destination: `${outputPrefix}-${outputMode}.json`,
           format: 'json/nested',
+          filter: tokenFilter,
           options: {
             mode: outputMode,
             layer: layer,
@@ -268,59 +261,67 @@ function cleanDist() {
 }
 
 /**
- * Erstellt Index-Dateien für jede Layer
+ * Erstellt Index-Dateien für jede Platform
  */
 function createIndexFiles() {
   console.log('\n📝 Erstelle Index-Dateien...');
 
+  const platforms = ['css', 'scss', 'js', 'json'];
   const layers = ['base', 'mapping', 'density', 'semantic'];
 
-  layers.forEach(layer => {
-    const layerDir = path.join(DIST_DIR, layer);
+  platforms.forEach(platform => {
+    const platformDir = path.join(DIST_DIR, platform);
 
-    if (!fs.existsSync(layerDir)) {
+    if (!fs.existsSync(platformDir)) {
       return;
     }
 
-    // Liste alle CSS-Dateien
-    const cssFiles = fs.readdirSync(layerDir)
-      .filter(f => f.endsWith('.css') && !f.includes('-global'))
-      .sort();
+    // Erstelle Index für jede Layer innerhalb der Platform
+    layers.forEach(layer => {
+      const layerDir = path.join(platformDir, layer);
 
-    // Erstelle CSS Index
-    let cssIndex = `/**\n * ${layer.toUpperCase()} Layer - Index File\n * Importiert alle Token-Dateien dieser Layer\n */\n\n`;
-    cssFiles.forEach(file => {
-      cssIndex += `@import './${file}';\n`;
+      if (!fs.existsSync(layerDir)) {
+        return;
+      }
+
+      const files = fs.readdirSync(layerDir)
+        .filter(f => f.endsWith(`.${platform}`) && !f.includes('-global') && f !== 'index' + `.${platform}`)
+        .sort();
+
+      if (files.length === 0) return;
+
+      let indexContent = '';
+
+      if (platform === 'css') {
+        indexContent = `/**\n * ${layer.toUpperCase()} Layer - CSS Index\n * Importiert alle Token-Dateien dieser Layer\n */\n\n`;
+        files.forEach(file => {
+          indexContent += `@import './${file}';\n`;
+        });
+      } else if (platform === 'scss') {
+        indexContent = `//\n// ${layer.toUpperCase()} Layer - SCSS Index\n// Importiert alle Token-Dateien dieser Layer\n//\n\n`;
+        files.forEach(file => {
+          indexContent += `@import './${file}';\n`;
+        });
+      } else if (platform === 'js') {
+        indexContent = `/**\n * ${layer.toUpperCase()} Layer - JavaScript Index\n * Exportiert alle Token-Objekte dieser Layer\n */\n\n`;
+        files.forEach(file => {
+          const varName = file.replace('.js', '').replace(/-/g, '_');
+          indexContent += `import ${varName} from './${file}';\n`;
+        });
+        indexContent += `\nexport {\n`;
+        files.forEach(file => {
+          const varName = file.replace('.js', '').replace(/-/g, '_');
+          indexContent += `  ${varName},\n`;
+        });
+        indexContent += `};\n`;
+      }
+
+      if (indexContent) {
+        fs.writeFileSync(path.join(layerDir, `index.${platform}`), indexContent, 'utf8');
+      }
     });
 
-    fs.writeFileSync(path.join(layerDir, 'index.css'), cssIndex, 'utf8');
-
-    // Erstelle SCSS Index
-    const scssFiles = fs.readdirSync(layerDir).filter(f => f.endsWith('.scss')).sort();
-    let scssIndex = `//\n// ${layer.toUpperCase()} Layer - Index File\n// Importiert alle Token-Dateien dieser Layer\n//\n\n`;
-    scssFiles.forEach(file => {
-      scssIndex += `@import './${file}';\n`;
-    });
-
-    fs.writeFileSync(path.join(layerDir, 'index.scss'), scssIndex, 'utf8');
-
-    // Erstelle JS Index
-    const jsFiles = fs.readdirSync(layerDir).filter(f => f.endsWith('.js') && f !== 'index.js').sort();
-    let jsIndex = `/**\n * ${layer.toUpperCase()} Layer - Index File\n * Exportiert alle Token-Objekte dieser Layer\n */\n\n`;
-    jsFiles.forEach(file => {
-      const varName = file.replace('.js', '').replace(/-/g, '_');
-      jsIndex += `import ${varName} from './${file}';\n`;
-    });
-    jsIndex += `\nexport {\n`;
-    jsFiles.forEach(file => {
-      const varName = file.replace('.js', '').replace(/-/g, '_');
-      jsIndex += `  ${varName},\n`;
-    });
-    jsIndex += `};\n`;
-
-    fs.writeFileSync(path.join(layerDir, 'index.js'), jsIndex, 'utf8');
-
-    console.log(`  ✅ Index-Dateien erstellt für: ${layer}`);
+    console.log(`  ✅ Index-Dateien erstellt für Platform: ${platform}`);
   });
 }
 
@@ -333,26 +334,58 @@ function createManifest() {
   const manifest = {
     generated: new Date().toISOString(),
     version: '1.0.0',
-    layers: {}
+    platforms: {}
   };
 
+  const platforms = ['css', 'scss', 'js', 'json'];
   const layers = ['base', 'mapping', 'density', 'semantic'];
 
-  layers.forEach(layer => {
-    const layerDir = path.join(DIST_DIR, layer);
+  platforms.forEach(platform => {
+    const platformDir = path.join(DIST_DIR, platform);
 
-    if (!fs.existsSync(layerDir)) {
+    if (!fs.existsSync(platformDir)) {
       return;
     }
 
-    const files = fs.readdirSync(layerDir)
-      .filter(f => !f.startsWith('index'))
-      .sort();
-
-    manifest.layers[layer] = {
-      files: files,
-      path: `dist/${layer}/`
+    manifest.platforms[platform] = {
+      layers: {}
     };
+
+    layers.forEach(layer => {
+      const layerDir = path.join(platformDir, layer);
+
+      if (!fs.existsSync(layerDir)) {
+        return;
+      }
+
+      const files = fs.readdirSync(layerDir)
+        .filter(f => !f.startsWith('index'))
+        .sort();
+
+      if (files.length > 0) {
+        manifest.platforms[platform].layers[layer] = {
+          files: files,
+          path: `dist/${platform}/${layer}/`
+        };
+      }
+    });
+  });
+
+  // Zähle Statistiken
+  manifest.statistics = {
+    totalFiles: 0,
+    byPlatform: {}
+  };
+
+  platforms.forEach(platform => {
+    if (manifest.platforms[platform]) {
+      let count = 0;
+      Object.values(manifest.platforms[platform].layers).forEach(layer => {
+        count += layer.files.length;
+      });
+      manifest.statistics.byPlatform[platform] = count;
+      manifest.statistics.totalFiles += count;
+    }
   });
 
   fs.writeFileSync(
@@ -448,11 +481,16 @@ async function main() {
   console.log(`   - Collections verarbeitet: ${collections.length}`);
   console.log(`   - Builds erfolgreich: ${successfulBuilds}/${totalBuilds}`);
   console.log(`   - Output-Verzeichnis: dist/\n`);
-  console.log(`📁 Struktur:`);
-  console.log(`   - dist/base/        → Primitive Tokens`);
-  console.log(`   - dist/mapping/     → Brand-spezifische Tokens`);
-  console.log(`   - dist/density/     → Density-Variationen`);
-  console.log(`   - dist/semantic/    → Semantische Tokens (ColorMode, BreakpointMode)`);
+  console.log(`📁 Neue Struktur (nach Platform):`);
+  console.log(`   - dist/css/         → CSS Custom Properties`);
+  console.log(`     ├── base/         → Primitive Tokens`);
+  console.log(`     ├── mapping/      → Brand-Tokens`);
+  console.log(`     ├── density/      → Density-Variationen`);
+  console.log(`     └── semantic/     → ColorMode, BreakpointMode`);
+  console.log(``);
+  console.log(`   - dist/scss/        → SCSS Variables`);
+  console.log(`   - dist/js/          → JavaScript ES6 Modules`);
+  console.log(`   - dist/json/        → JSON (strukturiert)`);
   console.log('');
 }
 

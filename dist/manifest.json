@@ -1,0 +1,201 @@
+{
+  "generated": "2025-11-20T17:23:49.919Z",
+  "version": "1.0.0",
+  "platforms": {
+    "css": {
+      "layers": {
+        "base": {
+          "files": [
+            "primitive-color-value-global.css",
+            "primitive-color-value.css",
+            "primitive-font-value-global.css",
+            "primitive-font-value.css",
+            "primitive-size-value-global.css",
+            "primitive-size-value.css",
+            "primitive-space-value-global.css",
+            "primitive-space-value.css"
+          ],
+          "path": "dist/css/base/"
+        },
+        "mapping": {
+          "files": [
+            "brand-advertorial-global.css",
+            "brand-advertorial.css",
+            "brand-bild-global.css",
+            "brand-bild.css",
+            "brand-color-bild-global.css",
+            "brand-color-bild.css",
+            "brand-color-sportbild-global.css",
+            "brand-color-sportbild.css",
+            "brand-sportbild-global.css",
+            "brand-sportbild.css"
+          ],
+          "path": "dist/css/mapping/"
+        },
+        "density": {
+          "files": [
+            "density-compact-global.css",
+            "density-compact.css",
+            "density-default-global.css",
+            "density-default.css",
+            "density-spacious-global.css",
+            "density-spacious.css"
+          ],
+          "path": "dist/css/density/"
+        },
+        "semantic": {
+          "files": [
+            "breakpoint-lg-global.css",
+            "breakpoint-lg.css",
+            "breakpoint-md-global.css",
+            "breakpoint-md.css",
+            "breakpoint-sm-global.css",
+            "breakpoint-sm.css",
+            "breakpoint-xs-global.css",
+            "breakpoint-xs.css",
+            "color-dark-global.css",
+            "color-dark.css",
+            "color-light-global.css",
+            "color-light.css"
+          ],
+          "path": "dist/css/semantic/"
+        }
+      }
+    },
+    "scss": {
+      "layers": {
+        "base": {
+          "files": [
+            "primitive-color-value.scss",
+            "primitive-font-value.scss",
+            "primitive-size-value.scss",
+            "primitive-space-value.scss"
+          ],
+          "path": "dist/scss/base/"
+        },
+        "mapping": {
+          "files": [
+            "brand-advertorial.scss",
+            "brand-bild.scss",
+            "brand-color-bild.scss",
+            "brand-color-sportbild.scss",
+            "brand-sportbild.scss"
+          ],
+          "path": "dist/scss/mapping/"
+        },
+        "density": {
+          "files": [
+            "density-compact.scss",
+            "density-default.scss",
+            "density-spacious.scss"
+          ],
+          "path": "dist/scss/density/"
+        },
+        "semantic": {
+          "files": [
+            "breakpoint-lg.scss",
+            "breakpoint-md.scss",
+            "breakpoint-sm.scss",
+            "breakpoint-xs.scss",
+            "color-dark.scss",
+            "color-light.scss"
+          ],
+          "path": "dist/scss/semantic/"
+        }
+      }
+    },
+    "js": {
+      "layers": {
+        "base": {
+          "files": [
+            "primitive-color-value.js",
+            "primitive-font-value.js",
+            "primitive-size-value.js",
+            "primitive-space-value.js"
+          ],
+          "path": "dist/js/base/"
+        },
+        "mapping": {
+          "files": [
+            "brand-advertorial.js",
+            "brand-bild.js",
+            "brand-color-bild.js",
+            "brand-color-sportbild.js",
+            "brand-sportbild.js"
+          ],
+          "path": "dist/js/mapping/"
+        },
+        "density": {
+          "files": [
+            "density-compact.js",
+            "density-default.js",
+            "density-spacious.js"
+          ],
+          "path": "dist/js/density/"
+        },
+        "semantic": {
+          "files": [
+            "breakpoint-lg.js",
+            "breakpoint-md.js",
+            "breakpoint-sm.js",
+            "breakpoint-xs.js",
+            "color-dark.js",
+            "color-light.js"
+          ],
+          "path": "dist/js/semantic/"
+        }
+      }
+    },
+    "json": {
+      "layers": {
+        "base": {
+          "files": [
+            "primitive-color-value.json",
+            "primitive-font-value.json",
+            "primitive-size-value.json",
+            "primitive-space-value.json"
+          ],
+          "path": "dist/json/base/"
+        },
+        "mapping": {
+          "files": [
+            "brand-advertorial.json",
+            "brand-bild.json",
+            "brand-color-bild.json",
+            "brand-color-sportbild.json",
+            "brand-sportbild.json"
+          ],
+          "path": "dist/json/mapping/"
+        },
+        "density": {
+          "files": [
+            "density-compact.json",
+            "density-default.json",
+            "density-spacious.json"
+          ],
+          "path": "dist/json/density/"
+        },
+        "semantic": {
+          "files": [
+            "breakpoint-lg.json",
+            "breakpoint-md.json",
+            "breakpoint-sm.json",
+            "breakpoint-xs.json",
+            "color-dark.json",
+            "color-light.json"
+          ],
+          "path": "dist/json/semantic/"
+        }
+      }
+    }
+  },
+  "statistics": {
+    "totalFiles": 90,
+    "byPlatform": {
+      "css": 36,
+      "scss": 18,
+      "js": 18,
+      "json": 18
+    }
+  }
+}

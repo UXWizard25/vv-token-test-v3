@@ -1,6 +1,6 @@
 # Dependencies
 node_modules/
-package-lock.json
+# package-lock.json ist für reproduzierbare Builds in CI/CD notwendig
 yarn.lock
 pnpm-lock.yaml
 
