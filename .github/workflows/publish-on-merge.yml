@@ -136,7 +136,7 @@ jobs:
       # 10. Package veröffentlichen
       - name: Publish to npmjs.org
         run: |
-          echo "📦 Publishing @uxwizard25/design-system-tokens@${{ steps.version.outputs.new }} to npmjs.org..."
+          echo "📦 Publishing @marioschmidt/design-system-tokens@${{ steps.version.outputs.new }} to npmjs.org..."
           npm publish
           echo "✅ Package published successfully!"
         env:
@@ -172,11 +172,7 @@ jobs:
             ### 📦 Installation
 
             ```bash
-            # Setup (once per project)
-            npm config set @uxwizard25:registry https://npm.pkg.github.com
-
-            # Install
-            npm install @uxwizard25/design-system-tokens@${{ steps.version.outputs.new }}
+            npm install @marioschmidt/design-system-tokens@${{ steps.version.outputs.new }}
             ```
 
             ### ✨ Changes
@@ -208,19 +204,19 @@ jobs:
         run: |
           echo "## 🚀 Package Published Successfully!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Package:** \`@uxwizard25/design-system-tokens\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Package:** \`@marioschmidt/design-system-tokens\`" >> $GITHUB_STEP_SUMMARY
           echo "**Previous Version:** \`${{ steps.version.outputs.current }}\`" >> $GITHUB_STEP_SUMMARY
           echo "**New Version:** \`${{ steps.version.outputs.new }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "**Registry:** GitHub Packages" >> $GITHUB_STEP_SUMMARY
+          echo "**Registry:** npmjs.org" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📥 Installation" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
-          echo "npm install @uxwizard25/design-system-tokens@${{ steps.version.outputs.new }}" >> $GITHUB_STEP_SUMMARY
+          echo "npm install @marioschmidt/design-system-tokens@${{ steps.version.outputs.new }}" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 🔗 Links" >> $GITHUB_STEP_SUMMARY
-          echo "- [📦 View Package](https://github.com/${{ github.repository }}/packages)" >> $GITHUB_STEP_SUMMARY
+          echo "- [📦 View on npmjs.org](https://www.npmjs.com/package/@marioschmidt/design-system-tokens)" >> $GITHUB_STEP_SUMMARY
           echo "- [📋 Release Notes](https://github.com/${{ github.repository }}/releases/tag/v${{ steps.version.outputs.new }})" >> $GITHUB_STEP_SUMMARY
           echo "- [🎨 Pull Requests](https://github.com/${{ github.repository }}/pulls?q=is%3Apr+is%3Amerged)" >> $GITHUB_STEP_SUMMARY
 

@@ -1,5 +1,5 @@
 {
-  "name": "@uxwizard25/design-system-tokens",
+  "name": "@marioschmidt/design-system-tokens",
   "version": "1.0.0",
   "description": "BILD Design System Token Pipeline with Style Dictionary - Multi-brand design tokens for BILD, SportBILD, and Advertorial",
   "main": "dist/index.js",
