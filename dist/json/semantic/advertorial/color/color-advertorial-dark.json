@@ -7,7 +7,7 @@
       "coreColorSecondaryConstant": "#ffffff",
       "coreColorTertiaryConstant": "#242629",
       "coreColorTertiaryVvPipeTEST": "#b0d1f2",
-      "leoTestColor": "#b0d1f2"
+      "npmTest": "#b0d1f2"
     },
     "Attention": {
       "accentColorPrimary": "#ffffff",
