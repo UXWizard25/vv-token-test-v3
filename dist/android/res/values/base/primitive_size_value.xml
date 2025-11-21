@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Do not edit directly, this file was auto-generated.
+-->
+<resources>
+  <integer name="size168x">1344</integer>
+  <integer name="size128x">1024</integer>
+  <integer name="size124x">992</integer>
+  <integer name="size116_25x">930</integer>
+  <integer name="size100x">800</integer>
+  <integer name="size87_5x">700</integer>
+  <integer name="size80x">640</integer>
+  <integer name="size60x">480</integer>
+  <integer name="size50x">400</integer>
+  <integer name="size40x">320</integer>
+  <integer name="size35x">280</integer>
+  <integer name="size30x">240</integer>
+  <integer name="size27_5x">220</integer>
+  <integer name="size25x">200</integer>
+  <integer name="size22_5x">180</integer>
+  <integer name="size20x">160</integer>
+  <integer name="size18_5x">148</integer>
+  <integer name="size17_5x">140</integer>
+  <integer name="size16_25">130</integer>
+  <integer name="size15x">120</integer>
+  <integer name="size12_5x">100</integer>
+  <integer name="size12x">96</integer>
+  <integer name="size11_5x">92</integer>
+  <integer name="size10x">80</integer>
+  <integer name="size9x">72</integer>
+  <integer name="size8x">64</integer>
+  <integer name="size7x">56</integer>
+  <integer name="size6x">48</integer>
+  <integer name="size5_25x">42</integer>
+  <integer name="size5x">40</integer>
+  <integer name="size4_5x">36</integer>
+  <integer name="size4x">32</integer>
+  <integer name="size3_75x">30</integer>
+  <integer name="size3_5x">28</integer>
+  <integer name="size3_25x">26</integer>
+  <integer name="size3x">24</integer>
+  <integer name="size2_75x">22</integer>
+  <integer name="size2_5x">20</integer>
+  <integer name="size2_25x">18</integer>
+  <integer name="size2x">16</integer>
+  <integer name="size1_75x">14</integer>
+  <integer name="size1_5x">12</integer>
+  <integer name="size1_25x">10</integer>
+  <integer name="size1x">8</integer>
+  <integer name="size0_75x">6</integer>
+  <integer name="size0_5x">4</integer>
+  <integer name="size0_25x">2</integer>
+  <integer name="size0_125x">1</integer>
+  <integer name="size0x">0</integer>
+</resources>

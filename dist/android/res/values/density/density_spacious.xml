@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Do not edit directly, this file was auto-generated.
+-->
+<resources>
+  <integer name="component_button_button_label_font_size">19</integer><!-- This variable is in the SpaceScaling Collection. It was made to experiment with how scaling size could work across different content scaling / size / contrast themes. Font size across devices: 15 - 17 - 19 -->
+  <integer name="component_button_button_content_gap_space">8</integer><!-- This variable is in the SpaceScaling Collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes. -->
+  <integer name="component_button_button_inline_space">24</integer><!-- This variable is in the SpaceScaling Collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes. -->
+  <integer name="component_button_button_stack_space">12</integer><!-- This variable is in the SpaceScaling collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes. -->
+  <integer name="component_inputfield_input_field_label_font_size">19</integer><!-- This variable is in the SpaceScaling Collection. It was made to experiment with how scaling size could work across different content scaling / size / contrast themes. Font size across scaling options: compact 15 - default 17 - spacious 19 -->
+  <integer name="component_inputfield_input_field_inline_space">16</integer>
+  <integer name="component_inputfield_input_field_height_size">48</integer>
+  <integer name="component_inputfield_input_field_stack_space">12</integer>
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Do not edit directly, this file was auto-generated.
+-->
+<resources>
+  <integer name="space20x">160</integer>
+  <integer name="space12x">96</integer>
+  <integer name="space10x">80</integer>
+  <integer name="space9x">72</integer>
+  <integer name="space8_5x">68</integer>
+  <integer name="space8x">64</integer>
+  <integer name="space7_5x">60</integer>
+  <integer name="space6x">48</integer>
+  <integer name="space5x">40</integer>
+  <integer name="space4_5x">36</integer>
+  <integer name="space4x">32</integer>
+  <integer name="space3_5x">28</integer>
+  <integer name="space3x">24</integer>
+  <integer name="space2_75x">22</integer>
+  <integer name="space2_5x">20</integer>
+  <integer name="space2x">16</integer>
+  <integer name="space1_75x">14</integer>
+  <integer name="space1_5x">12</integer>
+  <integer name="space1_25x">10</integer>
+  <integer name="space1x">8</integer>
+  <integer name="space0_75x">6</integer>
+  <integer name="space0_5x">4</integer>
+  <integer name="space0_25x">2</integer>
+  <integer name="space0x">0</integer>
+  <integer name="space_0_25x">-2</integer>
+</resources>
