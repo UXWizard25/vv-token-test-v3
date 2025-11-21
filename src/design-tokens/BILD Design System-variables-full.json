@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2025-11-21T13:58:40.550Z",
+  "lastModified": "2025-11-21T15:08:00.397Z",
   "collections": [
     {
       "id": "VariableCollectionId:470:1450",
@@ -2483,6 +2483,7 @@
         "VariableID:14215:155422",
         "VariableID:20773:45",
         "VariableID:20790:160",
+        "VariableID:20798:160",
         "VariableID:5003:3106",
         "VariableID:16279:318800",
         "VariableID:16279:318946",
@@ -2493,8 +2494,8 @@
         "VariableID:9694:16562",
         "VariableID:12663:137504",
         "VariableID:1954:19186",
-        "VariableID:3810:3107",
         "VariableID:9598:13708",
+        "VariableID:3810:3107",
         "VariableID:12672:137718",
         "VariableID:12672:137719",
         "VariableID:16279:19036",
@@ -2860,6 +2861,33 @@
           "variableCollectionId": "VariableCollectionId:588:1979"
         },
         {
+          "id": "VariableID:20798:160",
+          "name": "Semantic/Core/felipeTestColor",
+          "description": "this is a test for the token pipeline",
+          "key": "e7ddd799cba4b48828012da452c9bfaaa3e317d0",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "588:0": {
+              "r": 0.91,
+              "g": 0.34,
+              "b": 0.04,
+              "a": 1
+            },
+            "592:1": {
+              "r": 0.01,
+              "g": 0.1,
+              "b": 0.19,
+              "a": 1
+            }
+          },
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "hiddenFromPublishing": false,
+          "codeSyntax": {},
+          "variableCollectionId": "VariableCollectionId:588:1979"
+        },
+        {
           "id": "VariableID:5003:3106",
           "name": "Semantic/Attention/accentColorPrimary",
           "description": "Primary accent color used to emphasize interactive or highlight elements such as links, selection states, or focus indicators. Adapts in Darkmode to a fully white tone.",
@@ -3096,29 +3124,6 @@
           "variableCollectionId": "VariableCollectionId:588:1979"
         },
         {
-          "id": "VariableID:3810:3107",
-          "name": "Semantic/Attention/attentionColorHigh",
-          "description": "High-level attention color used for errors, destructive actions, and critical alerts (e.g., delete actions, error states). Remains red in both Light and Dark mode for immediate recognition.",
-          "key": "03d875df4407f7e765816472a7751b4eb3bf51df",
-          "resolvedType": "COLOR",
-          "valuesByMode": {
-            "588:0": {
-              "type": "VARIABLE_ALIAS",
-              "id": "VariableID:539:2239"
-            },
-            "592:1": {
-              "type": "VARIABLE_ALIAS",
-              "id": "VariableID:539:2239"
-            }
-          },
-          "scopes": [
-            "ALL_SCOPES"
-          ],
-          "hiddenFromPublishing": false,
-          "codeSyntax": {},
-          "variableCollectionId": "VariableCollectionId:588:1979"
-        },
-        {
           "id": "VariableID:9598:13708",
           "name": "Semantic/Border/borderColorHighContrast",
           "description": "High-emphasis border color for clear delineation between surfaces (e.g., focus rings, high-contrast UI zones).\nBehavior: Dynamic — light surfaces use a darker neutral, dark surfaces a light neutral tone.",
@@ -3138,6 +3143,29 @@
             "FRAME_FILL",
             "SHAPE_FILL",
             "STROKE_COLOR"
+          ],
+          "hiddenFromPublishing": false,
+          "codeSyntax": {},
+          "variableCollectionId": "VariableCollectionId:588:1979"
+        },
+        {
+          "id": "VariableID:3810:3107",
+          "name": "Semantic/Attention/attentionColorHigh",
+          "description": "High-level attention color used for errors, destructive actions, and critical alerts (e.g., delete actions, error states). Remains red in both Light and Dark mode for immediate recognition.",
+          "key": "03d875df4407f7e765816472a7751b4eb3bf51df",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "588:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:539:2239"
+            },
+            "592:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:539:2239"
+            }
+          },
+          "scopes": [
+            "ALL_SCOPES"
           ],
           "hiddenFromPublishing": false,
           "codeSyntax": {},
