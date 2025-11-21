@@ -26,6 +26,45 @@ const colorCssTransform = {
 };
 
 /**
+ * Transform: Color zu iOS UIColor
+ */
+const colorUIColorTransform = {
+  name: 'custom/color/UIColor',
+  type: 'value',
+  transitive: true,
+  filter: (token) => token.$type === 'color' || token.type === 'color',
+  transform: (token) => {
+    const value = token.$value || token.value;
+
+    // Hex zu UIColor
+    if (value.startsWith('#')) {
+      const hex = value.replace('#', '');
+      const r = parseInt(hex.substring(0, 2), 16) / 255;
+      const g = parseInt(hex.substring(2, 4), 16) / 255;
+      const b = parseInt(hex.substring(4, 6), 16) / 255;
+      const a = hex.length === 8 ? parseInt(hex.substring(6, 8), 16) / 255 : 1;
+
+      return `UIColor(red: ${r.toFixed(3)}, green: ${g.toFixed(3)}, blue: ${b.toFixed(3)}, alpha: ${a.toFixed(3)})`;
+    }
+
+    // RGBA zu UIColor
+    if (value.startsWith('rgb')) {
+      const match = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+      if (match) {
+        const r = parseInt(match[1]) / 255;
+        const g = parseInt(match[2]) / 255;
+        const b = parseInt(match[3]) / 255;
+        const a = match[4] ? parseFloat(match[4]) : 1;
+
+        return `UIColor(red: ${r.toFixed(3)}, green: ${g.toFixed(3)}, blue: ${b.toFixed(3)}, alpha: ${a.toFixed(3)})`;
+      }
+    }
+
+    return value;
+  }
+};
+
+/**
  * Transform: Dimension zu px
  */
 const sizePxTransform = {
@@ -287,7 +326,28 @@ const iosSwiftClassFormat = ({ dictionary, options, file }) => {
     const type = token.$type || token.type;
 
     if (type === 'color') {
-      valueOutput = value; // UIColor value from color/UIColor transform
+      // Transform color to UIColor directly in format
+      if (value.startsWith('#')) {
+        const hex = value.replace('#', '');
+        const r = (parseInt(hex.substring(0, 2), 16) / 255).toFixed(3);
+        const g = (parseInt(hex.substring(2, 4), 16) / 255).toFixed(3);
+        const b = (parseInt(hex.substring(4, 6), 16) / 255).toFixed(3);
+        const a = hex.length === 8 ? (parseInt(hex.substring(6, 8), 16) / 255).toFixed(3) : '1.000';
+        valueOutput = `UIColor(red: ${r}, green: ${g}, blue: ${b}, alpha: ${a})`;
+      } else if (value.startsWith('rgb')) {
+        const match = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+        if (match) {
+          const r = (parseInt(match[1]) / 255).toFixed(3);
+          const g = (parseInt(match[2]) / 255).toFixed(3);
+          const b = (parseInt(match[3]) / 255).toFixed(3);
+          const a = match[4] ? parseFloat(match[4]).toFixed(3) : '1.000';
+          valueOutput = `UIColor(red: ${r}, green: ${g}, blue: ${b}, alpha: ${a})`;
+        } else {
+          valueOutput = `"${value}"`;  // Fallback
+        }
+      } else {
+        valueOutput = `"${value}"`;  // Fallback for other color formats
+      }
     } else if (typeof value === 'number') {
       valueOutput = value;
     } else if (typeof value === 'string') {
@@ -331,7 +391,33 @@ const flutterDartClassFormat = ({ dictionary, options, file }) => {
     const type = token.$type || token.type;
 
     if (type === 'color') {
-      valueOutput = value; // Color value from color/hex8flutter transform
+      // Transform color to Flutter Color directly in format
+      if (value.startsWith('#')) {
+        const hex = value.replace('#', '');
+        let argb;
+        if (hex.length === 6) {
+          argb = 'FF' + hex; // Add full opacity
+        } else if (hex.length === 8) {
+          // Convert RGBA to ARGB
+          argb = hex.substring(6, 8) + hex.substring(0, 6);
+        } else {
+          argb = 'FF000000'; // Fallback
+        }
+        valueOutput = `Color(0x${argb})`;
+      } else if (value.startsWith('rgb')) {
+        const match = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+        if (match) {
+          const r = parseInt(match[1]).toString(16).padStart(2, '0');
+          const g = parseInt(match[2]).toString(16).padStart(2, '0');
+          const b = parseInt(match[3]).toString(16).padStart(2, '0');
+          const a = match[4] ? Math.round(parseFloat(match[4]) * 255).toString(16).padStart(2, '0') : 'FF';
+          valueOutput = `Color(0x${a}${r}${g}${b})`;
+        } else {
+          valueOutput = `"${value}"`;
+        }
+      } else {
+        valueOutput = `"${value}"`;
+      }
     } else if (typeof value === 'number') {
       valueOutput = value;
     } else if (typeof value === 'string') {
@@ -355,6 +441,7 @@ const flutterDartClassFormat = ({ dictionary, options, file }) => {
 module.exports = {
   transforms: {
     'color/css': colorCssTransform,
+    'custom/color/UIColor': colorUIColorTransform,
     'custom/size/px': sizePxTransform,
     'size/rem': sizeRemTransform,
     'name/kebab': nameKebabTransform,

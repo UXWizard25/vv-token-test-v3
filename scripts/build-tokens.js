@@ -290,7 +290,7 @@ function createStyleDictionaryConfig(collectionDir, modeName, config, brand = nu
 
       // iOS - Swift
       'ios-swift': {
-        transforms: ['attribute/cti', 'name/ios-swift', 'color/UIColor'],
+        transforms: ['custom/color/UIColor', 'attribute/cti', 'name/ios-swift'],
         buildPath: buildPathBase.replace('{{platform}}', 'ios'),
         files: [{
           destination: `${finalOutputPrefix.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('')}${outputMode.charAt(0).toUpperCase() + outputMode.slice(1)}.swift`,

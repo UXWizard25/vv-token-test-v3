@@ -35,8 +35,13 @@ function determineTokenType(tokenName, collectionName, value) {
   const tokenPath = tokenName.toLowerCase();
   const collection = collectionName.toLowerCase();
 
+  // Color: Hex (#) oder RGBA/RGB Farben
+  if (typeof value === 'string' && (value.startsWith('#') || value.startsWith('rgb'))) {
+    return { $type: 'color' };
+  }
+
   // WICHTIG: Wenn der Wert ein String ist (außer Farben), setze keinen dimension type
-  if (typeof value === 'string' && !value.startsWith('#') && !value.startsWith('rgb')) {
+  if (typeof value === 'string') {
     // Font Families und andere Strings: kein $type
     return { $type: null };
   }
@@ -497,9 +502,6 @@ function processCollection(collection, aliasLookup) {
         let processedValue = processValue(modeValue, variable.resolvedType, aliasLookup);
 
         if (processedValue !== null) {
-          // Bestimme Token-Typ (für $type Metadaten)
-          const typeInfo = determineTokenType(variable.name, collection.name, processedValue);
-
           // Behalte den Wert numerisch - Style Dictionary transforms fügen Units hinzu
           // Nur den type anpassen wenn wir einen speziellen $type haben
           let finalType = TYPE_MAPPING[variable.resolvedType] || 'other';
@@ -517,9 +519,16 @@ function processCollection(collection, aliasLookup) {
             }
           };
 
-          // Füge $type hinzu wenn bestimmt - Style Dictionary nutzt dies für transforms
-          if (typeInfo.$type) {
-            tokenObject.$type = typeInfo.$type;
+          // Setze $type basierend auf Figma's resolvedType und determineTokenType
+          // Für Farben: Nutze resolvedType, auch wenn der aktuelle Wert ein Alias ist
+          if (variable.resolvedType === 'COLOR') {
+            tokenObject.$type = 'color';
+          } else {
+            // Für andere Typen: Nutze determineTokenType basierend auf Wert und Name
+            const typeInfo = determineTokenType(variable.name, collection.name, processedValue);
+            if (typeInfo.$type) {
+              tokenObject.$type = typeInfo.$type;
+            }
           }
 
           if (variable.description) {
