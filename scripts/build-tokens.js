@@ -311,7 +311,6 @@ function createStyleDictionaryConfig(collectionDir, modeName, config, brand = nu
           destination: `${finalOutputPrefix.replace(/-/g, '_')}_${outputMode}.xml`,
           format: 'android/resources',
           filter: tokenFilter,
-          resourceType: 'color',
           options: {
             outputReferences: false
           }

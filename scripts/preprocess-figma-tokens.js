@@ -22,6 +22,68 @@ const TYPE_MAPPING = {
   'BOOLEAN': 'boolean'
 };
 
+/**
+ * Bestimmt den Token-Typ basierend auf Collection-Namen und Token-Pfad
+ * @param {string} tokenName - Der Token-Name/Pfad (z.B. "FontWeight/1000UltraFontWeight")
+ * @param {string} collectionName - Der Name der Collection (z.B. "_SizePrimitive", "_FontPrimitive")
+ * @param {any} value - Der Token-Wert
+ * @returns {object} - Objekt mit $type und needsUnit flag
+ */
+function determineTokenType(tokenName, collectionName, value) {
+  const tokenPath = tokenName.toLowerCase();
+  const collection = collectionName.toLowerCase();
+
+  // FontWeight: Sollte unitless bleiben (prüfe Token-Name UND Collection)
+  if (tokenPath.includes('fontweight') || tokenPath.includes('font-weight')) {
+    return { $type: 'fontWeight', needsUnit: false };
+  }
+
+  // FontSize: Benötigt px-Einheit (prüfe Token-Name UND Collection)
+  if (tokenPath.includes('fontsize') || tokenPath.includes('font-size')) {
+    return { $type: 'dimension', needsUnit: true };
+  }
+
+  // LineHeight: < 10 = unitless (relative), >= 10 = px (absolut)
+  if (tokenPath.includes('lineheight') || tokenPath.includes('line-height')) {
+    if (typeof value === 'number' && value < 10) {
+      return { $type: 'number', needsUnit: false };  // Relativer LineHeight-Wert
+    } else {
+      return { $type: 'dimension', needsUnit: true };  // Absoluter LineHeight-Wert
+    }
+  }
+
+  // Size Tokens: Benötigen px-Einheit (basierend auf Collection oder Token-Name)
+  if (collection.includes('size') || tokenPath.includes('size')) {
+    // Ausnahme: wenn es FontSize ist, wurde es bereits oben behandelt
+    if (!tokenPath.includes('fontsize') && !tokenPath.includes('font-size')) {
+      return { $type: 'dimension', needsUnit: true };
+    }
+  }
+
+  // Space/Spacing Tokens: Benötigen px-Einheit
+  if (collection.includes('space') || tokenPath.includes('space') || tokenPath.includes('spacing')) {
+    return { $type: 'dimension', needsUnit: true };
+  }
+
+  // Breakpoints: Benötigen px-Einheit
+  if (collection.includes('breakpoint') || tokenPath.includes('breakpoint')) {
+    return { $type: 'dimension', needsUnit: true };
+  }
+
+  // Density: Benötigen px-Einheit
+  if (collection.includes('density') || tokenPath.includes('density')) {
+    return { $type: 'dimension', needsUnit: true };
+  }
+
+  // Width/Height: Benötigen px-Einheit
+  if (tokenPath.includes('width') || tokenPath.includes('height')) {
+    return { $type: 'dimension', needsUnit: true };
+  }
+
+  // Fallback: Keine spezielle Behandlung
+  return { $type: null, needsUnit: false };
+}
+
 // Brand-spezifische Collections Konfiguration
 // Verwendet stabile Collection IDs aus Figma statt Namen für Robustheit bei Umbenennungen
 const BRAND_SPECIFIC_COLLECTIONS = {
@@ -403,12 +465,23 @@ function processCollection(collection, aliasLookup) {
       const modeValue = variable.valuesByMode[mode.modeId];
 
       if (modeValue !== undefined) {
-        const processedValue = processValue(modeValue, variable.resolvedType, aliasLookup);
+        let processedValue = processValue(modeValue, variable.resolvedType, aliasLookup);
 
         if (processedValue !== null) {
+          // Bestimme Token-Typ und ob Einheit benötigt wird
+          const typeInfo = determineTokenType(variable.name, collection.name, processedValue);
+
+          // Füge px-Einheit hinzu wenn benötigt und Wert ist numerisch
+          let finalType = TYPE_MAPPING[variable.resolvedType] || 'other';
+          if (typeInfo.needsUnit && typeof processedValue === 'number') {
+            processedValue = `${processedValue}px`;
+            // Wenn Wert jetzt ein String mit Einheit ist, setze type auf 'dimension' oder lasse bei 'string'
+            finalType = 'dimension';
+          }
+
           const tokenObject = {
             value: processedValue,
-            type: TYPE_MAPPING[variable.resolvedType] || 'other',
+            type: finalType,
             $extensions: {
               'com.figma': {
                 collectionId: collection.id,  // Stabile ID
@@ -417,6 +490,11 @@ function processCollection(collection, aliasLookup) {
               }
             }
           };
+
+          // Füge $type hinzu wenn bestimmt
+          if (typeInfo.$type) {
+            tokenObject.$type = typeInfo.$type;
+          }
 
           if (variable.description) {
             tokenObject.comment = variable.description;
