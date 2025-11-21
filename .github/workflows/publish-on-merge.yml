@@ -29,7 +29,7 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 2. Git konfigurieren für Version Bump
+      # 2. Git konfigurieren für Tagging
       - name: Configure Git
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -99,26 +99,20 @@ jobs:
           echo "📁 Package will contain:"
           npm pack --dry-run 2>&1 | grep -E "npm notice.*B " | head -20 || true
 
-      # 8. Commit Version Bump
-      - name: Commit Version Bump
-        run: |
-          git add package.json package-lock.json
-          git commit -m "chore: bump version to ${{ steps.version.outputs.new }} [skip ci]"
-
-      # 9. Tag erstellen
+      # 8. Tag erstellen (Version ist nur lokal für Publishing)
       - name: Create Git Tag
         run: |
           git tag "v${{ steps.version.outputs.new }}"
           echo "✅ Created tag: v${{ steps.version.outputs.new }}"
 
-      # 10. Pushe Version Bump & Tag
-      - name: Push Changes
+      # 9. Push Tag (Version Bump wird nicht committed, nur Tag)
+      - name: Push Tag
         run: |
-          git push origin main
           git push origin "v${{ steps.version.outputs.new }}"
-          echo "✅ Pushed version bump and tag"
+          echo "✅ Pushed tag v${{ steps.version.outputs.new }}"
+          echo "ℹ️  Note: Version bump is not committed to main (avoids race conditions)"
 
-      # 11. Package veröffentlichen
+      # 10. Package veröffentlichen
       - name: Publish to GitHub Packages
         run: |
           echo "📦 Publishing @uxwizard25/design-system-tokens@${{ steps.version.outputs.new }} to GitHub Packages..."
@@ -127,7 +121,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # 12. Changelog generieren (aus letztem Tag)
+      # 11. Changelog generieren (aus letztem Tag)
       - name: Generate Changelog
         id: changelog
         run: |
@@ -143,7 +137,7 @@ jobs:
           echo "$CHANGELOG" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      # 13. GitHub Release erstellen
+      # 12. GitHub Release erstellen
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
@@ -188,7 +182,7 @@ jobs:
           prerelease: false
           generate_release_notes: false
 
-      # 14. Success Summary
+      # 13. Success Summary
       - name: Create Publish Summary
         run: |
           echo "## 🚀 Package Published Successfully!" >> $GITHUB_STEP_SUMMARY
@@ -209,7 +203,7 @@ jobs:
           echo "- [📋 Release Notes](https://github.com/${{ github.repository }}/releases/tag/v${{ steps.version.outputs.new }})" >> $GITHUB_STEP_SUMMARY
           echo "- [🎨 Pull Requests](https://github.com/${{ github.repository }}/pulls?q=is%3Apr+is%3Amerged)" >> $GITHUB_STEP_SUMMARY
 
-      # 15. Bei Fehler benachrichtigen
+      # 14. Bei Fehler benachrichtigen
       - name: Notify on Failure
         if: failure()
         run: |
