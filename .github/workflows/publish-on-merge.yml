@@ -54,11 +54,18 @@ jobs:
       - name: Bump Version (Patch)
         id: version
         run: |
-          # Aktuelle Version
-          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          # Hole letzten Git Tag (oder 1.0.0 als default)
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v1.0.0")
+          echo "Latest tag: $LATEST_TAG"
+
+          # Entferne 'v' prefix
+          CURRENT_VERSION=${LATEST_TAG#v}
           echo "Current version: $CURRENT_VERSION"
 
-          # Version erhöhen (patch)
+          # Setze Version in package.json (temporär, nur für Build)
+          npm version $CURRENT_VERSION --no-git-tag-version --allow-same-version
+
+          # Erhöhe Patch-Version
           npm version patch --no-git-tag-version
 
           # Neue Version
@@ -102,14 +109,29 @@ jobs:
       # 8. Tag erstellen (Version ist nur lokal für Publishing)
       - name: Create Git Tag
         run: |
-          git tag "v${{ steps.version.outputs.new }}"
-          echo "✅ Created tag: v${{ steps.version.outputs.new }}"
+          TAG_NAME="v${{ steps.version.outputs.new }}"
+
+          # Prüfe ob Tag bereits existiert
+          if git rev-parse "$TAG_NAME" >/dev/null 2>&1; then
+            echo "⚠️  Tag $TAG_NAME already exists, skipping tag creation"
+          else
+            git tag "$TAG_NAME"
+            echo "✅ Created tag: $TAG_NAME"
+          fi
 
       # 9. Push Tag (Version Bump wird nicht committed, nur Tag)
       - name: Push Tag
         run: |
-          git push origin "v${{ steps.version.outputs.new }}"
-          echo "✅ Pushed tag v${{ steps.version.outputs.new }}"
+          TAG_NAME="v${{ steps.version.outputs.new }}"
+
+          # Prüfe ob Tag remote existiert
+          if git ls-remote --tags origin | grep -q "refs/tags/$TAG_NAME$"; then
+            echo "⚠️  Tag $TAG_NAME already exists on remote, skipping push"
+          else
+            git push origin "$TAG_NAME"
+            echo "✅ Pushed tag $TAG_NAME"
+          fi
+
           echo "ℹ️  Note: Version bump is not committed to main (avoids race conditions)"
 
       # 10. Package veröffentlichen
