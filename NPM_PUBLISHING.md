@@ -7,9 +7,10 @@ Deine Design Tokens werden automatisch als NPM Package veröffentlicht, wenn du 
 ## 🎯 Übersicht
 
 **Package Name:** `@uxwizard25/design-system-tokens`
-**Registry:** GitHub Packages (kostenlos & privat)
+**Registry:** npmjs.org (öffentlich & kostenlos)
 **Versionierung:** Automatisch (Patch-Version bei jedem Release)
 **Workflow:** Figma → PR → Merge → Publish ✅
+**Zugriff:** Öffentlich - jeder kann installieren ohne Token! 🌍
 
 ---
 
@@ -33,6 +34,41 @@ Deine Design Tokens werden automatisch als NPM Package veröffentlicht, wenn du 
 - ✅ Keine Git Tags erstellen
 - ✅ Kein manuelles Approve
 - ✅ Nur PR mergen
+
+---
+
+## 🔑 EINMALIGE EINRICHTUNG (nur beim ersten Mal!)
+
+### **NPM Token erstellen und in GitHub hinterlegen**
+
+Damit GitHub Actions dein Package zu npmjs.org publishen kann, benötigst du einen NPM Access Token:
+
+#### **1. NPM Account erstellen (falls noch nicht vorhanden)**
+
+1. Gehe zu: https://www.npmjs.com/signup
+2. Erstelle kostenlosen Account
+3. Bestätige E-Mail-Adresse
+
+#### **2. NPM Access Token erstellen**
+
+1. Gehe zu: https://www.npmjs.com/settings/YOUR-USERNAME/tokens
+2. Klicke auf **"Generate New Token"**
+3. Wähle **"Classic Token"**
+4. Token Type: **"Automation"** (für CI/CD)
+5. Klicke auf **"Generate Token"**
+6. **Kopiere den Token** (wird nur einmal angezeigt!) - sieht aus wie: `npm_XXXXXXXXXXXXXXXXXXXX`
+
+#### **3. Token als GitHub Secret hinterlegen**
+
+1. Gehe zu: https://github.com/UXWizard25/vv-token-test-v3/settings/secrets/actions
+2. Klicke auf **"New repository secret"**
+3. **Name:** `NPM_TOKEN` (exakt so!)
+4. **Secret:** Füge den kopierten NPM Token ein
+5. Klicke auf **"Add secret"**
+
+✅ **Fertig!** Der Workflow kann jetzt automatisch publishen.
+
+**Wichtig:** Du musst das nur einmal machen. Der Token bleibt gültig, bis du ihn löschst.
 
 ---
 
@@ -190,50 +226,12 @@ git push origin main --tags
 
 ## 📥 PACKAGE INSTALLIEREN (In anderen Projekten)
 
-### **Einmalige Konfiguration (pro Projekt)**
+### **Installation - Kein Setup erforderlich! 🎉**
 
-Erstelle/bearbeite `.npmrc` im Projekt-Root:
-
-```bash
-@uxwizard25:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
-```
-
-### **GitHub Token erstellen**
-
-1. Gehe zu: https://github.com/settings/tokens
-2. Klicke auf **"Generate new token (classic)"**
-3. Name: `npm-packages-read`
-4. Aktiviere Scope: **`read:packages`**
-5. Klicke auf **"Generate token"**
-6. Kopiere das Token (zeigt nur einmal!)
-
-### **Token in .npmrc einfügen**
-
-**Option A: Direkt in .npmrc** (einfach)
+Das Package ist öffentlich auf npmjs.org - jeder kann es direkt installieren:
 
 ```bash
-@uxwizard25:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=ghp_DEIN_TOKEN_HIER
-```
-
-**Option B: Umgebungsvariable** (sicherer)
-
-In `~/.bashrc` oder `~/.zshrc`:
-```bash
-export GITHUB_TOKEN="ghp_DEIN_TOKEN_HIER"
-```
-
-Dann in `.npmrc`:
-```bash
-@uxwizard25:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
-```
-
-### **Package installieren**
-
-```bash
-# Neueste Version
+# Neueste Version installieren
 npm install @uxwizard25/design-system-tokens
 
 # Spezifische Version
@@ -242,6 +240,10 @@ npm install @uxwizard25/design-system-tokens@1.2.3
 # Als Dev Dependency
 npm install --save-dev @uxwizard25/design-system-tokens
 ```
+
+**Keine `.npmrc` Datei erforderlich!**
+**Kein GitHub Token erforderlich!**
+**Einfach `npm install` und fertig!** ✅
 
 ### **Package nutzen**
 
@@ -278,6 +280,36 @@ import bildColors from '@uxwizard25/design-system-tokens/js/semantic/bild/color/
 import '@uxwizard25/design-system-tokens/css/semantic/bild/color/color-bild-light.css';
 
 // CSS wird automatisch in dein Bundle aufgenommen
+```
+
+### **Via CDN (ohne npm install!)**
+
+Dank npmjs.org kannst du die Tokens auch direkt via CDN nutzen - perfekt zum Testen!
+
+**unpkg.com:**
+```html
+<!-- Direkt im HTML -->
+<link rel="stylesheet" href="https://unpkg.com/@uxwizard25/design-system-tokens/css/semantic/bild/color/color-bild-light.css">
+```
+
+**jsDelivr:**
+```html
+<!-- Alternative CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@uxwizard25/design-system-tokens/css/semantic/bild/color/color-bild-light.css">
+```
+
+**JavaScript Fetch:**
+```javascript
+// Tokens dynamisch laden
+fetch('https://unpkg.com/@uxwizard25/design-system-tokens/json/semantic/bild/color/color-bild-light.json')
+  .then(r => r.json())
+  .then(tokens => console.log(tokens));
+```
+
+**CodePen / JSFiddle:**
+```html
+<!-- Perfekt zum schnellen Testen! -->
+<link rel="stylesheet" href="https://unpkg.com/@uxwizard25/design-system-tokens@latest/css/semantic/bild/color/color-bild-light.css">
 ```
 
 ---
@@ -323,7 +355,7 @@ Dependabot prüft automatisch jeden Montag (9:00 Uhr) auf Updates:
 - **Macht:**
   - Erhöht Patch-Version
   - Baut Tokens
-  - Published zu GitHub Packages
+  - Published zu npmjs.org (öffentlich zugänglich)
   - Erstellt GitHub Release
   - Erstellt Git Tag
 
@@ -367,30 +399,33 @@ Dependabot prüft automatisch jeden Montag (9:00 Uhr) auf Updates:
 
 **Mögliche Ursachen:**
 
-1. **Keine Package-Permissions**
-   - ✅ Lösung: Settings → Actions → General → "Read and write permissions"
+1. **NPM_TOKEN Secret fehlt oder ist ungültig**
+   - ✅ Lösung: Prüfe ob Secret `NPM_TOKEN` in GitHub hinterlegt ist
+   - Gehe zu: https://github.com/UXWizard25/vv-token-test-v3/settings/secrets/actions
+   - Falls fehlt: Erstelle NPM Token und füge als Secret hinzu (siehe Einrichtung oben)
 
-2. **Version existiert bereits**
+2. **Package Name bereits vergeben**
+   - ✅ Lösung: Prüfe auf npmjs.org ob `@uxwizard25/design-system-tokens` verfügbar ist
+   - Falls vergeben: Ändere Package Name in package.json
+
+3. **Version existiert bereits**
    - ✅ Lösung: Workflow erhöht Version automatisch, sollte nicht passieren
    - Falls doch: Version in package.json manuell erhöhen
 
-3. **NPM Registry nicht erreichbar**
+4. **NPM Registry nicht erreichbar**
    - ✅ Lösung: Warte 5 Minuten und pushe nochmal
 
 ### ❌ Problem: "Kann Package nicht installieren"
 
-**Ursache:** Keine Authentifizierung oder falscher Token
+**Ursache:** Package noch nicht veröffentlicht oder falscher Name
 
 **Lösung:**
-1. Prüfe `.npmrc` Datei:
+1. Prüfe ob Package existiert:
    ```bash
-   cat .npmrc
+   npm info @uxwizard25/design-system-tokens
    ```
-2. Prüfe ob Token gültig ist:
-   ```bash
-   echo $GITHUB_TOKEN
-   ```
-3. Erstelle neuen Token mit `read:packages` Scope
+2. Prüfe Package Name (exakt `@uxwizard25/design-system-tokens`)
+3. Stelle sicher, dass mindestens eine Version veröffentlicht wurde
 
 ---
 
@@ -407,7 +442,7 @@ Dependabot prüft automatisch jeden Montag (9:00 Uhr) auf Updates:
 
 ### **Kosten:**
 
-💰 **0 EUR** - GitHub Packages ist kostenlos für private Repos!
+💰 **0 EUR** - npmjs.org ist kostenlos für öffentliche Packages!
 
 ### **Vorteile:**
 
@@ -417,6 +452,9 @@ Dependabot prüft automatisch jeden Montag (9:00 Uhr) auf Updates:
 - ✅ Code Review durch PR
 - ✅ Nachvollziehbare Versionshistorie
 - ✅ Automatische Release Notes
+- ✅ Öffentlich zugänglich - kein Token erforderlich!
+- ✅ Nutzbar mit CDNs (unpkg.com, jsdelivr.com)
+- ✅ Standard NPM Registry - professionell
 
 ---
 

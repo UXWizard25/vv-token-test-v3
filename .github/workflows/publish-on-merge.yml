@@ -35,13 +35,12 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
 
-      # 3. Node.js Setup für GitHub Packages
+      # 3. Node.js Setup für npmjs.org
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@uxwizard25'
+          registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
 
       # 4. Dependencies installieren
@@ -135,13 +134,13 @@ jobs:
           echo "ℹ️  Note: Version bump is not committed to main (avoids race conditions)"
 
       # 10. Package veröffentlichen
-      - name: Publish to GitHub Packages
+      - name: Publish to npmjs.org
         run: |
-          echo "📦 Publishing @uxwizard25/design-system-tokens@${{ steps.version.outputs.new }} to GitHub Packages..."
+          echo "📦 Publishing @uxwizard25/design-system-tokens@${{ steps.version.outputs.new }} to npmjs.org..."
           npm publish
           echo "✅ Package published successfully!"
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       # 11. Changelog generieren (aus letztem Tag)
       - name: Generate Changelog
