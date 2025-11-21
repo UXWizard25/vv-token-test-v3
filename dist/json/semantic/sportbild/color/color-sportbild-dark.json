@@ -6,7 +6,8 @@
       "coreColorTertiary": "#ffffff",
       "coreColorSecondaryConstant": "#ffffff",
       "coreColorTertiaryConstant": "#081729",
-      "coreColorTertiaryVvPipeTEST": "#b0d1f2"
+      "coreColorTertiaryVvPipeTEST": "#b0d1f2",
+      "connysColor": "#051f36"
     },
     "Attention": {
       "accentColorPrimary": "#f7fafc",
