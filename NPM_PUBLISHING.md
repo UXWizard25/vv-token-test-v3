@@ -1,135 +1,196 @@
-# 📦 NPM Publishing Setup & Wartungsanleitung
+# 📦 NPM Publishing - Automatisierter Workflow
 
-Diese Anleitung erklärt Schritt für Schritt, wie du deine Design Tokens als NPM Package veröffentlichst und wartest.
+Deine Design Tokens werden automatisch als NPM Package veröffentlicht, wenn du sie aus Figma pushst.
 
 ---
 
 ## 🎯 Übersicht
 
-Dein Design Token Package ist jetzt konfiguriert als:
-- **Package Name:** `@uxwizard25/design-system-tokens`
-- **Registry:** GitHub Packages (kostenlos & privat)
-- **Versionierung:** Git Tags mit manuellem Approve
-- **Auto-Updates:** Dependabot (automatische PR's für Dependency Updates)
+**Package Name:** `@uxwizard25/design-system-tokens`
+**Registry:** GitHub Packages (kostenlos & privat)
+**Versionierung:** Automatisch (Patch-Version bei jedem Release)
+**Workflow:** Figma → PR → Merge → Publish ✅
 
 ---
 
-## 🚀 ERSTMALIGES SETUP
+## 🚀 SO FUNKTIONIERT ES
 
-### Schritt 1: GitHub Environment für manuelles Approve einrichten
+### **Der komplette Ablauf:**
 
-Das Package wird **erst nach deinem manuellen Approve** veröffentlicht.
+```
+1. Figma Variable Visualizer Plugin
+   ↓ Push to "figma-tokens" branch
+2. GitHub Actions erstellt automatisch Pull Request
+   ↓ Build & Validierung
+3. Du reviewst PR auf GitHub
+   ↓ Merge Pull Request
+4. GitHub Actions published automatisch neue Version
+   ↓
+5. Fertig! Package ist veröffentlicht 🎉
+```
 
-**So richtest du das ein:**
-
-1. Gehe zu deinem GitHub Repository: https://github.com/UXWizard25/vv-token-test-v3
-2. Klicke auf **Settings** (⚙️ oben rechts)
-3. In der linken Sidebar: **Environments**
-4. Klicke auf **New environment**
-5. Name: `npm-publish` (exakt so schreiben!)
-6. Klicke auf **Configure environment**
-7. Aktiviere **Required reviewers**
-8. Füge dich selbst als Reviewer hinzu (`UXWizard25`)
-9. Klicke auf **Save protection rules**
-
-**Was bewirkt das?**
-- Bei jedem Release-Versuch musst du manuell auf "Approve" klicken
-- Verhindert versehentliches Publishing
-- Du hast volle Kontrolle über Releases
+**Du brauchst:**
+- ✅ Keine Git Tags erstellen
+- ✅ Kein manuelles Approve
+- ✅ Nur PR mergen
 
 ---
 
-## 📝 PACKAGE VERÖFFENTLICHEN (Release Workflow)
+## 📝 SCHRITT-FÜR-SCHRITT ANLEITUNG
 
-### Schritt 1: Tokens aktualisieren
+### **Schritt 1: Figma Variable Visualizer Plugin konfigurieren**
 
-```bash
-# Ändere deine Tokens in Figma oder lokal
-# ...
+**WICHTIG:** Stelle den Target Branch auf `figma-tokens` (NICHT `main`!)
 
-# Committe die Änderungen
-git add src/design-tokens/
-git commit -m "feat: add new color tokens for dark mode"
-git push
+Im Variable Visualizer Plugin:
+
+```
+Repository:      UXWizard25/vv-token-test-v3
+Path:            src/design-tokens/
+Target branch:   figma-tokens  ← WICHTIG!
+Commit message:  Update from VV — [Zeitstempel]
 ```
 
-### Schritt 2: Version entscheiden
+**Screenshot-Referenz:**
+- Dropdown "Target branch" → Wähle `figma-tokens`
+- Wenn Branch nicht existiert, wird er automatisch erstellt
 
-Wähle die neue Version nach **Semantic Versioning**:
+### **Schritt 2: Tokens aus Figma pushen**
 
-| Änderung | Version Bump | Beispiel |
-|----------|-------------|----------|
-| 🐛 Bug Fix | Patch | `1.0.0` → `1.0.1` |
-| ✨ Neues Feature (kompatibel) | Minor | `1.0.0` → `1.1.0` |
-| 💥 Breaking Change | Major | `1.0.0` → `2.0.0` |
+1. Öffne Figma
+2. Öffne Variable Visualizer Plugin
+3. Klicke "Push to GitHub"
+4. Fertig! Plugin pusht zu Branch `figma-tokens`
 
-**Beispiele:**
-- Neue Farbe hinzugefügt → Minor (`1.1.0`)
-- Farbnamen geändert → Major (`2.0.0`)
-- Falsche Farbwerte gefixt → Patch (`1.0.1`)
+### **Schritt 3: Pull Request wird automatisch erstellt**
 
-### Schritt 3: Git Tag erstellen
+**Was passiert automatisch:**
 
-```bash
-# Format: v{MAJOR}.{MINOR}.{PATCH}
+1. GitHub Actions erkennt den Push zu `figma-tokens`
+2. Workflow "Auto PR from Figma Tokens" startet
+3. Tokens werden gebaut und validiert
+4. Pull Request wird erstellt: `figma-tokens` → `main`
 
-# Beispiel für Patch Release:
-git tag v1.0.1
+**Du bekommst Benachrichtigung:**
+```
+🎨 Update design tokens from Figma
 
-# Beispiel für Minor Release:
-git tag v1.1.0
+Build Status: ✅ Success
+Successful Builds: 30/30
+Files Changed: 5
 
-# Beispiel für Major Release:
-git tag v2.0.0
-
-# Tag pushen (triggert den Workflow!)
-git push --tags
+[View Pull Request]
 ```
 
-### Schritt 4: Workflow überwachen
+### **Schritt 4: Pull Request reviewen**
 
-1. Gehe zu GitHub: **Actions** Tab
-2. Du siehst einen Workflow: **"Publish to GitHub Packages"**
-3. Der Workflow läuft in 3 Phasen:
+Gehe zu: https://github.com/UXWizard25/vv-token-test-v3/pulls
 
-   **Phase 1: Build** ✅ (automatisch)
-   - Dependencies installieren
-   - Tokens bauen
-   - Tests durchführen
-   - Artifacts hochladen
+**Im PR siehst du:**
 
-   **Phase 2: Publish** ⏸️ (wartet auf dein Approve)
-   - ⚠️ Workflow pausiert hier
-   - Du bekommst eine Benachrichtigung
-   - Du musst manuell approven
+```markdown
+## 🎨 Design Token Update
 
-   **Phase 3: Release** ✅ (automatisch nach Approve)
-   - GitHub Release erstellen
-   - Release Notes generieren
-   - Download-Artifacts bereitstellen
+### ✅ Build Results
+- Build Status: Success
+- Successful Builds: 30/30
+- Warnings: 0
 
-### Schritt 5: Manuell approven
+### 📝 Changed Files
+Files Changed: 5
 
-1. Gehe zum **Actions** Tab in GitHub
-2. Klicke auf den wartenden Workflow
-3. Du siehst: **"Review pending"** oder **"Waiting for approval"**
-4. Klicke auf **"Review deployments"**
-5. Aktiviere die Checkbox bei `npm-publish`
-6. Klicke auf **"Approve and deploy"**
+src/design-tokens/colormode/light-bild.json
+src/design-tokens/colormode/dark-bild.json
+...
 
-**Jetzt wird das Package veröffentlicht!** 🎉
+### 🚀 What Happens After Merge?
+When you merge this PR:
+1. ✅ Tokens will be rebuilt
+2. ✅ Package version will be bumped (patch)
+3. ✅ Package will be published to GitHub Packages
+4. ✅ GitHub Release will be created
+```
 
-### Schritt 6: Verify Release
+**Prüfe:**
+- ✅ Build erfolgreich?
+- ✅ Richtige Dateien geändert?
+- ✅ Bereit zum Veröffentlichen?
 
-1. Gehe zu: https://github.com/UXWizard25/vv-token-test-v3/packages
-2. Du siehst dein Package: `@uxwizard25/design-system-tokens`
-3. Klicke drauf → du siehst alle veröffentlichten Versionen
+### **Schritt 5: Pull Request mergen**
+
+Klicke auf **"Merge pull request"** → **"Confirm merge"**
+
+### **Schritt 6: Automatisches Publishing**
+
+**Was jetzt automatisch passiert:**
+
+1. Workflow "Publish Package on Merge" startet
+2. Version wird erhöht (z.B. `1.0.0` → `1.0.1`)
+3. Tokens werden gebaut
+4. Package wird zu GitHub Packages published
+5. GitHub Release wird erstellt
+6. Git Tag wird erstellt (z.B. `v1.0.1`)
+
+**Nach ca. 3-4 Minuten:**
+
+✅ **Fertig!** Dein Package ist veröffentlicht!
+
+**Du siehst:**
+- 📦 Neues Package in: https://github.com/UXWizard25/vv-token-test-v3/packages
+- 📋 Neues Release in: https://github.com/UXWizard25/vv-token-test-v3/releases
+
+---
+
+## 📊 VERSIONIERUNG
+
+### **Automatische Patch-Versionierung**
+
+Jeder Merge erhöht automatisch die Patch-Version:
+
+```
+1.0.0 → 1.0.1 → 1.0.2 → 1.0.3 → ...
+```
+
+### **Für Minor oder Major Updates:**
+
+Wenn du größere Änderungen hast (neue Features oder Breaking Changes):
+
+**Option A: package.json manuell ändern (vor Merge)**
+
+1. Bearbeite `package.json` im PR:
+   ```json
+   {
+     "version": "1.1.0"  // oder 2.0.0 für Major
+   }
+   ```
+2. Merge PR
+3. Workflow nutzt die Version aus package.json
+
+**Option B: Nach Merge manuell erhöhen**
+
+```bash
+git checkout main
+git pull
+
+# Für Minor Update
+npm version minor  # 1.0.5 → 1.1.0
+
+# Für Major Update
+npm version major  # 1.1.0 → 2.0.0
+
+git push origin main --tags
+```
+
+**Semantic Versioning:**
+- **Patch** (1.0.0 → 1.0.1): Bug Fixes, kleine Korrekturen
+- **Minor** (1.0.0 → 1.1.0): Neue Tokens, neue Features (kompatibel)
+- **Major** (1.0.0 → 2.0.0): Breaking Changes (Token umbenannt, entfernt)
 
 ---
 
 ## 📥 PACKAGE INSTALLIEREN (In anderen Projekten)
 
-### Einmalige Konfiguration (pro Projekt)
+### **Einmalige Konfiguration (pro Projekt)**
 
 Erstelle/bearbeite `.npmrc` im Projekt-Root:
 
@@ -138,29 +199,38 @@ Erstelle/bearbeite `.npmrc` im Projekt-Root:
 //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
 ```
 
-**Authentifizierung:**
-
-**Option A: Persönlicher Access Token (empfohlen)**
+### **GitHub Token erstellen**
 
 1. Gehe zu: https://github.com/settings/tokens
 2. Klicke auf **"Generate new token (classic)"**
 3. Name: `npm-packages-read`
-4. Aktiviere Scope: `read:packages`
-5. Klicke auf **Generate token**
+4. Aktiviere Scope: **`read:packages`**
+5. Klicke auf **"Generate token"**
 6. Kopiere das Token (zeigt nur einmal!)
-7. Füge Token in `.npmrc` ein:
-   ```
-   //npm.pkg.github.com/:_authToken=ghp_DEIN_TOKEN_HIER
-   ```
 
-**Option B: Umgebungsvariable (für CI/CD)**
+### **Token in .npmrc einfügen**
+
+**Option A: Direkt in .npmrc** (einfach)
 
 ```bash
-# In ~/.bashrc oder ~/.zshrc
+@uxwizard25:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=ghp_DEIN_TOKEN_HIER
+```
+
+**Option B: Umgebungsvariable** (sicherer)
+
+In `~/.bashrc` oder `~/.zshrc`:
+```bash
 export GITHUB_TOKEN="ghp_DEIN_TOKEN_HIER"
 ```
 
-### Package installieren
+Dann in `.npmrc`:
+```bash
+@uxwizard25:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+```
+
+### **Package installieren**
 
 ```bash
 # Neueste Version
@@ -173,257 +243,206 @@ npm install @uxwizard25/design-system-tokens@1.2.3
 npm install --save-dev @uxwizard25/design-system-tokens
 ```
 
-### Package nutzen
+### **Package nutzen**
 
-```javascript
-// CSS importieren (in deiner main.css oder main.js)
-import '@uxwizard25/design-system-tokens/css/semantic/bild/color/color-bild-light.css';
+**CSS importieren:**
+```css
+/* In deiner main.css */
+@import '@uxwizard25/design-system-tokens/css/semantic/bild/color/color-bild-light.css';
+```
 
-// SCSS importieren
+**SCSS importieren:**
+```scss
+// In deiner main.scss
 @import '@uxwizard25/design-system-tokens/scss/semantic/bild/color/color-bild-light';
 
-// JavaScript/JSON
+.my-button {
+  background-color: var(--color-brand-primary);
+}
+```
+
+**JavaScript/TypeScript:**
+```javascript
+// Import tokens als JS Modul
 import tokens from '@uxwizard25/design-system-tokens/json/semantic/bild/color/color-bild-light.json';
+
 console.log(tokens.color.brand.primary); // "#de0000"
+
+// Oder einzelne Dateien
+import bildColors from '@uxwizard25/design-system-tokens/js/semantic/bild/color/color-bild-light.js';
+```
+
+**Webpack/Vite:**
+```javascript
+// In deiner main.js oder main.ts
+import '@uxwizard25/design-system-tokens/css/semantic/bild/color/color-bild-light.css';
+
+// CSS wird automatisch in dein Bundle aufgenommen
 ```
 
 ---
 
-## 🤖 DEPENDABOT (Automatische Updates)
+## 🤖 DEPENDABOT
 
-### Was macht Dependabot?
+Dependabot prüft automatisch jeden Montag (9:00 Uhr) auf Updates:
 
-Dependabot prüft **automatisch jede Woche (Montags 9:00 Uhr)**:
 - NPM Dependencies (style-dictionary, nodemon, etc.)
-- GitHub Actions Versionen
+- GitHub Actions Updates
 
-**Wenn Updates verfügbar sind:**
-1. Dependabot erstellt automatisch einen Pull Request
-2. Du wirst benachrichtigt
-3. Du reviewst den PR
-4. Du mergst den PR (oder lehnst ab)
-
-### Dependabot PR's verwalten
-
-**Automatisch generierte PR's sehen so aus:**
-
-```
-Title: chore(deps): bump style-dictionary from 4.2.0 to 4.3.0
-
-Description:
-Bumps style-dictionary from 4.2.0 to 4.3.0
-
-Release notes: ...
-Changelog: ...
-```
-
-**Was du tun solltest:**
-
-1. **Prüfe den PR:**
-   - Schau dir die Changes an
-   - Lies Release Notes/Changelog
-   - Prüfe ob Breaking Changes dabei sind
-
-2. **Teste lokal (optional):**
-   ```bash
-   gh pr checkout 123  # PR Nummer
-   npm install
-   npm run build
-   npm run test  # falls vorhanden
-   ```
-
-3. **Merge oder Ablehnen:**
-   - ✅ **Merge**: Klicke auf "Merge pull request"
-   - ❌ **Ablehnen**: Klicke auf "Close pull request"
-   - ⏸️ **Später**: Kommentiere `@dependabot rebase` für Rebase
+**Wenn Updates verfügbar:**
+1. Dependabot erstellt automatisch Pull Request
+2. Du bekommst Benachrichtigung
+3. Du reviewst und mergst PR
 
 **Dependabot Kommandos (in PR Kommentaren):**
 
 ```bash
 @dependabot rebase        # PR rebasen
 @dependabot recreate      # PR neu erstellen
-@dependabot merge         # Auto-merge (wenn Tests grün)
-@dependabot cancel merge  # Auto-merge abbrechen
+@dependabot merge         # Auto-merge
 @dependabot close         # PR schließen
-@dependabot ignore        # Dieses Update ignorieren
-```
-
-### Dependabot Settings anpassen
-
-In `.github/dependabot.yml`:
-
-```yaml
-# Häufigkeit ändern
-schedule:
-  interval: "daily"     # Täglich statt wöchentlich
-  # oder: "weekly", "monthly"
-
-# Mehr/weniger PR's gleichzeitig
-open-pull-requests-limit: 10  # Standard: 5
-
-# Bestimmte Dependencies ignorieren
-ignore:
-  - dependency-name: "style-dictionary"
-    versions: ["5.x"]  # Ignoriere Major Version 5
+@dependabot ignore        # Update ignorieren
 ```
 
 ---
 
-## 🔧 WARTUNG & TROUBLESHOOTING
+## 🔧 WORKFLOWS ÜBERSICHT
 
-### Package-Version in package.json synchronisieren
+### **Workflow 1: Auto PR from Figma Tokens**
+- **Datei:** `.github/workflows/auto-pr-from-figma.yml`
+- **Trigger:** Push zu Branch `figma-tokens`
+- **Macht:**
+  - Baut Tokens
+  - Validiert Build
+  - Erstellt/Updated Pull Request
+  - Zeigt Build-Statistiken
 
-**WICHTIG:** Die Version in `package.json` wird automatisch vom GitHub Actions Workflow gesetzt!
+### **Workflow 2: Publish Package on Merge**
+- **Datei:** `.github/workflows/publish-on-merge.yml`
+- **Trigger:** Push zu `main` (nach PR Merge)
+- **Macht:**
+  - Erhöht Patch-Version
+  - Baut Tokens
+  - Published zu GitHub Packages
+  - Erstellt GitHub Release
+  - Erstellt Git Tag
 
-Aber wenn du lokal testen willst:
-
-```bash
-# Version in package.json setzen (ohne Git Tag)
-npm version 1.2.3 --no-git-tag-version
-```
-
-### Package lokal testen (vor Veröffentlichung)
-
-```bash
-# Package packen (ohne zu publishen)
-npm pack
-
-# Output: uxwizard25-design-system-tokens-1.2.3.tgz
-
-# In anderem Projekt installieren
-cd ../mein-anderes-projekt
-npm install ../vv-token-test-v3/uxwizard25-design-system-tokens-1.2.3.tgz
-```
-
-### Package-Inhalt prüfen
-
-```bash
-# Zeige alle Dateien, die ins Package kommen
-npm pack --dry-run
-
-# Extrahiere .tgz und inspiziere
-tar -xzf uxwizard25-design-system-tokens-1.2.3.tgz
-cd package
-ls -la
-```
-
-### Workflow manuell triggern (Testing)
-
-Du kannst den Workflow auch manuell starten (ohne Git Tag):
-
-1. Gehe zu **Actions** Tab
-2. Klicke auf **"Publish to GitHub Packages"** (links)
-3. Klicke auf **"Run workflow"** (rechts)
-4. Wähle Branch: `main` oder `develop`
-5. Klicke auf **"Run workflow"**
-
-**⚠️ Achtung:** Das triggered nur den Build, nicht das Publishing (weil kein Git Tag).
-
-### Häufige Fehler
-
-#### ❌ Error: "Failed to publish package"
-
-**Ursache:** Keine Permissions oder Token fehlt
-
-**Lösung:**
-1. Prüfe in GitHub: **Settings → Actions → General**
-2. Unter **Workflow permissions**: Aktiviere **"Read and write permissions"**
-3. Aktiviere **"Allow GitHub Actions to create and approve pull requests"**
-
-#### ❌ Error: "Version already exists"
-
-**Ursache:** Du versuchst eine Version zu publishen, die schon existiert
-
-**Lösung:**
-1. Lösche den Git Tag: `git tag -d v1.2.3 && git push --delete origin v1.2.3`
-2. Erhöhe die Version: `git tag v1.2.4 && git push --tags`
-
-#### ❌ Error: "Build failed"
-
-**Ursache:** Token-Build schlägt fehl
-
-**Lösung:**
-1. Teste lokal: `npm run build`
-2. Prüfe Logs in GitHub Actions
-3. Fixe Fehler in `src/design-tokens/` oder `scripts/`
-
-#### ❌ Error: "Cannot find module dist/index.js"
-
-**Ursache:** Entry Point fehlt
-
-**Lösung:**
-Erstelle `dist/index.js` manuell oder passe `package.json` an:
-```json
-{
-  "main": "dist/css/index.css",  // oder anderer Pfad
-  "module": "dist/js/index.js"
-}
-```
+### **Workflow 3: Build Design Tokens** (optional)
+- **Datei:** `.github/workflows/build-tokens.yml`
+- **Trigger:** Push auf anderen Branches
+- **Macht:**
+  - Nur Build & Test
+  - Kein Publishing
 
 ---
 
-## 📚 WEITERE RESSOURCEN
+## 🆘 TROUBLESHOOTING
 
-### GitHub Packages Dokumentation
-- [Publishing packages](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry)
-- [Installing packages](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#installing-a-package)
+### ❌ Problem: "Pull Request wird nicht erstellt"
 
-### Dependabot Dokumentation
-- [Configuration options](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file)
-- [Managing pull requests](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/managing-pull-requests-for-dependency-updates)
+**Mögliche Ursachen:**
 
-### Semantic Versioning
-- [Semantic Versioning Specification](https://semver.org/)
+1. **Falscher Target Branch im VV Plugin**
+   - ✅ Lösung: Stelle sicher, dass Target Branch = `figma-tokens` ist
 
-### GitHub Actions
-- [Workflow syntax](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
-- [Environment protection rules](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#environment-protection-rules)
+2. **Branch `figma-tokens` existiert nicht**
+   - ✅ Lösung: VV Plugin erstellt ihn automatisch beim ersten Push
+
+3. **Workflow läuft nicht**
+   - ✅ Lösung: Prüfe GitHub Actions Permissions:
+     - Settings → Actions → General
+     - "Read and write permissions" aktivieren
+
+### ❌ Problem: "Build schlägt fehl"
+
+**Ursache:** Token-Dateien sind fehlerhaft
+
+**Lösung:**
+1. Prüfe Build-Log in GitHub Actions
+2. Teste lokal: `npm run build`
+3. Fixe Fehler in Figma
+4. Pushe nochmal
+
+### ❌ Problem: "Publishing schlägt fehl"
+
+**Mögliche Ursachen:**
+
+1. **Keine Package-Permissions**
+   - ✅ Lösung: Settings → Actions → General → "Read and write permissions"
+
+2. **Version existiert bereits**
+   - ✅ Lösung: Workflow erhöht Version automatisch, sollte nicht passieren
+   - Falls doch: Version in package.json manuell erhöhen
+
+3. **NPM Registry nicht erreichbar**
+   - ✅ Lösung: Warte 5 Minuten und pushe nochmal
+
+### ❌ Problem: "Kann Package nicht installieren"
+
+**Ursache:** Keine Authentifizierung oder falscher Token
+
+**Lösung:**
+1. Prüfe `.npmrc` Datei:
+   ```bash
+   cat .npmrc
+   ```
+2. Prüfe ob Token gültig ist:
+   ```bash
+   echo $GITHUB_TOKEN
+   ```
+3. Erstelle neuen Token mit `read:packages` Scope
 
 ---
 
-## 🎓 ZUSAMMENFASSUNG
+## 📚 ZUSAMMENFASSUNG
 
-### Tägliche Arbeit
-1. ✅ Tokens in Figma/lokal ändern
-2. ✅ Committen und pushen
-3. ✅ Tests laufen automatisch (GitHub Actions)
+### **Tägliche Arbeit:**
 
-### Release erstellen
-1. ✅ Git Tag erstellen: `git tag v1.2.3`
-2. ✅ Tag pushen: `git push --tags`
-3. ✅ Workflow beobachten auf GitHub
-4. ✅ Manuell approven wenn bereit
-5. ✅ Package wird veröffentlicht 🎉
+1. ✅ Tokens in Figma ändern
+2. ✅ Variable Visualizer Plugin → "Push to GitHub"
+3. ✅ Warte auf PR (automatisch)
+4. ✅ PR reviewen
+5. ✅ PR mergen
+6. ✅ Fertig! Package automatisch published
 
-### Updates verwalten
-1. ✅ Dependabot erstellt automatisch PR's
-2. ✅ Du reviewst und mergst PR's
-3. ✅ Fertig!
+### **Kosten:**
+
+💰 **0 EUR** - GitHub Packages ist kostenlos für private Repos!
+
+### **Vorteile:**
+
+- ✅ Komplett automatisiert
+- ✅ Kein Git Tag erstellen nötig
+- ✅ Kein manuelles Approve
+- ✅ Code Review durch PR
+- ✅ Nachvollziehbare Versionshistorie
+- ✅ Automatische Release Notes
 
 ---
 
 ## 💡 TIPPS
 
-✅ **DO's:**
-- Teste immer lokal mit `npm run build` vor dem Release
-- Schreibe aussagekräftige Git Commit Messages
+**✅ DO's:**
+- Reviewe jeden PR bevor du mergst
+- Schreibe aussagekräftige Commit Messages im VV Plugin
+- Teste lokal mit `npm run build` wenn unsicher
 - Nutze Semantic Versioning korrekt
-- Reviewe Dependabot PR's regelmäßig
-- Halte README.md aktuell
 
-❌ **DON'Ts:**
-- Version nicht manuell in `package.json` ändern (Workflow macht das)
-- Keine sensiblen Daten in Tokens committen
-- Git Tags nicht löschen nach Publishing
-- Dependencies nicht lange ignorieren
+**❌ DON'Ts:**
+- Nicht direkt zu `main` pushen (immer über `figma-tokens`)
+- Version nicht manuell in package.json ändern (außer für Minor/Major)
+- PR nicht mergen, wenn Build fehlschlägt
 
 ---
 
-## 🆘 HILFE BENÖTIGT?
+## 📞 SUPPORT
 
-Erstelle ein Issue auf GitHub:
-https://github.com/UXWizard25/vv-token-test-v3/issues
+**Probleme?**
+
+1. Prüfe die Workflow-Logs in GitHub Actions
+2. Lies diese Dokumentation nochmal
+3. Erstelle ein Issue: https://github.com/UXWizard25/vv-token-test-v3/issues
 
 ---
 
-**Viel Erfolg mit deinem Design Token Package! 🚀**
+**Viel Erfolg mit deinem automatisierten Token Publishing! 🚀🎨**
