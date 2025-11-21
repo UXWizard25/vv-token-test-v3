@@ -52,8 +52,7 @@
   "author": "UXWizard25",
   "license": "MIT",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "@uxwizard25:registry": "https://npm.pkg.github.com"
+    "access": "public"
   },
   "devDependencies": {
     "style-dictionary": "^4.2.0",
