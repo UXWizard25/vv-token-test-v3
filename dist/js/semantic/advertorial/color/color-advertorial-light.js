@@ -8,7 +8,6 @@ export const semanticCoreCorecolortertiary = "#242629"; // Represents tertiary b
 export const semanticCoreCorecolorsecondaryconstant = "#ffffff"; // Use this on elements that must maintain the white color even in dark mode.
 export const semanticCoreCorecolortertiaryconstant = "#242629"; // Use this on elements that need to maintain the dark color across themes and color modes.
 export const semanticCoreCorecolortertiaryvvpipetest = "#476e94"; // this is a test for the token pipeline
-export const semanticCoreConnyscolor = "#0d243b"; // this is a test for the token pipeline
 export const semanticAttentionAccentcolorprimary = "#de0000"; // Primary accent color used to emphasize interactive or highlight elements such as links, selection states, or focus indicators. Adapts in Darkmode to a fully white tone.
 export const semanticAttentionAccentcolorprimaryconstant = "#de0000"; // Used for accent highlights that must remain visually consistent across themes (e.g., brand identifiers, logos, or fixed emphasis areas). Color value does not change between Light and Dark mode.
 export const semanticAttentionAttentioncolorsuccessprimary = "#00c273"; // Primary success color used to indicate positive states, confirmations, or completed actions (e.g., success banners, icons, or badges). Remains the same across modes to ensure recognizability and consistency.

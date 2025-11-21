@@ -7,7 +7,6 @@ $semantic-core-core-color-tertiary: #ffffff; // Represents tertiary brand accent
 $semantic-core-core-color-secondary-constant: #ffffff; // Use this on elements that must maintain the white color even in dark mode.
 $semantic-core-core-color-tertiary-constant: #081729; // Use this on elements that need to maintain the dark color across themes and color modes.
 $semantic-core-core-color-tertiary-vv-pipe-test: #b0d1f2; // this is a test for the token pipeline
-$semantic-core-connys-color: #051f36; // this is a test for the token pipeline
 $semantic-attention-accent-color-primary: #f7fafc; // Primary accent color used to emphasize interactive or highlight elements such as links, selection states, or focus indicators. Adapts in Darkmode to a fully white tone.
 $semantic-attention-accent-color-primary-constant: #174582; // Used for accent highlights that must remain visually consistent across themes (e.g., brand identifiers, logos, or fixed emphasis areas). Color value does not change between Light and Dark mode.
 $semantic-attention-attention-color-success-primary: #00c273; // Primary success color used to indicate positive states, confirmations, or completed actions (e.g., success banners, icons, or badges). Remains the same across modes to ensure recognizability and consistency.
