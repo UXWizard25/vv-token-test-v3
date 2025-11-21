@@ -1,5 +1,5 @@
 {
-  "generated": "2025-11-21T12:27:10.488Z",
+  "generated": "2025-11-21T19:37:11.198Z",
   "version": "1.0.0",
   "platforms": {
     "css": {
@@ -169,15 +169,99 @@
           "path": "dist/json/semantic/"
         }
       }
+    },
+    "ios": {
+      "layers": {
+        "base": {
+          "files": [
+            "PrimitiveColorValue.swift",
+            "PrimitiveFontValue.swift",
+            "PrimitiveSizeValue.swift",
+            "PrimitiveSpaceValue.swift"
+          ],
+          "path": "dist/ios/base/"
+        },
+        "mapping": {
+          "files": [
+            "BrandAdvertorial.swift",
+            "BrandBild.swift",
+            "BrandColorBild.swift",
+            "BrandColorSportbild.swift",
+            "BrandSportbild.swift"
+          ],
+          "path": "dist/ios/mapping/"
+        },
+        "density": {
+          "files": [
+            "DensityCompact.swift",
+            "DensityDefault.swift",
+            "DensitySpacious.swift"
+          ],
+          "path": "dist/ios/density/"
+        },
+        "semantic": {
+          "files": [
+            "advertorial",
+            "bild",
+            "sportbild"
+          ],
+          "path": "dist/ios/semantic/"
+        }
+      }
+    },
+    "android": {
+      "layers": {}
+    },
+    "flutter": {
+      "layers": {
+        "base": {
+          "files": [
+            "primitive_color_value.dart",
+            "primitive_font_value.dart",
+            "primitive_size_value.dart",
+            "primitive_space_value.dart"
+          ],
+          "path": "dist/flutter/base/"
+        },
+        "mapping": {
+          "files": [
+            "brand_advertorial.dart",
+            "brand_bild.dart",
+            "brand_color_bild.dart",
+            "brand_color_sportbild.dart",
+            "brand_sportbild.dart"
+          ],
+          "path": "dist/flutter/mapping/"
+        },
+        "density": {
+          "files": [
+            "density_compact.dart",
+            "density_default.dart",
+            "density_spacious.dart"
+          ],
+          "path": "dist/flutter/density/"
+        },
+        "semantic": {
+          "files": [
+            "advertorial",
+            "bild",
+            "sportbild"
+          ],
+          "path": "dist/flutter/semantic/"
+        }
+      }
     }
   },
   "statistics": {
-    "totalFiles": 72,
+    "totalFiles": 102,
     "byPlatform": {
       "css": 27,
       "scss": 15,
       "js": 15,
-      "json": 15
+      "json": 15,
+      "ios": 15,
+      "android": 0,
+      "flutter": 15
     }
   }
 }

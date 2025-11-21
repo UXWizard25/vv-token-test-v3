@@ -286,6 +286,51 @@ function createStyleDictionaryConfig(collectionDir, modeName, config, brand = nu
             brand: brand
           }
         }]
+      },
+
+      // iOS - Swift
+      'ios-swift': {
+        transformGroup: 'ios-swift',
+        buildPath: buildPathBase.replace('{{platform}}', 'ios'),
+        files: [{
+          destination: `${finalOutputPrefix.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('')}${outputMode.charAt(0).toUpperCase() + outputMode.slice(1)}.swift`,
+          format: 'ios-swift/class.swift',
+          filter: tokenFilter,
+          className: `${finalOutputPrefix.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('')}${outputMode.charAt(0).toUpperCase() + outputMode.slice(1)}`,
+          options: {
+            outputReferences: false
+          }
+        }]
+      },
+
+      // Android - XML Resources
+      android: {
+        transformGroup: 'android',
+        buildPath: buildPathBase.replace('{{platform}}', 'android/res/values'),
+        files: [{
+          destination: `${finalOutputPrefix.replace(/-/g, '_')}_${outputMode}.xml`,
+          format: 'android/resources',
+          filter: tokenFilter,
+          resourceType: 'color',
+          options: {
+            outputReferences: false
+          }
+        }]
+      },
+
+      // Flutter - Dart
+      flutter: {
+        transformGroup: 'flutter',
+        buildPath: buildPathBase.replace('{{platform}}', 'flutter'),
+        files: [{
+          destination: `${finalOutputPrefix.replace(/-/g, '_')}_${outputMode}.dart`,
+          format: 'flutter/class.dart',
+          filter: tokenFilter,
+          className: `${finalOutputPrefix.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('')}${outputMode.charAt(0).toUpperCase() + outputMode.slice(1)}`,
+          options: {
+            outputReferences: false
+          }
+        }]
       }
     }
   };
@@ -370,7 +415,7 @@ function createIndexFilesRecursive(dir, platform, depth = 0) {
 function createIndexFiles() {
   console.log('\n📝 Erstelle Index-Dateien...');
 
-  const platforms = ['css', 'scss', 'js', 'json'];
+  const platforms = ['css', 'scss', 'js', 'json']; // iOS, Android, Flutter don't need index files
   const layers = ['base', 'mapping', 'density', 'semantic'];
 
   platforms.forEach(platform => {
@@ -402,7 +447,7 @@ function createManifest() {
     platforms: {}
   };
 
-  const platforms = ['css', 'scss', 'js', 'json'];
+  const platforms = ['css', 'scss', 'js', 'json', 'ios', 'android', 'flutter'];
   const layers = ['base', 'mapping', 'density', 'semantic'];
 
   platforms.forEach(platform => {
@@ -596,6 +641,9 @@ async function main() {
   console.log(`   - dist/scss/        → SCSS Variables (gleiche Struktur)`);
   console.log(`   - dist/js/          → JavaScript ES6 Modules`);
   console.log(`   - dist/json/        → JSON (strukturiert)`);
+  console.log(`   - dist/ios/         → iOS Swift Classes`);
+  console.log(`   - dist/android/     → Android XML Resources`);
+  console.log(`   - dist/flutter/     → Flutter Dart Classes`);
   console.log('');
 }
 
