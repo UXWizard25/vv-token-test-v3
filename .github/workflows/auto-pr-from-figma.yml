@@ -169,9 +169,7 @@ jobs:
           **Commit:** \`${{ github.sha }}\`
           **Created:** $(date -u +"%Y-%m-%d %H:%M UTC")
           EOF
-          )" \
-              --label "design-tokens" \
-              --label "figma"
+          )"
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
