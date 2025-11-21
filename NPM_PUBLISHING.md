@@ -6,7 +6,7 @@ Deine Design Tokens werden automatisch als NPM Package veröffentlicht, wenn du 
 
 ## 🎯 Übersicht
 
-**Package Name:** `@uxwizard25/design-system-tokens`
+**Package Name:** `@marioschmidt/design-system-tokens`
 **Registry:** npmjs.org (öffentlich & kostenlos)
 **Versionierung:** Automatisch (Patch-Version bei jedem Release)
 **Workflow:** Figma → PR → Merge → Publish ✅
@@ -232,13 +232,13 @@ Das Package ist öffentlich auf npmjs.org - jeder kann es direkt installieren:
 
 ```bash
 # Neueste Version installieren
-npm install @uxwizard25/design-system-tokens
+npm install @marioschmidt/design-system-tokens
 
 # Spezifische Version
-npm install @uxwizard25/design-system-tokens@1.2.3
+npm install @marioschmidt/design-system-tokens@1.2.3
 
 # Als Dev Dependency
-npm install --save-dev @uxwizard25/design-system-tokens
+npm install --save-dev @marioschmidt/design-system-tokens
 ```
 
 **Keine `.npmrc` Datei erforderlich!**
@@ -250,13 +250,13 @@ npm install --save-dev @uxwizard25/design-system-tokens
 **CSS importieren:**
 ```css
 /* In deiner main.css */
-@import '@uxwizard25/design-system-tokens/css/semantic/bild/color/color-bild-light.css';
+@import '@marioschmidt/design-system-tokens/css/semantic/bild/color/color-bild-light.css';
 ```
 
 **SCSS importieren:**
 ```scss
 // In deiner main.scss
-@import '@uxwizard25/design-system-tokens/scss/semantic/bild/color/color-bild-light';
+@import '@marioschmidt/design-system-tokens/scss/semantic/bild/color/color-bild-light';
 
 .my-button {
   background-color: var(--color-brand-primary);
@@ -266,18 +266,18 @@ npm install --save-dev @uxwizard25/design-system-tokens
 **JavaScript/TypeScript:**
 ```javascript
 // Import tokens als JS Modul
-import tokens from '@uxwizard25/design-system-tokens/json/semantic/bild/color/color-bild-light.json';
+import tokens from '@marioschmidt/design-system-tokens/json/semantic/bild/color/color-bild-light.json';
 
 console.log(tokens.color.brand.primary); // "#de0000"
 
 // Oder einzelne Dateien
-import bildColors from '@uxwizard25/design-system-tokens/js/semantic/bild/color/color-bild-light.js';
+import bildColors from '@marioschmidt/design-system-tokens/js/semantic/bild/color/color-bild-light.js';
 ```
 
 **Webpack/Vite:**
 ```javascript
 // In deiner main.js oder main.ts
-import '@uxwizard25/design-system-tokens/css/semantic/bild/color/color-bild-light.css';
+import '@marioschmidt/design-system-tokens/css/semantic/bild/color/color-bild-light.css';
 
 // CSS wird automatisch in dein Bundle aufgenommen
 ```
@@ -289,19 +289,19 @@ Dank npmjs.org kannst du die Tokens auch direkt via CDN nutzen - perfekt zum Tes
 **unpkg.com:**
 ```html
 <!-- Direkt im HTML -->
-<link rel="stylesheet" href="https://unpkg.com/@uxwizard25/design-system-tokens/css/semantic/bild/color/color-bild-light.css">
+<link rel="stylesheet" href="https://unpkg.com/@marioschmidt/design-system-tokens/css/semantic/bild/color/color-bild-light.css">
 ```
 
 **jsDelivr:**
 ```html
 <!-- Alternative CDN -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@uxwizard25/design-system-tokens/css/semantic/bild/color/color-bild-light.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@marioschmidt/design-system-tokens/css/semantic/bild/color/color-bild-light.css">
 ```
 
 **JavaScript Fetch:**
 ```javascript
 // Tokens dynamisch laden
-fetch('https://unpkg.com/@uxwizard25/design-system-tokens/json/semantic/bild/color/color-bild-light.json')
+fetch('https://unpkg.com/@marioschmidt/design-system-tokens/json/semantic/bild/color/color-bild-light.json')
   .then(r => r.json())
   .then(tokens => console.log(tokens));
 ```
@@ -309,7 +309,7 @@ fetch('https://unpkg.com/@uxwizard25/design-system-tokens/json/semantic/bild/col
 **CodePen / JSFiddle:**
 ```html
 <!-- Perfekt zum schnellen Testen! -->
-<link rel="stylesheet" href="https://unpkg.com/@uxwizard25/design-system-tokens@latest/css/semantic/bild/color/color-bild-light.css">
+<link rel="stylesheet" href="https://unpkg.com/@marioschmidt/design-system-tokens@latest/css/semantic/bild/color/color-bild-light.css">
 ```
 
 ---
@@ -405,7 +405,7 @@ Dependabot prüft automatisch jeden Montag (9:00 Uhr) auf Updates:
    - Falls fehlt: Erstelle NPM Token und füge als Secret hinzu (siehe Einrichtung oben)
 
 2. **Package Name bereits vergeben**
-   - ✅ Lösung: Prüfe auf npmjs.org ob `@uxwizard25/design-system-tokens` verfügbar ist
+   - ✅ Lösung: Prüfe auf npmjs.org ob `@marioschmidt/design-system-tokens` verfügbar ist
    - Falls vergeben: Ändere Package Name in package.json
 
 3. **Version existiert bereits**
@@ -422,9 +422,9 @@ Dependabot prüft automatisch jeden Montag (9:00 Uhr) auf Updates:
 **Lösung:**
 1. Prüfe ob Package existiert:
    ```bash
-   npm info @uxwizard25/design-system-tokens
+   npm info @marioschmidt/design-system-tokens
    ```
-2. Prüfe Package Name (exakt `@uxwizard25/design-system-tokens`)
+2. Prüfe Package Name (exakt `@marioschmidt/design-system-tokens`)
 3. Stelle sicher, dass mindestens eine Version veröffentlicht wurde
 
 ---
