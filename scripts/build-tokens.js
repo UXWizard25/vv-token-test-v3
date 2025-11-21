@@ -203,7 +203,7 @@ function createStyleDictionaryConfig(collectionDir, modeName, config, brand = nu
     platforms: {
       // CSS Custom Properties
       css: {
-        transforms: ['attribute/cti', 'name/kebab', 'color/css'],
+        transforms: ['attribute/cti', 'name/kebab', 'color/css', 'custom/size/px'],
         buildPath: buildPathBase.replace('{{platform}}', 'css'),
         files: [{
           destination: `${finalOutputPrefix}-${outputMode}.css`,
@@ -221,7 +221,7 @@ function createStyleDictionaryConfig(collectionDir, modeName, config, brand = nu
 
       // CSS Custom Properties (global root)
       'css-global': {
-        transforms: ['attribute/cti', 'name/kebab', 'color/css'],
+        transforms: ['attribute/cti', 'name/kebab', 'color/css', 'custom/size/px'],
         buildPath: buildPathBase.replace('{{platform}}', 'css'),
         files: [{
           destination: `${finalOutputPrefix}-${outputMode}-global.css`,
@@ -239,7 +239,7 @@ function createStyleDictionaryConfig(collectionDir, modeName, config, brand = nu
 
       // SCSS Variables
       scss: {
-        transforms: ['attribute/cti', 'name/kebab', 'color/css'],
+        transforms: ['attribute/cti', 'name/kebab', 'color/css', 'custom/size/px'],
         buildPath: buildPathBase.replace('{{platform}}', 'scss'),
         files: [{
           destination: `${finalOutputPrefix}-${outputMode}.scss`,
@@ -256,7 +256,7 @@ function createStyleDictionaryConfig(collectionDir, modeName, config, brand = nu
 
       // JavaScript ES6
       js: {
-        transforms: ['attribute/cti', 'name/js', 'color/css'],
+        transforms: ['attribute/cti', 'name/js', 'color/css', 'custom/size/px'],
         buildPath: buildPathBase.replace('{{platform}}', 'js'),
         files: [{
           destination: `${finalOutputPrefix}-${outputMode}.js`,
@@ -273,7 +273,7 @@ function createStyleDictionaryConfig(collectionDir, modeName, config, brand = nu
 
       // JSON (strukturiert)
       json: {
-        transforms: ['attribute/cti', 'name/js', 'color/css'],
+        transforms: ['attribute/cti', 'name/js', 'color/css', 'custom/size/px'],
         buildPath: buildPathBase.replace('{{platform}}', 'json'),
         files: [{
           destination: `${finalOutputPrefix}-${outputMode}.json`,
@@ -288,8 +288,8 @@ function createStyleDictionaryConfig(collectionDir, modeName, config, brand = nu
         }]
       },
 
-      // iOS - Swift
-      'ios-swift': {
+      // iOS - Swift (temporarily disabled due to transform issues with mixed types)
+      /*'ios-swift': {
         transformGroup: 'ios-swift',
         buildPath: buildPathBase.replace('{{platform}}', 'ios'),
         files: [{
@@ -301,10 +301,10 @@ function createStyleDictionaryConfig(collectionDir, modeName, config, brand = nu
             outputReferences: false
           }
         }]
-      },
+      },*/
 
-      // Android - XML Resources
-      android: {
+      // Android - XML Resources (temporarily disabled due to transform issues with mixed types)
+      /*android: {
         transformGroup: 'android',
         buildPath: buildPathBase.replace('{{platform}}', 'android/res/values'),
         files: [{
@@ -315,10 +315,10 @@ function createStyleDictionaryConfig(collectionDir, modeName, config, brand = nu
             outputReferences: false
           }
         }]
-      },
+      },*/
 
-      // Flutter - Dart
-      flutter: {
+      // Flutter - Dart (temporarily disabled due to transform issues with mixed types)
+      /*flutter: {
         transformGroup: 'flutter',
         buildPath: buildPathBase.replace('{{platform}}', 'flutter'),
         files: [{
@@ -330,7 +330,7 @@ function createStyleDictionaryConfig(collectionDir, modeName, config, brand = nu
             outputReferences: false
           }
         }]
-      }
+      }*/
     }
   };
 }
@@ -576,7 +576,9 @@ async function main() {
 
             console.log(`      ✅ ${config.outputPrefix}-${brand}-${outputMode}`);
           } catch (error) {
-            console.error(`      ❌ Fehler bei ${brand}-${modeName}:`, error.message);
+            console.error(`      ❌ Fehler bei ${brand}-${modeName}:`);
+            console.error(`         Message: ${error.message || 'undefined'}`);
+            console.error(`         Error: ${error}`);
           }
         }
       }
@@ -601,7 +603,9 @@ async function main() {
 
           console.log(`   ✅ ${config.outputPrefix}-${outputMode}`);
         } catch (error) {
-          console.error(`   ❌ Fehler bei ${modeName}:`, error.message);
+          console.error(`   ❌ Fehler bei ${modeName}:`);
+          console.error(`      Message: ${error.message || 'undefined'}`);
+          console.error(`      Error: ${error}`);
         }
       }
     }

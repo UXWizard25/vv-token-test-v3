@@ -24,64 +24,66 @@ const TYPE_MAPPING = {
 
 /**
  * Bestimmt den Token-Typ basierend auf Collection-Namen und Token-Pfad
+ * Style Dictionary nutzt den $type für transforms (z.B. um px hinzuzufügen)
+ *
  * @param {string} tokenName - Der Token-Name/Pfad (z.B. "FontWeight/1000UltraFontWeight")
  * @param {string} collectionName - Der Name der Collection (z.B. "_SizePrimitive", "_FontPrimitive")
  * @param {any} value - Der Token-Wert
- * @returns {object} - Objekt mit $type und needsUnit flag
+ * @returns {object} - Objekt mit $type für Style Dictionary
  */
 function determineTokenType(tokenName, collectionName, value) {
   const tokenPath = tokenName.toLowerCase();
   const collection = collectionName.toLowerCase();
 
-  // FontWeight: Sollte unitless bleiben (prüfe Token-Name UND Collection)
+  // FontWeight: Bleibt unitless
   if (tokenPath.includes('fontweight') || tokenPath.includes('font-weight')) {
-    return { $type: 'fontWeight', needsUnit: false };
+    return { $type: 'fontWeight' };
   }
 
-  // FontSize: Benötigt px-Einheit (prüfe Token-Name UND Collection)
+  // FontSize: Dimension (Style Dictionary fügt px hinzu)
   if (tokenPath.includes('fontsize') || tokenPath.includes('font-size')) {
-    return { $type: 'dimension', needsUnit: true };
+    return { $type: 'dimension' };
   }
 
-  // LineHeight: < 10 = unitless (relative), >= 10 = px (absolut)
+  // LineHeight: < 10 = unitless (relative), >= 10 = dimension (absolut)
   if (tokenPath.includes('lineheight') || tokenPath.includes('line-height')) {
     if (typeof value === 'number' && value < 10) {
-      return { $type: 'number', needsUnit: false };  // Relativer LineHeight-Wert
+      return { $type: 'number' };  // Relativer LineHeight-Wert
     } else {
-      return { $type: 'dimension', needsUnit: true };  // Absoluter LineHeight-Wert
+      return { $type: 'dimension' };  // Absoluter LineHeight-Wert
     }
   }
 
-  // Size Tokens: Benötigen px-Einheit (basierend auf Collection oder Token-Name)
+  // Size Tokens: Dimension
   if (collection.includes('size') || tokenPath.includes('size')) {
     // Ausnahme: wenn es FontSize ist, wurde es bereits oben behandelt
     if (!tokenPath.includes('fontsize') && !tokenPath.includes('font-size')) {
-      return { $type: 'dimension', needsUnit: true };
+      return { $type: 'dimension' };
     }
   }
 
-  // Space/Spacing Tokens: Benötigen px-Einheit
+  // Space/Spacing Tokens: Dimension
   if (collection.includes('space') || tokenPath.includes('space') || tokenPath.includes('spacing')) {
-    return { $type: 'dimension', needsUnit: true };
+    return { $type: 'dimension' };
   }
 
-  // Breakpoints: Benötigen px-Einheit
+  // Breakpoints: Dimension
   if (collection.includes('breakpoint') || tokenPath.includes('breakpoint')) {
-    return { $type: 'dimension', needsUnit: true };
+    return { $type: 'dimension' };
   }
 
-  // Density: Benötigen px-Einheit
+  // Density: Dimension
   if (collection.includes('density') || tokenPath.includes('density')) {
-    return { $type: 'dimension', needsUnit: true };
+    return { $type: 'dimension' };
   }
 
-  // Width/Height: Benötigen px-Einheit
+  // Width/Height: Dimension
   if (tokenPath.includes('width') || tokenPath.includes('height')) {
-    return { $type: 'dimension', needsUnit: true };
+    return { $type: 'dimension' };
   }
 
   // Fallback: Keine spezielle Behandlung
-  return { $type: null, needsUnit: false };
+  return { $type: null };
 }
 
 // Brand-spezifische Collections Konfiguration
@@ -427,11 +429,20 @@ function resolveAliasesInTokens(tokens, aliasLookup, modeId, brandModeMap, targe
 
     if (typeof token === 'object' && token !== null) {
       // Wenn es ein Token-Objekt mit value ist
-      if (token.value !== undefined) {
+      if (token.value !== undefined || token.$value !== undefined) {
+        const valueToResolve = token.$value !== undefined ? token.$value : token.value;
+
         // Prüfe, ob der Wert ein Alias ist
-        if (typeof token.value === 'string' && token.value.match(/^\{.+\}$/)) {
-          const resolvedValue = resolveAliasValue(token.value, aliasLookup, modeId, brandModeMap, targetBrand);
-          token.value = resolvedValue;
+        if (typeof valueToResolve === 'string' && valueToResolve.match(/^\{.+\}$/)) {
+          const resolvedValue = resolveAliasValue(valueToResolve, aliasLookup, modeId, brandModeMap, targetBrand);
+
+          // Update both value and $value
+          if (token.$value !== undefined) {
+            token.$value = resolvedValue;
+          }
+          if (token.value !== undefined) {
+            token.value = resolvedValue;
+          }
         }
       } else {
         // Rekursiv für verschachtelte Objekte
@@ -468,19 +479,16 @@ function processCollection(collection, aliasLookup) {
         let processedValue = processValue(modeValue, variable.resolvedType, aliasLookup);
 
         if (processedValue !== null) {
-          // Bestimme Token-Typ und ob Einheit benötigt wird
+          // Bestimme Token-Typ (für $type Metadaten)
           const typeInfo = determineTokenType(variable.name, collection.name, processedValue);
 
-          // Füge px-Einheit hinzu wenn benötigt und Wert ist numerisch
+          // Behalte den Wert numerisch - Style Dictionary transforms fügen Units hinzu
+          // Nur den type anpassen wenn wir einen speziellen $type haben
           let finalType = TYPE_MAPPING[variable.resolvedType] || 'other';
-          if (typeInfo.needsUnit && typeof processedValue === 'number') {
-            processedValue = `${processedValue}px`;
-            // Wenn Wert jetzt ein String mit Einheit ist, setze type auf 'dimension' oder lasse bei 'string'
-            finalType = 'dimension';
-          }
 
           const tokenObject = {
-            value: processedValue,
+            $value: processedValue,  // DTCG spec requires $value
+            value: processedValue,   // Keep for backward compatibility
             type: finalType,
             $extensions: {
               'com.figma': {
@@ -491,7 +499,7 @@ function processCollection(collection, aliasLookup) {
             }
           };
 
-          // Füge $type hinzu wenn bestimmt
+          // Füge $type hinzu wenn bestimmt - Style Dictionary nutzt dies für transforms
           if (typeInfo.$type) {
             tokenObject.$type = typeInfo.$type;
           }

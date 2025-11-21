@@ -3,3 +3,6 @@
  */
 
 @import './primitive-color-value.css';
+@import './primitive-font-value.css';
+@import './primitive-size-value.css';
+@import './primitive-space-value.css';

@@ -26,6 +26,35 @@ const colorCssTransform = {
 };
 
 /**
+ * Transform: Dimension zu px
+ */
+const sizePxTransform = {
+  name: 'custom/size/px',  // Renamed to avoid conflicts with built-in transforms
+  type: 'value',
+  filter: (token) => {
+    const type = token.$type || token.type;
+    const value = token.$value || token.value;
+
+    // Only match if type is dimension-related AND value is numeric
+    const isMatchingType = ['spacing', 'size', 'fontSize', 'dimension'].includes(type);
+    const isNumeric = typeof value === 'number';
+
+    return isMatchingType && isNumeric;
+  },
+  transform: (token) => {
+    const value = token.$value || token.value;
+
+    // Safety check: only transform if value is actually a number
+    if (typeof value === 'number') {
+      return `${value}px`;
+    }
+
+    // If not a number, return unchanged (shouldn't happen due to filter, but safety first)
+    return value;
+  }
+};
+
+/**
  * Transform: Spacing/Sizing zu rem
  */
 const sizeRemTransform = {
@@ -186,6 +215,7 @@ const jsonNestedFormat = ({ dictionary }) => {
 module.exports = {
   transforms: {
     'color/css': colorCssTransform,
+    'custom/size/px': sizePxTransform,
     'size/rem': sizeRemTransform,
     'name/kebab': nameKebabTransform,
     'name/js': nameJsTransform

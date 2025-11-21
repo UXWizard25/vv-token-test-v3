@@ -2,5 +2,8 @@
  * MAPPING - CSS Index
  */
 
+@import './brand-advertorial.css';
+@import './brand-bild.css';
 @import './brand-color-bild.css';
 @import './brand-color-sportbild.css';
+@import './brand-sportbild.css';
