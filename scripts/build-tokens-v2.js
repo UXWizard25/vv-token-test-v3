@@ -165,6 +165,74 @@ function createEffectConfig(brand, colorMode) {
 }
 
 /**
+ * Baut klassische Token Collections
+ */
+async function buildClassicTokens() {
+  console.log('\n📦 Baue Klassische Tokens:\n');
+
+  const classicDir = path.join(TOKENS_DIR, 'classic');
+  if (!fs.existsSync(classicDir)) {
+    console.log('  ⚠️  Kein classic/ Verzeichnis gefunden');
+    return { total: 0, successful: 0 };
+  }
+
+  // Sammle ALLE Token-Dateien als gemeinsame Source (für Alias-Auflösung)
+  const allTokenFiles = [];
+  const collections = fs.readdirSync(classicDir);
+
+  collections.forEach(collection => {
+    const collectionDir = path.join(classicDir, collection);
+    if (!fs.statSync(collectionDir).isDirectory()) return;
+
+    const files = fs.readdirSync(collectionDir).filter(f => f.endsWith('.json'));
+    files.forEach(file => {
+      allTokenFiles.push(path.join(collectionDir, file));
+    });
+  });
+
+  console.log(`  ℹ️  Gefunden: ${allTokenFiles.length} Token-Dateien\n`);
+
+  // Baue einen gemeinsamen Build mit allen Tokens
+  const config = {
+    source: allTokenFiles,
+    platforms: {
+      css: {
+        transformGroup: 'css',
+        buildPath: `${DIST_DIR}/css/classic/`,
+        files: [{
+          destination: 'tokens.css',
+          format: 'css/variables',
+          options: {
+            outputReferences: true
+          }
+        }]
+      },
+      json: {
+        transformGroup: 'js',
+        buildPath: `${DIST_DIR}/json/classic/`,
+        files: [{
+          destination: 'tokens.json',
+          format: 'json/nested'
+        }]
+      }
+    }
+  };
+
+  try {
+    const sd = new StyleDictionary(config);
+    await sd.buildAllPlatforms();
+    console.log(`  ✅ Alle klassischen Tokens gebaut\n`);
+    console.log(`     📄 CSS: dist/css/classic/tokens.css`);
+    console.log(`     📄 JSON: dist/json/classic/tokens.json`);
+    return { total: 1, successful: 1 };
+  } catch (error) {
+    console.error(`  ❌ Fehler beim Build klassischer Tokens:`);
+    console.error(`     ${error.message}`);
+    return { total: 1, successful: 0 };
+  }
+}
+
+/**
  * Baut Typography Tokens
  */
 async function buildTypographyTokens() {
@@ -293,6 +361,9 @@ async function main() {
 
   const stats = {};
 
+  // Baue klassische Tokens
+  stats.classicTokens = await buildClassicTokens();
+
   // Baue Typography Tokens
   stats.typographyTokens = await buildTypographyTokens();
 
@@ -307,6 +378,7 @@ async function main() {
   console.log('   Build abgeschlossen!');
   console.log('   ============================================\n');
   console.log(`📊 Statistiken:`);
+  console.log(`   - Classic Token Builds: ${stats.classicTokens.successful}/${stats.classicTokens.total}`);
   console.log(`   - Typography Builds: ${stats.typographyTokens.successfulBuilds}/${stats.typographyTokens.totalBuilds}`);
   console.log(`   - Effect Builds: ${stats.effectTokens.successfulBuilds}/${stats.effectTokens.totalBuilds}`);
   console.log(`   - Output-Verzeichnis: dist/\n`);
