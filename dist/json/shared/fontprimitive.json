@@ -12,7 +12,7 @@
             "variableId": "VariableID:585:1969"
           }
         },
-        "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
         "isSource": true,
         "original": {
           "$value": "Gotham XNarrow",
@@ -49,7 +49,7 @@
             "variableId": "VariableID:588:1985"
           }
         },
-        "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
         "isSource": true,
         "original": {
           "$value": "Gotham Condensed",
@@ -86,7 +86,7 @@
             "variableId": "VariableID:588:1986"
           }
         },
-        "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
         "isSource": true,
         "original": {
           "$value": "Gotham",
@@ -125,7 +125,7 @@
             "variableId": "VariableID:17036:23304"
           }
         },
-        "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
         "isSource": true,
         "original": {
           "$value": "Lucida Grande",
@@ -164,7 +164,7 @@
             "variableId": "VariableID:18038:10602"
           }
         },
-        "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
         "isSource": true,
         "original": {
           "$value": "AntennaExtraCond",
@@ -201,7 +201,7 @@
             "variableId": "VariableID:18038:10603"
           }
         },
-        "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
         "isSource": true,
         "original": {
           "$value": "AntennaCond",
@@ -238,7 +238,7 @@
             "variableId": "VariableID:18056:4790"
           }
         },
-        "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
         "isSource": true,
         "original": {
           "$value": "Inter",
@@ -280,7 +280,7 @@
       },
       "$type": "fontWeight",
       "comment": "700 is considered black weight because Gotham Condensed is the primary font family (most used in headlines). In other font families 700 is not black weight but bold.",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": 700,
@@ -318,7 +318,7 @@
         }
       },
       "$type": "fontWeight",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": 900,
@@ -355,7 +355,7 @@
         }
       },
       "$type": "fontWeight",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": 400,
@@ -392,7 +392,7 @@
         }
       },
       "$type": "fontWeight",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": 1000,
@@ -429,7 +429,7 @@
         }
       },
       "$type": "fontWeight",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": 800,
@@ -466,7 +466,7 @@
         }
       },
       "$type": "fontWeight",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": 350,
@@ -503,7 +503,7 @@
         }
       },
       "$type": "fontWeight",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": 600,
@@ -540,7 +540,7 @@
         }
       },
       "$type": "fontWeight",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": 100,
@@ -577,7 +577,7 @@
         }
       },
       "$type": "fontWeight",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": 300,
@@ -614,7 +614,7 @@
         }
       },
       "$type": "fontWeight",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": 200,
@@ -651,7 +651,7 @@
         }
       },
       "$type": "fontWeight",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": 500,
@@ -687,7 +687,7 @@
           "variableId": "VariableID:18164:13480"
         }
       },
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "Bold Italic",
@@ -722,7 +722,7 @@
           "variableId": "VariableID:18164:13485"
         }
       },
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "Black",
@@ -760,7 +760,7 @@
         }
       },
       "comment": "This variable is a primitive for use in creating semantic text styles that need to use a subtle small letter spacing value of -0.25.",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "-0.25px",
@@ -797,7 +797,7 @@
         }
       },
       "comment": "This variable is a primitive for use in creating semantic text styles that need to use a default letter spacing value of 0.",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "0px",
@@ -834,7 +834,7 @@
         }
       },
       "comment": "This variable is a primitive for use in creating semantic text styles that need to use a positive letter spacing value of 1.",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "1px",
@@ -871,7 +871,7 @@
         }
       },
       "comment": "This variable is a primitive for use in creating semantic text styles that need to use a slight positive letter spacing value of 0.5.",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "0.5px",
@@ -908,7 +908,7 @@
         }
       },
       "comment": "This variable is a primitive for use in creating semantic text styles that need to use a subtle positive letter spacing value of 0.25.",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "0.25px",
@@ -945,7 +945,7 @@
         }
       },
       "comment": "This variable is a primitive for use in creating semantic variables that need to use a subtle negative letter spacing value of -0.5.",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "-0.5px",
@@ -982,7 +982,7 @@
         }
       },
       "comment": "This variable is a primitive for use in creating semantic text styles that need to use a large letter spacing value of 2.",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "2px",
@@ -1019,7 +1019,7 @@
         }
       },
       "comment": "This variable is a primitive for use in creating semantic variables that need to use a negative letter spacing value of -1.",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "-1px",
@@ -1056,7 +1056,7 @@
         }
       },
       "comment": "This variable is a primitive for use in creating semantic text styles that need to use a large negative letter spacing value of -2. This is usually reserved for large texts styles that are used on titles or headlines.",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "-2px",
@@ -1093,7 +1093,7 @@
         }
       },
       "comment": "This variable is a primitive for use in creating semantic text styles that need to use a much larger letter spacing value of 3. Text styles that have smaller font sizes should use increasingly positive values for their letter spacings on smaller device sizes.",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "3px",
@@ -1130,7 +1130,7 @@
         }
       },
       "comment": "This variable is a primitive for use in creating semantic text styles that need to use a large negative letter spacing value of -3. Text styles that have larger font sizes should use increasingly negative values for their letter spacings on larger device sizes.",
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "-3px",
@@ -1168,7 +1168,7 @@
           "variableId": "VariableID:18275:5779"
         }
       },
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "1000",
@@ -1203,7 +1203,7 @@
           "variableId": "VariableID:18275:5780"
         }
       },
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "900",
@@ -1238,7 +1238,7 @@
           "variableId": "VariableID:18275:5781"
         }
       },
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "800",
@@ -1273,7 +1273,7 @@
           "variableId": "VariableID:18275:5782"
         }
       },
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "700",
@@ -1308,7 +1308,7 @@
           "variableId": "VariableID:18275:5783"
         }
       },
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "600",
@@ -1343,7 +1343,7 @@
           "variableId": "VariableID:18275:5784"
         }
       },
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "500",
@@ -1378,7 +1378,7 @@
           "variableId": "VariableID:18275:5785"
         }
       },
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "400",
@@ -1413,7 +1413,7 @@
           "variableId": "VariableID:18275:5786"
         }
       },
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "350",
@@ -1448,7 +1448,7 @@
           "variableId": "VariableID:18275:5787"
         }
       },
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "200",
@@ -1483,7 +1483,7 @@
           "variableId": "VariableID:18275:5788"
         }
       },
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "100",
@@ -1518,7 +1518,7 @@
           "variableId": "VariableID:18275:5789"
         }
       },
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "Bold Italic",
@@ -1553,7 +1553,7 @@
           "variableId": "VariableID:19144:63647"
         }
       },
-      "filePath": "/home/user/vv-token-test-v3/tokens/shared/fontprimitive.json",
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/fontprimitive.json",
       "isSource": true,
       "original": {
         "$value": "Black Italic",
