@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Do not edit directly, this file was auto-generated.
+-->
+<resources>
+  <dimen name="space1x">128.00dp</dimen>
+  <dimen name="space0_5x">64.00dp</dimen>
+  <dimen name="space0_25x">32.00dp</dimen>
+  <dimen name="space2x">256.00dp</dimen>
+  <dimen name="space1_5x">192.00dp</dimen>
+  <dimen name="space4x">512.00dp</dimen>
+  <dimen name="space3x">384.00dp</dimen>
+  <dimen name="space6x">768.00dp</dimen>
+  <dimen name="space8x">1024.00dp</dimen>
+  <dimen name="space9x">1152.00dp</dimen>
+  <dimen name="space5x">640.00dp</dimen>
+  <dimen name="space0x">0.00dp</dimen>
+  <dimen name="space10x">1280.00dp</dimen>
+  <dimen name="space20x">2560.00dp</dimen>
+  <dimen name="space2_5x">320.00dp</dimen>
+  <dimen name="space_0_25x">-32.00dp</dimen>
+  <dimen name="space0_75x">96.00dp</dimen>
+  <dimen name="space1_25x">160.00dp</dimen>
+  <dimen name="space2_75x">352.00dp</dimen>
+  <dimen name="space4_5x">576.00dp</dimen>
+  <dimen name="space7_5x">960.00dp</dimen>
+  <dimen name="space12x">1536.00dp</dimen>
+  <dimen name="space1_75x">224.00dp</dimen>
+  <dimen name="space8_5x">1088.00dp</dimen>
+  <dimen name="space3_5x">448.00dp</dimen>
+</resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Do not edit directly, this file was auto-generated.
+-->
+<resources>
+  <string name="font_family_bild_font_family_gotham_x_narrow">Gotham XNarrow</string>
+  <string name="font_family_bild_font_family_gotham_cond">Gotham Condensed</string>
+  <string name="font_family_bild_font_family_gotham">Gotham</string>
+  <string name="font_family_advertorial_font_family_lucida_grande">Lucida Grande</string>
+  <string name="font_family_sport_bild_font_family_antenna_extra_cond">AntennaExtraCond</string>
+  <string name="font_family_sport_bild_font_family_antenna_cond">AntennaCond</string>
+  <string name="font_family_sport_bild_font_family_inter">Inter</string>
+  <string name="font_weight_700_black_font_weight">700</string><!-- 700 is considered black weight because Gotham Condensed is the primary font family (most used in headlines). In other font families 700 is not black weight but bold. -->
+  <string name="font_weight_900_extra_black_font_weight">900</string>
+  <string name="font_weight_400_book_font_weight">400</string>
+  <string name="font_weight_1000_ultra_font_weight">1000</string>
+  <string name="font_weight_800_black_font_weight">800</string>
+  <string name="font_weight_350_book_font_weight">350</string>
+  <string name="font_weight_600_bold_font_weight">600</string>
+  <string name="font_weight_100_thin_font_weight">100</string>
+  <string name="font_weight_300_light_font_weight">300</string>
+  <string name="font_weight_200_extra_light_font_weight">200</string>
+  <string name="font_weight_500_medium_font_weight">500</string>
+  <string name="font_weight_bold_italic_font_weight_st">Bold Italic</string>
+  <string name="font_weight_black_font_weight_st">Black</string>
+  <string name="letter_spacing_letter_space_0_25">-0.25px</string><!-- This variable is a primitive for use in creating semantic text styles that need to use a subtle small letter spacing value of -0.25. -->
+  <string name="letter_spacing_letter_space_0">0px</string><!-- This variable is a primitive for use in creating semantic text styles that need to use a default letter spacing value of 0. -->
+  <string name="letter_spacing_letter_space1">1px</string><!-- This variable is a primitive for use in creating semantic text styles that need to use a positive letter spacing value of 1. -->
+  <string name="letter_spacing_letter_space0_5">0.5px</string><!-- This variable is a primitive for use in creating semantic text styles that need to use a slight positive letter spacing value of 0.5. -->
+  <string name="letter_spacing_letter_space0_25">0.25px</string><!-- This variable is a primitive for use in creating semantic text styles that need to use a subtle positive letter spacing value of 0.25. -->
+  <string name="letter_spacing_letter_space_0_5">-0.5px</string><!-- This variable is a primitive for use in creating semantic variables that need to use a subtle negative letter spacing value of -0.5. -->
+  <string name="letter_spacing_letter_space2">2px</string><!-- This variable is a primitive for use in creating semantic text styles that need to use a large letter spacing value of 2. -->
+  <string name="letter_spacing_letter_space_1">-1px</string><!-- This variable is a primitive for use in creating semantic variables that need to use a negative letter spacing value of -1. -->
+  <string name="letter_spacing_letter_space_2">-2px</string><!-- This variable is a primitive for use in creating semantic text styles that need to use a large negative letter spacing value of -2. This is usually reserved for large texts styles that are used on titles or headlines. -->
+  <string name="letter_spacing_letter_space3">3px</string><!-- This variable is a primitive for use in creating semantic text styles that need to use a much larger letter spacing value of 3. Text styles that have smaller font sizes should use increasingly positive values for their letter spacings on smaller device sizes. -->
+  <string name="letter_spacing_letter_space_3">-3px</string><!-- This variable is a primitive for use in creating semantic text styles that need to use a large negative letter spacing value of -3. Text styles that have larger font sizes should use increasingly negative values for their letter spacings on larger device sizes. -->
+  <string name="font_weight_string_1000_ultra_font_weight">1000</string>
+  <string name="font_weight_string_900_extra_black_font_weight">900</string>
+  <string name="font_weight_string_800_black_font_weight">800</string>
+  <string name="font_weight_string_700_black_font_weight">700</string>
+  <string name="font_weight_string_600_bold_font_weight">600</string>
+  <string name="font_weight_string_500_medium_font_weight">500</string>
+  <string name="font_weight_string_400_book_font_weight">400</string>
+  <string name="font_weight_string_350_book_font_weight">350</string>
+  <string name="font_weight_string_200_extra_light_font_weight">200</string>
+  <string name="font_weight_string_100_thin_font_weight">100</string>
+  <string name="font_weight_string_600_bold_italic_font_weight">Bold Italic</string>
+  <string name="font_weight_string_700_black_italic_font_weight">Black Italic</string>
+</resources>

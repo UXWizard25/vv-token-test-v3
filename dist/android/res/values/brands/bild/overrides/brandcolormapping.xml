@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Do not edit directly, this file was auto-generated.
+-->
+<resources>
+  <color name="global_core_core_color_primary">#ffdd0000</color><!-- Bild: 046; SpoBi: 016 current css calls this variable main tenant color -->
+  <color name="global_core_core_color_secondary">#ffffffff</color><!-- Bild&SpoBi Tone 100 -->
+  <color name="global_core_core_color_secondary_dark">#ff232629</color><!-- Bild: 015 ; SpoBi: 010 -->
+  <color name="global_core_core_color_tertiary">#ff232629</color><!-- Bild: 015 ; SpoBi: 010 -->
+  <color name="global_core_core_color_tertiary_dark">#ffffffff</color><!-- Bild&SpoBi: 100 -->
+  <color name="global_attention_accent_color_primary">#ffdd0000</color><!-- Bild: Tone 046 ; SpoBi: 016 This variable is used on small UI elements such as the background color for kickers. -->
+  <color name="global_attention_accent_color_primary_dark">#ffffffff</color><!-- Bild: 100 ; SpoBi: 098 -->
+  <color name="global_surface_surface_color_primary">#ffffffff</color><!-- Bild: 100 ; SpoBi: 100 -->
+  <color name="global_surface_surface_color_primary_dark">#ff232629</color><!-- Bild: 015 ; SpoBi: 010 -->
+  <color name="global_surface_surface_color_secondary">#fff2f4f5</color><!-- Bild: 096 ; SpoBi: 098 -->
+  <color name="global_surface_surface_color_secondary_dark">#ff2c3138</color><!-- Bild: 020 ; SpoBi: 016 -->
+  <color name="global_surface_surface_color_tertiary">#ffe9ecef</color><!-- Bild: 093 ; SpoBi: 081 -->
+  <color name="global_surface_surface_color_tertiary_dark">#ff343c41</color><!-- Bild: 025 ; SpoBi: 029 -->
+  <color name="global_surface_surface_color_quartenary">#ffced4da</color><!-- Bild: 085 ; SpoBi: 085 -->
+  <color name="global_surface_surface_color_quartenary_dark">#ff4b525a</color><!-- Bild: 035 ; SpoBi: 035 -->
+  <color name="global_state_color_primary_active">#ffdd0000</color><!-- Bild: 046 ; SpoBi: 029 -->
+  <color name="global_state_color_primary_active_dark">#ffdd0000</color><!-- Bild: 046 ; SpoBi: 098 -->
+  <color name="global_text_text_color_primary">#ff232629</color><!-- Bild & SpoBi: Tone 015 -->
+  <color name="global_text_text_color_primary_dark">#ffe9ecef</color><!-- Bild & SpoBi: Tone 093 -->
+  <color name="global_text_headline_color_primary">#ff232629</color><!-- Bild: 015 ; SpoBi: 016 -->
+  <color name="global_text_headline_color_primary_dark">#ffffffff</color><!-- Bild&SpoBi: Tone 100 -->
+  <color name="global_text_kicker_text_color_on_bg">#ffffffff</color><!-- This variable is used on kicker texts that are on top of a color that is different from the outer color of the overall user interface. Bild & SpoBi: Tone 100 -->
+  <color name="global_text_kicker_text_color_on_surface">#ffdd0000</color><!-- This variable is used for the color of kicker texts that are not no top of a different color of the overall user interface. Bild: 046 ; SpoBi: 060 -->
+  <color name="global_text_kicker_text_color_on_surface_dark">#ff8c9196</color><!-- Use this variable for kicker texts that are directly on top of the color of the overall user interface. Bild & SpoBi tone 060. -->
+  <color name="global_text_text_color_secondary">#ff8c9196</color><!-- Bild & SpoBi: Tone 060 -->
+  <color name="global_text_text_color_secondary_dark">#ff8c9196</color><!-- Bild & SpoBi: Tone 060 -->
+  <color name="global_text_kicker_bg_color_on_surface">#ffdd0000</color><!-- Use this variable for the color immediately behind the bounding box of the kicker text element. Bild: 046 ; SpoBi: 029 -->
+  <color name="global_text_kicker_bg_color_on_surface_dark">#ff8c9196</color><!-- Use this variable for the dark mode color of the background immediately around the kicker text element. Bild: 060 ; SpoBi: 060 -->
+  <color name="component_button_primary_neutral_button_primary_bg_color_idle">#ff232629</color><!-- Bild & SpoBi: Tone 015 -->
+  <color name="component_button_primary_neutral_button_primary_bg_color_hover">#ff4b525a</color><!-- Bild & SpoBi: Tone 035 -->
+  <color name="component_button_primary_neutral_button_primary_bg_color_idle_dark">#ffffffff</color><!-- Bild & SpoBi: Tone 100 -->
+  <color name="component_button_primary_neutral_button_primary_bg_color_hover_dark">#ffe9ecef</color><!-- Bild: 093 ; SpoBi: 081 -->
+  <color name="component_button_primary_brand_button_primary_bg_color_idle">#ffdd0000</color><!-- Bild: 046 ; SpoBi: 029 -->
+  <color name="component_button_primary_brand_button_primary_bg_color_idle_dark">#ffdd0000</color><!-- This variable controls the primary button idle color for two brands in dark mode. Bild: 046 ; SpoBi: 038 -->
+  <color name="component_button_primary_brand_button_primary_bg_color_hover">#ffaf0002</color><!-- Bild: 035 ; SpoBi: 016 -->
+  <color name="component_button_primary_brand_button_primary_bg_color_hover_dark">#ffaf0002</color><!-- This variable stores colors for the hover state of primary buttons for two brands in dark mode. Bild: 035 ; SpoBi: 029 -->
+  <color name="component_breaking_news_breaking_news_text_content_color">#ffffffff</color><!-- This variable is used on the text for headlines in the horizontally animated breaking news strip. Bild: 100 ; SpoBi: 015 -->
+  <color name="component_breaking_news_breaking_news_surface_color">#ff232629</color><!-- This variable is used on the breaking news strip that has horizontally animated headlines. Bild: 015 ; SpoBi: 081 -->
+  <color name="component_breaking_news_breaking_news_title_surface_color">#fffd8227</color><!-- This variable is used for the background color of the "Breaking News" title. Bild: 067 ; SpoBi: 016 -->
+  <color name="component_breaking_news_breaking_news_top_title_text_color">#ff1c1c1c</color><!-- This variable is used for the color of the "breaking" word in the "breaking news" horizontally animated headlines strip. Bild: 010 ; SpoBi: 081 -->
+  <color name="component_breaking_news_breaking_news_surface_color_dark">#ffe9ecef</color><!-- This variable is for the background color of the horizontally animated strip with headlines for breaking news on dark mode.  Bild: 093 ; SpoBi: 081 -->
+  <color name="component_breaking_news_breaking_news_text_content_color_dark">#ff232629</color><!-- This variable is used on the text for headlines in the horizontally animated breaking news strip on dark mode. Bild&SpoBi: 015 -->
+  <color name="component_breaking_news_breaking_news_bottom_title_text_color">#ff1c1c1c</color><!-- This variable is used for the color of the "News" word in the breaking news horizontal animated headlines strip. Bild: 010 ; SpoBi: 100 -->
+  <color name="component_teaser_teaser_title_background_gradient_start">#b2000000</color>
+  <color name="component_teaser_teaser_title_background_gradient_stop">#00000000</color>
+  <color name="component_menu_menu_link_lane_surface_color">#ffffffff</color><!-- This variable is used for making possible the default color difference between the Bild and SportBild link lanes inside the menu component. -->
+  <color name="component_menu_menu_link_lane_label_color">#ff4b525a</color><!-- This variable is used for making possible the default color difference between the Bild and SportBild link lane labels inside the menu component. -->
+  <color name="component_menu_menu_link_lane_label_color_dark">#ff8c9196</color>
+  <color name="component_menu_menu_link_lane_surface_color_dark">#ff232629</color><!-- This variable is used for making possible the default color difference between the Bild and SportBild link lanes inside the menu component on Dark mode. -->
+  <color name="component_menu_menu_link_color_border_active">#ffdd0000</color>
+  <color name="component_menu_menu_link_color_border_active_dark">#ffffffff</color>
+  <color name="component_menu_menu_link_lane_label_color_active">#ff232629</color><!-- This variable is used for making possible the active color difference between the Bild and SportBild link lane labels inside the menu component. -->
+  <color name="component_menu_app_top_bar_surface_color">#ffffffff</color>
+  <color name="component_menu_app_top_bar_bg_color_dark">#ff343c41</color>
+  <color name="component_menu_app_bottom_tab_bar_bg_color">#ffffffff</color>
+  <color name="component_menu_app_bottom_tab_bar_bg_dark">#ff343c41</color>
+  <color name="component_menu_app_top_bar_icon_color">#ff4b525a</color>
+  <color name="component_menu_app_top_bar_icon_color_dark">#ff8c9196</color>
+  <color name="component_menu_app_top_bar_text_color">#ff232629</color>
+  <color name="component_menu_app_top_bar_text_color_dark">#ffe9ecef</color>
+  <color name="component_menu_app_tob_bar_tab_nav_bottom_border">#ffe9ecef</color>
+  <color name="component_menu_app_tob_bar_tab_nav_bottom_border_dark">#ff4b525a</color>
+  <color name="component_menu_app_tob_bar_tab_nav_bottom_border_active">#ffdd0000</color>
+  <color name="component_menu_app_tob_bar_tab_nav_bottom_border_active_dark">#ffffffff</color>
+  <color name="component_avatar_avatar_label_color">#ff232629</color><!-- 09-2025 css --article-author-name-color // Bild: 015; SpoBi: 045 -->
+  <color name="component_avatar_avatar_label_color_dark">#ffffffff</color><!-- 09-2025 css --article-author-name-color // Bild: 100; SpoBi: 093 -->
+  <color name="component_avatar_avatar_label_color_hover">#ffdd0000</color><!-- This variable is used for decorating the avatar text's underline color. Bild: 046; SpoBi: 029 -->
+  <color name="component_chip_color_active">#ffdd0000</color>
+</resources>
