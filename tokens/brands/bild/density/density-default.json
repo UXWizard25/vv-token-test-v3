@@ -1,0 +1,117 @@
+{
+  "Component": {
+    "Button": {
+      "buttonContentGapSpace": {
+        "$value": "8px",
+        "value": "8px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:5695:5841",
+            "collectionName": "Density",
+            "variableId": "VariableID:5695:5842"
+          }
+        },
+        "$type": "dimension",
+        "comment": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes."
+      },
+      "buttonStackSpace": {
+        "$value": "8px",
+        "value": "8px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:5695:5841",
+            "collectionName": "Density",
+            "variableId": "VariableID:5696:5853"
+          }
+        },
+        "$type": "dimension",
+        "comment": "This variable is in the SpaceScaling collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes."
+      },
+      "buttonLabelFontSize": {
+        "$value": "17px",
+        "value": "17px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:5695:5841",
+            "collectionName": "Density",
+            "variableId": "VariableID:13264:8396"
+          }
+        },
+        "$type": "dimension",
+        "comment": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling size could work across different content scaling / size / contrast themes. Font size across devices: 15 - 17 - 19"
+      },
+      "buttonInlineSpace": {
+        "$value": "20px",
+        "value": "20px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:5695:5841",
+            "collectionName": "Density",
+            "variableId": "VariableID:13264:8569"
+          }
+        },
+        "$type": "dimension",
+        "comment": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes."
+      }
+    },
+    "Inputfield": {
+      "inputFieldInlineSpace": {
+        "$value": "16px",
+        "value": "16px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:5695:5841",
+            "collectionName": "Density",
+            "variableId": "VariableID:18682:535"
+          }
+        },
+        "$type": "dimension"
+      },
+      "inputFieldStackSpace": {
+        "$value": "8px",
+        "value": "8px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:5695:5841",
+            "collectionName": "Density",
+            "variableId": "VariableID:18682:536"
+          }
+        },
+        "$type": "dimension"
+      },
+      "inputFieldHeightSize": {
+        "$value": "40px",
+        "value": "40px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:5695:5841",
+            "collectionName": "Density",
+            "variableId": "VariableID:18682:4564"
+          }
+        },
+        "$type": "dimension"
+      },
+      "inputFieldLabelFontSize": {
+        "$value": "17px",
+        "value": "17px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:5695:5841",
+            "collectionName": "Density",
+            "variableId": "VariableID:18693:666"
+          }
+        },
+        "$type": "dimension",
+        "comment": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling size could work across different content scaling / size / contrast themes. Font size across scaling options: compact 15 - default 17 - spacious 19"
+      }
+    }
+  }
+}

@@ -1,0 +1,3704 @@
+{
+  "BILD": {
+    "red": {
+      "BILDRed": {
+        "$value": "#dd0000",
+        "value": "#DD0000",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:539:2239"
+          }
+        },
+        "$type": "color",
+        "comment": "Tone 046",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#DD0000",
+          "value": "#DD0000",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:539:2239"
+            }
+          },
+          "$type": "color",
+          "comment": "Tone 046"
+        },
+        "name": "BildRedBildRed",
+        "attributes": {
+          "category": "BILD",
+          "type": "red",
+          "item": "BILDRed"
+        },
+        "path": [
+          "BILD",
+          "red",
+          "BILDRed"
+        ]
+      },
+      "BILDRed035": {
+        "$value": "#af0002",
+        "value": "#AF0002",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2580:18750"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#AF0002",
+          "value": "#AF0002",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2580:18750"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildRedBildRed035",
+        "attributes": {
+          "category": "BILD",
+          "type": "red",
+          "item": "BILDRed035"
+        },
+        "path": [
+          "BILD",
+          "red",
+          "BILDRed035"
+        ]
+      },
+      "BILDRed053": {
+        "$value": "#f52d2d",
+        "value": "#F52D2D",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2580:18751"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#F52D2D",
+          "value": "#F52D2D",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2580:18751"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildRedBildRed053",
+        "attributes": {
+          "category": "BILD",
+          "type": "red",
+          "item": "BILDRed053"
+        },
+        "path": [
+          "BILD",
+          "red",
+          "BILDRed053"
+        ]
+      }
+    },
+    "gray": {
+      "BILD015": {
+        "$value": "#232629",
+        "value": "#232629",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:588:1977"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#232629",
+          "value": "#232629",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:588:1977"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildGrayBild015",
+        "attributes": {
+          "category": "BILD",
+          "type": "gray",
+          "item": "BILD015"
+        },
+        "path": [
+          "BILD",
+          "gray",
+          "BILD015"
+        ]
+      },
+      "BILD085": {
+        "$value": "#ced4da",
+        "value": "#CED4DA",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:736:2682"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#CED4DA",
+          "value": "#CED4DA",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:736:2682"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildGrayBild085",
+        "attributes": {
+          "category": "BILD",
+          "type": "gray",
+          "item": "BILD085"
+        },
+        "path": [
+          "BILD",
+          "gray",
+          "BILD085"
+        ]
+      },
+      "BILD035": {
+        "$value": "#4b525a",
+        "value": "#4B525A",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:736:2683"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#4B525A",
+          "value": "#4B525A",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:736:2683"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildGrayBild035",
+        "attributes": {
+          "category": "BILD",
+          "type": "gray",
+          "item": "BILD035"
+        },
+        "path": [
+          "BILD",
+          "gray",
+          "BILD035"
+        ]
+      },
+      "BILD025": {
+        "$value": "#343c41",
+        "value": "#343C41",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2068:3674"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#343C41",
+          "value": "#343C41",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2068:3674"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildGrayBild025",
+        "attributes": {
+          "category": "BILD",
+          "type": "gray",
+          "item": "BILD025"
+        },
+        "path": [
+          "BILD",
+          "gray",
+          "BILD025"
+        ]
+      },
+      "BILD060": {
+        "$value": "#8c9196",
+        "value": "#8C9196",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2552:18733"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#8C9196",
+          "value": "#8C9196",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2552:18733"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildGrayBild060",
+        "attributes": {
+          "category": "BILD",
+          "type": "gray",
+          "item": "BILD060"
+        },
+        "path": [
+          "BILD",
+          "gray",
+          "BILD060"
+        ]
+      },
+      "BILD096": {
+        "$value": "#f2f4f5",
+        "value": "#F2F4F5",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2552:18742"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#F2F4F5",
+          "value": "#F2F4F5",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2552:18742"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildGrayBild096",
+        "attributes": {
+          "category": "BILD",
+          "type": "gray",
+          "item": "BILD096"
+        },
+        "path": [
+          "BILD",
+          "gray",
+          "BILD096"
+        ]
+      },
+      "BILD093": {
+        "$value": "#e9ecef",
+        "value": "#E9ECEF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2881:1765"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#E9ECEF",
+          "value": "#E9ECEF",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2881:1765"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildGrayBild093",
+        "attributes": {
+          "category": "BILD",
+          "type": "gray",
+          "item": "BILD093"
+        },
+        "path": [
+          "BILD",
+          "gray",
+          "BILD093"
+        ]
+      },
+      "BILD085-50": {
+        "$value": "#ced4da80",
+        "value": "rgba(206, 212, 218, 0.5)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:3746:1642"
+          }
+        },
+        "$type": "color",
+        "comment": "The 50% opacity on this color makes it equivalent to BILD093.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(206, 212, 218, 0.5)",
+          "value": "rgba(206, 212, 218, 0.5)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:3746:1642"
+            }
+          },
+          "$type": "color",
+          "comment": "The 50% opacity on this color makes it equivalent to BILD093."
+        },
+        "name": "BildGrayBild08550",
+        "attributes": {
+          "category": "BILD",
+          "type": "gray",
+          "item": "BILD085-50"
+        },
+        "path": [
+          "BILD",
+          "gray",
+          "BILD085-50"
+        ]
+      },
+      "BILD073": {
+        "$value": "#aeb4b9",
+        "value": "#AEB4B9",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:3912:4269"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#AEB4B9",
+          "value": "#AEB4B9",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:3912:4269"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildGrayBild073",
+        "attributes": {
+          "category": "BILD",
+          "type": "gray",
+          "item": "BILD073"
+        },
+        "path": [
+          "BILD",
+          "gray",
+          "BILD073"
+        ]
+      },
+      "BILD045": {
+        "$value": "#666b70",
+        "value": "#666B70",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:3912:4271"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#666B70",
+          "value": "#666B70",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:3912:4271"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildGrayBild045",
+        "attributes": {
+          "category": "BILD",
+          "type": "gray",
+          "item": "BILD045"
+        },
+        "path": [
+          "BILD",
+          "gray",
+          "BILD045"
+        ]
+      },
+      "BILD010": {
+        "$value": "#1c1c1c",
+        "value": "#1C1C1C",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:8929:18579"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#1C1C1C",
+          "value": "#1C1C1C",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:8929:18579"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildGrayBild010",
+        "attributes": {
+          "category": "BILD",
+          "type": "gray",
+          "item": "BILD010"
+        },
+        "path": [
+          "BILD",
+          "gray",
+          "BILD010"
+        ]
+      },
+      "BILD020": {
+        "$value": "#2c3138",
+        "value": "#2C3138",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:8969:49793"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#2C3138",
+          "value": "#2C3138",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:8969:49793"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildGrayBild020",
+        "attributes": {
+          "category": "BILD",
+          "type": "gray",
+          "item": "BILD020"
+        },
+        "path": [
+          "BILD",
+          "gray",
+          "BILD020"
+        ]
+      }
+    },
+    "neutral": {
+      "BILD100": {
+        "$value": "#ffffff",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:588:1978"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#FFFFFF",
+          "value": "#FFFFFF",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:588:1978"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildNeutralBild100",
+        "attributes": {
+          "category": "BILD",
+          "type": "neutral",
+          "item": "BILD100"
+        },
+        "path": [
+          "BILD",
+          "neutral",
+          "BILD100"
+        ]
+      },
+      "BILDBlack": {
+        "$value": "#000000",
+        "value": "#000000",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:17326:23858"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#000000",
+          "value": "#000000",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:17326:23858"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildNeutralBildBlack",
+        "attributes": {
+          "category": "BILD",
+          "type": "neutral",
+          "item": "BILDBlack"
+        },
+        "path": [
+          "BILD",
+          "neutral",
+          "BILDBlack"
+        ]
+      }
+    },
+    "orange": {
+      "BILDOrange": {
+        "$value": "#fd8227",
+        "value": "#FD8227",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2496:18724"
+          }
+        },
+        "$type": "color",
+        "comment": "Tone: 067",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#FD8227",
+          "value": "#FD8227",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2496:18724"
+            }
+          },
+          "$type": "color",
+          "comment": "Tone: 067"
+        },
+        "name": "BildOrangeBildOrange",
+        "attributes": {
+          "category": "BILD",
+          "type": "orange",
+          "item": "BILDOrange"
+        },
+        "path": [
+          "BILD",
+          "orange",
+          "BILDOrange"
+        ]
+      }
+    },
+    "green": {
+      "BILDGreen070": {
+        "$value": "#00c373",
+        "value": "#00C373",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2496:18725"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#00C373",
+          "value": "#00C373",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2496:18725"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildGreenBildGreen070",
+        "attributes": {
+          "category": "BILD",
+          "type": "green",
+          "item": "BILDGreen070"
+        },
+        "path": [
+          "BILD",
+          "green",
+          "BILDGreen070"
+        ]
+      },
+      "BILDGreen063": {
+        "$value": "#00af67",
+        "value": "#00AF67",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2722:10737"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#00AF67",
+          "value": "#00AF67",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2722:10737"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildGreenBildGreen063",
+        "attributes": {
+          "category": "BILD",
+          "type": "green",
+          "item": "BILDGreen063"
+        },
+        "path": [
+          "BILD",
+          "green",
+          "BILDGreen063"
+        ]
+      },
+      "BILDGreen093": {
+        "$value": "#cef4e4",
+        "value": "#CEF4E4",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2812:809"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#CEF4E4",
+          "value": "#CEF4E4",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2812:809"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildGreenBildGreen093",
+        "attributes": {
+          "category": "BILD",
+          "type": "green",
+          "item": "BILDGreen093"
+        },
+        "path": [
+          "BILD",
+          "green",
+          "BILDGreen093"
+        ]
+      },
+      "BILDGreen093-50": {
+        "$value": "#cef4e480",
+        "value": "rgba(206, 244, 228, 0.5)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:3756:1744"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(206, 244, 228, 0.5)",
+          "value": "rgba(206, 244, 228, 0.5)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:3756:1744"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildGreenBildGreen09350",
+        "attributes": {
+          "category": "BILD",
+          "type": "green",
+          "item": "BILDGreen093-50"
+        },
+        "path": [
+          "BILD",
+          "green",
+          "BILDGreen093-50"
+        ]
+      },
+      "BILDGreen056-50": {
+        "$value": "#009b5a80",
+        "value": "rgba(0, 155, 90, 0.5)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:3765:1756"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(0, 155, 90, 0.5)",
+          "value": "rgba(0, 155, 90, 0.5)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:3765:1756"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildGreenBildGreen05650",
+        "attributes": {
+          "category": "BILD",
+          "type": "green",
+          "item": "BILDGreen056-50"
+        },
+        "path": [
+          "BILD",
+          "green",
+          "BILDGreen056-50"
+        ]
+      },
+      "BILDGreen040": {
+        "$value": "#006e3e",
+        "value": "#006E3E",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:9697:16953"
+          }
+        },
+        "$type": "color",
+        "comment": "This value of green was found in a text field's text color.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#006E3E",
+          "value": "#006E3E",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:9697:16953"
+            }
+          },
+          "$type": "color",
+          "comment": "This value of green was found in a text field's text color."
+        },
+        "name": "BildGreenBildGreen040",
+        "attributes": {
+          "category": "BILD",
+          "type": "green",
+          "item": "BILDGreen040"
+        },
+        "path": [
+          "BILD",
+          "green",
+          "BILDGreen040"
+        ]
+      },
+      "BILDGreen056": {
+        "$value": "#18995c",
+        "value": "#18995C",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:18489:23879"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#18995C",
+          "value": "#18995C",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:18489:23879"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildGreenBildGreen056",
+        "attributes": {
+          "category": "BILD",
+          "type": "green",
+          "item": "BILDGreen056"
+        },
+        "path": [
+          "BILD",
+          "green",
+          "BILDGreen056"
+        ]
+      }
+    },
+    "TextLabels": {
+      "BILDRed": {
+        "$value": "BILDRed",
+        "value": "BILDRed",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2857:864"
+          }
+        },
+        "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "BILDRed",
+          "value": "BILDRed",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2857:864"
+            }
+          },
+          "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
+        },
+        "name": "BildTextLabelsBildRed",
+        "attributes": {
+          "category": "BILD",
+          "type": "TextLabels",
+          "item": "BILDRed"
+        },
+        "path": [
+          "BILD",
+          "TextLabels",
+          "BILDRed"
+        ]
+      },
+      "BILD100": {
+        "$value": "BILD100",
+        "value": "BILD100",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2857:865"
+          }
+        },
+        "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "BILD100",
+          "value": "BILD100",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2857:865"
+            }
+          },
+          "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
+        },
+        "name": "BildTextLabelsBild100",
+        "attributes": {
+          "category": "BILD",
+          "type": "TextLabels",
+          "item": "BILD100"
+        },
+        "path": [
+          "BILD",
+          "TextLabels",
+          "BILD100"
+        ]
+      },
+      "BILD096": {
+        "$value": "BILD096",
+        "value": "BILD096",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2857:866"
+          }
+        },
+        "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "BILD096",
+          "value": "BILD096",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2857:866"
+            }
+          },
+          "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
+        },
+        "name": "BildTextLabelsBild096",
+        "attributes": {
+          "category": "BILD",
+          "type": "TextLabels",
+          "item": "BILD096"
+        },
+        "path": [
+          "BILD",
+          "TextLabels",
+          "BILD096"
+        ]
+      },
+      "BILD085": {
+        "$value": "BILD085",
+        "value": "BILD085",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2857:867"
+          }
+        },
+        "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "BILD085",
+          "value": "BILD085",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2857:867"
+            }
+          },
+          "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
+        },
+        "name": "BildTextLabelsBild085",
+        "attributes": {
+          "category": "BILD",
+          "type": "TextLabels",
+          "item": "BILD085"
+        },
+        "path": [
+          "BILD",
+          "TextLabels",
+          "BILD085"
+        ]
+      },
+      "BILD060": {
+        "$value": "BILD060",
+        "value": "BILD060",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2857:868"
+          }
+        },
+        "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "BILD060",
+          "value": "BILD060",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2857:868"
+            }
+          },
+          "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
+        },
+        "name": "BildTextLabelsBild060",
+        "attributes": {
+          "category": "BILD",
+          "type": "TextLabels",
+          "item": "BILD060"
+        },
+        "path": [
+          "BILD",
+          "TextLabels",
+          "BILD060"
+        ]
+      },
+      "BILD035": {
+        "$value": "BILD035",
+        "value": "BILD035",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2857:869"
+          }
+        },
+        "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "BILD035",
+          "value": "BILD035",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2857:869"
+            }
+          },
+          "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
+        },
+        "name": "BildTextLabelsBild035",
+        "attributes": {
+          "category": "BILD",
+          "type": "TextLabels",
+          "item": "BILD035"
+        },
+        "path": [
+          "BILD",
+          "TextLabels",
+          "BILD035"
+        ]
+      },
+      "BILD025": {
+        "$value": "BILD025",
+        "value": "BILD025",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2857:870"
+          }
+        },
+        "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "BILD025",
+          "value": "BILD025",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2857:870"
+            }
+          },
+          "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
+        },
+        "name": "BildTextLabelsBild025",
+        "attributes": {
+          "category": "BILD",
+          "type": "TextLabels",
+          "item": "BILD025"
+        },
+        "path": [
+          "BILD",
+          "TextLabels",
+          "BILD025"
+        ]
+      },
+      "BILD015": {
+        "$value": "BILD015",
+        "value": "BILD015",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2857:871"
+          }
+        },
+        "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "BILD015",
+          "value": "BILD015",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2857:871"
+            }
+          },
+          "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
+        },
+        "name": "BildTextLabelsBild015",
+        "attributes": {
+          "category": "BILD",
+          "type": "TextLabels",
+          "item": "BILD015"
+        },
+        "path": [
+          "BILD",
+          "TextLabels",
+          "BILD015"
+        ]
+      },
+      "BILDOrange": {
+        "$value": "BILDOrange",
+        "value": "BILDOrange",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2857:872"
+          }
+        },
+        "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "BILDOrange",
+          "value": "BILDOrange",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2857:872"
+            }
+          },
+          "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
+        },
+        "name": "BildTextLabelsBildOrange",
+        "attributes": {
+          "category": "BILD",
+          "type": "TextLabels",
+          "item": "BILDOrange"
+        },
+        "path": [
+          "BILD",
+          "TextLabels",
+          "BILDOrange"
+        ]
+      },
+      "BILDRed053": {
+        "$value": "BILDRed053",
+        "value": "BILDRed053",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2857:873"
+          }
+        },
+        "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "BILDRed053",
+          "value": "BILDRed053",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2857:873"
+            }
+          },
+          "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
+        },
+        "name": "BildTextLabelsBildRed053",
+        "attributes": {
+          "category": "BILD",
+          "type": "TextLabels",
+          "item": "BILDRed053"
+        },
+        "path": [
+          "BILD",
+          "TextLabels",
+          "BILDRed053"
+        ]
+      },
+      "BILDRed035": {
+        "$value": "BILDRed035",
+        "value": "BILDRed035",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2857:874"
+          }
+        },
+        "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "BILDRed035",
+          "value": "BILDRed035",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2857:874"
+            }
+          },
+          "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
+        },
+        "name": "BildTextLabelsBildRed035",
+        "attributes": {
+          "category": "BILD",
+          "type": "TextLabels",
+          "item": "BILDRed035"
+        },
+        "path": [
+          "BILD",
+          "TextLabels",
+          "BILDRed035"
+        ]
+      },
+      "BILDGreen093": {
+        "$value": "BILDGreen093",
+        "value": "BILDGreen093",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2857:875"
+          }
+        },
+        "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "BILDGreen093",
+          "value": "BILDGreen093",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2857:875"
+            }
+          },
+          "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
+        },
+        "name": "BildTextLabelsBildGreen093",
+        "attributes": {
+          "category": "BILD",
+          "type": "TextLabels",
+          "item": "BILDGreen093"
+        },
+        "path": [
+          "BILD",
+          "TextLabels",
+          "BILDGreen093"
+        ]
+      },
+      "BILDGreen070": {
+        "$value": "BILDGreen070",
+        "value": "BILDGreen070",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2857:876"
+          }
+        },
+        "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "BILDGreen070",
+          "value": "BILDGreen070",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2857:876"
+            }
+          },
+          "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
+        },
+        "name": "BildTextLabelsBildGreen070",
+        "attributes": {
+          "category": "BILD",
+          "type": "TextLabels",
+          "item": "BILDGreen070"
+        },
+        "path": [
+          "BILD",
+          "TextLabels",
+          "BILDGreen070"
+        ]
+      },
+      "BILDGreen063": {
+        "$value": "BILDGreen063",
+        "value": "BILDGreen063",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2857:877"
+          }
+        },
+        "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "BILDGreen063",
+          "value": "BILDGreen063",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2857:877"
+            }
+          },
+          "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
+        },
+        "name": "BildTextLabelsBildGreen063",
+        "attributes": {
+          "category": "BILD",
+          "type": "TextLabels",
+          "item": "BILDGreen063"
+        },
+        "path": [
+          "BILD",
+          "TextLabels",
+          "BILDGreen063"
+        ]
+      },
+      "BILD093": {
+        "$value": "BILD093",
+        "value": "BILD093",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2880:10484"
+          }
+        },
+        "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "BILD093",
+          "value": "BILD093",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2880:10484"
+            }
+          },
+          "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
+        },
+        "name": "BildTextLabelsBild093",
+        "attributes": {
+          "category": "BILD",
+          "type": "TextLabels",
+          "item": "BILD093"
+        },
+        "path": [
+          "BILD",
+          "TextLabels",
+          "BILD093"
+        ]
+      },
+      "BILDYellow": {
+        "$value": "BILDYellow",
+        "value": "BILDYellow",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2979:10318"
+          }
+        },
+        "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "BILDYellow",
+          "value": "BILDYellow",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2979:10318"
+            }
+          },
+          "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
+        },
+        "name": "BildTextLabelsBildYellow",
+        "attributes": {
+          "category": "BILD",
+          "type": "TextLabels",
+          "item": "BILDYellow"
+        },
+        "path": [
+          "BILD",
+          "TextLabels",
+          "BILDYellow"
+        ]
+      },
+      "BILD073": {
+        "$value": "BILD073",
+        "value": "BILD073",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:3912:4270"
+          }
+        },
+        "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "BILD073",
+          "value": "BILD073",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:3912:4270"
+            }
+          },
+          "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
+        },
+        "name": "BildTextLabelsBild073",
+        "attributes": {
+          "category": "BILD",
+          "type": "TextLabels",
+          "item": "BILD073"
+        },
+        "path": [
+          "BILD",
+          "TextLabels",
+          "BILD073"
+        ]
+      },
+      "BILD045": {
+        "$value": "BILD045",
+        "value": "BILD045",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:3912:4272"
+          }
+        },
+        "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "BILD045",
+          "value": "BILD045",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:3912:4272"
+            }
+          },
+          "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
+        },
+        "name": "BildTextLabelsBild045",
+        "attributes": {
+          "category": "BILD",
+          "type": "TextLabels",
+          "item": "BILD045"
+        },
+        "path": [
+          "BILD",
+          "TextLabels",
+          "BILD045"
+        ]
+      }
+    },
+    "yellow": {
+      "BILDYellow": {
+        "$value": "#ffbf00",
+        "value": "#FFBF00",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:2979:10317"
+          }
+        },
+        "$type": "color",
+        "comment": "Tone: 081",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#FFBF00",
+          "value": "#FFBF00",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:2979:10317"
+            }
+          },
+          "$type": "color",
+          "comment": "Tone: 081"
+        },
+        "name": "BildYellowBildYellow",
+        "attributes": {
+          "category": "BILD",
+          "type": "yellow",
+          "item": "BILDYellow"
+        },
+        "path": [
+          "BILD",
+          "yellow",
+          "BILDYellow"
+        ]
+      }
+    },
+    "purple": {
+      "BILDBerry": {
+        "$value": "#551937",
+        "value": "#551937",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:5457:10118"
+          }
+        },
+        "$type": "color",
+        "comment": "Tone: 020",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#551937",
+          "value": "#551937",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:5457:10118"
+            }
+          },
+          "$type": "color",
+          "comment": "Tone: 020"
+        },
+        "name": "BildPurpleBildBerry",
+        "attributes": {
+          "category": "BILD",
+          "type": "purple",
+          "item": "BILDBerry"
+        },
+        "path": [
+          "BILD",
+          "purple",
+          "BILDBerry"
+        ]
+      }
+    },
+    "alpha": {
+      "alphaBlack20": {
+        "$value": "#00000033",
+        "value": "rgba(0, 0, 0, 0.20000000298023224)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:7765:32149"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(0, 0, 0, 0.20000000298023224)",
+          "value": "rgba(0, 0, 0, 0.20000000298023224)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:7765:32149"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildAlphaAlphaBlack20",
+        "attributes": {
+          "category": "BILD",
+          "type": "alpha",
+          "item": "alphaBlack20"
+        },
+        "path": [
+          "BILD",
+          "alpha",
+          "alphaBlack20"
+        ]
+      },
+      "alphaBlack10": {
+        "$value": "#0000001a",
+        "value": "rgba(0, 0, 0, 0.10000000149011612)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:7765:33969"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(0, 0, 0, 0.10000000149011612)",
+          "value": "rgba(0, 0, 0, 0.10000000149011612)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:7765:33969"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildAlphaAlphaBlack10",
+        "attributes": {
+          "category": "BILD",
+          "type": "alpha",
+          "item": "alphaBlack10"
+        },
+        "path": [
+          "BILD",
+          "alpha",
+          "alphaBlack10"
+        ]
+      },
+      "alphaBlack60": {
+        "$value": "#00000099",
+        "value": "rgba(0, 0, 0, 0.6000000238418579)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:8076:22743"
+          }
+        },
+        "$type": "color",
+        "comment": "Used on elevation effects.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(0, 0, 0, 0.6000000238418579)",
+          "value": "rgba(0, 0, 0, 0.6000000238418579)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:8076:22743"
+            }
+          },
+          "$type": "color",
+          "comment": "Used on elevation effects."
+        },
+        "name": "BildAlphaAlphaBlack60",
+        "attributes": {
+          "category": "BILD",
+          "type": "alpha",
+          "item": "alphaBlack60"
+        },
+        "path": [
+          "BILD",
+          "alpha",
+          "alphaBlack60"
+        ]
+      },
+      "alphaBlack30": {
+        "$value": "#0000004d",
+        "value": "rgba(0, 0, 0, 0.30000001192092896)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:8900:5503"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(0, 0, 0, 0.30000001192092896)",
+          "value": "rgba(0, 0, 0, 0.30000001192092896)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:8900:5503"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildAlphaAlphaBlack30",
+        "attributes": {
+          "category": "BILD",
+          "type": "alpha",
+          "item": "alphaBlack30"
+        },
+        "path": [
+          "BILD",
+          "alpha",
+          "alphaBlack30"
+        ]
+      },
+      "alphaBlack70": {
+        "$value": "#000000b2",
+        "value": "rgba(0, 0, 0, 0.699999988079071)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16894:98370"
+          }
+        },
+        "$type": "color",
+        "comment": "Used on elevation effects.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(0, 0, 0, 0.699999988079071)",
+          "value": "rgba(0, 0, 0, 0.699999988079071)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16894:98370"
+            }
+          },
+          "$type": "color",
+          "comment": "Used on elevation effects."
+        },
+        "name": "BildAlphaAlphaBlack70",
+        "attributes": {
+          "category": "BILD",
+          "type": "alpha",
+          "item": "alphaBlack70"
+        },
+        "path": [
+          "BILD",
+          "alpha",
+          "alphaBlack70"
+        ]
+      },
+      "alphaWhite10": {
+        "$value": "#ffffff1a",
+        "value": "rgba(255, 255, 255, 0.10000000149011612)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16914:22433"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(255, 255, 255, 0.10000000149011612)",
+          "value": "rgba(255, 255, 255, 0.10000000149011612)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16914:22433"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildAlphaAlphaWhite10",
+        "attributes": {
+          "category": "BILD",
+          "type": "alpha",
+          "item": "alphaWhite10"
+        },
+        "path": [
+          "BILD",
+          "alpha",
+          "alphaWhite10"
+        ]
+      },
+      "alphaWhite20": {
+        "$value": "#ffffff33",
+        "value": "rgba(255, 255, 255, 0.20000000298023224)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16914:22434"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(255, 255, 255, 0.20000000298023224)",
+          "value": "rgba(255, 255, 255, 0.20000000298023224)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16914:22434"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildAlphaAlphaWhite20",
+        "attributes": {
+          "category": "BILD",
+          "type": "alpha",
+          "item": "alphaWhite20"
+        },
+        "path": [
+          "BILD",
+          "alpha",
+          "alphaWhite20"
+        ]
+      },
+      "alphaWhite30": {
+        "$value": "#ffffff4d",
+        "value": "rgba(255, 255, 255, 0.30000001192092896)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16914:22435"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(255, 255, 255, 0.30000001192092896)",
+          "value": "rgba(255, 255, 255, 0.30000001192092896)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16914:22435"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildAlphaAlphaWhite30",
+        "attributes": {
+          "category": "BILD",
+          "type": "alpha",
+          "item": "alphaWhite30"
+        },
+        "path": [
+          "BILD",
+          "alpha",
+          "alphaWhite30"
+        ]
+      },
+      "alphaWhite60": {
+        "$value": "#ffffff99",
+        "value": "rgba(255, 255, 255, 0.6000000238418579)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16914:22436"
+          }
+        },
+        "$type": "color",
+        "comment": "Used on elevation effects.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(255, 255, 255, 0.6000000238418579)",
+          "value": "rgba(255, 255, 255, 0.6000000238418579)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16914:22436"
+            }
+          },
+          "$type": "color",
+          "comment": "Used on elevation effects."
+        },
+        "name": "BildAlphaAlphaWhite60",
+        "attributes": {
+          "category": "BILD",
+          "type": "alpha",
+          "item": "alphaWhite60"
+        },
+        "path": [
+          "BILD",
+          "alpha",
+          "alphaWhite60"
+        ]
+      },
+      "alphaWhite70": {
+        "$value": "#ffffffb2",
+        "value": "rgba(255, 255, 255, 0.699999988079071)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16914:22437"
+          }
+        },
+        "$type": "color",
+        "comment": "Used on elevation effects.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(255, 255, 255, 0.699999988079071)",
+          "value": "rgba(255, 255, 255, 0.699999988079071)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16914:22437"
+            }
+          },
+          "$type": "color",
+          "comment": "Used on elevation effects."
+        },
+        "name": "BildAlphaAlphaWhite70",
+        "attributes": {
+          "category": "BILD",
+          "type": "alpha",
+          "item": "alphaWhite70"
+        },
+        "path": [
+          "BILD",
+          "alpha",
+          "alphaWhite70"
+        ]
+      },
+      "alphaWhite35": {
+        "$value": "#ffffff59",
+        "value": "rgba(255, 255, 255, 0.3499999940395355)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:17381:17511"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(255, 255, 255, 0.3499999940395355)",
+          "value": "rgba(255, 255, 255, 0.3499999940395355)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:17381:17511"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildAlphaAlphaWhite35",
+        "attributes": {
+          "category": "BILD",
+          "type": "alpha",
+          "item": "alphaWhite35"
+        },
+        "path": [
+          "BILD",
+          "alpha",
+          "alphaWhite35"
+        ]
+      },
+      "alphaBILDRed80": {
+        "$value": "#dd0000cc",
+        "value": "rgba(221, 0, 0, 0.800000011920929)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:17385:14798"
+          }
+        },
+        "$type": "color",
+        "comment": "Used on elevation effects.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(221, 0, 0, 0.800000011920929)",
+          "value": "rgba(221, 0, 0, 0.800000011920929)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:17385:14798"
+            }
+          },
+          "$type": "color",
+          "comment": "Used on elevation effects."
+        },
+        "name": "BildAlphaAlphaBildRed80",
+        "attributes": {
+          "category": "BILD",
+          "type": "alpha",
+          "item": "alphaBILDRed80"
+        },
+        "path": [
+          "BILD",
+          "alpha",
+          "alphaBILDRed80"
+        ]
+      },
+      "alphaBlack80": {
+        "$value": "#000000cc",
+        "value": "rgba(0, 0, 0, 0.800000011920929)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:17385:14799"
+          }
+        },
+        "$type": "color",
+        "comment": "Used on elevation effects.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(0, 0, 0, 0.800000011920929)",
+          "value": "rgba(0, 0, 0, 0.800000011920929)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:17385:14799"
+            }
+          },
+          "$type": "color",
+          "comment": "Used on elevation effects."
+        },
+        "name": "BildAlphaAlphaBlack80",
+        "attributes": {
+          "category": "BILD",
+          "type": "alpha",
+          "item": "alphaBlack80"
+        },
+        "path": [
+          "BILD",
+          "alpha",
+          "alphaBlack80"
+        ]
+      },
+      "alphaWhite80": {
+        "$value": "#ffffffcc",
+        "value": "rgba(255, 255, 255, 0.800000011920929)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:17385:14801"
+          }
+        },
+        "$type": "color",
+        "comment": "Used on elevation effects.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(255, 255, 255, 0.800000011920929)",
+          "value": "rgba(255, 255, 255, 0.800000011920929)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:17385:14801"
+            }
+          },
+          "$type": "color",
+          "comment": "Used on elevation effects."
+        },
+        "name": "BildAlphaAlphaWhite80",
+        "attributes": {
+          "category": "BILD",
+          "type": "alpha",
+          "item": "alphaWhite80"
+        },
+        "path": [
+          "BILD",
+          "alpha",
+          "alphaWhite80"
+        ]
+      },
+      "alphaBlack35": {
+        "$value": "#00000059",
+        "value": "rgba(0, 0, 0, 0.3499999940395355)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:17389:15070"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(0, 0, 0, 0.3499999940395355)",
+          "value": "rgba(0, 0, 0, 0.3499999940395355)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:17389:15070"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildAlphaAlphaBlack35",
+        "attributes": {
+          "category": "BILD",
+          "type": "alpha",
+          "item": "alphaBlack35"
+        },
+        "path": [
+          "BILD",
+          "alpha",
+          "alphaBlack35"
+        ]
+      },
+      "alphaBlack0": {
+        "$value": "#00000000",
+        "value": "rgba(0, 0, 0, 0)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:17390:25780"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(0, 0, 0, 0)",
+          "value": "rgba(0, 0, 0, 0)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:17390:25780"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildAlphaAlphaBlack0",
+        "attributes": {
+          "category": "BILD",
+          "type": "alpha",
+          "item": "alphaBlack0"
+        },
+        "path": [
+          "BILD",
+          "alpha",
+          "alphaBlack0"
+        ]
+      },
+      "alphaBlack50": {
+        "$value": "#00000080",
+        "value": "rgba(0, 0, 0, 0.5)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:17500:35355"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(0, 0, 0, 0.5)",
+          "value": "rgba(0, 0, 0, 0.5)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:17500:35355"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildAlphaAlphaBlack50",
+        "attributes": {
+          "category": "BILD",
+          "type": "alpha",
+          "item": "alphaBlack50"
+        },
+        "path": [
+          "BILD",
+          "alpha",
+          "alphaBlack50"
+        ]
+      },
+      "alphaBlack05": {
+        "$value": "#0000000d",
+        "value": "rgba(0, 0, 0, 0.05000000074505806)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:19706:121945"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(0, 0, 0, 0.05000000074505806)",
+          "value": "rgba(0, 0, 0, 0.05000000074505806)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:19706:121945"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "BildAlphaAlphaBlack05",
+        "attributes": {
+          "category": "BILD",
+          "type": "alpha",
+          "item": "alphaBlack05"
+        },
+        "path": [
+          "BILD",
+          "alpha",
+          "alphaBlack05"
+        ]
+      }
+    },
+    "blue": {
+      "BILDBlue": {
+        "$value": "#00b1ff",
+        "value": "#00B1FF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:12717:3755"
+          }
+        },
+        "$type": "color",
+        "comment": "This Blue color was taken from the Weather 2024 project. Tone: 069",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#00B1FF",
+          "value": "#00B1FF",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:12717:3755"
+            }
+          },
+          "$type": "color",
+          "comment": "This Blue color was taken from the Weather 2024 project. Tone: 069"
+        },
+        "name": "BildBlueBildBlue",
+        "attributes": {
+          "category": "BILD",
+          "type": "blue",
+          "item": "BILDBlue"
+        },
+        "path": [
+          "BILD",
+          "blue",
+          "BILDBlue"
+        ]
+      }
+    }
+  },
+  "Partner": {
+    "Fitbook": {
+      "fitbookCore": {
+        "$value": "#ff97b7",
+        "value": "#FF97B7",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16104:163537"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#FF97B7",
+          "value": "#FF97B7",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16104:163537"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "PartnerFitbookFitbookCore",
+        "attributes": {
+          "category": "Partner",
+          "type": "Fitbook",
+          "item": "fitbookCore"
+        },
+        "path": [
+          "Partner",
+          "Fitbook",
+          "fitbookCore"
+        ]
+      }
+    },
+    "Petbook": {
+      "petbookCore": {
+        "$value": "#b9db91",
+        "value": "#B9DB91",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16104:163538"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#B9DB91",
+          "value": "#B9DB91",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16104:163538"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "PartnerPetbookPetbookCore",
+        "attributes": {
+          "category": "Partner",
+          "type": "Petbook",
+          "item": "petbookCore"
+        },
+        "path": [
+          "Partner",
+          "Petbook",
+          "petbookCore"
+        ]
+      }
+    },
+    "MyHome": {
+      "myhomeCore": {
+        "$value": "#66cccc",
+        "value": "#66CCCC",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16104:163539"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#66CCCC",
+          "value": "#66CCCC",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16104:163539"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "PartnerMyHomeMyhomeCore",
+        "attributes": {
+          "category": "Partner",
+          "type": "MyHome",
+          "item": "myhomeCore"
+        },
+        "path": [
+          "Partner",
+          "MyHome",
+          "myhomeCore"
+        ]
+      }
+    },
+    "Travelbook": {
+      "travelbookCore": {
+        "$value": "#8ef0ed",
+        "value": "#8EF0ED",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16104:163540"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#8EF0ED",
+          "value": "#8EF0ED",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16104:163540"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "PartnerTravelbookTravelbookCore",
+        "attributes": {
+          "category": "Partner",
+          "type": "Travelbook",
+          "item": "travelbookCore"
+        },
+        "path": [
+          "Partner",
+          "Travelbook",
+          "travelbookCore"
+        ]
+      }
+    },
+    "Techbook": {
+      "techbookCore": {
+        "$value": "#93e4ff",
+        "value": "#93E4FF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16104:163541"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#93E4FF",
+          "value": "#93E4FF",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16104:163541"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "PartnerTechbookTechbookCore",
+        "attributes": {
+          "category": "Partner",
+          "type": "Techbook",
+          "item": "techbookCore"
+        },
+        "path": [
+          "Partner",
+          "Techbook",
+          "techbookCore"
+        ]
+      }
+    },
+    "Kaufberater": {
+      "kaufberaterCore": {
+        "$value": "#55476e",
+        "value": "#55476E",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16104:163542"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#55476E",
+          "value": "#55476E",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16104:163542"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "PartnerKaufberaterKaufberaterCore",
+        "attributes": {
+          "category": "Partner",
+          "type": "Kaufberater",
+          "item": "kaufberaterCore"
+        },
+        "path": [
+          "Partner",
+          "Kaufberater",
+          "kaufberaterCore"
+        ]
+      }
+    },
+    "Bz": {
+      "bzCore": {
+        "$value": "#e3001b",
+        "value": "#E3001B",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16104:163543"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#E3001B",
+          "value": "#E3001B",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16104:163543"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "PartnerBzBzCore",
+        "attributes": {
+          "category": "Partner",
+          "type": "Bz",
+          "item": "bzCore"
+        },
+        "path": [
+          "Partner",
+          "Bz",
+          "bzCore"
+        ]
+      }
+    },
+    "Aubi": {
+      "aubiCore": {
+        "$value": "#f00000",
+        "value": "#F00000",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16104:163544"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#F00000",
+          "value": "#F00000",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16104:163544"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "PartnerAubiAubiCore",
+        "attributes": {
+          "category": "Partner",
+          "type": "Aubi",
+          "item": "aubiCore"
+        },
+        "path": [
+          "Partner",
+          "Aubi",
+          "aubiCore"
+        ]
+      }
+    },
+    "ComputerBILD": {
+      "cobiCore": {
+        "$value": "#dc231c",
+        "value": "#DC231C",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16104:163545"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#DC231C",
+          "value": "#DC231C",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16104:163545"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "PartnerComputerBildCobiCore",
+        "attributes": {
+          "category": "Partner",
+          "type": "ComputerBILD",
+          "item": "cobiCore"
+        },
+        "path": [
+          "Partner",
+          "ComputerBILD",
+          "cobiCore"
+        ]
+      }
+    }
+  },
+  "SportBILD": {
+    "blue": {
+      "spobiBlue098": {
+        "$value": "#f7f9fd",
+        "value": "#F7F9FD",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16104:163546"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#F7F9FD",
+          "value": "#F7F9FD",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16104:163546"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "SportBildBlueSpobiBlue098",
+        "attributes": {
+          "category": "SportBILD",
+          "type": "blue",
+          "item": "spobiBlue098"
+        },
+        "path": [
+          "SportBILD",
+          "blue",
+          "spobiBlue098"
+        ]
+      },
+      "spobiBlue081": {
+        "$value": "#bdcadb",
+        "value": "#BDCADB",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16104:163547"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#BDCADB",
+          "value": "#BDCADB",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16104:163547"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "SportBildBlueSpobiBlue081",
+        "attributes": {
+          "category": "SportBILD",
+          "type": "blue",
+          "item": "spobiBlue081"
+        },
+        "path": [
+          "SportBILD",
+          "blue",
+          "spobiBlue081"
+        ]
+      },
+      "spobiBlue029": {
+        "$value": "#174482",
+        "value": "#174482",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16107:27"
+          }
+        },
+        "$type": "color",
+        "comment": "This variable in the current online CSS is called secondary-tenant-color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#174482",
+          "value": "#174482",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16107:27"
+            }
+          },
+          "$type": "color",
+          "comment": "This variable in the current online CSS is called secondary-tenant-color"
+        },
+        "name": "SportBildBlueSpobiBlue029",
+        "attributes": {
+          "category": "SportBILD",
+          "type": "blue",
+          "item": "spobiBlue029"
+        },
+        "path": [
+          "SportBILD",
+          "blue",
+          "spobiBlue029"
+        ]
+      },
+      "spobiBlue016": {
+        "$value": "#0a2750",
+        "value": "#0A2750",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16107:28"
+          }
+        },
+        "$type": "color",
+        "comment": "This variable in the current online CSS is called main-tenant-color for the spobi tenant.",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#0A2750",
+          "value": "#0A2750",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16107:28"
+            }
+          },
+          "$type": "color",
+          "comment": "This variable in the current online CSS is called main-tenant-color for the spobi tenant."
+        },
+        "name": "SportBildBlueSpobiBlue016",
+        "attributes": {
+          "category": "SportBILD",
+          "type": "blue",
+          "item": "spobiBlue016"
+        },
+        "path": [
+          "SportBILD",
+          "blue",
+          "spobiBlue016"
+        ]
+      },
+      "spobiBlue010": {
+        "$value": "#081828",
+        "value": "#081828",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:16107:29"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#081828",
+          "value": "#081828",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:16107:29"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "SportBildBlueSpobiBlue010",
+        "attributes": {
+          "category": "SportBILD",
+          "type": "blue",
+          "item": "spobiBlue010"
+        },
+        "path": [
+          "SportBILD",
+          "blue",
+          "spobiBlue010"
+        ]
+      },
+      "spobiBlue038": {
+        "$value": "#315998",
+        "value": "#315998",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:18489:25069"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#315998",
+          "value": "#315998",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:18489:25069"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "SportBildBlueSpobiBlue038",
+        "attributes": {
+          "category": "SportBILD",
+          "type": "blue",
+          "item": "spobiBlue038"
+        },
+        "path": [
+          "SportBILD",
+          "blue",
+          "spobiBlue038"
+        ]
+      }
+    },
+    "red": {
+      "spobiRed": {
+        "$value": "#e52528",
+        "value": "#E52528",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:18343:6628"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "#E52528",
+          "value": "#E52528",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:18343:6628"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "SportBildRedSpobiRed",
+        "attributes": {
+          "category": "SportBILD",
+          "type": "red",
+          "item": "spobiRed"
+        },
+        "path": [
+          "SportBILD",
+          "red",
+          "spobiRed"
+        ]
+      }
+    },
+    "alpha": {
+      "spobiBlue016-0": {
+        "$value": "#0a275000",
+        "value": "rgba(10, 39, 80, 0)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:18355:65196"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(10, 39, 80, 0)",
+          "value": "rgba(10, 39, 80, 0)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:18355:65196"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "SportBildAlphaSpobiBlue0160",
+        "attributes": {
+          "category": "SportBILD",
+          "type": "alpha",
+          "item": "spobiBlue016-0"
+        },
+        "path": [
+          "SportBILD",
+          "alpha",
+          "spobiBlue016-0"
+        ]
+      },
+      "spobiBlue016-70": {
+        "$value": "#0a2750b2",
+        "value": "rgba(10, 39, 80, 0.699999988079071)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:18355:65197"
+          }
+        },
+        "$type": "color",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+        "isSource": true,
+        "original": {
+          "$value": "rgba(10, 39, 80, 0.699999988079071)",
+          "value": "rgba(10, 39, 80, 0.699999988079071)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:539:2238",
+              "collectionName": "_ColorPrimitive",
+              "variableId": "VariableID:18355:65197"
+            }
+          },
+          "$type": "color"
+        },
+        "name": "SportBildAlphaSpobiBlue01670",
+        "attributes": {
+          "category": "SportBILD",
+          "type": "alpha",
+          "item": "spobiBlue016-70"
+        },
+        "path": [
+          "SportBILD",
+          "alpha",
+          "spobiBlue016-70"
+        ]
+      }
+    }
+  },
+  "Opacity": {
+    "opacity05": {
+      "$value": "5px",
+      "value": "5px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:539:2238",
+          "collectionName": "_ColorPrimitive",
+          "variableId": "VariableID:18489:24615"
+        }
+      },
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+      "isSource": true,
+      "original": {
+        "$value": "5px",
+        "value": "5px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:18489:24615"
+          }
+        }
+      },
+      "name": "OpacityOpacity05",
+      "attributes": {
+        "category": "Opacity",
+        "type": "opacity05"
+      },
+      "path": [
+        "Opacity",
+        "opacity05"
+      ]
+    },
+    "opacity10": {
+      "$value": "10px",
+      "value": "10px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:539:2238",
+          "collectionName": "_ColorPrimitive",
+          "variableId": "VariableID:18489:24616"
+        }
+      },
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+      "isSource": true,
+      "original": {
+        "$value": "10px",
+        "value": "10px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:18489:24616"
+          }
+        }
+      },
+      "name": "OpacityOpacity10",
+      "attributes": {
+        "category": "Opacity",
+        "type": "opacity10"
+      },
+      "path": [
+        "Opacity",
+        "opacity10"
+      ]
+    },
+    "opacity20": {
+      "$value": "20px",
+      "value": "20px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:539:2238",
+          "collectionName": "_ColorPrimitive",
+          "variableId": "VariableID:18489:24829"
+        }
+      },
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+      "isSource": true,
+      "original": {
+        "$value": "20px",
+        "value": "20px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:18489:24829"
+          }
+        }
+      },
+      "name": "OpacityOpacity20",
+      "attributes": {
+        "category": "Opacity",
+        "type": "opacity20"
+      },
+      "path": [
+        "Opacity",
+        "opacity20"
+      ]
+    },
+    "opacity40": {
+      "$value": "40px",
+      "value": "40px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:539:2238",
+          "collectionName": "_ColorPrimitive",
+          "variableId": "VariableID:18489:24830"
+        }
+      },
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+      "isSource": true,
+      "original": {
+        "$value": "40px",
+        "value": "40px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:18489:24830"
+          }
+        }
+      },
+      "name": "OpacityOpacity40",
+      "attributes": {
+        "category": "Opacity",
+        "type": "opacity40"
+      },
+      "path": [
+        "Opacity",
+        "opacity40"
+      ]
+    },
+    "opacity60": {
+      "$value": "60px",
+      "value": "60px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:539:2238",
+          "collectionName": "_ColorPrimitive",
+          "variableId": "VariableID:18489:24961"
+        }
+      },
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+      "isSource": true,
+      "original": {
+        "$value": "60px",
+        "value": "60px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:18489:24961"
+          }
+        }
+      },
+      "name": "OpacityOpacity60",
+      "attributes": {
+        "category": "Opacity",
+        "type": "opacity60"
+      },
+      "path": [
+        "Opacity",
+        "opacity60"
+      ]
+    },
+    "opacity80": {
+      "$value": "80px",
+      "value": "80px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:539:2238",
+          "collectionName": "_ColorPrimitive",
+          "variableId": "VariableID:18489:24962"
+        }
+      },
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+      "isSource": true,
+      "original": {
+        "$value": "80px",
+        "value": "80px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:18489:24962"
+          }
+        }
+      },
+      "name": "OpacityOpacity80",
+      "attributes": {
+        "category": "Opacity",
+        "type": "opacity80"
+      },
+      "path": [
+        "Opacity",
+        "opacity80"
+      ]
+    },
+    "opacity100": {
+      "$value": "100px",
+      "value": "100px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:539:2238",
+          "collectionName": "_ColorPrimitive",
+          "variableId": "VariableID:18489:24963"
+        }
+      },
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+      "isSource": true,
+      "original": {
+        "$value": "100px",
+        "value": "100px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:18489:24963"
+          }
+        }
+      },
+      "name": "OpacityOpacity100",
+      "attributes": {
+        "category": "Opacity",
+        "type": "opacity100"
+      },
+      "path": [
+        "Opacity",
+        "opacity100"
+      ]
+    },
+    "opacity90": {
+      "$value": "90px",
+      "value": "90px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:539:2238",
+          "collectionName": "_ColorPrimitive",
+          "variableId": "VariableID:18489:25043"
+        }
+      },
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+      "isSource": true,
+      "original": {
+        "$value": "90px",
+        "value": "90px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:18489:25043"
+          }
+        }
+      },
+      "name": "OpacityOpacity90",
+      "attributes": {
+        "category": "Opacity",
+        "type": "opacity90"
+      },
+      "path": [
+        "Opacity",
+        "opacity90"
+      ]
+    },
+    "opacity30": {
+      "$value": "30px",
+      "value": "30px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:539:2238",
+          "collectionName": "_ColorPrimitive",
+          "variableId": "VariableID:18489:25044"
+        }
+      },
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+      "isSource": true,
+      "original": {
+        "$value": "30px",
+        "value": "30px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:18489:25044"
+          }
+        }
+      },
+      "name": "OpacityOpacity30",
+      "attributes": {
+        "category": "Opacity",
+        "type": "opacity30"
+      },
+      "path": [
+        "Opacity",
+        "opacity30"
+      ]
+    },
+    "opacity50": {
+      "$value": "50px",
+      "value": "50px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:539:2238",
+          "collectionName": "_ColorPrimitive",
+          "variableId": "VariableID:18489:25045"
+        }
+      },
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+      "isSource": true,
+      "original": {
+        "$value": "50px",
+        "value": "50px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:18489:25045"
+          }
+        }
+      },
+      "name": "OpacityOpacity50",
+      "attributes": {
+        "category": "Opacity",
+        "type": "opacity50"
+      },
+      "path": [
+        "Opacity",
+        "opacity50"
+      ]
+    },
+    "opacity00": {
+      "$value": "0px",
+      "value": "0px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:539:2238",
+          "collectionName": "_ColorPrimitive",
+          "variableId": "VariableID:18489:25046"
+        }
+      },
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+      "isSource": true,
+      "original": {
+        "$value": "0px",
+        "value": "0px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:18489:25046"
+          }
+        }
+      },
+      "name": "OpacityOpacity00",
+      "attributes": {
+        "category": "Opacity",
+        "type": "opacity00"
+      },
+      "path": [
+        "Opacity",
+        "opacity00"
+      ]
+    },
+    "opacity70": {
+      "$value": "70px",
+      "value": "70px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:539:2238",
+          "collectionName": "_ColorPrimitive",
+          "variableId": "VariableID:18489:25047"
+        }
+      },
+      "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/shared/colorprimitive.json",
+      "isSource": true,
+      "original": {
+        "$value": "70px",
+        "value": "70px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:539:2238",
+            "collectionName": "_ColorPrimitive",
+            "variableId": "VariableID:18489:25047"
+          }
+        }
+      },
+      "name": "OpacityOpacity70",
+      "attributes": {
+        "category": "Opacity",
+        "type": "opacity70"
+      },
+      "path": [
+        "Opacity",
+        "opacity70"
+      ]
+    }
+  }
+}

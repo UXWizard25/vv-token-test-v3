@@ -1,0 +1,3719 @@
+{
+  "Global": {
+    "Typography": {
+      "FontSize": {
+        "Display": {
+          "display1FontSizeXS": {
+            "$value": "40px",
+            "value": "40px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10607"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 40 | SpoBi: 38 | Ads: 39 | This variable is used in the display1 text style font size parameter for small device sizes."
+          },
+          "display1FontSizeSM": {
+            "$value": "40px",
+            "value": "40px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10608"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 40 | SpoBi: 38 | Ads: 39 | This variable is used in the display1 text style font size parameter for small device sizes."
+          },
+          "display1FontSizeMD": {
+            "$value": "72px",
+            "value": "72px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10609"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 72 | SpoBi: 68 | Ads: 70 | This variable is used in the display1 text style font size parameter for medium device sizes."
+          },
+          "display1FontSizeLG": {
+            "$value": "120px",
+            "value": "120px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10610"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 120 | SpoBi: 114 | Ads: 116 | This variable is used in the display1 text style font size parameter for large device sizes."
+          },
+          "display2FontSizeXS": {
+            "$value": "36px",
+            "value": "36px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10611"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 36 | SpoBi: 34 | Ads: 35 | This variable is used in the display2 text style font size parameter for small device sizes."
+          },
+          "display2FontSizeSM": {
+            "$value": "36px",
+            "value": "36px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10612"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 36 | SpoBi: 34 | Ads: 35 | This variable is used in the display2 text style font size parameter for small device sizes."
+          },
+          "display2FontSizeMD": {
+            "$value": "42px",
+            "value": "42px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10613"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 42 | SpoBi: 40 | Ads: 41 | This variable is used in the display2 text style font size parameter for medium device sizes."
+          },
+          "display2FontSizeLG": {
+            "$value": "64px",
+            "value": "64px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10614"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 64 | SpoBi: 61 | Ads: 62 | This variable is used in the display2 text style font size parameter for large device sizes."
+          },
+          "display3FontSizeSM": {
+            "$value": "28px",
+            "value": "28px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18118:38350"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 28 | SpoBi: 27 | Ads: 27 | This variable is used in the display3 text style font size parameter for small device sizes."
+          },
+          "display3FontSizeMD": {
+            "$value": "32px",
+            "value": "32px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18118:38351"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 32 | SpoBi: 30 | Ads: 31 | This variable is used in the display3 text style font size parameter for medium device sizes."
+          },
+          "display3FontSizeLG": {
+            "$value": "40px",
+            "value": "40px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18118:38352"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 40 | SpoBi: 38 | Ads: 39 | This variable is used in the display3 text style font size parameter for large device sizes."
+          },
+          "display3FontSizeXS": {
+            "$value": "28px",
+            "value": "28px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18118:38353"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 28 | SpoBi: 27 | Ads: 27 | This variable is used in the display3 text style font size parameter for small device sizes."
+          }
+        },
+        "Headline": {
+          "headline1FontSizeXS": {
+            "$value": "48px",
+            "value": "48px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10615"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 48 | SpoBi: 42 | Ads: 36 | This variable is used in the headline1 text style font size parameter for small device sizes."
+          },
+          "headline1FontSizeSM": {
+            "$value": "48px",
+            "value": "48px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10616"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 48 | SpoBi: 42 | Ads: 36 | This variable is used in the headline1 text style font size parameter for small device sizes."
+          },
+          "headline1FontSizeMD": {
+            "$value": "72px",
+            "value": "72px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10617"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 72 | SpoBi: 60 | Ads: 54 | This variable is used in the headline1 text style font size parameter for medium device sizes."
+          },
+          "headline1FontSizeLG": {
+            "$value": "100px",
+            "value": "100px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10618"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 100 | SpoBi: 80 | Ads: 70 | This variable is used in the headline1 text style font size parameter for large device sizes."
+          },
+          "headline2FontSizeXS": {
+            "$value": "40px",
+            "value": "40px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10619"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 40 | SpoBi: 42 | Ads: 30 | This variable is used in the headline2 text style font size parameter for small device sizes."
+          },
+          "headline2FontSizeSM": {
+            "$value": "40px",
+            "value": "40px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10620"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 40 | SpoBi: 42 | Ads: 30 | This variable is used in the headline2 text style font size parameter for small device sizes."
+          },
+          "headline2FontSizeMD": {
+            "$value": "48px",
+            "value": "48px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10621"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 48 | SpoBi: 44 | Ads: 36 | This variable is used in the headline2 text style font size parameter for medium device sizes."
+          },
+          "headline2FontSizeLG": {
+            "$value": "64px",
+            "value": "64px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10622"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 64 | SpoBi: 50 | Ads: 48 | This variable is used in the headline2 text style font size parameter for large device sizes."
+          },
+          "headline3FontSizeXS": {
+            "$value": "28px",
+            "value": "28px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10623"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 28 | SpoBi: 30 | Ads: 24 | This variable is used in the headline3 text style font size parameter for small device sizes."
+          },
+          "headline3FontSizeSM": {
+            "$value": "28px",
+            "value": "28px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10624"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 28 | SpoBi: 30 | Ads: 24 | This variable is used in the headline3 text style font size parameter for small device sizes."
+          },
+          "headline3FontSizeMD": {
+            "$value": "36px",
+            "value": "36px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10625"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 36 | SpoBi: 30 | Ads: 26 | This variable is used in the headline3 text style font size parameter for medium device sizes."
+          },
+          "headline3FontSizeLG": {
+            "$value": "40px",
+            "value": "40px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10626"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 40 | SpoBi: 34 | Ads: 32 | This variable is used in the headline3 text style font size parameter for large device sizes."
+          },
+          "headline4FontSizeXS": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10627"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 22 | SpoBi: 21 | Ads: 16 | This variable is used in the headline4 text style font size parameter for small device sizes."
+          },
+          "headline4FontSizeSM": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10628"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 22 | SpoBi: 21 | Ads: 16 | This variable is used in the headline4 text style font size parameter for small device sizes."
+          },
+          "headline4FontSizeMD": {
+            "$value": "26px",
+            "value": "26px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10629"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 26 | SpoBi: 26 | Ads: 20 | This variable is used in the headline4 text style font size parameter for medium device sizes."
+          },
+          "headline4FontSizeLG": {
+            "$value": "32px",
+            "value": "32px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10630"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 32 | SpoBi: 26 | Ads: 22 | This variable is used in the headline4 text style font size parameter for large device sizes."
+          },
+          "headlineTextAlign": {
+            "$value": "center",
+            "value": "center",
+            "type": "string",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18126:918"
+              }
+            },
+            "comment": "This variable is used for controlling the alignment of headlines across brands. current online css example var: --headline-text-align-lg"
+          }
+        },
+        "Kicker": {
+          "kicker1FontSizeXS": {
+            "$value": "18px",
+            "value": "18px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10631"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 18 | SpoBi: 20 | Ads: 16 | This variable is used in the kicker1 text style font size parameter for small device sizes. Current online css: --kicker-0-font-size-sm"
+          },
+          "kicker1FontSizeSM": {
+            "$value": "18px",
+            "value": "18px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10632"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 18 | SpoBi: 20 | Ads: 16 | This variable is used in the kicker1 text style font size parameter for small device sizes. Current online css: --kicker-0-font-size-sm"
+          },
+          "kicker1FontSizeMD": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10633"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 22 | SpoBi: 26 | Ads: 18 | This variable is used in the kicker1 text style font size parameter for medium device sizes. Current online css: --kicker-0-font-size-md"
+          },
+          "kicker1FontSizeLG": {
+            "$value": "30px",
+            "value": "30px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10634"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 30 | SpoBi: 32 | Ads: 25 | This variable is used in the kicker1 text style font size parameter for large device sizes. Current online css: --kicker-0-font-size-lg"
+          },
+          "kicker2FontSizeXS": {
+            "$value": "18px",
+            "value": "18px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10635"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 18 | SpoBi: 16 | Ads: 16 | This variable is used in the kicker2 text style font size parameter for small device sizes. Current online css: --kicker-1-font-size-sm"
+          },
+          "kicker2FontSizeSM": {
+            "$value": "18px",
+            "value": "18px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10636"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 18 | SpoBi: 16 | Ads: 16 | This variable is used in the kicker2 text style font size parameter for small device sizes. Current online css: --kicker-1-font-size-sm"
+          },
+          "kicker2FontSizeMD": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10637"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 22 | SpoBi: 26 | Ads: 18 | This variable is used in the kicker2 text style font size parameter for medium device sizes. Current online css: --kicker-1-font-size-md"
+          },
+          "kicker2FontSizeLG": {
+            "$value": "24px",
+            "value": "24px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10638"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 24 | SpoBi: 26 | Ads: 21 | This variable is used in the kicker2 text style font size parameter for large device sizes. Current online css: --kicker-1-font-size-lg"
+          },
+          "kicker3FontSizeXS": {
+            "$value": "16px",
+            "value": "16px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10639"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 16 | SpoBi: 16 | Ads: 14 | This variable is used in the kicker3 text style font size parameter for small device sizes. Current online css: --kicker-2-font-size-sm"
+          },
+          "kicker3FontSizeSM": {
+            "$value": "16px",
+            "value": "16px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10640"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 16 | SpoBi: 16 | Ads: 14 | This variable is used in the kicker3 text style font size parameter for small device sizes. Current online css: --kicker-2-font-size-sm"
+          },
+          "kicker3FontSizeMD": {
+            "$value": "18px",
+            "value": "18px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10641"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 18 | SpoBi: 20 | Ads: 14 | This variable is used in the kicker3 text style font size parameter for medium device sizes. Current online css: --kicker-2-font-size-md"
+          },
+          "kicker3FontSizeLG": {
+            "$value": "20px",
+            "value": "20px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10642"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 20 | SpoBi: 22 | Ads: 16 | This variable is used in the kicker3 text style font size parameter for large device sizes. Current online css: --kicker-2-font-size-lg"
+          },
+          "kicker4FontSizeXS": {
+            "$value": "14px",
+            "value": "14px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10643"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 14 | SpoBi: 14 | Ads: 12 | This variable is used in the kicker4 text style font size parameter for small device sizes. Current online css: --kicker-3-font-size-sm"
+          },
+          "kicker4FontSizeSM": {
+            "$value": "14px",
+            "value": "14px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10644"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 14 | SpoBi: 14 | Ads: 12 | This variable is used in the kicker4 text style font size parameter for small device sizes. Current online css: --kicker-3-font-size-sm"
+          },
+          "kicker4FontSizeMD": {
+            "$value": "16px",
+            "value": "16px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10645"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 16 | SpoBi: 16 | Ads: 14 | This variable is used in the kicker4 text style font size parameter for medium device sizes. Current online css: --kicker-3-font-size-md"
+          },
+          "kicker4FontSizeLG": {
+            "$value": "16px",
+            "value": "16px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10646"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 16 | SpoBi: 18 | Ads: 14 | This variable is used in the kicker4 text style font size parameter for large device sizes. Current online css: --kicker-3-font-size-lg"
+          }
+        },
+        "Subheadline": {
+          "subheadline1FontSizeXS": {
+            "$value": "24px",
+            "value": "24px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10647"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 24 | SpoBi: 18 | Ads: 18 | This variable is used in the subheadline1 text style font size parameter for small device sizes."
+          },
+          "subheadline1FontSizeSM": {
+            "$value": "24px",
+            "value": "24px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10648"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 24 | SpoBi: 18 | Ads: 18 | This variable is used in the subheadline1 text style font size parameter for small device sizes."
+          },
+          "subheadline1FontSizeMD": {
+            "$value": "32px",
+            "value": "32px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10649"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 32 | SpoBi: 22 | Ads: 18 | This variable is used in the subheadline1 text style font size parameter for medium device sizes."
+          },
+          "subheadline1FontSizeLG": {
+            "$value": "36px",
+            "value": "36px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10650"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 36 | SpoBi: 26 | Ads: 28 | This variable is used in the subheadline1 text style font size parameter for large device sizes."
+          }
+        },
+        "Title": {
+          "title1FontSizeXS": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10655"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild 22 | SpoBi 24 | Ads 22 | current online css: --ressort-header-font-size-sm"
+          },
+          "title1FontSizeSM": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10656"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild 22 | SpoBi 24 | Ads 22 | current online css: --ressort-header-font-size-sm"
+          },
+          "title1FontSizeMD": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10657"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild 22 | SpoBi 28 | Ads 22 | current online css: --ressort-header-font-size-md"
+          },
+          "title1FontSizeLG": {
+            "$value": "28px",
+            "value": "28px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10658"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild 28 | SpoBi 30 | Ads 28 | current online css: --ressort-header-font-size-lg"
+          },
+          "title2FontSizeXS": {
+            "$value": "16px",
+            "value": "16px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10659"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild 16 | SpoBi 16 | Ads 14 | current online css var: --caption-1-font-size-sm"
+          },
+          "title2FontSizeSM": {
+            "$value": "16px",
+            "value": "16px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10660"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild 16 | SpoBi 16 | Ads 14 | current online css: --caption-1-font-size-sm"
+          },
+          "title2FontSizeMD": {
+            "$value": "18px",
+            "value": "18px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10661"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild 18 | SpoBi 18 | Ads 16 | current online css: --caption-1-font-size-md"
+          },
+          "title2FontSizeLG": {
+            "$value": "20px",
+            "value": "20px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10662"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild 20 | SpoBi 20 | Ads 18 | current online css: --caption-1-font-size-lg"
+          }
+        },
+        "Callout": {
+          "callout1FontSizeXS": {
+            "$value": "18px",
+            "value": "18px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10663"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 18 | SpoBi: 18 | Ads: 16 | This variable is used in the callout1 text style font size parameter for small device sizes. Current online css:"
+          },
+          "callout1FontSizeSM": {
+            "$value": "18px",
+            "value": "18px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10664"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 18 | SpoBi: 18 | Ads: 16 | This variable is used in the callout1 text style font size parameter for small device sizes. Current online css:"
+          },
+          "callout1FontSizeMD": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10665"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 22 | SpoBi: 24 | Ads: 22 | This variable is used in the callout1 text style font size parameter for medium device sizes. Current online css:"
+          },
+          "callout1FontSizeLG": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10666"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 22 | SpoBi: 24 | Ads: 22 | This variable is used in the callout1 text style font size parameter for large device sizes. Current online css:"
+          }
+        },
+        "Body": {
+          "bodyFontSizeXS": {
+            "$value": "21px",
+            "value": "21px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10667"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 21 | SpoBi: 17 | Ads: 17 | This variable is used in the body text style font size parameter for small device sizes. Current online css: --body-font-size"
+          },
+          "bodyFontSizeSM": {
+            "$value": "21px",
+            "value": "21px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10668"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 21 | SpoBi: 17 | Ads: 17 | This variable is used in the body text style font size parameter for small device sizes. Current online css: --body-font-size"
+          },
+          "bodyFontSizeMD": {
+            "$value": "21px",
+            "value": "21px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10669"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 21 | SpoBi: 17 | Ads: 17 | This variable is used in the body text style font size parameter for medium device sizes. Current online css: --body-font-size"
+          },
+          "bodyFontSizeLG": {
+            "$value": "21px",
+            "value": "21px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10670"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild: 21 | SpoBi: 17 | Ads: 17 | This variable is used in the body text style font size parameter for large device sizes. Current online css: --body-font-size"
+          }
+        },
+        "Footnote": {
+          "footnote1FontSizeXS": {
+            "$value": "16px",
+            "value": "16px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10671"
+              }
+            },
+            "$type": "dimension",
+            "comment": "--footnote-font-size-sm"
+          },
+          "footnote1FontSizeSM": {
+            "$value": "16px",
+            "value": "16px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10672"
+              }
+            },
+            "$type": "dimension",
+            "comment": "--footnote-font-size-sm"
+          },
+          "footnote1FontSizeMD": {
+            "$value": "16px",
+            "value": "16px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10673"
+              }
+            },
+            "$type": "dimension"
+          },
+          "footnote1FontSizeLG": {
+            "$value": "18px",
+            "value": "18px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10674"
+              }
+            },
+            "$type": "dimension",
+            "comment": "--footnote-font-size-lg"
+          },
+          "footnote2FontSizeXS": {
+            "$value": "12px",
+            "value": "12px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10675"
+              }
+            },
+            "$type": "dimension"
+          },
+          "footnote2FontSizeSM": {
+            "$value": "12px",
+            "value": "12px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10676"
+              }
+            },
+            "$type": "dimension"
+          },
+          "footnote2FontSizeMD": {
+            "$value": "12px",
+            "value": "12px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10677"
+              }
+            },
+            "$type": "dimension"
+          },
+          "footnote2FontSizeLG": {
+            "$value": "16px",
+            "value": "16px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10678"
+              }
+            },
+            "$type": "dimension"
+          }
+        },
+        "Quote": {
+          "quoteFontSizeXS": {
+            "$value": "16px",
+            "value": "16px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10679"
+              }
+            },
+            "$type": "dimension"
+          },
+          "quoteFontSizeSM": {
+            "$value": "16px",
+            "value": "16px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10680"
+              }
+            },
+            "$type": "dimension"
+          },
+          "quoteFontSizeMD": {
+            "$value": "18px",
+            "value": "18px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10681"
+              }
+            },
+            "$type": "dimension"
+          },
+          "quoteFontSizeLG": {
+            "$value": "20px",
+            "value": "20px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10682"
+              }
+            },
+            "$type": "dimension"
+          }
+        },
+        "Label": {
+          "label1FontSize": {
+            "$value": "17px",
+            "value": "17px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10703"
+              }
+            },
+            "$type": "dimension"
+          },
+          "label2FontSize": {
+            "$value": "15px",
+            "value": "15px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10704"
+              }
+            },
+            "$type": "dimension"
+          },
+          "label3FontSize": {
+            "$value": "12px",
+            "value": "12px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10705"
+              }
+            },
+            "$type": "dimension"
+          },
+          "label4FontSize": {
+            "$value": "8px",
+            "value": "8px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10706"
+              }
+            },
+            "$type": "dimension"
+          },
+          "label1RespFontSizeXS": {
+            "$value": "10px",
+            "value": "10px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10707"
+              }
+            },
+            "$type": "dimension"
+          },
+          "label1RespFontSizeSM": {
+            "$value": "10px",
+            "value": "10px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10708"
+              }
+            },
+            "$type": "dimension"
+          },
+          "label1RespFontSizeMD": {
+            "$value": "15px",
+            "value": "15px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10709"
+              }
+            },
+            "$type": "dimension"
+          },
+          "label1RespFontSizeLG": {
+            "$value": "17px",
+            "value": "17px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10710"
+              }
+            },
+            "$type": "dimension"
+          }
+        }
+      },
+      "LineHeight": {
+        "Display": {
+          "display1LineHeightXS": {
+            "$value": "40px",
+            "value": "40px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10711"
+              }
+            },
+            "$type": "dimension"
+          },
+          "display1LineHeightSM": {
+            "$value": "40px",
+            "value": "40px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10712"
+              }
+            },
+            "$type": "dimension"
+          },
+          "display1LineHeightMD": {
+            "$value": "72px",
+            "value": "72px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10713"
+              }
+            },
+            "$type": "dimension"
+          },
+          "display1LineHeightLG": {
+            "$value": "120px",
+            "value": "120px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10714"
+              }
+            },
+            "$type": "dimension"
+          },
+          "display2LineHeightXS": {
+            "$value": "36px",
+            "value": "36px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10715"
+              }
+            },
+            "$type": "dimension"
+          },
+          "display2LineHeightSM": {
+            "$value": "36px",
+            "value": "36px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10716"
+              }
+            },
+            "$type": "dimension"
+          },
+          "display2LineHeightMD": {
+            "$value": "42px",
+            "value": "42px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10717"
+              }
+            },
+            "$type": "dimension"
+          },
+          "display2LineHeightLG": {
+            "$value": "64px",
+            "value": "64px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10718"
+              }
+            },
+            "$type": "dimension"
+          },
+          "display3LineHeightLG": {
+            "$value": "40px",
+            "value": "40px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18118:38363"
+              }
+            },
+            "$type": "dimension"
+          },
+          "display3LineHeightMD": {
+            "$value": "32px",
+            "value": "32px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18118:38364"
+              }
+            },
+            "$type": "dimension"
+          },
+          "display3LineHeightSM": {
+            "$value": "28px",
+            "value": "28px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18118:38365"
+              }
+            },
+            "$type": "dimension"
+          },
+          "display3LineHeightXS": {
+            "$value": "28px",
+            "value": "28px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18118:38366"
+              }
+            },
+            "$type": "dimension"
+          }
+        },
+        "Headline": {
+          "headline1LineHeightXS": {
+            "$value": "48px",
+            "value": "48px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10719"
+              }
+            },
+            "$type": "dimension"
+          },
+          "headline1LineHeightSM": {
+            "$value": "48px",
+            "value": "48px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10720"
+              }
+            },
+            "$type": "dimension"
+          },
+          "headline1LineHeightMD": {
+            "$value": "72px",
+            "value": "72px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10721"
+              }
+            },
+            "$type": "dimension"
+          },
+          "headline1LineHeightLG": {
+            "$value": "100px",
+            "value": "100px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10722"
+              }
+            },
+            "$type": "dimension"
+          },
+          "headline2LineHeightXS": {
+            "$value": "40px",
+            "value": "40px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10723"
+              }
+            },
+            "$type": "dimension"
+          },
+          "headline2LineHeightSM": {
+            "$value": "40px",
+            "value": "40px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10724"
+              }
+            },
+            "$type": "dimension"
+          },
+          "headline2LineHeightMD": {
+            "$value": "48px",
+            "value": "48px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10725"
+              }
+            },
+            "$type": "dimension"
+          },
+          "headline2LineHeightLG": {
+            "$value": "64px",
+            "value": "64px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10726"
+              }
+            },
+            "$type": "dimension"
+          },
+          "headline3LineHeightXS": {
+            "$value": "28px",
+            "value": "28px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10727"
+              }
+            },
+            "$type": "dimension"
+          },
+          "headline3LineHeightSM": {
+            "$value": "28px",
+            "value": "28px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10728"
+              }
+            },
+            "$type": "dimension"
+          },
+          "headline3LineHeightMD": {
+            "$value": "36px",
+            "value": "36px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10729"
+              }
+            },
+            "$type": "dimension"
+          },
+          "headline3LineHeightLG": {
+            "$value": "40px",
+            "value": "40px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10730"
+              }
+            },
+            "$type": "dimension"
+          },
+          "headline4LineHeightXS": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10731"
+              }
+            },
+            "$type": "dimension"
+          },
+          "headline4LineHeightSM": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10732"
+              }
+            },
+            "$type": "dimension"
+          },
+          "headline4LineHeightMD": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10733"
+              }
+            },
+            "$type": "dimension"
+          },
+          "headline4LineHeightLG": {
+            "$value": "30px",
+            "value": "30px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10734"
+              }
+            },
+            "$type": "dimension"
+          }
+        },
+        "Subheadline": {
+          "subheadline1LineHeightXS": {
+            "$value": "24px",
+            "value": "24px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10735"
+              }
+            },
+            "$type": "dimension"
+          },
+          "subheadline1LineHeightSM": {
+            "$value": "24px",
+            "value": "24px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10736"
+              }
+            },
+            "$type": "dimension"
+          },
+          "subheadline1LineHeightMD": {
+            "$value": "32px",
+            "value": "32px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10737"
+              }
+            },
+            "$type": "dimension"
+          },
+          "subheadline1LineHeightLG": {
+            "$value": "36px",
+            "value": "36px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10738"
+              }
+            },
+            "$type": "dimension"
+          }
+        },
+        "Kicker": {
+          "kicker1LineHeightXS": {
+            "$value": "19.799999237060547px",
+            "value": "19.799999237060547px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10739"
+              }
+            },
+            "$type": "dimension"
+          },
+          "kicker1LineHeightSM": {
+            "$value": "19.799999237060547px",
+            "value": "19.799999237060547px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10756"
+              }
+            },
+            "$type": "dimension"
+          },
+          "kicker1LineHeightMD": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10757"
+              }
+            },
+            "$type": "dimension"
+          },
+          "kicker1LineHeightLG": {
+            "$value": "30px",
+            "value": "30px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10758"
+              }
+            },
+            "$type": "dimension"
+          },
+          "kicker2LineHeightXS": {
+            "$value": "19.799999237060547px",
+            "value": "19.799999237060547px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10759"
+              }
+            },
+            "$type": "dimension"
+          },
+          "kicker2LineHeightSM": {
+            "$value": "19.799999237060547px",
+            "value": "19.799999237060547px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10760"
+              }
+            },
+            "$type": "dimension"
+          },
+          "kicker2LineHeightMD": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10761"
+              }
+            },
+            "$type": "dimension"
+          },
+          "kicker2LineHeightLG": {
+            "$value": "24px",
+            "value": "24px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10762"
+              }
+            },
+            "$type": "dimension"
+          },
+          "kicker3LineHeightXS": {
+            "$value": "17.600000381469727px",
+            "value": "17.600000381469727px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10763"
+              }
+            },
+            "$type": "dimension"
+          },
+          "kicker3LineHeightSM": {
+            "$value": "17.600000381469727px",
+            "value": "17.600000381469727px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10764"
+              }
+            },
+            "$type": "dimension"
+          },
+          "kicker3LineHeightMD": {
+            "$value": "18px",
+            "value": "18px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10765"
+              }
+            },
+            "$type": "dimension"
+          },
+          "kicker3LineHeightLG": {
+            "$value": "20px",
+            "value": "20px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10766"
+              }
+            },
+            "$type": "dimension"
+          },
+          "kicker4LineHeightXS": {
+            "$value": "15.399999618530273px",
+            "value": "15.399999618530273px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10767"
+              }
+            },
+            "$type": "dimension"
+          },
+          "kicker4LineHeightSM": {
+            "$value": "15.399999618530273px",
+            "value": "15.399999618530273px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10768"
+              }
+            },
+            "$type": "dimension"
+          },
+          "kicker4LineHeightMD": {
+            "$value": "17.600000381469727px",
+            "value": "17.600000381469727px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10769"
+              }
+            },
+            "$type": "dimension"
+          },
+          "kicker4LineHeightLG": {
+            "$value": "16px",
+            "value": "16px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10770"
+              }
+            },
+            "$type": "dimension"
+          }
+        },
+        "Title": {
+          "title1LineHeightXS": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10740"
+              }
+            },
+            "$type": "dimension"
+          },
+          "title1LineHeightSM": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10741"
+              }
+            },
+            "$type": "dimension"
+          },
+          "title1LineHeightMD": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10742"
+              }
+            },
+            "$type": "dimension"
+          },
+          "title1LineHeightLG": {
+            "$value": "28px",
+            "value": "28px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10743"
+              }
+            },
+            "$type": "dimension"
+          },
+          "title2LineHeightXS": {
+            "$value": "17.600000381469727px",
+            "value": "17.600000381469727px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10744"
+              }
+            },
+            "$type": "dimension"
+          },
+          "title2LineHeightSM": {
+            "$value": "17.600000381469727px",
+            "value": "17.600000381469727px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10745"
+              }
+            },
+            "$type": "dimension"
+          },
+          "title2LineHeightMD": {
+            "$value": "19.799999237060547px",
+            "value": "19.799999237060547px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10746"
+              }
+            },
+            "$type": "dimension"
+          },
+          "title2LineHeightLG": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10747"
+              }
+            },
+            "$type": "dimension"
+          }
+        },
+        "Callout": {
+          "callout1LineHeightXS": {
+            "$value": "18px",
+            "value": "18px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10748"
+              }
+            },
+            "$type": "dimension"
+          },
+          "callout1LineHeightSM": {
+            "$value": "18px",
+            "value": "18px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10749"
+              }
+            },
+            "$type": "dimension"
+          },
+          "callout1LineHeightMD": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10750"
+              }
+            },
+            "$type": "dimension"
+          },
+          "callout1LineHeightLG": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10751"
+              }
+            },
+            "$type": "dimension"
+          }
+        },
+        "Body": {
+          "bodyLineHeightXS": {
+            "$value": "28px",
+            "value": "28px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10752"
+              }
+            },
+            "$type": "dimension"
+          },
+          "bodyLineHeightSM": {
+            "$value": "28px",
+            "value": "28px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10753"
+              }
+            },
+            "$type": "dimension"
+          },
+          "bodyLineHeightMD": {
+            "$value": "28px",
+            "value": "28px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10754"
+              }
+            },
+            "$type": "dimension"
+          },
+          "bodyLineHeightLG": {
+            "$value": "32px",
+            "value": "32px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10755"
+              }
+            },
+            "$type": "dimension"
+          }
+        },
+        "Footnote": {
+          "footnote1LineHeightXS": {
+            "$value": "21px",
+            "value": "21px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10771"
+              }
+            },
+            "$type": "dimension"
+          },
+          "footnote1LineHeightSM": {
+            "$value": "21px",
+            "value": "21px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10780"
+              }
+            },
+            "$type": "dimension"
+          },
+          "footnote1LineHeightMD": {
+            "$value": "21px",
+            "value": "21px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10781"
+              }
+            },
+            "$type": "dimension"
+          },
+          "footnote1LineHeightLG": {
+            "$value": "23px",
+            "value": "23px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10782"
+              }
+            },
+            "$type": "dimension"
+          },
+          "footnote2LineHeightXS": {
+            "$value": "15.600000381469727px",
+            "value": "15.600000381469727px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10783"
+              }
+            },
+            "$type": "dimension"
+          },
+          "footnote2LineHeightSM": {
+            "$value": "15.600000381469727px",
+            "value": "15.600000381469727px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10784"
+              }
+            },
+            "$type": "dimension"
+          },
+          "footnote2LineHeightMD": {
+            "$value": "15.800000190734863px",
+            "value": "15.800000190734863px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10785"
+              }
+            },
+            "$type": "dimension"
+          },
+          "footnote2LineHeightLG": {
+            "$value": "21px",
+            "value": "21px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10786"
+              }
+            },
+            "$type": "dimension"
+          }
+        },
+        "Label": {
+          "label1LineHeight": {
+            "$value": "17px",
+            "value": "17px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10772"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild 17 | SpoBi 20.4 | Ads 20.4 | The label 1 text style uses this variable for its line height parameter."
+          },
+          "label1RespLineHeightXS": {
+            "$value": "10px",
+            "value": "10px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10773"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild 10 | SpoBi 12 | Ads 10 | The label1 responsive text style uses this variable for its line height parameter."
+          },
+          "label1RespLineHeightSM": {
+            "$value": "10px",
+            "value": "10px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10774"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild 10 | SpoBi 12 | Ads 10 | The label1 responsive text style uses this variable for its line height parameter."
+          },
+          "label1RespLineHeightMD": {
+            "$value": "15px",
+            "value": "15px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10775"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild 15 | SpoBi 18 | Ads 15 | The label1 responsive text style uses this variable for its line height parameter."
+          },
+          "label1RespLineHeightLG": {
+            "$value": "17px",
+            "value": "17px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10776"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild 17 | SpoBi 20.4 | Ads 17 | The label1 responsive text style uses this variable for its line height parameter."
+          },
+          "label2LineHeight": {
+            "$value": "16px",
+            "value": "16px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10777"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild 16 | SpoBi 19.2 | Ads 16 | The label 2 text style uses this variable for its line height parameter."
+          },
+          "label3LineHeight": {
+            "$value": "14.399999618530273px",
+            "value": "14.399999618530273px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10778"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild 14.4 | SpoBi 14.4 | Ads 14.4 | The label 3 text style uses this variable for its line height parameter."
+          },
+          "label4LineHeight": {
+            "$value": "10px",
+            "value": "10px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10779"
+              }
+            },
+            "$type": "dimension",
+            "comment": "Bild 10 | SpoBi 10 | Ads 10 | The label 4 text style uses this variable for its line height parameter."
+          }
+        },
+        "Quote": {
+          "quoteLineHeightXS": {
+            "$value": "16px",
+            "value": "16px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10787"
+              }
+            },
+            "$type": "dimension"
+          },
+          "quoteLineHeightSM": {
+            "$value": "16px",
+            "value": "16px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10788"
+              }
+            },
+            "$type": "dimension"
+          },
+          "quoteLineHeightMD": {
+            "$value": "18px",
+            "value": "18px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10789"
+              }
+            },
+            "$type": "dimension"
+          },
+          "quoteLineHeightLG": {
+            "$value": "22px",
+            "value": "22px",
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18038:10790"
+              }
+            },
+            "$type": "dimension"
+          }
+        }
+      },
+      "FontWeight": {
+        "Body": {
+          "bodyFontWeightBook": {
+            "$value": 400,
+            "value": 400,
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18056:4912"
+              }
+            },
+            "$type": "fontWeight"
+          },
+          "bodyFontWeightBold": {
+            "$value": 700,
+            "value": 700,
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18094:38536"
+              }
+            },
+            "$type": "fontWeight"
+          }
+        },
+        "Footnote": {
+          "footnoteFontWeightBook": {
+            "$value": 400,
+            "value": 400,
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18056:4931"
+              }
+            },
+            "$type": "fontWeight"
+          },
+          "footnoteFontWeightBold": {
+            "$value": 700,
+            "value": 700,
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18094:38539"
+              }
+            },
+            "$type": "fontWeight"
+          }
+        },
+        "Label": {
+          "labelFontWeightBook": {
+            "$value": 400,
+            "value": 400,
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18056:4932"
+              }
+            },
+            "$type": "fontWeight"
+          },
+          "labelFontWeightBold": {
+            "$value": 700,
+            "value": 700,
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18056:4937"
+              }
+            },
+            "$type": "fontWeight"
+          }
+        },
+        "Quote": {
+          "quoteFontWeight": {
+            "$value": 800,
+            "value": 800,
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18056:4947"
+              }
+            },
+            "$type": "fontWeight"
+          }
+        },
+        "Display": {
+          "displayFontWeight": {
+            "$value": 800,
+            "value": 800,
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18288:5805"
+              }
+            },
+            "$type": "fontWeight"
+          }
+        },
+        "Headline": {
+          "headline1FontWeightSt": {
+            "$value": "700",
+            "value": "700",
+            "type": "string",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18288:5806"
+              }
+            }
+          },
+          "headline1FontWeight": {
+            "$value": 700,
+            "value": 700,
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18288:5807"
+              }
+            },
+            "$type": "fontWeight"
+          },
+          "headline2FontWeight": {
+            "$value": 700,
+            "value": 700,
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18288:5809"
+              }
+            },
+            "$type": "fontWeight"
+          },
+          "headline3FontWeight": {
+            "$value": 700,
+            "value": 700,
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18288:5810"
+              }
+            },
+            "$type": "fontWeight"
+          },
+          "headline4FontWeight": {
+            "$value": 600,
+            "value": 600,
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18288:5811"
+              }
+            },
+            "$type": "fontWeight"
+          },
+          "headline2FontWeightSt": {
+            "$value": "700",
+            "value": "700",
+            "type": "string",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:20360:16627"
+              }
+            }
+          },
+          "headline3FontWeightSt": {
+            "$value": "700",
+            "value": "700",
+            "type": "string",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:20360:16628"
+              }
+            }
+          },
+          "headline4FontWeightSt": {
+            "$value": "600",
+            "value": "600",
+            "type": "string",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:20360:16629"
+              }
+            }
+          }
+        },
+        "Subheadline": {
+          "subheadlineFontWeight": {
+            "$value": 700,
+            "value": 700,
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18288:5812"
+              }
+            },
+            "$type": "fontWeight"
+          }
+        },
+        "Kicker": {
+          "kickerFontWeight": {
+            "$value": 700,
+            "value": 700,
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18288:5813"
+              }
+            },
+            "$type": "fontWeight"
+          },
+          "kickerFontWeightST": {
+            "$value": "700",
+            "value": "700",
+            "type": "string",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:19144:63646"
+              }
+            }
+          }
+        },
+        "Callout": {
+          "calloutFontWeight": {
+            "$value": 800,
+            "value": 800,
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18288:5814"
+              }
+            },
+            "$type": "fontWeight"
+          }
+        },
+        "Title": {
+          "titleFontWeight": {
+            "$value": 800,
+            "value": 800,
+            "type": "float",
+            "$extensions": {
+              "com.figma": {
+                "collectionId": "VariableCollectionId:18038:10593",
+                "collectionName": "BrandTokenMapping",
+                "variableId": "VariableID:18288:5815"
+              }
+            },
+            "$type": "fontWeight"
+          }
+        }
+      },
+      "FontFamily": {
+        "kickerFontFamily": {
+          "$value": "Gotham XNarrow",
+          "value": "Gotham XNarrow",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18127:919"
+            }
+          },
+          "comment": "Bild: GothamXNarrow | SpoBi: AntennaExtraCond | Ads: LucidaGrande | This variable is used in the kickers text styles font family parameter."
+        },
+        "displayFontFamily": {
+          "$value": "Gotham",
+          "value": "Gotham",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18127:920"
+            }
+          },
+          "comment": "Bild: Gotham | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the display text style font family parameter."
+        },
+        "headlineFontFamily": {
+          "$value": "Gotham Condensed",
+          "value": "Gotham Condensed",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18127:921"
+            }
+          },
+          "comment": "Bild: GothamCond | SpoBi: AntennaExtraCond | Ads: LucidaGrande | This variable is used in the headlines text style font family parameter."
+        },
+        "subheadlineFontFamily": {
+          "$value": "Gotham Condensed",
+          "value": "Gotham Condensed",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18127:922"
+            }
+          },
+          "comment": "Bild: GothamCond | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the subheadlines text style font family parameter."
+        },
+        "bodyFontFamily": {
+          "$value": "Gotham XNarrow",
+          "value": "Gotham XNarrow",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18127:923"
+            }
+          },
+          "comment": "Bild: GothamXNarrow | SpoBi: Inter | Ads: LucidaGrande | This variable is used in the body text style font family parameter."
+        },
+        "footnoteFontFamily": {
+          "$value": "Gotham XNarrow",
+          "value": "Gotham XNarrow",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18127:924"
+            }
+          },
+          "comment": "Bild: GothamXNarrow | SpoBi: Inter | Ads: LucidaGrande | This variable is used in the footnotes text style font family parameter."
+        },
+        "labelFontFamily": {
+          "$value": "Gotham XNarrow",
+          "value": "Gotham XNarrow",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18127:925"
+            }
+          },
+          "comment": "Bild: GothamXNarrow | SpoBi: AntennaExtraCond | Ads: LucidaGrande | This variable is used in the labels text styles font family parameter."
+        },
+        "quoteFontFamily": {
+          "$value": "Gotham",
+          "value": "Gotham",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18127:926"
+            }
+          },
+          "comment": "Bild: Gotham | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the quotes text style font family parameter."
+        },
+        "titleFontFamily": {
+          "$value": "Gotham",
+          "value": "Gotham",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18127:927"
+            }
+          },
+          "comment": "Bild: Gotham | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the titles text style font family parameter."
+        },
+        "calloutFontFamily": {
+          "$value": "Gotham",
+          "value": "Gotham",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18127:928"
+            }
+          },
+          "comment": "Bild: Gotham | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the callouts text style font family parameter."
+        }
+      }
+    },
+    "Visibilty": {
+      "hideOnBILD": {
+        "$value": false,
+        "value": false,
+        "type": "boolean",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18209:12102"
+          }
+        }
+      },
+      "hideOnSportBILD": {
+        "$value": true,
+        "value": true,
+        "type": "boolean",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18209:12103"
+          }
+        }
+      },
+      "onlyAdvertorial": {
+        "$value": false,
+        "value": false,
+        "type": "boolean",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18209:12104"
+          }
+        }
+      },
+      "hideOnAdvertorial": {
+        "$value": true,
+        "value": true,
+        "type": "boolean",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18209:12105"
+          }
+        }
+      },
+      "onlyBILD": {
+        "$value": true,
+        "value": true,
+        "type": "boolean",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:19196:122816"
+          }
+        }
+      },
+      "onlySportBILD": {
+        "$value": false,
+        "value": false,
+        "type": "boolean",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:19196:122817"
+          }
+        }
+      }
+    }
+  },
+  "Component": {
+    "Article": {
+      "FontSize": {
+        "articleImageCaptionFontSizeXS": {
+          "$value": "16px",
+          "value": "16px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40959"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--article-figure-caption-font-size-sm"
+        },
+        "articleImageCaptionFontSizeMD": {
+          "$value": "18px",
+          "value": "18px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40960"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--article-figure-caption-font-size-md"
+        },
+        "articleImageCaptionFontSizeLG": {
+          "$value": "18px",
+          "value": "18px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40961"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--article-figure-caption-font-size-lg"
+        },
+        "articleImageCaptionFontSizeSM": {
+          "$value": "16px",
+          "value": "16px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40962"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--article-figure-caption-font-size-sm"
+        },
+        "articleImageSourceFontSizeXS": {
+          "$value": "16px",
+          "value": "16px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40964"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--article-figure-meta-font-size-sm"
+        },
+        "articleImageSourceFontSizeSM": {
+          "$value": "16px",
+          "value": "16px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40968"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--article-figure-meta-font-size-sm"
+        },
+        "articleImageSourceFontSizeMD": {
+          "$value": "16px",
+          "value": "16px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40969"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--article-figure-meta-font-size-sm"
+        },
+        "articleImageSourceFontSizeLG": {
+          "$value": "18px",
+          "value": "18px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40970"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--article-figure-meta-font-size-lg"
+        }
+      },
+      "LineHeight": {
+        "articleImageCaptionLineHeightXS": {
+          "$value": "19.5px",
+          "value": "19.5px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40963"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--article-figure-caption-line-height-sm ; Bild: 19.5 // SpoBi: 16.9 // Ad: 19.5"
+        },
+        "articleImageCaptionLineHeightMD": {
+          "$value": "24.75px",
+          "value": "24.75px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40965"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--article-figure-caption-line-height-md ; Bild: 24.75 // SpoBi: 16.9 // Ad: 19.5"
+        },
+        "articleImageCaptionLineHeightLG": {
+          "$value": "24.75px",
+          "value": "24.75px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40966"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--article-figure-caption-line-height-lg ; Bild: 24.75 // SpoBi: 19.5 // Ad: 24"
+        },
+        "articleImageCaptionLineHeightSM": {
+          "$value": "19.5px",
+          "value": "19.5px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40967"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--article-figure-caption-line-height-sm ; Bild: 19.5 // SpoBi: 16.9 // Ad: 19.5"
+        },
+        "articleImageSourceLineHeightMD": {
+          "$value": "21px",
+          "value": "21px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40971"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--article-figure-meta-line-height-sm ; Bild: 21 // SpoBi: 17 // Ad: 19"
+        },
+        "articleImageSourceLineHeightLG": {
+          "$value": "23px",
+          "value": "23px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40972"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--article-figure-meta-line-height-lg ; Bild: 23 // SpoBi: 19 // Ad: 24"
+        },
+        "articleImageSourceLineHeightXS": {
+          "$value": "21px",
+          "value": "21px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40973"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--article-figure-meta-line-height-sm ; Bild: 21 // SpoBi: 17 // Ad: 19"
+        },
+        "articleImageSourceLineHeightSM": {
+          "$value": "21px",
+          "value": "21px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40974"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--article-figure-meta-line-height-sm ; Bild: 21 // SpoBi: 17 // Ad: 19"
+        }
+      }
+    },
+    "Breadcrumb": {
+      "FontSize": {
+        "breadcrumbFontSizeXS": {
+          "$value": "15px",
+          "value": "15px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40976"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--breadcrumb-font-size-sm"
+        },
+        "breadcrumbFontSizeSM": {
+          "$value": "15px",
+          "value": "15px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40977"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--breadcrumb-font-size-sm"
+        },
+        "breadcrumbFontSizeMD": {
+          "$value": "15px",
+          "value": "15px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40978"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--breadcrumb-font-size-sm"
+        },
+        "breadcrumbFontSizeLG": {
+          "$value": "12px",
+          "value": "12px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40979"
+            }
+          },
+          "$type": "dimension",
+          "comment": "--breadcrumb-font-size-lg"
+        }
+      },
+      "LineHeight": {
+        "breadcrumbLineHeightXS": {
+          "$value": "15px",
+          "value": "15px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40980"
+            }
+          },
+          "$type": "dimension",
+          "comment": "not defined as variable"
+        },
+        "breadcrumbLineHeightSM": {
+          "$value": "15px",
+          "value": "15px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40981"
+            }
+          },
+          "$type": "dimension",
+          "comment": "not defined as variable"
+        },
+        "breadcrumbLineHeightMD": {
+          "$value": "15px",
+          "value": "15px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40982"
+            }
+          },
+          "$type": "dimension",
+          "comment": "not defined as variable"
+        },
+        "breadcrumbLineHeightLG": {
+          "$value": "12px",
+          "value": "12px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40983"
+            }
+          },
+          "$type": "dimension",
+          "comment": "not defined as variable"
+        }
+      },
+      "FontFamily": {
+        "breadcrumbFontFamily": {
+          "$value": "Gotham XNarrow",
+          "value": "Gotham XNarrow",
+          "type": "string",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40984"
+            }
+          },
+          "comment": "--breadcrumb-font"
+        }
+      },
+      "FontWeight": {
+        "breadcrumbFontWeight": {
+          "$value": 700,
+          "value": 700,
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18163:40986"
+            }
+          },
+          "$type": "fontWeight",
+          "comment": "--breadcrumb-font-size-sm"
+        }
+      }
+    },
+    "Menu": {
+      "menuItemFontSize": {
+        "$value": "15px",
+        "value": "15px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18163:40992"
+          }
+        },
+        "$type": "dimension",
+        "comment": "--nav-btn-font-size"
+      },
+      "appTopBarTitleFontSizeMD": {
+        "$value": "14px",
+        "value": "14px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18994:17042"
+          }
+        },
+        "$type": "dimension",
+        "comment": "--caption-1-font-size-md"
+      },
+      "appTopBarTitleFontSizeLG": {
+        "$value": "14px",
+        "value": "14px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18994:17043"
+          }
+        },
+        "$type": "dimension",
+        "comment": "--caption-1-font-size-lg"
+      },
+      "appTopBarTitleFontSizeXS": {
+        "$value": "12px",
+        "value": "12px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18994:17044"
+          }
+        },
+        "$type": "dimension",
+        "comment": "--caption-1-font-size-sm"
+      },
+      "appTopBarTitleFontSizeSM": {
+        "$value": "12px",
+        "value": "12px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18994:17045"
+          }
+        },
+        "$type": "dimension",
+        "comment": "--caption-1-font-size-sm"
+      },
+      "appTopBarTitleLineHeightMD": {
+        "$value": "17px",
+        "value": "17px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18994:17050"
+          }
+        },
+        "$type": "dimension"
+      },
+      "appTopBarTitleLineHeightLG": {
+        "$value": "17px",
+        "value": "17px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18994:17051"
+          }
+        },
+        "$type": "dimension"
+      },
+      "appTopBarTitleLineHeightXS": {
+        "$value": "14px",
+        "value": "14px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18994:17052"
+          }
+        },
+        "$type": "dimension"
+      },
+      "appTopBarTitleLineHeightSM": {
+        "$value": "14px",
+        "value": "14px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18994:17053"
+          }
+        },
+        "$type": "dimension"
+      },
+      "menuItemFontWeight": {
+        "$value": "700",
+        "value": "700",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:20321:208850"
+          }
+        }
+      }
+    },
+    "Teaser": {
+      "teaserTitleInlineSpaceLG": {
+        "$value": "12px",
+        "value": "12px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18163:40993"
+          }
+        },
+        "comment": "--teaser-title-padding-lg"
+      },
+      "teaserTitleInlineSpaceMD": {
+        "$value": "12px",
+        "value": "12px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18163:40994"
+          }
+        },
+        "comment": "--teaser-title-padding-md"
+      },
+      "teaserTitleInlineSpaceSM": {
+        "$value": "8px",
+        "value": "8px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18163:40995"
+          }
+        },
+        "comment": "--teaser-title-padding-sm"
+      },
+      "teaserTitleInlineSpaceXS": {
+        "$value": "8px",
+        "value": "8px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18163:40996"
+          }
+        },
+        "comment": "--teaser-title-padding-xs"
+      },
+      "Quad": {
+        "qTeaserTitleInlineSpaceLG": {
+          "$value": "12px",
+          "value": "12px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18205:27"
+            }
+          }
+        },
+        "qTeaserTitleInlineSpaceMD": {
+          "$value": "16px",
+          "value": "16px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18205:28"
+            }
+          }
+        },
+        "qTeaserTitleInlineSpaceSM": {
+          "$value": "8px",
+          "value": "8px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18205:29"
+            }
+          }
+        },
+        "qTeaserTitleInlineSpaceXS": {
+          "$value": "8px",
+          "value": "8px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18206:30"
+            }
+          }
+        }
+      },
+      "aTeaser": {
+        "aTeaserTitleInlineSpaceLG": {
+          "$value": "12px",
+          "value": "12px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18207:31"
+            }
+          }
+        },
+        "aTeaserTitleInlineSpaceMD": {
+          "$value": "12px",
+          "value": "12px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18207:32"
+            }
+          }
+        },
+        "aTeaserTitleInlineSpaceXS": {
+          "$value": "8px",
+          "value": "8px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18209:2"
+            }
+          }
+        },
+        "aTeaserTitleInlineSpaceSM": {
+          "$value": "8px",
+          "value": "8px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18209:3"
+            }
+          }
+        }
+      },
+      "bTeaser": {
+        "bTeaserTitleInlineSpace": {
+          "$value": "8px",
+          "value": "8px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18207:38"
+            }
+          }
+        }
+      },
+      "2xaTeaser": {
+        "2xaTeaserTitleInlineSpace": {
+          "$value": "8px",
+          "value": "8px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18208:40"
+            }
+          }
+        }
+      },
+      "miniQ": {
+        "miniQTeaserTitleInlineSpaceMD": {
+          "$value": "8px",
+          "value": "8px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18208:41"
+            }
+          }
+        },
+        "miniQTeaserTitleInlineSpaceLG": {
+          "$value": "8px",
+          "value": "8px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18208:42"
+            }
+          }
+        },
+        "miniQTeaserTitleInlineSpaceSM": {
+          "$value": "8px",
+          "value": "8px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18209:4"
+            }
+          }
+        },
+        "miniQTeaserTitleInlineSpaceXS": {
+          "$value": "8px",
+          "value": "8px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18209:5"
+            }
+          }
+        }
+      },
+      "superA": {
+        "superAteaserTitleInlineSpace": {
+          "$value": "16px",
+          "value": "16px",
+          "type": "float",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:18038:10593",
+              "collectionName": "BrandTokenMapping",
+              "variableId": "VariableID:18209:8491"
+            }
+          }
+        }
+      }
+    },
+    "Avatar": {
+      "avatarFontFamily": {
+        "$value": "Gotham XNarrow",
+        "value": "Gotham XNarrow",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18321:11220"
+          }
+        },
+        "comment": "current css 09-2025 --article-author-font // Bild: GothamXNarrow; SpoBi: Inter; Ads: LucidaGrande"
+      },
+      "avatarFontSizeSM": {
+        "$value": "16px",
+        "value": "16px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:19001:7954"
+          }
+        },
+        "$type": "dimension",
+        "comment": "09-2025 css using footnote var for font sizes SM & LG // Bild: 16; SpoBi: 13; Ads: 13"
+      },
+      "avatarFontSizeLG": {
+        "$value": "18px",
+        "value": "18px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:19001:7955"
+          }
+        },
+        "$type": "dimension",
+        "comment": "09-2025 css using footnote var for font sizes SM & LG // Bild: 18; SpoBi: 15; Ads: 15"
+      }
+    },
+    "BreakingNews": {
+      "breakingNewsContentFontSize": {
+        "$value": "21px",
+        "value": "21px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18345:42121"
+          }
+        },
+        "$type": "dimension"
+      }
+    },
+    "Accordion": {
+      "accordionLabelFontFamily": {
+        "$value": "Gotham XNarrow",
+        "value": "Gotham XNarrow",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18346:15408"
+          }
+        }
+      }
+    },
+    "Footer": {
+      "FooterLinkFontFamily": {
+        "$value": "Gotham XNarrow",
+        "value": "Gotham XNarrow",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18345:45912"
+          }
+        }
+      }
+    },
+    "MediaPlayer": {
+      "videoTimeBadgeFontFamily": {
+        "$value": "Gotham XNarrow",
+        "value": "Gotham XNarrow",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18379:11164"
+          }
+        }
+      }
+    },
+    "Inputfield": {
+      "inputFieldLabelFontFamily": {
+        "$value": "Gotham XNarrow",
+        "value": "Gotham XNarrow",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:18038:10593",
+            "collectionName": "BrandTokenMapping",
+            "variableId": "VariableID:18382:25549"
+          }
+        }
+      }
+    },
+    "buttonLabelFontWeightSt": {
+      "$value": "600",
+      "value": "600",
+      "type": "string",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:18038:10593",
+          "collectionName": "BrandTokenMapping",
+          "variableId": "VariableID:20361:19933"
+        }
+      }
+    }
+  },
+  "brandName": {
+    "$value": "BILD",
+    "value": "BILD",
+    "type": "string",
+    "$extensions": {
+      "com.figma": {
+        "collectionId": "VariableCollectionId:18038:10593",
+        "collectionName": "BrandTokenMapping",
+        "variableId": "VariableID:18258:8146"
+      }
+    }
+  }
+}

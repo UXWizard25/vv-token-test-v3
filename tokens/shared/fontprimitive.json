@@ -1,0 +1,555 @@
+{
+  "FontFamily": {
+    "BILD": {
+      "FontFamilyGothamXNarrow": {
+        "$value": "Gotham XNarrow",
+        "value": "Gotham XNarrow",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:470:1450",
+            "collectionName": "_FontPrimitive",
+            "variableId": "VariableID:585:1969"
+          }
+        }
+      },
+      "FontFamilyGothamCond": {
+        "$value": "Gotham Condensed",
+        "value": "Gotham Condensed",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:470:1450",
+            "collectionName": "_FontPrimitive",
+            "variableId": "VariableID:588:1985"
+          }
+        }
+      },
+      "FontFamilyGotham": {
+        "$value": "Gotham",
+        "value": "Gotham",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:470:1450",
+            "collectionName": "_FontPrimitive",
+            "variableId": "VariableID:588:1986"
+          }
+        }
+      }
+    },
+    "Advertorial": {
+      "FontFamilyLucidaGrande": {
+        "$value": "Lucida Grande",
+        "value": "Lucida Grande",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:470:1450",
+            "collectionName": "_FontPrimitive",
+            "variableId": "VariableID:17036:23304"
+          }
+        }
+      }
+    },
+    "SportBILD": {
+      "FontFamilyAntennaExtraCond": {
+        "$value": "AntennaExtraCond",
+        "value": "AntennaExtraCond",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:470:1450",
+            "collectionName": "_FontPrimitive",
+            "variableId": "VariableID:18038:10602"
+          }
+        }
+      },
+      "FontFamilyAntennaCond": {
+        "$value": "AntennaCond",
+        "value": "AntennaCond",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:470:1450",
+            "collectionName": "_FontPrimitive",
+            "variableId": "VariableID:18038:10603"
+          }
+        }
+      },
+      "FontFamilyInter": {
+        "$value": "Inter",
+        "value": "Inter",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:470:1450",
+            "collectionName": "_FontPrimitive",
+            "variableId": "VariableID:18056:4790"
+          }
+        }
+      }
+    }
+  },
+  "FontWeight": {
+    "700BlackFontWeight": {
+      "$value": 700,
+      "value": 700,
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:588:1987"
+        }
+      },
+      "$type": "fontWeight",
+      "comment": "700 is considered black weight because Gotham Condensed is the primary font family (most used in headlines). In other font families 700 is not black weight but bold."
+    },
+    "900ExtraBlackFontWeight": {
+      "$value": 900,
+      "value": 900,
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:588:1988"
+        }
+      },
+      "$type": "fontWeight"
+    },
+    "400BookFontWeight": {
+      "$value": 400,
+      "value": 400,
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:634:877"
+        }
+      },
+      "$type": "fontWeight"
+    },
+    "1000UltraFontWeight": {
+      "$value": 1000,
+      "value": 1000,
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:982:2356"
+        }
+      },
+      "$type": "fontWeight"
+    },
+    "800BlackFontWeight": {
+      "$value": 800,
+      "value": 800,
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:1045:2748"
+        }
+      },
+      "$type": "fontWeight"
+    },
+    "350BookFontWeight": {
+      "$value": 350,
+      "value": 350,
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:1259:9"
+        }
+      },
+      "$type": "fontWeight"
+    },
+    "600BoldFontWeight": {
+      "$value": 600,
+      "value": 600,
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:4197:5113"
+        }
+      },
+      "$type": "fontWeight"
+    },
+    "100ThinFontWeight": {
+      "$value": 100,
+      "value": 100,
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:4914:3023"
+        }
+      },
+      "$type": "fontWeight"
+    },
+    "300LightFontWeight": {
+      "$value": 300,
+      "value": 300,
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:4914:3024"
+        }
+      },
+      "$type": "fontWeight"
+    },
+    "200ExtraLightFontWeight": {
+      "$value": 200,
+      "value": 200,
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:4914:3025"
+        }
+      },
+      "$type": "fontWeight"
+    },
+    "500MediumFontWeight": {
+      "$value": 500,
+      "value": 500,
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:4914:3026"
+        }
+      },
+      "$type": "fontWeight"
+    },
+    "BoldItalicFontWeightST": {
+      "$value": "Bold Italic",
+      "value": "Bold Italic",
+      "type": "string",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:18164:13480"
+        }
+      }
+    },
+    "BlackFontWeightST": {
+      "$value": "Black",
+      "value": "Black",
+      "type": "string",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:18164:13485"
+        }
+      }
+    }
+  },
+  "LetterSpacing": {
+    "letterSpace-0_25": {
+      "$value": "-0.25px",
+      "value": "-0.25px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:16630:32557"
+        }
+      },
+      "comment": "This variable is a primitive for use in creating semantic text styles that need to use a subtle small letter spacing value of -0.25."
+    },
+    "letterSpace-0": {
+      "$value": "0px",
+      "value": "0px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:16630:32558"
+        }
+      },
+      "comment": "This variable is a primitive for use in creating semantic text styles that need to use a default letter spacing value of 0."
+    },
+    "letterSpace1": {
+      "$value": "1px",
+      "value": "1px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:16630:32559"
+        }
+      },
+      "comment": "This variable is a primitive for use in creating semantic text styles that need to use a positive letter spacing value of 1."
+    },
+    "letterSpace0_5": {
+      "$value": "0.5px",
+      "value": "0.5px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:16630:32560"
+        }
+      },
+      "comment": "This variable is a primitive for use in creating semantic text styles that need to use a slight positive letter spacing value of 0.5."
+    },
+    "letterSpace0_25": {
+      "$value": "0.25px",
+      "value": "0.25px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:16630:32561"
+        }
+      },
+      "comment": "This variable is a primitive for use in creating semantic text styles that need to use a subtle positive letter spacing value of 0.25."
+    },
+    "letterSpace-0_5": {
+      "$value": "-0.5px",
+      "value": "-0.5px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:16630:32562"
+        }
+      },
+      "comment": "This variable is a primitive for use in creating semantic variables that need to use a subtle negative letter spacing value of -0.5."
+    },
+    "letterSpace2": {
+      "$value": "2px",
+      "value": "2px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:16630:32563"
+        }
+      },
+      "comment": "This variable is a primitive for use in creating semantic text styles that need to use a large letter spacing value of 2."
+    },
+    "letterSpace-1": {
+      "$value": "-1px",
+      "value": "-1px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:16630:32564"
+        }
+      },
+      "comment": "This variable is a primitive for use in creating semantic variables that need to use a negative letter spacing value of -1."
+    },
+    "letterSpace-2": {
+      "$value": "-2px",
+      "value": "-2px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:16630:32565"
+        }
+      },
+      "comment": "This variable is a primitive for use in creating semantic text styles that need to use a large negative letter spacing value of -2. This is usually reserved for large texts styles that are used on titles or headlines."
+    },
+    "letterSpace3": {
+      "$value": "3px",
+      "value": "3px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:16630:32922"
+        }
+      },
+      "comment": "This variable is a primitive for use in creating semantic text styles that need to use a much larger letter spacing value of 3. Text styles that have smaller font sizes should use increasingly positive values for their letter spacings on smaller device sizes."
+    },
+    "letterSpace-3": {
+      "$value": "-3px",
+      "value": "-3px",
+      "type": "float",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:16630:32923"
+        }
+      },
+      "comment": "This variable is a primitive for use in creating semantic text styles that need to use a large negative letter spacing value of -3. Text styles that have larger font sizes should use increasingly negative values for their letter spacings on larger device sizes."
+    }
+  },
+  "FontWeightString": {
+    "1000UltraFontWeight": {
+      "$value": "1000",
+      "value": "1000",
+      "type": "string",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:18275:5779"
+        }
+      }
+    },
+    "900ExtraBlackFontWeight": {
+      "$value": "900",
+      "value": "900",
+      "type": "string",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:18275:5780"
+        }
+      }
+    },
+    "800BlackFontWeight": {
+      "$value": "800",
+      "value": "800",
+      "type": "string",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:18275:5781"
+        }
+      }
+    },
+    "700BlackFontWeight": {
+      "$value": "700",
+      "value": "700",
+      "type": "string",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:18275:5782"
+        }
+      }
+    },
+    "600BoldFontWeight": {
+      "$value": "600",
+      "value": "600",
+      "type": "string",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:18275:5783"
+        }
+      }
+    },
+    "500MediumFontWeight": {
+      "$value": "500",
+      "value": "500",
+      "type": "string",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:18275:5784"
+        }
+      }
+    },
+    "400BookFontWeight": {
+      "$value": "400",
+      "value": "400",
+      "type": "string",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:18275:5785"
+        }
+      }
+    },
+    "350BookFontWeight": {
+      "$value": "350",
+      "value": "350",
+      "type": "string",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:18275:5786"
+        }
+      }
+    },
+    "200ExtraLightFontWeight": {
+      "$value": "200",
+      "value": "200",
+      "type": "string",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:18275:5787"
+        }
+      }
+    },
+    "100ThinFontWeight": {
+      "$value": "100",
+      "value": "100",
+      "type": "string",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:18275:5788"
+        }
+      }
+    },
+    "600BoldItalicFontWeight": {
+      "$value": "Bold Italic",
+      "value": "Bold Italic",
+      "type": "string",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:18275:5789"
+        }
+      }
+    },
+    "700BlackItalicFontWeight": {
+      "$value": "Black Italic",
+      "value": "Black Italic",
+      "type": "string",
+      "$extensions": {
+        "com.figma": {
+          "collectionId": "VariableCollectionId:470:1450",
+          "collectionName": "_FontPrimitive",
+          "variableId": "VariableID:19144:63647"
+        }
+      }
+    }
+  }
+}

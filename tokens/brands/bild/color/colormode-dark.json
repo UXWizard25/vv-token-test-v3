@@ -1,0 +1,2950 @@
+{
+  "Semantic": {
+    "Text": {
+      "textColorAccentConstant": {
+        "$value": "#DD0000",
+        "value": "#DD0000",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:588:1980"
+          }
+        },
+        "$type": "color",
+        "comment": "Applies to text elements requiring fixed brand color usage (e.g., permanent links, brand slogans on constant backgrounds).\nBehavior: Constant — maintains identical red tone across Light and Dark mode."
+      },
+      "textColorPrimary": {
+        "$value": "#E9ECEF",
+        "value": "#E9ECEF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:588:1981"
+          }
+        },
+        "$type": "color",
+        "comment": "Main text color used for body copy and all primary textual content. Ensures optimal readability and contrast on standard surfaces.\nBehavior: Dynamic — switches between dark text on light backgrounds and light text on dark backgrounds."
+      },
+      "textColorMuted": {
+        "$value": "#CED4DA",
+        "value": "#CED4DA",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:5511:2499"
+          }
+        },
+        "$type": "color",
+        "comment": "Muted text tone for subtle information, timestamps, or inactive text elements.\nBehavior: Dynamic — adjusts between mid-gray in Light mode and lighter gray in Dark mode."
+      },
+      "textColorPrimaryInverse": {
+        "$value": "#232629",
+        "value": "#232629",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:7129:69342"
+          }
+        },
+        "$type": "color",
+        "comment": "Inverse text color used on opposing surfaces (e.g., white text on red or dark backgrounds).\nBehavior: Dynamic — alternates between light and dark mode."
+      },
+      "textColorPrimaryConstant": {
+        "$value": "#232629",
+        "value": "#232629",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9694:13817"
+          }
+        },
+        "$type": "color",
+        "comment": "Used when primary text color must remain fixed regardless of mode (e.g., on light constant backgrounds).\nBehavior: Constant — same tone across Light and Dark mode."
+      },
+      "textColorSuccessConstant": {
+        "$value": "#006E3E",
+        "value": "#006E3E",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9692:15537"
+          }
+        },
+        "$type": "color",
+        "comment": "Used for positive or success-related messages (e.g., “Saved”, “Success”, or confirmation text) on success surface colors.\nBehavior: Constant — green tone remains consistent across both modes."
+      },
+      "textColorPrimaryInverseConstant": {
+        "$value": "#E9ECEF",
+        "value": "#E9ECEF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9916:26696"
+          }
+        },
+        "$type": "color",
+        "comment": "Fixed inverse tone for text that always appears on dark surfaces (e.g., hero headlines or persistent dark cards).\nBehavior: Constant — unchanged across modes."
+      },
+      "textColorSecondary": {
+        "$value": "#8C9196",
+        "value": "#8C9196",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:13150:34412"
+          }
+        },
+        "$type": "color",
+        "comment": "Secondary text color used for supportive information, subtitles, and less prominent text.\nBehavior: Dynamic — adapts between neutral tones to maintain proper contrast per theme. In 2025 css it is called figure meta."
+      },
+      "textColorAttentionHigh": {
+        "$value": "#DD0000",
+        "value": "#DD0000",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16279:19035"
+          }
+        },
+        "$type": "color",
+        "comment": "Used for strong warnings, errors, or destructive action labels.\nBehavior: Constant — red color remains unchanged between Light and Dark mode for visibility and recognition."
+      },
+      "textColorAccent": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16279:318799"
+          }
+        },
+        "$type": "color",
+        "comment": "Accent text color used for links, interactive text, or highlighted key words. Changes from a red in light mode to a white in dark mode."
+      },
+      "textColorAttentionMedium": {
+        "$value": "#FD8227",
+        "value": "#FD8227",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16279:318945"
+          }
+        },
+        "$type": "color",
+        "comment": "Represents medium attention states, often used in warnings or pending states.\nBehavior: Constant — same orange tone across Light and Dark mode."
+      },
+      "textColorOnDarkSurface": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:19358:163830"
+          }
+        },
+        "$type": "color",
+        "comment": "Used for text displayed on dark surfaces to ensure maximum legibility and contrast.\nBehavior: Constant — always light neutral to guarantee accessibility on dark backgrounds."
+      }
+    },
+    "Surface": {
+      "surfaceColorPrimary": {
+        "$value": "#232629",
+        "value": "#232629",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:588:1984"
+          }
+        },
+        "$type": "color",
+        "comment": "Primary surface color used for main backgrounds and large layout areas (e.g., page background, primary containers).\nBehavior: Dynamic — adapts between light and dark surface tokens to maintain legibility and hierarchy."
+      },
+      "surfaceColorSecondary": {
+        "$value": "#2C3138",
+        "value": "#2C3138",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:4978:2986"
+          }
+        },
+        "$type": "color",
+        "comment": "Used for secondary surface layers such as cards, panels, or nested containers that need to differentiate themselves from the primary surface. .\nBehavior: Dynamic — adapts brightness level based on mode for appropriate depth contrast."
+      },
+      "surfaceColorPrimaryInverse": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:5952:3059"
+          }
+        },
+        "$type": "color",
+        "comment": "Inverse of the primary surface, used when Light and Dark surfaces are swapped (e.g., inverse cards or elevated sections).\nBehavior: Dynamic — switches between dark and light values depending on mode."
+      },
+      "surfaceColorPrimaryConstantLight": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:7506:5590"
+          }
+        },
+        "$type": "color",
+        "comment": "A fixed light surface tone used when a consistent light background is required (e.g., light panels within dark layouts).\nBehavior: Constant — remains the same in both modes."
+      },
+      "surfaceColorPrimaryConstantDark": {
+        "$value": "#232629",
+        "value": "#232629",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:7531:63125"
+          }
+        },
+        "$type": "color",
+        "comment": "A fixed dark surface tone used for dark overlays or nested dark sections inside light layouts.\nBehavior: Constant — identical across Light and Dark mode."
+      },
+      "surfaceColorQuartenary": {
+        "$value": "#4B525A",
+        "value": "#4B525A",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:7532:4296"
+          }
+        },
+        "$type": "color",
+        "comment": "HIghtest elevation surface color, typically used for grouping or background accents to differentiate themselves from all previous surface color options. Uses corresponding light/dark tones for consistent layering."
+      },
+      "surfaceColorSuccess": {
+        "$value": "#CEF4E4",
+        "value": "#CEF4E4",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9697:16794"
+          }
+        },
+        "$type": "color",
+        "comment": "Success-related background used for positive notifications, confirmation surfaces, or success banners.\nBehavior: Constant — remains the same across Light and Dark mode to ensure brand alignment."
+      },
+      "surfaceColorTertiary": {
+        "$value": "#343C41",
+        "value": "#343C41",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9756:1625"
+          }
+        },
+        "$type": "color",
+        "comment": "Tertiary background layer for inner containers, grouped content, or subtle elevation steps  that need to differentiate themselves from the primary and secondary surfaces.\nBehavior: Dynamic — switches between light and dark tertiary tones."
+      },
+      "surfaceColorTertiaryGradientStop": {
+        "$value": "rgba(52, 60, 65, 0)",
+        "value": "rgba(52, 60, 65, 0)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:11563:10610"
+          }
+        },
+        "$type": "color",
+        "comment": "Represents tertiary-level gradient background.\nCurrently used on skeletons."
+      },
+      "surfaceColorTertiaryInverse": {
+        "$value": "#E9ECEF",
+        "value": "#E9ECEF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:12682:137901"
+          }
+        },
+        "$type": "color",
+        "comment": "Inverse tertiary background, applied when Light and Dark surfaces are reversed (e.g., dark-on-light cards).\nBehavior: Dynamic — swaps values between modes for contrast preservation."
+      },
+      "surfaceColorPrimaryGradientStop": {
+        "$value": "rgba(35, 38, 41, 0)",
+        "value": "rgba(35, 38, 41, 0)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:14345:7767"
+          }
+        },
+        "$type": "color",
+        "comment": "Defines the end stops for primary surface gradients, creating visual depth or elevation. Used next to sliders buttons and slider container edges for fading out content. Behavior: Dynamic — light gradients in Light mode, dark gradients in Dark mode."
+      },
+      "surfaceColorSecondaryGradientStop": {
+        "$value": "rgba(44, 49, 56, 0)",
+        "value": "rgba(44, 49, 56, 0)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:14345:14512"
+          }
+        },
+        "$type": "color",
+        "comment": "Used for secondary surface gradients or subtle depth layers across backgrounds.\nBehavior: Dynamic — adapts to mode brightness for smooth gradient transitions."
+      },
+      "surfaceColorQuartenaryInverse": {
+        "$value": "#CED4DA",
+        "value": "#CED4DA",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:19568:251966"
+          }
+        },
+        "$type": "color",
+        "comment": "Inverse of the quartenary surface, used for background reversals in mixed-layout areas.\nBehavior: Dynamic — inverts between dark and light tones depending on mode."
+      }
+    },
+    "Heading": {
+      "kickerTextColorOnSurface": {
+        "$value": "#8C9196",
+        "value": "#8C9196",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:733:2657"
+          }
+        },
+        "$type": "color",
+        "comment": "Used for kicker text and category labels placed directly on standard surface backgrounds.\nBehavior: Dynamic — adjusts between red for Light and a neutral tone in Dark modes."
+      },
+      "headlineColorPrimary": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:733:2659"
+          }
+        },
+        "$type": "color",
+        "comment": "Primary color for headings and display typography. Ensures clear hierarchy and optimal readability on main surfaces. Adapds it´s color based on the brand mode for brand recognition.\nBehavior: Dynamic — dark text in Light mode, light text in Dark mode."
+      },
+      "headlineColorWhiteConst": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:762:3573"
+          }
+        },
+        "$type": "color",
+        "comment": "Fixed white heading color used on dark or colored backgrounds (e.g., hero sections, banners) that remain constant across modes.\nBehavior: Constant — remains white in both Light and Dark mode."
+      },
+      "kickerTextColorOnRed": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:4125:2902"
+          }
+        },
+        "$type": "color",
+        "comment": "Specialized kicker color for use on red or brand-colored backgrounds (e.g., red kicker bg within teaser cards).\nBehavior: Constant — remains consistent across light and darkmode."
+      },
+      "kickerTextColorOnDarkBg": {
+        "$value": "rgba(255, 255, 255, 0.800000011920929)",
+        "value": "rgba(255, 255, 255, 0.800000011920929)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:19039:103299"
+          }
+        },
+        "$type": "color",
+        "comment": "Applied to kicker or meta text on dark colored backgrounds to maintain high legibility.\nBehavior: Constant — always uses semi-transparent white for consistent readability."
+      },
+      "kickerTextColorOnBrightBg": {
+        "$value": "rgba(0, 0, 0, 0.699999988079071)",
+        "value": "rgba(0, 0, 0, 0.699999988079071)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:19039:103300"
+          }
+        },
+        "$type": "color",
+        "comment": "Used for kicker text placed on bright or light colored backgrounds. Ensures balanced contrast without harsh visual dominance.\nBehavior: Constant — remains semi-transparent black across both modes."
+      }
+    },
+    "State": {
+      "colorSecondaryActive": {
+        "$value": "#F2F4F5",
+        "value": "#F2F4F5",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:736:2684"
+          }
+        },
+        "$type": "color",
+        "comment": "Defines the active state color for secondary actions (e.g., secondary buttons, tabs, or toggles).\nBehavior: Dynamic — light gray in Light mode and bright gray in Dark mode to maintain perceptual balance."
+      },
+      "colorPrimaryActive": {
+        "$value": "#DD0000",
+        "value": "#DD0000",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:844:3883"
+          }
+        },
+        "$type": "color",
+        "comment": "Used to represent the active or pressed state of primary actions such as tabs or links.\nBehavior: Constant — identical value across modes for consistent interaction feedback."
+      },
+      "colorSecondaryDisabled": {
+        "$value": "#4B525A",
+        "value": "#4B525A",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3853:2806"
+          }
+        },
+        "$type": "color",
+        "comment": "Used for disabled secondary elements, ensuring reduced visual prominence while maintaining legibility.\nBehavior: Dynamic — adapts neutral tones based on theme brightness."
+      },
+      "colorPrimaryDisabled": {
+        "$value": "#343C41",
+        "value": "#343C41",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3936:1911"
+          }
+        },
+        "$type": "color",
+        "comment": "Defines the disabled color for primary components (e.g., disabled primary buttons, inputs). Reduces emphasis and contrast to signal inactivity.\nBehavior: Dynamic — slightly lighter in Light mode and darker in Dark mode to remain visually accessible."
+      },
+      "colorSecondaryActiveInverse": {
+        "$value": "#232629",
+        "value": "#232629",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:5953:3159"
+          }
+        },
+        "$type": "color",
+        "comment": "Inverse variant of the secondary active state, applied on dark backgrounds or inverse layouts.\nBehavior: Dynamic — switches between bright and dark tones depending on the background."
+      },
+      "colorTertiaryActive": {
+        "$value": "#00C373",
+        "value": "#00C373",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9226:16790"
+          }
+        },
+        "$type": "color",
+        "comment": "Represents active or pressed states for tertiary elements (e.g., link highlights, icons, or subtle interactive surfaces).\nBehavior: Constant — uses the same green success tone across Light and Dark mode."
+      },
+      "colorTertiaryDisabled": {
+        "$value": "#666B70",
+        "value": "#666B70",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:17386:9661"
+          }
+        },
+        "$type": "color",
+        "comment": "Represents disabled states for tertiary levels, maintaining subtle visibility without drawing attention.\nBehavior: Dynamic — adjusts between gray tones for Light and Dark mode consistency."
+      }
+    },
+    "Border": {
+      "borderColorMediumContrast": {
+        "$value": "#666B70",
+        "value": "#666B70",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:1954:19186"
+          }
+        },
+        "$type": "color",
+        "comment": "Medium-emphasis border color for standard outlines, input fields, or separators that require visible yet non-dominant contrast.\nBehavior: Dynamic — adjusts to maintain legibility in Light and Dark themes."
+      },
+      "borderColorLowContrast": {
+        "$value": "#4B525A",
+        "value": "#4B525A",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:8786:2988"
+          }
+        },
+        "$type": "color",
+        "comment": "Used for subtle dividers and low-emphasis borders in neutral areas (e.g., card outlines, input containers).\nDynamic — light gray in Light mode, dark gray in Dark mode."
+      },
+      "borderColorHighContrast": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9598:13708"
+          }
+        },
+        "$type": "color",
+        "comment": "High-emphasis border color for clear delineation between surfaces (e.g., focus rings, high-contrast UI zones).\nBehavior: Dynamic — light surfaces use a darker neutral, dark surfaces a light neutral tone."
+      },
+      "borderColorLowContrastConstant": {
+        "$value": "#E9ECEF",
+        "value": "#E9ECEF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9694:16562"
+          }
+        },
+        "$type": "color",
+        "comment": "Applies to UI elements that must visually remain the same regardless of theme (e.g., brand containers, static illustrations). Identical tone across Light and Dark mode."
+      },
+      "borderColorSuccess": {
+        "$value": "#00C373",
+        "value": "#00C373",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:12672:137718"
+          }
+        },
+        "$type": "color",
+        "comment": "Used for success states and validation borders (e.g., input success outlines or confirmation frames).\nBehavior: Constant — same success tone across modes for consistent feedback semantics."
+      },
+      "borderColorWarning": {
+        "$value": "#DD0000",
+        "value": "#DD0000",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:12672:137719"
+          }
+        },
+        "$type": "color",
+        "comment": "Defines border color for warning and error-related components, typically used for input validation or caution zones.\nBehavior: Constant — retains the same red warning tone in both Light and Dark modes."
+      },
+      "borderColorPrimaryDisabled": {
+        "$value": "#343C41",
+        "value": "#343C41",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16279:19036"
+          }
+        },
+        "$type": "color",
+        "comment": "Applied to disabled states of primary elements (e.g., buttons, inputs) to visually reduce emphasis and indicate inactivity."
+      },
+      "borderColorSecondaryDisabled": {
+        "$value": "#4B525A",
+        "value": "#4B525A",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16279:19037"
+          }
+        },
+        "$type": "color",
+        "comment": "Used for secondary component borders in a disabled state (e.g., secondary buttons, inactive input outlines)."
+      }
+    },
+    "Core": {
+      "coreColorPrimary": {
+        "$value": "#DD0000",
+        "value": "#DD0000",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:2068:3671"
+          }
+        },
+        "$type": "color",
+        "comment": "Used as the main brand color for key interactive elements such as primary buttons, active states, and prominent highlights. It remains constant across Light and Dark Mode."
+      },
+      "coreColorSecondary": {
+        "$value": "#232629",
+        "value": "#232629",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:2068:3672"
+          }
+        },
+        "$type": "color",
+        "comment": "Defines the secondary brand tone. This variable changes across Light and Dark Mode."
+      },
+      "coreColorTertiary": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:2068:3673"
+          }
+        },
+        "$type": "color",
+        "comment": "Represents tertiary brand accents. This variable changes across Light and Dark Mode."
+      },
+      "coreColorSecondaryConstant": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:14215:155421"
+          }
+        },
+        "$type": "color",
+        "comment": "Use this on elements that must maintain the white color even in dark mode."
+      },
+      "coreColorTertiaryConstant": {
+        "$value": "#232629",
+        "value": "#232629",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:14215:155422"
+          }
+        },
+        "$type": "color",
+        "comment": "Use this on elements that need to maintain the dark color across themes and color modes."
+      },
+      "coreColorTertiaryVvPipeTEST": {
+        "$value": "#B0D1F3",
+        "value": "#B0D1F3",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:20773:45"
+          }
+        },
+        "$type": "color",
+        "comment": "this is a test for the token pipeline"
+      },
+      "npmTest": {
+        "$value": "#B0D1F3",
+        "value": "#B0D1F3",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:20790:160"
+          }
+        },
+        "$type": "color",
+        "comment": "this is a test for the token pipeline"
+      },
+      "felipeTestColor": {
+        "$value": "#031A31",
+        "value": "#031A31",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:20798:160"
+          }
+        },
+        "$type": "color",
+        "comment": "this is a test for the token pipeline"
+      }
+    },
+    "Icon": {
+      "iconColorPrimary": {
+        "$value": "#8C9196",
+        "value": "#8C9196",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:2102:8677"
+          }
+        },
+        "$type": "color",
+        "comment": "Primary icon color on primary surfaces."
+      },
+      "iconColorInverse": {
+        "$value": "#4B525A",
+        "value": "#4B525A",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:2102:8678"
+          }
+        },
+        "$type": "color",
+        "comment": "Inverse icon color for use on contrasting backgrounds (e.g., light icons on dark surfaces or dark icons on bright surfaces).\nBehavior: Dynamic — switches between light and dark."
+      },
+      "iconColorSecondaryConstant": {
+        "$value": "#8C9196",
+        "value": "#8C9196",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9619:33177"
+          }
+        },
+        "$type": "color",
+        "comment": "Secondary icon tone for less prominent actions or supportive iconography (e.g., secondary buttons, tool icons). Remains unchanged across modes."
+      },
+      "iconColorConstantOnDark": {
+        "$value": "#F2F4F5",
+        "value": "#F2F4F5",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:17135:11267"
+          }
+        },
+        "$type": "color",
+        "comment": "Used for icons displayed on dark backgrounds that don´t change colors, ensuring sufficient contrast and legibility.\nBehavior: Constant — always uses a neutral bright value."
+      },
+      "iconColorPrimaryConstant": {
+        "$value": "#4B525A",
+        "value": "#4B525A",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:17831:12266"
+          }
+        },
+        "$type": "color",
+        "comment": "Used for icons that must remain visually consistent regardless of mode (e.g.,  icons that are on surfaces that don't change color).\nIdentical tone in both Light and Dark mode."
+      },
+      "iconColorSuccess": {
+        "$value": "#00C373",
+        "value": "#00C373",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18975:16732"
+          }
+        },
+        "$type": "color",
+        "comment": "Represents success or confirmation icons (e.g., checkmarks, completion indicators).\nBehavior: Constant — same success green tone across Light and Dark mode."
+      }
+    },
+    "Label": {
+      "labelColorPrimary": {
+        "$value": "#E9ECEF",
+        "value": "#E9ECEF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3269:3503"
+          }
+        },
+        "$type": "color",
+        "comment": "Primary label color used for labels, badges, or tag text on light backgrounds. Ensures strong readability and visual hierarchy.\nBehavior: Dynamic — dark neutral in Light mode, light neutral in Dark mode."
+      },
+      "labelColorSecondary": {
+        "$value": "#CED4DA",
+        "value": "#CED4DA",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3599:1619"
+          }
+        },
+        "$type": "color",
+        "comment": "Secondary label tone used for less prominent text such as secondary badges or supporting labels.\nBehavior: Dynamic — adapts between mid-grays for Light and Dark surfaces."
+      },
+      "labelColorDisabled": {
+        "$value": "#4B525A",
+        "value": "#4B525A",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3746:1628"
+          }
+        },
+        "$type": "color",
+        "comment": "Disabled label tone indicating inactive or unavailable states in UI elements.\nBehavior: Dynamic — lighter gray in Light mode, darker neutral in Dark mode."
+      },
+      "labelColorPrimaryConstant": {
+        "$value": "#232629",
+        "value": "#232629",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:7531:63134"
+          }
+        },
+        "$type": "color",
+        "comment": "Used when primary label color should remain unchanged across modes in static UI areas.\nBehavior: Constant — identical tone in both Light and Dark mode."
+      },
+      "labelColorPrimaryInverseConstant": {
+        "$value": "#E9ECEF",
+        "value": "#E9ECEF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:8704:13961"
+          }
+        },
+        "$type": "color",
+        "comment": "Fixed inverse label tone applied where white or bright text must always appear, regardless of theme.\nBehavior: Constant — remains bright neutral in both Light and Dark mode."
+      },
+      "labelColorTertiary": {
+        "$value": "#8C9196",
+        "value": "#8C9196",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9618:21019"
+          }
+        },
+        "$type": "color",
+        "comment": "Tertiary label tone for subtle, low-emphasis UI text such as placeholder text or tertiary badges.\nBehavior: Constant — identical tone across both modes for stable hierarchy."
+      },
+      "labelColorPrimaryInverse": {
+        "$value": "#232629",
+        "value": "#232629",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16353:426"
+          }
+        },
+        "$type": "color",
+        "comment": "Inverse version of the primary label color, used on dark or colored backgrounds.\nBehavior: Dynamic — switches between light and dark."
+      }
+    },
+    "Attention": {
+      "attentionColorHigh": {
+        "$value": "#DD0000",
+        "value": "#DD0000",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3810:3107"
+          }
+        },
+        "$type": "color",
+        "comment": "High-level attention color used for errors, destructive actions, and critical alerts (e.g., delete actions, error states). Remains red in both Light and Dark mode for immediate recognition."
+      },
+      "accentColorPrimary": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:5003:3106"
+          }
+        },
+        "$type": "color",
+        "comment": "Primary accent color used to emphasize interactive or highlight elements such as links, selection states, or focus indicators. Adapts in Darkmode to a fully white tone."
+      },
+      "attentionColorMedium": {
+        "$value": "#FD8227",
+        "value": "#FD8227",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:12663:137504"
+          }
+        },
+        "$type": "color",
+        "comment": "Medium-level attention tone representing stronger caution or intermediate alert states. Commonly applied in warning messages. Constant — identical in both modes."
+      },
+      "attentionColorLow": {
+        "$value": "#FFBF00",
+        "value": "#FFBF00",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:12684:164993"
+          }
+        },
+        "$type": "color",
+        "comment": "Low-level warning or attention tone, typically used for informational or cautionary messages. Same yellow tone across Light and Dark to maintain recognition."
+      },
+      "accentColorPrimaryConstant": {
+        "$value": "#DD0000",
+        "value": "#DD0000",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16279:318800"
+          }
+        },
+        "$type": "color",
+        "comment": "Used for accent highlights that must remain visually consistent across themes (e.g., brand identifiers, logos, or fixed emphasis areas). Color value does not change between Light and Dark mode."
+      },
+      "attentionColorSuccessPrimary": {
+        "$value": "#00C373",
+        "value": "#00C373",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16279:318946"
+          }
+        },
+        "$type": "color",
+        "comment": "Primary success color used to indicate positive states, confirmations, or completed actions (e.g., success banners, icons, or badges). Remains the same across modes to ensure recognizability and consistency."
+      },
+      "attentionColorExtraLow": {
+        "$value": "#343C41",
+        "value": "#343C41",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:17418:219"
+          }
+        },
+        "$type": "color",
+        "comment": "Very low-contrast background tone used for information or system-neutral surfaces, often for tooltips or quiet information highlights. Dynamic — light neutral in Light mode and dark neutral in Dark mode."
+      },
+      "attentionColorSuccessSecondary": {
+        "$value": "#006E3E",
+        "value": "#006E3E",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18119:28"
+          }
+        },
+        "$type": "color",
+        "comment": "Secondary success tone used for secondary states. Maintains the same color in both Light and Dark mode for clarity."
+      }
+    },
+    "Overlay": {
+      "overlayScrimBlack": {
+        "$value": "rgba(0, 0, 0, 0.699999988079071)",
+        "value": "rgba(0, 0, 0, 0.699999988079071)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16917:208444"
+          }
+        },
+        "$type": "color",
+        "comment": "A semi-transparent black overlay used to dim background content when modals, drawers, or dialogs are active. Identical opacity and tone in both Light and Dark mode to ensure consistent overlay depth."
+      },
+      "overlayScrimWhite": {
+        "$value": "rgba(255, 255, 255, 0.699999988079071)",
+        "value": "rgba(255, 255, 255, 0.699999988079071)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16917:208445"
+          }
+        },
+        "$type": "color",
+        "comment": "A semi-transparent white overlay used to brighten or fade background layers, often applied behind bottom sheets or temporary panels.\nBehavior: Constant — same opacity level across modes to preserve uniform layering behavior."
+      }
+    },
+    "LayerOpacity": {
+      "layerOpacity05": {
+        "$value": "5px",
+        "value": "5px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18980:34211"
+          }
+        }
+      },
+      "layerOpacity10": {
+        "$value": "10px",
+        "value": "10px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18980:34212"
+          }
+        }
+      },
+      "layerOpacity20": {
+        "$value": "20px",
+        "value": "20px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18980:34213"
+          }
+        }
+      },
+      "layerOpacity30": {
+        "$value": "30px",
+        "value": "30px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18980:34214"
+          }
+        }
+      },
+      "layerOpacity40": {
+        "$value": "40px",
+        "value": "40px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18980:34215"
+          }
+        }
+      },
+      "layerOpacity50": {
+        "$value": "50px",
+        "value": "50px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18980:34216"
+          }
+        }
+      },
+      "layerOpacity60": {
+        "$value": "60px",
+        "value": "60px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18980:34217"
+          }
+        }
+      },
+      "layerOpacity70": {
+        "$value": "70px",
+        "value": "70px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18980:34218"
+          }
+        }
+      },
+      "layerOpacity80": {
+        "$value": "80px",
+        "value": "80px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18980:34220"
+          }
+        }
+      },
+      "layerOpacity90": {
+        "$value": "90px",
+        "value": "90px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18980:34221"
+          }
+        }
+      },
+      "layerOpacity100": {
+        "$value": "100px",
+        "value": "100px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18980:34222"
+          }
+        }
+      },
+      "layerOpacity00": {
+        "$value": "0px",
+        "value": "0px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18980:34223"
+          }
+        }
+      }
+    }
+  },
+  "Component": {
+    "Subheader": {
+      "subheadersColor": {
+        "$value": "#E9ECEF",
+        "value": "#E9ECEF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:588:1982"
+          }
+        },
+        "$type": "color"
+      }
+    },
+    "Breadcrumb": {
+      "breadcrumbTextColorIdle": {
+        "$value": "#F2F4F5",
+        "value": "#F2F4F5",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:736:2681"
+          }
+        },
+        "$type": "color",
+        "comment": "Use this token on breadcrumbs that are in their default idle state. This token changes color between light and dark modes. L:035 / D:096"
+      },
+      "breadcrumbTextColorHover": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3490:2006"
+          }
+        },
+        "$type": "color",
+        "comment": "Use this token on breadcrumbs that the user's pointer is hovering on or clicked on. This token changes color between light and dark modes. L:015 / D:100"
+      }
+    },
+    "BreakingNews": {
+      "breakingNewsTitleSurfaceColor": {
+        "$value": "#FD8227",
+        "value": "#FD8227",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:2496:18723"
+          }
+        },
+        "$type": "color"
+      },
+      "breakingNewsSurfaceColor": {
+        "$value": "#E9ECEF",
+        "value": "#E9ECEF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:4491:2041"
+          }
+        },
+        "$type": "color"
+      },
+      "breakingNewsTextContentColor": {
+        "$value": "#232629",
+        "value": "#232629",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:4491:2042"
+          }
+        },
+        "$type": "color"
+      },
+      "breakingNewsTopTitleTextColor": {
+        "$value": "#1C1C1C",
+        "value": "#1C1C1C",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16120:163558"
+          }
+        },
+        "$type": "color"
+      },
+      "breakingNewsBottomTitleTextColor": {
+        "$value": "#1C1C1C",
+        "value": "#1C1C1C",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18345:42310"
+          }
+        },
+        "$type": "color"
+      }
+    },
+    "Menu": {
+      "menuSurfaceColor": {
+        "$value": "#232629",
+        "value": "#232629",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:2905:1774"
+          }
+        },
+        "$type": "color"
+      },
+      "menuScrolledSurfaceGradientColor": {
+        "$value": "rgba(35, 38, 41, 0.949999988079071)",
+        "value": "rgba(35, 38, 41, 0.949999988079071)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:13414:162820"
+          }
+        },
+        "$type": "color",
+        "comment": "Used on a thin part at the top of header in navigation menu."
+      },
+      "menuLinkLaneSurfaceColor": {
+        "$value": "#232629",
+        "value": "#232629",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18631:74155"
+          }
+        },
+        "$type": "color"
+      },
+      "menuLinkLaneLabelColor": {
+        "$value": "#8C9196",
+        "value": "#8C9196",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18631:80973"
+          }
+        },
+        "$type": "color"
+      },
+      "menuLinkLaneLabelColorActive": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18641:81006"
+          }
+        },
+        "$type": "color"
+      },
+      "appTopBarSurfaceColor": {
+        "$value": "#343C41",
+        "value": "#343C41",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18710:4101"
+          }
+        },
+        "$type": "color"
+      },
+      "appTopBarIconColor": {
+        "$value": "#8C9196",
+        "value": "#8C9196",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18961:17142"
+          }
+        },
+        "$type": "color"
+      },
+      "appTopBarTextColorPrimary": {
+        "$value": "#E9ECEF",
+        "value": "#E9ECEF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18961:17145"
+          }
+        },
+        "$type": "color"
+      },
+      "appTobBarTabNavBottomBorder": {
+        "$value": "#4B525A",
+        "value": "#4B525A",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:19221:66797"
+          }
+        },
+        "$type": "color"
+      },
+      "appTobBarTabNavBottomBorderActive": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:19221:66801"
+          }
+        },
+        "$type": "color"
+      }
+    },
+    "PartnerLinks": {
+      "partnerLinksBorderColorIdle": {
+        "$value": "#CED4DA",
+        "value": "#CED4DA",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3269:2629"
+          }
+        },
+        "$type": "color",
+        "comment": "!do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons."
+      },
+      "partnerLinksBorderColorActive": {
+        "$value": "#E9ECEF",
+        "value": "#E9ECEF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3269:3502"
+          }
+        },
+        "$type": "color",
+        "comment": "!do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons."
+      },
+      "partnerLinksBgColorIdle": {
+        "$value": "#343C41",
+        "value": "#343C41",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3269:3504"
+          }
+        },
+        "$type": "color",
+        "comment": "!do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons."
+      },
+      "partnerLinksBgColorActive": {
+        "$value": "#8C9196",
+        "value": "#8C9196",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3281:3505"
+          }
+        },
+        "$type": "color",
+        "comment": "!do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons."
+      },
+      "partnerLinksContainerBorderColor": {
+        "$value": "#4B525A",
+        "value": "#4B525A",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:14610:19321"
+          }
+        },
+        "$type": "color",
+        "comment": "!do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons."
+      }
+    },
+    "SocialShareButton": {
+      "socialShareButtonLabelColorDefault": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3572:1614"
+          }
+        },
+        "$type": "color"
+      },
+      "socialShareButtonLabelColorActive": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3572:1615"
+          }
+        },
+        "$type": "color"
+      },
+      "socialShareButtonBgColorActive": {
+        "$value": "#343C41",
+        "value": "#343C41",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3572:1616"
+          }
+        },
+        "$type": "color"
+      },
+      "socialShareButtonBgColorDefault": {
+        "$value": "#4B525A",
+        "value": "#4B525A",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3572:1617"
+          }
+        },
+        "$type": "color"
+      }
+    },
+    "Button": {
+      "Primary": {
+        "buttonPrimaryBrandBgColorIdle": {
+          "$value": "#DD0000",
+          "value": "#DD0000",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:3746:1627"
+            }
+          },
+          "$type": "color"
+        },
+        "buttonPrimaryBrandBgColorHover": {
+          "$value": "#AF0002",
+          "value": "#AF0002",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:3746:1630"
+            }
+          },
+          "$type": "color"
+        },
+        "buttonPrimaryLabelColor": {
+          "$value": "#FFFFFF",
+          "value": "#FFFFFF",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:3746:1631"
+            }
+          },
+          "$type": "color"
+        },
+        "buttonPrimarySuccessColorIdle": {
+          "$value": "#18995C",
+          "value": "#18995C",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:3765:1757"
+            }
+          },
+          "$type": "color"
+        },
+        "buttonPrimarySuccessColorHover": {
+          "$value": "#006E3E",
+          "value": "#006E3E",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:3765:1758"
+            }
+          },
+          "$type": "color"
+        },
+        "buttonPrimaryNeutralBgColorIdle": {
+          "$value": "#FFFFFF",
+          "value": "#FFFFFF",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:18340:13239"
+            }
+          },
+          "$type": "color",
+          "comment": "Use this variable on the neutral color primary button. Tone changes between light and dark mode. Light mode Bild & SpoBi: Tone 015 ; Dark mode Bild & SpoBi: Tone 100"
+        },
+        "buttonPrimaryNeutralBgColorHover": {
+          "$value": "#E9ECEF",
+          "value": "#E9ECEF",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:18340:13240"
+            }
+          },
+          "$type": "color"
+        }
+      },
+      "Tertiary": {
+        "buttonTertiaryLabelColor": {
+          "$value": "#F2F4F5",
+          "value": "#F2F4F5",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:3746:1633"
+            }
+          },
+          "$type": "color"
+        },
+        "buttonTertiaryBorderColorIdle": {
+          "$value": "#4B525A",
+          "value": "#4B525A",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:3746:1634"
+            }
+          },
+          "$type": "color"
+        },
+        "buttonTertiaryBorderColorHover": {
+          "$value": "#FFFFFF",
+          "value": "#FFFFFF",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:3746:1635"
+            }
+          },
+          "$type": "color"
+        },
+        "buttonTertiarySuccessBgColorHover": {
+          "$value": "rgba(0, 155, 90, 0.5)",
+          "value": "rgba(0, 155, 90, 0.5)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:3769:1760"
+            }
+          },
+          "$type": "color"
+        },
+        "buttonTertiarySuccessBorderColor": {
+          "$value": "#18995C",
+          "value": "#18995C",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:18560:21298"
+            }
+          },
+          "$type": "color"
+        }
+      },
+      "Secondary": {
+        "buttonSecondaryBgColorHover": {
+          "$value": "rgba(206, 212, 218, 0.5)",
+          "value": "rgba(206, 212, 218, 0.5)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:3746:1640"
+            }
+          },
+          "$type": "color"
+        },
+        "buttonSecondaryLabelColor": {
+          "$value": "#E9ECEF",
+          "value": "#E9ECEF",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:3752:3402"
+            }
+          },
+          "$type": "color"
+        },
+        "buttonSecondaryBgColorIdle": {
+          "$value": "#4B525A",
+          "value": "#4B525A",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:3752:3403"
+            }
+          },
+          "$type": "color"
+        }
+      },
+      "buttonLiveTickerLoadNewSurfaceColor": {
+        "$value": "#232629",
+        "value": "#232629",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:8871:15630"
+          }
+        },
+        "$type": "color"
+      },
+      "buttonLiveTickerLoadNewLabelColor": {
+        "$value": "#F2F4F5",
+        "value": "#F2F4F5",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:8871:17185"
+          }
+        },
+        "$type": "color"
+      },
+      "Ghost": {
+        "buttonGhostBgColorHover": {
+          "$value": "rgba(206, 212, 218, 0.5)",
+          "value": "rgba(206, 212, 218, 0.5)",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:18560:21299"
+            }
+          },
+          "$type": "color"
+        }
+      }
+    },
+    "InputField": {
+      "inputFieldBorderColorIdle": {
+        "$value": "#8C9196",
+        "value": "#8C9196",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3810:3105"
+          }
+        },
+        "$type": "color"
+      },
+      "inputFieldBorderColorActive": {
+        "$value": "#E9ECEF",
+        "value": "#E9ECEF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3810:3106"
+          }
+        },
+        "$type": "color"
+      },
+      "inputFieldBorderColorDark": {
+        "$value": "#CED4DA",
+        "value": "#CED4DA",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9611:21012"
+          }
+        },
+        "$type": "color"
+      },
+      "inputFieldBorderColorDarkActive": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9611:21013"
+          }
+        },
+        "$type": "color"
+      },
+      "inputFieldBgColorDarkLowContrast": {
+        "$value": "#343C41",
+        "value": "#343C41",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9611:21014"
+          }
+        },
+        "$type": "color"
+      },
+      "inputFieldBgColorDarkMediumContrast": {
+        "$value": "#4B525A",
+        "value": "#4B525A",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9611:21016"
+          }
+        },
+        "$type": "color"
+      },
+      "inputFieldBgColorDarkHighContrast": {
+        "$value": "#E9ECEF",
+        "value": "#E9ECEF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9617:96731"
+          }
+        },
+        "$type": "color"
+      }
+    },
+    "Dropdown": {
+      "dropdownBgColorHover": {
+        "$value": "#4B525A",
+        "value": "#4B525A",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3815:4119"
+          }
+        },
+        "$type": "color"
+      },
+      "dropdownBgColorIdle": {
+        "$value": "#343C41",
+        "value": "#343C41",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3844:1684"
+          }
+        },
+        "$type": "color"
+      }
+    },
+    "TextLink": {
+      "textLinkColorSecondary": {
+        "$value": "#CED4DA",
+        "value": "#CED4DA",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3853:2804"
+          }
+        },
+        "$type": "color"
+      },
+      "textLinkColorSecondaryActive": {
+        "$value": "#E9ECEF",
+        "value": "#E9ECEF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3853:2805"
+          }
+        },
+        "$type": "color"
+      },
+      "textLinkColorPrimary": {
+        "$value": "#8C9196",
+        "value": "#8C9196",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9228:1432"
+          }
+        },
+        "$type": "color"
+      }
+    },
+    "Tab": {
+      "tabBgColorHover": {
+        "$value": "#343C41",
+        "value": "#343C41",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3885:1920"
+          }
+        },
+        "$type": "color"
+      },
+      "tabLabelColorActive": {
+        "$value": "#F2F4F5",
+        "value": "#F2F4F5",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3909:2518"
+          }
+        },
+        "$type": "color"
+      },
+      "tabLabelColorDefault": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16677:14841"
+          }
+        },
+        "$type": "color"
+      },
+      "appBottomTabBarBgColor": {
+        "$value": "#343C41",
+        "value": "#343C41",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:17784:14153"
+          }
+        },
+        "$type": "color"
+      }
+    },
+    "MenuItem": {
+      "menuItemBorderColorActive": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3904:1660"
+          }
+        },
+        "$type": "color"
+      },
+      "menuItemLabelColorPrimary": {
+        "$value": "#8C9196",
+        "value": "#8C9196",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:10939:50"
+          }
+        },
+        "$type": "color"
+      },
+      "menuItemLabelColorPrimaryActive": {
+        "$value": "#F2F4F5",
+        "value": "#F2F4F5",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:10939:1291"
+          }
+        },
+        "$type": "color"
+      },
+      "menuItemLabelColorSecondary": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16395:1109823"
+          }
+        },
+        "$type": "color",
+        "comment": "The variable can be used on secondary menus that many times show up on dedicated home pages specific to a topic. The menu labels are often times using the color white across color modes."
+      }
+    },
+    "Foldout": {
+      "foldoutLabelColorActive": {
+        "$value": "#F2F4F5",
+        "value": "#F2F4F5",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3936:1893"
+          }
+        },
+        "$type": "color"
+      },
+      "foldoutLabelColorIdle": {
+        "$value": "#CED4DA",
+        "value": "#CED4DA",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:3936:1910"
+          }
+        },
+        "$type": "color"
+      }
+    },
+    "Newsticker": {
+      "newsTickerTimestampColor": {
+        "$value": "#8C9196",
+        "value": "#8C9196",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:5854:2162"
+          }
+        },
+        "$type": "color"
+      },
+      "newsTickerBadgeIconsColor": {
+        "$value": "#8C9196",
+        "value": "#8C9196",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16687:31316"
+          }
+        },
+        "$type": "color"
+      }
+    },
+    "Alert": {
+      "alertSurfaceColor": {
+        "$value": "#343C41",
+        "value": "#343C41",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:6388:192"
+          }
+        },
+        "$type": "color",
+        "comment": "On marketing offer surfaces this variable is usually not used. The alertSurfaceConstant variables should be used. This token changes color between light and dark modes. L:100 / D:025"
+      },
+      "alertSurfaceColorConstant": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16391:770603"
+          }
+        },
+        "$type": "color",
+        "comment": "On marketing offer surfaces this variable is  used."
+      }
+    },
+    "Empties": {
+      "emptiesBgColor": {
+        "$value": "#343C41",
+        "value": "#343C41",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:8706:4364"
+          }
+        },
+        "$type": "color"
+      },
+      "emptiesLogoColor": {
+        "$value": "#2C3138",
+        "value": "#2C3138",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:8706:5799"
+          }
+        },
+        "$type": "color"
+      }
+    },
+    "Chips": {
+      "chipsBgColorHover": {
+        "$value": "#CED4DA",
+        "value": "#CED4DA",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:8750:42"
+          }
+        },
+        "$type": "color"
+      },
+      "chipsLabelColorHover": {
+        "$value": "#232629",
+        "value": "#232629",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:8750:1377"
+          }
+        },
+        "$type": "color"
+      },
+      "chipsBgColorActive": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:8750:1692"
+          }
+        },
+        "$type": "color"
+      },
+      "chipsBgColorIdle": {
+        "$value": "#4B525A",
+        "value": "#4B525A",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:8750:1693"
+          }
+        },
+        "$type": "color"
+      },
+      "chipsLabelColorIdle": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:8750:1694"
+          }
+        },
+        "$type": "color"
+      }
+    },
+    "Card": {
+      "cardSurfaceBgColor": {
+        "$value": "#2C3138",
+        "value": "#2C3138",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:8947:12500"
+          }
+        },
+        "$type": "color"
+      }
+    },
+    "Selection": {
+      "selectionBorderColor": {
+        "$value": "#8C9196",
+        "value": "#8C9196",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9226:2048"
+          }
+        },
+        "$type": "color",
+        "comment": "Checkboxes and Radio buttons use this variable for their border."
+      }
+    },
+    "_DSysDoc": {
+      "_DSysDocs_labelTextSurfaceColorPrimaryPrimitiveName": {
+        "$value": "BILD010",
+        "value": "BILD010",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9617:96744"
+          }
+        },
+        "comment": "This variable is only for use in Figma's Design System File. It is automating some of the content in documentation pages."
+      },
+      "_DSysDocs_labelTextColorMode": {
+        "$value": "(Dark Mode)",
+        "value": "(Dark Mode)",
+        "type": "string",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9617:96745"
+          }
+        },
+        "comment": "This is currently for use in this design system's documentation texts. It is a text string made for being used in light and dark mode documentation texts."
+      },
+      "dsDocSpacingItemBgColor": {
+        "$value": "rgba(255, 255, 255, 0.20000000298023224)",
+        "value": "rgba(255, 255, 255, 0.20000000298023224)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:17886:12668"
+          }
+        },
+        "$type": "color"
+      },
+      "dsDocSpacingItemBorderColor": {
+        "$value": "rgba(255, 255, 255, 0.800000011920929)",
+        "value": "rgba(255, 255, 255, 0.800000011920929)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:17886:12670"
+          }
+        },
+        "$type": "color"
+      }
+    },
+    "Hey": {
+      "heyFavInputFieldSurfaceColor": {
+        "$value": "#4B525A",
+        "value": "#4B525A",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9801:11394"
+          }
+        },
+        "$type": "color"
+      },
+      "heyTextColor": {
+        "$value": "#E9ECEF",
+        "value": "#E9ECEF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9827:12418"
+          }
+        },
+        "$type": "color"
+      },
+      "heyIconUtilColor": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9827:12419"
+          }
+        },
+        "$type": "color"
+      },
+      "heySeparatorColor": {
+        "$value": "#666B70",
+        "value": "#666B70",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9828:966"
+          }
+        },
+        "$type": "color",
+        "comment": "This is the most used color for separators across Bild products."
+      },
+      "heyDrawerSurfaceColor": {
+        "$value": "#343C41",
+        "value": "#343C41",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:9827:12937"
+          }
+        },
+        "$type": "color"
+      }
+    },
+    "Pagination": {
+      "paginationElementColorDefault": {
+        "$value": "#8C9196",
+        "value": "#8C9196",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:10074:1491"
+          }
+        },
+        "$type": "color"
+      },
+      "paginationElementColorActive": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16125:168405"
+          }
+        },
+        "$type": "color"
+      },
+      "galleryPaginationElementActiveOpacity": {
+        "$value": "100px",
+        "value": "100px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16642:28694"
+          }
+        },
+        "comment": "Use this on gallery slider pagination elements. This can also be applied to hover states of those elements."
+      },
+      "scrollBarTrackBgColor": {
+        "$value": "rgba(255, 255, 255, 0.10000000149011612)",
+        "value": "rgba(255, 255, 255, 0.10000000149011612)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:17380:3244"
+          }
+        },
+        "$type": "color",
+        "comment": "Used as the background surface color scroll bars. Found on components that vertically or horizontally stack elements."
+      },
+      "scrollBarThumbBgColor": {
+        "$value": "#8C9196",
+        "value": "#8C9196",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:17381:6625"
+          }
+        },
+        "$type": "color",
+        "comment": "Use on the scroll bar interactive element which shows where the scroll view is positioned inside the full extent of the scrolling space."
+      }
+    },
+    "Kicker": {
+      "Standard": {
+        "kickerBgColorOnSurface": {
+          "$value": "#8C9196",
+          "value": "#8C9196",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:10927:84"
+            }
+          },
+          "$type": "color"
+        }
+      },
+      "Partner": {
+        "kickerStylebookBgColor": {
+          "$value": "UNRESOLVED_VariableID:16104:163534",
+          "value": "UNRESOLVED_VariableID:16104:163534",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:16118:8473"
+            }
+          },
+          "$type": "color"
+        },
+        "kickerFitbookBgColor": {
+          "$value": "#FF97B7",
+          "value": "#FF97B7",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:16118:8474"
+            }
+          },
+          "$type": "color"
+        },
+        "kickerPetbookBgColor": {
+          "$value": "#B9DB91",
+          "value": "#B9DB91",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:16118:8475"
+            }
+          },
+          "$type": "color"
+        },
+        "kickerMyhomebookBgColor": {
+          "$value": "#66CCCC",
+          "value": "#66CCCC",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:16118:8476"
+            }
+          },
+          "$type": "color"
+        },
+        "kickerTravelbookBgColor": {
+          "$value": "#8EF0ED",
+          "value": "#8EF0ED",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:16118:8477"
+            }
+          },
+          "$type": "color"
+        },
+        "kickerTechbookBgColor": {
+          "$value": "#93E4FF",
+          "value": "#93E4FF",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:16118:8478"
+            }
+          },
+          "$type": "color"
+        },
+        "kickerKaufberaterBgColor": {
+          "$value": "#55476E",
+          "value": "#55476E",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:16118:8479"
+            }
+          },
+          "$type": "color"
+        },
+        "kickerCobiBgColor": {
+          "$value": "#DC231C",
+          "value": "#DC231C",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:16118:8480"
+            }
+          },
+          "$type": "color"
+        },
+        "kickerAubiBgColor": {
+          "$value": "#F00000",
+          "value": "#F00000",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:16118:8481"
+            }
+          },
+          "$type": "color"
+        },
+        "kickerSpobiBgColor": {
+          "$value": "#174482",
+          "value": "#174482",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:16118:8482"
+            }
+          },
+          "$type": "color"
+        },
+        "kickerBzBgColor": {
+          "$value": "#E3001B",
+          "value": "#E3001B",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:16125:168406"
+            }
+          },
+          "$type": "color"
+        }
+      }
+    },
+    "Teaser": {
+      "teaserHoverOpacity": {
+        "$value": "80px",
+        "value": "80px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16642:28692"
+          }
+        },
+        "comment": "When users hover over graphical teasers the image reduces opacity to 80%."
+      },
+      "teaserTitleBackgroundGradientStart": {
+        "$value": "rgba(0, 0, 0, 0.699999988079071)",
+        "value": "rgba(0, 0, 0, 0.699999988079071)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18355:65242"
+          }
+        },
+        "$type": "color"
+      },
+      "teaserTitleBackgroundGradientStop": {
+        "$value": "rgba(0, 0, 0, 0)",
+        "value": "rgba(0, 0, 0, 0)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:18355:65257"
+          }
+        },
+        "$type": "color"
+      }
+    },
+    "Slider": {
+      "sliderButtonOpacity": {
+        "$value": "90px",
+        "value": "90px",
+        "type": "float",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:16642:28693"
+          }
+        },
+        "comment": "When users hover on gallery slider buttons the opacity changes to 90%."
+      },
+      "sliderTrackBgColor": {
+        "$value": "rgba(255, 255, 255, 0.3499999940395355)",
+        "value": "rgba(255, 255, 255, 0.3499999940395355)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:17381:17513"
+          }
+        },
+        "$type": "color",
+        "comment": "This variable is used on audio player slider bars. It references a pure white with 35% opacity."
+      }
+    },
+    "Mediaplayer": {
+      "vidPlayerControlsAutoplayButtonBgColor": {
+        "$value": "rgba(0, 0, 0, 0.20000000298023224)",
+        "value": "rgba(0, 0, 0, 0.20000000298023224)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:17385:14800"
+          }
+        },
+        "$type": "color"
+      },
+      "vidPlayerControlButtonsBgHoverColor": {
+        "$value": "rgba(221, 0, 0, 0.800000011920929)",
+        "value": "rgba(221, 0, 0, 0.800000011920929)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:17385:15019"
+          }
+        },
+        "$type": "color",
+        "comment": "This variable is used for hover states of video player control buttons."
+      },
+      "vidPlayerControlButtonsBgColorHover": {
+        "$value": "rgba(0, 0, 0, 0.20000000298023224)",
+        "value": "rgba(0, 0, 0, 0.20000000298023224)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:17389:15063"
+          }
+        },
+        "$type": "color"
+      },
+      "vidPlayerOverlayScrimColor": {
+        "$value": "rgba(0, 0, 0, 0.5)",
+        "value": "rgba(0, 0, 0, 0.5)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:17495:370"
+          }
+        },
+        "$type": "color"
+      },
+      "audioPlayerPlayButtonBgColor": {
+        "$value": "rgba(255, 255, 255, 0.30000001192092896)",
+        "value": "rgba(255, 255, 255, 0.30000001192092896)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:17593:16476"
+          }
+        },
+        "$type": "color"
+      },
+      "vidPlayerTooltipBgColor": {
+        "$value": "rgba(0, 0, 0, 0.699999988079071)",
+        "value": "rgba(0, 0, 0, 0.699999988079071)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:19706:121815"
+          }
+        },
+        "$type": "color"
+      },
+      "vidPlayerControlButtonsBgColorPressed": {
+        "$value": "rgba(0, 0, 0, 0.05000000074505806)",
+        "value": "rgba(0, 0, 0, 0.05000000074505806)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:19706:121941"
+          }
+        },
+        "$type": "color"
+      },
+      "vidPlayerProgressBarPreloadBgColor": {
+        "$value": "rgba(255, 255, 255, 0.30000001192092896)",
+        "value": "rgba(255, 255, 255, 0.30000001192092896)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:19706:124726"
+          }
+        },
+        "$type": "color"
+      },
+      "vidPlayerUnmuteButtonBgColor": {
+        "$value": "rgba(0, 0, 0, 0.20000000298023224)",
+        "value": "rgba(0, 0, 0, 0.20000000298023224)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:19709:71129"
+          }
+        },
+        "$type": "color"
+      },
+      "vidPlayerUnmuteButtonBgColorHover": {
+        "$value": "rgba(0, 0, 0, 0.3499999940395355)",
+        "value": "rgba(0, 0, 0, 0.3499999940395355)",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:19709:71141"
+          }
+        },
+        "$type": "color"
+      }
+    },
+    "Avatar": {
+      "avatarLabelColor": {
+        "$value": "#FFFFFF",
+        "value": "#FFFFFF",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:19012:10966"
+          }
+        },
+        "$type": "color",
+        "comment": "09-2025 css --article-author-name-color"
+      },
+      "avatarLabelColorHover": {
+        "$value": "#DD0000",
+        "value": "#DD0000",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:19881:148841"
+          }
+        },
+        "$type": "color",
+        "comment": "09-2025 css --article-author-name-color"
+      }
+    },
+    "Gallery": {
+      "appImageLightboxGalleryBgColor": {
+        "$value": "#000000",
+        "value": "#000000",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:19026:93265"
+          }
+        },
+        "$type": "color"
+      }
+    }
+  }
+}
