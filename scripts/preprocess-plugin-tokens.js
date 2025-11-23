@@ -366,6 +366,15 @@ function processSharedPrimitives(collections, aliasLookup) {
 }
 
 /**
+ * Prüft ob eine Brand BrandColorMapping hat
+ */
+function hasBrandColorMapping(collections, brandName) {
+  const brandColorMappingCollection = collections.find(c => c.id === COLLECTION_IDS.BRAND_COLOR_MAPPING);
+  if (!brandColorMappingCollection) return false;
+  return brandColorMappingCollection.modes.some(m => m.name === brandName);
+}
+
+/**
  * Verarbeitet Brand-spezifische Token Collections
  * Output: brands/{brand}/{category}/{collectionName}-{mode}.json
  */
@@ -381,7 +390,7 @@ function processBrandSpecificTokens(collections, aliasLookup) {
   const outputs = {
     bild: { density: {}, breakpoints: {}, color: {} },
     sportbild: { density: {}, breakpoints: {}, color: {} },
-    advertorial: { density: {}, breakpoints: {}, color: {} }
+    advertorial: { density: {}, breakpoints: {} } // Advertorial hat kein BrandColorMapping
   };
 
   collections.forEach(collection => {
@@ -398,6 +407,11 @@ function processBrandSpecificTokens(collections, aliasLookup) {
     // Für jede Brand
     Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
       const brandKey = brandName.toLowerCase();
+
+      // Skip ColorMode für Brands ohne BrandColorMapping
+      if (category === 'color' && !hasBrandColorMapping(collections, brandName)) {
+        return;
+      }
 
       // Für jeden Mode in dieser Collection
       collection.modes.forEach(mode => {
