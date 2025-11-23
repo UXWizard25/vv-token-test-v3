@@ -312,18 +312,24 @@ function processClassicTokens(collections, aliasLookup) {
         if (modeValue !== undefined && modeValue !== null) {
           let processedValue;
 
-          // Wenn Alias, erstelle Style Dictionary Alias-Syntax
+          // Wenn Alias, löse vollständig auf (NICHT Style Dictionary Syntax)
           if (modeValue.type === 'VARIABLE_ALIAS') {
-            const referencedVar = aliasLookup.get(modeValue.id);
-            if (referencedVar) {
-              const aliasPath = referencedVar.name
-                .split('/')
-                .filter(part => part && !part.startsWith('_'))
-                .join('.');
-              processedValue = `{${aliasPath}}`;
-            } else {
-              processedValue = null;
+            // Bestimme Context basierend auf Collection
+            let context = {};
+
+            if (collection.id === COLLECTION_IDS.COLOR_MODE) {
+              context.colorModeModeId = mode.modeId;
+            } else if (collection.id === COLLECTION_IDS.BREAKPOINT_MODE) {
+              context.breakpointModeId = mode.modeId;
+            } else if (collection.id === COLLECTION_IDS.BRAND_TOKEN_MAPPING ||
+                       collection.id === COLLECTION_IDS.BRAND_COLOR_MAPPING) {
+              context.brandModeId = mode.modeId;
+            } else if (collection.id === COLLECTION_IDS.DENSITY) {
+              context.breakpointModeId = mode.modeId; // Density nutzt Breakpoints
             }
+
+            // Vollständige rekursive Auflösung
+            processedValue = resolveAliasWithContext(modeValue.id, aliasLookup, context, new Set());
           } else {
             // Direkter Wert
             processedValue = processDirectValue(modeValue, variable.resolvedType, variable.name);

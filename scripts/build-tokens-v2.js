@@ -203,7 +203,7 @@ async function buildClassicTokens() {
           destination: 'tokens.css',
           format: 'css/variables',
           options: {
-            outputReferences: true
+            outputReferences: false  // Aliase sind bereits im Preprocessing aufgelöst
           }
         }]
       },
