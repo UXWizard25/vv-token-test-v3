@@ -499,11 +499,19 @@ async function main() {
   console.log('\n✨ ============================================');
   console.log('   Build abgeschlossen!');
   console.log('   ============================================\n');
+
+  // Berechne Gesamtstatistik für GitHub Actions
+  const totalBuilds = stats.sharedPrimitives.total + stats.brandSpecific.totalBuilds +
+                      stats.typographyTokens.totalBuilds + stats.effectTokens.totalBuilds;
+  const successfulBuilds = stats.sharedPrimitives.successful + stats.brandSpecific.successfulBuilds +
+                           stats.typographyTokens.successfulBuilds + stats.effectTokens.successfulBuilds;
+
   console.log(`📊 Statistiken:`);
   console.log(`   - Shared Primitives: ${stats.sharedPrimitives.successful}/${stats.sharedPrimitives.total}`);
   console.log(`   - Brand-spezifische Tokens: ${stats.brandSpecific.successfulBuilds}/${stats.brandSpecific.totalBuilds}`);
   console.log(`   - Typography Builds: ${stats.typographyTokens.successfulBuilds}/${stats.typographyTokens.totalBuilds}`);
   console.log(`   - Effect Builds: ${stats.effectTokens.successfulBuilds}/${stats.effectTokens.totalBuilds}`);
+  console.log(`   - Builds erfolgreich: ${successfulBuilds}/${totalBuilds}`);
   console.log(`   - Output-Verzeichnis: dist/\n`);
 
   console.log(`📁 Struktur:`);
