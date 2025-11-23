@@ -71,7 +71,7 @@ function registerCustomConfig() {
  * Erstellt Style Dictionary Config für Typography Tokens
  */
 function createTypographyConfig(brand, breakpoint) {
-  const sourceFile = path.join(TOKENS_DIR, 'typography', `${brand}-${breakpoint}.json`);
+  const sourceFile = path.join(TOKENS_DIR, 'brands', brand, 'semantic', 'typography', `typography-${breakpoint}.json`);
 
   if (!fs.existsSync(sourceFile)) {
     return null;
@@ -85,7 +85,7 @@ function createTypographyConfig(brand, breakpoint) {
       // CSS: 4 separate files per brand (xs, sm, md, lg)
       css: {
         transforms: ['attribute/cti'],
-        buildPath: `${DIST_DIR}/css/${brand}/typography/`,
+        buildPath: `${DIST_DIR}/css/brands/${brand}/semantic/typography/`,
         files: [{
           destination: `typography-${breakpoint}.css`,
           format: 'css/typography-classes',
@@ -100,7 +100,7 @@ function createTypographyConfig(brand, breakpoint) {
       ...(SIZE_CLASS_MAPPING[breakpoint] ? {
         ios: {
           transforms: ['attribute/cti'],
-          buildPath: `${DIST_DIR}/ios/${brand}/sizeclass-${SIZE_CLASS_MAPPING[breakpoint]}/`,
+          buildPath: `${DIST_DIR}/ios/brands/${brand}/sizeclass-${SIZE_CLASS_MAPPING[breakpoint]}/`,
           files: [{
             destination: 'Typography.swift',
             format: 'ios-swift/typography',
@@ -117,7 +117,7 @@ function createTypographyConfig(brand, breakpoint) {
       ...(SIZE_CLASS_MAPPING[breakpoint] ? {
         android: {
           transforms: ['attribute/cti'],
-          buildPath: `${DIST_DIR}/android/${brand}/sizeclass-${SIZE_CLASS_MAPPING[breakpoint]}/`,
+          buildPath: `${DIST_DIR}/android/brands/${brand}/sizeclass-${SIZE_CLASS_MAPPING[breakpoint]}/`,
           files: [{
             destination: 'typography_styles.xml',
             format: 'android/typography-styles',
@@ -136,7 +136,7 @@ function createTypographyConfig(brand, breakpoint) {
  * Erstellt Style Dictionary Config für Effect Tokens
  */
 function createEffectConfig(brand, colorMode) {
-  const sourceFile = path.join(TOKENS_DIR, 'effects', `${brand}-${colorMode}.json`);
+  const sourceFile = path.join(TOKENS_DIR, 'brands', brand, 'semantic', 'effects', `effects-${colorMode}.json`);
 
   if (!fs.existsSync(sourceFile)) {
     return null;
@@ -150,7 +150,7 @@ function createEffectConfig(brand, colorMode) {
       // CSS
       css: {
         transforms: ['attribute/cti'],
-        buildPath: `${DIST_DIR}/css/${brand}/effects/`,
+        buildPath: `${DIST_DIR}/css/brands/${brand}/semantic/effects/`,
         files: [{
           destination: `effects-${colorMode}.css`,
           format: 'css/effect-classes',
@@ -165,75 +165,185 @@ function createEffectConfig(brand, colorMode) {
 }
 
 /**
- * Baut klassische Token Collections
+ * Baut Shared Primitive Tokens
  */
-async function buildClassicTokens() {
-  console.log('\n📦 Baue Klassische Tokens:\n');
+async function buildSharedPrimitives() {
+  console.log('\n📦 Baue Shared Primitives:\n');
 
-  const classicDir = path.join(TOKENS_DIR, 'classic');
-  if (!fs.existsSync(classicDir)) {
-    console.log('  ⚠️  Kein classic/ Verzeichnis gefunden');
+  const sharedDir = path.join(TOKENS_DIR, 'shared');
+  if (!fs.existsSync(sharedDir)) {
+    console.log('  ⚠️  Kein shared/ Verzeichnis gefunden');
     return { total: 0, successful: 0 };
   }
 
-  // Sammle ALLE Token-Dateien als gemeinsame Source (für Alias-Auflösung)
-  const allTokenFiles = [];
-  const collections = fs.readdirSync(classicDir);
+  const files = fs.readdirSync(sharedDir).filter(f => f.endsWith('.json'));
+  let successful = 0;
 
-  collections.forEach(collection => {
-    const collectionDir = path.join(classicDir, collection);
-    if (!fs.statSync(collectionDir).isDirectory()) return;
+  for (const file of files) {
+    const baseName = path.basename(file, '.json');
+    const sourcePath = path.join(sharedDir, file);
 
-    const files = fs.readdirSync(collectionDir).filter(f => f.endsWith('.json'));
-    files.forEach(file => {
-      allTokenFiles.push(path.join(collectionDir, file));
-    });
-  });
-
-  console.log(`  ℹ️  Gefunden: ${allTokenFiles.length} Token-Dateien\n`);
-
-  // Baue einen gemeinsamen Build mit allen Tokens
-  const config = {
-    source: allTokenFiles,
-    platforms: {
-      css: {
-        transformGroup: 'css',
-        buildPath: `${DIST_DIR}/css/classic/`,
-        files: [{
-          destination: 'tokens.css',
-          format: 'css/variables',
-          options: {
-            outputReferences: false  // Aliase sind bereits im Preprocessing aufgelöst
-          }
-        }]
-      },
-      json: {
-        transformGroup: 'js',
-        buildPath: `${DIST_DIR}/json/classic/`,
-        files: [{
-          destination: 'tokens.json',
-          format: 'json/nested'
-        }]
+    const config = {
+      source: [sourcePath],
+      platforms: {
+        css: {
+          transformGroup: 'css',
+          buildPath: `${DIST_DIR}/css/shared/`,
+          files: [{
+            destination: `${baseName}.css`,
+            format: 'css/variables',
+            options: { outputReferences: false }
+          }]
+        }
       }
-    }
-  };
+    };
 
-  try {
-    const sd = new StyleDictionary(config);
-    await sd.buildAllPlatforms();
-    console.log(`  ✅ Alle klassischen Tokens gebaut\n`);
-    console.log(`     📄 CSS: dist/css/classic/tokens.css`);
-    console.log(`     📄 JSON: dist/json/classic/tokens.json`);
-    return { total: 1, successful: 1 };
-  } catch (error) {
-    console.error(`  ❌ Fehler beim Build klassischer Tokens:`);
-    console.error(`     ${error.message}`);
-    return { total: 1, successful: 0 };
+    try {
+      const sd = new StyleDictionary(config);
+      await sd.buildAllPlatforms();
+      console.log(`  ✅ ${baseName}`);
+      successful++;
+    } catch (error) {
+      console.error(`  ❌ ${baseName}: ${error.message}`);
+    }
   }
+
+  return { total: files.length, successful };
 }
 
 /**
- * Baut Typography Tokens
+ * Baut Brand-spezifische Token Collections
+ */
+async function buildBrandSpecificTokens() {
+  console.log('\n🏷️  Baue Brand-spezifische Tokens:\n');
+
+  let totalBuilds = 0;
+  let successfulBuilds = 0;
+
+  for (const brand of BRANDS) {
+    console.log(`  📦 ${brand}:`);
+
+    const brandDir = path.join(TOKENS_DIR, 'brands', brand);
+    if (!fs.existsSync(brandDir)) continue;
+
+    // Density
+    const densityDir = path.join(brandDir, 'density');
+    if (fs.existsSync(densityDir)) {
+      const files = fs.readdirSync(densityDir).filter(f => f.endsWith('.json'));
+      for (const file of files) {
+        const fileName = path.basename(file, '.json');
+        const config = {
+          source: [path.join(densityDir, file)],
+          platforms: {
+            css: {
+              transformGroup: 'css',
+              buildPath: `${DIST_DIR}/css/brands/${brand}/density/`,
+              files: [{ destination: `${fileName}.css`, format: 'css/variables', options: { outputReferences: false } }]
+            }
+          }
+        };
+
+        try {
+          totalBuilds++;
+          await new StyleDictionary(config).buildAllPlatforms();
+          successfulBuilds++;
+        } catch (error) {
+          console.error(`     ❌ density/${fileName}: ${error.message}`);
+        }
+      }
+      console.log(`     ✅ density (${files.length} modes)`);
+    }
+
+    // Breakpoints
+    const breakpointsDir = path.join(brandDir, 'breakpoints');
+    if (fs.existsSync(breakpointsDir)) {
+      const files = fs.readdirSync(breakpointsDir).filter(f => f.endsWith('.json'));
+      for (const file of files) {
+        const fileName = path.basename(file, '.json');
+        const config = {
+          source: [path.join(breakpointsDir, file)],
+          platforms: {
+            css: {
+              transformGroup: 'css',
+              buildPath: `${DIST_DIR}/css/brands/${brand}/semantic/breakpoints/`,
+              files: [{ destination: `${fileName}.css`, format: 'css/variables', options: { outputReferences: false } }]
+            }
+          }
+        };
+
+        try {
+          totalBuilds++;
+          await new StyleDictionary(config).buildAllPlatforms();
+          successfulBuilds++;
+        } catch (error) {
+          console.error(`     ❌ breakpoints/${fileName}: ${error.message}`);
+        }
+      }
+      console.log(`     ✅ breakpoints (${files.length} modes)`);
+    }
+
+    // Color
+    const colorDir = path.join(brandDir, 'color');
+    if (fs.existsSync(colorDir)) {
+      const files = fs.readdirSync(colorDir).filter(f => f.endsWith('.json'));
+      for (const file of files) {
+        const fileName = path.basename(file, '.json');
+        const config = {
+          source: [path.join(colorDir, file)],
+          platforms: {
+            css: {
+              transformGroup: 'css',
+              buildPath: `${DIST_DIR}/css/brands/${brand}/semantic/color/`,
+              files: [{ destination: `${fileName}.css`, format: 'css/variables', options: { outputReferences: false } }]
+            }
+          }
+        };
+
+        try {
+          totalBuilds++;
+          await new StyleDictionary(config).buildAllPlatforms();
+          successfulBuilds++;
+        } catch (error) {
+          console.error(`     ❌ color/${fileName}: ${error.message}`);
+        }
+      }
+      console.log(`     ✅ color (${files.length} modes)`);
+    }
+
+    // Overrides
+    const overridesDir = path.join(brandDir, 'overrides');
+    if (fs.existsSync(overridesDir)) {
+      const files = fs.readdirSync(overridesDir).filter(f => f.endsWith('.json'));
+      for (const file of files) {
+        const fileName = path.basename(file, '.json');
+        const config = {
+          source: [path.join(overridesDir, file)],
+          platforms: {
+            css: {
+              transformGroup: 'css',
+              buildPath: `${DIST_DIR}/css/brands/${brand}/overrides/`,
+              files: [{ destination: `${fileName}.css`, format: 'css/variables', options: { outputReferences: false } }]
+            }
+          }
+        };
+
+        try {
+          totalBuilds++;
+          await new StyleDictionary(config).buildAllPlatforms();
+          successfulBuilds++;
+        } catch (error) {
+          console.error(`     ❌ overrides/${fileName}: ${error.message}`);
+        }
+      }
+      console.log(`     ✅ overrides (${files.length} collections)`);
+    }
+  }
+
+  return { totalBuilds, successfulBuilds };
+}
+
+/**
+ * Baut Typography Tokens (brand-spezifisch)
  */
 async function buildTypographyTokens() {
   console.log('\n✍️  Baue Typography Tokens:\n');
@@ -242,7 +352,7 @@ async function buildTypographyTokens() {
   let successfulBuilds = 0;
 
   for (const brand of BRANDS) {
-    console.log(`  🏷️  Brand: ${brand}`);
+    console.log(`  🏷️  ${brand}:`);
 
     for (const breakpoint of BREAKPOINTS) {
       const config = createTypographyConfig(brand, breakpoint);
@@ -317,15 +427,24 @@ function createManifest(stats) {
     generated: new Date().toISOString(),
     version: '2.0.0',
     statistics: {
-      classicTokens: stats.classicTokens || { total: 0, successful: 0 },
-      typographyTokens: stats.typographyTokens || { total: 0, successful: 0 },
-      effectTokens: stats.effectTokens || { total: 0, successful: 0 }
+      sharedPrimitives: stats.sharedPrimitives || { total: 0, successful: 0 },
+      brandSpecific: stats.brandSpecific || { totalBuilds: 0, successfulBuilds: 0 },
+      typographyTokens: stats.typographyTokens || { totalBuilds: 0, successfulBuilds: 0 },
+      effectTokens: stats.effectTokens || { totalBuilds: 0, successfulBuilds: 0 }
     },
     structure: {
       brands: BRANDS,
       breakpoints: BREAKPOINTS,
       colorModes: COLOR_MODES,
-      sizeClasses: Object.values(SIZE_CLASS_MAPPING)
+      sizeClasses: Object.values(SIZE_CLASS_MAPPING),
+      outputPaths: {
+        css: {
+          shared: 'css/shared/',
+          brands: 'css/brands/{brand}/'
+        },
+        ios: 'ios/brands/{brand}/sizeclass-{compact|regular}/',
+        android: 'android/brands/{brand}/sizeclass-{compact|regular}/'
+      }
     }
   };
 
@@ -361,8 +480,11 @@ async function main() {
 
   const stats = {};
 
-  // Baue klassische Tokens
-  stats.classicTokens = await buildClassicTokens();
+  // Baue Shared Primitives
+  stats.sharedPrimitives = await buildSharedPrimitives();
+
+  // Baue Brand-spezifische Tokens
+  stats.brandSpecific = await buildBrandSpecificTokens();
 
   // Baue Typography Tokens
   stats.typographyTokens = await buildTypographyTokens();
@@ -378,7 +500,8 @@ async function main() {
   console.log('   Build abgeschlossen!');
   console.log('   ============================================\n');
   console.log(`📊 Statistiken:`);
-  console.log(`   - Classic Token Builds: ${stats.classicTokens.successful}/${stats.classicTokens.total}`);
+  console.log(`   - Shared Primitives: ${stats.sharedPrimitives.successful}/${stats.sharedPrimitives.total}`);
+  console.log(`   - Brand-spezifische Tokens: ${stats.brandSpecific.successfulBuilds}/${stats.brandSpecific.totalBuilds}`);
   console.log(`   - Typography Builds: ${stats.typographyTokens.successfulBuilds}/${stats.typographyTokens.totalBuilds}`);
   console.log(`   - Effect Builds: ${stats.effectTokens.successfulBuilds}/${stats.effectTokens.totalBuilds}`);
   console.log(`   - Output-Verzeichnis: dist/\n`);
@@ -386,23 +509,18 @@ async function main() {
   console.log(`📁 Struktur:`);
   console.log(`   dist/`);
   console.log(`   ├── css/`);
-  console.log(`   │   ├── bild/`);
-  console.log(`   │   │   ├── typography/    (xs, sm, md, lg)`);
-  console.log(`   │   │   └── effects/       (light, dark)`);
-  console.log(`   │   ├── sportbild/ (same)`);
-  console.log(`   │   └── advertorial/ (same)`);
-  console.log(`   ├── ios/`);
-  console.log(`   │   ├── bild/`);
-  console.log(`   │   │   ├── sizeclass-compact/   (Typography.swift)`);
-  console.log(`   │   │   └── sizeclass-regular/   (Typography.swift)`);
-  console.log(`   │   ├── sportbild/ (same)`);
-  console.log(`   │   └── advertorial/ (same)`);
-  console.log(`   └── android/`);
-  console.log(`       ├── bild/`);
-  console.log(`       │   ├── sizeclass-compact/   (typography_styles.xml)`);
-  console.log(`       │   └── sizeclass-regular/   (typography_styles.xml)`);
-  console.log(`       ├── sportbild/ (same)`);
-  console.log(`       └── advertorial/ (same)`);
+  console.log(`   │   ├── shared/              (primitives)`);
+  console.log(`   │   └── brands/`);
+  console.log(`   │       └── {brand}/`);
+  console.log(`   │           ├── density/     (3 modes)`);
+  console.log(`   │           ├── overrides/   (brand mappings)`);
+  console.log(`   │           └── semantic/`);
+  console.log(`   │               ├── breakpoints/  (4 modes)`);
+  console.log(`   │               ├── color/        (2 modes)`);
+  console.log(`   │               ├── effects/      (2 color modes)`);
+  console.log(`   │               └── typography/   (4 breakpoints)`);
+  console.log(`   ├── ios/brands/{brand}/sizeclass-{compact|regular}/`);
+  console.log(`   └── android/brands/{brand}/sizeclass-{compact|regular}/`);
   console.log('');
 }
 
