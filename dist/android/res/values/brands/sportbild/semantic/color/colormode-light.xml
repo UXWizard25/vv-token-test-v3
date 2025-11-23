@@ -240,7 +240,6 @@ Behavior: Constant — same opacity level across modes to preserve uniform layer
   <color name="component_pagination_scroll_bar_track_bg_color">#1a000000</color><!-- Used as the background surface color scroll bars. Found on components that vertically or horizontally stack elements. -->
   <color name="component_pagination_scroll_bar_thumb_bg_color">#ff8c9196</color><!-- Use on the scroll bar interactive element which shows where the scroll view is positioned inside the full extent of the scrolling space. -->
   <color name="component_kicker_standard_kicker_bg_color_on_surface">#ffdd0000</color>
-  <color name="component_kicker_partner_kicker_stylebook_bg_color">UNRESOLVED_VariableID:16104:163534</color>
   <color name="component_kicker_partner_kicker_fitbook_bg_color">#ffff97b7</color>
   <color name="component_kicker_partner_kicker_petbook_bg_color">#ffb9db91</color>
   <color name="component_kicker_partner_kicker_myhomebook_bg_color">#ff66cccc</color>

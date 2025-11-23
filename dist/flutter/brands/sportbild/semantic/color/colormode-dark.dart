@@ -78,7 +78,6 @@ class ColormodeDark {
     static const componentKickerPartnerKickerMyhomebookBgColor = Color(0xFF66CCCC);
     static const componentKickerPartnerKickerPetbookBgColor = Color(0xFFB9DB91);
     static const componentKickerPartnerKickerSpobiBgColor = Color(0xFF174482);
-    static const componentKickerPartnerKickerStylebookBgColor = UNRESOLVED_VariableID:16104:163534;
     static const componentKickerPartnerKickerTechbookBgColor = Color(0xFF93E4FF);
     static const componentKickerPartnerKickerTravelbookBgColor = Color(0xFF8EF0ED);
     static const componentKickerStandardKickerBgColorOnSurface = Color(0xFF8C9196);

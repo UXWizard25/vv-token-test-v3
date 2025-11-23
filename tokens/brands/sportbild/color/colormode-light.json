@@ -2553,19 +2553,6 @@
         }
       },
       "Partner": {
-        "kickerStylebookBgColor": {
-          "$value": "UNRESOLVED_VariableID:16104:163534",
-          "value": "UNRESOLVED_VariableID:16104:163534",
-          "type": "color",
-          "$extensions": {
-            "com.figma": {
-              "collectionId": "VariableCollectionId:588:1979",
-              "collectionName": "ColorMode",
-              "variableId": "VariableID:16118:8473"
-            }
-          },
-          "$type": "color"
-        },
         "kickerFitbookBgColor": {
           "$value": "#FF97B7",
           "value": "#FF97B7",

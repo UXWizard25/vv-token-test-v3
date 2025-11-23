@@ -7452,47 +7452,6 @@
         }
       },
       "Partner": {
-        "kickerStylebookBgColor": {
-          "$value": "UNRESOLVED_VariableID:16104:163534",
-          "value": "UNRESOLVED_VariableID:16104:163534",
-          "type": "color",
-          "$extensions": {
-            "com.figma": {
-              "collectionId": "VariableCollectionId:588:1979",
-              "collectionName": "ColorMode",
-              "variableId": "VariableID:16118:8473"
-            }
-          },
-          "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/sportbild/color/colormode-light.json",
-          "isSource": true,
-          "original": {
-            "$value": "UNRESOLVED_VariableID:16104:163534",
-            "value": "UNRESOLVED_VariableID:16104:163534",
-            "type": "color",
-            "$extensions": {
-              "com.figma": {
-                "collectionId": "VariableCollectionId:588:1979",
-                "collectionName": "ColorMode",
-                "variableId": "VariableID:16118:8473"
-              }
-            },
-            "$type": "color"
-          },
-          "name": "ComponentKickerPartnerKickerStylebookBgColor",
-          "attributes": {
-            "category": "Component",
-            "type": "Kicker",
-            "item": "Partner",
-            "subitem": "kickerStylebookBgColor"
-          },
-          "path": [
-            "Component",
-            "Kicker",
-            "Partner",
-            "kickerStylebookBgColor"
-          ]
-        },
         "kickerFitbookBgColor": {
           "$value": "#ff97b7",
           "value": "#FF97B7",

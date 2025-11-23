@@ -75,7 +75,6 @@ public class ColormodeLight {
     public static let componentKickerPartnerKickerMyhomebookBgColor = UIColor(red: 0.400, green: 0.800, blue: 0.800, alpha: 1)
     public static let componentKickerPartnerKickerPetbookBgColor = UIColor(red: 0.725, green: 0.859, blue: 0.569, alpha: 1)
     public static let componentKickerPartnerKickerSpobiBgColor = UIColor(red: 0.090, green: 0.267, blue: 0.510, alpha: 1)
-    public static let componentKickerPartnerKickerStylebookBgColor = UNRESOLVED_VariableID:16104:163534
     public static let componentKickerPartnerKickerTechbookBgColor = UIColor(red: 0.576, green: 0.894, blue: 1.000, alpha: 1)
     public static let componentKickerPartnerKickerTravelbookBgColor = UIColor(red: 0.557, green: 0.941, blue: 0.929, alpha: 1)
     public static let componentKickerStandardKickerBgColorOnSurface = UIColor(red: 0.867, green: 0.000, blue: 0.000, alpha: 1)

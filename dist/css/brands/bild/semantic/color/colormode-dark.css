@@ -395,7 +395,6 @@
   --component-pagination-scroll-bar-track-bg-color: rgba(255, 255, 255, 0.10000000149011612); /** Used as the background surface color scroll bars. Found on components that vertically or horizontally stack elements. */
   --component-pagination-scroll-bar-thumb-bg-color: #8C9196; /** Use on the scroll bar interactive element which shows where the scroll view is positioned inside the full extent of the scrolling space. */
   --component-kicker-standard-kicker-bg-color-on-surface: #8C9196;
-  --component-kicker-partner-kicker-stylebook-bg-color: UNRESOLVED_VariableID:16104:163534;
   --component-kicker-partner-kicker-fitbook-bg-color: #FF97B7;
   --component-kicker-partner-kicker-petbook-bg-color: #B9DB91;
   --component-kicker-partner-kicker-myhomebook-bg-color: #66CCCC;

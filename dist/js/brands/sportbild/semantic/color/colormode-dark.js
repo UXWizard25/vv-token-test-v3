@@ -193,8 +193,6 @@ export const ComponentPaginationGalleryPaginationElementActiveOpacity = "100px";
 export const ComponentPaginationScrollBarTrackBgColor = "#ffffff1a";
 export const ComponentPaginationScrollBarThumbBgColor = "#8c9196";
 export const ComponentKickerStandardKickerBgColorOnSurface = "#8c9196";
-export const ComponentKickerPartnerKickerStylebookBgColor =
-  "UNRESOLVED_VariableID:16104:163534";
 export const ComponentKickerPartnerKickerFitbookBgColor = "#ff97b7";
 export const ComponentKickerPartnerKickerPetbookBgColor = "#b9db91";
 export const ComponentKickerPartnerKickerMyhomebookBgColor = "#66cccc";
