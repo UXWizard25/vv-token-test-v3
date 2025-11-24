@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Do not edit directly, this file was auto-generated.
+-->
+<resources>
+  <dimen name="button-content-gap-space">8px</dimen><!-- This variable is in the SpaceScaling Collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes. -->
+  <dimen name="button-stack-space">8px</dimen><!-- This variable is in the SpaceScaling collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes. -->
+  <dimen name="button-label-font-size">17px</dimen><!-- This variable is in the SpaceScaling Collection. It was made to experiment with how scaling size could work across different content scaling / size / contrast themes. Font size across devices: 15 - 17 - 19 -->
+  <dimen name="button-inline-space">20px</dimen><!-- This variable is in the SpaceScaling Collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes. -->
+  <dimen name="input-field-inline-space">16px</dimen>
+  <dimen name="input-field-stack-space">8px</dimen>
+  <dimen name="input-field-height-size">40px</dimen>
+  <dimen name="input-field-label-font-size">17px</dimen><!-- This variable is in the SpaceScaling Collection. It was made to experiment with how scaling size could work across different content scaling / size / contrast themes. Font size across scaling options: compact 15 - default 17 - spacious 19 -->
+</resources>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Do not edit directly, this file was auto-generated.
+-->
+<resources>
+  <dimen name="size6x">48px</dimen>
+  <dimen name="size3x">24px</dimen>
+  <dimen name="size1x">8px</dimen>
+  <dimen name="size0-25x">2px</dimen>
+  <dimen name="size0-5x">4px</dimen>
+  <dimen name="size2x">16px</dimen>
+  <dimen name="size4-5x">36px</dimen>
+  <dimen name="size5x">40px</dimen>
+  <dimen name="size3-5x">28px</dimen>
+  <dimen name="size2-5x">20px</dimen>
+  <dimen name="size12-5x">100px</dimen>
+  <dimen name="size2-75x">22px</dimen>
+  <dimen name="size3-25x">26px</dimen>
+  <dimen name="size4x">32px</dimen>
+  <dimen name="size3-75x">30px</dimen>
+  <dimen name="size2-25x">18px</dimen>
+  <dimen name="size7x">56px</dimen>
+  <dimen name="size1-5x">12px</dimen>
+  <dimen name="size0-75x">6px</dimen>
+  <dimen name="size22-5x">180px</dimen>
+  <dimen name="size40x">320px</dimen>
+  <dimen name="size8x">64px</dimen>
+  <dimen name="size11-5x">92px</dimen>
+  <dimen name="size1-75x">14px</dimen>
+  <dimen name="size5-25x">42px</dimen>
+  <dimen name="size1-25x">10px</dimen>
+  <dimen name="size80x">640px</dimen>
+  <dimen name="size17-5x">140px</dimen>
+  <dimen name="size20x">160px</dimen>
+  <dimen name="size128x">1024px</dimen>
+  <dimen name="size124x">992px</dimen>
+  <dimen name="size12x">96px</dimen>
+  <dimen name="size35x">280px</dimen>
+  <dimen name="size15x">120px</dimen>
+  <dimen name="size16-25">130px</dimen>
+  <dimen name="size87-5x">700px</dimen>
+  <dimen name="size10x">80px</dimen>
+  <dimen name="size30x">240px</dimen>
+  <dimen name="size25x">200px</dimen>
+  <dimen name="size168x">1344px</dimen>
+  <dimen name="size60x">480px</dimen>
+  <dimen name="size9x">72px</dimen>
+  <dimen name="size27-5x">220px</dimen>
+  <dimen name="size50x">400px</dimen>
+  <dimen name="size116-25x">930px</dimen>
+  <dimen name="size18-5x">148px</dimen>
+  <dimen name="size100x">800px</dimen>
+  <dimen name="size0x">0px</dimen>
+  <dimen name="size0-125x">1px</dimen>
+</resources>

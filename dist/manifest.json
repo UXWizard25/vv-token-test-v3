@@ -1,0 +1,75 @@
+{
+  "generated": "2025-11-24T18:28:23.105Z",
+  "version": "2.0.0",
+  "statistics": {
+    "sharedPrimitives": {
+      "total": 4,
+      "successful": 4
+    },
+    "brandSpecific": {
+      "totalBuilds": 30,
+      "successfulBuilds": 30
+    },
+    "typographyTokens": {
+      "totalBuilds": 12,
+      "successfulBuilds": 12
+    },
+    "effectTokens": {
+      "totalBuilds": 6,
+      "successfulBuilds": 6
+    }
+  },
+  "structure": {
+    "brands": [
+      "bild",
+      "sportbild",
+      "advertorial"
+    ],
+    "breakpoints": [
+      "xs",
+      "sm",
+      "md",
+      "lg"
+    ],
+    "colorModes": [
+      "light",
+      "dark"
+    ],
+    "sizeClasses": [
+      "compact",
+      "regular"
+    ],
+    "outputPaths": {
+      "css": {
+        "shared": "css/shared/",
+        "brands": "css/brands/{brand}/"
+      },
+      "scss": {
+        "shared": "scss/shared/",
+        "brands": "scss/brands/{brand}/"
+      },
+      "js": {
+        "shared": "js/shared/",
+        "brands": "js/brands/{brand}/"
+      },
+      "json": {
+        "shared": "json/shared/",
+        "brands": "json/brands/{brand}/"
+      },
+      "ios": {
+        "shared": "ios/shared/",
+        "brands": "ios/brands/{brand}/",
+        "sizeClasses": "ios/brands/{brand}/sizeclass-{compact|regular}/"
+      },
+      "android": {
+        "shared": "android/res/values/shared/",
+        "brands": "android/res/values/brands/{brand}/",
+        "sizeClasses": "android/brands/{brand}/sizeclass-{compact|regular}/"
+      },
+      "flutter": {
+        "shared": "flutter/shared/",
+        "brands": "flutter/brands/{brand}/"
+      }
+    }
+  }
+}
