@@ -2,7 +2,7 @@
   "BILD": {
     "red": {
       "BILDRed": {
-        "$value": "#dd0000",
+        "$value": "#DD0000",
         "value": "#DD0000",
         "type": "color",
         "$extensions": {
@@ -30,12 +30,8 @@
           "$type": "color",
           "comment": "Tone 046"
         },
-        "name": "BildRedBildRed",
-        "attributes": {
-          "category": "BILD",
-          "type": "red",
-          "item": "BILDRed"
-        },
+        "name": "bILDRed",
+        "attributes": {},
         "path": [
           "BILD",
           "red",
@@ -43,7 +39,7 @@
         ]
       },
       "BILDRed035": {
-        "$value": "#af0002",
+        "$value": "#AF0002",
         "value": "#AF0002",
         "type": "color",
         "$extensions": {
@@ -69,12 +65,8 @@
           },
           "$type": "color"
         },
-        "name": "BildRedBildRed035",
-        "attributes": {
-          "category": "BILD",
-          "type": "red",
-          "item": "BILDRed035"
-        },
+        "name": "bILDRed035",
+        "attributes": {},
         "path": [
           "BILD",
           "red",
@@ -82,7 +74,7 @@
         ]
       },
       "BILDRed053": {
-        "$value": "#f52d2d",
+        "$value": "#F52D2D",
         "value": "#F52D2D",
         "type": "color",
         "$extensions": {
@@ -108,12 +100,8 @@
           },
           "$type": "color"
         },
-        "name": "BildRedBildRed053",
-        "attributes": {
-          "category": "BILD",
-          "type": "red",
-          "item": "BILDRed053"
-        },
+        "name": "bILDRed053",
+        "attributes": {},
         "path": [
           "BILD",
           "red",
@@ -149,12 +137,8 @@
           },
           "$type": "color"
         },
-        "name": "BildGrayBild015",
-        "attributes": {
-          "category": "BILD",
-          "type": "gray",
-          "item": "BILD015"
-        },
+        "name": "bILD015",
+        "attributes": {},
         "path": [
           "BILD",
           "gray",
@@ -162,7 +146,7 @@
         ]
       },
       "BILD085": {
-        "$value": "#ced4da",
+        "$value": "#CED4DA",
         "value": "#CED4DA",
         "type": "color",
         "$extensions": {
@@ -188,12 +172,8 @@
           },
           "$type": "color"
         },
-        "name": "BildGrayBild085",
-        "attributes": {
-          "category": "BILD",
-          "type": "gray",
-          "item": "BILD085"
-        },
+        "name": "bILD085",
+        "attributes": {},
         "path": [
           "BILD",
           "gray",
@@ -201,7 +181,7 @@
         ]
       },
       "BILD035": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -227,12 +207,8 @@
           },
           "$type": "color"
         },
-        "name": "BildGrayBild035",
-        "attributes": {
-          "category": "BILD",
-          "type": "gray",
-          "item": "BILD035"
-        },
+        "name": "bILD035",
+        "attributes": {},
         "path": [
           "BILD",
           "gray",
@@ -240,7 +216,7 @@
         ]
       },
       "BILD025": {
-        "$value": "#343c41",
+        "$value": "#343C41",
         "value": "#343C41",
         "type": "color",
         "$extensions": {
@@ -266,12 +242,8 @@
           },
           "$type": "color"
         },
-        "name": "BildGrayBild025",
-        "attributes": {
-          "category": "BILD",
-          "type": "gray",
-          "item": "BILD025"
-        },
+        "name": "bILD025",
+        "attributes": {},
         "path": [
           "BILD",
           "gray",
@@ -279,7 +251,7 @@
         ]
       },
       "BILD060": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -305,12 +277,8 @@
           },
           "$type": "color"
         },
-        "name": "BildGrayBild060",
-        "attributes": {
-          "category": "BILD",
-          "type": "gray",
-          "item": "BILD060"
-        },
+        "name": "bILD060",
+        "attributes": {},
         "path": [
           "BILD",
           "gray",
@@ -318,7 +286,7 @@
         ]
       },
       "BILD096": {
-        "$value": "#f2f4f5",
+        "$value": "#F2F4F5",
         "value": "#F2F4F5",
         "type": "color",
         "$extensions": {
@@ -344,12 +312,8 @@
           },
           "$type": "color"
         },
-        "name": "BildGrayBild096",
-        "attributes": {
-          "category": "BILD",
-          "type": "gray",
-          "item": "BILD096"
-        },
+        "name": "bILD096",
+        "attributes": {},
         "path": [
           "BILD",
           "gray",
@@ -357,7 +321,7 @@
         ]
       },
       "BILD093": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -383,12 +347,8 @@
           },
           "$type": "color"
         },
-        "name": "BildGrayBild093",
-        "attributes": {
-          "category": "BILD",
-          "type": "gray",
-          "item": "BILD093"
-        },
+        "name": "bILD093",
+        "attributes": {},
         "path": [
           "BILD",
           "gray",
@@ -396,7 +356,7 @@
         ]
       },
       "BILD085-50": {
-        "$value": "#ced4da80",
+        "$value": "rgba(206, 212, 218, 0.5)",
         "value": "rgba(206, 212, 218, 0.5)",
         "type": "color",
         "$extensions": {
@@ -424,12 +384,8 @@
           "$type": "color",
           "comment": "The 50% opacity on this color makes it equivalent to BILD093."
         },
-        "name": "BildGrayBild08550",
-        "attributes": {
-          "category": "BILD",
-          "type": "gray",
-          "item": "BILD085-50"
-        },
+        "name": "bILD085-50",
+        "attributes": {},
         "path": [
           "BILD",
           "gray",
@@ -437,7 +393,7 @@
         ]
       },
       "BILD073": {
-        "$value": "#aeb4b9",
+        "$value": "#AEB4B9",
         "value": "#AEB4B9",
         "type": "color",
         "$extensions": {
@@ -463,12 +419,8 @@
           },
           "$type": "color"
         },
-        "name": "BildGrayBild073",
-        "attributes": {
-          "category": "BILD",
-          "type": "gray",
-          "item": "BILD073"
-        },
+        "name": "bILD073",
+        "attributes": {},
         "path": [
           "BILD",
           "gray",
@@ -476,7 +428,7 @@
         ]
       },
       "BILD045": {
-        "$value": "#666b70",
+        "$value": "#666B70",
         "value": "#666B70",
         "type": "color",
         "$extensions": {
@@ -502,12 +454,8 @@
           },
           "$type": "color"
         },
-        "name": "BildGrayBild045",
-        "attributes": {
-          "category": "BILD",
-          "type": "gray",
-          "item": "BILD045"
-        },
+        "name": "bILD045",
+        "attributes": {},
         "path": [
           "BILD",
           "gray",
@@ -515,7 +463,7 @@
         ]
       },
       "BILD010": {
-        "$value": "#1c1c1c",
+        "$value": "#1C1C1C",
         "value": "#1C1C1C",
         "type": "color",
         "$extensions": {
@@ -541,12 +489,8 @@
           },
           "$type": "color"
         },
-        "name": "BildGrayBild010",
-        "attributes": {
-          "category": "BILD",
-          "type": "gray",
-          "item": "BILD010"
-        },
+        "name": "bILD010",
+        "attributes": {},
         "path": [
           "BILD",
           "gray",
@@ -554,7 +498,7 @@
         ]
       },
       "BILD020": {
-        "$value": "#2c3138",
+        "$value": "#2C3138",
         "value": "#2C3138",
         "type": "color",
         "$extensions": {
@@ -580,12 +524,8 @@
           },
           "$type": "color"
         },
-        "name": "BildGrayBild020",
-        "attributes": {
-          "category": "BILD",
-          "type": "gray",
-          "item": "BILD020"
-        },
+        "name": "bILD020",
+        "attributes": {},
         "path": [
           "BILD",
           "gray",
@@ -595,7 +535,7 @@
     },
     "neutral": {
       "BILD100": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -621,12 +561,8 @@
           },
           "$type": "color"
         },
-        "name": "BildNeutralBild100",
-        "attributes": {
-          "category": "BILD",
-          "type": "neutral",
-          "item": "BILD100"
-        },
+        "name": "bILD100",
+        "attributes": {},
         "path": [
           "BILD",
           "neutral",
@@ -660,12 +596,8 @@
           },
           "$type": "color"
         },
-        "name": "BildNeutralBildBlack",
-        "attributes": {
-          "category": "BILD",
-          "type": "neutral",
-          "item": "BILDBlack"
-        },
+        "name": "bILDBlack",
+        "attributes": {},
         "path": [
           "BILD",
           "neutral",
@@ -675,7 +607,7 @@
     },
     "orange": {
       "BILDOrange": {
-        "$value": "#fd8227",
+        "$value": "#FD8227",
         "value": "#FD8227",
         "type": "color",
         "$extensions": {
@@ -703,12 +635,8 @@
           "$type": "color",
           "comment": "Tone: 067"
         },
-        "name": "BildOrangeBildOrange",
-        "attributes": {
-          "category": "BILD",
-          "type": "orange",
-          "item": "BILDOrange"
-        },
+        "name": "bILDOrange",
+        "attributes": {},
         "path": [
           "BILD",
           "orange",
@@ -718,7 +646,7 @@
     },
     "green": {
       "BILDGreen070": {
-        "$value": "#00c373",
+        "$value": "#00C373",
         "value": "#00C373",
         "type": "color",
         "$extensions": {
@@ -744,12 +672,8 @@
           },
           "$type": "color"
         },
-        "name": "BildGreenBildGreen070",
-        "attributes": {
-          "category": "BILD",
-          "type": "green",
-          "item": "BILDGreen070"
-        },
+        "name": "bILDGreen070",
+        "attributes": {},
         "path": [
           "BILD",
           "green",
@@ -757,7 +681,7 @@
         ]
       },
       "BILDGreen063": {
-        "$value": "#00af67",
+        "$value": "#00AF67",
         "value": "#00AF67",
         "type": "color",
         "$extensions": {
@@ -783,12 +707,8 @@
           },
           "$type": "color"
         },
-        "name": "BildGreenBildGreen063",
-        "attributes": {
-          "category": "BILD",
-          "type": "green",
-          "item": "BILDGreen063"
-        },
+        "name": "bILDGreen063",
+        "attributes": {},
         "path": [
           "BILD",
           "green",
@@ -796,7 +716,7 @@
         ]
       },
       "BILDGreen093": {
-        "$value": "#cef4e4",
+        "$value": "#CEF4E4",
         "value": "#CEF4E4",
         "type": "color",
         "$extensions": {
@@ -822,12 +742,8 @@
           },
           "$type": "color"
         },
-        "name": "BildGreenBildGreen093",
-        "attributes": {
-          "category": "BILD",
-          "type": "green",
-          "item": "BILDGreen093"
-        },
+        "name": "bILDGreen093",
+        "attributes": {},
         "path": [
           "BILD",
           "green",
@@ -835,7 +751,7 @@
         ]
       },
       "BILDGreen093-50": {
-        "$value": "#cef4e480",
+        "$value": "rgba(206, 244, 228, 0.5)",
         "value": "rgba(206, 244, 228, 0.5)",
         "type": "color",
         "$extensions": {
@@ -861,12 +777,8 @@
           },
           "$type": "color"
         },
-        "name": "BildGreenBildGreen09350",
-        "attributes": {
-          "category": "BILD",
-          "type": "green",
-          "item": "BILDGreen093-50"
-        },
+        "name": "bILDGreen093-50",
+        "attributes": {},
         "path": [
           "BILD",
           "green",
@@ -874,7 +786,7 @@
         ]
       },
       "BILDGreen056-50": {
-        "$value": "#009b5a80",
+        "$value": "rgba(0, 155, 90, 0.5)",
         "value": "rgba(0, 155, 90, 0.5)",
         "type": "color",
         "$extensions": {
@@ -900,12 +812,8 @@
           },
           "$type": "color"
         },
-        "name": "BildGreenBildGreen05650",
-        "attributes": {
-          "category": "BILD",
-          "type": "green",
-          "item": "BILDGreen056-50"
-        },
+        "name": "bILDGreen056-50",
+        "attributes": {},
         "path": [
           "BILD",
           "green",
@@ -913,7 +821,7 @@
         ]
       },
       "BILDGreen040": {
-        "$value": "#006e3e",
+        "$value": "#006E3E",
         "value": "#006E3E",
         "type": "color",
         "$extensions": {
@@ -941,12 +849,8 @@
           "$type": "color",
           "comment": "This value of green was found in a text field's text color."
         },
-        "name": "BildGreenBildGreen040",
-        "attributes": {
-          "category": "BILD",
-          "type": "green",
-          "item": "BILDGreen040"
-        },
+        "name": "bILDGreen040",
+        "attributes": {},
         "path": [
           "BILD",
           "green",
@@ -954,7 +858,7 @@
         ]
       },
       "BILDGreen056": {
-        "$value": "#18995c",
+        "$value": "#18995C",
         "value": "#18995C",
         "type": "color",
         "$extensions": {
@@ -980,12 +884,8 @@
           },
           "$type": "color"
         },
-        "name": "BildGreenBildGreen056",
-        "attributes": {
-          "category": "BILD",
-          "type": "green",
-          "item": "BILDGreen056"
-        },
+        "name": "bILDGreen056",
+        "attributes": {},
         "path": [
           "BILD",
           "green",
@@ -1021,12 +921,8 @@
           },
           "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
         },
-        "name": "BildTextLabelsBildRed",
-        "attributes": {
-          "category": "BILD",
-          "type": "TextLabels",
-          "item": "BILDRed"
-        },
+        "name": "bILDRed",
+        "attributes": {},
         "path": [
           "BILD",
           "TextLabels",
@@ -1060,12 +956,8 @@
           },
           "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
         },
-        "name": "BildTextLabelsBild100",
-        "attributes": {
-          "category": "BILD",
-          "type": "TextLabels",
-          "item": "BILD100"
-        },
+        "name": "bILD100",
+        "attributes": {},
         "path": [
           "BILD",
           "TextLabels",
@@ -1099,12 +991,8 @@
           },
           "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
         },
-        "name": "BildTextLabelsBild096",
-        "attributes": {
-          "category": "BILD",
-          "type": "TextLabels",
-          "item": "BILD096"
-        },
+        "name": "bILD096",
+        "attributes": {},
         "path": [
           "BILD",
           "TextLabels",
@@ -1138,12 +1026,8 @@
           },
           "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
         },
-        "name": "BildTextLabelsBild085",
-        "attributes": {
-          "category": "BILD",
-          "type": "TextLabels",
-          "item": "BILD085"
-        },
+        "name": "bILD085",
+        "attributes": {},
         "path": [
           "BILD",
           "TextLabels",
@@ -1177,12 +1061,8 @@
           },
           "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
         },
-        "name": "BildTextLabelsBild060",
-        "attributes": {
-          "category": "BILD",
-          "type": "TextLabels",
-          "item": "BILD060"
-        },
+        "name": "bILD060",
+        "attributes": {},
         "path": [
           "BILD",
           "TextLabels",
@@ -1216,12 +1096,8 @@
           },
           "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
         },
-        "name": "BildTextLabelsBild035",
-        "attributes": {
-          "category": "BILD",
-          "type": "TextLabels",
-          "item": "BILD035"
-        },
+        "name": "bILD035",
+        "attributes": {},
         "path": [
           "BILD",
           "TextLabels",
@@ -1255,12 +1131,8 @@
           },
           "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
         },
-        "name": "BildTextLabelsBild025",
-        "attributes": {
-          "category": "BILD",
-          "type": "TextLabels",
-          "item": "BILD025"
-        },
+        "name": "bILD025",
+        "attributes": {},
         "path": [
           "BILD",
           "TextLabels",
@@ -1294,12 +1166,8 @@
           },
           "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
         },
-        "name": "BildTextLabelsBild015",
-        "attributes": {
-          "category": "BILD",
-          "type": "TextLabels",
-          "item": "BILD015"
-        },
+        "name": "bILD015",
+        "attributes": {},
         "path": [
           "BILD",
           "TextLabels",
@@ -1333,12 +1201,8 @@
           },
           "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
         },
-        "name": "BildTextLabelsBildOrange",
-        "attributes": {
-          "category": "BILD",
-          "type": "TextLabels",
-          "item": "BILDOrange"
-        },
+        "name": "bILDOrange",
+        "attributes": {},
         "path": [
           "BILD",
           "TextLabels",
@@ -1372,12 +1236,8 @@
           },
           "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
         },
-        "name": "BildTextLabelsBildRed053",
-        "attributes": {
-          "category": "BILD",
-          "type": "TextLabels",
-          "item": "BILDRed053"
-        },
+        "name": "bILDRed053",
+        "attributes": {},
         "path": [
           "BILD",
           "TextLabels",
@@ -1411,12 +1271,8 @@
           },
           "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
         },
-        "name": "BildTextLabelsBildRed035",
-        "attributes": {
-          "category": "BILD",
-          "type": "TextLabels",
-          "item": "BILDRed035"
-        },
+        "name": "bILDRed035",
+        "attributes": {},
         "path": [
           "BILD",
           "TextLabels",
@@ -1450,12 +1306,8 @@
           },
           "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
         },
-        "name": "BildTextLabelsBildGreen093",
-        "attributes": {
-          "category": "BILD",
-          "type": "TextLabels",
-          "item": "BILDGreen093"
-        },
+        "name": "bILDGreen093",
+        "attributes": {},
         "path": [
           "BILD",
           "TextLabels",
@@ -1489,12 +1341,8 @@
           },
           "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
         },
-        "name": "BildTextLabelsBildGreen070",
-        "attributes": {
-          "category": "BILD",
-          "type": "TextLabels",
-          "item": "BILDGreen070"
-        },
+        "name": "bILDGreen070",
+        "attributes": {},
         "path": [
           "BILD",
           "TextLabels",
@@ -1528,12 +1376,8 @@
           },
           "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
         },
-        "name": "BildTextLabelsBildGreen063",
-        "attributes": {
-          "category": "BILD",
-          "type": "TextLabels",
-          "item": "BILDGreen063"
-        },
+        "name": "bILDGreen063",
+        "attributes": {},
         "path": [
           "BILD",
           "TextLabels",
@@ -1567,12 +1411,8 @@
           },
           "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
         },
-        "name": "BildTextLabelsBild093",
-        "attributes": {
-          "category": "BILD",
-          "type": "TextLabels",
-          "item": "BILD093"
-        },
+        "name": "bILD093",
+        "attributes": {},
         "path": [
           "BILD",
           "TextLabels",
@@ -1606,12 +1446,8 @@
           },
           "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
         },
-        "name": "BildTextLabelsBildYellow",
-        "attributes": {
-          "category": "BILD",
-          "type": "TextLabels",
-          "item": "BILDYellow"
-        },
+        "name": "bILDYellow",
+        "attributes": {},
         "path": [
           "BILD",
           "TextLabels",
@@ -1645,12 +1481,8 @@
           },
           "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
         },
-        "name": "BildTextLabelsBild073",
-        "attributes": {
-          "category": "BILD",
-          "type": "TextLabels",
-          "item": "BILD073"
-        },
+        "name": "bILD073",
+        "attributes": {},
         "path": [
           "BILD",
           "TextLabels",
@@ -1684,12 +1516,8 @@
           },
           "comment": "This is a variable used only for documentation purposes in the design system Figma Foundations pages."
         },
-        "name": "BildTextLabelsBild045",
-        "attributes": {
-          "category": "BILD",
-          "type": "TextLabels",
-          "item": "BILD045"
-        },
+        "name": "bILD045",
+        "attributes": {},
         "path": [
           "BILD",
           "TextLabels",
@@ -1699,7 +1527,7 @@
     },
     "yellow": {
       "BILDYellow": {
-        "$value": "#ffbf00",
+        "$value": "#FFBF00",
         "value": "#FFBF00",
         "type": "color",
         "$extensions": {
@@ -1727,12 +1555,8 @@
           "$type": "color",
           "comment": "Tone: 081"
         },
-        "name": "BildYellowBildYellow",
-        "attributes": {
-          "category": "BILD",
-          "type": "yellow",
-          "item": "BILDYellow"
-        },
+        "name": "bILDYellow",
+        "attributes": {},
         "path": [
           "BILD",
           "yellow",
@@ -1770,12 +1594,8 @@
           "$type": "color",
           "comment": "Tone: 020"
         },
-        "name": "BildPurpleBildBerry",
-        "attributes": {
-          "category": "BILD",
-          "type": "purple",
-          "item": "BILDBerry"
-        },
+        "name": "bILDBerry",
+        "attributes": {},
         "path": [
           "BILD",
           "purple",
@@ -1785,7 +1605,7 @@
     },
     "alpha": {
       "alphaBlack20": {
-        "$value": "#00000033",
+        "$value": "rgba(0, 0, 0, 0.20000000298023224)",
         "value": "rgba(0, 0, 0, 0.20000000298023224)",
         "type": "color",
         "$extensions": {
@@ -1811,12 +1631,8 @@
           },
           "$type": "color"
         },
-        "name": "BildAlphaAlphaBlack20",
-        "attributes": {
-          "category": "BILD",
-          "type": "alpha",
-          "item": "alphaBlack20"
-        },
+        "name": "alphaBlack20",
+        "attributes": {},
         "path": [
           "BILD",
           "alpha",
@@ -1824,7 +1640,7 @@
         ]
       },
       "alphaBlack10": {
-        "$value": "#0000001a",
+        "$value": "rgba(0, 0, 0, 0.10000000149011612)",
         "value": "rgba(0, 0, 0, 0.10000000149011612)",
         "type": "color",
         "$extensions": {
@@ -1850,12 +1666,8 @@
           },
           "$type": "color"
         },
-        "name": "BildAlphaAlphaBlack10",
-        "attributes": {
-          "category": "BILD",
-          "type": "alpha",
-          "item": "alphaBlack10"
-        },
+        "name": "alphaBlack10",
+        "attributes": {},
         "path": [
           "BILD",
           "alpha",
@@ -1863,7 +1675,7 @@
         ]
       },
       "alphaBlack60": {
-        "$value": "#00000099",
+        "$value": "rgba(0, 0, 0, 0.6000000238418579)",
         "value": "rgba(0, 0, 0, 0.6000000238418579)",
         "type": "color",
         "$extensions": {
@@ -1891,12 +1703,8 @@
           "$type": "color",
           "comment": "Used on elevation effects."
         },
-        "name": "BildAlphaAlphaBlack60",
-        "attributes": {
-          "category": "BILD",
-          "type": "alpha",
-          "item": "alphaBlack60"
-        },
+        "name": "alphaBlack60",
+        "attributes": {},
         "path": [
           "BILD",
           "alpha",
@@ -1904,7 +1712,7 @@
         ]
       },
       "alphaBlack30": {
-        "$value": "#0000004d",
+        "$value": "rgba(0, 0, 0, 0.30000001192092896)",
         "value": "rgba(0, 0, 0, 0.30000001192092896)",
         "type": "color",
         "$extensions": {
@@ -1930,12 +1738,8 @@
           },
           "$type": "color"
         },
-        "name": "BildAlphaAlphaBlack30",
-        "attributes": {
-          "category": "BILD",
-          "type": "alpha",
-          "item": "alphaBlack30"
-        },
+        "name": "alphaBlack30",
+        "attributes": {},
         "path": [
           "BILD",
           "alpha",
@@ -1943,7 +1747,7 @@
         ]
       },
       "alphaBlack70": {
-        "$value": "#000000b2",
+        "$value": "rgba(0, 0, 0, 0.699999988079071)",
         "value": "rgba(0, 0, 0, 0.699999988079071)",
         "type": "color",
         "$extensions": {
@@ -1971,12 +1775,8 @@
           "$type": "color",
           "comment": "Used on elevation effects."
         },
-        "name": "BildAlphaAlphaBlack70",
-        "attributes": {
-          "category": "BILD",
-          "type": "alpha",
-          "item": "alphaBlack70"
-        },
+        "name": "alphaBlack70",
+        "attributes": {},
         "path": [
           "BILD",
           "alpha",
@@ -1984,7 +1784,7 @@
         ]
       },
       "alphaWhite10": {
-        "$value": "#ffffff1a",
+        "$value": "rgba(255, 255, 255, 0.10000000149011612)",
         "value": "rgba(255, 255, 255, 0.10000000149011612)",
         "type": "color",
         "$extensions": {
@@ -2010,12 +1810,8 @@
           },
           "$type": "color"
         },
-        "name": "BildAlphaAlphaWhite10",
-        "attributes": {
-          "category": "BILD",
-          "type": "alpha",
-          "item": "alphaWhite10"
-        },
+        "name": "alphaWhite10",
+        "attributes": {},
         "path": [
           "BILD",
           "alpha",
@@ -2023,7 +1819,7 @@
         ]
       },
       "alphaWhite20": {
-        "$value": "#ffffff33",
+        "$value": "rgba(255, 255, 255, 0.20000000298023224)",
         "value": "rgba(255, 255, 255, 0.20000000298023224)",
         "type": "color",
         "$extensions": {
@@ -2049,12 +1845,8 @@
           },
           "$type": "color"
         },
-        "name": "BildAlphaAlphaWhite20",
-        "attributes": {
-          "category": "BILD",
-          "type": "alpha",
-          "item": "alphaWhite20"
-        },
+        "name": "alphaWhite20",
+        "attributes": {},
         "path": [
           "BILD",
           "alpha",
@@ -2062,7 +1854,7 @@
         ]
       },
       "alphaWhite30": {
-        "$value": "#ffffff4d",
+        "$value": "rgba(255, 255, 255, 0.30000001192092896)",
         "value": "rgba(255, 255, 255, 0.30000001192092896)",
         "type": "color",
         "$extensions": {
@@ -2088,12 +1880,8 @@
           },
           "$type": "color"
         },
-        "name": "BildAlphaAlphaWhite30",
-        "attributes": {
-          "category": "BILD",
-          "type": "alpha",
-          "item": "alphaWhite30"
-        },
+        "name": "alphaWhite30",
+        "attributes": {},
         "path": [
           "BILD",
           "alpha",
@@ -2101,7 +1889,7 @@
         ]
       },
       "alphaWhite60": {
-        "$value": "#ffffff99",
+        "$value": "rgba(255, 255, 255, 0.6000000238418579)",
         "value": "rgba(255, 255, 255, 0.6000000238418579)",
         "type": "color",
         "$extensions": {
@@ -2129,12 +1917,8 @@
           "$type": "color",
           "comment": "Used on elevation effects."
         },
-        "name": "BildAlphaAlphaWhite60",
-        "attributes": {
-          "category": "BILD",
-          "type": "alpha",
-          "item": "alphaWhite60"
-        },
+        "name": "alphaWhite60",
+        "attributes": {},
         "path": [
           "BILD",
           "alpha",
@@ -2142,7 +1926,7 @@
         ]
       },
       "alphaWhite70": {
-        "$value": "#ffffffb2",
+        "$value": "rgba(255, 255, 255, 0.699999988079071)",
         "value": "rgba(255, 255, 255, 0.699999988079071)",
         "type": "color",
         "$extensions": {
@@ -2170,12 +1954,8 @@
           "$type": "color",
           "comment": "Used on elevation effects."
         },
-        "name": "BildAlphaAlphaWhite70",
-        "attributes": {
-          "category": "BILD",
-          "type": "alpha",
-          "item": "alphaWhite70"
-        },
+        "name": "alphaWhite70",
+        "attributes": {},
         "path": [
           "BILD",
           "alpha",
@@ -2183,7 +1963,7 @@
         ]
       },
       "alphaWhite35": {
-        "$value": "#ffffff59",
+        "$value": "rgba(255, 255, 255, 0.3499999940395355)",
         "value": "rgba(255, 255, 255, 0.3499999940395355)",
         "type": "color",
         "$extensions": {
@@ -2209,12 +1989,8 @@
           },
           "$type": "color"
         },
-        "name": "BildAlphaAlphaWhite35",
-        "attributes": {
-          "category": "BILD",
-          "type": "alpha",
-          "item": "alphaWhite35"
-        },
+        "name": "alphaWhite35",
+        "attributes": {},
         "path": [
           "BILD",
           "alpha",
@@ -2222,7 +1998,7 @@
         ]
       },
       "alphaBILDRed80": {
-        "$value": "#dd0000cc",
+        "$value": "rgba(221, 0, 0, 0.800000011920929)",
         "value": "rgba(221, 0, 0, 0.800000011920929)",
         "type": "color",
         "$extensions": {
@@ -2250,12 +2026,8 @@
           "$type": "color",
           "comment": "Used on elevation effects."
         },
-        "name": "BildAlphaAlphaBildRed80",
-        "attributes": {
-          "category": "BILD",
-          "type": "alpha",
-          "item": "alphaBILDRed80"
-        },
+        "name": "alphaBILDRed80",
+        "attributes": {},
         "path": [
           "BILD",
           "alpha",
@@ -2263,7 +2035,7 @@
         ]
       },
       "alphaBlack80": {
-        "$value": "#000000cc",
+        "$value": "rgba(0, 0, 0, 0.800000011920929)",
         "value": "rgba(0, 0, 0, 0.800000011920929)",
         "type": "color",
         "$extensions": {
@@ -2291,12 +2063,8 @@
           "$type": "color",
           "comment": "Used on elevation effects."
         },
-        "name": "BildAlphaAlphaBlack80",
-        "attributes": {
-          "category": "BILD",
-          "type": "alpha",
-          "item": "alphaBlack80"
-        },
+        "name": "alphaBlack80",
+        "attributes": {},
         "path": [
           "BILD",
           "alpha",
@@ -2304,7 +2072,7 @@
         ]
       },
       "alphaWhite80": {
-        "$value": "#ffffffcc",
+        "$value": "rgba(255, 255, 255, 0.800000011920929)",
         "value": "rgba(255, 255, 255, 0.800000011920929)",
         "type": "color",
         "$extensions": {
@@ -2332,12 +2100,8 @@
           "$type": "color",
           "comment": "Used on elevation effects."
         },
-        "name": "BildAlphaAlphaWhite80",
-        "attributes": {
-          "category": "BILD",
-          "type": "alpha",
-          "item": "alphaWhite80"
-        },
+        "name": "alphaWhite80",
+        "attributes": {},
         "path": [
           "BILD",
           "alpha",
@@ -2345,7 +2109,7 @@
         ]
       },
       "alphaBlack35": {
-        "$value": "#00000059",
+        "$value": "rgba(0, 0, 0, 0.3499999940395355)",
         "value": "rgba(0, 0, 0, 0.3499999940395355)",
         "type": "color",
         "$extensions": {
@@ -2371,12 +2135,8 @@
           },
           "$type": "color"
         },
-        "name": "BildAlphaAlphaBlack35",
-        "attributes": {
-          "category": "BILD",
-          "type": "alpha",
-          "item": "alphaBlack35"
-        },
+        "name": "alphaBlack35",
+        "attributes": {},
         "path": [
           "BILD",
           "alpha",
@@ -2384,7 +2144,7 @@
         ]
       },
       "alphaBlack0": {
-        "$value": "#00000000",
+        "$value": "rgba(0, 0, 0, 0)",
         "value": "rgba(0, 0, 0, 0)",
         "type": "color",
         "$extensions": {
@@ -2410,12 +2170,8 @@
           },
           "$type": "color"
         },
-        "name": "BildAlphaAlphaBlack0",
-        "attributes": {
-          "category": "BILD",
-          "type": "alpha",
-          "item": "alphaBlack0"
-        },
+        "name": "alphaBlack0",
+        "attributes": {},
         "path": [
           "BILD",
           "alpha",
@@ -2423,7 +2179,7 @@
         ]
       },
       "alphaBlack50": {
-        "$value": "#00000080",
+        "$value": "rgba(0, 0, 0, 0.5)",
         "value": "rgba(0, 0, 0, 0.5)",
         "type": "color",
         "$extensions": {
@@ -2449,12 +2205,8 @@
           },
           "$type": "color"
         },
-        "name": "BildAlphaAlphaBlack50",
-        "attributes": {
-          "category": "BILD",
-          "type": "alpha",
-          "item": "alphaBlack50"
-        },
+        "name": "alphaBlack50",
+        "attributes": {},
         "path": [
           "BILD",
           "alpha",
@@ -2462,7 +2214,7 @@
         ]
       },
       "alphaBlack05": {
-        "$value": "#0000000d",
+        "$value": "rgba(0, 0, 0, 0.05000000074505806)",
         "value": "rgba(0, 0, 0, 0.05000000074505806)",
         "type": "color",
         "$extensions": {
@@ -2488,12 +2240,8 @@
           },
           "$type": "color"
         },
-        "name": "BildAlphaAlphaBlack05",
-        "attributes": {
-          "category": "BILD",
-          "type": "alpha",
-          "item": "alphaBlack05"
-        },
+        "name": "alphaBlack05",
+        "attributes": {},
         "path": [
           "BILD",
           "alpha",
@@ -2503,7 +2251,7 @@
     },
     "blue": {
       "BILDBlue": {
-        "$value": "#00b1ff",
+        "$value": "#00B1FF",
         "value": "#00B1FF",
         "type": "color",
         "$extensions": {
@@ -2531,12 +2279,8 @@
           "$type": "color",
           "comment": "This Blue color was taken from the Weather 2024 project. Tone: 069"
         },
-        "name": "BildBlueBildBlue",
-        "attributes": {
-          "category": "BILD",
-          "type": "blue",
-          "item": "BILDBlue"
-        },
+        "name": "bILDBlue",
+        "attributes": {},
         "path": [
           "BILD",
           "blue",
@@ -2548,7 +2292,7 @@
   "Partner": {
     "Fitbook": {
       "fitbookCore": {
-        "$value": "#ff97b7",
+        "$value": "#FF97B7",
         "value": "#FF97B7",
         "type": "color",
         "$extensions": {
@@ -2574,12 +2318,8 @@
           },
           "$type": "color"
         },
-        "name": "PartnerFitbookFitbookCore",
-        "attributes": {
-          "category": "Partner",
-          "type": "Fitbook",
-          "item": "fitbookCore"
-        },
+        "name": "fitbookCore",
+        "attributes": {},
         "path": [
           "Partner",
           "Fitbook",
@@ -2589,7 +2329,7 @@
     },
     "Petbook": {
       "petbookCore": {
-        "$value": "#b9db91",
+        "$value": "#B9DB91",
         "value": "#B9DB91",
         "type": "color",
         "$extensions": {
@@ -2615,12 +2355,8 @@
           },
           "$type": "color"
         },
-        "name": "PartnerPetbookPetbookCore",
-        "attributes": {
-          "category": "Partner",
-          "type": "Petbook",
-          "item": "petbookCore"
-        },
+        "name": "petbookCore",
+        "attributes": {},
         "path": [
           "Partner",
           "Petbook",
@@ -2630,7 +2366,7 @@
     },
     "MyHome": {
       "myhomeCore": {
-        "$value": "#66cccc",
+        "$value": "#66CCCC",
         "value": "#66CCCC",
         "type": "color",
         "$extensions": {
@@ -2656,12 +2392,8 @@
           },
           "$type": "color"
         },
-        "name": "PartnerMyHomeMyhomeCore",
-        "attributes": {
-          "category": "Partner",
-          "type": "MyHome",
-          "item": "myhomeCore"
-        },
+        "name": "myhomeCore",
+        "attributes": {},
         "path": [
           "Partner",
           "MyHome",
@@ -2671,7 +2403,7 @@
     },
     "Travelbook": {
       "travelbookCore": {
-        "$value": "#8ef0ed",
+        "$value": "#8EF0ED",
         "value": "#8EF0ED",
         "type": "color",
         "$extensions": {
@@ -2697,12 +2429,8 @@
           },
           "$type": "color"
         },
-        "name": "PartnerTravelbookTravelbookCore",
-        "attributes": {
-          "category": "Partner",
-          "type": "Travelbook",
-          "item": "travelbookCore"
-        },
+        "name": "travelbookCore",
+        "attributes": {},
         "path": [
           "Partner",
           "Travelbook",
@@ -2712,7 +2440,7 @@
     },
     "Techbook": {
       "techbookCore": {
-        "$value": "#93e4ff",
+        "$value": "#93E4FF",
         "value": "#93E4FF",
         "type": "color",
         "$extensions": {
@@ -2738,12 +2466,8 @@
           },
           "$type": "color"
         },
-        "name": "PartnerTechbookTechbookCore",
-        "attributes": {
-          "category": "Partner",
-          "type": "Techbook",
-          "item": "techbookCore"
-        },
+        "name": "techbookCore",
+        "attributes": {},
         "path": [
           "Partner",
           "Techbook",
@@ -2753,7 +2477,7 @@
     },
     "Kaufberater": {
       "kaufberaterCore": {
-        "$value": "#55476e",
+        "$value": "#55476E",
         "value": "#55476E",
         "type": "color",
         "$extensions": {
@@ -2779,12 +2503,8 @@
           },
           "$type": "color"
         },
-        "name": "PartnerKaufberaterKaufberaterCore",
-        "attributes": {
-          "category": "Partner",
-          "type": "Kaufberater",
-          "item": "kaufberaterCore"
-        },
+        "name": "kaufberaterCore",
+        "attributes": {},
         "path": [
           "Partner",
           "Kaufberater",
@@ -2794,7 +2514,7 @@
     },
     "Bz": {
       "bzCore": {
-        "$value": "#e3001b",
+        "$value": "#E3001B",
         "value": "#E3001B",
         "type": "color",
         "$extensions": {
@@ -2820,12 +2540,8 @@
           },
           "$type": "color"
         },
-        "name": "PartnerBzBzCore",
-        "attributes": {
-          "category": "Partner",
-          "type": "Bz",
-          "item": "bzCore"
-        },
+        "name": "bzCore",
+        "attributes": {},
         "path": [
           "Partner",
           "Bz",
@@ -2835,7 +2551,7 @@
     },
     "Aubi": {
       "aubiCore": {
-        "$value": "#f00000",
+        "$value": "#F00000",
         "value": "#F00000",
         "type": "color",
         "$extensions": {
@@ -2861,12 +2577,8 @@
           },
           "$type": "color"
         },
-        "name": "PartnerAubiAubiCore",
-        "attributes": {
-          "category": "Partner",
-          "type": "Aubi",
-          "item": "aubiCore"
-        },
+        "name": "aubiCore",
+        "attributes": {},
         "path": [
           "Partner",
           "Aubi",
@@ -2876,7 +2588,7 @@
     },
     "ComputerBILD": {
       "cobiCore": {
-        "$value": "#dc231c",
+        "$value": "#DC231C",
         "value": "#DC231C",
         "type": "color",
         "$extensions": {
@@ -2902,12 +2614,8 @@
           },
           "$type": "color"
         },
-        "name": "PartnerComputerBildCobiCore",
-        "attributes": {
-          "category": "Partner",
-          "type": "ComputerBILD",
-          "item": "cobiCore"
-        },
+        "name": "cobiCore",
+        "attributes": {},
         "path": [
           "Partner",
           "ComputerBILD",
@@ -2919,7 +2627,7 @@
   "SportBILD": {
     "blue": {
       "spobiBlue098": {
-        "$value": "#f7f9fd",
+        "$value": "#F7F9FD",
         "value": "#F7F9FD",
         "type": "color",
         "$extensions": {
@@ -2945,12 +2653,8 @@
           },
           "$type": "color"
         },
-        "name": "SportBildBlueSpobiBlue098",
-        "attributes": {
-          "category": "SportBILD",
-          "type": "blue",
-          "item": "spobiBlue098"
-        },
+        "name": "spobiBlue098",
+        "attributes": {},
         "path": [
           "SportBILD",
           "blue",
@@ -2958,7 +2662,7 @@
         ]
       },
       "spobiBlue081": {
-        "$value": "#bdcadb",
+        "$value": "#BDCADB",
         "value": "#BDCADB",
         "type": "color",
         "$extensions": {
@@ -2984,12 +2688,8 @@
           },
           "$type": "color"
         },
-        "name": "SportBildBlueSpobiBlue081",
-        "attributes": {
-          "category": "SportBILD",
-          "type": "blue",
-          "item": "spobiBlue081"
-        },
+        "name": "spobiBlue081",
+        "attributes": {},
         "path": [
           "SportBILD",
           "blue",
@@ -3025,12 +2725,8 @@
           "$type": "color",
           "comment": "This variable in the current online CSS is called secondary-tenant-color"
         },
-        "name": "SportBildBlueSpobiBlue029",
-        "attributes": {
-          "category": "SportBILD",
-          "type": "blue",
-          "item": "spobiBlue029"
-        },
+        "name": "spobiBlue029",
+        "attributes": {},
         "path": [
           "SportBILD",
           "blue",
@@ -3038,7 +2734,7 @@
         ]
       },
       "spobiBlue016": {
-        "$value": "#0a2750",
+        "$value": "#0A2750",
         "value": "#0A2750",
         "type": "color",
         "$extensions": {
@@ -3066,12 +2762,8 @@
           "$type": "color",
           "comment": "This variable in the current online CSS is called main-tenant-color for the spobi tenant."
         },
-        "name": "SportBildBlueSpobiBlue016",
-        "attributes": {
-          "category": "SportBILD",
-          "type": "blue",
-          "item": "spobiBlue016"
-        },
+        "name": "spobiBlue016",
+        "attributes": {},
         "path": [
           "SportBILD",
           "blue",
@@ -3105,12 +2797,8 @@
           },
           "$type": "color"
         },
-        "name": "SportBildBlueSpobiBlue010",
-        "attributes": {
-          "category": "SportBILD",
-          "type": "blue",
-          "item": "spobiBlue010"
-        },
+        "name": "spobiBlue010",
+        "attributes": {},
         "path": [
           "SportBILD",
           "blue",
@@ -3144,12 +2832,8 @@
           },
           "$type": "color"
         },
-        "name": "SportBildBlueSpobiBlue038",
-        "attributes": {
-          "category": "SportBILD",
-          "type": "blue",
-          "item": "spobiBlue038"
-        },
+        "name": "spobiBlue038",
+        "attributes": {},
         "path": [
           "SportBILD",
           "blue",
@@ -3159,7 +2843,7 @@
     },
     "red": {
       "spobiRed": {
-        "$value": "#e52528",
+        "$value": "#E52528",
         "value": "#E52528",
         "type": "color",
         "$extensions": {
@@ -3185,12 +2869,8 @@
           },
           "$type": "color"
         },
-        "name": "SportBildRedSpobiRed",
-        "attributes": {
-          "category": "SportBILD",
-          "type": "red",
-          "item": "spobiRed"
-        },
+        "name": "spobiRed",
+        "attributes": {},
         "path": [
           "SportBILD",
           "red",
@@ -3200,7 +2880,7 @@
     },
     "alpha": {
       "spobiBlue016-0": {
-        "$value": "#0a275000",
+        "$value": "rgba(10, 39, 80, 0)",
         "value": "rgba(10, 39, 80, 0)",
         "type": "color",
         "$extensions": {
@@ -3226,12 +2906,8 @@
           },
           "$type": "color"
         },
-        "name": "SportBildAlphaSpobiBlue0160",
-        "attributes": {
-          "category": "SportBILD",
-          "type": "alpha",
-          "item": "spobiBlue016-0"
-        },
+        "name": "spobiBlue016-0",
+        "attributes": {},
         "path": [
           "SportBILD",
           "alpha",
@@ -3239,7 +2915,7 @@
         ]
       },
       "spobiBlue016-70": {
-        "$value": "#0a2750b2",
+        "$value": "rgba(10, 39, 80, 0.699999988079071)",
         "value": "rgba(10, 39, 80, 0.699999988079071)",
         "type": "color",
         "$extensions": {
@@ -3265,12 +2941,8 @@
           },
           "$type": "color"
         },
-        "name": "SportBildAlphaSpobiBlue01670",
-        "attributes": {
-          "category": "SportBILD",
-          "type": "alpha",
-          "item": "spobiBlue016-70"
-        },
+        "name": "spobiBlue016-70",
+        "attributes": {},
         "path": [
           "SportBILD",
           "alpha",
@@ -3305,11 +2977,8 @@
           }
         }
       },
-      "name": "OpacityOpacity05",
-      "attributes": {
-        "category": "Opacity",
-        "type": "opacity05"
-      },
+      "name": "opacity05",
+      "attributes": {},
       "path": [
         "Opacity",
         "opacity05"
@@ -3340,11 +3009,8 @@
           }
         }
       },
-      "name": "OpacityOpacity10",
-      "attributes": {
-        "category": "Opacity",
-        "type": "opacity10"
-      },
+      "name": "opacity10",
+      "attributes": {},
       "path": [
         "Opacity",
         "opacity10"
@@ -3375,11 +3041,8 @@
           }
         }
       },
-      "name": "OpacityOpacity20",
-      "attributes": {
-        "category": "Opacity",
-        "type": "opacity20"
-      },
+      "name": "opacity20",
+      "attributes": {},
       "path": [
         "Opacity",
         "opacity20"
@@ -3410,11 +3073,8 @@
           }
         }
       },
-      "name": "OpacityOpacity40",
-      "attributes": {
-        "category": "Opacity",
-        "type": "opacity40"
-      },
+      "name": "opacity40",
+      "attributes": {},
       "path": [
         "Opacity",
         "opacity40"
@@ -3445,11 +3105,8 @@
           }
         }
       },
-      "name": "OpacityOpacity60",
-      "attributes": {
-        "category": "Opacity",
-        "type": "opacity60"
-      },
+      "name": "opacity60",
+      "attributes": {},
       "path": [
         "Opacity",
         "opacity60"
@@ -3480,11 +3137,8 @@
           }
         }
       },
-      "name": "OpacityOpacity80",
-      "attributes": {
-        "category": "Opacity",
-        "type": "opacity80"
-      },
+      "name": "opacity80",
+      "attributes": {},
       "path": [
         "Opacity",
         "opacity80"
@@ -3515,11 +3169,8 @@
           }
         }
       },
-      "name": "OpacityOpacity100",
-      "attributes": {
-        "category": "Opacity",
-        "type": "opacity100"
-      },
+      "name": "opacity100",
+      "attributes": {},
       "path": [
         "Opacity",
         "opacity100"
@@ -3550,11 +3201,8 @@
           }
         }
       },
-      "name": "OpacityOpacity90",
-      "attributes": {
-        "category": "Opacity",
-        "type": "opacity90"
-      },
+      "name": "opacity90",
+      "attributes": {},
       "path": [
         "Opacity",
         "opacity90"
@@ -3585,11 +3233,8 @@
           }
         }
       },
-      "name": "OpacityOpacity30",
-      "attributes": {
-        "category": "Opacity",
-        "type": "opacity30"
-      },
+      "name": "opacity30",
+      "attributes": {},
       "path": [
         "Opacity",
         "opacity30"
@@ -3620,11 +3265,8 @@
           }
         }
       },
-      "name": "OpacityOpacity50",
-      "attributes": {
-        "category": "Opacity",
-        "type": "opacity50"
-      },
+      "name": "opacity50",
+      "attributes": {},
       "path": [
         "Opacity",
         "opacity50"
@@ -3655,11 +3297,8 @@
           }
         }
       },
-      "name": "OpacityOpacity00",
-      "attributes": {
-        "category": "Opacity",
-        "type": "opacity00"
-      },
+      "name": "opacity00",
+      "attributes": {},
       "path": [
         "Opacity",
         "opacity00"
@@ -3690,11 +3329,8 @@
           }
         }
       },
-      "name": "OpacityOpacity70",
-      "attributes": {
-        "category": "Opacity",
-        "type": "opacity70"
-      },
+      "name": "opacity70",
+      "attributes": {},
       "path": [
         "Opacity",
         "opacity70"

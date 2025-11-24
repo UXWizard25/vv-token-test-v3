@@ -2,7 +2,7 @@
   "Semantic": {
     "Text": {
       "textColorAccentConstant": {
-        "$value": "#dd0000",
+        "$value": "#DD0000",
         "value": "#DD0000",
         "type": "color",
         "$extensions": {
@@ -30,12 +30,8 @@
           "$type": "color",
           "comment": "Applies to text elements requiring fixed brand color usage (e.g., permanent links, brand slogans on constant backgrounds).\nBehavior: Constant — maintains identical red tone across Light and Dark mode."
         },
-        "name": "SemanticTextTextColorAccentConstant",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Text",
-          "item": "textColorAccentConstant"
-        },
+        "name": "textColorAccentConstant",
+        "attributes": {},
         "path": [
           "Semantic",
           "Text",
@@ -43,7 +39,7 @@
         ]
       },
       "textColorPrimary": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -71,12 +67,8 @@
           "$type": "color",
           "comment": "Main text color used for body copy and all primary textual content. Ensures optimal readability and contrast on standard surfaces.\nBehavior: Dynamic — switches between dark text on light backgrounds and light text on dark backgrounds."
         },
-        "name": "SemanticTextTextColorPrimary",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Text",
-          "item": "textColorPrimary"
-        },
+        "name": "textColorPrimary",
+        "attributes": {},
         "path": [
           "Semantic",
           "Text",
@@ -84,7 +76,7 @@
         ]
       },
       "textColorMuted": {
-        "$value": "#ced4da",
+        "$value": "#CED4DA",
         "value": "#CED4DA",
         "type": "color",
         "$extensions": {
@@ -112,12 +104,8 @@
           "$type": "color",
           "comment": "Muted text tone for subtle information, timestamps, or inactive text elements.\nBehavior: Dynamic — adjusts between mid-gray in Light mode and lighter gray in Dark mode."
         },
-        "name": "SemanticTextTextColorMuted",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Text",
-          "item": "textColorMuted"
-        },
+        "name": "textColorMuted",
+        "attributes": {},
         "path": [
           "Semantic",
           "Text",
@@ -153,12 +141,8 @@
           "$type": "color",
           "comment": "Inverse text color used on opposing surfaces (e.g., white text on red or dark backgrounds).\nBehavior: Dynamic — alternates between light and dark mode."
         },
-        "name": "SemanticTextTextColorPrimaryInverse",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Text",
-          "item": "textColorPrimaryInverse"
-        },
+        "name": "textColorPrimaryInverse",
+        "attributes": {},
         "path": [
           "Semantic",
           "Text",
@@ -194,12 +178,8 @@
           "$type": "color",
           "comment": "Used when primary text color must remain fixed regardless of mode (e.g., on light constant backgrounds).\nBehavior: Constant — same tone across Light and Dark mode."
         },
-        "name": "SemanticTextTextColorPrimaryConstant",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Text",
-          "item": "textColorPrimaryConstant"
-        },
+        "name": "textColorPrimaryConstant",
+        "attributes": {},
         "path": [
           "Semantic",
           "Text",
@@ -207,7 +187,7 @@
         ]
       },
       "textColorSuccessConstant": {
-        "$value": "#006e3e",
+        "$value": "#006E3E",
         "value": "#006E3E",
         "type": "color",
         "$extensions": {
@@ -235,12 +215,8 @@
           "$type": "color",
           "comment": "Used for positive or success-related messages (e.g., “Saved”, “Success”, or confirmation text) on success surface colors.\nBehavior: Constant — green tone remains consistent across both modes."
         },
-        "name": "SemanticTextTextColorSuccessConstant",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Text",
-          "item": "textColorSuccessConstant"
-        },
+        "name": "textColorSuccessConstant",
+        "attributes": {},
         "path": [
           "Semantic",
           "Text",
@@ -248,7 +224,7 @@
         ]
       },
       "textColorPrimaryInverseConstant": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -276,12 +252,8 @@
           "$type": "color",
           "comment": "Fixed inverse tone for text that always appears on dark surfaces (e.g., hero headlines or persistent dark cards).\nBehavior: Constant — unchanged across modes."
         },
-        "name": "SemanticTextTextColorPrimaryInverseConstant",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Text",
-          "item": "textColorPrimaryInverseConstant"
-        },
+        "name": "textColorPrimaryInverseConstant",
+        "attributes": {},
         "path": [
           "Semantic",
           "Text",
@@ -289,7 +261,7 @@
         ]
       },
       "textColorSecondary": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -317,12 +289,8 @@
           "$type": "color",
           "comment": "Secondary text color used for supportive information, subtitles, and less prominent text.\nBehavior: Dynamic — adapts between neutral tones to maintain proper contrast per theme. In 2025 css it is called figure meta."
         },
-        "name": "SemanticTextTextColorSecondary",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Text",
-          "item": "textColorSecondary"
-        },
+        "name": "textColorSecondary",
+        "attributes": {},
         "path": [
           "Semantic",
           "Text",
@@ -330,7 +298,7 @@
         ]
       },
       "textColorAttentionHigh": {
-        "$value": "#dd0000",
+        "$value": "#DD0000",
         "value": "#DD0000",
         "type": "color",
         "$extensions": {
@@ -358,12 +326,8 @@
           "$type": "color",
           "comment": "Used for strong warnings, errors, or destructive action labels.\nBehavior: Constant — red color remains unchanged between Light and Dark mode for visibility and recognition."
         },
-        "name": "SemanticTextTextColorAttentionHigh",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Text",
-          "item": "textColorAttentionHigh"
-        },
+        "name": "textColorAttentionHigh",
+        "attributes": {},
         "path": [
           "Semantic",
           "Text",
@@ -371,7 +335,7 @@
         ]
       },
       "textColorAccent": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -399,12 +363,8 @@
           "$type": "color",
           "comment": "Accent text color used for links, interactive text, or highlighted key words. Changes from a red in light mode to a white in dark mode."
         },
-        "name": "SemanticTextTextColorAccent",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Text",
-          "item": "textColorAccent"
-        },
+        "name": "textColorAccent",
+        "attributes": {},
         "path": [
           "Semantic",
           "Text",
@@ -412,7 +372,7 @@
         ]
       },
       "textColorAttentionMedium": {
-        "$value": "#fd8227",
+        "$value": "#FD8227",
         "value": "#FD8227",
         "type": "color",
         "$extensions": {
@@ -440,12 +400,8 @@
           "$type": "color",
           "comment": "Represents medium attention states, often used in warnings or pending states.\nBehavior: Constant — same orange tone across Light and Dark mode."
         },
-        "name": "SemanticTextTextColorAttentionMedium",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Text",
-          "item": "textColorAttentionMedium"
-        },
+        "name": "textColorAttentionMedium",
+        "attributes": {},
         "path": [
           "Semantic",
           "Text",
@@ -453,7 +409,7 @@
         ]
       },
       "textColorOnDarkSurface": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -481,12 +437,8 @@
           "$type": "color",
           "comment": "Used for text displayed on dark surfaces to ensure maximum legibility and contrast.\nBehavior: Constant — always light neutral to guarantee accessibility on dark backgrounds."
         },
-        "name": "SemanticTextTextColorOnDarkSurface",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Text",
-          "item": "textColorOnDarkSurface"
-        },
+        "name": "textColorOnDarkSurface",
+        "attributes": {},
         "path": [
           "Semantic",
           "Text",
@@ -524,12 +476,8 @@
           "$type": "color",
           "comment": "Primary surface color used for main backgrounds and large layout areas (e.g., page background, primary containers).\nBehavior: Dynamic — adapts between light and dark surface tokens to maintain legibility and hierarchy."
         },
-        "name": "SemanticSurfaceSurfaceColorPrimary",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Surface",
-          "item": "surfaceColorPrimary"
-        },
+        "name": "surfaceColorPrimary",
+        "attributes": {},
         "path": [
           "Semantic",
           "Surface",
@@ -537,7 +485,7 @@
         ]
       },
       "surfaceColorSecondary": {
-        "$value": "#2c3138",
+        "$value": "#2C3138",
         "value": "#2C3138",
         "type": "color",
         "$extensions": {
@@ -565,12 +513,8 @@
           "$type": "color",
           "comment": "Used for secondary surface layers such as cards, panels, or nested containers that need to differentiate themselves from the primary surface. .\nBehavior: Dynamic — adapts brightness level based on mode for appropriate depth contrast."
         },
-        "name": "SemanticSurfaceSurfaceColorSecondary",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Surface",
-          "item": "surfaceColorSecondary"
-        },
+        "name": "surfaceColorSecondary",
+        "attributes": {},
         "path": [
           "Semantic",
           "Surface",
@@ -578,7 +522,7 @@
         ]
       },
       "surfaceColorPrimaryInverse": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -606,12 +550,8 @@
           "$type": "color",
           "comment": "Inverse of the primary surface, used when Light and Dark surfaces are swapped (e.g., inverse cards or elevated sections).\nBehavior: Dynamic — switches between dark and light values depending on mode."
         },
-        "name": "SemanticSurfaceSurfaceColorPrimaryInverse",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Surface",
-          "item": "surfaceColorPrimaryInverse"
-        },
+        "name": "surfaceColorPrimaryInverse",
+        "attributes": {},
         "path": [
           "Semantic",
           "Surface",
@@ -619,7 +559,7 @@
         ]
       },
       "surfaceColorPrimaryConstantLight": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -647,12 +587,8 @@
           "$type": "color",
           "comment": "A fixed light surface tone used when a consistent light background is required (e.g., light panels within dark layouts).\nBehavior: Constant — remains the same in both modes."
         },
-        "name": "SemanticSurfaceSurfaceColorPrimaryConstantLight",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Surface",
-          "item": "surfaceColorPrimaryConstantLight"
-        },
+        "name": "surfaceColorPrimaryConstantLight",
+        "attributes": {},
         "path": [
           "Semantic",
           "Surface",
@@ -688,12 +624,8 @@
           "$type": "color",
           "comment": "A fixed dark surface tone used for dark overlays or nested dark sections inside light layouts.\nBehavior: Constant — identical across Light and Dark mode."
         },
-        "name": "SemanticSurfaceSurfaceColorPrimaryConstantDark",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Surface",
-          "item": "surfaceColorPrimaryConstantDark"
-        },
+        "name": "surfaceColorPrimaryConstantDark",
+        "attributes": {},
         "path": [
           "Semantic",
           "Surface",
@@ -701,7 +633,7 @@
         ]
       },
       "surfaceColorQuartenary": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -729,12 +661,8 @@
           "$type": "color",
           "comment": "HIghtest elevation surface color, typically used for grouping or background accents to differentiate themselves from all previous surface color options. Uses corresponding light/dark tones for consistent layering."
         },
-        "name": "SemanticSurfaceSurfaceColorQuartenary",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Surface",
-          "item": "surfaceColorQuartenary"
-        },
+        "name": "surfaceColorQuartenary",
+        "attributes": {},
         "path": [
           "Semantic",
           "Surface",
@@ -742,7 +670,7 @@
         ]
       },
       "surfaceColorSuccess": {
-        "$value": "#cef4e4",
+        "$value": "#CEF4E4",
         "value": "#CEF4E4",
         "type": "color",
         "$extensions": {
@@ -770,12 +698,8 @@
           "$type": "color",
           "comment": "Success-related background used for positive notifications, confirmation surfaces, or success banners.\nBehavior: Constant — remains the same across Light and Dark mode to ensure brand alignment."
         },
-        "name": "SemanticSurfaceSurfaceColorSuccess",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Surface",
-          "item": "surfaceColorSuccess"
-        },
+        "name": "surfaceColorSuccess",
+        "attributes": {},
         "path": [
           "Semantic",
           "Surface",
@@ -783,7 +707,7 @@
         ]
       },
       "surfaceColorTertiary": {
-        "$value": "#343c41",
+        "$value": "#343C41",
         "value": "#343C41",
         "type": "color",
         "$extensions": {
@@ -811,12 +735,8 @@
           "$type": "color",
           "comment": "Tertiary background layer for inner containers, grouped content, or subtle elevation steps  that need to differentiate themselves from the primary and secondary surfaces.\nBehavior: Dynamic — switches between light and dark tertiary tones."
         },
-        "name": "SemanticSurfaceSurfaceColorTertiary",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Surface",
-          "item": "surfaceColorTertiary"
-        },
+        "name": "surfaceColorTertiary",
+        "attributes": {},
         "path": [
           "Semantic",
           "Surface",
@@ -824,7 +744,7 @@
         ]
       },
       "surfaceColorTertiaryGradientStop": {
-        "$value": "#343c4100",
+        "$value": "rgba(52, 60, 65, 0)",
         "value": "rgba(52, 60, 65, 0)",
         "type": "color",
         "$extensions": {
@@ -852,12 +772,8 @@
           "$type": "color",
           "comment": "Represents tertiary-level gradient background.\nCurrently used on skeletons."
         },
-        "name": "SemanticSurfaceSurfaceColorTertiaryGradientStop",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Surface",
-          "item": "surfaceColorTertiaryGradientStop"
-        },
+        "name": "surfaceColorTertiaryGradientStop",
+        "attributes": {},
         "path": [
           "Semantic",
           "Surface",
@@ -865,7 +781,7 @@
         ]
       },
       "surfaceColorTertiaryInverse": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -893,12 +809,8 @@
           "$type": "color",
           "comment": "Inverse tertiary background, applied when Light and Dark surfaces are reversed (e.g., dark-on-light cards).\nBehavior: Dynamic — swaps values between modes for contrast preservation."
         },
-        "name": "SemanticSurfaceSurfaceColorTertiaryInverse",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Surface",
-          "item": "surfaceColorTertiaryInverse"
-        },
+        "name": "surfaceColorTertiaryInverse",
+        "attributes": {},
         "path": [
           "Semantic",
           "Surface",
@@ -906,7 +818,7 @@
         ]
       },
       "surfaceColorPrimaryGradientStop": {
-        "$value": "#23262900",
+        "$value": "rgba(35, 38, 41, 0)",
         "value": "rgba(35, 38, 41, 0)",
         "type": "color",
         "$extensions": {
@@ -934,12 +846,8 @@
           "$type": "color",
           "comment": "Defines the end stops for primary surface gradients, creating visual depth or elevation. Used next to sliders buttons and slider container edges for fading out content. Behavior: Dynamic — light gradients in Light mode, dark gradients in Dark mode."
         },
-        "name": "SemanticSurfaceSurfaceColorPrimaryGradientStop",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Surface",
-          "item": "surfaceColorPrimaryGradientStop"
-        },
+        "name": "surfaceColorPrimaryGradientStop",
+        "attributes": {},
         "path": [
           "Semantic",
           "Surface",
@@ -947,7 +855,7 @@
         ]
       },
       "surfaceColorSecondaryGradientStop": {
-        "$value": "#2c313800",
+        "$value": "rgba(44, 49, 56, 0)",
         "value": "rgba(44, 49, 56, 0)",
         "type": "color",
         "$extensions": {
@@ -975,12 +883,8 @@
           "$type": "color",
           "comment": "Used for secondary surface gradients or subtle depth layers across backgrounds.\nBehavior: Dynamic — adapts to mode brightness for smooth gradient transitions."
         },
-        "name": "SemanticSurfaceSurfaceColorSecondaryGradientStop",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Surface",
-          "item": "surfaceColorSecondaryGradientStop"
-        },
+        "name": "surfaceColorSecondaryGradientStop",
+        "attributes": {},
         "path": [
           "Semantic",
           "Surface",
@@ -988,7 +892,7 @@
         ]
       },
       "surfaceColorQuartenaryInverse": {
-        "$value": "#ced4da",
+        "$value": "#CED4DA",
         "value": "#CED4DA",
         "type": "color",
         "$extensions": {
@@ -1016,12 +920,8 @@
           "$type": "color",
           "comment": "Inverse of the quartenary surface, used for background reversals in mixed-layout areas.\nBehavior: Dynamic — inverts between dark and light tones depending on mode."
         },
-        "name": "SemanticSurfaceSurfaceColorQuartenaryInverse",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Surface",
-          "item": "surfaceColorQuartenaryInverse"
-        },
+        "name": "surfaceColorQuartenaryInverse",
+        "attributes": {},
         "path": [
           "Semantic",
           "Surface",
@@ -1031,7 +931,7 @@
     },
     "Heading": {
       "kickerTextColorOnSurface": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -1059,12 +959,8 @@
           "$type": "color",
           "comment": "Used for kicker text and category labels placed directly on standard surface backgrounds.\nBehavior: Dynamic — adjusts between red for Light and a neutral tone in Dark modes."
         },
-        "name": "SemanticHeadingKickerTextColorOnSurface",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Heading",
-          "item": "kickerTextColorOnSurface"
-        },
+        "name": "kickerTextColorOnSurface",
+        "attributes": {},
         "path": [
           "Semantic",
           "Heading",
@@ -1072,7 +968,7 @@
         ]
       },
       "headlineColorPrimary": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -1100,12 +996,8 @@
           "$type": "color",
           "comment": "Primary color for headings and display typography. Ensures clear hierarchy and optimal readability on main surfaces. Adapds it´s color based on the brand mode for brand recognition.\nBehavior: Dynamic — dark text in Light mode, light text in Dark mode."
         },
-        "name": "SemanticHeadingHeadlineColorPrimary",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Heading",
-          "item": "headlineColorPrimary"
-        },
+        "name": "headlineColorPrimary",
+        "attributes": {},
         "path": [
           "Semantic",
           "Heading",
@@ -1113,7 +1005,7 @@
         ]
       },
       "headlineColorWhiteConst": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -1141,12 +1033,8 @@
           "$type": "color",
           "comment": "Fixed white heading color used on dark or colored backgrounds (e.g., hero sections, banners) that remain constant across modes.\nBehavior: Constant — remains white in both Light and Dark mode."
         },
-        "name": "SemanticHeadingHeadlineColorWhiteConst",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Heading",
-          "item": "headlineColorWhiteConst"
-        },
+        "name": "headlineColorWhiteConst",
+        "attributes": {},
         "path": [
           "Semantic",
           "Heading",
@@ -1154,7 +1042,7 @@
         ]
       },
       "kickerTextColorOnRed": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -1182,12 +1070,8 @@
           "$type": "color",
           "comment": "Specialized kicker color for use on red or brand-colored backgrounds (e.g., red kicker bg within teaser cards).\nBehavior: Constant — remains consistent across light and darkmode."
         },
-        "name": "SemanticHeadingKickerTextColorOnRed",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Heading",
-          "item": "kickerTextColorOnRed"
-        },
+        "name": "kickerTextColorOnRed",
+        "attributes": {},
         "path": [
           "Semantic",
           "Heading",
@@ -1195,7 +1079,7 @@
         ]
       },
       "kickerTextColorOnDarkBg": {
-        "$value": "#ffffffcc",
+        "$value": "rgba(255, 255, 255, 0.800000011920929)",
         "value": "rgba(255, 255, 255, 0.800000011920929)",
         "type": "color",
         "$extensions": {
@@ -1223,12 +1107,8 @@
           "$type": "color",
           "comment": "Applied to kicker or meta text on dark colored backgrounds to maintain high legibility.\nBehavior: Constant — always uses semi-transparent white for consistent readability."
         },
-        "name": "SemanticHeadingKickerTextColorOnDarkBg",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Heading",
-          "item": "kickerTextColorOnDarkBg"
-        },
+        "name": "kickerTextColorOnDarkBg",
+        "attributes": {},
         "path": [
           "Semantic",
           "Heading",
@@ -1236,7 +1116,7 @@
         ]
       },
       "kickerTextColorOnBrightBg": {
-        "$value": "#000000b2",
+        "$value": "rgba(0, 0, 0, 0.699999988079071)",
         "value": "rgba(0, 0, 0, 0.699999988079071)",
         "type": "color",
         "$extensions": {
@@ -1264,12 +1144,8 @@
           "$type": "color",
           "comment": "Used for kicker text placed on bright or light colored backgrounds. Ensures balanced contrast without harsh visual dominance.\nBehavior: Constant — remains semi-transparent black across both modes."
         },
-        "name": "SemanticHeadingKickerTextColorOnBrightBg",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Heading",
-          "item": "kickerTextColorOnBrightBg"
-        },
+        "name": "kickerTextColorOnBrightBg",
+        "attributes": {},
         "path": [
           "Semantic",
           "Heading",
@@ -1279,7 +1155,7 @@
     },
     "State": {
       "colorSecondaryActive": {
-        "$value": "#f2f4f5",
+        "$value": "#F2F4F5",
         "value": "#F2F4F5",
         "type": "color",
         "$extensions": {
@@ -1307,12 +1183,8 @@
           "$type": "color",
           "comment": "Defines the active state color for secondary actions (e.g., secondary buttons, tabs, or toggles).\nBehavior: Dynamic — light gray in Light mode and bright gray in Dark mode to maintain perceptual balance."
         },
-        "name": "SemanticStateColorSecondaryActive",
-        "attributes": {
-          "category": "Semantic",
-          "type": "State",
-          "item": "colorSecondaryActive"
-        },
+        "name": "colorSecondaryActive",
+        "attributes": {},
         "path": [
           "Semantic",
           "State",
@@ -1320,7 +1192,7 @@
         ]
       },
       "colorPrimaryActive": {
-        "$value": "#dd0000",
+        "$value": "#DD0000",
         "value": "#DD0000",
         "type": "color",
         "$extensions": {
@@ -1348,12 +1220,8 @@
           "$type": "color",
           "comment": "Used to represent the active or pressed state of primary actions such as tabs or links.\nBehavior: Constant — identical value across modes for consistent interaction feedback."
         },
-        "name": "SemanticStateColorPrimaryActive",
-        "attributes": {
-          "category": "Semantic",
-          "type": "State",
-          "item": "colorPrimaryActive"
-        },
+        "name": "colorPrimaryActive",
+        "attributes": {},
         "path": [
           "Semantic",
           "State",
@@ -1361,7 +1229,7 @@
         ]
       },
       "colorSecondaryDisabled": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -1389,12 +1257,8 @@
           "$type": "color",
           "comment": "Used for disabled secondary elements, ensuring reduced visual prominence while maintaining legibility.\nBehavior: Dynamic — adapts neutral tones based on theme brightness."
         },
-        "name": "SemanticStateColorSecondaryDisabled",
-        "attributes": {
-          "category": "Semantic",
-          "type": "State",
-          "item": "colorSecondaryDisabled"
-        },
+        "name": "colorSecondaryDisabled",
+        "attributes": {},
         "path": [
           "Semantic",
           "State",
@@ -1402,7 +1266,7 @@
         ]
       },
       "colorPrimaryDisabled": {
-        "$value": "#343c41",
+        "$value": "#343C41",
         "value": "#343C41",
         "type": "color",
         "$extensions": {
@@ -1430,12 +1294,8 @@
           "$type": "color",
           "comment": "Defines the disabled color for primary components (e.g., disabled primary buttons, inputs). Reduces emphasis and contrast to signal inactivity.\nBehavior: Dynamic — slightly lighter in Light mode and darker in Dark mode to remain visually accessible."
         },
-        "name": "SemanticStateColorPrimaryDisabled",
-        "attributes": {
-          "category": "Semantic",
-          "type": "State",
-          "item": "colorPrimaryDisabled"
-        },
+        "name": "colorPrimaryDisabled",
+        "attributes": {},
         "path": [
           "Semantic",
           "State",
@@ -1471,12 +1331,8 @@
           "$type": "color",
           "comment": "Inverse variant of the secondary active state, applied on dark backgrounds or inverse layouts.\nBehavior: Dynamic — switches between bright and dark tones depending on the background."
         },
-        "name": "SemanticStateColorSecondaryActiveInverse",
-        "attributes": {
-          "category": "Semantic",
-          "type": "State",
-          "item": "colorSecondaryActiveInverse"
-        },
+        "name": "colorSecondaryActiveInverse",
+        "attributes": {},
         "path": [
           "Semantic",
           "State",
@@ -1484,7 +1340,7 @@
         ]
       },
       "colorTertiaryActive": {
-        "$value": "#00c373",
+        "$value": "#00C373",
         "value": "#00C373",
         "type": "color",
         "$extensions": {
@@ -1512,12 +1368,8 @@
           "$type": "color",
           "comment": "Represents active or pressed states for tertiary elements (e.g., link highlights, icons, or subtle interactive surfaces).\nBehavior: Constant — uses the same green success tone across Light and Dark mode."
         },
-        "name": "SemanticStateColorTertiaryActive",
-        "attributes": {
-          "category": "Semantic",
-          "type": "State",
-          "item": "colorTertiaryActive"
-        },
+        "name": "colorTertiaryActive",
+        "attributes": {},
         "path": [
           "Semantic",
           "State",
@@ -1525,7 +1377,7 @@
         ]
       },
       "colorTertiaryDisabled": {
-        "$value": "#666b70",
+        "$value": "#666B70",
         "value": "#666B70",
         "type": "color",
         "$extensions": {
@@ -1553,12 +1405,8 @@
           "$type": "color",
           "comment": "Represents disabled states for tertiary levels, maintaining subtle visibility without drawing attention.\nBehavior: Dynamic — adjusts between gray tones for Light and Dark mode consistency."
         },
-        "name": "SemanticStateColorTertiaryDisabled",
-        "attributes": {
-          "category": "Semantic",
-          "type": "State",
-          "item": "colorTertiaryDisabled"
-        },
+        "name": "colorTertiaryDisabled",
+        "attributes": {},
         "path": [
           "Semantic",
           "State",
@@ -1568,7 +1416,7 @@
     },
     "Border": {
       "borderColorMediumContrast": {
-        "$value": "#666b70",
+        "$value": "#666B70",
         "value": "#666B70",
         "type": "color",
         "$extensions": {
@@ -1596,12 +1444,8 @@
           "$type": "color",
           "comment": "Medium-emphasis border color for standard outlines, input fields, or separators that require visible yet non-dominant contrast.\nBehavior: Dynamic — adjusts to maintain legibility in Light and Dark themes."
         },
-        "name": "SemanticBorderBorderColorMediumContrast",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Border",
-          "item": "borderColorMediumContrast"
-        },
+        "name": "borderColorMediumContrast",
+        "attributes": {},
         "path": [
           "Semantic",
           "Border",
@@ -1609,7 +1453,7 @@
         ]
       },
       "borderColorLowContrast": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -1637,12 +1481,8 @@
           "$type": "color",
           "comment": "Used for subtle dividers and low-emphasis borders in neutral areas (e.g., card outlines, input containers).\nDynamic — light gray in Light mode, dark gray in Dark mode."
         },
-        "name": "SemanticBorderBorderColorLowContrast",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Border",
-          "item": "borderColorLowContrast"
-        },
+        "name": "borderColorLowContrast",
+        "attributes": {},
         "path": [
           "Semantic",
           "Border",
@@ -1650,7 +1490,7 @@
         ]
       },
       "borderColorHighContrast": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -1678,12 +1518,8 @@
           "$type": "color",
           "comment": "High-emphasis border color for clear delineation between surfaces (e.g., focus rings, high-contrast UI zones).\nBehavior: Dynamic — light surfaces use a darker neutral, dark surfaces a light neutral tone."
         },
-        "name": "SemanticBorderBorderColorHighContrast",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Border",
-          "item": "borderColorHighContrast"
-        },
+        "name": "borderColorHighContrast",
+        "attributes": {},
         "path": [
           "Semantic",
           "Border",
@@ -1691,7 +1527,7 @@
         ]
       },
       "borderColorLowContrastConstant": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -1719,12 +1555,8 @@
           "$type": "color",
           "comment": "Applies to UI elements that must visually remain the same regardless of theme (e.g., brand containers, static illustrations). Identical tone across Light and Dark mode."
         },
-        "name": "SemanticBorderBorderColorLowContrastConstant",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Border",
-          "item": "borderColorLowContrastConstant"
-        },
+        "name": "borderColorLowContrastConstant",
+        "attributes": {},
         "path": [
           "Semantic",
           "Border",
@@ -1732,7 +1564,7 @@
         ]
       },
       "borderColorSuccess": {
-        "$value": "#00c373",
+        "$value": "#00C373",
         "value": "#00C373",
         "type": "color",
         "$extensions": {
@@ -1760,12 +1592,8 @@
           "$type": "color",
           "comment": "Used for success states and validation borders (e.g., input success outlines or confirmation frames).\nBehavior: Constant — same success tone across modes for consistent feedback semantics."
         },
-        "name": "SemanticBorderBorderColorSuccess",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Border",
-          "item": "borderColorSuccess"
-        },
+        "name": "borderColorSuccess",
+        "attributes": {},
         "path": [
           "Semantic",
           "Border",
@@ -1773,7 +1601,7 @@
         ]
       },
       "borderColorWarning": {
-        "$value": "#dd0000",
+        "$value": "#DD0000",
         "value": "#DD0000",
         "type": "color",
         "$extensions": {
@@ -1801,12 +1629,8 @@
           "$type": "color",
           "comment": "Defines border color for warning and error-related components, typically used for input validation or caution zones.\nBehavior: Constant — retains the same red warning tone in both Light and Dark modes."
         },
-        "name": "SemanticBorderBorderColorWarning",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Border",
-          "item": "borderColorWarning"
-        },
+        "name": "borderColorWarning",
+        "attributes": {},
         "path": [
           "Semantic",
           "Border",
@@ -1814,7 +1638,7 @@
         ]
       },
       "borderColorPrimaryDisabled": {
-        "$value": "#343c41",
+        "$value": "#343C41",
         "value": "#343C41",
         "type": "color",
         "$extensions": {
@@ -1842,12 +1666,8 @@
           "$type": "color",
           "comment": "Applied to disabled states of primary elements (e.g., buttons, inputs) to visually reduce emphasis and indicate inactivity."
         },
-        "name": "SemanticBorderBorderColorPrimaryDisabled",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Border",
-          "item": "borderColorPrimaryDisabled"
-        },
+        "name": "borderColorPrimaryDisabled",
+        "attributes": {},
         "path": [
           "Semantic",
           "Border",
@@ -1855,7 +1675,7 @@
         ]
       },
       "borderColorSecondaryDisabled": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -1883,12 +1703,8 @@
           "$type": "color",
           "comment": "Used for secondary component borders in a disabled state (e.g., secondary buttons, inactive input outlines)."
         },
-        "name": "SemanticBorderBorderColorSecondaryDisabled",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Border",
-          "item": "borderColorSecondaryDisabled"
-        },
+        "name": "borderColorSecondaryDisabled",
+        "attributes": {},
         "path": [
           "Semantic",
           "Border",
@@ -1898,7 +1714,7 @@
     },
     "Core": {
       "coreColorPrimary": {
-        "$value": "#dd0000",
+        "$value": "#DD0000",
         "value": "#DD0000",
         "type": "color",
         "$extensions": {
@@ -1926,12 +1742,8 @@
           "$type": "color",
           "comment": "Used as the main brand color for key interactive elements such as primary buttons, active states, and prominent highlights. It remains constant across Light and Dark Mode."
         },
-        "name": "SemanticCoreCoreColorPrimary",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Core",
-          "item": "coreColorPrimary"
-        },
+        "name": "coreColorPrimary",
+        "attributes": {},
         "path": [
           "Semantic",
           "Core",
@@ -1967,12 +1779,8 @@
           "$type": "color",
           "comment": "Defines the secondary brand tone. This variable changes across Light and Dark Mode."
         },
-        "name": "SemanticCoreCoreColorSecondary",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Core",
-          "item": "coreColorSecondary"
-        },
+        "name": "coreColorSecondary",
+        "attributes": {},
         "path": [
           "Semantic",
           "Core",
@@ -1980,7 +1788,7 @@
         ]
       },
       "coreColorTertiary": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -2008,12 +1816,8 @@
           "$type": "color",
           "comment": "Represents tertiary brand accents. This variable changes across Light and Dark Mode."
         },
-        "name": "SemanticCoreCoreColorTertiary",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Core",
-          "item": "coreColorTertiary"
-        },
+        "name": "coreColorTertiary",
+        "attributes": {},
         "path": [
           "Semantic",
           "Core",
@@ -2021,7 +1825,7 @@
         ]
       },
       "coreColorSecondaryConstant": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -2049,12 +1853,8 @@
           "$type": "color",
           "comment": "Use this on elements that must maintain the white color even in dark mode."
         },
-        "name": "SemanticCoreCoreColorSecondaryConstant",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Core",
-          "item": "coreColorSecondaryConstant"
-        },
+        "name": "coreColorSecondaryConstant",
+        "attributes": {},
         "path": [
           "Semantic",
           "Core",
@@ -2090,12 +1890,8 @@
           "$type": "color",
           "comment": "Use this on elements that need to maintain the dark color across themes and color modes."
         },
-        "name": "SemanticCoreCoreColorTertiaryConstant",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Core",
-          "item": "coreColorTertiaryConstant"
-        },
+        "name": "coreColorTertiaryConstant",
+        "attributes": {},
         "path": [
           "Semantic",
           "Core",
@@ -2103,7 +1899,7 @@
         ]
       },
       "coreColorTertiaryVvPipeTEST": {
-        "$value": "#b0d1f3",
+        "$value": "#B0D1F3",
         "value": "#B0D1F3",
         "type": "color",
         "$extensions": {
@@ -2131,12 +1927,8 @@
           "$type": "color",
           "comment": "this is a test for the token pipeline"
         },
-        "name": "SemanticCoreCoreColorTertiaryVvPipeTest",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Core",
-          "item": "coreColorTertiaryVvPipeTEST"
-        },
+        "name": "coreColorTertiaryVvPipeTEST",
+        "attributes": {},
         "path": [
           "Semantic",
           "Core",
@@ -2144,7 +1936,7 @@
         ]
       },
       "npmTest": {
-        "$value": "#b0d1f3",
+        "$value": "#B0D1F3",
         "value": "#B0D1F3",
         "type": "color",
         "$extensions": {
@@ -2172,12 +1964,8 @@
           "$type": "color",
           "comment": "this is a test for the token pipeline"
         },
-        "name": "SemanticCoreNpmTest",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Core",
-          "item": "npmTest"
-        },
+        "name": "npmTest",
+        "attributes": {},
         "path": [
           "Semantic",
           "Core",
@@ -2185,7 +1973,7 @@
         ]
       },
       "felipeTestColor": {
-        "$value": "#031a31",
+        "$value": "#031A31",
         "value": "#031A31",
         "type": "color",
         "$extensions": {
@@ -2213,12 +2001,8 @@
           "$type": "color",
           "comment": "this is a test for the token pipeline"
         },
-        "name": "SemanticCoreFelipeTestColor",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Core",
-          "item": "felipeTestColor"
-        },
+        "name": "felipeTestColor",
+        "attributes": {},
         "path": [
           "Semantic",
           "Core",
@@ -2228,7 +2012,7 @@
     },
     "Icon": {
       "iconColorPrimary": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -2256,12 +2040,8 @@
           "$type": "color",
           "comment": "Primary icon color on primary surfaces."
         },
-        "name": "SemanticIconIconColorPrimary",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Icon",
-          "item": "iconColorPrimary"
-        },
+        "name": "iconColorPrimary",
+        "attributes": {},
         "path": [
           "Semantic",
           "Icon",
@@ -2269,7 +2049,7 @@
         ]
       },
       "iconColorInverse": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -2297,12 +2077,8 @@
           "$type": "color",
           "comment": "Inverse icon color for use on contrasting backgrounds (e.g., light icons on dark surfaces or dark icons on bright surfaces).\nBehavior: Dynamic — switches between light and dark."
         },
-        "name": "SemanticIconIconColorInverse",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Icon",
-          "item": "iconColorInverse"
-        },
+        "name": "iconColorInverse",
+        "attributes": {},
         "path": [
           "Semantic",
           "Icon",
@@ -2310,7 +2086,7 @@
         ]
       },
       "iconColorSecondaryConstant": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -2338,12 +2114,8 @@
           "$type": "color",
           "comment": "Secondary icon tone for less prominent actions or supportive iconography (e.g., secondary buttons, tool icons). Remains unchanged across modes."
         },
-        "name": "SemanticIconIconColorSecondaryConstant",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Icon",
-          "item": "iconColorSecondaryConstant"
-        },
+        "name": "iconColorSecondaryConstant",
+        "attributes": {},
         "path": [
           "Semantic",
           "Icon",
@@ -2351,7 +2123,7 @@
         ]
       },
       "iconColorConstantOnDark": {
-        "$value": "#f2f4f5",
+        "$value": "#F2F4F5",
         "value": "#F2F4F5",
         "type": "color",
         "$extensions": {
@@ -2379,12 +2151,8 @@
           "$type": "color",
           "comment": "Used for icons displayed on dark backgrounds that don´t change colors, ensuring sufficient contrast and legibility.\nBehavior: Constant — always uses a neutral bright value."
         },
-        "name": "SemanticIconIconColorConstantOnDark",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Icon",
-          "item": "iconColorConstantOnDark"
-        },
+        "name": "iconColorConstantOnDark",
+        "attributes": {},
         "path": [
           "Semantic",
           "Icon",
@@ -2392,7 +2160,7 @@
         ]
       },
       "iconColorPrimaryConstant": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -2420,12 +2188,8 @@
           "$type": "color",
           "comment": "Used for icons that must remain visually consistent regardless of mode (e.g.,  icons that are on surfaces that don't change color).\nIdentical tone in both Light and Dark mode."
         },
-        "name": "SemanticIconIconColorPrimaryConstant",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Icon",
-          "item": "iconColorPrimaryConstant"
-        },
+        "name": "iconColorPrimaryConstant",
+        "attributes": {},
         "path": [
           "Semantic",
           "Icon",
@@ -2433,7 +2197,7 @@
         ]
       },
       "iconColorSuccess": {
-        "$value": "#00c373",
+        "$value": "#00C373",
         "value": "#00C373",
         "type": "color",
         "$extensions": {
@@ -2461,12 +2225,8 @@
           "$type": "color",
           "comment": "Represents success or confirmation icons (e.g., checkmarks, completion indicators).\nBehavior: Constant — same success green tone across Light and Dark mode."
         },
-        "name": "SemanticIconIconColorSuccess",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Icon",
-          "item": "iconColorSuccess"
-        },
+        "name": "iconColorSuccess",
+        "attributes": {},
         "path": [
           "Semantic",
           "Icon",
@@ -2476,7 +2236,7 @@
     },
     "Label": {
       "labelColorPrimary": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -2504,12 +2264,8 @@
           "$type": "color",
           "comment": "Primary label color used for labels, badges, or tag text on light backgrounds. Ensures strong readability and visual hierarchy.\nBehavior: Dynamic — dark neutral in Light mode, light neutral in Dark mode."
         },
-        "name": "SemanticLabelLabelColorPrimary",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Label",
-          "item": "labelColorPrimary"
-        },
+        "name": "labelColorPrimary",
+        "attributes": {},
         "path": [
           "Semantic",
           "Label",
@@ -2517,7 +2273,7 @@
         ]
       },
       "labelColorSecondary": {
-        "$value": "#ced4da",
+        "$value": "#CED4DA",
         "value": "#CED4DA",
         "type": "color",
         "$extensions": {
@@ -2545,12 +2301,8 @@
           "$type": "color",
           "comment": "Secondary label tone used for less prominent text such as secondary badges or supporting labels.\nBehavior: Dynamic — adapts between mid-grays for Light and Dark surfaces."
         },
-        "name": "SemanticLabelLabelColorSecondary",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Label",
-          "item": "labelColorSecondary"
-        },
+        "name": "labelColorSecondary",
+        "attributes": {},
         "path": [
           "Semantic",
           "Label",
@@ -2558,7 +2310,7 @@
         ]
       },
       "labelColorDisabled": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -2586,12 +2338,8 @@
           "$type": "color",
           "comment": "Disabled label tone indicating inactive or unavailable states in UI elements.\nBehavior: Dynamic — lighter gray in Light mode, darker neutral in Dark mode."
         },
-        "name": "SemanticLabelLabelColorDisabled",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Label",
-          "item": "labelColorDisabled"
-        },
+        "name": "labelColorDisabled",
+        "attributes": {},
         "path": [
           "Semantic",
           "Label",
@@ -2627,12 +2375,8 @@
           "$type": "color",
           "comment": "Used when primary label color should remain unchanged across modes in static UI areas.\nBehavior: Constant — identical tone in both Light and Dark mode."
         },
-        "name": "SemanticLabelLabelColorPrimaryConstant",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Label",
-          "item": "labelColorPrimaryConstant"
-        },
+        "name": "labelColorPrimaryConstant",
+        "attributes": {},
         "path": [
           "Semantic",
           "Label",
@@ -2640,7 +2384,7 @@
         ]
       },
       "labelColorPrimaryInverseConstant": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -2668,12 +2412,8 @@
           "$type": "color",
           "comment": "Fixed inverse label tone applied where white or bright text must always appear, regardless of theme.\nBehavior: Constant — remains bright neutral in both Light and Dark mode."
         },
-        "name": "SemanticLabelLabelColorPrimaryInverseConstant",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Label",
-          "item": "labelColorPrimaryInverseConstant"
-        },
+        "name": "labelColorPrimaryInverseConstant",
+        "attributes": {},
         "path": [
           "Semantic",
           "Label",
@@ -2681,7 +2421,7 @@
         ]
       },
       "labelColorTertiary": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -2709,12 +2449,8 @@
           "$type": "color",
           "comment": "Tertiary label tone for subtle, low-emphasis UI text such as placeholder text or tertiary badges.\nBehavior: Constant — identical tone across both modes for stable hierarchy."
         },
-        "name": "SemanticLabelLabelColorTertiary",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Label",
-          "item": "labelColorTertiary"
-        },
+        "name": "labelColorTertiary",
+        "attributes": {},
         "path": [
           "Semantic",
           "Label",
@@ -2750,12 +2486,8 @@
           "$type": "color",
           "comment": "Inverse version of the primary label color, used on dark or colored backgrounds.\nBehavior: Dynamic — switches between light and dark."
         },
-        "name": "SemanticLabelLabelColorPrimaryInverse",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Label",
-          "item": "labelColorPrimaryInverse"
-        },
+        "name": "labelColorPrimaryInverse",
+        "attributes": {},
         "path": [
           "Semantic",
           "Label",
@@ -2765,7 +2497,7 @@
     },
     "Attention": {
       "attentionColorHigh": {
-        "$value": "#dd0000",
+        "$value": "#DD0000",
         "value": "#DD0000",
         "type": "color",
         "$extensions": {
@@ -2793,12 +2525,8 @@
           "$type": "color",
           "comment": "High-level attention color used for errors, destructive actions, and critical alerts (e.g., delete actions, error states). Remains red in both Light and Dark mode for immediate recognition."
         },
-        "name": "SemanticAttentionAttentionColorHigh",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Attention",
-          "item": "attentionColorHigh"
-        },
+        "name": "attentionColorHigh",
+        "attributes": {},
         "path": [
           "Semantic",
           "Attention",
@@ -2806,7 +2534,7 @@
         ]
       },
       "accentColorPrimary": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -2834,12 +2562,8 @@
           "$type": "color",
           "comment": "Primary accent color used to emphasize interactive or highlight elements such as links, selection states, or focus indicators. Adapts in Darkmode to a fully white tone."
         },
-        "name": "SemanticAttentionAccentColorPrimary",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Attention",
-          "item": "accentColorPrimary"
-        },
+        "name": "accentColorPrimary",
+        "attributes": {},
         "path": [
           "Semantic",
           "Attention",
@@ -2847,7 +2571,7 @@
         ]
       },
       "attentionColorMedium": {
-        "$value": "#fd8227",
+        "$value": "#FD8227",
         "value": "#FD8227",
         "type": "color",
         "$extensions": {
@@ -2875,12 +2599,8 @@
           "$type": "color",
           "comment": "Medium-level attention tone representing stronger caution or intermediate alert states. Commonly applied in warning messages. Constant — identical in both modes."
         },
-        "name": "SemanticAttentionAttentionColorMedium",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Attention",
-          "item": "attentionColorMedium"
-        },
+        "name": "attentionColorMedium",
+        "attributes": {},
         "path": [
           "Semantic",
           "Attention",
@@ -2888,7 +2608,7 @@
         ]
       },
       "attentionColorLow": {
-        "$value": "#ffbf00",
+        "$value": "#FFBF00",
         "value": "#FFBF00",
         "type": "color",
         "$extensions": {
@@ -2916,12 +2636,8 @@
           "$type": "color",
           "comment": "Low-level warning or attention tone, typically used for informational or cautionary messages. Same yellow tone across Light and Dark to maintain recognition."
         },
-        "name": "SemanticAttentionAttentionColorLow",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Attention",
-          "item": "attentionColorLow"
-        },
+        "name": "attentionColorLow",
+        "attributes": {},
         "path": [
           "Semantic",
           "Attention",
@@ -2929,7 +2645,7 @@
         ]
       },
       "accentColorPrimaryConstant": {
-        "$value": "#dd0000",
+        "$value": "#DD0000",
         "value": "#DD0000",
         "type": "color",
         "$extensions": {
@@ -2957,12 +2673,8 @@
           "$type": "color",
           "comment": "Used for accent highlights that must remain visually consistent across themes (e.g., brand identifiers, logos, or fixed emphasis areas). Color value does not change between Light and Dark mode."
         },
-        "name": "SemanticAttentionAccentColorPrimaryConstant",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Attention",
-          "item": "accentColorPrimaryConstant"
-        },
+        "name": "accentColorPrimaryConstant",
+        "attributes": {},
         "path": [
           "Semantic",
           "Attention",
@@ -2970,7 +2682,7 @@
         ]
       },
       "attentionColorSuccessPrimary": {
-        "$value": "#00c373",
+        "$value": "#00C373",
         "value": "#00C373",
         "type": "color",
         "$extensions": {
@@ -2998,12 +2710,8 @@
           "$type": "color",
           "comment": "Primary success color used to indicate positive states, confirmations, or completed actions (e.g., success banners, icons, or badges). Remains the same across modes to ensure recognizability and consistency."
         },
-        "name": "SemanticAttentionAttentionColorSuccessPrimary",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Attention",
-          "item": "attentionColorSuccessPrimary"
-        },
+        "name": "attentionColorSuccessPrimary",
+        "attributes": {},
         "path": [
           "Semantic",
           "Attention",
@@ -3011,7 +2719,7 @@
         ]
       },
       "attentionColorExtraLow": {
-        "$value": "#343c41",
+        "$value": "#343C41",
         "value": "#343C41",
         "type": "color",
         "$extensions": {
@@ -3039,12 +2747,8 @@
           "$type": "color",
           "comment": "Very low-contrast background tone used for information or system-neutral surfaces, often for tooltips or quiet information highlights. Dynamic — light neutral in Light mode and dark neutral in Dark mode."
         },
-        "name": "SemanticAttentionAttentionColorExtraLow",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Attention",
-          "item": "attentionColorExtraLow"
-        },
+        "name": "attentionColorExtraLow",
+        "attributes": {},
         "path": [
           "Semantic",
           "Attention",
@@ -3052,7 +2756,7 @@
         ]
       },
       "attentionColorSuccessSecondary": {
-        "$value": "#006e3e",
+        "$value": "#006E3E",
         "value": "#006E3E",
         "type": "color",
         "$extensions": {
@@ -3080,12 +2784,8 @@
           "$type": "color",
           "comment": "Secondary success tone used for secondary states. Maintains the same color in both Light and Dark mode for clarity."
         },
-        "name": "SemanticAttentionAttentionColorSuccessSecondary",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Attention",
-          "item": "attentionColorSuccessSecondary"
-        },
+        "name": "attentionColorSuccessSecondary",
+        "attributes": {},
         "path": [
           "Semantic",
           "Attention",
@@ -3095,7 +2795,7 @@
     },
     "Overlay": {
       "overlayScrimBlack": {
-        "$value": "#000000b2",
+        "$value": "rgba(0, 0, 0, 0.699999988079071)",
         "value": "rgba(0, 0, 0, 0.699999988079071)",
         "type": "color",
         "$extensions": {
@@ -3123,12 +2823,8 @@
           "$type": "color",
           "comment": "A semi-transparent black overlay used to dim background content when modals, drawers, or dialogs are active. Identical opacity and tone in both Light and Dark mode to ensure consistent overlay depth."
         },
-        "name": "SemanticOverlayOverlayScrimBlack",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Overlay",
-          "item": "overlayScrimBlack"
-        },
+        "name": "overlayScrimBlack",
+        "attributes": {},
         "path": [
           "Semantic",
           "Overlay",
@@ -3136,7 +2832,7 @@
         ]
       },
       "overlayScrimWhite": {
-        "$value": "#ffffffb2",
+        "$value": "rgba(255, 255, 255, 0.699999988079071)",
         "value": "rgba(255, 255, 255, 0.699999988079071)",
         "type": "color",
         "$extensions": {
@@ -3164,12 +2860,8 @@
           "$type": "color",
           "comment": "A semi-transparent white overlay used to brighten or fade background layers, often applied behind bottom sheets or temporary panels.\nBehavior: Constant — same opacity level across modes to preserve uniform layering behavior."
         },
-        "name": "SemanticOverlayOverlayScrimWhite",
-        "attributes": {
-          "category": "Semantic",
-          "type": "Overlay",
-          "item": "overlayScrimWhite"
-        },
+        "name": "overlayScrimWhite",
+        "attributes": {},
         "path": [
           "Semantic",
           "Overlay",
@@ -3203,12 +2895,8 @@
             }
           }
         },
-        "name": "SemanticLayerOpacityLayerOpacity05",
-        "attributes": {
-          "category": "Semantic",
-          "type": "LayerOpacity",
-          "item": "layerOpacity05"
-        },
+        "name": "layerOpacity05",
+        "attributes": {},
         "path": [
           "Semantic",
           "LayerOpacity",
@@ -3240,12 +2928,8 @@
             }
           }
         },
-        "name": "SemanticLayerOpacityLayerOpacity10",
-        "attributes": {
-          "category": "Semantic",
-          "type": "LayerOpacity",
-          "item": "layerOpacity10"
-        },
+        "name": "layerOpacity10",
+        "attributes": {},
         "path": [
           "Semantic",
           "LayerOpacity",
@@ -3277,12 +2961,8 @@
             }
           }
         },
-        "name": "SemanticLayerOpacityLayerOpacity20",
-        "attributes": {
-          "category": "Semantic",
-          "type": "LayerOpacity",
-          "item": "layerOpacity20"
-        },
+        "name": "layerOpacity20",
+        "attributes": {},
         "path": [
           "Semantic",
           "LayerOpacity",
@@ -3314,12 +2994,8 @@
             }
           }
         },
-        "name": "SemanticLayerOpacityLayerOpacity30",
-        "attributes": {
-          "category": "Semantic",
-          "type": "LayerOpacity",
-          "item": "layerOpacity30"
-        },
+        "name": "layerOpacity30",
+        "attributes": {},
         "path": [
           "Semantic",
           "LayerOpacity",
@@ -3351,12 +3027,8 @@
             }
           }
         },
-        "name": "SemanticLayerOpacityLayerOpacity40",
-        "attributes": {
-          "category": "Semantic",
-          "type": "LayerOpacity",
-          "item": "layerOpacity40"
-        },
+        "name": "layerOpacity40",
+        "attributes": {},
         "path": [
           "Semantic",
           "LayerOpacity",
@@ -3388,12 +3060,8 @@
             }
           }
         },
-        "name": "SemanticLayerOpacityLayerOpacity50",
-        "attributes": {
-          "category": "Semantic",
-          "type": "LayerOpacity",
-          "item": "layerOpacity50"
-        },
+        "name": "layerOpacity50",
+        "attributes": {},
         "path": [
           "Semantic",
           "LayerOpacity",
@@ -3425,12 +3093,8 @@
             }
           }
         },
-        "name": "SemanticLayerOpacityLayerOpacity60",
-        "attributes": {
-          "category": "Semantic",
-          "type": "LayerOpacity",
-          "item": "layerOpacity60"
-        },
+        "name": "layerOpacity60",
+        "attributes": {},
         "path": [
           "Semantic",
           "LayerOpacity",
@@ -3462,12 +3126,8 @@
             }
           }
         },
-        "name": "SemanticLayerOpacityLayerOpacity70",
-        "attributes": {
-          "category": "Semantic",
-          "type": "LayerOpacity",
-          "item": "layerOpacity70"
-        },
+        "name": "layerOpacity70",
+        "attributes": {},
         "path": [
           "Semantic",
           "LayerOpacity",
@@ -3499,12 +3159,8 @@
             }
           }
         },
-        "name": "SemanticLayerOpacityLayerOpacity80",
-        "attributes": {
-          "category": "Semantic",
-          "type": "LayerOpacity",
-          "item": "layerOpacity80"
-        },
+        "name": "layerOpacity80",
+        "attributes": {},
         "path": [
           "Semantic",
           "LayerOpacity",
@@ -3536,12 +3192,8 @@
             }
           }
         },
-        "name": "SemanticLayerOpacityLayerOpacity90",
-        "attributes": {
-          "category": "Semantic",
-          "type": "LayerOpacity",
-          "item": "layerOpacity90"
-        },
+        "name": "layerOpacity90",
+        "attributes": {},
         "path": [
           "Semantic",
           "LayerOpacity",
@@ -3573,12 +3225,8 @@
             }
           }
         },
-        "name": "SemanticLayerOpacityLayerOpacity100",
-        "attributes": {
-          "category": "Semantic",
-          "type": "LayerOpacity",
-          "item": "layerOpacity100"
-        },
+        "name": "layerOpacity100",
+        "attributes": {},
         "path": [
           "Semantic",
           "LayerOpacity",
@@ -3610,12 +3258,8 @@
             }
           }
         },
-        "name": "SemanticLayerOpacityLayerOpacity00",
-        "attributes": {
-          "category": "Semantic",
-          "type": "LayerOpacity",
-          "item": "layerOpacity00"
-        },
+        "name": "layerOpacity00",
+        "attributes": {},
         "path": [
           "Semantic",
           "LayerOpacity",
@@ -3627,7 +3271,7 @@
   "Component": {
     "Subheader": {
       "subheadersColor": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -3653,12 +3297,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentSubheaderSubheadersColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Subheader",
-          "item": "subheadersColor"
-        },
+        "name": "subheadersColor",
+        "attributes": {},
         "path": [
           "Component",
           "Subheader",
@@ -3668,7 +3308,7 @@
     },
     "Breadcrumb": {
       "breadcrumbTextColorIdle": {
-        "$value": "#f2f4f5",
+        "$value": "#F2F4F5",
         "value": "#F2F4F5",
         "type": "color",
         "$extensions": {
@@ -3696,12 +3336,8 @@
           "$type": "color",
           "comment": "Use this token on breadcrumbs that are in their default idle state. This token changes color between light and dark modes. L:035 / D:096"
         },
-        "name": "ComponentBreadcrumbBreadcrumbTextColorIdle",
-        "attributes": {
-          "category": "Component",
-          "type": "Breadcrumb",
-          "item": "breadcrumbTextColorIdle"
-        },
+        "name": "breadcrumbTextColorIdle",
+        "attributes": {},
         "path": [
           "Component",
           "Breadcrumb",
@@ -3709,7 +3345,7 @@
         ]
       },
       "breadcrumbTextColorHover": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -3737,12 +3373,8 @@
           "$type": "color",
           "comment": "Use this token on breadcrumbs that the user's pointer is hovering on or clicked on. This token changes color between light and dark modes. L:015 / D:100"
         },
-        "name": "ComponentBreadcrumbBreadcrumbTextColorHover",
-        "attributes": {
-          "category": "Component",
-          "type": "Breadcrumb",
-          "item": "breadcrumbTextColorHover"
-        },
+        "name": "breadcrumbTextColorHover",
+        "attributes": {},
         "path": [
           "Component",
           "Breadcrumb",
@@ -3752,7 +3384,7 @@
     },
     "BreakingNews": {
       "breakingNewsTitleSurfaceColor": {
-        "$value": "#fd8227",
+        "$value": "#FD8227",
         "value": "#FD8227",
         "type": "color",
         "$extensions": {
@@ -3778,12 +3410,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentBreakingNewsBreakingNewsTitleSurfaceColor",
-        "attributes": {
-          "category": "Component",
-          "type": "BreakingNews",
-          "item": "breakingNewsTitleSurfaceColor"
-        },
+        "name": "breakingNewsTitleSurfaceColor",
+        "attributes": {},
         "path": [
           "Component",
           "BreakingNews",
@@ -3791,7 +3419,7 @@
         ]
       },
       "breakingNewsSurfaceColor": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -3817,12 +3445,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentBreakingNewsBreakingNewsSurfaceColor",
-        "attributes": {
-          "category": "Component",
-          "type": "BreakingNews",
-          "item": "breakingNewsSurfaceColor"
-        },
+        "name": "breakingNewsSurfaceColor",
+        "attributes": {},
         "path": [
           "Component",
           "BreakingNews",
@@ -3856,12 +3480,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentBreakingNewsBreakingNewsTextContentColor",
-        "attributes": {
-          "category": "Component",
-          "type": "BreakingNews",
-          "item": "breakingNewsTextContentColor"
-        },
+        "name": "breakingNewsTextContentColor",
+        "attributes": {},
         "path": [
           "Component",
           "BreakingNews",
@@ -3869,7 +3489,7 @@
         ]
       },
       "breakingNewsTopTitleTextColor": {
-        "$value": "#1c1c1c",
+        "$value": "#1C1C1C",
         "value": "#1C1C1C",
         "type": "color",
         "$extensions": {
@@ -3895,12 +3515,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentBreakingNewsBreakingNewsTopTitleTextColor",
-        "attributes": {
-          "category": "Component",
-          "type": "BreakingNews",
-          "item": "breakingNewsTopTitleTextColor"
-        },
+        "name": "breakingNewsTopTitleTextColor",
+        "attributes": {},
         "path": [
           "Component",
           "BreakingNews",
@@ -3908,7 +3524,7 @@
         ]
       },
       "breakingNewsBottomTitleTextColor": {
-        "$value": "#1c1c1c",
+        "$value": "#1C1C1C",
         "value": "#1C1C1C",
         "type": "color",
         "$extensions": {
@@ -3934,12 +3550,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentBreakingNewsBreakingNewsBottomTitleTextColor",
-        "attributes": {
-          "category": "Component",
-          "type": "BreakingNews",
-          "item": "breakingNewsBottomTitleTextColor"
-        },
+        "name": "breakingNewsBottomTitleTextColor",
+        "attributes": {},
         "path": [
           "Component",
           "BreakingNews",
@@ -3975,12 +3587,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuMenuSurfaceColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "menuSurfaceColor"
-        },
+        "name": "menuSurfaceColor",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -3988,7 +3596,7 @@
         ]
       },
       "menuScrolledSurfaceGradientColor": {
-        "$value": "#232629f2",
+        "$value": "rgba(35, 38, 41, 0.949999988079071)",
         "value": "rgba(35, 38, 41, 0.949999988079071)",
         "type": "color",
         "$extensions": {
@@ -4016,12 +3624,8 @@
           "$type": "color",
           "comment": "Used on a thin part at the top of header in navigation menu."
         },
-        "name": "ComponentMenuMenuScrolledSurfaceGradientColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "menuScrolledSurfaceGradientColor"
-        },
+        "name": "menuScrolledSurfaceGradientColor",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -4055,12 +3659,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuMenuLinkLaneSurfaceColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "menuLinkLaneSurfaceColor"
-        },
+        "name": "menuLinkLaneSurfaceColor",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -4068,7 +3668,7 @@
         ]
       },
       "menuLinkLaneLabelColor": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -4094,12 +3694,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuMenuLinkLaneLabelColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "menuLinkLaneLabelColor"
-        },
+        "name": "menuLinkLaneLabelColor",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -4107,7 +3703,7 @@
         ]
       },
       "menuLinkLaneLabelColorActive": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -4133,12 +3729,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuMenuLinkLaneLabelColorActive",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "menuLinkLaneLabelColorActive"
-        },
+        "name": "menuLinkLaneLabelColorActive",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -4146,7 +3738,7 @@
         ]
       },
       "appTopBarSurfaceColor": {
-        "$value": "#343c41",
+        "$value": "#343C41",
         "value": "#343C41",
         "type": "color",
         "$extensions": {
@@ -4172,12 +3764,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuAppTopBarSurfaceColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTopBarSurfaceColor"
-        },
+        "name": "appTopBarSurfaceColor",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -4185,7 +3773,7 @@
         ]
       },
       "appTopBarIconColor": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -4211,12 +3799,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuAppTopBarIconColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTopBarIconColor"
-        },
+        "name": "appTopBarIconColor",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -4224,7 +3808,7 @@
         ]
       },
       "appTopBarTextColorPrimary": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -4250,12 +3834,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuAppTopBarTextColorPrimary",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTopBarTextColorPrimary"
-        },
+        "name": "appTopBarTextColorPrimary",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -4263,7 +3843,7 @@
         ]
       },
       "appTobBarTabNavBottomBorder": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -4289,12 +3869,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuAppTobBarTabNavBottomBorder",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTobBarTabNavBottomBorder"
-        },
+        "name": "appTobBarTabNavBottomBorder",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -4302,7 +3878,7 @@
         ]
       },
       "appTobBarTabNavBottomBorderActive": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -4328,12 +3904,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuAppTobBarTabNavBottomBorderActive",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTobBarTabNavBottomBorderActive"
-        },
+        "name": "appTobBarTabNavBottomBorderActive",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -4343,7 +3915,7 @@
     },
     "PartnerLinks": {
       "partnerLinksBorderColorIdle": {
-        "$value": "#ced4da",
+        "$value": "#CED4DA",
         "value": "#CED4DA",
         "type": "color",
         "$extensions": {
@@ -4371,12 +3943,8 @@
           "$type": "color",
           "comment": "!do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons."
         },
-        "name": "ComponentPartnerLinksPartnerLinksBorderColorIdle",
-        "attributes": {
-          "category": "Component",
-          "type": "PartnerLinks",
-          "item": "partnerLinksBorderColorIdle"
-        },
+        "name": "partnerLinksBorderColorIdle",
+        "attributes": {},
         "path": [
           "Component",
           "PartnerLinks",
@@ -4384,7 +3952,7 @@
         ]
       },
       "partnerLinksBorderColorActive": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -4412,12 +3980,8 @@
           "$type": "color",
           "comment": "!do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons."
         },
-        "name": "ComponentPartnerLinksPartnerLinksBorderColorActive",
-        "attributes": {
-          "category": "Component",
-          "type": "PartnerLinks",
-          "item": "partnerLinksBorderColorActive"
-        },
+        "name": "partnerLinksBorderColorActive",
+        "attributes": {},
         "path": [
           "Component",
           "PartnerLinks",
@@ -4425,7 +3989,7 @@
         ]
       },
       "partnerLinksBgColorIdle": {
-        "$value": "#343c41",
+        "$value": "#343C41",
         "value": "#343C41",
         "type": "color",
         "$extensions": {
@@ -4453,12 +4017,8 @@
           "$type": "color",
           "comment": "!do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons."
         },
-        "name": "ComponentPartnerLinksPartnerLinksBgColorIdle",
-        "attributes": {
-          "category": "Component",
-          "type": "PartnerLinks",
-          "item": "partnerLinksBgColorIdle"
-        },
+        "name": "partnerLinksBgColorIdle",
+        "attributes": {},
         "path": [
           "Component",
           "PartnerLinks",
@@ -4466,7 +4026,7 @@
         ]
       },
       "partnerLinksBgColorActive": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -4494,12 +4054,8 @@
           "$type": "color",
           "comment": "!do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons."
         },
-        "name": "ComponentPartnerLinksPartnerLinksBgColorActive",
-        "attributes": {
-          "category": "Component",
-          "type": "PartnerLinks",
-          "item": "partnerLinksBgColorActive"
-        },
+        "name": "partnerLinksBgColorActive",
+        "attributes": {},
         "path": [
           "Component",
           "PartnerLinks",
@@ -4507,7 +4063,7 @@
         ]
       },
       "partnerLinksContainerBorderColor": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -4535,12 +4091,8 @@
           "$type": "color",
           "comment": "!do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons."
         },
-        "name": "ComponentPartnerLinksPartnerLinksContainerBorderColor",
-        "attributes": {
-          "category": "Component",
-          "type": "PartnerLinks",
-          "item": "partnerLinksContainerBorderColor"
-        },
+        "name": "partnerLinksContainerBorderColor",
+        "attributes": {},
         "path": [
           "Component",
           "PartnerLinks",
@@ -4550,7 +4102,7 @@
     },
     "SocialShareButton": {
       "socialShareButtonLabelColorDefault": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -4576,12 +4128,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentSocialShareButtonSocialShareButtonLabelColorDefault",
-        "attributes": {
-          "category": "Component",
-          "type": "SocialShareButton",
-          "item": "socialShareButtonLabelColorDefault"
-        },
+        "name": "socialShareButtonLabelColorDefault",
+        "attributes": {},
         "path": [
           "Component",
           "SocialShareButton",
@@ -4589,7 +4137,7 @@
         ]
       },
       "socialShareButtonLabelColorActive": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -4615,12 +4163,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentSocialShareButtonSocialShareButtonLabelColorActive",
-        "attributes": {
-          "category": "Component",
-          "type": "SocialShareButton",
-          "item": "socialShareButtonLabelColorActive"
-        },
+        "name": "socialShareButtonLabelColorActive",
+        "attributes": {},
         "path": [
           "Component",
           "SocialShareButton",
@@ -4628,7 +4172,7 @@
         ]
       },
       "socialShareButtonBgColorActive": {
-        "$value": "#343c41",
+        "$value": "#343C41",
         "value": "#343C41",
         "type": "color",
         "$extensions": {
@@ -4654,12 +4198,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentSocialShareButtonSocialShareButtonBgColorActive",
-        "attributes": {
-          "category": "Component",
-          "type": "SocialShareButton",
-          "item": "socialShareButtonBgColorActive"
-        },
+        "name": "socialShareButtonBgColorActive",
+        "attributes": {},
         "path": [
           "Component",
           "SocialShareButton",
@@ -4667,7 +4207,7 @@
         ]
       },
       "socialShareButtonBgColorDefault": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -4693,12 +4233,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentSocialShareButtonSocialShareButtonBgColorDefault",
-        "attributes": {
-          "category": "Component",
-          "type": "SocialShareButton",
-          "item": "socialShareButtonBgColorDefault"
-        },
+        "name": "socialShareButtonBgColorDefault",
+        "attributes": {},
         "path": [
           "Component",
           "SocialShareButton",
@@ -4709,7 +4245,7 @@
     "Button": {
       "Primary": {
         "buttonPrimaryBrandBgColorIdle": {
-          "$value": "#dd0000",
+          "$value": "#DD0000",
           "value": "#DD0000",
           "type": "color",
           "$extensions": {
@@ -4735,13 +4271,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentButtonPrimaryButtonPrimaryBrandBgColorIdle",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "Primary",
-            "subitem": "buttonPrimaryBrandBgColorIdle"
-          },
+          "name": "buttonPrimaryBrandBgColorIdle",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -4750,7 +4281,7 @@
           ]
         },
         "buttonPrimaryBrandBgColorHover": {
-          "$value": "#af0002",
+          "$value": "#AF0002",
           "value": "#AF0002",
           "type": "color",
           "$extensions": {
@@ -4776,13 +4307,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentButtonPrimaryButtonPrimaryBrandBgColorHover",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "Primary",
-            "subitem": "buttonPrimaryBrandBgColorHover"
-          },
+          "name": "buttonPrimaryBrandBgColorHover",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -4791,7 +4317,7 @@
           ]
         },
         "buttonPrimaryLabelColor": {
-          "$value": "#ffffff",
+          "$value": "#FFFFFF",
           "value": "#FFFFFF",
           "type": "color",
           "$extensions": {
@@ -4817,13 +4343,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentButtonPrimaryButtonPrimaryLabelColor",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "Primary",
-            "subitem": "buttonPrimaryLabelColor"
-          },
+          "name": "buttonPrimaryLabelColor",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -4832,7 +4353,7 @@
           ]
         },
         "buttonPrimarySuccessColorIdle": {
-          "$value": "#18995c",
+          "$value": "#18995C",
           "value": "#18995C",
           "type": "color",
           "$extensions": {
@@ -4858,13 +4379,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentButtonPrimaryButtonPrimarySuccessColorIdle",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "Primary",
-            "subitem": "buttonPrimarySuccessColorIdle"
-          },
+          "name": "buttonPrimarySuccessColorIdle",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -4873,7 +4389,7 @@
           ]
         },
         "buttonPrimarySuccessColorHover": {
-          "$value": "#006e3e",
+          "$value": "#006E3E",
           "value": "#006E3E",
           "type": "color",
           "$extensions": {
@@ -4899,13 +4415,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentButtonPrimaryButtonPrimarySuccessColorHover",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "Primary",
-            "subitem": "buttonPrimarySuccessColorHover"
-          },
+          "name": "buttonPrimarySuccessColorHover",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -4914,7 +4425,7 @@
           ]
         },
         "buttonPrimaryNeutralBgColorIdle": {
-          "$value": "#ffffff",
+          "$value": "#FFFFFF",
           "value": "#FFFFFF",
           "type": "color",
           "$extensions": {
@@ -4942,13 +4453,8 @@
             "$type": "color",
             "comment": "Use this variable on the neutral color primary button. Tone changes between light and dark mode. Light mode Bild & SpoBi: Tone 015 ; Dark mode Bild & SpoBi: Tone 100"
           },
-          "name": "ComponentButtonPrimaryButtonPrimaryNeutralBgColorIdle",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "Primary",
-            "subitem": "buttonPrimaryNeutralBgColorIdle"
-          },
+          "name": "buttonPrimaryNeutralBgColorIdle",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -4957,7 +4463,7 @@
           ]
         },
         "buttonPrimaryNeutralBgColorHover": {
-          "$value": "#e9ecef",
+          "$value": "#E9ECEF",
           "value": "#E9ECEF",
           "type": "color",
           "$extensions": {
@@ -4983,13 +4489,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentButtonPrimaryButtonPrimaryNeutralBgColorHover",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "Primary",
-            "subitem": "buttonPrimaryNeutralBgColorHover"
-          },
+          "name": "buttonPrimaryNeutralBgColorHover",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -5000,7 +4501,7 @@
       },
       "Tertiary": {
         "buttonTertiaryLabelColor": {
-          "$value": "#f2f4f5",
+          "$value": "#F2F4F5",
           "value": "#F2F4F5",
           "type": "color",
           "$extensions": {
@@ -5026,13 +4527,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentButtonTertiaryButtonTertiaryLabelColor",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "Tertiary",
-            "subitem": "buttonTertiaryLabelColor"
-          },
+          "name": "buttonTertiaryLabelColor",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -5041,7 +4537,7 @@
           ]
         },
         "buttonTertiaryBorderColorIdle": {
-          "$value": "#4b525a",
+          "$value": "#4B525A",
           "value": "#4B525A",
           "type": "color",
           "$extensions": {
@@ -5067,13 +4563,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentButtonTertiaryButtonTertiaryBorderColorIdle",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "Tertiary",
-            "subitem": "buttonTertiaryBorderColorIdle"
-          },
+          "name": "buttonTertiaryBorderColorIdle",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -5082,7 +4573,7 @@
           ]
         },
         "buttonTertiaryBorderColorHover": {
-          "$value": "#ffffff",
+          "$value": "#FFFFFF",
           "value": "#FFFFFF",
           "type": "color",
           "$extensions": {
@@ -5108,13 +4599,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentButtonTertiaryButtonTertiaryBorderColorHover",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "Tertiary",
-            "subitem": "buttonTertiaryBorderColorHover"
-          },
+          "name": "buttonTertiaryBorderColorHover",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -5123,7 +4609,7 @@
           ]
         },
         "buttonTertiarySuccessBgColorHover": {
-          "$value": "#009b5a80",
+          "$value": "rgba(0, 155, 90, 0.5)",
           "value": "rgba(0, 155, 90, 0.5)",
           "type": "color",
           "$extensions": {
@@ -5149,13 +4635,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentButtonTertiaryButtonTertiarySuccessBgColorHover",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "Tertiary",
-            "subitem": "buttonTertiarySuccessBgColorHover"
-          },
+          "name": "buttonTertiarySuccessBgColorHover",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -5164,7 +4645,7 @@
           ]
         },
         "buttonTertiarySuccessBorderColor": {
-          "$value": "#18995c",
+          "$value": "#18995C",
           "value": "#18995C",
           "type": "color",
           "$extensions": {
@@ -5190,13 +4671,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentButtonTertiaryButtonTertiarySuccessBorderColor",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "Tertiary",
-            "subitem": "buttonTertiarySuccessBorderColor"
-          },
+          "name": "buttonTertiarySuccessBorderColor",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -5207,7 +4683,7 @@
       },
       "Secondary": {
         "buttonSecondaryBgColorHover": {
-          "$value": "#ced4da80",
+          "$value": "rgba(206, 212, 218, 0.5)",
           "value": "rgba(206, 212, 218, 0.5)",
           "type": "color",
           "$extensions": {
@@ -5233,13 +4709,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentButtonSecondaryButtonSecondaryBgColorHover",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "Secondary",
-            "subitem": "buttonSecondaryBgColorHover"
-          },
+          "name": "buttonSecondaryBgColorHover",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -5248,7 +4719,7 @@
           ]
         },
         "buttonSecondaryLabelColor": {
-          "$value": "#e9ecef",
+          "$value": "#E9ECEF",
           "value": "#E9ECEF",
           "type": "color",
           "$extensions": {
@@ -5274,13 +4745,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentButtonSecondaryButtonSecondaryLabelColor",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "Secondary",
-            "subitem": "buttonSecondaryLabelColor"
-          },
+          "name": "buttonSecondaryLabelColor",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -5289,7 +4755,7 @@
           ]
         },
         "buttonSecondaryBgColorIdle": {
-          "$value": "#4b525a",
+          "$value": "#4B525A",
           "value": "#4B525A",
           "type": "color",
           "$extensions": {
@@ -5315,13 +4781,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentButtonSecondaryButtonSecondaryBgColorIdle",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "Secondary",
-            "subitem": "buttonSecondaryBgColorIdle"
-          },
+          "name": "buttonSecondaryBgColorIdle",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -5357,12 +4818,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentButtonButtonLiveTickerLoadNewSurfaceColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Button",
-          "item": "buttonLiveTickerLoadNewSurfaceColor"
-        },
+        "name": "buttonLiveTickerLoadNewSurfaceColor",
+        "attributes": {},
         "path": [
           "Component",
           "Button",
@@ -5370,7 +4827,7 @@
         ]
       },
       "buttonLiveTickerLoadNewLabelColor": {
-        "$value": "#f2f4f5",
+        "$value": "#F2F4F5",
         "value": "#F2F4F5",
         "type": "color",
         "$extensions": {
@@ -5396,12 +4853,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentButtonButtonLiveTickerLoadNewLabelColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Button",
-          "item": "buttonLiveTickerLoadNewLabelColor"
-        },
+        "name": "buttonLiveTickerLoadNewLabelColor",
+        "attributes": {},
         "path": [
           "Component",
           "Button",
@@ -5410,7 +4863,7 @@
       },
       "Ghost": {
         "buttonGhostBgColorHover": {
-          "$value": "#ced4da80",
+          "$value": "rgba(206, 212, 218, 0.5)",
           "value": "rgba(206, 212, 218, 0.5)",
           "type": "color",
           "$extensions": {
@@ -5436,13 +4889,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentButtonGhostButtonGhostBgColorHover",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "Ghost",
-            "subitem": "buttonGhostBgColorHover"
-          },
+          "name": "buttonGhostBgColorHover",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -5454,7 +4902,7 @@
     },
     "InputField": {
       "inputFieldBorderColorIdle": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -5480,12 +4928,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentInputFieldInputFieldBorderColorIdle",
-        "attributes": {
-          "category": "Component",
-          "type": "InputField",
-          "item": "inputFieldBorderColorIdle"
-        },
+        "name": "inputFieldBorderColorIdle",
+        "attributes": {},
         "path": [
           "Component",
           "InputField",
@@ -5493,7 +4937,7 @@
         ]
       },
       "inputFieldBorderColorActive": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -5519,12 +4963,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentInputFieldInputFieldBorderColorActive",
-        "attributes": {
-          "category": "Component",
-          "type": "InputField",
-          "item": "inputFieldBorderColorActive"
-        },
+        "name": "inputFieldBorderColorActive",
+        "attributes": {},
         "path": [
           "Component",
           "InputField",
@@ -5532,7 +4972,7 @@
         ]
       },
       "inputFieldBorderColorDark": {
-        "$value": "#ced4da",
+        "$value": "#CED4DA",
         "value": "#CED4DA",
         "type": "color",
         "$extensions": {
@@ -5558,12 +4998,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentInputFieldInputFieldBorderColorDark",
-        "attributes": {
-          "category": "Component",
-          "type": "InputField",
-          "item": "inputFieldBorderColorDark"
-        },
+        "name": "inputFieldBorderColorDark",
+        "attributes": {},
         "path": [
           "Component",
           "InputField",
@@ -5571,7 +5007,7 @@
         ]
       },
       "inputFieldBorderColorDarkActive": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -5597,12 +5033,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentInputFieldInputFieldBorderColorDarkActive",
-        "attributes": {
-          "category": "Component",
-          "type": "InputField",
-          "item": "inputFieldBorderColorDarkActive"
-        },
+        "name": "inputFieldBorderColorDarkActive",
+        "attributes": {},
         "path": [
           "Component",
           "InputField",
@@ -5610,7 +5042,7 @@
         ]
       },
       "inputFieldBgColorDarkLowContrast": {
-        "$value": "#343c41",
+        "$value": "#343C41",
         "value": "#343C41",
         "type": "color",
         "$extensions": {
@@ -5636,12 +5068,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentInputFieldInputFieldBgColorDarkLowContrast",
-        "attributes": {
-          "category": "Component",
-          "type": "InputField",
-          "item": "inputFieldBgColorDarkLowContrast"
-        },
+        "name": "inputFieldBgColorDarkLowContrast",
+        "attributes": {},
         "path": [
           "Component",
           "InputField",
@@ -5649,7 +5077,7 @@
         ]
       },
       "inputFieldBgColorDarkMediumContrast": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -5675,12 +5103,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentInputFieldInputFieldBgColorDarkMediumContrast",
-        "attributes": {
-          "category": "Component",
-          "type": "InputField",
-          "item": "inputFieldBgColorDarkMediumContrast"
-        },
+        "name": "inputFieldBgColorDarkMediumContrast",
+        "attributes": {},
         "path": [
           "Component",
           "InputField",
@@ -5688,7 +5112,7 @@
         ]
       },
       "inputFieldBgColorDarkHighContrast": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -5714,12 +5138,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentInputFieldInputFieldBgColorDarkHighContrast",
-        "attributes": {
-          "category": "Component",
-          "type": "InputField",
-          "item": "inputFieldBgColorDarkHighContrast"
-        },
+        "name": "inputFieldBgColorDarkHighContrast",
+        "attributes": {},
         "path": [
           "Component",
           "InputField",
@@ -5729,7 +5149,7 @@
     },
     "Dropdown": {
       "dropdownBgColorHover": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -5755,12 +5175,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentDropdownDropdownBgColorHover",
-        "attributes": {
-          "category": "Component",
-          "type": "Dropdown",
-          "item": "dropdownBgColorHover"
-        },
+        "name": "dropdownBgColorHover",
+        "attributes": {},
         "path": [
           "Component",
           "Dropdown",
@@ -5768,7 +5184,7 @@
         ]
       },
       "dropdownBgColorIdle": {
-        "$value": "#343c41",
+        "$value": "#343C41",
         "value": "#343C41",
         "type": "color",
         "$extensions": {
@@ -5794,12 +5210,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentDropdownDropdownBgColorIdle",
-        "attributes": {
-          "category": "Component",
-          "type": "Dropdown",
-          "item": "dropdownBgColorIdle"
-        },
+        "name": "dropdownBgColorIdle",
+        "attributes": {},
         "path": [
           "Component",
           "Dropdown",
@@ -5809,7 +5221,7 @@
     },
     "TextLink": {
       "textLinkColorSecondary": {
-        "$value": "#ced4da",
+        "$value": "#CED4DA",
         "value": "#CED4DA",
         "type": "color",
         "$extensions": {
@@ -5835,12 +5247,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentTextLinkTextLinkColorSecondary",
-        "attributes": {
-          "category": "Component",
-          "type": "TextLink",
-          "item": "textLinkColorSecondary"
-        },
+        "name": "textLinkColorSecondary",
+        "attributes": {},
         "path": [
           "Component",
           "TextLink",
@@ -5848,7 +5256,7 @@
         ]
       },
       "textLinkColorSecondaryActive": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -5874,12 +5282,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentTextLinkTextLinkColorSecondaryActive",
-        "attributes": {
-          "category": "Component",
-          "type": "TextLink",
-          "item": "textLinkColorSecondaryActive"
-        },
+        "name": "textLinkColorSecondaryActive",
+        "attributes": {},
         "path": [
           "Component",
           "TextLink",
@@ -5887,7 +5291,7 @@
         ]
       },
       "textLinkColorPrimary": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -5913,12 +5317,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentTextLinkTextLinkColorPrimary",
-        "attributes": {
-          "category": "Component",
-          "type": "TextLink",
-          "item": "textLinkColorPrimary"
-        },
+        "name": "textLinkColorPrimary",
+        "attributes": {},
         "path": [
           "Component",
           "TextLink",
@@ -5928,7 +5328,7 @@
     },
     "Tab": {
       "tabBgColorHover": {
-        "$value": "#343c41",
+        "$value": "#343C41",
         "value": "#343C41",
         "type": "color",
         "$extensions": {
@@ -5954,12 +5354,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentTabTabBgColorHover",
-        "attributes": {
-          "category": "Component",
-          "type": "Tab",
-          "item": "tabBgColorHover"
-        },
+        "name": "tabBgColorHover",
+        "attributes": {},
         "path": [
           "Component",
           "Tab",
@@ -5967,7 +5363,7 @@
         ]
       },
       "tabLabelColorActive": {
-        "$value": "#f2f4f5",
+        "$value": "#F2F4F5",
         "value": "#F2F4F5",
         "type": "color",
         "$extensions": {
@@ -5993,12 +5389,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentTabTabLabelColorActive",
-        "attributes": {
-          "category": "Component",
-          "type": "Tab",
-          "item": "tabLabelColorActive"
-        },
+        "name": "tabLabelColorActive",
+        "attributes": {},
         "path": [
           "Component",
           "Tab",
@@ -6006,7 +5398,7 @@
         ]
       },
       "tabLabelColorDefault": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -6032,12 +5424,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentTabTabLabelColorDefault",
-        "attributes": {
-          "category": "Component",
-          "type": "Tab",
-          "item": "tabLabelColorDefault"
-        },
+        "name": "tabLabelColorDefault",
+        "attributes": {},
         "path": [
           "Component",
           "Tab",
@@ -6045,7 +5433,7 @@
         ]
       },
       "appBottomTabBarBgColor": {
-        "$value": "#343c41",
+        "$value": "#343C41",
         "value": "#343C41",
         "type": "color",
         "$extensions": {
@@ -6071,12 +5459,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentTabAppBottomTabBarBgColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Tab",
-          "item": "appBottomTabBarBgColor"
-        },
+        "name": "appBottomTabBarBgColor",
+        "attributes": {},
         "path": [
           "Component",
           "Tab",
@@ -6086,7 +5470,7 @@
     },
     "MenuItem": {
       "menuItemBorderColorActive": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -6112,12 +5496,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuItemMenuItemBorderColorActive",
-        "attributes": {
-          "category": "Component",
-          "type": "MenuItem",
-          "item": "menuItemBorderColorActive"
-        },
+        "name": "menuItemBorderColorActive",
+        "attributes": {},
         "path": [
           "Component",
           "MenuItem",
@@ -6125,7 +5505,7 @@
         ]
       },
       "menuItemLabelColorPrimary": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -6151,12 +5531,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuItemMenuItemLabelColorPrimary",
-        "attributes": {
-          "category": "Component",
-          "type": "MenuItem",
-          "item": "menuItemLabelColorPrimary"
-        },
+        "name": "menuItemLabelColorPrimary",
+        "attributes": {},
         "path": [
           "Component",
           "MenuItem",
@@ -6164,7 +5540,7 @@
         ]
       },
       "menuItemLabelColorPrimaryActive": {
-        "$value": "#f2f4f5",
+        "$value": "#F2F4F5",
         "value": "#F2F4F5",
         "type": "color",
         "$extensions": {
@@ -6190,12 +5566,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuItemMenuItemLabelColorPrimaryActive",
-        "attributes": {
-          "category": "Component",
-          "type": "MenuItem",
-          "item": "menuItemLabelColorPrimaryActive"
-        },
+        "name": "menuItemLabelColorPrimaryActive",
+        "attributes": {},
         "path": [
           "Component",
           "MenuItem",
@@ -6203,7 +5575,7 @@
         ]
       },
       "menuItemLabelColorSecondary": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -6231,12 +5603,8 @@
           "$type": "color",
           "comment": "The variable can be used on secondary menus that many times show up on dedicated home pages specific to a topic. The menu labels are often times using the color white across color modes."
         },
-        "name": "ComponentMenuItemMenuItemLabelColorSecondary",
-        "attributes": {
-          "category": "Component",
-          "type": "MenuItem",
-          "item": "menuItemLabelColorSecondary"
-        },
+        "name": "menuItemLabelColorSecondary",
+        "attributes": {},
         "path": [
           "Component",
           "MenuItem",
@@ -6246,7 +5614,7 @@
     },
     "Foldout": {
       "foldoutLabelColorActive": {
-        "$value": "#f2f4f5",
+        "$value": "#F2F4F5",
         "value": "#F2F4F5",
         "type": "color",
         "$extensions": {
@@ -6272,12 +5640,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentFoldoutFoldoutLabelColorActive",
-        "attributes": {
-          "category": "Component",
-          "type": "Foldout",
-          "item": "foldoutLabelColorActive"
-        },
+        "name": "foldoutLabelColorActive",
+        "attributes": {},
         "path": [
           "Component",
           "Foldout",
@@ -6285,7 +5649,7 @@
         ]
       },
       "foldoutLabelColorIdle": {
-        "$value": "#ced4da",
+        "$value": "#CED4DA",
         "value": "#CED4DA",
         "type": "color",
         "$extensions": {
@@ -6311,12 +5675,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentFoldoutFoldoutLabelColorIdle",
-        "attributes": {
-          "category": "Component",
-          "type": "Foldout",
-          "item": "foldoutLabelColorIdle"
-        },
+        "name": "foldoutLabelColorIdle",
+        "attributes": {},
         "path": [
           "Component",
           "Foldout",
@@ -6326,7 +5686,7 @@
     },
     "Newsticker": {
       "newsTickerTimestampColor": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -6352,12 +5712,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentNewstickerNewsTickerTimestampColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Newsticker",
-          "item": "newsTickerTimestampColor"
-        },
+        "name": "newsTickerTimestampColor",
+        "attributes": {},
         "path": [
           "Component",
           "Newsticker",
@@ -6365,7 +5721,7 @@
         ]
       },
       "newsTickerBadgeIconsColor": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -6391,12 +5747,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentNewstickerNewsTickerBadgeIconsColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Newsticker",
-          "item": "newsTickerBadgeIconsColor"
-        },
+        "name": "newsTickerBadgeIconsColor",
+        "attributes": {},
         "path": [
           "Component",
           "Newsticker",
@@ -6406,7 +5758,7 @@
     },
     "Alert": {
       "alertSurfaceColor": {
-        "$value": "#343c41",
+        "$value": "#343C41",
         "value": "#343C41",
         "type": "color",
         "$extensions": {
@@ -6434,12 +5786,8 @@
           "$type": "color",
           "comment": "On marketing offer surfaces this variable is usually not used. The alertSurfaceConstant variables should be used. This token changes color between light and dark modes. L:100 / D:025"
         },
-        "name": "ComponentAlertAlertSurfaceColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Alert",
-          "item": "alertSurfaceColor"
-        },
+        "name": "alertSurfaceColor",
+        "attributes": {},
         "path": [
           "Component",
           "Alert",
@@ -6447,7 +5795,7 @@
         ]
       },
       "alertSurfaceColorConstant": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -6475,12 +5823,8 @@
           "$type": "color",
           "comment": "On marketing offer surfaces this variable is  used."
         },
-        "name": "ComponentAlertAlertSurfaceColorConstant",
-        "attributes": {
-          "category": "Component",
-          "type": "Alert",
-          "item": "alertSurfaceColorConstant"
-        },
+        "name": "alertSurfaceColorConstant",
+        "attributes": {},
         "path": [
           "Component",
           "Alert",
@@ -6490,7 +5834,7 @@
     },
     "Empties": {
       "emptiesBgColor": {
-        "$value": "#343c41",
+        "$value": "#343C41",
         "value": "#343C41",
         "type": "color",
         "$extensions": {
@@ -6516,12 +5860,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentEmptiesEmptiesBgColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Empties",
-          "item": "emptiesBgColor"
-        },
+        "name": "emptiesBgColor",
+        "attributes": {},
         "path": [
           "Component",
           "Empties",
@@ -6529,7 +5869,7 @@
         ]
       },
       "emptiesLogoColor": {
-        "$value": "#2c3138",
+        "$value": "#2C3138",
         "value": "#2C3138",
         "type": "color",
         "$extensions": {
@@ -6555,12 +5895,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentEmptiesEmptiesLogoColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Empties",
-          "item": "emptiesLogoColor"
-        },
+        "name": "emptiesLogoColor",
+        "attributes": {},
         "path": [
           "Component",
           "Empties",
@@ -6570,7 +5906,7 @@
     },
     "Chips": {
       "chipsBgColorHover": {
-        "$value": "#ced4da",
+        "$value": "#CED4DA",
         "value": "#CED4DA",
         "type": "color",
         "$extensions": {
@@ -6596,12 +5932,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentChipsChipsBgColorHover",
-        "attributes": {
-          "category": "Component",
-          "type": "Chips",
-          "item": "chipsBgColorHover"
-        },
+        "name": "chipsBgColorHover",
+        "attributes": {},
         "path": [
           "Component",
           "Chips",
@@ -6635,12 +5967,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentChipsChipsLabelColorHover",
-        "attributes": {
-          "category": "Component",
-          "type": "Chips",
-          "item": "chipsLabelColorHover"
-        },
+        "name": "chipsLabelColorHover",
+        "attributes": {},
         "path": [
           "Component",
           "Chips",
@@ -6648,7 +5976,7 @@
         ]
       },
       "chipsBgColorActive": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -6674,12 +6002,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentChipsChipsBgColorActive",
-        "attributes": {
-          "category": "Component",
-          "type": "Chips",
-          "item": "chipsBgColorActive"
-        },
+        "name": "chipsBgColorActive",
+        "attributes": {},
         "path": [
           "Component",
           "Chips",
@@ -6687,7 +6011,7 @@
         ]
       },
       "chipsBgColorIdle": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -6713,12 +6037,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentChipsChipsBgColorIdle",
-        "attributes": {
-          "category": "Component",
-          "type": "Chips",
-          "item": "chipsBgColorIdle"
-        },
+        "name": "chipsBgColorIdle",
+        "attributes": {},
         "path": [
           "Component",
           "Chips",
@@ -6726,7 +6046,7 @@
         ]
       },
       "chipsLabelColorIdle": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -6752,12 +6072,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentChipsChipsLabelColorIdle",
-        "attributes": {
-          "category": "Component",
-          "type": "Chips",
-          "item": "chipsLabelColorIdle"
-        },
+        "name": "chipsLabelColorIdle",
+        "attributes": {},
         "path": [
           "Component",
           "Chips",
@@ -6767,7 +6083,7 @@
     },
     "Card": {
       "cardSurfaceBgColor": {
-        "$value": "#2c3138",
+        "$value": "#2C3138",
         "value": "#2C3138",
         "type": "color",
         "$extensions": {
@@ -6793,12 +6109,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentCardCardSurfaceBgColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Card",
-          "item": "cardSurfaceBgColor"
-        },
+        "name": "cardSurfaceBgColor",
+        "attributes": {},
         "path": [
           "Component",
           "Card",
@@ -6808,7 +6120,7 @@
     },
     "Selection": {
       "selectionBorderColor": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -6836,12 +6148,8 @@
           "$type": "color",
           "comment": "Checkboxes and Radio buttons use this variable for their border."
         },
-        "name": "ComponentSelectionSelectionBorderColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Selection",
-          "item": "selectionBorderColor"
-        },
+        "name": "selectionBorderColor",
+        "attributes": {},
         "path": [
           "Component",
           "Selection",
@@ -6877,12 +6185,8 @@
           },
           "comment": "This variable is only for use in Figma's Design System File. It is automating some of the content in documentation pages."
         },
-        "name": "ComponentDSysDocDSysDocsLabelTextSurfaceColorPrimaryPrimitiveName",
-        "attributes": {
-          "category": "Component",
-          "type": "_DSysDoc",
-          "item": "_DSysDocs_labelTextSurfaceColorPrimaryPrimitiveName"
-        },
+        "name": "_DSysDocs_labelTextSurfaceColorPrimaryPrimitiveName",
+        "attributes": {},
         "path": [
           "Component",
           "_DSysDoc",
@@ -6916,12 +6220,8 @@
           },
           "comment": "This is currently for use in this design system's documentation texts. It is a text string made for being used in light and dark mode documentation texts."
         },
-        "name": "ComponentDSysDocDSysDocsLabelTextColorMode",
-        "attributes": {
-          "category": "Component",
-          "type": "_DSysDoc",
-          "item": "_DSysDocs_labelTextColorMode"
-        },
+        "name": "_DSysDocs_labelTextColorMode",
+        "attributes": {},
         "path": [
           "Component",
           "_DSysDoc",
@@ -6929,7 +6229,7 @@
         ]
       },
       "dsDocSpacingItemBgColor": {
-        "$value": "#ffffff33",
+        "$value": "rgba(255, 255, 255, 0.20000000298023224)",
         "value": "rgba(255, 255, 255, 0.20000000298023224)",
         "type": "color",
         "$extensions": {
@@ -6955,12 +6255,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentDSysDocDsDocSpacingItemBgColor",
-        "attributes": {
-          "category": "Component",
-          "type": "_DSysDoc",
-          "item": "dsDocSpacingItemBgColor"
-        },
+        "name": "dsDocSpacingItemBgColor",
+        "attributes": {},
         "path": [
           "Component",
           "_DSysDoc",
@@ -6968,7 +6264,7 @@
         ]
       },
       "dsDocSpacingItemBorderColor": {
-        "$value": "#ffffffcc",
+        "$value": "rgba(255, 255, 255, 0.800000011920929)",
         "value": "rgba(255, 255, 255, 0.800000011920929)",
         "type": "color",
         "$extensions": {
@@ -6994,12 +6290,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentDSysDocDsDocSpacingItemBorderColor",
-        "attributes": {
-          "category": "Component",
-          "type": "_DSysDoc",
-          "item": "dsDocSpacingItemBorderColor"
-        },
+        "name": "dsDocSpacingItemBorderColor",
+        "attributes": {},
         "path": [
           "Component",
           "_DSysDoc",
@@ -7009,7 +6301,7 @@
     },
     "Hey": {
       "heyFavInputFieldSurfaceColor": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -7035,12 +6327,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentHeyHeyFavInputFieldSurfaceColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Hey",
-          "item": "heyFavInputFieldSurfaceColor"
-        },
+        "name": "heyFavInputFieldSurfaceColor",
+        "attributes": {},
         "path": [
           "Component",
           "Hey",
@@ -7048,7 +6336,7 @@
         ]
       },
       "heyTextColor": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -7074,12 +6362,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentHeyHeyTextColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Hey",
-          "item": "heyTextColor"
-        },
+        "name": "heyTextColor",
+        "attributes": {},
         "path": [
           "Component",
           "Hey",
@@ -7087,7 +6371,7 @@
         ]
       },
       "heyIconUtilColor": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -7113,12 +6397,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentHeyHeyIconUtilColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Hey",
-          "item": "heyIconUtilColor"
-        },
+        "name": "heyIconUtilColor",
+        "attributes": {},
         "path": [
           "Component",
           "Hey",
@@ -7126,7 +6406,7 @@
         ]
       },
       "heySeparatorColor": {
-        "$value": "#666b70",
+        "$value": "#666B70",
         "value": "#666B70",
         "type": "color",
         "$extensions": {
@@ -7154,12 +6434,8 @@
           "$type": "color",
           "comment": "This is the most used color for separators across Bild products."
         },
-        "name": "ComponentHeyHeySeparatorColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Hey",
-          "item": "heySeparatorColor"
-        },
+        "name": "heySeparatorColor",
+        "attributes": {},
         "path": [
           "Component",
           "Hey",
@@ -7167,7 +6443,7 @@
         ]
       },
       "heyDrawerSurfaceColor": {
-        "$value": "#343c41",
+        "$value": "#343C41",
         "value": "#343C41",
         "type": "color",
         "$extensions": {
@@ -7193,12 +6469,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentHeyHeyDrawerSurfaceColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Hey",
-          "item": "heyDrawerSurfaceColor"
-        },
+        "name": "heyDrawerSurfaceColor",
+        "attributes": {},
         "path": [
           "Component",
           "Hey",
@@ -7208,7 +6480,7 @@
     },
     "Pagination": {
       "paginationElementColorDefault": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -7234,12 +6506,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentPaginationPaginationElementColorDefault",
-        "attributes": {
-          "category": "Component",
-          "type": "Pagination",
-          "item": "paginationElementColorDefault"
-        },
+        "name": "paginationElementColorDefault",
+        "attributes": {},
         "path": [
           "Component",
           "Pagination",
@@ -7247,7 +6515,7 @@
         ]
       },
       "paginationElementColorActive": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -7273,12 +6541,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentPaginationPaginationElementColorActive",
-        "attributes": {
-          "category": "Component",
-          "type": "Pagination",
-          "item": "paginationElementColorActive"
-        },
+        "name": "paginationElementColorActive",
+        "attributes": {},
         "path": [
           "Component",
           "Pagination",
@@ -7312,12 +6576,8 @@
           },
           "comment": "Use this on gallery slider pagination elements. This can also be applied to hover states of those elements."
         },
-        "name": "ComponentPaginationGalleryPaginationElementActiveOpacity",
-        "attributes": {
-          "category": "Component",
-          "type": "Pagination",
-          "item": "galleryPaginationElementActiveOpacity"
-        },
+        "name": "galleryPaginationElementActiveOpacity",
+        "attributes": {},
         "path": [
           "Component",
           "Pagination",
@@ -7325,7 +6585,7 @@
         ]
       },
       "scrollBarTrackBgColor": {
-        "$value": "#ffffff1a",
+        "$value": "rgba(255, 255, 255, 0.10000000149011612)",
         "value": "rgba(255, 255, 255, 0.10000000149011612)",
         "type": "color",
         "$extensions": {
@@ -7353,12 +6613,8 @@
           "$type": "color",
           "comment": "Used as the background surface color scroll bars. Found on components that vertically or horizontally stack elements."
         },
-        "name": "ComponentPaginationScrollBarTrackBgColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Pagination",
-          "item": "scrollBarTrackBgColor"
-        },
+        "name": "scrollBarTrackBgColor",
+        "attributes": {},
         "path": [
           "Component",
           "Pagination",
@@ -7366,7 +6622,7 @@
         ]
       },
       "scrollBarThumbBgColor": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -7394,12 +6650,8 @@
           "$type": "color",
           "comment": "Use on the scroll bar interactive element which shows where the scroll view is positioned inside the full extent of the scrolling space."
         },
-        "name": "ComponentPaginationScrollBarThumbBgColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Pagination",
-          "item": "scrollBarThumbBgColor"
-        },
+        "name": "scrollBarThumbBgColor",
+        "attributes": {},
         "path": [
           "Component",
           "Pagination",
@@ -7410,7 +6662,7 @@
     "Kicker": {
       "Standard": {
         "kickerBgColorOnSurface": {
-          "$value": "#8c9196",
+          "$value": "#8C9196",
           "value": "#8C9196",
           "type": "color",
           "$extensions": {
@@ -7436,13 +6688,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentKickerStandardKickerBgColorOnSurface",
-          "attributes": {
-            "category": "Component",
-            "type": "Kicker",
-            "item": "Standard",
-            "subitem": "kickerBgColorOnSurface"
-          },
+          "name": "kickerBgColorOnSurface",
+          "attributes": {},
           "path": [
             "Component",
             "Kicker",
@@ -7479,13 +6726,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentKickerPartnerKickerStylebookBgColor",
-          "attributes": {
-            "category": "Component",
-            "type": "Kicker",
-            "item": "Partner",
-            "subitem": "kickerStylebookBgColor"
-          },
+          "name": "kickerStylebookBgColor",
+          "attributes": {},
           "path": [
             "Component",
             "Kicker",
@@ -7494,7 +6736,7 @@
           ]
         },
         "kickerFitbookBgColor": {
-          "$value": "#ff97b7",
+          "$value": "#FF97B7",
           "value": "#FF97B7",
           "type": "color",
           "$extensions": {
@@ -7520,13 +6762,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentKickerPartnerKickerFitbookBgColor",
-          "attributes": {
-            "category": "Component",
-            "type": "Kicker",
-            "item": "Partner",
-            "subitem": "kickerFitbookBgColor"
-          },
+          "name": "kickerFitbookBgColor",
+          "attributes": {},
           "path": [
             "Component",
             "Kicker",
@@ -7535,7 +6772,7 @@
           ]
         },
         "kickerPetbookBgColor": {
-          "$value": "#b9db91",
+          "$value": "#B9DB91",
           "value": "#B9DB91",
           "type": "color",
           "$extensions": {
@@ -7561,13 +6798,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentKickerPartnerKickerPetbookBgColor",
-          "attributes": {
-            "category": "Component",
-            "type": "Kicker",
-            "item": "Partner",
-            "subitem": "kickerPetbookBgColor"
-          },
+          "name": "kickerPetbookBgColor",
+          "attributes": {},
           "path": [
             "Component",
             "Kicker",
@@ -7576,7 +6808,7 @@
           ]
         },
         "kickerMyhomebookBgColor": {
-          "$value": "#66cccc",
+          "$value": "#66CCCC",
           "value": "#66CCCC",
           "type": "color",
           "$extensions": {
@@ -7602,13 +6834,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentKickerPartnerKickerMyhomebookBgColor",
-          "attributes": {
-            "category": "Component",
-            "type": "Kicker",
-            "item": "Partner",
-            "subitem": "kickerMyhomebookBgColor"
-          },
+          "name": "kickerMyhomebookBgColor",
+          "attributes": {},
           "path": [
             "Component",
             "Kicker",
@@ -7617,7 +6844,7 @@
           ]
         },
         "kickerTravelbookBgColor": {
-          "$value": "#8ef0ed",
+          "$value": "#8EF0ED",
           "value": "#8EF0ED",
           "type": "color",
           "$extensions": {
@@ -7643,13 +6870,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentKickerPartnerKickerTravelbookBgColor",
-          "attributes": {
-            "category": "Component",
-            "type": "Kicker",
-            "item": "Partner",
-            "subitem": "kickerTravelbookBgColor"
-          },
+          "name": "kickerTravelbookBgColor",
+          "attributes": {},
           "path": [
             "Component",
             "Kicker",
@@ -7658,7 +6880,7 @@
           ]
         },
         "kickerTechbookBgColor": {
-          "$value": "#93e4ff",
+          "$value": "#93E4FF",
           "value": "#93E4FF",
           "type": "color",
           "$extensions": {
@@ -7684,13 +6906,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentKickerPartnerKickerTechbookBgColor",
-          "attributes": {
-            "category": "Component",
-            "type": "Kicker",
-            "item": "Partner",
-            "subitem": "kickerTechbookBgColor"
-          },
+          "name": "kickerTechbookBgColor",
+          "attributes": {},
           "path": [
             "Component",
             "Kicker",
@@ -7699,7 +6916,7 @@
           ]
         },
         "kickerKaufberaterBgColor": {
-          "$value": "#55476e",
+          "$value": "#55476E",
           "value": "#55476E",
           "type": "color",
           "$extensions": {
@@ -7725,13 +6942,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentKickerPartnerKickerKaufberaterBgColor",
-          "attributes": {
-            "category": "Component",
-            "type": "Kicker",
-            "item": "Partner",
-            "subitem": "kickerKaufberaterBgColor"
-          },
+          "name": "kickerKaufberaterBgColor",
+          "attributes": {},
           "path": [
             "Component",
             "Kicker",
@@ -7740,7 +6952,7 @@
           ]
         },
         "kickerCobiBgColor": {
-          "$value": "#dc231c",
+          "$value": "#DC231C",
           "value": "#DC231C",
           "type": "color",
           "$extensions": {
@@ -7766,13 +6978,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentKickerPartnerKickerCobiBgColor",
-          "attributes": {
-            "category": "Component",
-            "type": "Kicker",
-            "item": "Partner",
-            "subitem": "kickerCobiBgColor"
-          },
+          "name": "kickerCobiBgColor",
+          "attributes": {},
           "path": [
             "Component",
             "Kicker",
@@ -7781,7 +6988,7 @@
           ]
         },
         "kickerAubiBgColor": {
-          "$value": "#f00000",
+          "$value": "#F00000",
           "value": "#F00000",
           "type": "color",
           "$extensions": {
@@ -7807,13 +7014,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentKickerPartnerKickerAubiBgColor",
-          "attributes": {
-            "category": "Component",
-            "type": "Kicker",
-            "item": "Partner",
-            "subitem": "kickerAubiBgColor"
-          },
+          "name": "kickerAubiBgColor",
+          "attributes": {},
           "path": [
             "Component",
             "Kicker",
@@ -7848,13 +7050,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentKickerPartnerKickerSpobiBgColor",
-          "attributes": {
-            "category": "Component",
-            "type": "Kicker",
-            "item": "Partner",
-            "subitem": "kickerSpobiBgColor"
-          },
+          "name": "kickerSpobiBgColor",
+          "attributes": {},
           "path": [
             "Component",
             "Kicker",
@@ -7863,7 +7060,7 @@
           ]
         },
         "kickerBzBgColor": {
-          "$value": "#e3001b",
+          "$value": "#E3001B",
           "value": "#E3001B",
           "type": "color",
           "$extensions": {
@@ -7889,13 +7086,8 @@
             },
             "$type": "color"
           },
-          "name": "ComponentKickerPartnerKickerBzBgColor",
-          "attributes": {
-            "category": "Component",
-            "type": "Kicker",
-            "item": "Partner",
-            "subitem": "kickerBzBgColor"
-          },
+          "name": "kickerBzBgColor",
+          "attributes": {},
           "path": [
             "Component",
             "Kicker",
@@ -7933,12 +7125,8 @@
           },
           "comment": "When users hover over graphical teasers the image reduces opacity to 80%."
         },
-        "name": "ComponentTeaserTeaserHoverOpacity",
-        "attributes": {
-          "category": "Component",
-          "type": "Teaser",
-          "item": "teaserHoverOpacity"
-        },
+        "name": "teaserHoverOpacity",
+        "attributes": {},
         "path": [
           "Component",
           "Teaser",
@@ -7946,7 +7134,7 @@
         ]
       },
       "teaserTitleBackgroundGradientStart": {
-        "$value": "#000000b2",
+        "$value": "rgba(0, 0, 0, 0.699999988079071)",
         "value": "rgba(0, 0, 0, 0.699999988079071)",
         "type": "color",
         "$extensions": {
@@ -7972,12 +7160,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentTeaserTeaserTitleBackgroundGradientStart",
-        "attributes": {
-          "category": "Component",
-          "type": "Teaser",
-          "item": "teaserTitleBackgroundGradientStart"
-        },
+        "name": "teaserTitleBackgroundGradientStart",
+        "attributes": {},
         "path": [
           "Component",
           "Teaser",
@@ -7985,7 +7169,7 @@
         ]
       },
       "teaserTitleBackgroundGradientStop": {
-        "$value": "#00000000",
+        "$value": "rgba(0, 0, 0, 0)",
         "value": "rgba(0, 0, 0, 0)",
         "type": "color",
         "$extensions": {
@@ -8011,12 +7195,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentTeaserTeaserTitleBackgroundGradientStop",
-        "attributes": {
-          "category": "Component",
-          "type": "Teaser",
-          "item": "teaserTitleBackgroundGradientStop"
-        },
+        "name": "teaserTitleBackgroundGradientStop",
+        "attributes": {},
         "path": [
           "Component",
           "Teaser",
@@ -8052,12 +7232,8 @@
           },
           "comment": "When users hover on gallery slider buttons the opacity changes to 90%."
         },
-        "name": "ComponentSliderSliderButtonOpacity",
-        "attributes": {
-          "category": "Component",
-          "type": "Slider",
-          "item": "sliderButtonOpacity"
-        },
+        "name": "sliderButtonOpacity",
+        "attributes": {},
         "path": [
           "Component",
           "Slider",
@@ -8065,7 +7241,7 @@
         ]
       },
       "sliderTrackBgColor": {
-        "$value": "#ffffff59",
+        "$value": "rgba(255, 255, 255, 0.3499999940395355)",
         "value": "rgba(255, 255, 255, 0.3499999940395355)",
         "type": "color",
         "$extensions": {
@@ -8093,12 +7269,8 @@
           "$type": "color",
           "comment": "This variable is used on audio player slider bars. It references a pure white with 35% opacity."
         },
-        "name": "ComponentSliderSliderTrackBgColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Slider",
-          "item": "sliderTrackBgColor"
-        },
+        "name": "sliderTrackBgColor",
+        "attributes": {},
         "path": [
           "Component",
           "Slider",
@@ -8108,7 +7280,7 @@
     },
     "Mediaplayer": {
       "vidPlayerControlsAutoplayButtonBgColor": {
-        "$value": "#00000033",
+        "$value": "rgba(0, 0, 0, 0.20000000298023224)",
         "value": "rgba(0, 0, 0, 0.20000000298023224)",
         "type": "color",
         "$extensions": {
@@ -8134,12 +7306,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMediaplayerVidPlayerControlsAutoplayButtonBgColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Mediaplayer",
-          "item": "vidPlayerControlsAutoplayButtonBgColor"
-        },
+        "name": "vidPlayerControlsAutoplayButtonBgColor",
+        "attributes": {},
         "path": [
           "Component",
           "Mediaplayer",
@@ -8147,7 +7315,7 @@
         ]
       },
       "vidPlayerControlButtonsBgHoverColor": {
-        "$value": "#dd0000cc",
+        "$value": "rgba(221, 0, 0, 0.800000011920929)",
         "value": "rgba(221, 0, 0, 0.800000011920929)",
         "type": "color",
         "$extensions": {
@@ -8175,12 +7343,8 @@
           "$type": "color",
           "comment": "This variable is used for hover states of video player control buttons."
         },
-        "name": "ComponentMediaplayerVidPlayerControlButtonsBgHoverColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Mediaplayer",
-          "item": "vidPlayerControlButtonsBgHoverColor"
-        },
+        "name": "vidPlayerControlButtonsBgHoverColor",
+        "attributes": {},
         "path": [
           "Component",
           "Mediaplayer",
@@ -8188,7 +7352,7 @@
         ]
       },
       "vidPlayerControlButtonsBgColorHover": {
-        "$value": "#00000033",
+        "$value": "rgba(0, 0, 0, 0.20000000298023224)",
         "value": "rgba(0, 0, 0, 0.20000000298023224)",
         "type": "color",
         "$extensions": {
@@ -8214,12 +7378,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMediaplayerVidPlayerControlButtonsBgColorHover",
-        "attributes": {
-          "category": "Component",
-          "type": "Mediaplayer",
-          "item": "vidPlayerControlButtonsBgColorHover"
-        },
+        "name": "vidPlayerControlButtonsBgColorHover",
+        "attributes": {},
         "path": [
           "Component",
           "Mediaplayer",
@@ -8227,7 +7387,7 @@
         ]
       },
       "vidPlayerOverlayScrimColor": {
-        "$value": "#00000080",
+        "$value": "rgba(0, 0, 0, 0.5)",
         "value": "rgba(0, 0, 0, 0.5)",
         "type": "color",
         "$extensions": {
@@ -8253,12 +7413,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMediaplayerVidPlayerOverlayScrimColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Mediaplayer",
-          "item": "vidPlayerOverlayScrimColor"
-        },
+        "name": "vidPlayerOverlayScrimColor",
+        "attributes": {},
         "path": [
           "Component",
           "Mediaplayer",
@@ -8266,7 +7422,7 @@
         ]
       },
       "audioPlayerPlayButtonBgColor": {
-        "$value": "#ffffff4d",
+        "$value": "rgba(255, 255, 255, 0.30000001192092896)",
         "value": "rgba(255, 255, 255, 0.30000001192092896)",
         "type": "color",
         "$extensions": {
@@ -8292,12 +7448,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMediaplayerAudioPlayerPlayButtonBgColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Mediaplayer",
-          "item": "audioPlayerPlayButtonBgColor"
-        },
+        "name": "audioPlayerPlayButtonBgColor",
+        "attributes": {},
         "path": [
           "Component",
           "Mediaplayer",
@@ -8305,7 +7457,7 @@
         ]
       },
       "vidPlayerTooltipBgColor": {
-        "$value": "#000000b2",
+        "$value": "rgba(0, 0, 0, 0.699999988079071)",
         "value": "rgba(0, 0, 0, 0.699999988079071)",
         "type": "color",
         "$extensions": {
@@ -8331,12 +7483,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMediaplayerVidPlayerTooltipBgColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Mediaplayer",
-          "item": "vidPlayerTooltipBgColor"
-        },
+        "name": "vidPlayerTooltipBgColor",
+        "attributes": {},
         "path": [
           "Component",
           "Mediaplayer",
@@ -8344,7 +7492,7 @@
         ]
       },
       "vidPlayerControlButtonsBgColorPressed": {
-        "$value": "#0000000d",
+        "$value": "rgba(0, 0, 0, 0.05000000074505806)",
         "value": "rgba(0, 0, 0, 0.05000000074505806)",
         "type": "color",
         "$extensions": {
@@ -8370,12 +7518,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMediaplayerVidPlayerControlButtonsBgColorPressed",
-        "attributes": {
-          "category": "Component",
-          "type": "Mediaplayer",
-          "item": "vidPlayerControlButtonsBgColorPressed"
-        },
+        "name": "vidPlayerControlButtonsBgColorPressed",
+        "attributes": {},
         "path": [
           "Component",
           "Mediaplayer",
@@ -8383,7 +7527,7 @@
         ]
       },
       "vidPlayerProgressBarPreloadBgColor": {
-        "$value": "#ffffff4d",
+        "$value": "rgba(255, 255, 255, 0.30000001192092896)",
         "value": "rgba(255, 255, 255, 0.30000001192092896)",
         "type": "color",
         "$extensions": {
@@ -8409,12 +7553,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMediaplayerVidPlayerProgressBarPreloadBgColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Mediaplayer",
-          "item": "vidPlayerProgressBarPreloadBgColor"
-        },
+        "name": "vidPlayerProgressBarPreloadBgColor",
+        "attributes": {},
         "path": [
           "Component",
           "Mediaplayer",
@@ -8422,7 +7562,7 @@
         ]
       },
       "vidPlayerUnmuteButtonBgColor": {
-        "$value": "#00000033",
+        "$value": "rgba(0, 0, 0, 0.20000000298023224)",
         "value": "rgba(0, 0, 0, 0.20000000298023224)",
         "type": "color",
         "$extensions": {
@@ -8448,12 +7588,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMediaplayerVidPlayerUnmuteButtonBgColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Mediaplayer",
-          "item": "vidPlayerUnmuteButtonBgColor"
-        },
+        "name": "vidPlayerUnmuteButtonBgColor",
+        "attributes": {},
         "path": [
           "Component",
           "Mediaplayer",
@@ -8461,7 +7597,7 @@
         ]
       },
       "vidPlayerUnmuteButtonBgColorHover": {
-        "$value": "#00000059",
+        "$value": "rgba(0, 0, 0, 0.3499999940395355)",
         "value": "rgba(0, 0, 0, 0.3499999940395355)",
         "type": "color",
         "$extensions": {
@@ -8487,12 +7623,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMediaplayerVidPlayerUnmuteButtonBgColorHover",
-        "attributes": {
-          "category": "Component",
-          "type": "Mediaplayer",
-          "item": "vidPlayerUnmuteButtonBgColorHover"
-        },
+        "name": "vidPlayerUnmuteButtonBgColorHover",
+        "attributes": {},
         "path": [
           "Component",
           "Mediaplayer",
@@ -8502,7 +7634,7 @@
     },
     "Avatar": {
       "avatarLabelColor": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -8530,12 +7662,8 @@
           "$type": "color",
           "comment": "09-2025 css --article-author-name-color"
         },
-        "name": "ComponentAvatarAvatarLabelColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Avatar",
-          "item": "avatarLabelColor"
-        },
+        "name": "avatarLabelColor",
+        "attributes": {},
         "path": [
           "Component",
           "Avatar",
@@ -8543,7 +7671,7 @@
         ]
       },
       "avatarLabelColorHover": {
-        "$value": "#dd0000",
+        "$value": "#DD0000",
         "value": "#DD0000",
         "type": "color",
         "$extensions": {
@@ -8571,12 +7699,8 @@
           "$type": "color",
           "comment": "09-2025 css --article-author-name-color"
         },
-        "name": "ComponentAvatarAvatarLabelColorHover",
-        "attributes": {
-          "category": "Component",
-          "type": "Avatar",
-          "item": "avatarLabelColorHover"
-        },
+        "name": "avatarLabelColorHover",
+        "attributes": {},
         "path": [
           "Component",
           "Avatar",
@@ -8612,12 +7736,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentGalleryAppImageLightboxGalleryBgColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Gallery",
-          "item": "appImageLightboxGalleryBgColor"
-        },
+        "name": "appImageLightboxGalleryBgColor",
+        "attributes": {},
         "path": [
           "Component",
           "Gallery",

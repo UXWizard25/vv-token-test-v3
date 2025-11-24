@@ -32,14 +32,8 @@
               "$type": "dimension",
               "comment": "Bild: 40 | SpoBi: 38 | Ads: 39 | This variable is used in the display1 text style font size parameter for small device sizes."
             },
-            "name": "GlobalTypographyFontSizeDisplayDisplay1FontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Display",
-              "state": "display1FontSizeXS"
-            },
+            "name": "display1FontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -77,14 +71,8 @@
               "$type": "dimension",
               "comment": "Bild: 40 | SpoBi: 38 | Ads: 39 | This variable is used in the display1 text style font size parameter for small device sizes."
             },
-            "name": "GlobalTypographyFontSizeDisplayDisplay1FontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Display",
-              "state": "display1FontSizeSM"
-            },
+            "name": "display1FontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -122,14 +110,8 @@
               "$type": "dimension",
               "comment": "Bild: 72 | SpoBi: 68 | Ads: 70 | This variable is used in the display1 text style font size parameter for medium device sizes."
             },
-            "name": "GlobalTypographyFontSizeDisplayDisplay1FontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Display",
-              "state": "display1FontSizeMD"
-            },
+            "name": "display1FontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -167,14 +149,8 @@
               "$type": "dimension",
               "comment": "Bild: 120 | SpoBi: 114 | Ads: 116 | This variable is used in the display1 text style font size parameter for large device sizes."
             },
-            "name": "GlobalTypographyFontSizeDisplayDisplay1FontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Display",
-              "state": "display1FontSizeLG"
-            },
+            "name": "display1FontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -212,14 +188,8 @@
               "$type": "dimension",
               "comment": "Bild: 36 | SpoBi: 34 | Ads: 35 | This variable is used in the display2 text style font size parameter for small device sizes."
             },
-            "name": "GlobalTypographyFontSizeDisplayDisplay2FontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Display",
-              "state": "display2FontSizeXS"
-            },
+            "name": "display2FontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -257,14 +227,8 @@
               "$type": "dimension",
               "comment": "Bild: 36 | SpoBi: 34 | Ads: 35 | This variable is used in the display2 text style font size parameter for small device sizes."
             },
-            "name": "GlobalTypographyFontSizeDisplayDisplay2FontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Display",
-              "state": "display2FontSizeSM"
-            },
+            "name": "display2FontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -302,14 +266,8 @@
               "$type": "dimension",
               "comment": "Bild: 42 | SpoBi: 40 | Ads: 41 | This variable is used in the display2 text style font size parameter for medium device sizes."
             },
-            "name": "GlobalTypographyFontSizeDisplayDisplay2FontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Display",
-              "state": "display2FontSizeMD"
-            },
+            "name": "display2FontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -347,14 +305,8 @@
               "$type": "dimension",
               "comment": "Bild: 64 | SpoBi: 61 | Ads: 62 | This variable is used in the display2 text style font size parameter for large device sizes."
             },
-            "name": "GlobalTypographyFontSizeDisplayDisplay2FontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Display",
-              "state": "display2FontSizeLG"
-            },
+            "name": "display2FontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -392,14 +344,8 @@
               "$type": "dimension",
               "comment": "Bild: 28 | SpoBi: 27 | Ads: 27 | This variable is used in the display3 text style font size parameter for small device sizes."
             },
-            "name": "GlobalTypographyFontSizeDisplayDisplay3FontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Display",
-              "state": "display3FontSizeSM"
-            },
+            "name": "display3FontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -437,14 +383,8 @@
               "$type": "dimension",
               "comment": "Bild: 32 | SpoBi: 30 | Ads: 31 | This variable is used in the display3 text style font size parameter for medium device sizes."
             },
-            "name": "GlobalTypographyFontSizeDisplayDisplay3FontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Display",
-              "state": "display3FontSizeMD"
-            },
+            "name": "display3FontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -482,14 +422,8 @@
               "$type": "dimension",
               "comment": "Bild: 40 | SpoBi: 38 | Ads: 39 | This variable is used in the display3 text style font size parameter for large device sizes."
             },
-            "name": "GlobalTypographyFontSizeDisplayDisplay3FontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Display",
-              "state": "display3FontSizeLG"
-            },
+            "name": "display3FontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -527,14 +461,8 @@
               "$type": "dimension",
               "comment": "Bild: 28 | SpoBi: 27 | Ads: 27 | This variable is used in the display3 text style font size parameter for small device sizes."
             },
-            "name": "GlobalTypographyFontSizeDisplayDisplay3FontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Display",
-              "state": "display3FontSizeXS"
-            },
+            "name": "display3FontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -574,14 +502,8 @@
               "$type": "dimension",
               "comment": "Bild: 48 | SpoBi: 42 | Ads: 36 | This variable is used in the headline1 text style font size parameter for small device sizes."
             },
-            "name": "GlobalTypographyFontSizeHeadlineHeadline1FontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Headline",
-              "state": "headline1FontSizeXS"
-            },
+            "name": "headline1FontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -619,14 +541,8 @@
               "$type": "dimension",
               "comment": "Bild: 48 | SpoBi: 42 | Ads: 36 | This variable is used in the headline1 text style font size parameter for small device sizes."
             },
-            "name": "GlobalTypographyFontSizeHeadlineHeadline1FontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Headline",
-              "state": "headline1FontSizeSM"
-            },
+            "name": "headline1FontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -664,14 +580,8 @@
               "$type": "dimension",
               "comment": "Bild: 72 | SpoBi: 60 | Ads: 54 | This variable is used in the headline1 text style font size parameter for medium device sizes."
             },
-            "name": "GlobalTypographyFontSizeHeadlineHeadline1FontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Headline",
-              "state": "headline1FontSizeMD"
-            },
+            "name": "headline1FontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -709,14 +619,8 @@
               "$type": "dimension",
               "comment": "Bild: 100 | SpoBi: 80 | Ads: 70 | This variable is used in the headline1 text style font size parameter for large device sizes."
             },
-            "name": "GlobalTypographyFontSizeHeadlineHeadline1FontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Headline",
-              "state": "headline1FontSizeLG"
-            },
+            "name": "headline1FontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -754,14 +658,8 @@
               "$type": "dimension",
               "comment": "Bild: 40 | SpoBi: 42 | Ads: 30 | This variable is used in the headline2 text style font size parameter for small device sizes."
             },
-            "name": "GlobalTypographyFontSizeHeadlineHeadline2FontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Headline",
-              "state": "headline2FontSizeXS"
-            },
+            "name": "headline2FontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -799,14 +697,8 @@
               "$type": "dimension",
               "comment": "Bild: 40 | SpoBi: 42 | Ads: 30 | This variable is used in the headline2 text style font size parameter for small device sizes."
             },
-            "name": "GlobalTypographyFontSizeHeadlineHeadline2FontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Headline",
-              "state": "headline2FontSizeSM"
-            },
+            "name": "headline2FontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -844,14 +736,8 @@
               "$type": "dimension",
               "comment": "Bild: 48 | SpoBi: 44 | Ads: 36 | This variable is used in the headline2 text style font size parameter for medium device sizes."
             },
-            "name": "GlobalTypographyFontSizeHeadlineHeadline2FontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Headline",
-              "state": "headline2FontSizeMD"
-            },
+            "name": "headline2FontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -889,14 +775,8 @@
               "$type": "dimension",
               "comment": "Bild: 64 | SpoBi: 50 | Ads: 48 | This variable is used in the headline2 text style font size parameter for large device sizes."
             },
-            "name": "GlobalTypographyFontSizeHeadlineHeadline2FontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Headline",
-              "state": "headline2FontSizeLG"
-            },
+            "name": "headline2FontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -934,14 +814,8 @@
               "$type": "dimension",
               "comment": "Bild: 28 | SpoBi: 30 | Ads: 24 | This variable is used in the headline3 text style font size parameter for small device sizes."
             },
-            "name": "GlobalTypographyFontSizeHeadlineHeadline3FontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Headline",
-              "state": "headline3FontSizeXS"
-            },
+            "name": "headline3FontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -979,14 +853,8 @@
               "$type": "dimension",
               "comment": "Bild: 28 | SpoBi: 30 | Ads: 24 | This variable is used in the headline3 text style font size parameter for small device sizes."
             },
-            "name": "GlobalTypographyFontSizeHeadlineHeadline3FontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Headline",
-              "state": "headline3FontSizeSM"
-            },
+            "name": "headline3FontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1024,14 +892,8 @@
               "$type": "dimension",
               "comment": "Bild: 36 | SpoBi: 30 | Ads: 26 | This variable is used in the headline3 text style font size parameter for medium device sizes."
             },
-            "name": "GlobalTypographyFontSizeHeadlineHeadline3FontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Headline",
-              "state": "headline3FontSizeMD"
-            },
+            "name": "headline3FontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1069,14 +931,8 @@
               "$type": "dimension",
               "comment": "Bild: 40 | SpoBi: 34 | Ads: 32 | This variable is used in the headline3 text style font size parameter for large device sizes."
             },
-            "name": "GlobalTypographyFontSizeHeadlineHeadline3FontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Headline",
-              "state": "headline3FontSizeLG"
-            },
+            "name": "headline3FontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1114,14 +970,8 @@
               "$type": "dimension",
               "comment": "Bild: 22 | SpoBi: 21 | Ads: 16 | This variable is used in the headline4 text style font size parameter for small device sizes."
             },
-            "name": "GlobalTypographyFontSizeHeadlineHeadline4FontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Headline",
-              "state": "headline4FontSizeXS"
-            },
+            "name": "headline4FontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1159,14 +1009,8 @@
               "$type": "dimension",
               "comment": "Bild: 22 | SpoBi: 21 | Ads: 16 | This variable is used in the headline4 text style font size parameter for small device sizes."
             },
-            "name": "GlobalTypographyFontSizeHeadlineHeadline4FontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Headline",
-              "state": "headline4FontSizeSM"
-            },
+            "name": "headline4FontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1204,14 +1048,8 @@
               "$type": "dimension",
               "comment": "Bild: 26 | SpoBi: 26 | Ads: 20 | This variable is used in the headline4 text style font size parameter for medium device sizes."
             },
-            "name": "GlobalTypographyFontSizeHeadlineHeadline4FontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Headline",
-              "state": "headline4FontSizeMD"
-            },
+            "name": "headline4FontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1249,14 +1087,8 @@
               "$type": "dimension",
               "comment": "Bild: 32 | SpoBi: 26 | Ads: 22 | This variable is used in the headline4 text style font size parameter for large device sizes."
             },
-            "name": "GlobalTypographyFontSizeHeadlineHeadline4FontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Headline",
-              "state": "headline4FontSizeLG"
-            },
+            "name": "headline4FontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1292,14 +1124,8 @@
               },
               "comment": "This variable is used for controlling the alignment of headlines across brands. current online css example var: --headline-text-align-lg"
             },
-            "name": "GlobalTypographyFontSizeHeadlineHeadlineTextAlign",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Headline",
-              "state": "headlineTextAlign"
-            },
+            "name": "headlineTextAlign",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1339,14 +1165,8 @@
               "$type": "dimension",
               "comment": "Bild: 18 | SpoBi: 20 | Ads: 16 | This variable is used in the kicker1 text style font size parameter for small device sizes. Current online css: --kicker-0-font-size-sm"
             },
-            "name": "GlobalTypographyFontSizeKickerKicker1FontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Kicker",
-              "state": "kicker1FontSizeXS"
-            },
+            "name": "kicker1FontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1384,14 +1204,8 @@
               "$type": "dimension",
               "comment": "Bild: 18 | SpoBi: 20 | Ads: 16 | This variable is used in the kicker1 text style font size parameter for small device sizes. Current online css: --kicker-0-font-size-sm"
             },
-            "name": "GlobalTypographyFontSizeKickerKicker1FontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Kicker",
-              "state": "kicker1FontSizeSM"
-            },
+            "name": "kicker1FontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1429,14 +1243,8 @@
               "$type": "dimension",
               "comment": "Bild: 22 | SpoBi: 26 | Ads: 18 | This variable is used in the kicker1 text style font size parameter for medium device sizes. Current online css: --kicker-0-font-size-md"
             },
-            "name": "GlobalTypographyFontSizeKickerKicker1FontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Kicker",
-              "state": "kicker1FontSizeMD"
-            },
+            "name": "kicker1FontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1474,14 +1282,8 @@
               "$type": "dimension",
               "comment": "Bild: 30 | SpoBi: 32 | Ads: 25 | This variable is used in the kicker1 text style font size parameter for large device sizes. Current online css: --kicker-0-font-size-lg"
             },
-            "name": "GlobalTypographyFontSizeKickerKicker1FontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Kicker",
-              "state": "kicker1FontSizeLG"
-            },
+            "name": "kicker1FontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1519,14 +1321,8 @@
               "$type": "dimension",
               "comment": "Bild: 18 | SpoBi: 16 | Ads: 16 | This variable is used in the kicker2 text style font size parameter for small device sizes. Current online css: --kicker-1-font-size-sm"
             },
-            "name": "GlobalTypographyFontSizeKickerKicker2FontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Kicker",
-              "state": "kicker2FontSizeXS"
-            },
+            "name": "kicker2FontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1564,14 +1360,8 @@
               "$type": "dimension",
               "comment": "Bild: 18 | SpoBi: 16 | Ads: 16 | This variable is used in the kicker2 text style font size parameter for small device sizes. Current online css: --kicker-1-font-size-sm"
             },
-            "name": "GlobalTypographyFontSizeKickerKicker2FontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Kicker",
-              "state": "kicker2FontSizeSM"
-            },
+            "name": "kicker2FontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1609,14 +1399,8 @@
               "$type": "dimension",
               "comment": "Bild: 22 | SpoBi: 26 | Ads: 18 | This variable is used in the kicker2 text style font size parameter for medium device sizes. Current online css: --kicker-1-font-size-md"
             },
-            "name": "GlobalTypographyFontSizeKickerKicker2FontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Kicker",
-              "state": "kicker2FontSizeMD"
-            },
+            "name": "kicker2FontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1654,14 +1438,8 @@
               "$type": "dimension",
               "comment": "Bild: 24 | SpoBi: 26 | Ads: 21 | This variable is used in the kicker2 text style font size parameter for large device sizes. Current online css: --kicker-1-font-size-lg"
             },
-            "name": "GlobalTypographyFontSizeKickerKicker2FontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Kicker",
-              "state": "kicker2FontSizeLG"
-            },
+            "name": "kicker2FontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1699,14 +1477,8 @@
               "$type": "dimension",
               "comment": "Bild: 16 | SpoBi: 16 | Ads: 14 | This variable is used in the kicker3 text style font size parameter for small device sizes. Current online css: --kicker-2-font-size-sm"
             },
-            "name": "GlobalTypographyFontSizeKickerKicker3FontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Kicker",
-              "state": "kicker3FontSizeXS"
-            },
+            "name": "kicker3FontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1744,14 +1516,8 @@
               "$type": "dimension",
               "comment": "Bild: 16 | SpoBi: 16 | Ads: 14 | This variable is used in the kicker3 text style font size parameter for small device sizes. Current online css: --kicker-2-font-size-sm"
             },
-            "name": "GlobalTypographyFontSizeKickerKicker3FontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Kicker",
-              "state": "kicker3FontSizeSM"
-            },
+            "name": "kicker3FontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1789,14 +1555,8 @@
               "$type": "dimension",
               "comment": "Bild: 18 | SpoBi: 20 | Ads: 14 | This variable is used in the kicker3 text style font size parameter for medium device sizes. Current online css: --kicker-2-font-size-md"
             },
-            "name": "GlobalTypographyFontSizeKickerKicker3FontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Kicker",
-              "state": "kicker3FontSizeMD"
-            },
+            "name": "kicker3FontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1834,14 +1594,8 @@
               "$type": "dimension",
               "comment": "Bild: 20 | SpoBi: 22 | Ads: 16 | This variable is used in the kicker3 text style font size parameter for large device sizes. Current online css: --kicker-2-font-size-lg"
             },
-            "name": "GlobalTypographyFontSizeKickerKicker3FontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Kicker",
-              "state": "kicker3FontSizeLG"
-            },
+            "name": "kicker3FontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1879,14 +1633,8 @@
               "$type": "dimension",
               "comment": "Bild: 14 | SpoBi: 14 | Ads: 12 | This variable is used in the kicker4 text style font size parameter for small device sizes. Current online css: --kicker-3-font-size-sm"
             },
-            "name": "GlobalTypographyFontSizeKickerKicker4FontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Kicker",
-              "state": "kicker4FontSizeXS"
-            },
+            "name": "kicker4FontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1924,14 +1672,8 @@
               "$type": "dimension",
               "comment": "Bild: 14 | SpoBi: 14 | Ads: 12 | This variable is used in the kicker4 text style font size parameter for small device sizes. Current online css: --kicker-3-font-size-sm"
             },
-            "name": "GlobalTypographyFontSizeKickerKicker4FontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Kicker",
-              "state": "kicker4FontSizeSM"
-            },
+            "name": "kicker4FontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -1969,14 +1711,8 @@
               "$type": "dimension",
               "comment": "Bild: 16 | SpoBi: 16 | Ads: 14 | This variable is used in the kicker4 text style font size parameter for medium device sizes. Current online css: --kicker-3-font-size-md"
             },
-            "name": "GlobalTypographyFontSizeKickerKicker4FontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Kicker",
-              "state": "kicker4FontSizeMD"
-            },
+            "name": "kicker4FontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2014,14 +1750,8 @@
               "$type": "dimension",
               "comment": "Bild: 16 | SpoBi: 18 | Ads: 14 | This variable is used in the kicker4 text style font size parameter for large device sizes. Current online css: --kicker-3-font-size-lg"
             },
-            "name": "GlobalTypographyFontSizeKickerKicker4FontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Kicker",
-              "state": "kicker4FontSizeLG"
-            },
+            "name": "kicker4FontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2061,14 +1791,8 @@
               "$type": "dimension",
               "comment": "Bild: 24 | SpoBi: 18 | Ads: 18 | This variable is used in the subheadline1 text style font size parameter for small device sizes."
             },
-            "name": "GlobalTypographyFontSizeSubheadlineSubheadline1FontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Subheadline",
-              "state": "subheadline1FontSizeXS"
-            },
+            "name": "subheadline1FontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2106,14 +1830,8 @@
               "$type": "dimension",
               "comment": "Bild: 24 | SpoBi: 18 | Ads: 18 | This variable is used in the subheadline1 text style font size parameter for small device sizes."
             },
-            "name": "GlobalTypographyFontSizeSubheadlineSubheadline1FontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Subheadline",
-              "state": "subheadline1FontSizeSM"
-            },
+            "name": "subheadline1FontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2151,14 +1869,8 @@
               "$type": "dimension",
               "comment": "Bild: 32 | SpoBi: 22 | Ads: 18 | This variable is used in the subheadline1 text style font size parameter for medium device sizes."
             },
-            "name": "GlobalTypographyFontSizeSubheadlineSubheadline1FontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Subheadline",
-              "state": "subheadline1FontSizeMD"
-            },
+            "name": "subheadline1FontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2196,14 +1908,8 @@
               "$type": "dimension",
               "comment": "Bild: 36 | SpoBi: 26 | Ads: 28 | This variable is used in the subheadline1 text style font size parameter for large device sizes."
             },
-            "name": "GlobalTypographyFontSizeSubheadlineSubheadline1FontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Subheadline",
-              "state": "subheadline1FontSizeLG"
-            },
+            "name": "subheadline1FontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2243,14 +1949,8 @@
               "$type": "dimension",
               "comment": "Bild 22 | SpoBi 24 | Ads 22 | current online css: --ressort-header-font-size-sm"
             },
-            "name": "GlobalTypographyFontSizeTitleTitle1FontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Title",
-              "state": "title1FontSizeXS"
-            },
+            "name": "title1FontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2288,14 +1988,8 @@
               "$type": "dimension",
               "comment": "Bild 22 | SpoBi 24 | Ads 22 | current online css: --ressort-header-font-size-sm"
             },
-            "name": "GlobalTypographyFontSizeTitleTitle1FontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Title",
-              "state": "title1FontSizeSM"
-            },
+            "name": "title1FontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2333,14 +2027,8 @@
               "$type": "dimension",
               "comment": "Bild 22 | SpoBi 28 | Ads 22 | current online css: --ressort-header-font-size-md"
             },
-            "name": "GlobalTypographyFontSizeTitleTitle1FontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Title",
-              "state": "title1FontSizeMD"
-            },
+            "name": "title1FontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2378,14 +2066,8 @@
               "$type": "dimension",
               "comment": "Bild 28 | SpoBi 30 | Ads 28 | current online css: --ressort-header-font-size-lg"
             },
-            "name": "GlobalTypographyFontSizeTitleTitle1FontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Title",
-              "state": "title1FontSizeLG"
-            },
+            "name": "title1FontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2423,14 +2105,8 @@
               "$type": "dimension",
               "comment": "Bild 16 | SpoBi 16 | Ads 14 | current online css var: --caption-1-font-size-sm"
             },
-            "name": "GlobalTypographyFontSizeTitleTitle2FontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Title",
-              "state": "title2FontSizeXS"
-            },
+            "name": "title2FontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2468,14 +2144,8 @@
               "$type": "dimension",
               "comment": "Bild 16 | SpoBi 16 | Ads 14 | current online css: --caption-1-font-size-sm"
             },
-            "name": "GlobalTypographyFontSizeTitleTitle2FontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Title",
-              "state": "title2FontSizeSM"
-            },
+            "name": "title2FontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2513,14 +2183,8 @@
               "$type": "dimension",
               "comment": "Bild 18 | SpoBi 18 | Ads 16 | current online css: --caption-1-font-size-md"
             },
-            "name": "GlobalTypographyFontSizeTitleTitle2FontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Title",
-              "state": "title2FontSizeMD"
-            },
+            "name": "title2FontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2558,14 +2222,8 @@
               "$type": "dimension",
               "comment": "Bild 20 | SpoBi 20 | Ads 18 | current online css: --caption-1-font-size-lg"
             },
-            "name": "GlobalTypographyFontSizeTitleTitle2FontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Title",
-              "state": "title2FontSizeLG"
-            },
+            "name": "title2FontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2605,14 +2263,8 @@
               "$type": "dimension",
               "comment": "Bild: 18 | SpoBi: 18 | Ads: 16 | This variable is used in the callout1 text style font size parameter for small device sizes. Current online css:"
             },
-            "name": "GlobalTypographyFontSizeCalloutCallout1FontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Callout",
-              "state": "callout1FontSizeXS"
-            },
+            "name": "callout1FontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2650,14 +2302,8 @@
               "$type": "dimension",
               "comment": "Bild: 18 | SpoBi: 18 | Ads: 16 | This variable is used in the callout1 text style font size parameter for small device sizes. Current online css:"
             },
-            "name": "GlobalTypographyFontSizeCalloutCallout1FontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Callout",
-              "state": "callout1FontSizeSM"
-            },
+            "name": "callout1FontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2695,14 +2341,8 @@
               "$type": "dimension",
               "comment": "Bild: 22 | SpoBi: 24 | Ads: 22 | This variable is used in the callout1 text style font size parameter for medium device sizes. Current online css:"
             },
-            "name": "GlobalTypographyFontSizeCalloutCallout1FontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Callout",
-              "state": "callout1FontSizeMD"
-            },
+            "name": "callout1FontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2740,14 +2380,8 @@
               "$type": "dimension",
               "comment": "Bild: 22 | SpoBi: 24 | Ads: 22 | This variable is used in the callout1 text style font size parameter for large device sizes. Current online css:"
             },
-            "name": "GlobalTypographyFontSizeCalloutCallout1FontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Callout",
-              "state": "callout1FontSizeLG"
-            },
+            "name": "callout1FontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2787,14 +2421,8 @@
               "$type": "dimension",
               "comment": "Bild: 21 | SpoBi: 17 | Ads: 17 | This variable is used in the body text style font size parameter for small device sizes. Current online css: --body-font-size"
             },
-            "name": "GlobalTypographyFontSizeBodyBodyFontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Body",
-              "state": "bodyFontSizeXS"
-            },
+            "name": "bodyFontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2832,14 +2460,8 @@
               "$type": "dimension",
               "comment": "Bild: 21 | SpoBi: 17 | Ads: 17 | This variable is used in the body text style font size parameter for small device sizes. Current online css: --body-font-size"
             },
-            "name": "GlobalTypographyFontSizeBodyBodyFontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Body",
-              "state": "bodyFontSizeSM"
-            },
+            "name": "bodyFontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2877,14 +2499,8 @@
               "$type": "dimension",
               "comment": "Bild: 21 | SpoBi: 17 | Ads: 17 | This variable is used in the body text style font size parameter for medium device sizes. Current online css: --body-font-size"
             },
-            "name": "GlobalTypographyFontSizeBodyBodyFontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Body",
-              "state": "bodyFontSizeMD"
-            },
+            "name": "bodyFontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2922,14 +2538,8 @@
               "$type": "dimension",
               "comment": "Bild: 21 | SpoBi: 17 | Ads: 17 | This variable is used in the body text style font size parameter for large device sizes. Current online css: --body-font-size"
             },
-            "name": "GlobalTypographyFontSizeBodyBodyFontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Body",
-              "state": "bodyFontSizeLG"
-            },
+            "name": "bodyFontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -2969,14 +2579,8 @@
               "$type": "dimension",
               "comment": "--footnote-font-size-sm"
             },
-            "name": "GlobalTypographyFontSizeFootnoteFootnote1FontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Footnote",
-              "state": "footnote1FontSizeXS"
-            },
+            "name": "footnote1FontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3014,14 +2618,8 @@
               "$type": "dimension",
               "comment": "--footnote-font-size-sm"
             },
-            "name": "GlobalTypographyFontSizeFootnoteFootnote1FontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Footnote",
-              "state": "footnote1FontSizeSM"
-            },
+            "name": "footnote1FontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3057,14 +2655,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyFontSizeFootnoteFootnote1FontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Footnote",
-              "state": "footnote1FontSizeMD"
-            },
+            "name": "footnote1FontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3102,14 +2694,8 @@
               "$type": "dimension",
               "comment": "--footnote-font-size-lg"
             },
-            "name": "GlobalTypographyFontSizeFootnoteFootnote1FontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Footnote",
-              "state": "footnote1FontSizeLG"
-            },
+            "name": "footnote1FontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3145,14 +2731,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyFontSizeFootnoteFootnote2FontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Footnote",
-              "state": "footnote2FontSizeXS"
-            },
+            "name": "footnote2FontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3188,14 +2768,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyFontSizeFootnoteFootnote2FontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Footnote",
-              "state": "footnote2FontSizeSM"
-            },
+            "name": "footnote2FontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3231,14 +2805,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyFontSizeFootnoteFootnote2FontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Footnote",
-              "state": "footnote2FontSizeMD"
-            },
+            "name": "footnote2FontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3274,14 +2842,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyFontSizeFootnoteFootnote2FontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Footnote",
-              "state": "footnote2FontSizeLG"
-            },
+            "name": "footnote2FontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3319,14 +2881,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyFontSizeQuoteQuoteFontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Quote",
-              "state": "quoteFontSizeXS"
-            },
+            "name": "quoteFontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3362,14 +2918,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyFontSizeQuoteQuoteFontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Quote",
-              "state": "quoteFontSizeSM"
-            },
+            "name": "quoteFontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3405,14 +2955,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyFontSizeQuoteQuoteFontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Quote",
-              "state": "quoteFontSizeMD"
-            },
+            "name": "quoteFontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3448,14 +2992,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyFontSizeQuoteQuoteFontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Quote",
-              "state": "quoteFontSizeLG"
-            },
+            "name": "quoteFontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3493,14 +3031,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyFontSizeLabelLabel1FontSize",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Label",
-              "state": "label1FontSize"
-            },
+            "name": "label1FontSize",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3536,14 +3068,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyFontSizeLabelLabel2FontSize",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Label",
-              "state": "label2FontSize"
-            },
+            "name": "label2FontSize",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3579,14 +3105,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyFontSizeLabelLabel3FontSize",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Label",
-              "state": "label3FontSize"
-            },
+            "name": "label3FontSize",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3622,14 +3142,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyFontSizeLabelLabel4FontSize",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Label",
-              "state": "label4FontSize"
-            },
+            "name": "label4FontSize",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3665,14 +3179,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyFontSizeLabelLabel1RespFontSizeXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Label",
-              "state": "label1RespFontSizeXS"
-            },
+            "name": "label1RespFontSizeXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3708,14 +3216,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyFontSizeLabelLabel1RespFontSizeSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Label",
-              "state": "label1RespFontSizeSM"
-            },
+            "name": "label1RespFontSizeSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3751,14 +3253,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyFontSizeLabelLabel1RespFontSizeMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Label",
-              "state": "label1RespFontSizeMD"
-            },
+            "name": "label1RespFontSizeMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3794,14 +3290,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyFontSizeLabelLabel1RespFontSizeLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontSize",
-              "subitem": "Label",
-              "state": "label1RespFontSizeLG"
-            },
+            "name": "label1RespFontSizeLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3841,14 +3331,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightDisplayDisplay1LineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Display",
-              "state": "display1LineHeightXS"
-            },
+            "name": "display1LineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3884,14 +3368,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightDisplayDisplay1LineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Display",
-              "state": "display1LineHeightSM"
-            },
+            "name": "display1LineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3927,14 +3405,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightDisplayDisplay1LineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Display",
-              "state": "display1LineHeightMD"
-            },
+            "name": "display1LineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -3970,14 +3442,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightDisplayDisplay1LineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Display",
-              "state": "display1LineHeightLG"
-            },
+            "name": "display1LineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4013,14 +3479,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightDisplayDisplay2LineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Display",
-              "state": "display2LineHeightXS"
-            },
+            "name": "display2LineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4056,14 +3516,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightDisplayDisplay2LineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Display",
-              "state": "display2LineHeightSM"
-            },
+            "name": "display2LineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4099,14 +3553,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightDisplayDisplay2LineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Display",
-              "state": "display2LineHeightMD"
-            },
+            "name": "display2LineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4142,14 +3590,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightDisplayDisplay2LineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Display",
-              "state": "display2LineHeightLG"
-            },
+            "name": "display2LineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4185,14 +3627,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightDisplayDisplay3LineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Display",
-              "state": "display3LineHeightLG"
-            },
+            "name": "display3LineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4228,14 +3664,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightDisplayDisplay3LineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Display",
-              "state": "display3LineHeightMD"
-            },
+            "name": "display3LineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4271,14 +3701,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightDisplayDisplay3LineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Display",
-              "state": "display3LineHeightSM"
-            },
+            "name": "display3LineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4314,14 +3738,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightDisplayDisplay3LineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Display",
-              "state": "display3LineHeightXS"
-            },
+            "name": "display3LineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4359,14 +3777,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightHeadlineHeadline1LineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Headline",
-              "state": "headline1LineHeightXS"
-            },
+            "name": "headline1LineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4402,14 +3814,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightHeadlineHeadline1LineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Headline",
-              "state": "headline1LineHeightSM"
-            },
+            "name": "headline1LineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4445,14 +3851,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightHeadlineHeadline1LineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Headline",
-              "state": "headline1LineHeightMD"
-            },
+            "name": "headline1LineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4488,14 +3888,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightHeadlineHeadline1LineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Headline",
-              "state": "headline1LineHeightLG"
-            },
+            "name": "headline1LineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4531,14 +3925,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightHeadlineHeadline2LineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Headline",
-              "state": "headline2LineHeightXS"
-            },
+            "name": "headline2LineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4574,14 +3962,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightHeadlineHeadline2LineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Headline",
-              "state": "headline2LineHeightSM"
-            },
+            "name": "headline2LineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4617,14 +3999,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightHeadlineHeadline2LineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Headline",
-              "state": "headline2LineHeightMD"
-            },
+            "name": "headline2LineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4660,14 +4036,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightHeadlineHeadline2LineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Headline",
-              "state": "headline2LineHeightLG"
-            },
+            "name": "headline2LineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4703,14 +4073,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightHeadlineHeadline3LineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Headline",
-              "state": "headline3LineHeightXS"
-            },
+            "name": "headline3LineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4746,14 +4110,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightHeadlineHeadline3LineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Headline",
-              "state": "headline3LineHeightSM"
-            },
+            "name": "headline3LineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4789,14 +4147,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightHeadlineHeadline3LineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Headline",
-              "state": "headline3LineHeightMD"
-            },
+            "name": "headline3LineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4832,14 +4184,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightHeadlineHeadline3LineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Headline",
-              "state": "headline3LineHeightLG"
-            },
+            "name": "headline3LineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4875,14 +4221,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightHeadlineHeadline4LineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Headline",
-              "state": "headline4LineHeightXS"
-            },
+            "name": "headline4LineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4918,14 +4258,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightHeadlineHeadline4LineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Headline",
-              "state": "headline4LineHeightSM"
-            },
+            "name": "headline4LineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -4961,14 +4295,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightHeadlineHeadline4LineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Headline",
-              "state": "headline4LineHeightMD"
-            },
+            "name": "headline4LineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5004,14 +4332,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightHeadlineHeadline4LineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Headline",
-              "state": "headline4LineHeightLG"
-            },
+            "name": "headline4LineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5049,14 +4371,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightSubheadlineSubheadline1LineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Subheadline",
-              "state": "subheadline1LineHeightXS"
-            },
+            "name": "subheadline1LineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5092,14 +4408,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightSubheadlineSubheadline1LineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Subheadline",
-              "state": "subheadline1LineHeightSM"
-            },
+            "name": "subheadline1LineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5135,14 +4445,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightSubheadlineSubheadline1LineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Subheadline",
-              "state": "subheadline1LineHeightMD"
-            },
+            "name": "subheadline1LineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5178,14 +4482,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightSubheadlineSubheadline1LineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Subheadline",
-              "state": "subheadline1LineHeightLG"
-            },
+            "name": "subheadline1LineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5223,14 +4521,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightKickerKicker1LineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Kicker",
-              "state": "kicker1LineHeightXS"
-            },
+            "name": "kicker1LineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5266,14 +4558,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightKickerKicker1LineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Kicker",
-              "state": "kicker1LineHeightSM"
-            },
+            "name": "kicker1LineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5309,14 +4595,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightKickerKicker1LineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Kicker",
-              "state": "kicker1LineHeightMD"
-            },
+            "name": "kicker1LineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5352,14 +4632,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightKickerKicker1LineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Kicker",
-              "state": "kicker1LineHeightLG"
-            },
+            "name": "kicker1LineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5395,14 +4669,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightKickerKicker2LineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Kicker",
-              "state": "kicker2LineHeightXS"
-            },
+            "name": "kicker2LineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5438,14 +4706,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightKickerKicker2LineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Kicker",
-              "state": "kicker2LineHeightSM"
-            },
+            "name": "kicker2LineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5481,14 +4743,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightKickerKicker2LineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Kicker",
-              "state": "kicker2LineHeightMD"
-            },
+            "name": "kicker2LineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5524,14 +4780,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightKickerKicker2LineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Kicker",
-              "state": "kicker2LineHeightLG"
-            },
+            "name": "kicker2LineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5567,14 +4817,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightKickerKicker3LineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Kicker",
-              "state": "kicker3LineHeightXS"
-            },
+            "name": "kicker3LineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5610,14 +4854,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightKickerKicker3LineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Kicker",
-              "state": "kicker3LineHeightSM"
-            },
+            "name": "kicker3LineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5653,14 +4891,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightKickerKicker3LineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Kicker",
-              "state": "kicker3LineHeightMD"
-            },
+            "name": "kicker3LineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5696,14 +4928,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightKickerKicker3LineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Kicker",
-              "state": "kicker3LineHeightLG"
-            },
+            "name": "kicker3LineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5739,14 +4965,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightKickerKicker4LineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Kicker",
-              "state": "kicker4LineHeightXS"
-            },
+            "name": "kicker4LineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5782,14 +5002,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightKickerKicker4LineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Kicker",
-              "state": "kicker4LineHeightSM"
-            },
+            "name": "kicker4LineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5825,14 +5039,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightKickerKicker4LineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Kicker",
-              "state": "kicker4LineHeightMD"
-            },
+            "name": "kicker4LineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5868,14 +5076,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightKickerKicker4LineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Kicker",
-              "state": "kicker4LineHeightLG"
-            },
+            "name": "kicker4LineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5913,14 +5115,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightTitleTitle1LineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Title",
-              "state": "title1LineHeightXS"
-            },
+            "name": "title1LineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5956,14 +5152,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightTitleTitle1LineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Title",
-              "state": "title1LineHeightSM"
-            },
+            "name": "title1LineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -5999,14 +5189,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightTitleTitle1LineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Title",
-              "state": "title1LineHeightMD"
-            },
+            "name": "title1LineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6042,14 +5226,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightTitleTitle1LineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Title",
-              "state": "title1LineHeightLG"
-            },
+            "name": "title1LineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6085,14 +5263,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightTitleTitle2LineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Title",
-              "state": "title2LineHeightXS"
-            },
+            "name": "title2LineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6128,14 +5300,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightTitleTitle2LineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Title",
-              "state": "title2LineHeightSM"
-            },
+            "name": "title2LineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6171,14 +5337,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightTitleTitle2LineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Title",
-              "state": "title2LineHeightMD"
-            },
+            "name": "title2LineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6214,14 +5374,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightTitleTitle2LineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Title",
-              "state": "title2LineHeightLG"
-            },
+            "name": "title2LineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6259,14 +5413,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightCalloutCallout1LineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Callout",
-              "state": "callout1LineHeightXS"
-            },
+            "name": "callout1LineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6302,14 +5450,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightCalloutCallout1LineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Callout",
-              "state": "callout1LineHeightSM"
-            },
+            "name": "callout1LineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6345,14 +5487,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightCalloutCallout1LineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Callout",
-              "state": "callout1LineHeightMD"
-            },
+            "name": "callout1LineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6388,14 +5524,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightCalloutCallout1LineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Callout",
-              "state": "callout1LineHeightLG"
-            },
+            "name": "callout1LineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6433,14 +5563,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightBodyBodyLineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Body",
-              "state": "bodyLineHeightXS"
-            },
+            "name": "bodyLineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6476,14 +5600,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightBodyBodyLineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Body",
-              "state": "bodyLineHeightSM"
-            },
+            "name": "bodyLineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6519,14 +5637,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightBodyBodyLineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Body",
-              "state": "bodyLineHeightMD"
-            },
+            "name": "bodyLineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6562,14 +5674,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightBodyBodyLineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Body",
-              "state": "bodyLineHeightLG"
-            },
+            "name": "bodyLineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6607,14 +5713,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightFootnoteFootnote1LineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Footnote",
-              "state": "footnote1LineHeightXS"
-            },
+            "name": "footnote1LineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6650,14 +5750,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightFootnoteFootnote1LineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Footnote",
-              "state": "footnote1LineHeightSM"
-            },
+            "name": "footnote1LineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6693,14 +5787,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightFootnoteFootnote1LineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Footnote",
-              "state": "footnote1LineHeightMD"
-            },
+            "name": "footnote1LineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6736,14 +5824,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightFootnoteFootnote1LineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Footnote",
-              "state": "footnote1LineHeightLG"
-            },
+            "name": "footnote1LineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6779,14 +5861,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightFootnoteFootnote2LineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Footnote",
-              "state": "footnote2LineHeightXS"
-            },
+            "name": "footnote2LineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6822,14 +5898,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightFootnoteFootnote2LineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Footnote",
-              "state": "footnote2LineHeightSM"
-            },
+            "name": "footnote2LineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6865,14 +5935,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightFootnoteFootnote2LineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Footnote",
-              "state": "footnote2LineHeightMD"
-            },
+            "name": "footnote2LineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6908,14 +5972,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightFootnoteFootnote2LineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Footnote",
-              "state": "footnote2LineHeightLG"
-            },
+            "name": "footnote2LineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -6955,14 +6013,8 @@
               "$type": "dimension",
               "comment": "Bild 17 | SpoBi 20.4 | Ads 20.4 | The label 1 text style uses this variable for its line height parameter."
             },
-            "name": "GlobalTypographyLineHeightLabelLabel1LineHeight",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Label",
-              "state": "label1LineHeight"
-            },
+            "name": "label1LineHeight",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7000,14 +6052,8 @@
               "$type": "dimension",
               "comment": "Bild 10 | SpoBi 12 | Ads 10 | The label1 responsive text style uses this variable for its line height parameter."
             },
-            "name": "GlobalTypographyLineHeightLabelLabel1RespLineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Label",
-              "state": "label1RespLineHeightXS"
-            },
+            "name": "label1RespLineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7045,14 +6091,8 @@
               "$type": "dimension",
               "comment": "Bild 10 | SpoBi 12 | Ads 10 | The label1 responsive text style uses this variable for its line height parameter."
             },
-            "name": "GlobalTypographyLineHeightLabelLabel1RespLineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Label",
-              "state": "label1RespLineHeightSM"
-            },
+            "name": "label1RespLineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7090,14 +6130,8 @@
               "$type": "dimension",
               "comment": "Bild 15 | SpoBi 18 | Ads 15 | The label1 responsive text style uses this variable for its line height parameter."
             },
-            "name": "GlobalTypographyLineHeightLabelLabel1RespLineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Label",
-              "state": "label1RespLineHeightMD"
-            },
+            "name": "label1RespLineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7135,14 +6169,8 @@
               "$type": "dimension",
               "comment": "Bild 17 | SpoBi 20.4 | Ads 17 | The label1 responsive text style uses this variable for its line height parameter."
             },
-            "name": "GlobalTypographyLineHeightLabelLabel1RespLineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Label",
-              "state": "label1RespLineHeightLG"
-            },
+            "name": "label1RespLineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7180,14 +6208,8 @@
               "$type": "dimension",
               "comment": "Bild 16 | SpoBi 19.2 | Ads 16 | The label 2 text style uses this variable for its line height parameter."
             },
-            "name": "GlobalTypographyLineHeightLabelLabel2LineHeight",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Label",
-              "state": "label2LineHeight"
-            },
+            "name": "label2LineHeight",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7225,14 +6247,8 @@
               "$type": "dimension",
               "comment": "Bild 14.4 | SpoBi 14.4 | Ads 14.4 | The label 3 text style uses this variable for its line height parameter."
             },
-            "name": "GlobalTypographyLineHeightLabelLabel3LineHeight",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Label",
-              "state": "label3LineHeight"
-            },
+            "name": "label3LineHeight",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7270,14 +6286,8 @@
               "$type": "dimension",
               "comment": "Bild 10 | SpoBi 10 | Ads 10 | The label 4 text style uses this variable for its line height parameter."
             },
-            "name": "GlobalTypographyLineHeightLabelLabel4LineHeight",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Label",
-              "state": "label4LineHeight"
-            },
+            "name": "label4LineHeight",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7315,14 +6325,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightQuoteQuoteLineHeightXs",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Quote",
-              "state": "quoteLineHeightXS"
-            },
+            "name": "quoteLineHeightXS",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7358,14 +6362,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightQuoteQuoteLineHeightSm",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Quote",
-              "state": "quoteLineHeightSM"
-            },
+            "name": "quoteLineHeightSM",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7401,14 +6399,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightQuoteQuoteLineHeightMd",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Quote",
-              "state": "quoteLineHeightMD"
-            },
+            "name": "quoteLineHeightMD",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7444,14 +6436,8 @@
               },
               "$type": "dimension"
             },
-            "name": "GlobalTypographyLineHeightQuoteQuoteLineHeightLg",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "LineHeight",
-              "subitem": "Quote",
-              "state": "quoteLineHeightLG"
-            },
+            "name": "quoteLineHeightLG",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7491,14 +6477,8 @@
               },
               "$type": "fontWeight"
             },
-            "name": "GlobalTypographyFontWeightBodyBodyFontWeightBook",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Body",
-              "state": "bodyFontWeightBook"
-            },
+            "name": "bodyFontWeightBook",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7534,14 +6514,8 @@
               },
               "$type": "fontWeight"
             },
-            "name": "GlobalTypographyFontWeightBodyBodyFontWeightBold",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Body",
-              "state": "bodyFontWeightBold"
-            },
+            "name": "bodyFontWeightBold",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7579,14 +6553,8 @@
               },
               "$type": "fontWeight"
             },
-            "name": "GlobalTypographyFontWeightFootnoteFootnoteFontWeightBook",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Footnote",
-              "state": "footnoteFontWeightBook"
-            },
+            "name": "footnoteFontWeightBook",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7622,14 +6590,8 @@
               },
               "$type": "fontWeight"
             },
-            "name": "GlobalTypographyFontWeightFootnoteFootnoteFontWeightBold",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Footnote",
-              "state": "footnoteFontWeightBold"
-            },
+            "name": "footnoteFontWeightBold",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7667,14 +6629,8 @@
               },
               "$type": "fontWeight"
             },
-            "name": "GlobalTypographyFontWeightLabelLabelFontWeightBook",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Label",
-              "state": "labelFontWeightBook"
-            },
+            "name": "labelFontWeightBook",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7710,14 +6666,8 @@
               },
               "$type": "fontWeight"
             },
-            "name": "GlobalTypographyFontWeightLabelLabelFontWeightBold",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Label",
-              "state": "labelFontWeightBold"
-            },
+            "name": "labelFontWeightBold",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7755,14 +6705,8 @@
               },
               "$type": "fontWeight"
             },
-            "name": "GlobalTypographyFontWeightQuoteQuoteFontWeight",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Quote",
-              "state": "quoteFontWeight"
-            },
+            "name": "quoteFontWeight",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7800,14 +6744,8 @@
               },
               "$type": "fontWeight"
             },
-            "name": "GlobalTypographyFontWeightDisplayDisplayFontWeight",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Display",
-              "state": "displayFontWeight"
-            },
+            "name": "displayFontWeight",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7843,14 +6781,8 @@
                 }
               }
             },
-            "name": "GlobalTypographyFontWeightHeadlineHeadline1FontWeightSt",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Headline",
-              "state": "headline1FontWeightSt"
-            },
+            "name": "headline1FontWeightSt",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7886,14 +6818,8 @@
               },
               "$type": "fontWeight"
             },
-            "name": "GlobalTypographyFontWeightHeadlineHeadline1FontWeight",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Headline",
-              "state": "headline1FontWeight"
-            },
+            "name": "headline1FontWeight",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7929,14 +6855,8 @@
               },
               "$type": "fontWeight"
             },
-            "name": "GlobalTypographyFontWeightHeadlineHeadline2FontWeight",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Headline",
-              "state": "headline2FontWeight"
-            },
+            "name": "headline2FontWeight",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -7972,14 +6892,8 @@
               },
               "$type": "fontWeight"
             },
-            "name": "GlobalTypographyFontWeightHeadlineHeadline3FontWeight",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Headline",
-              "state": "headline3FontWeight"
-            },
+            "name": "headline3FontWeight",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -8015,14 +6929,8 @@
               },
               "$type": "fontWeight"
             },
-            "name": "GlobalTypographyFontWeightHeadlineHeadline4FontWeight",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Headline",
-              "state": "headline4FontWeight"
-            },
+            "name": "headline4FontWeight",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -8056,14 +6964,8 @@
                 }
               }
             },
-            "name": "GlobalTypographyFontWeightHeadlineHeadline2FontWeightSt",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Headline",
-              "state": "headline2FontWeightSt"
-            },
+            "name": "headline2FontWeightSt",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -8097,14 +6999,8 @@
                 }
               }
             },
-            "name": "GlobalTypographyFontWeightHeadlineHeadline3FontWeightSt",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Headline",
-              "state": "headline3FontWeightSt"
-            },
+            "name": "headline3FontWeightSt",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -8138,14 +7034,8 @@
                 }
               }
             },
-            "name": "GlobalTypographyFontWeightHeadlineHeadline4FontWeightSt",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Headline",
-              "state": "headline4FontWeightSt"
-            },
+            "name": "headline4FontWeightSt",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -8183,14 +7073,8 @@
               },
               "$type": "fontWeight"
             },
-            "name": "GlobalTypographyFontWeightSubheadlineSubheadlineFontWeight",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Subheadline",
-              "state": "subheadlineFontWeight"
-            },
+            "name": "subheadlineFontWeight",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -8228,14 +7112,8 @@
               },
               "$type": "fontWeight"
             },
-            "name": "GlobalTypographyFontWeightKickerKickerFontWeight",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Kicker",
-              "state": "kickerFontWeight"
-            },
+            "name": "kickerFontWeight",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -8269,14 +7147,8 @@
                 }
               }
             },
-            "name": "GlobalTypographyFontWeightKickerKickerFontWeightSt",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Kicker",
-              "state": "kickerFontWeightST"
-            },
+            "name": "kickerFontWeightST",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -8314,14 +7186,8 @@
               },
               "$type": "fontWeight"
             },
-            "name": "GlobalTypographyFontWeightCalloutCalloutFontWeight",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Callout",
-              "state": "calloutFontWeight"
-            },
+            "name": "calloutFontWeight",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -8359,14 +7225,8 @@
               },
               "$type": "fontWeight"
             },
-            "name": "GlobalTypographyFontWeightTitleTitleFontWeight",
-            "attributes": {
-              "category": "Global",
-              "type": "Typography",
-              "item": "FontWeight",
-              "subitem": "Title",
-              "state": "titleFontWeight"
-            },
+            "name": "titleFontWeight",
+            "attributes": {},
             "path": [
               "Global",
               "Typography",
@@ -8405,13 +7265,8 @@
             },
             "comment": "Bild: GothamXNarrow | SpoBi: AntennaExtraCond | Ads: LucidaGrande | This variable is used in the kickers text styles font family parameter."
           },
-          "name": "GlobalTypographyFontFamilyKickerFontFamily",
-          "attributes": {
-            "category": "Global",
-            "type": "Typography",
-            "item": "FontFamily",
-            "subitem": "kickerFontFamily"
-          },
+          "name": "kickerFontFamily",
+          "attributes": {},
           "path": [
             "Global",
             "Typography",
@@ -8446,13 +7301,8 @@
             },
             "comment": "Bild: Gotham | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the display text style font family parameter."
           },
-          "name": "GlobalTypographyFontFamilyDisplayFontFamily",
-          "attributes": {
-            "category": "Global",
-            "type": "Typography",
-            "item": "FontFamily",
-            "subitem": "displayFontFamily"
-          },
+          "name": "displayFontFamily",
+          "attributes": {},
           "path": [
             "Global",
             "Typography",
@@ -8487,13 +7337,8 @@
             },
             "comment": "Bild: GothamCond | SpoBi: AntennaExtraCond | Ads: LucidaGrande | This variable is used in the headlines text style font family parameter."
           },
-          "name": "GlobalTypographyFontFamilyHeadlineFontFamily",
-          "attributes": {
-            "category": "Global",
-            "type": "Typography",
-            "item": "FontFamily",
-            "subitem": "headlineFontFamily"
-          },
+          "name": "headlineFontFamily",
+          "attributes": {},
           "path": [
             "Global",
             "Typography",
@@ -8528,13 +7373,8 @@
             },
             "comment": "Bild: GothamCond | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the subheadlines text style font family parameter."
           },
-          "name": "GlobalTypographyFontFamilySubheadlineFontFamily",
-          "attributes": {
-            "category": "Global",
-            "type": "Typography",
-            "item": "FontFamily",
-            "subitem": "subheadlineFontFamily"
-          },
+          "name": "subheadlineFontFamily",
+          "attributes": {},
           "path": [
             "Global",
             "Typography",
@@ -8569,13 +7409,8 @@
             },
             "comment": "Bild: GothamXNarrow | SpoBi: Inter | Ads: LucidaGrande | This variable is used in the body text style font family parameter."
           },
-          "name": "GlobalTypographyFontFamilyBodyFontFamily",
-          "attributes": {
-            "category": "Global",
-            "type": "Typography",
-            "item": "FontFamily",
-            "subitem": "bodyFontFamily"
-          },
+          "name": "bodyFontFamily",
+          "attributes": {},
           "path": [
             "Global",
             "Typography",
@@ -8610,13 +7445,8 @@
             },
             "comment": "Bild: GothamXNarrow | SpoBi: Inter | Ads: LucidaGrande | This variable is used in the footnotes text style font family parameter."
           },
-          "name": "GlobalTypographyFontFamilyFootnoteFontFamily",
-          "attributes": {
-            "category": "Global",
-            "type": "Typography",
-            "item": "FontFamily",
-            "subitem": "footnoteFontFamily"
-          },
+          "name": "footnoteFontFamily",
+          "attributes": {},
           "path": [
             "Global",
             "Typography",
@@ -8651,13 +7481,8 @@
             },
             "comment": "Bild: GothamXNarrow | SpoBi: AntennaExtraCond | Ads: LucidaGrande | This variable is used in the labels text styles font family parameter."
           },
-          "name": "GlobalTypographyFontFamilyLabelFontFamily",
-          "attributes": {
-            "category": "Global",
-            "type": "Typography",
-            "item": "FontFamily",
-            "subitem": "labelFontFamily"
-          },
+          "name": "labelFontFamily",
+          "attributes": {},
           "path": [
             "Global",
             "Typography",
@@ -8692,13 +7517,8 @@
             },
             "comment": "Bild: Gotham | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the quotes text style font family parameter."
           },
-          "name": "GlobalTypographyFontFamilyQuoteFontFamily",
-          "attributes": {
-            "category": "Global",
-            "type": "Typography",
-            "item": "FontFamily",
-            "subitem": "quoteFontFamily"
-          },
+          "name": "quoteFontFamily",
+          "attributes": {},
           "path": [
             "Global",
             "Typography",
@@ -8733,13 +7553,8 @@
             },
             "comment": "Bild: Gotham | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the titles text style font family parameter."
           },
-          "name": "GlobalTypographyFontFamilyTitleFontFamily",
-          "attributes": {
-            "category": "Global",
-            "type": "Typography",
-            "item": "FontFamily",
-            "subitem": "titleFontFamily"
-          },
+          "name": "titleFontFamily",
+          "attributes": {},
           "path": [
             "Global",
             "Typography",
@@ -8774,13 +7589,8 @@
             },
             "comment": "Bild: Gotham | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the callouts text style font family parameter."
           },
-          "name": "GlobalTypographyFontFamilyCalloutFontFamily",
-          "attributes": {
-            "category": "Global",
-            "type": "Typography",
-            "item": "FontFamily",
-            "subitem": "calloutFontFamily"
-          },
+          "name": "calloutFontFamily",
+          "attributes": {},
           "path": [
             "Global",
             "Typography",
@@ -8816,12 +7626,8 @@
             }
           }
         },
-        "name": "GlobalVisibiltyHideOnBild",
-        "attributes": {
-          "category": "Global",
-          "type": "Visibilty",
-          "item": "hideOnBILD"
-        },
+        "name": "hideOnBILD",
+        "attributes": {},
         "path": [
           "Global",
           "Visibilty",
@@ -8853,12 +7659,8 @@
             }
           }
         },
-        "name": "GlobalVisibiltyHideOnSportBild",
-        "attributes": {
-          "category": "Global",
-          "type": "Visibilty",
-          "item": "hideOnSportBILD"
-        },
+        "name": "hideOnSportBILD",
+        "attributes": {},
         "path": [
           "Global",
           "Visibilty",
@@ -8890,12 +7692,8 @@
             }
           }
         },
-        "name": "GlobalVisibiltyOnlyAdvertorial",
-        "attributes": {
-          "category": "Global",
-          "type": "Visibilty",
-          "item": "onlyAdvertorial"
-        },
+        "name": "onlyAdvertorial",
+        "attributes": {},
         "path": [
           "Global",
           "Visibilty",
@@ -8927,12 +7725,8 @@
             }
           }
         },
-        "name": "GlobalVisibiltyHideOnAdvertorial",
-        "attributes": {
-          "category": "Global",
-          "type": "Visibilty",
-          "item": "hideOnAdvertorial"
-        },
+        "name": "hideOnAdvertorial",
+        "attributes": {},
         "path": [
           "Global",
           "Visibilty",
@@ -8964,12 +7758,8 @@
             }
           }
         },
-        "name": "GlobalVisibiltyOnlyBild",
-        "attributes": {
-          "category": "Global",
-          "type": "Visibilty",
-          "item": "onlyBILD"
-        },
+        "name": "onlyBILD",
+        "attributes": {},
         "path": [
           "Global",
           "Visibilty",
@@ -9001,12 +7791,8 @@
             }
           }
         },
-        "name": "GlobalVisibiltyOnlySportBild",
-        "attributes": {
-          "category": "Global",
-          "type": "Visibilty",
-          "item": "onlySportBILD"
-        },
+        "name": "onlySportBILD",
+        "attributes": {},
         "path": [
           "Global",
           "Visibilty",
@@ -9047,13 +7833,8 @@
             "$type": "dimension",
             "comment": "--article-figure-caption-font-size-sm"
           },
-          "name": "ComponentArticleFontSizeArticleImageCaptionFontSizeXs",
-          "attributes": {
-            "category": "Component",
-            "type": "Article",
-            "item": "FontSize",
-            "subitem": "articleImageCaptionFontSizeXS"
-          },
+          "name": "articleImageCaptionFontSizeXS",
+          "attributes": {},
           "path": [
             "Component",
             "Article",
@@ -9090,13 +7871,8 @@
             "$type": "dimension",
             "comment": "--article-figure-caption-font-size-md"
           },
-          "name": "ComponentArticleFontSizeArticleImageCaptionFontSizeMd",
-          "attributes": {
-            "category": "Component",
-            "type": "Article",
-            "item": "FontSize",
-            "subitem": "articleImageCaptionFontSizeMD"
-          },
+          "name": "articleImageCaptionFontSizeMD",
+          "attributes": {},
           "path": [
             "Component",
             "Article",
@@ -9133,13 +7909,8 @@
             "$type": "dimension",
             "comment": "--article-figure-caption-font-size-lg"
           },
-          "name": "ComponentArticleFontSizeArticleImageCaptionFontSizeLg",
-          "attributes": {
-            "category": "Component",
-            "type": "Article",
-            "item": "FontSize",
-            "subitem": "articleImageCaptionFontSizeLG"
-          },
+          "name": "articleImageCaptionFontSizeLG",
+          "attributes": {},
           "path": [
             "Component",
             "Article",
@@ -9176,13 +7947,8 @@
             "$type": "dimension",
             "comment": "--article-figure-caption-font-size-sm"
           },
-          "name": "ComponentArticleFontSizeArticleImageCaptionFontSizeSm",
-          "attributes": {
-            "category": "Component",
-            "type": "Article",
-            "item": "FontSize",
-            "subitem": "articleImageCaptionFontSizeSM"
-          },
+          "name": "articleImageCaptionFontSizeSM",
+          "attributes": {},
           "path": [
             "Component",
             "Article",
@@ -9219,13 +7985,8 @@
             "$type": "dimension",
             "comment": "--article-figure-meta-font-size-sm"
           },
-          "name": "ComponentArticleFontSizeArticleImageSourceFontSizeXs",
-          "attributes": {
-            "category": "Component",
-            "type": "Article",
-            "item": "FontSize",
-            "subitem": "articleImageSourceFontSizeXS"
-          },
+          "name": "articleImageSourceFontSizeXS",
+          "attributes": {},
           "path": [
             "Component",
             "Article",
@@ -9262,13 +8023,8 @@
             "$type": "dimension",
             "comment": "--article-figure-meta-font-size-sm"
           },
-          "name": "ComponentArticleFontSizeArticleImageSourceFontSizeSm",
-          "attributes": {
-            "category": "Component",
-            "type": "Article",
-            "item": "FontSize",
-            "subitem": "articleImageSourceFontSizeSM"
-          },
+          "name": "articleImageSourceFontSizeSM",
+          "attributes": {},
           "path": [
             "Component",
             "Article",
@@ -9305,13 +8061,8 @@
             "$type": "dimension",
             "comment": "--article-figure-meta-font-size-sm"
           },
-          "name": "ComponentArticleFontSizeArticleImageSourceFontSizeMd",
-          "attributes": {
-            "category": "Component",
-            "type": "Article",
-            "item": "FontSize",
-            "subitem": "articleImageSourceFontSizeMD"
-          },
+          "name": "articleImageSourceFontSizeMD",
+          "attributes": {},
           "path": [
             "Component",
             "Article",
@@ -9348,13 +8099,8 @@
             "$type": "dimension",
             "comment": "--article-figure-meta-font-size-lg"
           },
-          "name": "ComponentArticleFontSizeArticleImageSourceFontSizeLg",
-          "attributes": {
-            "category": "Component",
-            "type": "Article",
-            "item": "FontSize",
-            "subitem": "articleImageSourceFontSizeLG"
-          },
+          "name": "articleImageSourceFontSizeLG",
+          "attributes": {},
           "path": [
             "Component",
             "Article",
@@ -9393,13 +8139,8 @@
             "$type": "dimension",
             "comment": "--article-figure-caption-line-height-sm ; Bild: 19.5 // SpoBi: 16.9 // Ad: 19.5"
           },
-          "name": "ComponentArticleLineHeightArticleImageCaptionLineHeightXs",
-          "attributes": {
-            "category": "Component",
-            "type": "Article",
-            "item": "LineHeight",
-            "subitem": "articleImageCaptionLineHeightXS"
-          },
+          "name": "articleImageCaptionLineHeightXS",
+          "attributes": {},
           "path": [
             "Component",
             "Article",
@@ -9436,13 +8177,8 @@
             "$type": "dimension",
             "comment": "--article-figure-caption-line-height-md ; Bild: 24.75 // SpoBi: 16.9 // Ad: 19.5"
           },
-          "name": "ComponentArticleLineHeightArticleImageCaptionLineHeightMd",
-          "attributes": {
-            "category": "Component",
-            "type": "Article",
-            "item": "LineHeight",
-            "subitem": "articleImageCaptionLineHeightMD"
-          },
+          "name": "articleImageCaptionLineHeightMD",
+          "attributes": {},
           "path": [
             "Component",
             "Article",
@@ -9479,13 +8215,8 @@
             "$type": "dimension",
             "comment": "--article-figure-caption-line-height-lg ; Bild: 24.75 // SpoBi: 19.5 // Ad: 24"
           },
-          "name": "ComponentArticleLineHeightArticleImageCaptionLineHeightLg",
-          "attributes": {
-            "category": "Component",
-            "type": "Article",
-            "item": "LineHeight",
-            "subitem": "articleImageCaptionLineHeightLG"
-          },
+          "name": "articleImageCaptionLineHeightLG",
+          "attributes": {},
           "path": [
             "Component",
             "Article",
@@ -9522,13 +8253,8 @@
             "$type": "dimension",
             "comment": "--article-figure-caption-line-height-sm ; Bild: 19.5 // SpoBi: 16.9 // Ad: 19.5"
           },
-          "name": "ComponentArticleLineHeightArticleImageCaptionLineHeightSm",
-          "attributes": {
-            "category": "Component",
-            "type": "Article",
-            "item": "LineHeight",
-            "subitem": "articleImageCaptionLineHeightSM"
-          },
+          "name": "articleImageCaptionLineHeightSM",
+          "attributes": {},
           "path": [
             "Component",
             "Article",
@@ -9565,13 +8291,8 @@
             "$type": "dimension",
             "comment": "--article-figure-meta-line-height-sm ; Bild: 21 // SpoBi: 17 // Ad: 19"
           },
-          "name": "ComponentArticleLineHeightArticleImageSourceLineHeightMd",
-          "attributes": {
-            "category": "Component",
-            "type": "Article",
-            "item": "LineHeight",
-            "subitem": "articleImageSourceLineHeightMD"
-          },
+          "name": "articleImageSourceLineHeightMD",
+          "attributes": {},
           "path": [
             "Component",
             "Article",
@@ -9608,13 +8329,8 @@
             "$type": "dimension",
             "comment": "--article-figure-meta-line-height-lg ; Bild: 23 // SpoBi: 19 // Ad: 24"
           },
-          "name": "ComponentArticleLineHeightArticleImageSourceLineHeightLg",
-          "attributes": {
-            "category": "Component",
-            "type": "Article",
-            "item": "LineHeight",
-            "subitem": "articleImageSourceLineHeightLG"
-          },
+          "name": "articleImageSourceLineHeightLG",
+          "attributes": {},
           "path": [
             "Component",
             "Article",
@@ -9651,13 +8367,8 @@
             "$type": "dimension",
             "comment": "--article-figure-meta-line-height-sm ; Bild: 21 // SpoBi: 17 // Ad: 19"
           },
-          "name": "ComponentArticleLineHeightArticleImageSourceLineHeightXs",
-          "attributes": {
-            "category": "Component",
-            "type": "Article",
-            "item": "LineHeight",
-            "subitem": "articleImageSourceLineHeightXS"
-          },
+          "name": "articleImageSourceLineHeightXS",
+          "attributes": {},
           "path": [
             "Component",
             "Article",
@@ -9694,13 +8405,8 @@
             "$type": "dimension",
             "comment": "--article-figure-meta-line-height-sm ; Bild: 21 // SpoBi: 17 // Ad: 19"
           },
-          "name": "ComponentArticleLineHeightArticleImageSourceLineHeightSm",
-          "attributes": {
-            "category": "Component",
-            "type": "Article",
-            "item": "LineHeight",
-            "subitem": "articleImageSourceLineHeightSM"
-          },
+          "name": "articleImageSourceLineHeightSM",
+          "attributes": {},
           "path": [
             "Component",
             "Article",
@@ -9741,13 +8447,8 @@
             "$type": "dimension",
             "comment": "--breadcrumb-font-size-sm"
           },
-          "name": "ComponentBreadcrumbFontSizeBreadcrumbFontSizeXs",
-          "attributes": {
-            "category": "Component",
-            "type": "Breadcrumb",
-            "item": "FontSize",
-            "subitem": "breadcrumbFontSizeXS"
-          },
+          "name": "breadcrumbFontSizeXS",
+          "attributes": {},
           "path": [
             "Component",
             "Breadcrumb",
@@ -9784,13 +8485,8 @@
             "$type": "dimension",
             "comment": "--breadcrumb-font-size-sm"
           },
-          "name": "ComponentBreadcrumbFontSizeBreadcrumbFontSizeSm",
-          "attributes": {
-            "category": "Component",
-            "type": "Breadcrumb",
-            "item": "FontSize",
-            "subitem": "breadcrumbFontSizeSM"
-          },
+          "name": "breadcrumbFontSizeSM",
+          "attributes": {},
           "path": [
             "Component",
             "Breadcrumb",
@@ -9827,13 +8523,8 @@
             "$type": "dimension",
             "comment": "--breadcrumb-font-size-sm"
           },
-          "name": "ComponentBreadcrumbFontSizeBreadcrumbFontSizeMd",
-          "attributes": {
-            "category": "Component",
-            "type": "Breadcrumb",
-            "item": "FontSize",
-            "subitem": "breadcrumbFontSizeMD"
-          },
+          "name": "breadcrumbFontSizeMD",
+          "attributes": {},
           "path": [
             "Component",
             "Breadcrumb",
@@ -9870,13 +8561,8 @@
             "$type": "dimension",
             "comment": "--breadcrumb-font-size-lg"
           },
-          "name": "ComponentBreadcrumbFontSizeBreadcrumbFontSizeLg",
-          "attributes": {
-            "category": "Component",
-            "type": "Breadcrumb",
-            "item": "FontSize",
-            "subitem": "breadcrumbFontSizeLG"
-          },
+          "name": "breadcrumbFontSizeLG",
+          "attributes": {},
           "path": [
             "Component",
             "Breadcrumb",
@@ -9915,13 +8601,8 @@
             "$type": "dimension",
             "comment": "not defined as variable"
           },
-          "name": "ComponentBreadcrumbLineHeightBreadcrumbLineHeightXs",
-          "attributes": {
-            "category": "Component",
-            "type": "Breadcrumb",
-            "item": "LineHeight",
-            "subitem": "breadcrumbLineHeightXS"
-          },
+          "name": "breadcrumbLineHeightXS",
+          "attributes": {},
           "path": [
             "Component",
             "Breadcrumb",
@@ -9958,13 +8639,8 @@
             "$type": "dimension",
             "comment": "not defined as variable"
           },
-          "name": "ComponentBreadcrumbLineHeightBreadcrumbLineHeightSm",
-          "attributes": {
-            "category": "Component",
-            "type": "Breadcrumb",
-            "item": "LineHeight",
-            "subitem": "breadcrumbLineHeightSM"
-          },
+          "name": "breadcrumbLineHeightSM",
+          "attributes": {},
           "path": [
             "Component",
             "Breadcrumb",
@@ -10001,13 +8677,8 @@
             "$type": "dimension",
             "comment": "not defined as variable"
           },
-          "name": "ComponentBreadcrumbLineHeightBreadcrumbLineHeightMd",
-          "attributes": {
-            "category": "Component",
-            "type": "Breadcrumb",
-            "item": "LineHeight",
-            "subitem": "breadcrumbLineHeightMD"
-          },
+          "name": "breadcrumbLineHeightMD",
+          "attributes": {},
           "path": [
             "Component",
             "Breadcrumb",
@@ -10044,13 +8715,8 @@
             "$type": "dimension",
             "comment": "not defined as variable"
           },
-          "name": "ComponentBreadcrumbLineHeightBreadcrumbLineHeightLg",
-          "attributes": {
-            "category": "Component",
-            "type": "Breadcrumb",
-            "item": "LineHeight",
-            "subitem": "breadcrumbLineHeightLG"
-          },
+          "name": "breadcrumbLineHeightLG",
+          "attributes": {},
           "path": [
             "Component",
             "Breadcrumb",
@@ -10087,13 +8753,8 @@
             },
             "comment": "--breadcrumb-font"
           },
-          "name": "ComponentBreadcrumbFontFamilyBreadcrumbFontFamily",
-          "attributes": {
-            "category": "Component",
-            "type": "Breadcrumb",
-            "item": "FontFamily",
-            "subitem": "breadcrumbFontFamily"
-          },
+          "name": "breadcrumbFontFamily",
+          "attributes": {},
           "path": [
             "Component",
             "Breadcrumb",
@@ -10132,13 +8793,8 @@
             "$type": "fontWeight",
             "comment": "--breadcrumb-font-size-sm"
           },
-          "name": "ComponentBreadcrumbFontWeightBreadcrumbFontWeight",
-          "attributes": {
-            "category": "Component",
-            "type": "Breadcrumb",
-            "item": "FontWeight",
-            "subitem": "breadcrumbFontWeight"
-          },
+          "name": "breadcrumbFontWeight",
+          "attributes": {},
           "path": [
             "Component",
             "Breadcrumb",
@@ -10178,12 +8834,8 @@
           "$type": "dimension",
           "comment": "--nav-btn-font-size"
         },
-        "name": "ComponentMenuMenuItemFontSize",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "menuItemFontSize"
-        },
+        "name": "menuItemFontSize",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -10219,12 +8871,8 @@
           "$type": "dimension",
           "comment": "--caption-1-font-size-md"
         },
-        "name": "ComponentMenuAppTopBarTitleFontSizeMd",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTopBarTitleFontSizeMD"
-        },
+        "name": "appTopBarTitleFontSizeMD",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -10260,12 +8908,8 @@
           "$type": "dimension",
           "comment": "--caption-1-font-size-lg"
         },
-        "name": "ComponentMenuAppTopBarTitleFontSizeLg",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTopBarTitleFontSizeLG"
-        },
+        "name": "appTopBarTitleFontSizeLG",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -10301,12 +8945,8 @@
           "$type": "dimension",
           "comment": "--caption-1-font-size-sm"
         },
-        "name": "ComponentMenuAppTopBarTitleFontSizeXs",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTopBarTitleFontSizeXS"
-        },
+        "name": "appTopBarTitleFontSizeXS",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -10342,12 +8982,8 @@
           "$type": "dimension",
           "comment": "--caption-1-font-size-sm"
         },
-        "name": "ComponentMenuAppTopBarTitleFontSizeSm",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTopBarTitleFontSizeSM"
-        },
+        "name": "appTopBarTitleFontSizeSM",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -10381,12 +9017,8 @@
           },
           "$type": "dimension"
         },
-        "name": "ComponentMenuAppTopBarTitleLineHeightMd",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTopBarTitleLineHeightMD"
-        },
+        "name": "appTopBarTitleLineHeightMD",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -10420,12 +9052,8 @@
           },
           "$type": "dimension"
         },
-        "name": "ComponentMenuAppTopBarTitleLineHeightLg",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTopBarTitleLineHeightLG"
-        },
+        "name": "appTopBarTitleLineHeightLG",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -10459,12 +9087,8 @@
           },
           "$type": "dimension"
         },
-        "name": "ComponentMenuAppTopBarTitleLineHeightXs",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTopBarTitleLineHeightXS"
-        },
+        "name": "appTopBarTitleLineHeightXS",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -10498,12 +9122,8 @@
           },
           "$type": "dimension"
         },
-        "name": "ComponentMenuAppTopBarTitleLineHeightSm",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTopBarTitleLineHeightSM"
-        },
+        "name": "appTopBarTitleLineHeightSM",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -10535,12 +9155,8 @@
             }
           }
         },
-        "name": "ComponentMenuMenuItemFontWeight",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "menuItemFontWeight"
-        },
+        "name": "menuItemFontWeight",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -10576,12 +9192,8 @@
           },
           "comment": "--teaser-title-padding-lg"
         },
-        "name": "ComponentTeaserTeaserTitleInlineSpaceLg",
-        "attributes": {
-          "category": "Component",
-          "type": "Teaser",
-          "item": "teaserTitleInlineSpaceLG"
-        },
+        "name": "teaserTitleInlineSpaceLG",
+        "attributes": {},
         "path": [
           "Component",
           "Teaser",
@@ -10615,12 +9227,8 @@
           },
           "comment": "--teaser-title-padding-md"
         },
-        "name": "ComponentTeaserTeaserTitleInlineSpaceMd",
-        "attributes": {
-          "category": "Component",
-          "type": "Teaser",
-          "item": "teaserTitleInlineSpaceMD"
-        },
+        "name": "teaserTitleInlineSpaceMD",
+        "attributes": {},
         "path": [
           "Component",
           "Teaser",
@@ -10654,12 +9262,8 @@
           },
           "comment": "--teaser-title-padding-sm"
         },
-        "name": "ComponentTeaserTeaserTitleInlineSpaceSm",
-        "attributes": {
-          "category": "Component",
-          "type": "Teaser",
-          "item": "teaserTitleInlineSpaceSM"
-        },
+        "name": "teaserTitleInlineSpaceSM",
+        "attributes": {},
         "path": [
           "Component",
           "Teaser",
@@ -10693,12 +9297,8 @@
           },
           "comment": "--teaser-title-padding-xs"
         },
-        "name": "ComponentTeaserTeaserTitleInlineSpaceXs",
-        "attributes": {
-          "category": "Component",
-          "type": "Teaser",
-          "item": "teaserTitleInlineSpaceXS"
-        },
+        "name": "teaserTitleInlineSpaceXS",
+        "attributes": {},
         "path": [
           "Component",
           "Teaser",
@@ -10731,13 +9331,8 @@
               }
             }
           },
-          "name": "ComponentTeaserQuadQTeaserTitleInlineSpaceLg",
-          "attributes": {
-            "category": "Component",
-            "type": "Teaser",
-            "item": "Quad",
-            "subitem": "qTeaserTitleInlineSpaceLG"
-          },
+          "name": "qTeaserTitleInlineSpaceLG",
+          "attributes": {},
           "path": [
             "Component",
             "Teaser",
@@ -10770,13 +9365,8 @@
               }
             }
           },
-          "name": "ComponentTeaserQuadQTeaserTitleInlineSpaceMd",
-          "attributes": {
-            "category": "Component",
-            "type": "Teaser",
-            "item": "Quad",
-            "subitem": "qTeaserTitleInlineSpaceMD"
-          },
+          "name": "qTeaserTitleInlineSpaceMD",
+          "attributes": {},
           "path": [
             "Component",
             "Teaser",
@@ -10809,13 +9399,8 @@
               }
             }
           },
-          "name": "ComponentTeaserQuadQTeaserTitleInlineSpaceSm",
-          "attributes": {
-            "category": "Component",
-            "type": "Teaser",
-            "item": "Quad",
-            "subitem": "qTeaserTitleInlineSpaceSM"
-          },
+          "name": "qTeaserTitleInlineSpaceSM",
+          "attributes": {},
           "path": [
             "Component",
             "Teaser",
@@ -10848,13 +9433,8 @@
               }
             }
           },
-          "name": "ComponentTeaserQuadQTeaserTitleInlineSpaceXs",
-          "attributes": {
-            "category": "Component",
-            "type": "Teaser",
-            "item": "Quad",
-            "subitem": "qTeaserTitleInlineSpaceXS"
-          },
+          "name": "qTeaserTitleInlineSpaceXS",
+          "attributes": {},
           "path": [
             "Component",
             "Teaser",
@@ -10889,13 +9469,8 @@
               }
             }
           },
-          "name": "ComponentTeaserATeaserATeaserTitleInlineSpaceLg",
-          "attributes": {
-            "category": "Component",
-            "type": "Teaser",
-            "item": "aTeaser",
-            "subitem": "aTeaserTitleInlineSpaceLG"
-          },
+          "name": "aTeaserTitleInlineSpaceLG",
+          "attributes": {},
           "path": [
             "Component",
             "Teaser",
@@ -10928,13 +9503,8 @@
               }
             }
           },
-          "name": "ComponentTeaserATeaserATeaserTitleInlineSpaceMd",
-          "attributes": {
-            "category": "Component",
-            "type": "Teaser",
-            "item": "aTeaser",
-            "subitem": "aTeaserTitleInlineSpaceMD"
-          },
+          "name": "aTeaserTitleInlineSpaceMD",
+          "attributes": {},
           "path": [
             "Component",
             "Teaser",
@@ -10967,13 +9537,8 @@
               }
             }
           },
-          "name": "ComponentTeaserATeaserATeaserTitleInlineSpaceXs",
-          "attributes": {
-            "category": "Component",
-            "type": "Teaser",
-            "item": "aTeaser",
-            "subitem": "aTeaserTitleInlineSpaceXS"
-          },
+          "name": "aTeaserTitleInlineSpaceXS",
+          "attributes": {},
           "path": [
             "Component",
             "Teaser",
@@ -11006,13 +9571,8 @@
               }
             }
           },
-          "name": "ComponentTeaserATeaserATeaserTitleInlineSpaceSm",
-          "attributes": {
-            "category": "Component",
-            "type": "Teaser",
-            "item": "aTeaser",
-            "subitem": "aTeaserTitleInlineSpaceSM"
-          },
+          "name": "aTeaserTitleInlineSpaceSM",
+          "attributes": {},
           "path": [
             "Component",
             "Teaser",
@@ -11047,13 +9607,8 @@
               }
             }
           },
-          "name": "ComponentTeaserBTeaserBTeaserTitleInlineSpace",
-          "attributes": {
-            "category": "Component",
-            "type": "Teaser",
-            "item": "bTeaser",
-            "subitem": "bTeaserTitleInlineSpace"
-          },
+          "name": "bTeaserTitleInlineSpace",
+          "attributes": {},
           "path": [
             "Component",
             "Teaser",
@@ -11088,13 +9643,8 @@
               }
             }
           },
-          "name": "ComponentTeaser2xaTeaser2xaTeaserTitleInlineSpace",
-          "attributes": {
-            "category": "Component",
-            "type": "Teaser",
-            "item": "2xaTeaser",
-            "subitem": "2xaTeaserTitleInlineSpace"
-          },
+          "name": "_2xaTeaserTitleInlineSpace",
+          "attributes": {},
           "path": [
             "Component",
             "Teaser",
@@ -11129,13 +9679,8 @@
               }
             }
           },
-          "name": "ComponentTeaserMiniQMiniQTeaserTitleInlineSpaceMd",
-          "attributes": {
-            "category": "Component",
-            "type": "Teaser",
-            "item": "miniQ",
-            "subitem": "miniQTeaserTitleInlineSpaceMD"
-          },
+          "name": "miniQTeaserTitleInlineSpaceMD",
+          "attributes": {},
           "path": [
             "Component",
             "Teaser",
@@ -11168,13 +9713,8 @@
               }
             }
           },
-          "name": "ComponentTeaserMiniQMiniQTeaserTitleInlineSpaceLg",
-          "attributes": {
-            "category": "Component",
-            "type": "Teaser",
-            "item": "miniQ",
-            "subitem": "miniQTeaserTitleInlineSpaceLG"
-          },
+          "name": "miniQTeaserTitleInlineSpaceLG",
+          "attributes": {},
           "path": [
             "Component",
             "Teaser",
@@ -11207,13 +9747,8 @@
               }
             }
           },
-          "name": "ComponentTeaserMiniQMiniQTeaserTitleInlineSpaceSm",
-          "attributes": {
-            "category": "Component",
-            "type": "Teaser",
-            "item": "miniQ",
-            "subitem": "miniQTeaserTitleInlineSpaceSM"
-          },
+          "name": "miniQTeaserTitleInlineSpaceSM",
+          "attributes": {},
           "path": [
             "Component",
             "Teaser",
@@ -11246,13 +9781,8 @@
               }
             }
           },
-          "name": "ComponentTeaserMiniQMiniQTeaserTitleInlineSpaceXs",
-          "attributes": {
-            "category": "Component",
-            "type": "Teaser",
-            "item": "miniQ",
-            "subitem": "miniQTeaserTitleInlineSpaceXS"
-          },
+          "name": "miniQTeaserTitleInlineSpaceXS",
+          "attributes": {},
           "path": [
             "Component",
             "Teaser",
@@ -11287,13 +9817,8 @@
               }
             }
           },
-          "name": "ComponentTeaserSuperASuperAteaserTitleInlineSpace",
-          "attributes": {
-            "category": "Component",
-            "type": "Teaser",
-            "item": "superA",
-            "subitem": "superAteaserTitleInlineSpace"
-          },
+          "name": "superAteaserTitleInlineSpace",
+          "attributes": {},
           "path": [
             "Component",
             "Teaser",
@@ -11331,12 +9856,8 @@
           },
           "comment": "current css 09-2025 --article-author-font // Bild: GothamXNarrow; SpoBi: Inter; Ads: LucidaGrande"
         },
-        "name": "ComponentAvatarAvatarFontFamily",
-        "attributes": {
-          "category": "Component",
-          "type": "Avatar",
-          "item": "avatarFontFamily"
-        },
+        "name": "avatarFontFamily",
+        "attributes": {},
         "path": [
           "Component",
           "Avatar",
@@ -11372,12 +9893,8 @@
           "$type": "dimension",
           "comment": "09-2025 css using footnote var for font sizes SM & LG // Bild: 16; SpoBi: 13; Ads: 13"
         },
-        "name": "ComponentAvatarAvatarFontSizeSm",
-        "attributes": {
-          "category": "Component",
-          "type": "Avatar",
-          "item": "avatarFontSizeSM"
-        },
+        "name": "avatarFontSizeSM",
+        "attributes": {},
         "path": [
           "Component",
           "Avatar",
@@ -11413,12 +9930,8 @@
           "$type": "dimension",
           "comment": "09-2025 css using footnote var for font sizes SM & LG // Bild: 18; SpoBi: 15; Ads: 15"
         },
-        "name": "ComponentAvatarAvatarFontSizeLg",
-        "attributes": {
-          "category": "Component",
-          "type": "Avatar",
-          "item": "avatarFontSizeLG"
-        },
+        "name": "avatarFontSizeLG",
+        "attributes": {},
         "path": [
           "Component",
           "Avatar",
@@ -11454,12 +9967,8 @@
           },
           "$type": "dimension"
         },
-        "name": "ComponentBreakingNewsBreakingNewsContentFontSize",
-        "attributes": {
-          "category": "Component",
-          "type": "BreakingNews",
-          "item": "breakingNewsContentFontSize"
-        },
+        "name": "breakingNewsContentFontSize",
+        "attributes": {},
         "path": [
           "Component",
           "BreakingNews",
@@ -11493,12 +10002,8 @@
             }
           }
         },
-        "name": "ComponentAccordionAccordionLabelFontFamily",
-        "attributes": {
-          "category": "Component",
-          "type": "Accordion",
-          "item": "accordionLabelFontFamily"
-        },
+        "name": "accordionLabelFontFamily",
+        "attributes": {},
         "path": [
           "Component",
           "Accordion",
@@ -11532,12 +10037,8 @@
             }
           }
         },
-        "name": "ComponentFooterFooterLinkFontFamily",
-        "attributes": {
-          "category": "Component",
-          "type": "Footer",
-          "item": "FooterLinkFontFamily"
-        },
+        "name": "footerLinkFontFamily",
+        "attributes": {},
         "path": [
           "Component",
           "Footer",
@@ -11571,12 +10072,8 @@
             }
           }
         },
-        "name": "ComponentMediaPlayerVideoTimeBadgeFontFamily",
-        "attributes": {
-          "category": "Component",
-          "type": "MediaPlayer",
-          "item": "videoTimeBadgeFontFamily"
-        },
+        "name": "videoTimeBadgeFontFamily",
+        "attributes": {},
         "path": [
           "Component",
           "MediaPlayer",
@@ -11610,12 +10107,8 @@
             }
           }
         },
-        "name": "ComponentInputfieldInputFieldLabelFontFamily",
-        "attributes": {
-          "category": "Component",
-          "type": "Inputfield",
-          "item": "inputFieldLabelFontFamily"
-        },
+        "name": "inputFieldLabelFontFamily",
+        "attributes": {},
         "path": [
           "Component",
           "Inputfield",
@@ -11648,11 +10141,8 @@
           }
         }
       },
-      "name": "ComponentButtonLabelFontWeightSt",
-      "attributes": {
-        "category": "Component",
-        "type": "buttonLabelFontWeightSt"
-      },
+      "name": "buttonLabelFontWeightSt",
+      "attributes": {},
       "path": [
         "Component",
         "buttonLabelFontWeightSt"
@@ -11684,10 +10174,8 @@
         }
       }
     },
-    "name": "BrandName",
-    "attributes": {
-      "category": "brandName"
-    },
+    "name": "brandName",
+    "attributes": {},
     "path": [
       "brandName"
     ]

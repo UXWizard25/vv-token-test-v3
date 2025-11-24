@@ -26,12 +26,8 @@
             }
           }
         },
-        "name": "FontFamilyBildFontFamilyGothamXNarrow",
-        "attributes": {
-          "category": "FontFamily",
-          "type": "BILD",
-          "item": "FontFamilyGothamXNarrow"
-        },
+        "name": "fontFamilyGothamXNarrow",
+        "attributes": {},
         "path": [
           "FontFamily",
           "BILD",
@@ -63,12 +59,8 @@
             }
           }
         },
-        "name": "FontFamilyBildFontFamilyGothamCond",
-        "attributes": {
-          "category": "FontFamily",
-          "type": "BILD",
-          "item": "FontFamilyGothamCond"
-        },
+        "name": "fontFamilyGothamCond",
+        "attributes": {},
         "path": [
           "FontFamily",
           "BILD",
@@ -100,12 +92,8 @@
             }
           }
         },
-        "name": "FontFamilyBildFontFamilyGotham",
-        "attributes": {
-          "category": "FontFamily",
-          "type": "BILD",
-          "item": "FontFamilyGotham"
-        },
+        "name": "fontFamilyGotham",
+        "attributes": {},
         "path": [
           "FontFamily",
           "BILD",
@@ -139,12 +127,8 @@
             }
           }
         },
-        "name": "FontFamilyAdvertorialFontFamilyLucidaGrande",
-        "attributes": {
-          "category": "FontFamily",
-          "type": "Advertorial",
-          "item": "FontFamilyLucidaGrande"
-        },
+        "name": "fontFamilyLucidaGrande",
+        "attributes": {},
         "path": [
           "FontFamily",
           "Advertorial",
@@ -178,12 +162,8 @@
             }
           }
         },
-        "name": "FontFamilySportBildFontFamilyAntennaExtraCond",
-        "attributes": {
-          "category": "FontFamily",
-          "type": "SportBILD",
-          "item": "FontFamilyAntennaExtraCond"
-        },
+        "name": "fontFamilyAntennaExtraCond",
+        "attributes": {},
         "path": [
           "FontFamily",
           "SportBILD",
@@ -215,12 +195,8 @@
             }
           }
         },
-        "name": "FontFamilySportBildFontFamilyAntennaCond",
-        "attributes": {
-          "category": "FontFamily",
-          "type": "SportBILD",
-          "item": "FontFamilyAntennaCond"
-        },
+        "name": "fontFamilyAntennaCond",
+        "attributes": {},
         "path": [
           "FontFamily",
           "SportBILD",
@@ -252,12 +228,8 @@
             }
           }
         },
-        "name": "FontFamilySportBildFontFamilyInter",
-        "attributes": {
-          "category": "FontFamily",
-          "type": "SportBILD",
-          "item": "FontFamilyInter"
-        },
+        "name": "fontFamilyInter",
+        "attributes": {},
         "path": [
           "FontFamily",
           "SportBILD",
@@ -296,11 +268,8 @@
         "$type": "fontWeight",
         "comment": "700 is considered black weight because Gotham Condensed is the primary font family (most used in headlines). In other font families 700 is not black weight but bold."
       },
-      "name": "FontWeight700BlackFontWeight",
-      "attributes": {
-        "category": "FontWeight",
-        "type": "700BlackFontWeight"
-      },
+      "name": "_700BlackFontWeight",
+      "attributes": {},
       "path": [
         "FontWeight",
         "700BlackFontWeight"
@@ -333,11 +302,8 @@
         },
         "$type": "fontWeight"
       },
-      "name": "FontWeight900ExtraBlackFontWeight",
-      "attributes": {
-        "category": "FontWeight",
-        "type": "900ExtraBlackFontWeight"
-      },
+      "name": "_900ExtraBlackFontWeight",
+      "attributes": {},
       "path": [
         "FontWeight",
         "900ExtraBlackFontWeight"
@@ -370,11 +336,8 @@
         },
         "$type": "fontWeight"
       },
-      "name": "FontWeight400BookFontWeight",
-      "attributes": {
-        "category": "FontWeight",
-        "type": "400BookFontWeight"
-      },
+      "name": "_400BookFontWeight",
+      "attributes": {},
       "path": [
         "FontWeight",
         "400BookFontWeight"
@@ -407,11 +370,8 @@
         },
         "$type": "fontWeight"
       },
-      "name": "FontWeight1000UltraFontWeight",
-      "attributes": {
-        "category": "FontWeight",
-        "type": "1000UltraFontWeight"
-      },
+      "name": "_1000UltraFontWeight",
+      "attributes": {},
       "path": [
         "FontWeight",
         "1000UltraFontWeight"
@@ -444,11 +404,8 @@
         },
         "$type": "fontWeight"
       },
-      "name": "FontWeight800BlackFontWeight",
-      "attributes": {
-        "category": "FontWeight",
-        "type": "800BlackFontWeight"
-      },
+      "name": "_800BlackFontWeight",
+      "attributes": {},
       "path": [
         "FontWeight",
         "800BlackFontWeight"
@@ -481,11 +438,8 @@
         },
         "$type": "fontWeight"
       },
-      "name": "FontWeight350BookFontWeight",
-      "attributes": {
-        "category": "FontWeight",
-        "type": "350BookFontWeight"
-      },
+      "name": "_350BookFontWeight",
+      "attributes": {},
       "path": [
         "FontWeight",
         "350BookFontWeight"
@@ -518,11 +472,8 @@
         },
         "$type": "fontWeight"
       },
-      "name": "FontWeight600BoldFontWeight",
-      "attributes": {
-        "category": "FontWeight",
-        "type": "600BoldFontWeight"
-      },
+      "name": "_600BoldFontWeight",
+      "attributes": {},
       "path": [
         "FontWeight",
         "600BoldFontWeight"
@@ -555,11 +506,8 @@
         },
         "$type": "fontWeight"
       },
-      "name": "FontWeight100ThinFontWeight",
-      "attributes": {
-        "category": "FontWeight",
-        "type": "100ThinFontWeight"
-      },
+      "name": "_100ThinFontWeight",
+      "attributes": {},
       "path": [
         "FontWeight",
         "100ThinFontWeight"
@@ -592,11 +540,8 @@
         },
         "$type": "fontWeight"
       },
-      "name": "FontWeight300LightFontWeight",
-      "attributes": {
-        "category": "FontWeight",
-        "type": "300LightFontWeight"
-      },
+      "name": "_300LightFontWeight",
+      "attributes": {},
       "path": [
         "FontWeight",
         "300LightFontWeight"
@@ -629,11 +574,8 @@
         },
         "$type": "fontWeight"
       },
-      "name": "FontWeight200ExtraLightFontWeight",
-      "attributes": {
-        "category": "FontWeight",
-        "type": "200ExtraLightFontWeight"
-      },
+      "name": "_200ExtraLightFontWeight",
+      "attributes": {},
       "path": [
         "FontWeight",
         "200ExtraLightFontWeight"
@@ -666,11 +608,8 @@
         },
         "$type": "fontWeight"
       },
-      "name": "FontWeight500MediumFontWeight",
-      "attributes": {
-        "category": "FontWeight",
-        "type": "500MediumFontWeight"
-      },
+      "name": "_500MediumFontWeight",
+      "attributes": {},
       "path": [
         "FontWeight",
         "500MediumFontWeight"
@@ -701,11 +640,8 @@
           }
         }
       },
-      "name": "FontWeightBoldItalicFontWeightSt",
-      "attributes": {
-        "category": "FontWeight",
-        "type": "BoldItalicFontWeightST"
-      },
+      "name": "boldItalicFontWeightST",
+      "attributes": {},
       "path": [
         "FontWeight",
         "BoldItalicFontWeightST"
@@ -736,11 +672,8 @@
           }
         }
       },
-      "name": "FontWeightBlackFontWeightSt",
-      "attributes": {
-        "category": "FontWeight",
-        "type": "BlackFontWeightST"
-      },
+      "name": "blackFontWeightST",
+      "attributes": {},
       "path": [
         "FontWeight",
         "BlackFontWeightST"
@@ -775,11 +708,8 @@
         },
         "comment": "This variable is a primitive for use in creating semantic text styles that need to use a subtle small letter spacing value of -0.25."
       },
-      "name": "LetterSpacingLetterSpace025",
-      "attributes": {
-        "category": "LetterSpacing",
-        "type": "letterSpace-0_25"
-      },
+      "name": "letterSpace-0_25",
+      "attributes": {},
       "path": [
         "LetterSpacing",
         "letterSpace-0_25"
@@ -812,11 +742,8 @@
         },
         "comment": "This variable is a primitive for use in creating semantic text styles that need to use a default letter spacing value of 0."
       },
-      "name": "LetterSpacingLetterSpace0",
-      "attributes": {
-        "category": "LetterSpacing",
-        "type": "letterSpace-0"
-      },
+      "name": "letterSpace-0",
+      "attributes": {},
       "path": [
         "LetterSpacing",
         "letterSpace-0"
@@ -849,11 +776,8 @@
         },
         "comment": "This variable is a primitive for use in creating semantic text styles that need to use a positive letter spacing value of 1."
       },
-      "name": "LetterSpacingLetterSpace1",
-      "attributes": {
-        "category": "LetterSpacing",
-        "type": "letterSpace1"
-      },
+      "name": "letterSpace1",
+      "attributes": {},
       "path": [
         "LetterSpacing",
         "letterSpace1"
@@ -886,11 +810,8 @@
         },
         "comment": "This variable is a primitive for use in creating semantic text styles that need to use a slight positive letter spacing value of 0.5."
       },
-      "name": "LetterSpacingLetterSpace05",
-      "attributes": {
-        "category": "LetterSpacing",
-        "type": "letterSpace0_5"
-      },
+      "name": "letterSpace0_5",
+      "attributes": {},
       "path": [
         "LetterSpacing",
         "letterSpace0_5"
@@ -923,11 +844,8 @@
         },
         "comment": "This variable is a primitive for use in creating semantic text styles that need to use a subtle positive letter spacing value of 0.25."
       },
-      "name": "LetterSpacingLetterSpace025",
-      "attributes": {
-        "category": "LetterSpacing",
-        "type": "letterSpace0_25"
-      },
+      "name": "letterSpace0_25",
+      "attributes": {},
       "path": [
         "LetterSpacing",
         "letterSpace0_25"
@@ -960,11 +878,8 @@
         },
         "comment": "This variable is a primitive for use in creating semantic variables that need to use a subtle negative letter spacing value of -0.5."
       },
-      "name": "LetterSpacingLetterSpace05",
-      "attributes": {
-        "category": "LetterSpacing",
-        "type": "letterSpace-0_5"
-      },
+      "name": "letterSpace-0_5",
+      "attributes": {},
       "path": [
         "LetterSpacing",
         "letterSpace-0_5"
@@ -997,11 +912,8 @@
         },
         "comment": "This variable is a primitive for use in creating semantic text styles that need to use a large letter spacing value of 2."
       },
-      "name": "LetterSpacingLetterSpace2",
-      "attributes": {
-        "category": "LetterSpacing",
-        "type": "letterSpace2"
-      },
+      "name": "letterSpace2",
+      "attributes": {},
       "path": [
         "LetterSpacing",
         "letterSpace2"
@@ -1034,11 +946,8 @@
         },
         "comment": "This variable is a primitive for use in creating semantic variables that need to use a negative letter spacing value of -1."
       },
-      "name": "LetterSpacingLetterSpace1",
-      "attributes": {
-        "category": "LetterSpacing",
-        "type": "letterSpace-1"
-      },
+      "name": "letterSpace-1",
+      "attributes": {},
       "path": [
         "LetterSpacing",
         "letterSpace-1"
@@ -1071,11 +980,8 @@
         },
         "comment": "This variable is a primitive for use in creating semantic text styles that need to use a large negative letter spacing value of -2. This is usually reserved for large texts styles that are used on titles or headlines."
       },
-      "name": "LetterSpacingLetterSpace2",
-      "attributes": {
-        "category": "LetterSpacing",
-        "type": "letterSpace-2"
-      },
+      "name": "letterSpace-2",
+      "attributes": {},
       "path": [
         "LetterSpacing",
         "letterSpace-2"
@@ -1108,11 +1014,8 @@
         },
         "comment": "This variable is a primitive for use in creating semantic text styles that need to use a much larger letter spacing value of 3. Text styles that have smaller font sizes should use increasingly positive values for their letter spacings on smaller device sizes."
       },
-      "name": "LetterSpacingLetterSpace3",
-      "attributes": {
-        "category": "LetterSpacing",
-        "type": "letterSpace3"
-      },
+      "name": "letterSpace3",
+      "attributes": {},
       "path": [
         "LetterSpacing",
         "letterSpace3"
@@ -1145,11 +1048,8 @@
         },
         "comment": "This variable is a primitive for use in creating semantic text styles that need to use a large negative letter spacing value of -3. Text styles that have larger font sizes should use increasingly negative values for their letter spacings on larger device sizes."
       },
-      "name": "LetterSpacingLetterSpace3",
-      "attributes": {
-        "category": "LetterSpacing",
-        "type": "letterSpace-3"
-      },
+      "name": "letterSpace-3",
+      "attributes": {},
       "path": [
         "LetterSpacing",
         "letterSpace-3"
@@ -1182,11 +1082,8 @@
           }
         }
       },
-      "name": "FontWeightString1000UltraFontWeight",
-      "attributes": {
-        "category": "FontWeightString",
-        "type": "1000UltraFontWeight"
-      },
+      "name": "_1000UltraFontWeight",
+      "attributes": {},
       "path": [
         "FontWeightString",
         "1000UltraFontWeight"
@@ -1217,11 +1114,8 @@
           }
         }
       },
-      "name": "FontWeightString900ExtraBlackFontWeight",
-      "attributes": {
-        "category": "FontWeightString",
-        "type": "900ExtraBlackFontWeight"
-      },
+      "name": "_900ExtraBlackFontWeight",
+      "attributes": {},
       "path": [
         "FontWeightString",
         "900ExtraBlackFontWeight"
@@ -1252,11 +1146,8 @@
           }
         }
       },
-      "name": "FontWeightString800BlackFontWeight",
-      "attributes": {
-        "category": "FontWeightString",
-        "type": "800BlackFontWeight"
-      },
+      "name": "_800BlackFontWeight",
+      "attributes": {},
       "path": [
         "FontWeightString",
         "800BlackFontWeight"
@@ -1287,11 +1178,8 @@
           }
         }
       },
-      "name": "FontWeightString700BlackFontWeight",
-      "attributes": {
-        "category": "FontWeightString",
-        "type": "700BlackFontWeight"
-      },
+      "name": "_700BlackFontWeight",
+      "attributes": {},
       "path": [
         "FontWeightString",
         "700BlackFontWeight"
@@ -1322,11 +1210,8 @@
           }
         }
       },
-      "name": "FontWeightString600BoldFontWeight",
-      "attributes": {
-        "category": "FontWeightString",
-        "type": "600BoldFontWeight"
-      },
+      "name": "_600BoldFontWeight",
+      "attributes": {},
       "path": [
         "FontWeightString",
         "600BoldFontWeight"
@@ -1357,11 +1242,8 @@
           }
         }
       },
-      "name": "FontWeightString500MediumFontWeight",
-      "attributes": {
-        "category": "FontWeightString",
-        "type": "500MediumFontWeight"
-      },
+      "name": "_500MediumFontWeight",
+      "attributes": {},
       "path": [
         "FontWeightString",
         "500MediumFontWeight"
@@ -1392,11 +1274,8 @@
           }
         }
       },
-      "name": "FontWeightString400BookFontWeight",
-      "attributes": {
-        "category": "FontWeightString",
-        "type": "400BookFontWeight"
-      },
+      "name": "_400BookFontWeight",
+      "attributes": {},
       "path": [
         "FontWeightString",
         "400BookFontWeight"
@@ -1427,11 +1306,8 @@
           }
         }
       },
-      "name": "FontWeightString350BookFontWeight",
-      "attributes": {
-        "category": "FontWeightString",
-        "type": "350BookFontWeight"
-      },
+      "name": "_350BookFontWeight",
+      "attributes": {},
       "path": [
         "FontWeightString",
         "350BookFontWeight"
@@ -1462,11 +1338,8 @@
           }
         }
       },
-      "name": "FontWeightString200ExtraLightFontWeight",
-      "attributes": {
-        "category": "FontWeightString",
-        "type": "200ExtraLightFontWeight"
-      },
+      "name": "_200ExtraLightFontWeight",
+      "attributes": {},
       "path": [
         "FontWeightString",
         "200ExtraLightFontWeight"
@@ -1497,11 +1370,8 @@
           }
         }
       },
-      "name": "FontWeightString100ThinFontWeight",
-      "attributes": {
-        "category": "FontWeightString",
-        "type": "100ThinFontWeight"
-      },
+      "name": "_100ThinFontWeight",
+      "attributes": {},
       "path": [
         "FontWeightString",
         "100ThinFontWeight"
@@ -1532,11 +1402,8 @@
           }
         }
       },
-      "name": "FontWeightString600BoldItalicFontWeight",
-      "attributes": {
-        "category": "FontWeightString",
-        "type": "600BoldItalicFontWeight"
-      },
+      "name": "_600BoldItalicFontWeight",
+      "attributes": {},
       "path": [
         "FontWeightString",
         "600BoldItalicFontWeight"
@@ -1567,11 +1434,8 @@
           }
         }
       },
-      "name": "FontWeightString700BlackItalicFontWeight",
-      "attributes": {
-        "category": "FontWeightString",
-        "type": "700BlackItalicFontWeight"
-      },
+      "name": "_700BlackItalicFontWeight",
+      "attributes": {},
       "path": [
         "FontWeightString",
         "700BlackItalicFontWeight"

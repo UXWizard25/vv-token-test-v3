@@ -26,10 +26,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size6x",
-    "attributes": {
-      "category": "size6x"
-    },
+    "name": "size6x",
+    "attributes": {},
     "path": [
       "size6x"
     ]
@@ -61,10 +59,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size3x",
-    "attributes": {
-      "category": "size3x"
-    },
+    "name": "size3x",
+    "attributes": {},
     "path": [
       "size3x"
     ]
@@ -96,10 +92,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size1x",
-    "attributes": {
-      "category": "size1x"
-    },
+    "name": "size1x",
+    "attributes": {},
     "path": [
       "size1x"
     ]
@@ -131,10 +125,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size025x",
-    "attributes": {
-      "category": "size0_25x"
-    },
+    "name": "size0_25x",
+    "attributes": {},
     "path": [
       "size0_25x"
     ]
@@ -166,10 +158,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size05x",
-    "attributes": {
-      "category": "size0_5x"
-    },
+    "name": "size0_5x",
+    "attributes": {},
     "path": [
       "size0_5x"
     ]
@@ -201,10 +191,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size2x",
-    "attributes": {
-      "category": "size2x"
-    },
+    "name": "size2x",
+    "attributes": {},
     "path": [
       "size2x"
     ]
@@ -236,10 +224,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size45x",
-    "attributes": {
-      "category": "size4_5x"
-    },
+    "name": "size4_5x",
+    "attributes": {},
     "path": [
       "size4_5x"
     ]
@@ -271,10 +257,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size5x",
-    "attributes": {
-      "category": "size5x"
-    },
+    "name": "size5x",
+    "attributes": {},
     "path": [
       "size5x"
     ]
@@ -306,10 +290,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size35x",
-    "attributes": {
-      "category": "size3_5x"
-    },
+    "name": "size3_5x",
+    "attributes": {},
     "path": [
       "size3_5x"
     ]
@@ -341,10 +323,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size25x",
-    "attributes": {
-      "category": "size2_5x"
-    },
+    "name": "size2_5x",
+    "attributes": {},
     "path": [
       "size2_5x"
     ]
@@ -376,10 +356,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size125x",
-    "attributes": {
-      "category": "size12_5x"
-    },
+    "name": "size12_5x",
+    "attributes": {},
     "path": [
       "size12_5x"
     ]
@@ -411,10 +389,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size275x",
-    "attributes": {
-      "category": "size2_75x"
-    },
+    "name": "size2_75x",
+    "attributes": {},
     "path": [
       "size2_75x"
     ]
@@ -446,10 +422,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size325x",
-    "attributes": {
-      "category": "size3_25x"
-    },
+    "name": "size3_25x",
+    "attributes": {},
     "path": [
       "size3_25x"
     ]
@@ -481,10 +455,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size4x",
-    "attributes": {
-      "category": "size4x"
-    },
+    "name": "size4x",
+    "attributes": {},
     "path": [
       "size4x"
     ]
@@ -516,10 +488,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size375x",
-    "attributes": {
-      "category": "size3_75x"
-    },
+    "name": "size3_75x",
+    "attributes": {},
     "path": [
       "size3_75x"
     ]
@@ -551,10 +521,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size225x",
-    "attributes": {
-      "category": "size2_25x"
-    },
+    "name": "size2_25x",
+    "attributes": {},
     "path": [
       "size2_25x"
     ]
@@ -586,10 +554,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size7x",
-    "attributes": {
-      "category": "size7x"
-    },
+    "name": "size7x",
+    "attributes": {},
     "path": [
       "size7x"
     ]
@@ -621,10 +587,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size15x",
-    "attributes": {
-      "category": "size1_5x"
-    },
+    "name": "size1_5x",
+    "attributes": {},
     "path": [
       "size1_5x"
     ]
@@ -656,10 +620,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size075x",
-    "attributes": {
-      "category": "size0_75x"
-    },
+    "name": "size0_75x",
+    "attributes": {},
     "path": [
       "size0_75x"
     ]
@@ -691,10 +653,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size225x",
-    "attributes": {
-      "category": "size22_5x"
-    },
+    "name": "size22_5x",
+    "attributes": {},
     "path": [
       "size22_5x"
     ]
@@ -726,10 +686,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size40x",
-    "attributes": {
-      "category": "size40x"
-    },
+    "name": "size40x",
+    "attributes": {},
     "path": [
       "size40x"
     ]
@@ -761,10 +719,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size8x",
-    "attributes": {
-      "category": "size8x"
-    },
+    "name": "size8x",
+    "attributes": {},
     "path": [
       "size8x"
     ]
@@ -796,10 +752,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size115x",
-    "attributes": {
-      "category": "size11_5x"
-    },
+    "name": "size11_5x",
+    "attributes": {},
     "path": [
       "size11_5x"
     ]
@@ -831,10 +785,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size175x",
-    "attributes": {
-      "category": "size1_75x"
-    },
+    "name": "size1_75x",
+    "attributes": {},
     "path": [
       "size1_75x"
     ]
@@ -866,10 +818,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size525x",
-    "attributes": {
-      "category": "size5_25x"
-    },
+    "name": "size5_25x",
+    "attributes": {},
     "path": [
       "size5_25x"
     ]
@@ -901,10 +851,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size125x",
-    "attributes": {
-      "category": "size1_25x"
-    },
+    "name": "size1_25x",
+    "attributes": {},
     "path": [
       "size1_25x"
     ]
@@ -936,10 +884,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size80x",
-    "attributes": {
-      "category": "size80x"
-    },
+    "name": "size80x",
+    "attributes": {},
     "path": [
       "size80x"
     ]
@@ -971,10 +917,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size175x",
-    "attributes": {
-      "category": "size17_5x"
-    },
+    "name": "size17_5x",
+    "attributes": {},
     "path": [
       "size17_5x"
     ]
@@ -1006,10 +950,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size20x",
-    "attributes": {
-      "category": "size20x"
-    },
+    "name": "size20x",
+    "attributes": {},
     "path": [
       "size20x"
     ]
@@ -1041,10 +983,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size128x",
-    "attributes": {
-      "category": "size128x"
-    },
+    "name": "size128x",
+    "attributes": {},
     "path": [
       "size128x"
     ]
@@ -1076,10 +1016,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size124x",
-    "attributes": {
-      "category": "size124x"
-    },
+    "name": "size124x",
+    "attributes": {},
     "path": [
       "size124x"
     ]
@@ -1111,10 +1049,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size12x",
-    "attributes": {
-      "category": "size12x"
-    },
+    "name": "size12x",
+    "attributes": {},
     "path": [
       "size12x"
     ]
@@ -1146,10 +1082,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size35x",
-    "attributes": {
-      "category": "size35x"
-    },
+    "name": "size35x",
+    "attributes": {},
     "path": [
       "size35x"
     ]
@@ -1181,10 +1115,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size15x",
-    "attributes": {
-      "category": "size15x"
-    },
+    "name": "size15x",
+    "attributes": {},
     "path": [
       "size15x"
     ]
@@ -1216,10 +1148,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size1625",
-    "attributes": {
-      "category": "size16_25"
-    },
+    "name": "size16_25",
+    "attributes": {},
     "path": [
       "size16_25"
     ]
@@ -1251,10 +1181,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size875x",
-    "attributes": {
-      "category": "size87_5x"
-    },
+    "name": "size87_5x",
+    "attributes": {},
     "path": [
       "size87_5x"
     ]
@@ -1286,10 +1214,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size10x",
-    "attributes": {
-      "category": "size10x"
-    },
+    "name": "size10x",
+    "attributes": {},
     "path": [
       "size10x"
     ]
@@ -1321,10 +1247,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size30x",
-    "attributes": {
-      "category": "size30x"
-    },
+    "name": "size30x",
+    "attributes": {},
     "path": [
       "size30x"
     ]
@@ -1356,10 +1280,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size25x",
-    "attributes": {
-      "category": "size25x"
-    },
+    "name": "size25x",
+    "attributes": {},
     "path": [
       "size25x"
     ]
@@ -1391,10 +1313,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size168x",
-    "attributes": {
-      "category": "size168x"
-    },
+    "name": "size168x",
+    "attributes": {},
     "path": [
       "size168x"
     ]
@@ -1426,10 +1346,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size60x",
-    "attributes": {
-      "category": "size60x"
-    },
+    "name": "size60x",
+    "attributes": {},
     "path": [
       "size60x"
     ]
@@ -1461,10 +1379,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size9x",
-    "attributes": {
-      "category": "size9x"
-    },
+    "name": "size9x",
+    "attributes": {},
     "path": [
       "size9x"
     ]
@@ -1496,10 +1412,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size275x",
-    "attributes": {
-      "category": "size27_5x"
-    },
+    "name": "size27_5x",
+    "attributes": {},
     "path": [
       "size27_5x"
     ]
@@ -1531,10 +1445,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size50x",
-    "attributes": {
-      "category": "size50x"
-    },
+    "name": "size50x",
+    "attributes": {},
     "path": [
       "size50x"
     ]
@@ -1566,10 +1478,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size11625x",
-    "attributes": {
-      "category": "size116_25x"
-    },
+    "name": "size116_25x",
+    "attributes": {},
     "path": [
       "size116_25x"
     ]
@@ -1601,10 +1511,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size185x",
-    "attributes": {
-      "category": "size18_5x"
-    },
+    "name": "size18_5x",
+    "attributes": {},
     "path": [
       "size18_5x"
     ]
@@ -1636,10 +1544,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size100x",
-    "attributes": {
-      "category": "size100x"
-    },
+    "name": "size100x",
+    "attributes": {},
     "path": [
       "size100x"
     ]
@@ -1671,10 +1577,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size0x",
-    "attributes": {
-      "category": "size0x"
-    },
+    "name": "size0x",
+    "attributes": {},
     "path": [
       "size0x"
     ]
@@ -1706,10 +1610,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Size0125x",
-    "attributes": {
-      "category": "size0_125x"
-    },
+    "name": "size0_125x",
+    "attributes": {},
     "path": [
       "size0_125x"
     ]

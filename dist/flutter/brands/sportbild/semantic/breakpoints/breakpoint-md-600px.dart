@@ -12,488 +12,885 @@ import 'dart:ui';
 class BreakpointMd600px {
     BreakpointMd600px._();
 
-    static const breakpointName = md;
-    static const componentAccordionAccordionLabelFontFamily = Inter; /** This variable exists specifically for changing the accordion font family across brands. It is subject to review. Bild: GothamXNarrow, SpoBi: Inter, Ads: LucindaGrande */
-    static const componentArticleAricleMobile1ColGridImageMarginSpace = 1152.00;
-    static const componentArticleArticleContentInlineSpace = 1152.00; /** 16 | 16 | 72 | 162 - This variable is used for making the left and right spacings around article content blocks. Current css has the article-body class assigned to a div and article body contains these horizontal padding values. */
-    static const componentArticleArticleContentStackSpace = 384.00; /** 16 - 16 - 24 - 32 - This variable creates the vertical spacing between different article body elements such as avatars, media players, corssheadings, paragraphs, field sets, images, tables, quotes, videos, social embeds, etc. */
-    static const componentArticleArticleGalleryATeaserWidth = 4160.00; /** same as standard teaser width size variable */
-    static const componentArticleArticleHeadingsInlineSpace = 1152.00; /** 16 | 16 | 72 | 16 - This variable is used for the left and right space within the article page headings container which holds the article page kicker, headline and subheadline. */
-    static const componentArticleArticleHeadingsStackSpace = 192.00; /** 12 | 12 | 12 | 16 - This spacing variable is used for the space between article page heading kickers, headlines and subheadlines. XS&SM need review; correct value might be 8 */
-    static const componentArticleArticleHeadlineFontSize = 960.00; /** 40 - 40 - 72 - 100 - This variable uses the semantic variables headline2 for XS&SM, headline1 for MD&LG */
-    static const componentArticleArticleImageCaptionFontSize = 208.00; /** CSS --article-figure-meta-font-size 16-16-18-18 */
-    static const componentArticleArticleImageCaptionLineHeight = 270.40; /** this component level variable references the branding variables */
-    static const componentArticleArticleImageContainerStackSpace = 192.00;
-    static const componentArticleArticleImageLandscapeInlineSpace = 192.00;
-    static const componentArticleArticleImagePortaitInlineSpace = 1152.00;
-    static const componentArticleArticleImageSourceFontSize = 208.00; /** NMT CSS --article-figure-meta-font-size */
-    static const componentArticleArticleImageSourceLineHeight = 272.00;
-    static const componentArticleArticleInfoboxInlineSpace = 384.00;
-    static const componentArticleArticleInfoboxStackSpace = 384.00;
-    static const componentArticleArticleKickerFontSize = 416.00; /** This variable is used to control the font size of kickers in the heading section of article pages. 18 - 18 - 22 - 30 */
-    static const componentArticleArticleMetaFontFamily = AntennaCond; /** This variable is used on the font size of article day&time stamp that usually shows up along with the article author avatars. On app versions this variable is used for the avatar names. This variable references variables from the branding collection. */
-    static const componentArticleArticleMetaFontSize = 224.00; /** This variable is used on the font size of article day&time stamp that usually shows up along with the article author avatars. On app versions this variable is used for the avatar names. 12 - 12 - 14 - 16 */
-    static const componentArticleArticleTopMarginSpace = 192.00; /** 8 | 8 | 12 | 16 - This space variable is used at the top edge of the article main content bounding box. */
-    static const componentAudioPlayerAudioPlayerFontSize = 256.00; /** This variable is used in the text style dedicated to audio player labels for elapsed time, reproduction speed and short functionality description text. 16 - 16 - 16 - 18 */
-    static const componentAvatarAppAvatarFontFamily = AntennaCond; /** This variable is used for setting the font of avatars on iOS and Android platforms. This is subject to review. */
-    static const componentAvatarAvatarArticleSize = 768.00; /** This variable is used for setting the size of avatar images in article pages. It references the sizeConstMD variable from the "generic" semantic collection. Its value is 48 across devices. */
-    static const componentAvatarAvatarAuthorPageSize = 2080.00; /** 96 - 96 - 130 - 130 This variable is used for controlling the size of the avatar image on author pages. */
-    static const componentAvatarAvatarFontFamily = Inter; /** This variable is used in avatar text styles. It receives values from the Brand Tokens Collection. Bild: GothamXNarrow; SpoBi: Inter; Ads: LucidaGrande */
-    static const componentAvatarAvatarLabelFontSize = 208.00; /** This variable is used on avatar names in article pages. Bild: 16 - 16 - 16 - 18; SpoBi&Ads: 13 - 13 - 13 - 15 */
-    static const componentAvatarAvatarLabelLineHeight = 336.00; /** This variable is used for controlling the line height of avatar texts. Its values influence the stacking space between avatar texts. 21 - 21 - 21 - 23 */
-    static const componentAvatarAvatarLaneGapSpace = 384.00; /** This variable is used for setting the inline space between multiple avatars that are horizontally placed in a lane when an article has multiple authors. 16 - 16 - 24 - 24 */
-    static const componentBadgeAdLabelBadgeHeightSize = 480.00; /** 30 - 30 - 30 - 30 - This variable is used on the Advert rectangular badge that is found above an ad containers. */
-    static const componentBadgeBadgesInnerInlineSpace = 64.00; /** This space variable is used for creating the left and right space between a badge's text label and the badge background surface that the text label is on top of. */
-    static const componentBadgeBadgesInnerStackSpace = 32.00; /** This space variable is used for creating the top and bottom space between a badge's text label and the surface that the text label is on top of. */
-    static const componentBreadcrumbBreadcrumbArrowLeftInlineSpace1 = 48.00;
-    static const componentBreadcrumbBreadcrumbArrowRightInlineSpace2 = 80.00;
-    static const componentBreadcrumbBreadcrumbFontFamily = Inter;
-    static const componentBreadcrumbBreadcrumbFontSize = 224.00; /** 15 - 15 - 15 - 12 -- Breadcrumbs have a slightly larger font size on mobile devices compared to when they are rendered on larger desktop devices. */
-    static const componentBreadcrumbBreadcrumbFontWeight = 400;
-    static const componentBreadcrumbBreadcrumbInlineSpace = 192.00;
-    static const componentBreadcrumbBreadcrumbLineHeight = 224.00; /** 15 - 15 - 15 - 12 -- Breadcrumbs have a slightly larger font size on mobile devices compared to when they are rendered on larger desktop devices. */
-    static const componentBreadcrumbBreadcrumbStackSpace = 224.00;
-    static const componentBreakingNewsBreakingNewsBadgeInlineSpace = 192.00;
-    static const componentBreakingNewsBreakingNewsBadgeLowerTitleFontSize = 480.00;
-    static const componentBreakingNewsBreakingNewsBadgeLowerTitleLineHeight = 336.00;
-    static const componentBreakingNewsBreakingNewsBadgeTitelsStackSpace = 64.00;
-    static const componentBreakingNewsBreakingNewsBadgeUpperTitleFontSize = 272.00;
-    static const componentBreakingNewsBreakingNewsBadgeUpperTitleLineHeight = 192.00;
-    static const componentBreakingNewsBreakingNewsContainerHeightSize = 896.00;
-    static const componentBreakingNewsBreakingNewsScrollingTextFontSize = 336.00;
-    static const componentBreakingNewsBreakingNewsScrollingTextLineHeight = 384.00;
-    static const componentButtonButtonBorderRadius = 128.00;
-    static const componentButtonButtonBorderWidthSize = 32.00;
-    static const componentButtonButtonContentGapSpace = 96.00;
-    static const componentButtonButtonContentMinHeightSize = 384.00; /** This fixed height variable ensures that the button maintains a consistent height, even when the icon is not active. */
-    static const componentButtonButtonInlineSpace = 256.00;
-    static const componentButtonButtonLabelFontSize = 240.00;
-    static const componentButtonButtonLabelLineHeight = 240.00;
-    static const componentButtonButtonStackSpace = 96.00;
-    static const componentButtonPartnerLinkButtonInlineSpace = 128.00;
-    static const componentButtonPartnerLinkButtonLabelFontSize = 256.00; /** Use this variable for controlling the font size of partner buttons. 16 - 16 - 16 - 18 */
-    static const componentButtonPartnerLinkButtonLabelHeightSize = 768.00;
-    static const componentCardsNewstickerImageCardWidthSize = 3296.00;
-    static const componentCardsSearchResultCardImageHeightSizeStacked = 3024.00;
-    static const componentCardsSearchResultCardImageWidthSize = 3456.00;
-    static const componentCarouselAppEpaperCarouseBeilageItemWidth = 2752.00;
-    static const componentCarouselAppEpaperCarouselItemDefaultWidth = 2752.00;
-    static const componentCarouselAppEpaperCarouselItemFocusWidth = 3840.00;
-    static const componentCarouselGalleryTeaserAppGapSpace = 128.00; /** This token is used to create more bottom padding space on system teaser headlines inside the gallery to avoid overlapping with the pagination. */
-    static const componentCarouselGalleryTeaserTitleBottomSpace = 576.00; /** This token is used to create more bottom padding space on system teaser headlines inside the gallery to avoid overlapping with the pagination. */
-    static const componentCarouselStandardTeaserGalleryTeaserWidthApp = 4480.00;
-    static const componentCarouselStandardTeaserGalleryTeaserWidthWeb = 4160.00;
-    static const componentChipsChipsFontSize = 256.00; /** This variable is used on the chips font size parameter of the chips text style. The font size changes only for the change between larger device widths and any device smaller than the largest. 16 - 16 -16 - 18 */
-    static const componentChipsChipsInlineSpace = 192.00;
-    static const componentChipsChipsStackSpace = 128.00;
-    static const componentDSysDocs1columnMobile = 14880.00; /** This variable is used only for this design system's component tests. */
-    static const componentDSysDocsBildDesignFrameSpace = 1024.00; /** Variable used in spacing parameters of bild.design webpage mockups. move to bild.design group maybe */
-    static const componentDSysDocsDSysDocsWidthSize = 15392.00;
-    static const componentDSysDocsDocHeaderHeightSize = 2560.00; /** This variable is used on documentation headers that contain info about platfroms and component names. 144 - 144 - 160 - 180 */
-    static const componentDSysDocsDsCaptionStackSpace05x = 96.00; /** This variable is used in documentation pages that have small caption or lables along with a UI component documented. 4 - 4 - 6 - 8 */
-    static const componentDSysDocsDsCaptionStackSpace1x = 192.00;
-    static const componentDSysDocsDsMainContainerSpace = 1088.00; /** This variable is used on documentation pages. This is an alternative variable to the main container max width variable. 0 - 0 - 68 - 68 */
-    static const componentDSysDocsFoundationsBannerHeightSize = 1280.00; /** This variable is used on documentation pages that have an artistic banner at the top of the page that is related to the foundation topic on the page. 80 - 80 -80 - 140 */
-    static const componentDSysDocsMainContentStageSize = 15392.00; /** This variable is used as a max width size for content blocks. For mobile devices this var references the DSysDocsWidthSize var 320 - 750 - 962 - 1024 */
-    static const componentDSysDocsSpecsFontFamily = Gotham; /** This variable is used only for texts and labels that form part of this design system's documentation. */
-    static const componentDSysDocsThinBannerVerticalHeightSize = 8928.00; /** This variable is currently used on a thin gallery that appears on desktop websites with petbook and other "books" content. Its height changes to a large height on mobile sites. 558 - 558 - 558 - 186 */
-    static const componentDatepickerDatepickerItemDayWidthSize = 704.00;
-    static const componentDatepickerDatepickerItemHeightSize = 704.00;
-    static const componentDatepickerDatepickerItemYearWidthSize = 1232.00;
-    static const componentDrawersMobileMenuDrawerLeftInlineSpace = 320.00;
-    static const componentDrawersMobileMenuDrawerMaxWidthSize = 6400.00;
-    static const componentDrawersMobileMenuDrawerRightInlineSpace = 256.00;
-    static const componentDrawersMobileMenuDrawerStackSpace = 320.00;
-    static const componentDropdownDropDownBorderRadius = 64.00;
-    static const componentDropdownDropDownItemInlineSpace = 192.00;
-    static const componentDropdownDropDownItemStackSpace = 128.00;
-    static const componentFooterFooterFontFamily = Inter;
-    static const componentFooterFooterFontSize = 176.00; /** This variable is used on footer links that commonly show up at the bottom of pages. The font size parameter remains constant at 11 px across device sizes. */
-    static const componentFooterFooterFontSizeUserOfferPages = 288.00;
-    static const componentFooterFooterLineHeight = 224.00;
-    static const componentFooterFooterLineHeightUserOfferPages = 416.00;
-    static const componentIconIconSize = 384.00;
-    static const componentIconIconSizeEmbeddMedia = 640.00;
-    static const componentInfoElementInfoElementTeaserBadgeHeightSize = 256.00;
-    static const componentInfoElementInfoElementTeaserBadgeMarginSpace = 64.00;
-    static const componentInfoElementInfoElementTeaserImageHeightSize = 1328.00;
-    static const componentInfoElementInfoElementTeaserImageWidthSize = 2368.00;
-    static const componentInputfieldHeyInputContainerInlineSpace = 128.00;
-    static const componentInputfieldInputFieldFontFamily = Inter;
-    static const componentInputfieldInputFieldFontSize = 256.00; /** This variable controls texts inside of input fields such as dropdowns, date input and other text inputs that appear in forms for example. compact 15 - default 17 - spacious 19 */
-    static const componentInputfieldInputFieldHeightSize = 576.00;
-    static const componentInputfieldInputFieldIMessageInlineSpace = 256.00;
-    static const componentInputfieldInputFieldInlineSpace = 256.00;
-    static const componentInputfieldInputFieldMessageGapSpace = 64.00;
-    static const componentInputfieldInputFieldMiniLabelInlineSpace = 64.00;
-    static const componentInputfieldInputFieldStackSpace = 96.00;
-    static const componentLivetickerLiveTickerAppCardHeightSize = 2048.00;
-    static const componentLivetickerLiveTickerAppCardWidthSize = 4800.00;
-    static const componentLivetickerLiveTickerHeadlinesFontSize = 512.00; /** This variable is used for the font size of live ticker headlines. 22 - 22 - 32 - 32 */
-    static const componentLivetickerLiveTickerSliderItemWidthMaxSize = 4112.00;
-    static const componentLivetickerLiveTickerTimeHeadlineStackSpace = 64.00;
-    static const componentLivetickerLiveTickerTimeStampFontSize = 256.00; /** This variable is used for the live ticker time stamp font size. 14 - 14 - 16 - 16 */
-    static const componentLivetickerLiveTickerheadlineFontWeight = 600;
-    static const componentLivetickerTimeStampFontFamily = Gotham XNarrow;
-    static const componentMediaplayerAudioPlayerHeaderStackSpace = 896.00;
-    static const componentMediaplayerPodcastPlayButtonSize = 768.00;
-    static const componentMediaplayerVidPlayerBottomBarGapSpace = 0.00;
-    static const componentMediaplayerVidPlayerControlButtonIconSizeHover = 448.00;
-    static const componentMediaplayerVidPlayerControlButtonSize = 672.00;
-    static const componentMediaplayerVidPlayerProgressBarContainerHeightSize = 384.00;
-    static const componentMediaplayerVidPlayerTimecodeContainerMinWidthSize = 928.00;
-    static const componentMediaplayerVidPlayerTimecodeFontSize = 256.00;
-    static const componentMediaplayerVidPlayerUnmuteButtonWidthSize = 3520.00;
-    static const componentMediaplayerVideoTimeBadgeFontFamily = Inter;
-    static const componentMenuAppTopbarStageTitleHeight = 272.00;
-    static const componentMenuAppTopbarTitleFontSize = 208.00;
-    static const componentMenuHeyInputShadowVisibility = Color(0x00000000); /** This color type variables are only in this semantic collection for making subtle shadow effects change visibility across device sizes. Shadow alpha: 0 - 0 - 0 - 10 */
-    static const componentMenuIOSappTopBarHeightSize = 768.00;
-    static const componentMenuIOSappTopBarLeftInlineSpace = 304.00;
-    static const componentMenuIOSappTopBarRightInlineSpace = 304.00;
-    static const componentMenuMenuBottomStackSpace = 128.00;
-    static const componentMenuMenuItemFontSize = 288.00; /** This variable is used on the menu link lane and on the mobile side menu drawer. */
-    static const componentMenuMenuItemSpace = 128.00;
-    static const componentMenuMenuItemUtilFontSize = 192.00;
-    static const componentMenuMenuItemUtilStackSpace = 160.00;
-    static const componentMenuMenuLeftInlineSpace = 128.00;
-    static const componentMenuMenuLinkItemInlineSpace = 64.00;
-    static const componentMenuMenuLinkLaneHeightSize = 768.00;
-    static const componentMenuMenuLogoDefaultSize = 896.00;
-    static const componentMenuMenuLogoScrolledSize = 896.00;
-    static const componentMenuMenuRightInlineSpace = 0.00;
-    static const componentMenuMenuShadowVisibility = Color(0x1A000000); /** This color type variables are only in this semantic collection for making subtle shadow effects change visibility across device sizes. Shadow alpha: 10 - 10 - 10 - 0 */
-    static const componentMenuMenuSpecialNaviItemHeightSize = 768.00;
-    static const componentMenuMenuTopStackSpace = 128.00;
-    static const componentMenuMenuUtilityLinksContainerHeightSize = 896.00;
-    static const componentMenuMenuUtilityLinksDividerHeightSize = 640.00;
-    static const componentMenuMenuUtilityLinksGapSpace = 384.00;
-    static const componentMenuMenuUtillinkItemHeightSize = 768.00;
-    static const componentMenuSubNavBarHeightSize = 672.00;
-    static const componentNewstickerNewsTickerAppCardHeightSize = 2400.00;
-    static const componentNewstickerNewsTickerAppCardWidthSize = 4800.00;
-    static const componentNewstickerNewsTickerBadgesInlineSpace = 192.00;
-    static const componentNewstickerNewsTickerContentStackSpace = 64.00;
-    static const componentNewstickerNewsTickerEntriesLeftInlineSpace = 352.00;
-    static const componentNewstickerNewsTickerEntriesStackSpace = 352.00;
-    static const componentNewstickerNewsTickerKickerInnerInlineSpace = 64.00;
-    static const componentNewstickerNewsTickerKickerInnerStackSpace = 32.00;
-    static const componentNewstickerNewsTickerLineInlineSpace = 112.00;
-    static const componentNewstickerNewsTickerRedDotSize = 224.00;
-    static const componentNewstickerNewsTickerSkeletonBottomSpace = 0.00;
-    static const componentNewstickerNewsTickerTimeFontFamily = AntennaExtraCond;
-    static const componentNewstickerNewsTickerTimeFontSize = 256.00; /** similar to kicker3 values - 16 - 16 - 16 - 18 */
-    static const componentNewstickerNewsTickerTimeFontWeight = 700;
-    static const componentNewstickerNewsTickerTimeKickerStackSpace = 96.00;
-    static const componentNewstickerNewsTickerTimeLineHeight = 332.80; /** Figma currently does not allow for percentages in Line Height variables. The values in this token are the result of multiplying the font size by the line height variable defined on the Bild home css -> newsTickerTime line height: 1.3. Line height for this component does not change across devices. */
-    static const componentNewstickerNewsTickerTitlesInlineSpace = 384.00;
-    static const componentPaginationGalleryPaginationContainerAppInlineSpace = 192.00;
-    static const componentPaginationGalleryPaginationContainerStackSpace = 256.00; /** 12 - 12 - 16 - 16 - this component level variable references the semantic */
-    static const componentPaginationGalleryPaginationContainerWebInlineSpace = 192.00; /** 8 - 8 - 12 - 12 - this component level variable references the inlineSpaceConst semantic variables; SM for smaller devices, MD for larger devices */
-    static const componentPaginationGalleryPaginationItemHeightSize = 64.00;
-    static const componentPaginationScrollBarThicknessSize = 128.00;
-    static const componentPaywallPaywallCardMaxWidthSize = 5536.00;
-    static const componentPaywallPaywallCardPriceNoteFontSize = 640.00; /** This variable is used on the paywall card text under the price tag. 40 - 40 - 40 - 40 */
-    static const componentPaywallPaywallCardPriceNoteLineHeight = 640.00;
-    static const componentPaywallPaywallCardPriceTagFontSize = 1024.00; /** This variable is used on the paywall card price tag. 64 constant */
-    static const componentPaywallPaywallCardPriceTagLineHeight = 1024.00;
-    static const componentPaywallPaywallContainerGapSpace = -768.00;
-    static const componentPaywallPaywallHeaderBottomStackSpace = 1280.00;
-    static const componentQuotesQuoteContainerInlineSpace = 256.00;
-    static const componentQuotesQuoteContainerStackSpace = 384.00;
-    static const componentQuotesQuoteContentGapSpace = 768.00;
-    static const componentQuotesQuoteQuotationMarksFontSize = 512.00;
-    static const componentRadioButtonsRadioSelectorDotActiveSize = 192.00;
-    static const componentRadioButtonsRadioSelectorSize = 320.00;
-    static const componentSearchSearchResultBadgeHeightSize = 288.00;
-    static const componentSectionTitleSectionTitleArrowInlineSpace = 80.00; /** This variable is used on large title headings that are h2 elements in html and indicate a new section in the user interface. This space changes when a user hovers over the large title. */
-    static const componentSectionTitleSectionTitleArrowInlineSpaceActive = 80.00; /** This variable is used for increasing the space between the text and the arrow at the end of the large title text. On mobile devices there is no hover state so this variables values are the same as the default state values. */
-    static const componentSectionTitleSectionTitleHeightSize = 512.00;
-    static const componentSectionTitleSectionTitleInnerStackBottomSpace = 192.00;
-    static const componentSeparatorsSeparatorThicknessSize = 32.00;
-    static const componentSkeletonsArticleSkeletonImageInlineSpace = 768.00;
-    static const componentSkeletonsArticleSkeletonTextInlineSpace = 768.00;
-    static const componentSkeletonsArticleTextSkeletonHeightSize = 11520.00;
-    static const componentSkeletonsHeadlinesSkeletonImagePlaceholderMaxWidth = 2560.00;
-    static const componentSlidersSliderProgressBarHoverHeightSize = 128.00;
-    static const componentSlidersSliderProgressBarIdleHeightSize = 64.00;
-    static const componentSlidersSliderProgressInactiveHeightSize = 32.00;
-    static const componentSlidersVidPlayerProgressBarHeightSize = 192.00;
-    static const componentSpecialNaviSpecialNaviInlineSpace = 384.00;
-    static const componentSpinnersVideoSpinnerSize = 1280.00;
-    static const componentSpinnersVideoSpinnerSize05x = 640.00;
-    static const componentSpinnersVideoSpinnerStrokeSize = 64.00;
-    static const componentTableTableColumnWidthSize05x = 768.00;
-    static const componentTableTableColumnWidthSize075x = 1024.00;
-    static const componentTableTableColumnWidthSize15x = 2560.00;
-    static const componentTableTableColumnWidthSize1x = 1536.00;
-    static const componentTableTableColumnWidthSize25x = 3840.00;
-    static const componentTableTableColumnWidthSize2x = 2880.00;
-    static const componentTableTableColumnWidthSize3x = 4480.00;
-    static const componentTableTableItemMaxWidthSize = 3584.00;
-    static const componentTabsAndroidTabbarHeightSize = 1184.00;
-    static const componentTabsAppsTabsLabelFontSize = 256.00; /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
-    static const componentTabsAppsTabsLabelLineHeight = 374.40; /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
-    static const componentTabsIosTabbarHeightSize = 784.00;
-    static const componentTabsTabLabelFontSize = 256.00; /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
-    static const componentTabsTabLabelFontSizeLine = 256.00; /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
-    static const componentTabsTopBarTabItemHeightSize = 704.00;
-    static const componentTeaserATeaserATeaserHeadlineFontSize = 704.00; /** This variable references the semantic variables headline3 (XS&SM) and headline2 (MD&LG). 28 - 28 - 48 - 64 */
-    static const componentTeaserATeaserATeaserHeadlineLineHeight = 809.60;
-    static const componentTeaserATeaserATeaserKickerFontSize = 416.00; /** 16 - 16 - 22 - 24 This variable references the semantic variables kicker3fontsize and kicker2fontsize. At the 600px breakpoint smaller devices use the kicker3 variable */
-    static const componentTeaserATeaserATeaserKickerLineHeight = 416.00;
-    static const componentTeaserATeaserATeaserTitleInlineSpace = 256.00;
-    static const componentTeaserBTeaserBTeaserTitleInlineSpace = 256.00;
-    static const componentTeaserBildPlayBildPlayTeaserWidthSize = 2704.00;
-    static const componentTeaserMQTeaserMQTeaserHeadlineFontSize = 480.00; /** XS-headline4FontSize:22 // SM-headline4FontSize:22 // MD-headline3FontSize:36 // LG-headline3FontSize:40 */
-    static const componentTeaserMQTeaserMQTeaserHeadlineFontWeight = 700;
-    static const componentTeaserMQTeaserMQTeaserHeadlineLineHeight = 552.00;
-    static const componentTeaserMQTeaserMqTeaserTitleInlineSpace = 192.00;
-    static const componentTeaserQTeaserQTeaserTitleInlineSpace = 384.00;
-    static const componentTeaserQTeaserQuadHeadlineFontSize = 960.00; /** This component level variable is used on the quad teaser headline. It references the semantic level variable headline1. 48 - 48 - 72 - 100 */
-    static const componentTeaserQTeaserQuadHeadlineLineHeight = 1104.00;
-    static const componentTeaserQTeaserQuadKickerFontSize = 416.00;
-    static const componentTeaserStdTeaserStdTeaserBadgesMarginSpace = 128.00; /** This variable is used for creating space around the outside of a subscription badge or video icon badge. */
-    static const componentTeaserStdTeaserStdTeaserImageTitleGapSpace = 96.00;
-    static const componentTeaserStdTeaserStdTeaserKickerHeadlineStackSpace = 32.00; /** 2 | 2 | 2 | 2 - This variable is used on the standard teaser vertical spacing between the kicker and the headline. It references the semantic variable stackSpaceConst3XS */
-    static const componentTeaserSuperASuperATeaserTitleInlineSpace = 384.00; /** 16 - 16 - 16 - 16 */
-    static const componentTeaserTeaserBadgesHeightSizeLg = 512.00; /** This token is for controling the height of badges that are inside of teasers. 32 - 32 - 32 - 40 */
-    static const componentTeaserTeaserBadgesHeightSizeSm = 512.00;
-    static const componentTeaserTeaserBadgesMarginSpace = 128.00; /** This variable is used for creating space around the outside of a subscription badge or video icon badge. */
-    static const componentTeaserTeaserKickerBgInlineSpace = 96.00;
-    static const componentTeaserTeaserKickerBgStackSpace = 32.00;
-    static const componentTeaserTeaserLayoutGridSpace = 192.00;
-    static const componentTeaserTeaserTitleBottomStackSpace = 256.00;
-    static const componentTeaserTeaserTitleGapSpace = 64.00;
-    static const componentTeaserTeaserTitleInlineLeftSpace = 0.00;
-    static const componentTeaserTeaserTitleStackSpace = 64.00;
-    static const componentToggleSwitchAppToggleItemLabelFontSize = 256.00; /** This variable is used on labels in list items with toggle switches found in app preferences. 14 - 14 - 16 - 18 */
-    static const componentToggleSwitchAppToggleItemLabelLineHeight = 259.20; /** This variable is used on labels in list items with toggle switches found in app preferences. 14.1 - 14.1 - 16.2 - 18.2 */
-    static const componentVideoVerticalVideoMockHeadlineFontSize = 512.00;
-    static const componentVideoVideoAdBadgeFontSize = 256.00; /** 14 - 14 - 16 - 16 -- This variable is used in the videoAdBadge font size parameter. */
-    static const componentVideoVideoBadgeTimeLineHeight = 380.80;
-    static const componentVideoVideoFrameInlineSpace = 192.00;
-    static const componentVideoVideoRedPlayIconHeightSize = 224.00; /** This variable is used for changing the red play icon inside the white square. */
-    static const componentVideoVideoRedPlayIconWidthSize = 192.00;
-    static const componentVideoVideoSkeletonContainerHeight = 7424.00;
-    static const componentVideoVideoTimeBadgeCornerSize = 32.00; /** This variable is used on video player badges that display a red play icon on top of a white square next to a time stamp. This variable references the borderRadiusXS. Constant value of 2 across device sizes. */
-    static const componentVideoVideoTimeBadgeFontSize = 288.00; /** 16 - 16 - 18 - 18 -- This variable is used to control the videoTimeBadge text style's font size parameter. The typography style that uses this variable is the videoTimeBadge style. The badge that uses this variable appears on the upper right corner of horizontal videos. */
-    static const componentVideoVideoTimeBadgeSize = 512.00; /** 24 - 24 - 32 - 40 - This variable is used on horizontal video badges that contain a red play icon on top of a white square next to a timestamp. */
-    static const semanticBorderBorderRadiusBorderRadiusFull = 159984.00; /** creates fully rounded shapes, typically used for circular elements like avatars. */
-    static const semanticBorderBorderRadiusBorderRadiusLg = 256.00; /** 16-16-16-16 – use for corner rounding on small cards, overlays, and modal surfaces. */
-    static const semanticBorderBorderRadiusBorderRadiusMd = 128.00; /** 8-8-8-8 – Standard radius for buttons, chips, input fields, and medium-sized interactive elements. */
-    static const semanticBorderBorderRadiusBorderRadiusNone = 0.00; /** 0-0-0-0 – no corner rounding. Used as default for flat layouts, content modules, images, and teaser elements. */
-    static const semanticBorderBorderRadiusBorderRadiusSm = 64.00; /** 4-4-4-4 – use for corner rounding on compact components like checkboxes or small input controls. */
-    static const semanticBorderBorderRadiusBorderRadiusXl = 384.00; /** 24-24-24-24 – use for corner rounding on larger cards, overlays, dialogs, and other container components. */
-    static const semanticBorderBorderRadiusBorderRadiusXs = 32.00; /** 2-2-2-2 use for corner rounding on very small UI elements such as tooltips and badges. */
-    static const semanticBorderBorderWidthBorderWidthHairline = 5.28; /** 0.33 -0.33 -0.33 -0.33 – primarily used in mobile app interfaces. Optimized for high-density displays to create subtle dividers and outlines without visual overload. */
-    static const semanticBorderBorderWidthBorderWidthThick = 32.00; /** 2-2-2-2 – use for stronger outlines on form elements (inputs), buttons (outline variants), and interaction states (focus, hover, active) */
-    static const semanticBorderBorderWidthBorderWidthThin = 16.00; /** 1-1-1-1 – use for subtle outlines and dividers */
-    static const /**
- * 389 - 599 - 1023 - 1024 – Defines the minimum width of the main frame for different breakpoints.
- * Apply this token to the main frame of page layouts to simulate realistic maximum widths across responsive viewports.
- */
-semanticLayoutBreakpointsBreakpointMaxWidthSize = 16368.00;
-    static const /**
- * 320 - 390 - 600 - 1024 – Defines the minimum width of the main frame for different breakpoints.
- * Apply this token to the main frame of page layouts to simulate realistic minimum widths across responsive viewports.
- */
-semanticLayoutBreakpointsBreakpointMinWidthSize = 9600.00;
-    static const /**
- * Common viewport height size based on the selected mode.
- * Apply this token to the main frame of page layouts to simulate realistic vertical space.
- */
-semanticLayoutCanvasHeightSizeApp = 19104.00;
-    static const /**
- * Common viewport height size based on the selected mode.
- * Apply this token to the main frame of page layouts to simulate realistic vertical space.
- */
-semanticLayoutCanvasHeightSizeWeb = 15360.00;
-    static const /**
- * Common viewport width size based on the selected breakpoint.
- * Apply this token to the main frame of page layouts.
- */
-semanticLayoutCanvasWidthSizeApp = 13344.00;
-    static const /**
- * Common viewport width size based on the selected breakpoint.
- * Apply this token to the main frame of page layouts.
- */
-semanticLayoutCanvasWidthSizeWeb = 9600.00;
-    static const semanticLayoutContentWidthContentMaxWidthFull = 16384.00; /** Use for content containers that should fill the full width of the page */
-    static const semanticLayoutContentWidthContentMaxWidthMedium = 11200.00; /** Use for content containers that should not fill the full page width on larger viewports. This is commonly used on article body text content and other elements in an article page. */
-    static const semanticLayoutGridConstantGridSpaceConstLg = 256.00; /** 16-16-16-16 – use for fixed side paddings and gutters */
-    static const semanticLayoutGridConstantGridSpaceConstSm = 192.00; /** 12-12-12-12 – use for fixed side paddings and gutters */
-    static const semanticLayoutGridLayoutGuideLayoutGuideGridColums = 128.00; /** Used to set the column count in Figma Layout guide Grids */
-    static const semanticLayoutGridResponsiveGridSpaceRespBase = 192.00; /** 12-12-12-16 – use for side paddings and gutters in responsive layouts */
-    static const semanticLayoutGridResponsiveGridSpaceRespLg = 512.00; /** 24-24-32-32 – use for side paddings and gutters in responsive layouts */
-    static const semanticLayoutGridResponsiveGridSpaceRespSm = 96.00; /** 6-6-6-8 – use for side paddings and gutters in responsive layouts */
-    static const semanticLayoutGridResponsiveGridSpaceRespXl = 1024.00; /** 48-48-64-64 – use for side paddings and gutters in responsive layouts */
-    static const semanticLayoutGridResponsivePageInlineSpace = 0.00; /** 0-0-0-16 – This token is used on the main homepages content container, ensuring full-width layout (no horizontal padding) on mobile and tablet breakpoints. */
-    static const semanticLayoutSectionParagraphEndSpace = 512.00; /** 16-16-32-32 – Use for spacing after paragraphs in text content */
-    static const semanticLayoutSectionSectionSpaceBase = 768.00; /** 36-36-48-48 – Use for vertical spacing between sections in a layout. */
-    static const semanticLayoutSectionSectionSpaceLg = 1536.00; /** 72-72-96-96 – Use for vertical spacing between sections in a layout */
-    static const semanticLayoutSectionSectionSpaceSm = 576.00; /** 24-24-36-36 – Use for vertical spacing between subsections in a layout */
-    static const semanticSizeConstantSizeConst2Xl = 1152.00; /** 72-72-72-72 – Use for setting fixed height and width of UI elements */
-    static const semanticSizeConstantSizeConst2Xs = 384.00; /** 24-24-24-24 – Use for setting fixed height and width of UI elements */
-    static const semanticSizeConstantSizeConst3Xl = 1536.00; /** 96-96-96-96 – Use for setting fixed height and width of UI elements */
-    static const semanticSizeConstantSizeConst3Xs = 256.00; /** 16-16-16-16 – Use for setting fixed height and width of UI elements */
-    static const semanticSizeConstantSizeConst4Xl = 2368.00; /** 148-148-148-148 – Use for setting fixed height and width of UI elements */
-    static const semanticSizeConstantSizeConst4Xs = 128.00; /** 8-8-8-8 – Use for setting fixed height and width of UI elements */
-    static const semanticSizeConstantSizeConstLg = 896.00; /** 56-56-56-56 – Use for setting fixed height and width of UI elements */
-    static const semanticSizeConstantSizeConstMd = 768.00; /** 48-48-48-48 Use for setting fixed height and width of UI elements */
-    static const semanticSizeConstantSizeConstSm = 640.00; /** 40-40-40-40 – Use for setting fixed height and width of UI elements */
-    static const semanticSizeConstantSizeConstXl = 1024.00; /** 64-64-64-64 – Use for setting fixed height and width of UI elements */
-    static const semanticSizeConstantSizeConstXs = 512.00; /** 32-32-32-32 – Use for setting fixed height and width of UI elements */
-    static const semanticSizeResponsiveSizeResp2Xl = 1472.00; /** 72-72-92-100 – Use for setting height and width of UI elements that scale across breakpoints */
-    static const semanticSizeResponsiveSizeResp2Xs = 512.00; /** 24-24-32-32 – Use for setting height and width of UI elements that scale across breakpoints */
-    static const semanticSizeResponsiveSizeResp3Xl = 1920.00; /** 96-96-120-148 – Use for setting height and width of UI elements that scale across breakpoints */
-    static const semanticSizeResponsiveSizeResp3Xs = 256.00; /** 16-16-16-24 – Use for setting height and width of UI elements that scale across breakpoints */
-    static const semanticSizeResponsiveSizeResp4Xl = 2560.00; /** 148-148-160-180 – Use for setting height and width of UI elements that scale across breakpoints */
-    static const semanticSizeResponsiveSizeResp4Xs = 224.00; /** 12-12-14-16 – Use for setting height and width of UI elements that scale across breakpoints */
-    static const semanticSizeResponsiveSizeRespLg = 1152.00; /** 56-56-72-92 – Use for setting height and width of UI elements that scale across breakpoints */
-    static const semanticSizeResponsiveSizeRespMd = 1024.00; /** 48-48-64-72 – Use for setting height and width of UI elements that scale across breakpoints */
-    static const semanticSizeResponsiveSizeRespSm = 768.00; /** 40-40-48-56 – Use for setting height and width of UI elements that scale across breakpoints */
-    static const semanticSizeResponsiveSizeRespXl = 1280.00; /** 64-64-80-96 – Use for setting height and width of UI elements that scale across breakpoints */
-    static const semanticSizeResponsiveSizeRespXs = 640.00; /** 32-32-40-48 – Use for setting height and width of UI elements that scale across breakpoints */
-    static const semanticSpaceGapConstantGapSpaceConst2Xl = 512.00; /** 32-32-32-32 – Use for fixed gaps between items inside of UI elements */
-    static const semanticSpaceGapConstantGapSpaceConst2Xs = 32.00; /** 2-2-2-2 – Use for fixed gaps between items inside of UI elements */
-    static const semanticSpaceGapConstantGapSpaceConst3Xl = 768.00; /** 48-48-48-48 – Use for fixed gaps between items inside of UI elements */
-    static const semanticSpaceGapConstantGapSpaceConstLg = 256.00; /** 16-16-16-16 – Use for fixed gaps between items inside of UI elements */
-    static const semanticSpaceGapConstantGapSpaceConstMd = 192.00; /** 12-12-12-12 – Use for fixed gaps between items inside of UI elements */
-    static const semanticSpaceGapConstantGapSpaceConstSm = 128.00; /** 8-8-8-8 – Use for fixed gaps between items inside of UI elements */
-    static const semanticSpaceGapConstantGapSpaceConstXl = 384.00; /** 24-24-24-24 – Use for fixed gaps between items inside of UI elements */
-    static const semanticSpaceGapConstantGapSpaceConstXs = 64.00; /** 4-4-4-4 – Use for fixed gaps between items inside of UI elements */
-    static const semanticSpaceGapResponsiveGapSpaceResp2Xl = 768.00; /** 32-32-48-64 – Use for gaps between items inside of UI elements that scale across breakpoints */
-    static const semanticSpaceGapResponsiveGapSpaceResp2Xs = 64.00; /** 2-2-4-6 – Use for gaps between items inside of UI elements that scale across breakpoints */
-    static const semanticSpaceGapResponsiveGapSpaceResp3Xl = 1152.00; /** 48-48-72-96 – Use for gaps between items inside of UI elements that scale across breakpoints */
-    static const semanticSpaceGapResponsiveGapSpaceRespLg = 384.00; /** 16-16-24-32 – Use for gaps between items inside of UI elements that scale across breakpoints */
-    static const semanticSpaceGapResponsiveGapSpaceRespMd = 256.00; /** 12-12-16-24 – Use for gaps between items inside of UI elements that scale across breakpoints */
-    static const semanticSpaceGapResponsiveGapSpaceRespSm = 192.00; /** 8-8-12-16 – Use for gaps between items inside of UI elements that scale across breakpoints */
-    static const semanticSpaceGapResponsiveGapSpaceRespXl = 512.00; /** 24-24-32-48 – Use for gaps between items inside of UI elements that scale across breakpoints */
-    static const semanticSpaceGapResponsiveGapSpaceRespXs = 96.00; /** 4-4-6-8 – Use for gaps between items inside of UI elements that scale across breakpoints */
-    static const semanticSpaceInlineConstantInlineSpaceConst2Xl = 512.00; /** 32-32-32-32 – Use for fixed horizontal (left/right) padding of UI elements */
-    static const semanticSpaceInlineConstantInlineSpaceConst2Xs = 64.00; /** 4-4-4-4 – Use for fixed horizontal (left/right) padding of UI elements */
-    static const semanticSpaceInlineConstantInlineSpaceConst3Xs = 32.00; /** 2-2-2-2 – Use for fixed horizontal (left/right) padding of UI elements */
-    static const semanticSpaceInlineConstantInlineSpaceConstLg = 256.00; /** 16-16-16-16 – Use for fixed horizontal (left/right) padding of UI elements */
-    static const semanticSpaceInlineConstantInlineSpaceConstMd = 192.00; /** 12-12-12-12 – Use for fixed horizontal (left/right) padding of UI elements */
-    static const semanticSpaceInlineConstantInlineSpaceConstSm = 128.00; /** 8-8-8-8 – Use for fixed horizontal (left/right) padding of UI elements */
-    static const semanticSpaceInlineConstantInlineSpaceConstXl = 384.00; /** 24-24-24-24 – Use for fixed horizontal (left/right) padding of UI elements */
-    static const semanticSpaceInlineConstantInlineSpaceConstXs = 96.00; /** 6-6-6-6 – Use for fixed horizontal (left/right) padding of UI elements */
-    static const semanticSpaceInlineResponsiveInlineSpaceResp2Xl = 768.00; /** 32-32-48-64 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
-    static const semanticSpaceInlineResponsiveInlineSpaceRespLg = 384.00; /** 16-16-24-32 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
-    static const semanticSpaceInlineResponsiveInlineSpaceRespMd = 256.00; /** 12-12-16-24 use for horizontal (left/right) padding of UI elements that scales across breakpoints */
-    static const semanticSpaceInlineResponsiveInlineSpaceRespSm = 192.00; /** 8-8-12-16 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
-    static const semanticSpaceInlineResponsiveInlineSpaceRespXl = 512.00; /** 24-24-32-40 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
-    static const semanticSpaceStackConstantStackSpaceConst2Xl = 512.00; /** 32-32-32-32 – Use for fixed vertical (top/bottom) padding of UI elements */
-    static const semanticSpaceStackConstantStackSpaceConst2Xs = 64.00; /** 4-4-4-4 – Use for fixed vertical (top/bottom) padding of UI elements */
-    static const semanticSpaceStackConstantStackSpaceConst3Xs = 32.00; /** 2-2-2-2 – Use for fixed vertical (top/bottom) padding of UI elements */
-    static const semanticSpaceStackConstantStackSpaceConstLg = 256.00; /** 16-16-16-16 – Use for fixed vertical (top/bottom) padding of UI elements */
-    static const semanticSpaceStackConstantStackSpaceConstMd = 192.00; /** 12-12-12-12 – Use for fixed vertical (top/bottom) padding of UI elements */
-    static const semanticSpaceStackConstantStackSpaceConstSm = 128.00; /** 8-8-8-8 – Use for fixed vertical (top/bottom) padding of UI elements */
-    static const semanticSpaceStackConstantStackSpaceConstXl = 384.00; /** 24-24-24-24 – Use for fixed vertical (top/bottom) padding of UI elements */
-    static const semanticSpaceStackConstantStackSpaceConstXs = 96.00; /** 6-6-6-6 – Use for fixed vertical (top/bottom) padding of UI elements */
-    static const semanticSpaceStackResponsiveStackSpaceResp2Xl = 768.00; /** 32-32-48-64 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
-    static const semanticSpaceStackResponsiveStackSpaceRespLg = 384.00; /** 16-16-24-32 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
-    static const semanticSpaceStackResponsiveStackSpaceRespMd = 256.00; /** 12-12-16-24 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
-    static const semanticSpaceStackResponsiveStackSpaceRespSm = 192.00; /** 8-8-12-16 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
-    static const semanticSpaceStackResponsiveStackSpaceRespXl = 512.00; /** 24-24-32-40 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
-    static const semanticTypographyFontFamilyBodyFontFamily = Inter; /** This variable references the bodyFontFamily variable from the branding collection. */
-    static const semanticTypographyFontFamilyCalloutFontFamily = AntennaCond;
-    static const semanticTypographyFontFamilyDisplayFontFamily = AntennaCond;
-    static const semanticTypographyFontFamilyFootnoteFontFamily = Inter;
-    static const semanticTypographyFontFamilyHeadlineFontFamily = AntennaExtraCond;
-    static const semanticTypographyFontFamilyKickerFontFamily = AntennaExtraCond;
-    static const semanticTypographyFontFamilyLabelFontFamily = AntennaExtraCond;
-    static const semanticTypographyFontFamilyQuoteFontFamily = AntennaCond;
-    static const semanticTypographyFontFamilySubheadlineFontFamily = AntennaCond;
-    static const semanticTypographyFontFamilyTitleFontFamily = AntennaCond;
-    static const semanticTypographyFontSizeBodyBodyFontSize = 272.00; /** This variable is used on the body text style's font size parameter. It remains constant at 21. */
-    static const semanticTypographyFontSizeCalloutCallout1FontSize = 384.00; /** This token is used for the font size parameter of the callout text style. 18 - 18 - 22 - 22 */
-    static const semanticTypographyFontSizeDisplayDisplay1FontSize = 1088.00; /** This variable is used on the font size parameter for the display1 text style. 40 - 40 - 72 - 120 */
-    static const semanticTypographyFontSizeDisplayDisplay2FontSize = 640.00; /** This variable is used for the font size parameter of the Display2 text style. 36 - 36 - 42 - 64 */
-    static const semanticTypographyFontSizeDisplayDisplay3FontSize = 480.00; /** This variable is used on the display3 font size parameter of the display3 text style. 28 - 28 - 32 - 40 */
-    static const semanticTypographyFontSizeFootnoteFootnote1FontSize = 208.00; /** This token is used on the footnote text style font size parameter. 16 - 16 - 16 - 18 */
-    static const semanticTypographyFontSizeFootnoteFootnote2FontSize = 160.00; /** This token is used in the font size parameter of the footnote2 text style. 12 - 12 - 12 - 16 */
-    static const semanticTypographyFontSizeHeadlineHeadline1FontSize = 960.00; /** This token is used for the headline1 text style's font size parameter. 48 - 48 - 72 - 100 */
-    static const semanticTypographyFontSizeHeadlineHeadline2FontSize = 704.00; /** This token is used on the headline2 text style's font size parameter. 40 - 40 - 48 - 64 */
-    static const semanticTypographyFontSizeHeadlineHeadline3FontSize = 480.00; /** This token is used on the headline3 text style's font size parameter. 28 - 28 - 36 - 40 */
-    static const semanticTypographyFontSizeHeadlineHeadline4FontSize = 416.00; /** This token controls the headline4 text style's font size parameter: 22 - 22 - 26 - 32 */
-    static const semanticTypographyFontSizeKickerKicker1FontSize = 416.00; /** Values come from NMT Figma File 01_Foundation; in online CSS this is kicker0. 18 - 18 - 22 - 30 - This variable does not exist yet in online css. Online css is called kicker0 for smallest font size. */
-    static const semanticTypographyFontSizeKickerKicker2FontSize = 416.00; /** Values come from comparing NMT Figma File 01_Foundation to online CSS. Online kickers are numbered from 0 to 3. This DS uses 1 to 4 following html convention of h1, h2, h3, etc. 18 - 18 - 22 - 24 */
-    static const semanticTypographyFontSizeKickerKicker3FontSize = 320.00; /** Values come from comparing NMT Figma File 01_Foundation to online CSS. Online kickers are numbered from 0 to 3. 16 - 16 - 18 - 20 */
-    static const semanticTypographyFontSizeKickerKicker4FontSize = 256.00; /** Values come from comparing NMT Figma File 01_Foundation to online CSS. Online kickers are numbered from 0 to 3. 14 - 14 - 16 - 16 */
-    static const semanticTypographyFontSizeLabelLabel1FontSize = 272.00; /** This token is used in the label1 text style font size parameter. Its value remains constant at 17 across device sizes. */
-    static const semanticTypographyFontSizeLabelLabel1FontSizeResponsive = 240.00; /** 10 - 10 - 15 - 17 Use this label font size when you want your label's font size to change across device sizes. */
-    static const semanticTypographyFontSizeLabelLabel2FontSize = 240.00; /** This variable controls the label2 text style's font size parameter. Its value remains constant at 15. */
-    static const semanticTypographyFontSizeLabelLabel3FontSize = 192.00; /** This token is used in the label3 text style's font size parameter. Its value remains constant at 12 across device sizes. */
-    static const semanticTypographyFontSizeLabelLabel4FontSize = 128.00; /** This token is used in the font size parameter of the label4 text style. The value remains constant at 8. */
-    static const semanticTypographyFontSizeQuoteQuoteFontSize = 288.00; /** 16 - 16 - 18 - 20 -- This variable is used for controlling the font size of the quote text style. */
-    static const semanticTypographyFontSizeSubheadlineSubheadline1FontSize = 352.00; /** This token controls the subheadline1 font size parameter. 24 - 24 - 32 - 36 */
-    static const semanticTypographyFontSizeTitleTitle1FontSize = 448.00; /** 22 - 22 - 22 - 28 -- html class stage-block-title__text css var --ressort-header-font-size(sm-md-lg) */
-    static const semanticTypographyFontSizeTitleTitle2FontSize = 288.00; /** 16 - 16 - 18 - 20 - html class stage-block-title__text css var --ressort-header-font-size(sm-md-lg) */
-    static const semanticTypographyFontWeightBodyBodyFontWeightBold = 700;
-    static const semanticTypographyFontWeightBodyBodyFontWeightBook = 400;
-    static const semanticTypographyFontWeightCalloutCalloutFontWeight = 800;
-    static const semanticTypographyFontWeightDisplayDisplayFontWeight = 800;
-    static const semanticTypographyFontWeightFootnoteFootnoteFontWeightBold = 700;
-    static const semanticTypographyFontWeightFootnoteFootnoteFontWeightBook = 400;
-    static const semanticTypographyFontWeightHeadlineHeadline1FontWeight = 700;
-    static const semanticTypographyFontWeightHeadlineHeadline1FontWeightSt = Bold Italic; /** This variable is a string type variable for controlling not only headline font weight but also the italic style for Sport Bild headlines. */
-    static const semanticTypographyFontWeightHeadlineHeadline2FontWeight = 700;
-    static const semanticTypographyFontWeightHeadlineHeadline3FontWeight = 700;
-    static const semanticTypographyFontWeightHeadlineHeadline4FontWeight = 700;
-    static const semanticTypographyFontWeightKickerKickerFontWeight = 700;
-    static const semanticTypographyFontWeightKickerKickerFontWeightSt = Black Italic;
-    static const semanticTypographyFontWeightLabelLabelFontWeightBold = 700;
-    static const semanticTypographyFontWeightLabelLabelFontWeightBook = 400;
-    static const semanticTypographyFontWeightQuoteQuoteFontWeight = 800;
-    static const semanticTypographyFontWeightSubheadlineSubheadlineFontWeight = 700;
-    static const semanticTypographyFontWeightTitleTitleFontWeight = 800;
-    static const semanticTypographyLetterSpacingDisplayDisplay1LetterSpacing = -16.00; /** -0.5 | -0.5 | -1 | -2 | This variable is used for the letter spacing parameter of the display1 text style. On smaller devices the value is smaller than on larger devices. On desktop devices the letter spacing is further reduced for making the text style more compact. */
-    static const semanticTypographyLetterSpacingDisplayDisplay2LetterSpacing = -16.00; /** -0.5 | -0.5 | -1 | -1 | This variable is used for the letter spacing parameter of the display2 text style. On smaller devices the value is smaller than on larger devices. */
-    static const semanticTypographyLetterSpacingDisplayDisplay3LetterSpacing = -16.00; /** -0.5 | -0.5 | -1 | -1 | This variable is used for the letter spacing parameter of the display3 text style. On smaller devices the value is smaller than on larger devices. */
-    static const semanticTypographyLetterSpacingLetterSpacingNegativeLg = -32.00; /** -2 | -2 | -2 | -3 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
-    static const semanticTypographyLetterSpacingLetterSpacingNegativeMd = -16.00; /** -1 | -1 | -1 | -1 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
-    static const semanticTypographyLetterSpacingLetterSpacingNegativeSm = -4.00; /** -0.5 | -0.5 | -0.25 | -0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
-    static const semanticTypographyLetterSpacingLetterSpacingNegativeXs = -4.00; /** -0.25 | -0.25 | -0.25 | -0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. This letter spacing was only found in large titles on iOS mobile app large title component. */
-    static const semanticTypographyLetterSpacingLetterSpacingNone = 0.00; /** 0 | 0 | 0 | 0 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
-    static const semanticTypographyLetterSpacingLetterSpacingPositiveLg = 32.00; /** 2 | 2 | 2 | 3 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
-    static const semanticTypographyLetterSpacingLetterSpacingPositiveMd = 16.00; /** 1 | 1 | 1 | 1 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
-    static const semanticTypographyLetterSpacingLetterSpacingPositiveSm = 8.00; /** 0.5 | 0.5 | 0.5 | 0.5 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
-    static const semanticTypographyLetterSpacingLetterSpacingPositiveXs = 4.00; /** 0.25 | 0.25 | 0.25 | 0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
-    static const semanticTypographyLineHeightBodyBodyLineHeight = 476.00; /** Figma's font line height currently does not allow for multipliers as is used on current website css var(--body-line-height) */
-    static const semanticTypographyLineHeightCalloutCalloutLineHeight = 499.20;
-    static const semanticTypographyLineHeightDisplayDisplay1LineHeight = 1152.00;
-    static const semanticTypographyLineHeightDisplayDisplay2LineHeight = 672.00;
-    static const semanticTypographyLineHeightDisplayDisplay3LineHeight = 512.00;
-    static const semanticTypographyLineHeightFootnoteFootnote1LineHeight = 272.48;
-    static const semanticTypographyLineHeightFootnoteFootnote2LineHeight = 208.00;
-    static const semanticTypographyLineHeightHeadlineHeadline1LineHeight = 1104.00;
-    static const semanticTypographyLineHeightHeadlineHeadline2LineHeight = 809.60;
-    static const semanticTypographyLineHeightHeadlineHeadline3LineHeight = 552.00;
-    static const semanticTypographyLineHeightHeadlineHeadline4LineHeight = 457.60;
-    static const semanticTypographyLineHeightKickerKicker1LineHeight = 457.60;
-    static const semanticTypographyLineHeightKickerKicker2LineHeight = 457.60;
-    static const semanticTypographyLineHeightKickerKicker3LineHeight = 352.00;
-    static const semanticTypographyLineHeightKickerKicker4LineHeight = 281.60;
-    static const semanticTypographyLineHeightLabelLabel1LineHeight = 326.40; /** This variable is used in the label1 text style's line height parameter. It references branding variables for brand specific line heights. */
-    static const semanticTypographyLineHeightLabelLabel1ResponsiveLineHeight = 288.00;
-    static const semanticTypographyLineHeightLabelLabel2LineHeight = 307.20;
-    static const semanticTypographyLineHeightLabelLabel3LineHeight = 230.40;
-    static const semanticTypographyLineHeightLabelLabel4LineHeight = 160.00;
-    static const semanticTypographyLineHeightQuoteQuoteLineHeight = 374.40; /** This variable is used in the quote text style line height parameter. */
-    static const semanticTypographyLineHeightSubheadlineSubheadline1LineHeight = 457.60;
-    static const semanticTypographyLineHeightTitleTitle1LineHeight = 492.80;
-    static const semanticTypographyLineHeightTitleTitle2LineHeight = 374.40; /** html class stage-block-title__text css var --ressort-header-font-size(sm-md-lg) */
-    static const semanticVisibilityBooleanHideOnDesktop = true; /** Use for hiding elements on desktop viewport sizes only */
-    static const semanticVisibilityBooleanHideOnMobile = true; /** Use for hiding elements on mobile viewport sizes */
-    static const semanticVisibilityBooleanVisilbleAbove600px = true; /** Use for showing elements on viewport sizes above 600 px */
-    static const semanticVisibilityBooleanVisilbleBelow600px = false; /** Use for showing elements on viewport sizes below 600 px */
-    static const semanticVisibilityBooleanVisilbleDesktopOnly = false; /** Use for showing elements on desktop viewport sizes only */
-    static const semanticVisibilityBooleanVisilbleMobileOnly = false; /** Use for showing elements on mobile viewport sizes only */
-    static const semanticVisibilityBooleanVisilbleTabletOnly = true; /** Use for showing elements on tablet viewport sizes only */
-    static const semanticVisibilityVariantSwitchBpSpecificApp = regular;
-    static const semanticVisibilityVariantSwitchBpSpecificWeb = md;
-    static const semanticVisibilityVariantSwitchChangeOnLg = xs/sm/md;
-    static const semanticVisibilityVariantSwitchChangeOnMd = md/lg; /** This variable is used for controlling size changes across device sizes on some components such as the vertical newsticker cards and the search results cards. Both have cards that change layouts at different breakpoints. */
+    static const breakpointName = "md";
+    // Component - Accordion
+    /** This variable exists specifically for changing the accordion font family across brands. It is subject to review. Bild: GothamXNarrow, SpoBi: Inter, Ads: LucindaGrande */
+    static const accordionLabelFontFamily = "Inter";
+
+    // Component - Article
+    static const aricleMobile1ColGridImageMarginSpace = "72px";
+    /** 8 | 8 | 12 | 16 - This space variable is used at the top edge of the article main content bounding box. */
+    static const articleTopMarginSpace = "12px";
+    /** This variable is used to control the font size of kickers in the heading section of article pages. 18 - 18 - 22 - 30 */
+    static const articleKickerFontSize = "26px";
+    /** 40 - 40 - 72 - 100 - This variable uses the semantic variables headline2 for XS&SM, headline1 for MD&LG */
+    static const articleHeadlineFontSize = "60px";
+    /** same as standard teaser width size variable */
+    static const articleGalleryATeaserWidth = "260px";
+    /** CSS --article-figure-meta-font-size 16-16-18-18 */
+    static const articleImageCaptionFontSize = "13px";
+    /** NMT CSS --article-figure-meta-font-size */
+    static const articleImageSourceFontSize = "13px";
+    /** this component level variable references the branding variables */
+    static const articleImageCaptionLineHeight = "16.899999618530273px";
+    static const articleImageSourceLineHeight = "17px";
+    /** 16 - 16 - 24 - 32 - This variable creates the vertical spacing between different article body elements such as avatars, media players, corssheadings, paragraphs, field sets, images, tables, quotes, videos, social embeds, etc. */
+    static const articleContentStackSpace = "24px";
+    /** 12 | 12 | 12 | 16 - This spacing variable is used for the space between article page heading kickers, headlines and subheadlines. XS&SM need review; correct value might be 8 */
+    static const articleHeadingsStackSpace = "12px";
+    static const articleImageLandscapeInlineSpace = "12px";
+    /** This variable is used on the font size of article day&time stamp that usually shows up along with the article author avatars. On app versions this variable is used for the avatar names. This variable references variables from the branding collection. */
+    static const articleMetaFontFamily = "AntennaCond";
+    /** This variable is used on the font size of article day&time stamp that usually shows up along with the article author avatars. On app versions this variable is used for the avatar names. 12 - 12 - 14 - 16 */
+    static const articleMetaFontSize = "14px";
+    /** 16 | 16 | 72 | 162 - This variable is used for making the left and right spacings around article content blocks. Current css has the article-body class assigned to a div and article body contains these horizontal padding values. */
+    static const articleContentInlineSpace = "72px";
+    /** 16 | 16 | 72 | 16 - This variable is used for the left and right space within the article page headings container which holds the article page kicker, headline and subheadline. */
+    static const articleHeadingsInlineSpace = "72px";
+    static const articleImagePortaitInlineSpace = "72px";
+    static const articleImageContainerStackSpace = "12px";
+    static const articleInfoboxInlineSpace = "24px";
+    static const articleInfoboxStackSpace = "24px";
+
+    // Component - AudioPlayer
+    /** This variable is used in the text style dedicated to audio player labels for elapsed time, reproduction speed and short functionality description text. 16 - 16 - 16 - 18 */
+    static const audioPlayerFontSize = "16px";
+
+    // Component - Avatar
+    /** This variable is used on avatar names in article pages. Bild: 16 - 16 - 16 - 18; SpoBi&Ads: 13 - 13 - 13 - 15 */
+    static const avatarLabelFontSize = "13px";
+    /** This variable is used for setting the size of avatar images in article pages. It references the sizeConstMD variable from the "generic" semantic collection. Its value is 48 across devices. */
+    static const avatarArticleSize = "48px";
+    /** 96 - 96 - 130 - 130 This variable is used for controlling the size of the avatar image on author pages. */
+    static const avatarAuthorPageSize = "130px";
+    /** This variable is used in avatar text styles. It receives values from the Brand Tokens Collection. Bild: GothamXNarrow; SpoBi: Inter; Ads: LucidaGrande */
+    static const avatarFontFamily = "Inter";
+    /** This variable is used for controlling the line height of avatar texts. Its values influence the stacking space between avatar texts. 21 - 21 - 21 - 23 */
+    static const avatarLabelLineHeight = "21px";
+    /** This variable is used for setting the inline space between multiple avatars that are horizontally placed in a lane when an article has multiple authors. 16 - 16 - 24 - 24 */
+    static const avatarLaneGapSpace = "24px";
+    /** This variable is used for setting the font of avatars on iOS and Android platforms. This is subject to review. */
+    static const appAvatarFontFamily = "AntennaCond";
+
+    // Component - Badge
+    /** This space variable is used for creating the top and bottom space between a badge's text label and the surface that the text label is on top of. */
+    static const badgesInnerStackSpace = "2px";
+    /** This space variable is used for creating the left and right space between a badge's text label and the badge background surface that the text label is on top of. */
+    static const badgesInnerInlineSpace = "4px";
+    /** 30 - 30 - 30 - 30 - This variable is used on the Advert rectangular badge that is found above an ad containers. */
+    static const adLabelBadgeHeightSize = "30px";
+
+    // Component - Breadcrumb
+    /** 15 - 15 - 15 - 12 -- Breadcrumbs have a slightly larger font size on mobile devices compared to when they are rendered on larger desktop devices. */
+    static const breadcrumbFontSize = "14px";
+    static const breadcrumbFontFamily = "Inter";
+    static const breadcrumb&ArrowLeftInlineSpace1 = "3px";
+    static const breadcrumb&ArrowRightInlineSpace2 = "5px";
+    static const breadcrumbInlineSpace = "12px";
+    /** 15 - 15 - 15 - 12 -- Breadcrumbs have a slightly larger font size on mobile devices compared to when they are rendered on larger desktop devices. */
+    static const breadcrumbLineHeight = "14px";
+    static const breadcrumbFontWeight = 400;
+    static const breadcrumbStackSpace = "14px";
+
+    // Component - BreakingNews
+    static const breakingNewsContainerHeightSize = "56px";
+    static const breakingNewsBadgeUpperTitleFontSize = "17px";
+    static const breakingNewsBadgeLowerTitleFontSize = "30px";
+    static const breakingNewsBadgeUpperTitleLineHeight = "12px";
+    static const breakingNewsBadgeLowerTitleLineHeight = "21px";
+    static const breakingNewsBadgeTitelsStackSpace = "4px";
+    static const breakingNewsScrollingTextFontSize = "21px";
+    static const breakingNewsScrollingTextLineHeight = "24px";
+    static const breakingNewsBadgeInlineSpace = "12px";
+
+    // Component - Button
+    static const buttonLabelFontSize = "15px";
+    static const buttonInlineSpace = "16px";
+    /** Use this variable for controlling the font size of partner buttons. 16 - 16 - 16 - 18 */
+    static const partnerLinkButtonLabelFontSize = "16px";
+    static const partnerLinkButtonLabelHeightSize = "48px";
+    static const buttonBorderWidthSize = "2px";
+    /** This fixed height variable ensures that the button maintains a consistent height, even when the icon is not active. */
+    static const buttonContentMinHeightSize = "24px";
+    static const partnerLinkButtonInlineSpace = "8px";
+    static const buttonLabelLineHeight = "15px";
+    static const buttonContentGapSpace = "6px";
+    static const buttonStackSpace = "6px";
+    static const buttonBorderRadius = "8px";
+
+    // Component - Cards
+    static const searchResultCardImageWidthSize = "216px";
+    static const searchResultCardImageHeightSizeStacked = "189px";
+    static const newstickerImageCardWidthSize = "206px";
+
+    // Component - Carousel
+    /** This token is used to create more bottom padding space on system teaser headlines inside the gallery to avoid overlapping with the pagination. */
+    static const galleryTeaserTitleBottomSpace = "36px";
+    /** This token is used to create more bottom padding space on system teaser headlines inside the gallery to avoid overlapping with the pagination. */
+    static const galleryTeaserAppGapSpace = "8px";
+    static const appEpaperCarouselItemFocusWidth = "240px";
+    static const appEpaperCarouselItemDefaultWidth = "172px";
+    static const appEpaperCarouseBeilageItemWidth = "172px";
+    static const standardTeaserGalleryTeaserWidthWeb = "260px";
+    static const standardTeaserGalleryTeaserWidthApp = "280px";
+
+    // Component - Chips
+    /** This variable is used on the chips font size parameter of the chips text style. The font size changes only for the change between larger device widths and any device smaller than the largest. 16 - 16 -16 - 18 */
+    static const chipsFontSize = "16px";
+    static const chipsInlineSpace = "12px";
+    static const chipsStackSpace = "8px";
+
+    // Component - Datepicker
+    static const datepickerItemDayWidthSize = "44px";
+    static const datepickerItemHeightSize = "44px";
+    static const datepickerItemYearWidthSize = "77px";
+
+    // Component - Drawers
+    static const mobileMenuDrawerStackSpace = "20px";
+    static const mobileMenuDrawerLeftInlineSpace = "20px";
+    static const mobileMenuDrawerRightInlineSpace = "16px";
+    static const mobileMenuDrawerMaxWidthSize = "400px";
+
+    // Component - Dropdown
+    static const dropDownBorderRadius = "4px";
+    static const dropDownItemStackSpace = "8px";
+    static const dropDownItemInlineSpace = "12px";
+
+    // Component - Footer
+    /** This variable is used on footer links that commonly show up at the bottom of pages. The font size parameter remains constant at 11 px across device sizes. */
+    static const footerFontSize = "11px";
+    static const footerLineHeight = "14px";
+    static const footerFontFamily = "Inter";
+    static const footerFontSizeUserOfferPages = "18px";
+    static const footerLineHeightUserOfferPages = "26px";
+
+    // Component - Icon
+    static const iconSize = "24px";
+    static const iconSizeEmbeddMedia = "40px";
+
+    // Component - InfoElement
+    static const infoElementTeaserBadgeHeightSize = "16px";
+    static const infoElementTeaserImageHeightSize = "83px";
+    static const infoElementTeaserImageWidthSize = "148px";
+    static const infoElementTeaserBadgeMarginSpace = "4px";
+
+    // Component - Inputfield
+    static const inputFieldStackSpace = "6px";
+    static const inputFieldInlineSpace = "16px";
+    static const inputFieldMiniLabelInlineSpace = "4px";
+    /** This variable controls texts inside of input fields such as dropdowns, date input and other text inputs that appear in forms for example. compact 15 - default 17 - spacious 19 */
+    static const inputFieldFontSize = "16px";
+    static const inputFieldIMessageInlineSpace = "16px";
+    static const inputFieldHeightSize = "36px";
+    static const heyInputContainerInlineSpace = "8px";
+    static const inputFieldMessageGapSpace = "4px";
+    static const inputFieldFontFamily = "Inter";
+
+    // Component - Liveticker
+    static const liveTickerheadlineFontWeight = 600;
+    /** This variable is used for the font size of live ticker headlines. 22 - 22 - 32 - 32 */
+    static const liveTickerHeadlinesFontSize = "32px";
+    static const timeStampFontFamily = "Gotham XNarrow";
+    /** This variable is used for the live ticker time stamp font size. 14 - 14 - 16 - 16 */
+    static const liveTickerTimeStampFontSize = "16px";
+    static const liveTickerTime&HeadlineStackSpace = "4px";
+    static const liveTickerSliderItemWidthMaxSize = "257px";
+    static const liveTickerAppCardHeightSize = "128px";
+    static const liveTickerAppCardWidthSize = "300px";
+
+    // Component - Mediaplayer
+    static const podcastPlayButtonSize = "48px";
+    static const vidPlayerBottomBarGapSpace = "0px";
+    static const audioPlayerHeaderStackSpace = "56px";
+    static const videoTimeBadgeFontFamily = "Inter";
+    static const vidPlayerControlButtonSize = "42px";
+    static const vidPlayerControlButtonIconSizeHover = "28px";
+    static const vidPlayerTimecodeFontSize = "16px";
+    static const vidPlayerTimecodeContainerMinWidthSize = "58px";
+    static const vidPlayerProgressBarContainerHeightSize = "24px";
+    static const vidPlayerUnmuteButtonWidthSize = "220px";
+
+    // Component - Menu
+    static const menuItemSpace = "8px";
+    /** This variable is used on the menu link lane and on the mobile side menu drawer. */
+    static const menuItemFontSize = "18px";
+    static const menuItemUtilFontSize = "12px";
+    static const menuItemUtilStackSpace = "10px";
+    static const menuLinkLaneHeightSize = "48px";
+    static const menuUtillinkItemHeightSize = "48px";
+    static const menuLinkItemInlineSpace = "4px";
+    static const menuLogoDefaultSize = "56px";
+    static const menuLogoScrolledSize = "56px";
+    static const menuSpecialNaviItemHeightSize = "48px";
+    static const subNavBarHeightSize = "42px";
+    static const menuUtilityLinksContainerHeightSize = "56px";
+    static const menuTopStackSpace = "8px";
+    static const menuLeftInlineSpace = "8px";
+    static const menuUtilityLinksGapSpace = "24px";
+    static const menuRightInlineSpace = "0px";
+    static const menuBottomStackSpace = "8px";
+    static const menuUtilityLinksDividerHeightSize = "40px";
+    /** This color type variables are only in this semantic collection for making subtle shadow effects change visibility across device sizes. Shadow alpha: 10 - 10 - 10 - 0 */
+    static const menuShadowVisibility = Color(0x1a000000);
+    /** This color type variables are only in this semantic collection for making subtle shadow effects change visibility across device sizes. Shadow alpha: 0 - 0 - 0 - 10 */
+    static const heyInputShadowVisibility = Color(0x00000000);
+    static const appTopbarTitleFontSize = "13px";
+    static const appTopbarStageTitleHeight = "17px";
+    static const iOSappTopBarHeightSize = "48px";
+    static const iOSappTopBarLeftInlineSpace = "19px";
+    static const iOSappTopBarRightInlineSpace = "19px";
+
+    // Component - Newsticker
+    /** similar to kicker3 values - 16 - 16 - 16 - 18 */
+    static const newsTickerTimeFontSize = "16px";
+    static const newsTickerTimeFontWeight = 700;
+    static const newsTickerTimeFontFamily = "AntennaExtraCond";
+    /** Figma currently does not allow for percentages in Line Height variables. The values in this token are the result of multiplying the font size by the line height variable defined on the Bild home css -> newsTickerTime line height: 1.3. Line height for this component does not change across devices. */
+    static const newsTickerTimeLineHeight = "20.799999237060547px";
+    static const newsTickerContentStackSpace = "4px";
+    static const newsTickerKickerInnerStackSpace = "2px";
+    static const newsTickerTitlesInlineSpace = "24px";
+    static const newsTickerBadgesInlineSpace = "12px";
+    static const newsTickerTime&KickerStackSpace = "6px";
+    static const newsTickerEntriesStackSpace = "22px";
+    static const newsTickerKickerInnerInlineSpace = "4px";
+    static const newsTickerSkeletonBottomSpace = "0px";
+    static const newsTickerRedDotSize = "14px";
+    static const newsTickerEntriesLeftInlineSpace = "22px";
+    static const newsTickerLineInlineSpace = "7px";
+    static const newsTickerAppCardHeightSize = "150px";
+    static const newsTickerAppCardWidthSize = "300px";
+
+    // Component - Pagination
+    static const galleryPaginationItemHeightSize = "4px";
+    /** 8 - 8 - 12 - 12 - this component level variable references the inlineSpaceConst semantic variables; SM for smaller devices, MD for larger devices */
+    static const galleryPaginationContainerWebInlineSpace = "12px";
+    /** 12 - 12 - 16 - 16 - this component level variable references the semantic */
+    static const galleryPaginationContainerStackSpace = "16px";
+    static const galleryPaginationContainerAppInlineSpace = "12px";
+    static const scrollBarThicknessSize = "8px";
+
+    // Component - Paywall
+    static const paywallContainerGapSpace = "-48px";
+    static const paywallHeaderBottomStackSpace = "80px";
+    static const paywallCardMaxWidthSize = "346px";
+    /** This variable is used on the paywall card price tag. 64 constant */
+    static const paywallCardPriceTagFontSize = "64px";
+    static const paywallCardPriceTagLineHeight = "64px";
+    static const paywallCardPriceNoteLineHeight = "40px";
+    /** This variable is used on the paywall card text under the price tag. 40 - 40 - 40 - 40 */
+    static const paywallCardPriceNoteFontSize = "40px";
+
+    // Component - Quotes
+    static const quoteContainerInlineSpace = "16px";
+    static const quoteContainerStackSpace = "24px";
+    static const quoteQuotationMarksFontSize = "32px";
+    static const quoteContentGapSpace = "48px";
+
+    // Component - RadioButtons
+    static const radioSelectorSize = "20px";
+    static const radioSelectorDotActiveSize = "12px";
+
+    // Component - Search
+    static const searchResultBadgeHeightSize = "18px";
+
+    // Component - SectionTitle
+    static const sectionTitleInnerStackBottomSpace = "12px";
+    static const sectionTitleHeightSize = "32px";
+    /** This variable is used on large title headings that are h2 elements in html and indicate a new section in the user interface. This space changes when a user hovers over the large title. */
+    static const sectionTitle&ArrowInlineSpace = "5px";
+    /** This variable is used for increasing the space between the text and the arrow at the end of the large title text. On mobile devices there is no hover state so this variables values are the same as the default state values. */
+    static const sectionTitle&ArrowInlineSpaceActive = "5px";
+
+    // Component - Separators
+    static const separatorThicknessSize = "2px";
+
+    // Component - Skeletons
+    static const headlinesSkeletonImagePlaceholderMaxWidth = "160px";
+    static const articleSkeletonImageInlineSpace = "48px";
+    static const articleSkeletonTextInlineSpace = "48px";
+    static const articleTextSkeletonHeightSize = "720px";
+
+    // Component - Sliders
+    static const sliderProgressBarIdleHeightSize = "4px";
+    static const sliderProgressBarHoverHeightSize = "8px";
+    static const sliderProgressInactiveHeightSize = "2px";
+    static const vidPlayerProgressBarHeightSize = "12px";
+
+    // Component - SpecialNavi
+    static const specialNaviInlineSpace = "24px";
+
+    // Component - Spinners
+    static const videoSpinnerSize = "80px";
+    static const videoSpinnerStrokeSize = "4px";
+    static const videoSpinnerSize0_5x = "40px";
+
+    // Component - Table
+    static const tableColumnWidthSize1x = "96px";
+    static const tableColumnWidthSize2x = "180px";
+    static const tableColumnWidthSize0_5x = "48px";
+    static const tableColumnWidthSize1_5x = "160px";
+    static const tableColumnWidthSize2_5x = "240px";
+    static const tableColumnWidthSize0_75x = "64px";
+    static const tableColumnWidthSize3x = "280px";
+    static const tableItemMaxWidthSize = "224px";
+
+    // Component - Tabs
+    /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
+    static const tabLabelFontSize = "16px";
+    static const iosTabbarHeightSize = "49px";
+    static const androidTabbarHeightSize = "74px";
+    /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
+    static const tabLabelFontSizeLine = "16px";
+    /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
+    static const appsTabsLabelFontSize = "16px";
+    /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
+    static const appsTabsLabelLineHeight = "23.399999618530273px";
+    static const topBarTabItemHeightSize = "44px";
+
+    // Component - Teaser
+    static const teaserTitleInlineLeftSpace = "0px";
+    static const teaserTitleStackSpace = "4px";
+    static const teaserTitleGapSpace = "4px";
+    static const teaserKickerBgInlineSpace = "6px";
+    static const teaserKickerBgStackSpace = "2px";
+    /** This variable is used for creating space around the outside of a subscription badge or video icon badge. */
+    static const teaserBadgesMarginSpace = "8px";
+    /** This token is for controling the height of badges that are inside of teasers. 32 - 32 - 32 - 40 */
+    static const teaserBadgesHeightSizeLG = "32px";
+    static const teaserTitleBottomStackSpace = "16px";
+    static const teaserBadgesHeightSizeSM = "32px";
+    static const teaserLayoutGridSpace = "12px";
+
+    // Component - Teaser - aTeaser
+    /** 16 - 16 - 22 - 24 This variable references the semantic variables kicker3fontsize and kicker2fontsize. At the 600px breakpoint smaller devices use the kicker3 variable */
+    static const aTeaserKickerFontSize = "26px";
+    /** This variable references the semantic variables headline3 (XS&SM) and headline2 (MD&LG). 28 - 28 - 48 - 64 */
+    static const aTeaserHeadlineFontSize = "44px";
+    static const aTeaserKickerLineHeight = "26px";
+    static const aTeaserHeadlineLineHeight = "50.599998474121094px";
+    static const aTeaserTitleInlineSpace = "16px";
+
+    // Component - Teaser - bTeaser
+    static const bTeaserTitleInlineSpace = "16px";
+
+    // Component - Teaser - bildPlay
+    static const bildPlayTeaserWidthSize = "169px";
+
+    // Component - Teaser - mQTeaser
+    /** XS-headline4FontSize:22 // SM-headline4FontSize:22 // MD-headline3FontSize:36 // LG-headline3FontSize:40 */
+    static const mQTeaserHeadlineFontSize = "30px";
+    static const mQTeaserHeadlineFontWeight = 700;
+    static const mQTeaserHeadlineLineHeight = "34.5px";
+    static const mqTeaserTitleInlineSpace = "12px";
+
+    // Component - Teaser - qTeaser
+    /** This component level variable is used on the quad teaser headline. It references the semantic level variable headline1. 48 - 48 - 72 - 100 */
+    static const quadHeadlineFontSize = "60px";
+    static const quadKickerFontSize = "26px";
+    static const quadHeadlineLineHeight = "69px";
+    static const qTeaserTitleInlineSpace = "24px";
+
+    // Component - Teaser - stdTeaser
+    static const stdTeaserImageTitleGapSpace = "6px";
+    /** This variable is used for creating space around the outside of a subscription badge or video icon badge. */
+    static const stdTeaserBadgesMarginSpace = "8px";
+    /** 2 | 2 | 2 | 2 - This variable is used on the standard teaser vertical spacing between the kicker and the headline. It references the semantic variable stackSpaceConst3XS */
+    static const stdTeaserKickerHeadlineStackSpace = "2px";
+
+    // Component - Teaser - superA
+    /** 16 - 16 - 16 - 16 */
+    static const superATeaserTitleInlineSpace = "24px";
+
+    // Component - ToggleSwitch
+    /** This variable is used on labels in list items with toggle switches found in app preferences. 14 - 14 - 16 - 18 */
+    static const appToggleItemLabelFontSize = "16px";
+    /** This variable is used on labels in list items with toggle switches found in app preferences. 14.1 - 14.1 - 16.2 - 18.2 */
+    static const appToggleItemLabelLineHeight = "16.200000762939453px";
+
+    // Component - Video
+    /** This variable is used on video player badges that display a red play icon on top of a white square next to a time stamp. This variable references the borderRadiusXS. Constant value of 2 across device sizes. */
+    static const videoTimeBadgeCornerSize = "2px";
+    /** 16 - 16 - 18 - 18 -- This variable is used to control the videoTimeBadge text style's font size parameter. The typography style that uses this variable is the videoTimeBadge style. The badge that uses this variable appears on the upper right corner of horizontal videos. */
+    static const videoTimeBadgeFontSize = "18px";
+    /** 24 - 24 - 32 - 40 - This variable is used on horizontal video badges that contain a red play icon on top of a white square next to a timestamp. */
+    static const videoTimeBadgeSize = "32px";
+    static const videoRedPlayIconWidthSize = "12px";
+    /** This variable is used for changing the red play icon inside the white square. */
+    static const videoRedPlayIconHeightSize = "14px";
+    static const videoBadgeTimeLineHeight = "23.799999237060547px";
+    static const videoSkeletonContainerHeight = "464px";
+    static const videoFrameInlineSpace = "12px";
+    static const verticalVideoMockHeadlineFontSize = "32px";
+    /** 14 - 14 - 16 - 16 -- This variable is used in the videoAdBadge font size parameter. */
+    static const videoAdBadgeFontSize = "16px";
+
+    // Component - _DSysDocs
+    /** Variable used in spacing parameters of bild.design webpage mockups. move to bild.design group maybe */
+    static const bildDesignFrameSpace = "64px";
+    /** This variable is used on documentation pages. This is an alternative variable to the main container max width variable. 0 - 0 - 68 - 68 */
+    static const dsMainContainerSpace = "68px";
+    static const dSysDocsWidthSize = "962px";
+    /** This variable is used as a max width size for content blocks. For mobile devices this var references the DSysDocsWidthSize var 320 - 750 - 962 - 1024 */
+    static const mainContentStageSize = "962px";
+    /** This variable is used on documentation pages that have an artistic banner at the top of the page that is related to the foundation topic on the page. 80 - 80 -80 - 140 */
+    static const foundationsBannerHeightSize = "80px";
+    /** This variable is used in documentation pages that have small caption or lables along with a UI component documented. 4 - 4 - 6 - 8 */
+    static const dsCaptionStackSpace0_5x = "6px";
+    static const dsCaptionStackSpace1x = "12px";
+    /** This variable is used only for this design system's component tests. */
+    static const 1columnMobile = "930px";
+    /** This variable is currently used on a thin gallery that appears on desktop websites with petbook and other "books" content. Its height changes to a large height on mobile sites. 558 - 558 - 558 - 186 */
+    static const thinBannerVerticalHeightSize = "558px";
+    /** This variable is used only for texts and labels that form part of this design system's documentation. */
+    static const specsFontFamily = "Gotham";
+    /** This variable is used on documentation headers that contain info about platfroms and component names. 144 - 144 - 160 - 180 */
+    static const docHeaderHeightSize = "160px";
+
+    // Semantic - Border - BorderRadius
+    /** 2-2-2-2 use for corner rounding on very small UI elements such as tooltips and badges. */
+    static const borderRadiusXS = "2px";
+    /** 8-8-8-8 – Standard radius for buttons, chips, input fields, and medium-sized interactive elements. */
+    static const borderRadiusMD = "8px";
+    /** 4-4-4-4 – use for corner rounding on compact components like checkboxes or small input controls. */
+    static const borderRadiusSM = "4px";
+    /** 24-24-24-24 – use for corner rounding on larger cards, overlays, dialogs, and other container components. */
+    static const borderRadiusXL = "24px";
+    /** 16-16-16-16 – use for corner rounding on small cards, overlays, and modal surfaces. */
+    static const borderRadiusLG = "16px";
+    /** 0-0-0-0 – no corner rounding. Used as default for flat layouts, content modules, images, and teaser elements. */
+    static const borderRadiusNone = "0px";
+    /** creates fully rounded shapes, typically used for circular elements like avatars. */
+    static const borderRadiusFull = "9999px";
+
+    // Semantic - Border - BorderWidth
+    /** 1-1-1-1 – use for subtle outlines and dividers */
+    static const borderWidthThin = "1px";
+    /** 2-2-2-2 – use for stronger outlines on form elements (inputs), buttons (outline variants), and interaction states (focus, hover, active) */
+    static const borderWidthThick = "2px";
+    /** 0.33 -0.33 -0.33 -0.33 – primarily used in mobile app interfaces. Optimized for high-density displays to create subtle dividers and outlines without visual overload. */
+    static const borderWidthHairline = "0.33000001311302185px";
+
+    // Semantic - Layout
+    /** Common viewport height size based on the selected mode.
+Apply this token to the main frame of page layouts to simulate realistic vertical space. */
+    static const canvasHeightSizeWeb = "960px";
+    /** Common viewport width size based on the selected breakpoint.
+Apply this token to the main frame of page layouts. */
+    static const canvasWidthSizeWeb = "600px";
+    /** Common viewport width size based on the selected breakpoint.
+Apply this token to the main frame of page layouts. */
+    static const canvasWidthSizeApp = "834px";
+    /** Common viewport height size based on the selected mode.
+Apply this token to the main frame of page layouts to simulate realistic vertical space. */
+    static const canvasHeightSizeApp = "1194px";
+
+    // Semantic - Layout - Breakpoints
+    /** 320 - 390 - 600 - 1024 – Defines the minimum width of the main frame for different breakpoints.
+Apply this token to the main frame of page layouts to simulate realistic minimum widths across responsive viewports. */
+    static const breakpointMinWidthSize = "600px";
+    /** 389 - 599 - 1023 - 1024 – Defines the minimum width of the main frame for different breakpoints.
+Apply this token to the main frame of page layouts to simulate realistic maximum widths across responsive viewports. */
+    static const breakpointMaxWidthSize = "1023px";
+
+    // Semantic - Layout - ContentWidth
+    /** Use for content containers that should not fill the full page width on larger viewports. This is commonly used on article body text content and other elements in an article page. */
+    static const contentMaxWidthMedium = "700px";
+    /** Use for content containers that should fill the full width of the page */
+    static const contentMaxWidthFull = "1024px";
+
+    // Semantic - Layout - Grid - Constant
+    /** 16-16-16-16 – use for fixed side paddings and gutters */
+    static const gridSpaceConstLG = "16px";
+    /** 12-12-12-12 – use for fixed side paddings and gutters */
+    static const gridSpaceConstSM = "12px";
+
+    // Semantic - Layout - Grid - LayoutGuide
+    /** Used to set the column count in Figma Layout guide Grids */
+    static const layoutGuideGridColums = "8px";
+
+    // Semantic - Layout - Grid - Responsive
+    /** 24-24-32-32 – use for side paddings and gutters in responsive layouts */
+    static const gridSpaceRespLG = "32px";
+    /** 48-48-64-64 – use for side paddings and gutters in responsive layouts */
+    static const gridSpaceRespXL = "64px";
+    /** 12-12-12-16 – use for side paddings and gutters in responsive layouts */
+    static const gridSpaceRespBase = "12px";
+    /** 6-6-6-8 – use for side paddings and gutters in responsive layouts */
+    static const gridSpaceRespSM = "6px";
+    /** 0-0-0-16 – This token is used on the main homepages content container, ensuring full-width layout (no horizontal padding) on mobile and tablet breakpoints. */
+    static const pageInlineSpace = "0px";
+
+    // Semantic - Layout - Section
+    /** 36-36-48-48 – Use for vertical spacing between sections in a layout. */
+    static const sectionSpaceBase = "48px";
+    /** 72-72-96-96 – Use for vertical spacing between sections in a layout */
+    static const sectionSpaceLG = "96px";
+    /** 16-16-32-32 – Use for spacing after paragraphs in text content */
+    static const paragraphEndSpace = "32px";
+    /** 24-24-36-36 – Use for vertical spacing between subsections in a layout */
+    static const sectionSpaceSM = "36px";
+
+    // Semantic - Size - Constant
+    /** 16-16-16-16 – Use for setting fixed height and width of UI elements */
+    static const sizeConst3XS = "16px";
+    /** 24-24-24-24 – Use for setting fixed height and width of UI elements */
+    static const sizeConst2XS = "24px";
+    /** 32-32-32-32 – Use for setting fixed height and width of UI elements */
+    static const sizeConstXS = "32px";
+    /** 40-40-40-40 – Use for setting fixed height and width of UI elements */
+    static const sizeConstSM = "40px";
+    /** 48-48-48-48 Use for setting fixed height and width of UI elements */
+    static const sizeConstMD = "48px";
+    /** 56-56-56-56 – Use for setting fixed height and width of UI elements */
+    static const sizeConstLG = "56px";
+    /** 64-64-64-64 – Use for setting fixed height and width of UI elements */
+    static const sizeConstXL = "64px";
+    /** 96-96-96-96 – Use for setting fixed height and width of UI elements */
+    static const sizeConst3XL = "96px";
+    /** 148-148-148-148 – Use for setting fixed height and width of UI elements */
+    static const sizeConst4XL = "148px";
+    /** 72-72-72-72 – Use for setting fixed height and width of UI elements */
+    static const sizeConst2XL = "72px";
+    /** 8-8-8-8 – Use for setting fixed height and width of UI elements */
+    static const sizeConst4XS = "8px";
+
+    // Semantic - Size - Responsive
+    /** 16-16-16-24 – Use for setting height and width of UI elements that scale across breakpoints */
+    static const sizeResp3XS = "16px";
+    /** 24-24-32-32 – Use for setting height and width of UI elements that scale across breakpoints */
+    static const sizeResp2XS = "32px";
+    /** 32-32-40-48 – Use for setting height and width of UI elements that scale across breakpoints */
+    static const sizeRespXS = "40px";
+    /** 40-40-48-56 – Use for setting height and width of UI elements that scale across breakpoints */
+    static const sizeRespSM = "48px";
+    /** 48-48-64-72 – Use for setting height and width of UI elements that scale across breakpoints */
+    static const sizeRespMD = "64px";
+    /** 56-56-72-92 – Use for setting height and width of UI elements that scale across breakpoints */
+    static const sizeRespLG = "72px";
+    /** 64-64-80-96 – Use for setting height and width of UI elements that scale across breakpoints */
+    static const sizeRespXL = "80px";
+    /** 72-72-92-100 – Use for setting height and width of UI elements that scale across breakpoints */
+    static const sizeResp2XL = "92px";
+    /** 96-96-120-148 – Use for setting height and width of UI elements that scale across breakpoints */
+    static const sizeResp3XL = "120px";
+    /** 148-148-160-180 – Use for setting height and width of UI elements that scale across breakpoints */
+    static const sizeResp4XL = "160px";
+    /** 12-12-14-16 – Use for setting height and width of UI elements that scale across breakpoints */
+    static const sizeResp4XS = "14px";
+
+    // Semantic - Space - Gap - Constant
+    /** 2-2-2-2 – Use for fixed gaps between items inside of UI elements */
+    static const gapSpaceConst2XS = "2px";
+    /** 4-4-4-4 – Use for fixed gaps between items inside of UI elements */
+    static const gapSpaceConstXS = "4px";
+    /** 8-8-8-8 – Use for fixed gaps between items inside of UI elements */
+    static const gapSpaceConstSM = "8px";
+    /** 12-12-12-12 – Use for fixed gaps between items inside of UI elements */
+    static const gapSpaceConstMD = "12px";
+    /** 16-16-16-16 – Use for fixed gaps between items inside of UI elements */
+    static const gapSpaceConstLG = "16px";
+    /** 24-24-24-24 – Use for fixed gaps between items inside of UI elements */
+    static const gapSpaceConstXL = "24px";
+    /** 32-32-32-32 – Use for fixed gaps between items inside of UI elements */
+    static const gapSpaceConst2XL = "32px";
+    /** 48-48-48-48 – Use for fixed gaps between items inside of UI elements */
+    static const gapSpaceConst3XL = "48px";
+
+    // Semantic - Space - Gap - Responsive
+    /** 4-4-6-8 – Use for gaps between items inside of UI elements that scale across breakpoints */
+    static const gapSpaceRespXS = "6px";
+    /** 16-16-24-32 – Use for gaps between items inside of UI elements that scale across breakpoints */
+    static const gapSpaceRespLG = "24px";
+    /** 24-24-32-48 – Use for gaps between items inside of UI elements that scale across breakpoints */
+    static const gapSpaceRespXL = "32px";
+    /** 32-32-48-64 – Use for gaps between items inside of UI elements that scale across breakpoints */
+    static const gapSpaceResp2XL = "48px";
+    /** 12-12-16-24 – Use for gaps between items inside of UI elements that scale across breakpoints */
+    static const gapSpaceRespMD = "16px";
+    /** 8-8-12-16 – Use for gaps between items inside of UI elements that scale across breakpoints */
+    static const gapSpaceRespSM = "12px";
+    /** 2-2-4-6 – Use for gaps between items inside of UI elements that scale across breakpoints */
+    static const gapSpaceResp2XS = "4px";
+    /** 48-48-72-96 – Use for gaps between items inside of UI elements that scale across breakpoints */
+    static const gapSpaceResp3XL = "72px";
+
+    // Semantic - Space - Inline - Constant
+    /** 8-8-8-8 – Use for fixed horizontal (left/right) padding of UI elements */
+    static const inlineSpaceConstSM = "8px";
+    /** 12-12-12-12 – Use for fixed horizontal (left/right) padding of UI elements */
+    static const inlineSpaceConstMD = "12px";
+    /** 16-16-16-16 – Use for fixed horizontal (left/right) padding of UI elements */
+    static const inlineSpaceConstLG = "16px";
+    /** 32-32-32-32 – Use for fixed horizontal (left/right) padding of UI elements */
+    static const inlineSpaceConst2XL = "32px";
+    /** 24-24-24-24 – Use for fixed horizontal (left/right) padding of UI elements */
+    static const inlineSpaceConstXL = "24px";
+    /** 6-6-6-6 – Use for fixed horizontal (left/right) padding of UI elements */
+    static const inlineSpaceConstXS = "6px";
+    /** 2-2-2-2 – Use for fixed horizontal (left/right) padding of UI elements */
+    static const inlineSpaceConst3XS = "2px";
+    /** 4-4-4-4 – Use for fixed horizontal (left/right) padding of UI elements */
+    static const inlineSpaceConst2XS = "4px";
+
+    // Semantic - Space - Inline - Responsive
+    /** 8-8-12-16 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
+    static const inlineSpaceRespSM = "12px";
+    /** 12-12-16-24 use for horizontal (left/right) padding of UI elements that scales across breakpoints */
+    static const inlineSpaceRespMD = "16px";
+    /** 16-16-24-32 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
+    static const inlineSpaceRespLG = "24px";
+    /** 32-32-48-64 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
+    static const inlineSpaceResp2XL = "48px";
+    /** 24-24-32-40 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
+    static const inlineSpaceRespXL = "32px";
+
+    // Semantic - Space - Stack - Constant
+    /** 8-8-8-8 – Use for fixed vertical (top/bottom) padding of UI elements */
+    static const stackSpaceConstSM = "8px";
+    /** 12-12-12-12 – Use for fixed vertical (top/bottom) padding of UI elements */
+    static const stackSpaceConstMD = "12px";
+    /** 16-16-16-16 – Use for fixed vertical (top/bottom) padding of UI elements */
+    static const stackSpaceConstLG = "16px";
+    /** 32-32-32-32 – Use for fixed vertical (top/bottom) padding of UI elements */
+    static const stackSpaceConst2XL = "32px";
+    /** 24-24-24-24 – Use for fixed vertical (top/bottom) padding of UI elements */
+    static const stackSpaceConstXL = "24px";
+    /** 6-6-6-6 – Use for fixed vertical (top/bottom) padding of UI elements */
+    static const stackSpaceConstXS = "6px";
+    /** 2-2-2-2 – Use for fixed vertical (top/bottom) padding of UI elements */
+    static const stackSpaceConst3XS = "2px";
+    /** 4-4-4-4 – Use for fixed vertical (top/bottom) padding of UI elements */
+    static const stackSpaceConst2XS = "4px";
+
+    // Semantic - Space - Stack - Responsive
+    /** 12-12-16-24 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
+    static const stackSpaceRespMD = "16px";
+    /** 16-16-24-32 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
+    static const stackSpaceRespLG = "24px";
+    /** 32-32-48-64 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
+    static const stackSpaceResp2XL = "48px";
+    /** 8-8-12-16 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
+    static const stackSpaceRespSM = "12px";
+    /** 24-24-32-40 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
+    static const stackSpaceRespXL = "32px";
+
+    // Semantic - Typography - FontFamily
+    /** This variable references the bodyFontFamily variable from the branding collection. */
+    static const bodyFontFamily = "Inter";
+    static const calloutFontFamily = "AntennaCond";
+    static const headlineFontFamily = "AntennaExtraCond";
+    static const footnoteFontFamily = "Inter";
+    static const labelFontFamily = "AntennaExtraCond";
+    static const kickerFontFamily = "AntennaExtraCond";
+    static const subheadlineFontFamily = "AntennaCond";
+    static const titleFontFamily = "AntennaCond";
+    static const quoteFontFamily = "AntennaCond";
+    static const displayFontFamily = "AntennaCond";
+
+    // Semantic - Typography - FontSize - Body
+    /** This variable is used on the body text style's font size parameter. It remains constant at 21. */
+    static const bodyFontSize = "17px";
+
+    // Semantic - Typography - FontSize - Callout
+    /** This token is used for the font size parameter of the callout text style. 18 - 18 - 22 - 22 */
+    static const callout1FontSize = "24px";
+
+    // Semantic - Typography - FontSize - Display
+    /** This variable is used on the font size parameter for the display1 text style. 40 - 40 - 72 - 120 */
+    static const display1FontSize = "68px";
+    /** This variable is used for the font size parameter of the Display2 text style. 36 - 36 - 42 - 64 */
+    static const display2FontSize = "40px";
+    /** This variable is used on the display3 font size parameter of the display3 text style. 28 - 28 - 32 - 40 */
+    static const display3FontSize = "30px";
+
+    // Semantic - Typography - FontSize - Footnote
+    /** This token is used on the footnote text style font size parameter. 16 - 16 - 16 - 18 */
+    static const footnote1FontSize = "13px";
+    /** This token is used in the font size parameter of the footnote2 text style. 12 - 12 - 12 - 16 */
+    static const footnote2FontSize = "10px";
+
+    // Semantic - Typography - FontSize - Headline
+    /** This token is used for the headline1 text style's font size parameter. 48 - 48 - 72 - 100 */
+    static const headline1FontSize = "60px";
+    /** This token is used on the headline2 text style's font size parameter. 40 - 40 - 48 - 64 */
+    static const headline2FontSize = "44px";
+    /** This token is used on the headline3 text style's font size parameter. 28 - 28 - 36 - 40 */
+    static const headline3FontSize = "30px";
+    /** This token controls the headline4 text style's font size parameter: 22 - 22 - 26 - 32 */
+    static const headline4FontSize = "26px";
+
+    // Semantic - Typography - FontSize - Kicker
+    /** Values come from NMT Figma File 01_Foundation; in online CSS this is kicker0. 18 - 18 - 22 - 30 - This variable does not exist yet in online css. Online css is called kicker0 for smallest font size. */
+    static const kicker1FontSize = "26px";
+    /** Values come from comparing NMT Figma File 01_Foundation to online CSS. Online kickers are numbered from 0 to 3. This DS uses 1 to 4 following html convention of h1, h2, h3, etc. 18 - 18 - 22 - 24 */
+    static const kicker2FontSize = "26px";
+    /** Values come from comparing NMT Figma File 01_Foundation to online CSS. Online kickers are numbered from 0 to 3. 16 - 16 - 18 - 20 */
+    static const kicker3FontSize = "20px";
+    /** Values come from comparing NMT Figma File 01_Foundation to online CSS. Online kickers are numbered from 0 to 3. 14 - 14 - 16 - 16 */
+    static const kicker4FontSize = "16px";
+
+    // Semantic - Typography - FontSize - Label
+    /** This token is used in the label3 text style's font size parameter. Its value remains constant at 12 across device sizes. */
+    static const label3FontSize = "12px";
+    /** This variable controls the label2 text style's font size parameter. Its value remains constant at 15. */
+    static const label2FontSize = "15px";
+    /** This token is used in the label1 text style font size parameter. Its value remains constant at 17 across device sizes. */
+    static const label1FontSize = "17px";
+    /** 10 - 10 - 15 - 17 Use this label font size when you want your label's font size to change across device sizes. */
+    static const label1FontSizeResponsive = "15px";
+    /** This token is used in the font size parameter of the label4 text style. The value remains constant at 8. */
+    static const label4FontSize = "8px";
+
+    // Semantic - Typography - FontSize - Quote
+    /** 16 - 16 - 18 - 20 -- This variable is used for controlling the font size of the quote text style. */
+    static const quoteFontSize = "18px";
+
+    // Semantic - Typography - FontSize - Subheadline
+    /** This token controls the subheadline1 font size parameter. 24 - 24 - 32 - 36 */
+    static const subheadline1FontSize = "22px";
+
+    // Semantic - Typography - FontSize - Title
+    /** 22 - 22 - 22 - 28 -- html class stage-block-title__text css var --ressort-header-font-size(sm-md-lg) */
+    static const title1FontSize = "28px";
+    /** 16 - 16 - 18 - 20 - html class stage-block-title__text css var --ressort-header-font-size(sm-md-lg) */
+    static const title2FontSize = "18px";
+
+    // Semantic - Typography - FontWeight - Body
+    static const bodyFontWeightBook = 400;
+    static const bodyFontWeightBold = 700;
+
+    // Semantic - Typography - FontWeight - Callout
+    static const calloutFontWeight = 800;
+
+    // Semantic - Typography - FontWeight - Display
+    static const displayFontWeight = 800;
+
+    // Semantic - Typography - FontWeight - Footnote
+    static const footnoteFontWeightBook = 400;
+    static const footnoteFontWeightBold = 700;
+
+    // Semantic - Typography - FontWeight - Headline
+    static const headline1FontWeight = 700;
+    static const headline2FontWeight = 700;
+    static const headline3FontWeight = 700;
+    static const headline4FontWeight = 700;
+    /** This variable is a string type variable for controlling not only headline font weight but also the italic style for Sport Bild headlines. */
+    static const headline1FontWeightST = "Bold Italic";
+
+    // Semantic - Typography - FontWeight - Kicker
+    static const kickerFontWeight = 700;
+    static const kickerFontWeightST = "Black Italic";
+
+    // Semantic - Typography - FontWeight - Label
+    static const labelFontWeightBold = 700;
+    static const labelFontWeightBook = 400;
+
+    // Semantic - Typography - FontWeight - Quote
+    static const quoteFontWeight = 800;
+
+    // Semantic - Typography - FontWeight - Subheadline
+    static const subheadlineFontWeight = 700;
+
+    // Semantic - Typography - FontWeight - Title
+    static const titleFontWeight = 800;
+
+    // Semantic - Typography - LetterSpacing
+    /** 0.5 | 0.5 | 0.5 | 0.5 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+    static const letterSpacingPositiveSM = "0.5px";
+    /** 2 | 2 | 2 | 3 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+    static const letterSpacingPositiveLG = "2px";
+    /** 1 | 1 | 1 | 1 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+    static const letterSpacingPositiveMD = "1px";
+    /** 0 | 0 | 0 | 0 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+    static const letterSpacingNone = "0px";
+    /** -0.5 | -0.5 | -0.25 | -0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+    static const letterSpacingNegativeSM = "-0.25px";
+    /** -1 | -1 | -1 | -1 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+    static const letterSpacingNegativeMD = "-1px";
+    /** -2 | -2 | -2 | -3 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+    static const letterSpacingNegativeLG = "-2px";
+    /** -0.25 | -0.25 | -0.25 | -0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. This letter spacing was only found in large titles on iOS mobile app large title component. */
+    static const letterSpacingNegativeXS = "-0.25px";
+    /** 0.25 | 0.25 | 0.25 | 0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+    static const letterSpacingPositiveXS = "0.25px";
+
+    // Semantic - Typography - LetterSpacing - display
+    /** -0.5 | -0.5 | -1 | -2 | This variable is used for the letter spacing parameter of the display1 text style. On smaller devices the value is smaller than on larger devices. On desktop devices the letter spacing is further reduced for making the text style more compact. */
+    static const display1LetterSpacing = "-1px";
+    /** -0.5 | -0.5 | -1 | -1 | This variable is used for the letter spacing parameter of the display2 text style. On smaller devices the value is smaller than on larger devices. */
+    static const display2LetterSpacing = "-1px";
+    /** -0.5 | -0.5 | -1 | -1 | This variable is used for the letter spacing parameter of the display3 text style. On smaller devices the value is smaller than on larger devices. */
+    static const display3LetterSpacing = "-1px";
+
+    // Semantic - Typography - LineHeight - Body
+    /** Figma's font line height currently does not allow for multipliers as is used on current website css var(--body-line-height) */
+    static const bodyLineHeight = "29.75px";
+
+    // Semantic - Typography - LineHeight - Callout
+    static const calloutLineHeight = "31.200000762939453px";
+
+    // Semantic - Typography - LineHeight - Display
+    static const display1LineHeight = "72px";
+    static const display2LineHeight = "42px";
+    static const display3LineHeight = "32px";
+
+    // Semantic - Typography - LineHeight - Footnote
+    static const footnote1LineHeight = "17.030000686645508px";
+    static const footnote2LineHeight = "13px";
+
+    // Semantic - Typography - LineHeight - Headline
+    static const headline1LineHeight = "69px";
+    static const headline2LineHeight = "50.599998474121094px";
+    static const headline3LineHeight = "34.5px";
+    static const headline4LineHeight = "28.600000381469727px";
+
+    // Semantic - Typography - LineHeight - Kicker
+    static const kicker4LineHeight = "17.600000381469727px";
+    static const kicker3LineHeight = "22px";
+    static const kicker2LineHeight = "28.600000381469727px";
+    static const kicker1LineHeight = "28.600000381469727px";
+
+    // Semantic - Typography - LineHeight - Label
+    static const label3LineHeight = "14.399999618530273px";
+    /** This variable is used in the label1 text style's line height parameter. It references branding variables for brand specific line heights. */
+    static const label1LineHeight = "20.399999618530273px";
+    static const label1ResponsiveLineHeight = "18px";
+    static const label2LineHeight = "19.200000762939453px";
+    static const label4LineHeight = "10px";
+
+    // Semantic - Typography - LineHeight - Quote
+    /** This variable is used in the quote text style line height parameter. */
+    static const quoteLineHeight = "23.399999618530273px";
+
+    // Semantic - Typography - LineHeight - Subheadline
+    static const subheadline1LineHeight = "28.600000381469727px";
+
+    // Semantic - Typography - LineHeight - Title
+    static const title1LineHeight = "30.799999237060547px";
+    /** html class stage-block-title__text css var --ressort-header-font-size(sm-md-lg) */
+    static const title2LineHeight = "23.399999618530273px";
+
+    // Semantic - Visibility - Boolean
+    /** Use for showing elements on mobile viewport sizes only */
+    static const visilbleMobileOnly = false;
+    /** Use for showing elements on desktop viewport sizes only */
+    static const visilbleDesktopOnly = false;
+    /** Use for showing elements on viewport sizes above 600 px */
+    static const visilbleAbove600px = true;
+    /** Use for showing elements on viewport sizes below 600 px */
+    static const visilbleBelow600px = false;
+    /** Use for hiding elements on mobile viewport sizes */
+    static const hideOnMobile = true;
+    /** Use for showing elements on tablet viewport sizes only */
+    static const visilbleTabletOnly = true;
+    /** Use for hiding elements on desktop viewport sizes only */
+    static const hideOnDesktop = true;
+
+    // Semantic - Visibility - VariantSwitch
+    static const changeOnLG = "xs/sm/md";
+    /** This variable is used for controlling size changes across device sizes on some components such as the vertical newsticker cards and the search results cards. Both have cards that change layouts at different breakpoints. */
+    static const changeOnMD = "md/lg";
+    static const bpSpecificWeb = "md";
+    static const bpSpecificApp = "regular";
 }

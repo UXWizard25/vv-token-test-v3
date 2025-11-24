@@ -2,11 +2,11 @@
  * Do not edit directly, this file was auto-generated.
  */
 
-export const ComponentButtonButtonContentGapSpace = "8px";
-export const ComponentButtonButtonStackSpace = "8px";
-export const ComponentButtonButtonLabelFontSize = "17px";
-export const ComponentButtonButtonInlineSpace = "20px";
-export const ComponentInputfieldInputFieldInlineSpace = "16px";
-export const ComponentInputfieldInputFieldStackSpace = "8px";
-export const ComponentInputfieldInputFieldHeightSize = "40px";
-export const ComponentInputfieldInputFieldLabelFontSize = "17px";
+export const buttonContentGapSpace = "8px";
+export const buttonStackSpace = "8px";
+export const buttonLabelFontSize = "17px";
+export const buttonInlineSpace = "20px";
+export const inputFieldInlineSpace = "16px";
+export const inputFieldStackSpace = "8px";
+export const inputFieldHeightSize = "40px";
+export const inputFieldLabelFontSize = "17px";

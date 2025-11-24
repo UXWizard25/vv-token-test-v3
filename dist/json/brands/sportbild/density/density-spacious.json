@@ -30,12 +30,8 @@
           "$type": "dimension",
           "comment": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes."
         },
-        "name": "ComponentButtonButtonContentGapSpace",
-        "attributes": {
-          "category": "Component",
-          "type": "Button",
-          "item": "buttonContentGapSpace"
-        },
+        "name": "buttonContentGapSpace",
+        "attributes": {},
         "path": [
           "Component",
           "Button",
@@ -71,12 +67,8 @@
           "$type": "dimension",
           "comment": "This variable is in the SpaceScaling collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes."
         },
-        "name": "ComponentButtonButtonStackSpace",
-        "attributes": {
-          "category": "Component",
-          "type": "Button",
-          "item": "buttonStackSpace"
-        },
+        "name": "buttonStackSpace",
+        "attributes": {},
         "path": [
           "Component",
           "Button",
@@ -112,12 +104,8 @@
           "$type": "dimension",
           "comment": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling size could work across different content scaling / size / contrast themes. Font size across devices: 15 - 17 - 19"
         },
-        "name": "ComponentButtonButtonLabelFontSize",
-        "attributes": {
-          "category": "Component",
-          "type": "Button",
-          "item": "buttonLabelFontSize"
-        },
+        "name": "buttonLabelFontSize",
+        "attributes": {},
         "path": [
           "Component",
           "Button",
@@ -153,12 +141,8 @@
           "$type": "dimension",
           "comment": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes."
         },
-        "name": "ComponentButtonButtonInlineSpace",
-        "attributes": {
-          "category": "Component",
-          "type": "Button",
-          "item": "buttonInlineSpace"
-        },
+        "name": "buttonInlineSpace",
+        "attributes": {},
         "path": [
           "Component",
           "Button",
@@ -194,12 +178,8 @@
           },
           "$type": "dimension"
         },
-        "name": "ComponentInputfieldInputFieldInlineSpace",
-        "attributes": {
-          "category": "Component",
-          "type": "Inputfield",
-          "item": "inputFieldInlineSpace"
-        },
+        "name": "inputFieldInlineSpace",
+        "attributes": {},
         "path": [
           "Component",
           "Inputfield",
@@ -233,12 +213,8 @@
           },
           "$type": "dimension"
         },
-        "name": "ComponentInputfieldInputFieldStackSpace",
-        "attributes": {
-          "category": "Component",
-          "type": "Inputfield",
-          "item": "inputFieldStackSpace"
-        },
+        "name": "inputFieldStackSpace",
+        "attributes": {},
         "path": [
           "Component",
           "Inputfield",
@@ -272,12 +248,8 @@
           },
           "$type": "dimension"
         },
-        "name": "ComponentInputfieldInputFieldHeightSize",
-        "attributes": {
-          "category": "Component",
-          "type": "Inputfield",
-          "item": "inputFieldHeightSize"
-        },
+        "name": "inputFieldHeightSize",
+        "attributes": {},
         "path": [
           "Component",
           "Inputfield",
@@ -313,12 +285,8 @@
           "$type": "dimension",
           "comment": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling size could work across different content scaling / size / contrast themes. Font size across scaling options: compact 15 - default 17 - spacious 19"
         },
-        "name": "ComponentInputfieldInputFieldLabelFontSize",
-        "attributes": {
-          "category": "Component",
-          "type": "Inputfield",
-          "item": "inputFieldLabelFontSize"
-        },
+        "name": "inputFieldLabelFontSize",
+        "attributes": {},
         "path": [
           "Component",
           "Inputfield",

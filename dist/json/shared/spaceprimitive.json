@@ -26,10 +26,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space1x",
-    "attributes": {
-      "category": "space1x"
-    },
+    "name": "space1x",
+    "attributes": {},
     "path": [
       "space1x"
     ]
@@ -61,10 +59,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space05x",
-    "attributes": {
-      "category": "space0_5x"
-    },
+    "name": "space0_5x",
+    "attributes": {},
     "path": [
       "space0_5x"
     ]
@@ -96,10 +92,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space025x",
-    "attributes": {
-      "category": "space0_25x"
-    },
+    "name": "space0_25x",
+    "attributes": {},
     "path": [
       "space0_25x"
     ]
@@ -131,10 +125,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space2x",
-    "attributes": {
-      "category": "space2x"
-    },
+    "name": "space2x",
+    "attributes": {},
     "path": [
       "space2x"
     ]
@@ -166,10 +158,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space15x",
-    "attributes": {
-      "category": "space1_5x"
-    },
+    "name": "space1_5x",
+    "attributes": {},
     "path": [
       "space1_5x"
     ]
@@ -201,10 +191,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space4x",
-    "attributes": {
-      "category": "space4x"
-    },
+    "name": "space4x",
+    "attributes": {},
     "path": [
       "space4x"
     ]
@@ -236,10 +224,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space3x",
-    "attributes": {
-      "category": "space3x"
-    },
+    "name": "space3x",
+    "attributes": {},
     "path": [
       "space3x"
     ]
@@ -271,10 +257,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space6x",
-    "attributes": {
-      "category": "space6x"
-    },
+    "name": "space6x",
+    "attributes": {},
     "path": [
       "space6x"
     ]
@@ -306,10 +290,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space8x",
-    "attributes": {
-      "category": "space8x"
-    },
+    "name": "space8x",
+    "attributes": {},
     "path": [
       "space8x"
     ]
@@ -341,10 +323,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space9x",
-    "attributes": {
-      "category": "space9x"
-    },
+    "name": "space9x",
+    "attributes": {},
     "path": [
       "space9x"
     ]
@@ -376,10 +356,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space5x",
-    "attributes": {
-      "category": "space5x"
-    },
+    "name": "space5x",
+    "attributes": {},
     "path": [
       "space5x"
     ]
@@ -411,10 +389,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space0x",
-    "attributes": {
-      "category": "space0x"
-    },
+    "name": "space0x",
+    "attributes": {},
     "path": [
       "space0x"
     ]
@@ -446,10 +422,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space10x",
-    "attributes": {
-      "category": "space10x"
-    },
+    "name": "space10x",
+    "attributes": {},
     "path": [
       "space10x"
     ]
@@ -481,10 +455,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space20x",
-    "attributes": {
-      "category": "space20x"
-    },
+    "name": "space20x",
+    "attributes": {},
     "path": [
       "space20x"
     ]
@@ -516,10 +488,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space25x",
-    "attributes": {
-      "category": "space2_5x"
-    },
+    "name": "space2_5x",
+    "attributes": {},
     "path": [
       "space2_5x"
     ]
@@ -551,10 +521,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space025x",
-    "attributes": {
-      "category": "space-0_25x"
-    },
+    "name": "space-0_25x",
+    "attributes": {},
     "path": [
       "space-0_25x"
     ]
@@ -586,10 +554,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space075x",
-    "attributes": {
-      "category": "space0_75x"
-    },
+    "name": "space0_75x",
+    "attributes": {},
     "path": [
       "space0_75x"
     ]
@@ -621,10 +587,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space125x",
-    "attributes": {
-      "category": "space1_25x"
-    },
+    "name": "space1_25x",
+    "attributes": {},
     "path": [
       "space1_25x"
     ]
@@ -656,10 +620,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space275x",
-    "attributes": {
-      "category": "space2_75x"
-    },
+    "name": "space2_75x",
+    "attributes": {},
     "path": [
       "space2_75x"
     ]
@@ -691,10 +653,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space45x",
-    "attributes": {
-      "category": "space4_5x"
-    },
+    "name": "space4_5x",
+    "attributes": {},
     "path": [
       "space4_5x"
     ]
@@ -726,10 +686,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space75x",
-    "attributes": {
-      "category": "space7_5x"
-    },
+    "name": "space7_5x",
+    "attributes": {},
     "path": [
       "space7_5x"
     ]
@@ -761,10 +719,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space12x",
-    "attributes": {
-      "category": "space12x"
-    },
+    "name": "space12x",
+    "attributes": {},
     "path": [
       "space12x"
     ]
@@ -796,10 +752,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space175x",
-    "attributes": {
-      "category": "space1_75x"
-    },
+    "name": "space1_75x",
+    "attributes": {},
     "path": [
       "space1_75x"
     ]
@@ -831,10 +785,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space85x",
-    "attributes": {
-      "category": "space8_5x"
-    },
+    "name": "space8_5x",
+    "attributes": {},
     "path": [
       "space8_5x"
     ]
@@ -866,10 +818,8 @@
       },
       "$type": "dimension"
     },
-    "name": "Space35x",
-    "attributes": {
-      "category": "space3_5x"
-    },
+    "name": "space3_5x",
+    "attributes": {},
     "path": [
       "space3_5x"
     ]

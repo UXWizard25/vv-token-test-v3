@@ -2,331 +2,274 @@
  * Do not edit directly, this file was auto-generated.
  */
 
-export const GlobalTypographyFontSizeDisplayDisplay1FontSizeXs = "39px";
-export const GlobalTypographyFontSizeDisplayDisplay1FontSizeSm = "39px";
-export const GlobalTypographyFontSizeDisplayDisplay1FontSizeMd = "70px";
-export const GlobalTypographyFontSizeDisplayDisplay1FontSizeLg = "116px";
-export const GlobalTypographyFontSizeDisplayDisplay2FontSizeXs = "35px";
-export const GlobalTypographyFontSizeDisplayDisplay2FontSizeSm = "35px";
-export const GlobalTypographyFontSizeDisplayDisplay2FontSizeMd = "41px";
-export const GlobalTypographyFontSizeDisplayDisplay2FontSizeLg = "62px";
-export const GlobalTypographyFontSizeDisplayDisplay3FontSizeSm = "27px";
-export const GlobalTypographyFontSizeDisplayDisplay3FontSizeMd = "31px";
-export const GlobalTypographyFontSizeDisplayDisplay3FontSizeLg = "39px";
-export const GlobalTypographyFontSizeDisplayDisplay3FontSizeXs = "27px";
-export const GlobalTypographyFontSizeHeadlineHeadline1FontSizeXs = "36px";
-export const GlobalTypographyFontSizeHeadlineHeadline1FontSizeSm = "36px";
-export const GlobalTypographyFontSizeHeadlineHeadline1FontSizeMd = "54px";
-export const GlobalTypographyFontSizeHeadlineHeadline1FontSizeLg = "70px";
-export const GlobalTypographyFontSizeHeadlineHeadline2FontSizeXs = "30px";
-export const GlobalTypographyFontSizeHeadlineHeadline2FontSizeSm = "30px";
-export const GlobalTypographyFontSizeHeadlineHeadline2FontSizeMd = "36px";
-export const GlobalTypographyFontSizeHeadlineHeadline2FontSizeLg = "48px";
-export const GlobalTypographyFontSizeHeadlineHeadline3FontSizeXs = "24px";
-export const GlobalTypographyFontSizeHeadlineHeadline3FontSizeSm = "24px";
-export const GlobalTypographyFontSizeHeadlineHeadline3FontSizeMd = "26px";
-export const GlobalTypographyFontSizeHeadlineHeadline3FontSizeLg = "32px";
-export const GlobalTypographyFontSizeHeadlineHeadline4FontSizeXs = "16px";
-export const GlobalTypographyFontSizeHeadlineHeadline4FontSizeSm = "16px";
-export const GlobalTypographyFontSizeHeadlineHeadline4FontSizeMd = "20px";
-export const GlobalTypographyFontSizeHeadlineHeadline4FontSizeLg = "22px";
-export const GlobalTypographyFontSizeHeadlineHeadlineTextAlign = "center";
-export const GlobalTypographyFontSizeKickerKicker1FontSizeXs = "16px";
-export const GlobalTypographyFontSizeKickerKicker1FontSizeSm = "16px";
-export const GlobalTypographyFontSizeKickerKicker1FontSizeMd = "18px";
-export const GlobalTypographyFontSizeKickerKicker1FontSizeLg = "25px";
-export const GlobalTypographyFontSizeKickerKicker2FontSizeXs = "16px";
-export const GlobalTypographyFontSizeKickerKicker2FontSizeSm = "16px";
-export const GlobalTypographyFontSizeKickerKicker2FontSizeMd = "18px";
-export const GlobalTypographyFontSizeKickerKicker2FontSizeLg = "21px";
-export const GlobalTypographyFontSizeKickerKicker3FontSizeXs = "14px";
-export const GlobalTypographyFontSizeKickerKicker3FontSizeSm = "14px";
-export const GlobalTypographyFontSizeKickerKicker3FontSizeMd = "14px";
-export const GlobalTypographyFontSizeKickerKicker3FontSizeLg = "16px";
-export const GlobalTypographyFontSizeKickerKicker4FontSizeXs = "12px";
-export const GlobalTypographyFontSizeKickerKicker4FontSizeSm = "12px";
-export const GlobalTypographyFontSizeKickerKicker4FontSizeMd = "14px";
-export const GlobalTypographyFontSizeKickerKicker4FontSizeLg = "14px";
-export const GlobalTypographyFontSizeSubheadlineSubheadline1FontSizeXs = "18px";
-export const GlobalTypographyFontSizeSubheadlineSubheadline1FontSizeSm = "18px";
-export const GlobalTypographyFontSizeSubheadlineSubheadline1FontSizeMd = "18px";
-export const GlobalTypographyFontSizeSubheadlineSubheadline1FontSizeLg = "28px";
-export const GlobalTypographyFontSizeTitleTitle1FontSizeXs = "22px";
-export const GlobalTypographyFontSizeTitleTitle1FontSizeSm = "22px";
-export const GlobalTypographyFontSizeTitleTitle1FontSizeMd = "22px";
-export const GlobalTypographyFontSizeTitleTitle1FontSizeLg = "28px";
-export const GlobalTypographyFontSizeTitleTitle2FontSizeXs = "14px";
-export const GlobalTypographyFontSizeTitleTitle2FontSizeSm = "14px";
-export const GlobalTypographyFontSizeTitleTitle2FontSizeMd = "16px";
-export const GlobalTypographyFontSizeTitleTitle2FontSizeLg = "18px";
-export const GlobalTypographyFontSizeCalloutCallout1FontSizeXs = "16px";
-export const GlobalTypographyFontSizeCalloutCallout1FontSizeSm = "16px";
-export const GlobalTypographyFontSizeCalloutCallout1FontSizeMd = "22px";
-export const GlobalTypographyFontSizeCalloutCallout1FontSizeLg = "22px";
-export const GlobalTypographyFontSizeBodyBodyFontSizeXs = "17px";
-export const GlobalTypographyFontSizeBodyBodyFontSizeSm = "17px";
-export const GlobalTypographyFontSizeBodyBodyFontSizeMd = "17px";
-export const GlobalTypographyFontSizeBodyBodyFontSizeLg = "17px";
-export const GlobalTypographyFontSizeFootnoteFootnote1FontSizeXs = "13px";
-export const GlobalTypographyFontSizeFootnoteFootnote1FontSizeSm = "13px";
-export const GlobalTypographyFontSizeFootnoteFootnote1FontSizeMd = "13px";
-export const GlobalTypographyFontSizeFootnoteFootnote1FontSizeLg = "15px";
-export const GlobalTypographyFontSizeFootnoteFootnote2FontSizeXs = "10px";
-export const GlobalTypographyFontSizeFootnoteFootnote2FontSizeSm = "10px";
-export const GlobalTypographyFontSizeFootnoteFootnote2FontSizeMd = "10px";
-export const GlobalTypographyFontSizeFootnoteFootnote2FontSizeLg = "13px";
-export const GlobalTypographyFontSizeQuoteQuoteFontSizeXs = "16px";
-export const GlobalTypographyFontSizeQuoteQuoteFontSizeSm = "16px";
-export const GlobalTypographyFontSizeQuoteQuoteFontSizeMd = "16px";
-export const GlobalTypographyFontSizeQuoteQuoteFontSizeLg = "18px";
-export const GlobalTypographyFontSizeLabelLabel1FontSize = "17px";
-export const GlobalTypographyFontSizeLabelLabel2FontSize = "15px";
-export const GlobalTypographyFontSizeLabelLabel3FontSize = "12px";
-export const GlobalTypographyFontSizeLabelLabel4FontSize = "8px";
-export const GlobalTypographyFontSizeLabelLabel1RespFontSizeXs = "10px";
-export const GlobalTypographyFontSizeLabelLabel1RespFontSizeSm = "10px";
-export const GlobalTypographyFontSizeLabelLabel1RespFontSizeMd = "15px";
-export const GlobalTypographyFontSizeLabelLabel1RespFontSizeLg = "17px";
-export const GlobalTypographyLineHeightDisplayDisplay1LineHeightXs = "40px";
-export const GlobalTypographyLineHeightDisplayDisplay1LineHeightSm = "40px";
-export const GlobalTypographyLineHeightDisplayDisplay1LineHeightMd = "72px";
-export const GlobalTypographyLineHeightDisplayDisplay1LineHeightLg = "120px";
-export const GlobalTypographyLineHeightDisplayDisplay2LineHeightXs = "36px";
-export const GlobalTypographyLineHeightDisplayDisplay2LineHeightSm = "36px";
-export const GlobalTypographyLineHeightDisplayDisplay2LineHeightMd = "42px";
-export const GlobalTypographyLineHeightDisplayDisplay2LineHeightLg = "64px";
-export const GlobalTypographyLineHeightDisplayDisplay3LineHeightLg = "40px";
-export const GlobalTypographyLineHeightDisplayDisplay3LineHeightMd = "32px";
-export const GlobalTypographyLineHeightDisplayDisplay3LineHeightSm = "28px";
-export const GlobalTypographyLineHeightDisplayDisplay3LineHeightXs = "28px";
-export const GlobalTypographyLineHeightHeadlineHeadline1LineHeightXs =
-  "37.79999923706055px";
-export const GlobalTypographyLineHeightHeadlineHeadline1LineHeightSm =
-  "37.79999923706055px";
-export const GlobalTypographyLineHeightHeadlineHeadline1LineHeightMd =
-  "56.70000076293945px";
-export const GlobalTypographyLineHeightHeadlineHeadline1LineHeightLg = "77px";
-export const GlobalTypographyLineHeightHeadlineHeadline2LineHeightXs = "33px";
-export const GlobalTypographyLineHeightHeadlineHeadline2LineHeightSm = "33px";
-export const GlobalTypographyLineHeightHeadlineHeadline2LineHeightMd =
-  "39.599998474121094px";
-export const GlobalTypographyLineHeightHeadlineHeadline2LineHeightLg =
-  "52.79999923706055px";
-export const GlobalTypographyLineHeightHeadlineHeadline3LineHeightXs =
-  "26.399999618530273px";
-export const GlobalTypographyLineHeightHeadlineHeadline3LineHeightSm =
-  "26.399999618530273px";
-export const GlobalTypographyLineHeightHeadlineHeadline3LineHeightMd =
-  "28.600000381469727px";
-export const GlobalTypographyLineHeightHeadlineHeadline3LineHeightLg =
-  "35.20000076293945px";
-export const GlobalTypographyLineHeightHeadlineHeadline4LineHeightXs =
-  "18.399999618530273px";
-export const GlobalTypographyLineHeightHeadlineHeadline4LineHeightSm =
-  "18.399999618530273px";
-export const GlobalTypographyLineHeightHeadlineHeadline4LineHeightMd =
-  "19.799999237060547px";
-export const GlobalTypographyLineHeightHeadlineHeadline4LineHeightLg = "27.5px";
-export const GlobalTypographyLineHeightSubheadlineSubheadline1LineHeightXs =
-  "23.399999618530273px";
-export const GlobalTypographyLineHeightSubheadlineSubheadline1LineHeightSm =
-  "23.399999618530273px";
-export const GlobalTypographyLineHeightSubheadlineSubheadline1LineHeightMd =
-  "23.399999618530273px";
-export const GlobalTypographyLineHeightSubheadlineSubheadline1LineHeightLg =
-  "36.400001525878906px";
-export const GlobalTypographyLineHeightKickerKicker1LineHeightXs =
-  "17.600000381469727px";
-export const GlobalTypographyLineHeightKickerKicker1LineHeightSm =
-  "17.600000381469727px";
-export const GlobalTypographyLineHeightKickerKicker1LineHeightMd =
-  "19.799999237060547px";
-export const GlobalTypographyLineHeightKickerKicker1LineHeightLg = "27.5px";
-export const GlobalTypographyLineHeightKickerKicker2LineHeightXs =
-  "17.600000381469727px";
-export const GlobalTypographyLineHeightKickerKicker2LineHeightSm =
-  "17.600000381469727px";
-export const GlobalTypographyLineHeightKickerKicker2LineHeightMd =
-  "19.799999237060547px";
-export const GlobalTypographyLineHeightKickerKicker2LineHeightLg =
-  "23.100000381469727px";
-export const GlobalTypographyLineHeightKickerKicker3LineHeightXs =
-  "15.399999618530273px";
-export const GlobalTypographyLineHeightKickerKicker3LineHeightSm =
-  "15.399999618530273px";
-export const GlobalTypographyLineHeightKickerKicker3LineHeightMd =
-  "15.399999618530273px";
-export const GlobalTypographyLineHeightKickerKicker3LineHeightLg =
-  "17.600000381469727px";
-export const GlobalTypographyLineHeightKickerKicker4LineHeightXs =
-  "13.199999809265137px";
-export const GlobalTypographyLineHeightKickerKicker4LineHeightSm =
-  "13.199999809265137px";
-export const GlobalTypographyLineHeightKickerKicker4LineHeightMd =
-  "15.399999618530273px";
-export const GlobalTypographyLineHeightKickerKicker4LineHeightLg =
-  "15.399999618530273px";
-export const GlobalTypographyLineHeightTitleTitle1LineHeightXs =
-  "26.399999618530273px";
-export const GlobalTypographyLineHeightTitleTitle1LineHeightSm =
-  "26.399999618530273px";
-export const GlobalTypographyLineHeightTitleTitle1LineHeightMd =
-  "26.399999618530273px";
-export const GlobalTypographyLineHeightTitleTitle1LineHeightLg =
-  "33.599998474121094px";
-export const GlobalTypographyLineHeightTitleTitle2LineHeightXs =
-  "16.799999237060547px";
-export const GlobalTypographyLineHeightTitleTitle2LineHeightSm =
-  "16.799999237060547px";
-export const GlobalTypographyLineHeightTitleTitle2LineHeightMd =
-  "19.200000762939453px";
-export const GlobalTypographyLineHeightTitleTitle2LineHeightLg =
-  "23.399999618530273px";
-export const GlobalTypographyLineHeightCalloutCallout1LineHeightXs =
-  "20.799999237060547px";
-export const GlobalTypographyLineHeightCalloutCallout1LineHeightSm =
-  "20.799999237060547px";
-export const GlobalTypographyLineHeightCalloutCallout1LineHeightMd =
-  "28.600000381469727px";
-export const GlobalTypographyLineHeightCalloutCallout1LineHeightLg =
-  "28.600000381469727px";
-export const GlobalTypographyLineHeightBodyBodyLineHeightXs = "29.75px";
-export const GlobalTypographyLineHeightBodyBodyLineHeightSm = "29.75px";
-export const GlobalTypographyLineHeightBodyBodyLineHeightMd = "29.75px";
-export const GlobalTypographyLineHeightBodyBodyLineHeightLg = "29.75px";
-export const GlobalTypographyLineHeightFootnoteFootnote1LineHeightXs =
-  "16.899999618530273px";
-export const GlobalTypographyLineHeightFootnoteFootnote1LineHeightSm =
-  "16.899999618530273px";
-export const GlobalTypographyLineHeightFootnoteFootnote1LineHeightMd =
-  "16.899999618530273px";
-export const GlobalTypographyLineHeightFootnoteFootnote1LineHeightLg = "19.5px";
-export const GlobalTypographyLineHeightFootnoteFootnote2LineHeightXs = "13px";
-export const GlobalTypographyLineHeightFootnoteFootnote2LineHeightSm = "13px";
-export const GlobalTypographyLineHeightFootnoteFootnote2LineHeightMd = "13px";
-export const GlobalTypographyLineHeightFootnoteFootnote2LineHeightLg =
-  "16.899999618530273px";
-export const GlobalTypographyLineHeightLabelLabel1LineHeight =
-  "20.399999618530273px";
-export const GlobalTypographyLineHeightLabelLabel1RespLineHeightXs = "10px";
-export const GlobalTypographyLineHeightLabelLabel1RespLineHeightSm = "10px";
-export const GlobalTypographyLineHeightLabelLabel1RespLineHeightMd = "15px";
-export const GlobalTypographyLineHeightLabelLabel1RespLineHeightLg = "17px";
-export const GlobalTypographyLineHeightLabelLabel2LineHeight = "16px";
-export const GlobalTypographyLineHeightLabelLabel3LineHeight =
-  "14.399999618530273px";
-export const GlobalTypographyLineHeightLabelLabel4LineHeight = "10px";
-export const GlobalTypographyLineHeightQuoteQuoteLineHeightXs =
-  "20.799999237060547px";
-export const GlobalTypographyLineHeightQuoteQuoteLineHeightSm =
-  "20.799999237060547px";
-export const GlobalTypographyLineHeightQuoteQuoteLineHeightMd =
-  "20.799999237060547px";
-export const GlobalTypographyLineHeightQuoteQuoteLineHeightLg =
-  "23.399999618530273px";
-export const GlobalTypographyFontWeightBodyBodyFontWeightBook = 400;
-export const GlobalTypographyFontWeightBodyBodyFontWeightBold = 700;
-export const GlobalTypographyFontWeightFootnoteFootnoteFontWeightBook = 400;
-export const GlobalTypographyFontWeightFootnoteFootnoteFontWeightBold = 700;
-export const GlobalTypographyFontWeightLabelLabelFontWeightBook = 400;
-export const GlobalTypographyFontWeightLabelLabelFontWeightBold = 700;
-export const GlobalTypographyFontWeightQuoteQuoteFontWeight = 800;
-export const GlobalTypographyFontWeightDisplayDisplayFontWeight = 800;
-export const GlobalTypographyFontWeightHeadlineHeadline1FontWeightSt = "700";
-export const GlobalTypographyFontWeightHeadlineHeadline1FontWeight = 700;
-export const GlobalTypographyFontWeightHeadlineHeadline2FontWeight = 700;
-export const GlobalTypographyFontWeightHeadlineHeadline3FontWeight = 700;
-export const GlobalTypographyFontWeightHeadlineHeadline4FontWeight = 600;
-export const GlobalTypographyFontWeightHeadlineHeadline2FontWeightSt = "700";
-export const GlobalTypographyFontWeightHeadlineHeadline3FontWeightSt = "700";
-export const GlobalTypographyFontWeightHeadlineHeadline4FontWeightSt = "600";
-export const GlobalTypographyFontWeightSubheadlineSubheadlineFontWeight = 700;
-export const GlobalTypographyFontWeightKickerKickerFontWeight = 700;
-export const GlobalTypographyFontWeightKickerKickerFontWeightSt = "700";
-export const GlobalTypographyFontWeightCalloutCalloutFontWeight = 800;
-export const GlobalTypographyFontWeightTitleTitleFontWeight = 800;
-export const GlobalTypographyFontFamilyKickerFontFamily = "Lucida Grande";
-export const GlobalTypographyFontFamilyDisplayFontFamily = "Lucida Grande";
-export const GlobalTypographyFontFamilyHeadlineFontFamily = "Lucida Grande";
-export const GlobalTypographyFontFamilySubheadlineFontFamily = "Lucida Grande";
-export const GlobalTypographyFontFamilyBodyFontFamily = "Lucida Grande";
-export const GlobalTypographyFontFamilyFootnoteFontFamily = "Lucida Grande";
-export const GlobalTypographyFontFamilyLabelFontFamily = "Lucida Grande";
-export const GlobalTypographyFontFamilyQuoteFontFamily = "Lucida Grande";
-export const GlobalTypographyFontFamilyTitleFontFamily = "Lucida Grande";
-export const GlobalTypographyFontFamilyCalloutFontFamily = "Lucida Grande";
-export const GlobalVisibiltyHideOnBild = true;
-export const GlobalVisibiltyHideOnSportBild = true;
-export const GlobalVisibiltyOnlyAdvertorial = true;
-export const GlobalVisibiltyHideOnAdvertorial = false;
-export const GlobalVisibiltyOnlyBild = false;
-export const GlobalVisibiltyOnlySportBild = false;
-export const ComponentArticleFontSizeArticleImageCaptionFontSizeXs = "13px";
-export const ComponentArticleFontSizeArticleImageCaptionFontSizeMd = "13px";
-export const ComponentArticleFontSizeArticleImageCaptionFontSizeLg = "16px";
-export const ComponentArticleFontSizeArticleImageCaptionFontSizeSm = "13px";
-export const ComponentArticleFontSizeArticleImageSourceFontSizeXs = "13px";
-export const ComponentArticleFontSizeArticleImageSourceFontSizeSm = "13px";
-export const ComponentArticleFontSizeArticleImageSourceFontSizeMd = "13px";
-export const ComponentArticleFontSizeArticleImageSourceFontSizeLg = "16px";
-export const ComponentArticleLineHeightArticleImageCaptionLineHeightXs =
-  "19.5px";
-export const ComponentArticleLineHeightArticleImageCaptionLineHeightMd =
-  "19.5px";
-export const ComponentArticleLineHeightArticleImageCaptionLineHeightLg = "24px";
-export const ComponentArticleLineHeightArticleImageCaptionLineHeightSm =
-  "19.5px";
-export const ComponentArticleLineHeightArticleImageSourceLineHeightMd = "19px";
-export const ComponentArticleLineHeightArticleImageSourceLineHeightLg = "24px";
-export const ComponentArticleLineHeightArticleImageSourceLineHeightXs = "19px";
-export const ComponentArticleLineHeightArticleImageSourceLineHeightSm = "19px";
-export const ComponentBreadcrumbFontSizeBreadcrumbFontSizeXs = "15px";
-export const ComponentBreadcrumbFontSizeBreadcrumbFontSizeSm = "15px";
-export const ComponentBreadcrumbFontSizeBreadcrumbFontSizeMd = "15px";
-export const ComponentBreadcrumbFontSizeBreadcrumbFontSizeLg = "12px";
-export const ComponentBreadcrumbLineHeightBreadcrumbLineHeightXs = "15px";
-export const ComponentBreadcrumbLineHeightBreadcrumbLineHeightSm = "15px";
-export const ComponentBreadcrumbLineHeightBreadcrumbLineHeightMd = "15px";
-export const ComponentBreadcrumbLineHeightBreadcrumbLineHeightLg = "12px";
-export const ComponentBreadcrumbFontFamilyBreadcrumbFontFamily =
-  "Lucida Grande";
-export const ComponentBreadcrumbFontWeightBreadcrumbFontWeight = 700;
-export const ComponentMenuMenuItemFontSize = "15px";
-export const ComponentMenuAppTopBarTitleFontSizeMd = "14px";
-export const ComponentMenuAppTopBarTitleFontSizeLg = "14px";
-export const ComponentMenuAppTopBarTitleFontSizeXs = "12px";
-export const ComponentMenuAppTopBarTitleFontSizeSm = "12px";
-export const ComponentMenuAppTopBarTitleLineHeightMd = "17px";
-export const ComponentMenuAppTopBarTitleLineHeightLg = "17px";
-export const ComponentMenuAppTopBarTitleLineHeightXs = "14px";
-export const ComponentMenuAppTopBarTitleLineHeightSm = "14px";
-export const ComponentMenuMenuItemFontWeight = "700";
-export const ComponentTeaserTeaserTitleInlineSpaceLg = "12px";
-export const ComponentTeaserTeaserTitleInlineSpaceMd = "12px";
-export const ComponentTeaserTeaserTitleInlineSpaceSm = "8px";
-export const ComponentTeaserTeaserTitleInlineSpaceXs = "8px";
-export const ComponentTeaserQuadQTeaserTitleInlineSpaceLg = "12px";
-export const ComponentTeaserQuadQTeaserTitleInlineSpaceMd = "16px";
-export const ComponentTeaserQuadQTeaserTitleInlineSpaceSm = "8px";
-export const ComponentTeaserQuadQTeaserTitleInlineSpaceXs = "8px";
-export const ComponentTeaserATeaserATeaserTitleInlineSpaceLg = "12px";
-export const ComponentTeaserATeaserATeaserTitleInlineSpaceMd = "12px";
-export const ComponentTeaserATeaserATeaserTitleInlineSpaceXs = "8px";
-export const ComponentTeaserATeaserATeaserTitleInlineSpaceSm = "8px";
-export const ComponentTeaserBTeaserBTeaserTitleInlineSpace = "8px";
-export const ComponentTeaser2xaTeaser2xaTeaserTitleInlineSpace = "8px";
-export const ComponentTeaserMiniQMiniQTeaserTitleInlineSpaceMd = "8px";
-export const ComponentTeaserMiniQMiniQTeaserTitleInlineSpaceLg = "8px";
-export const ComponentTeaserMiniQMiniQTeaserTitleInlineSpaceSm = "8px";
-export const ComponentTeaserMiniQMiniQTeaserTitleInlineSpaceXs = "8px";
-export const ComponentTeaserSuperASuperAteaserTitleInlineSpace = "16px";
-export const ComponentAvatarAvatarFontFamily = "Lucida Grande";
-export const ComponentAvatarAvatarFontSizeSm = "13px";
-export const ComponentAvatarAvatarFontSizeLg = "15px";
-export const ComponentBreakingNewsBreakingNewsContentFontSize = "21px";
-export const ComponentAccordionAccordionLabelFontFamily = "Lucida Grande";
-export const ComponentFooterFooterLinkFontFamily = "Gotham XNarrow";
-export const ComponentMediaPlayerVideoTimeBadgeFontFamily = "Lucida Grande";
-export const ComponentInputfieldInputFieldLabelFontFamily = "Lucida Grande";
-export const ComponentButtonLabelFontWeightSt = "600";
-export const BrandName = "Advertorial";
+export const display1FontSizeXS = "39px";
+export const display1FontSizeSM = "39px";
+export const display1FontSizeMD = "70px";
+export const display1FontSizeLG = "116px";
+export const display2FontSizeXS = "35px";
+export const display2FontSizeSM = "35px";
+export const display2FontSizeMD = "41px";
+export const display2FontSizeLG = "62px";
+export const display3FontSizeSM = "27px";
+export const display3FontSizeMD = "31px";
+export const display3FontSizeLG = "39px";
+export const display3FontSizeXS = "27px";
+export const headline1FontSizeXS = "36px";
+export const headline1FontSizeSM = "36px";
+export const headline1FontSizeMD = "54px";
+export const headline1FontSizeLG = "70px";
+export const headline2FontSizeXS = "30px";
+export const headline2FontSizeSM = "30px";
+export const headline2FontSizeMD = "36px";
+export const headline2FontSizeLG = "48px";
+export const headline3FontSizeXS = "24px";
+export const headline3FontSizeSM = "24px";
+export const headline3FontSizeMD = "26px";
+export const headline3FontSizeLG = "32px";
+export const headline4FontSizeXS = "16px";
+export const headline4FontSizeSM = "16px";
+export const headline4FontSizeMD = "20px";
+export const headline4FontSizeLG = "22px";
+export const headlineTextAlign = "center";
+export const kicker1FontSizeXS = "16px";
+export const kicker1FontSizeSM = "16px";
+export const kicker1FontSizeMD = "18px";
+export const kicker1FontSizeLG = "25px";
+export const kicker2FontSizeXS = "16px";
+export const kicker2FontSizeSM = "16px";
+export const kicker2FontSizeMD = "18px";
+export const kicker2FontSizeLG = "21px";
+export const kicker3FontSizeXS = "14px";
+export const kicker3FontSizeSM = "14px";
+export const kicker3FontSizeMD = "14px";
+export const kicker3FontSizeLG = "16px";
+export const kicker4FontSizeXS = "12px";
+export const kicker4FontSizeSM = "12px";
+export const kicker4FontSizeMD = "14px";
+export const kicker4FontSizeLG = "14px";
+export const subheadline1FontSizeXS = "18px";
+export const subheadline1FontSizeSM = "18px";
+export const subheadline1FontSizeMD = "18px";
+export const subheadline1FontSizeLG = "28px";
+export const title1FontSizeXS = "22px";
+export const title1FontSizeSM = "22px";
+export const title1FontSizeMD = "22px";
+export const title1FontSizeLG = "28px";
+export const title2FontSizeXS = "14px";
+export const title2FontSizeSM = "14px";
+export const title2FontSizeMD = "16px";
+export const title2FontSizeLG = "18px";
+export const callout1FontSizeXS = "16px";
+export const callout1FontSizeSM = "16px";
+export const callout1FontSizeMD = "22px";
+export const callout1FontSizeLG = "22px";
+export const bodyFontSizeXS = "17px";
+export const bodyFontSizeSM = "17px";
+export const bodyFontSizeMD = "17px";
+export const bodyFontSizeLG = "17px";
+export const footnote1FontSizeXS = "13px";
+export const footnote1FontSizeSM = "13px";
+export const footnote1FontSizeMD = "13px";
+export const footnote1FontSizeLG = "15px";
+export const footnote2FontSizeXS = "10px";
+export const footnote2FontSizeSM = "10px";
+export const footnote2FontSizeMD = "10px";
+export const footnote2FontSizeLG = "13px";
+export const quoteFontSizeXS = "16px";
+export const quoteFontSizeSM = "16px";
+export const quoteFontSizeMD = "16px";
+export const quoteFontSizeLG = "18px";
+export const label1FontSize = "17px";
+export const label2FontSize = "15px";
+export const label3FontSize = "12px";
+export const label4FontSize = "8px";
+export const label1RespFontSizeXS = "10px";
+export const label1RespFontSizeSM = "10px";
+export const label1RespFontSizeMD = "15px";
+export const label1RespFontSizeLG = "17px";
+export const display1LineHeightXS = "40px";
+export const display1LineHeightSM = "40px";
+export const display1LineHeightMD = "72px";
+export const display1LineHeightLG = "120px";
+export const display2LineHeightXS = "36px";
+export const display2LineHeightSM = "36px";
+export const display2LineHeightMD = "42px";
+export const display2LineHeightLG = "64px";
+export const display3LineHeightLG = "40px";
+export const display3LineHeightMD = "32px";
+export const display3LineHeightSM = "28px";
+export const display3LineHeightXS = "28px";
+export const headline1LineHeightXS = "37.79999923706055px";
+export const headline1LineHeightSM = "37.79999923706055px";
+export const headline1LineHeightMD = "56.70000076293945px";
+export const headline1LineHeightLG = "77px";
+export const headline2LineHeightXS = "33px";
+export const headline2LineHeightSM = "33px";
+export const headline2LineHeightMD = "39.599998474121094px";
+export const headline2LineHeightLG = "52.79999923706055px";
+export const headline3LineHeightXS = "26.399999618530273px";
+export const headline3LineHeightSM = "26.399999618530273px";
+export const headline3LineHeightMD = "28.600000381469727px";
+export const headline3LineHeightLG = "35.20000076293945px";
+export const headline4LineHeightXS = "18.399999618530273px";
+export const headline4LineHeightSM = "18.399999618530273px";
+export const headline4LineHeightMD = "19.799999237060547px";
+export const headline4LineHeightLG = "27.5px";
+export const subheadline1LineHeightXS = "23.399999618530273px";
+export const subheadline1LineHeightSM = "23.399999618530273px";
+export const subheadline1LineHeightMD = "23.399999618530273px";
+export const subheadline1LineHeightLG = "36.400001525878906px";
+export const kicker1LineHeightXS = "17.600000381469727px";
+export const kicker1LineHeightSM = "17.600000381469727px";
+export const kicker1LineHeightMD = "19.799999237060547px";
+export const kicker1LineHeightLG = "27.5px";
+export const kicker2LineHeightXS = "17.600000381469727px";
+export const kicker2LineHeightSM = "17.600000381469727px";
+export const kicker2LineHeightMD = "19.799999237060547px";
+export const kicker2LineHeightLG = "23.100000381469727px";
+export const kicker3LineHeightXS = "15.399999618530273px";
+export const kicker3LineHeightSM = "15.399999618530273px";
+export const kicker3LineHeightMD = "15.399999618530273px";
+export const kicker3LineHeightLG = "17.600000381469727px";
+export const kicker4LineHeightXS = "13.199999809265137px";
+export const kicker4LineHeightSM = "13.199999809265137px";
+export const kicker4LineHeightMD = "15.399999618530273px";
+export const kicker4LineHeightLG = "15.399999618530273px";
+export const title1LineHeightXS = "26.399999618530273px";
+export const title1LineHeightSM = "26.399999618530273px";
+export const title1LineHeightMD = "26.399999618530273px";
+export const title1LineHeightLG = "33.599998474121094px";
+export const title2LineHeightXS = "16.799999237060547px";
+export const title2LineHeightSM = "16.799999237060547px";
+export const title2LineHeightMD = "19.200000762939453px";
+export const title2LineHeightLG = "23.399999618530273px";
+export const callout1LineHeightXS = "20.799999237060547px";
+export const callout1LineHeightSM = "20.799999237060547px";
+export const callout1LineHeightMD = "28.600000381469727px";
+export const callout1LineHeightLG = "28.600000381469727px";
+export const bodyLineHeightXS = "29.75px";
+export const bodyLineHeightSM = "29.75px";
+export const bodyLineHeightMD = "29.75px";
+export const bodyLineHeightLG = "29.75px";
+export const footnote1LineHeightXS = "16.899999618530273px";
+export const footnote1LineHeightSM = "16.899999618530273px";
+export const footnote1LineHeightMD = "16.899999618530273px";
+export const footnote1LineHeightLG = "19.5px";
+export const footnote2LineHeightXS = "13px";
+export const footnote2LineHeightSM = "13px";
+export const footnote2LineHeightMD = "13px";
+export const footnote2LineHeightLG = "16.899999618530273px";
+export const label1LineHeight = "20.399999618530273px";
+export const label1RespLineHeightXS = "10px";
+export const label1RespLineHeightSM = "10px";
+export const label1RespLineHeightMD = "15px";
+export const label1RespLineHeightLG = "17px";
+export const label2LineHeight = "16px";
+export const label3LineHeight = "14.399999618530273px";
+export const label4LineHeight = "10px";
+export const quoteLineHeightXS = "20.799999237060547px";
+export const quoteLineHeightSM = "20.799999237060547px";
+export const quoteLineHeightMD = "20.799999237060547px";
+export const quoteLineHeightLG = "23.399999618530273px";
+export const bodyFontWeightBook = 400;
+export const bodyFontWeightBold = 700;
+export const footnoteFontWeightBook = 400;
+export const footnoteFontWeightBold = 700;
+export const labelFontWeightBook = 400;
+export const labelFontWeightBold = 700;
+export const quoteFontWeight = 800;
+export const displayFontWeight = 800;
+export const headline1FontWeightSt = "700";
+export const headline1FontWeight = 700;
+export const headline2FontWeight = 700;
+export const headline3FontWeight = 700;
+export const headline4FontWeight = 600;
+export const headline2FontWeightSt = "700";
+export const headline3FontWeightSt = "700";
+export const headline4FontWeightSt = "600";
+export const subheadlineFontWeight = 700;
+export const kickerFontWeight = 700;
+export const kickerFontWeightST = "700";
+export const calloutFontWeight = 800;
+export const titleFontWeight = 800;
+export const kickerFontFamily = "Lucida Grande";
+export const displayFontFamily = "Lucida Grande";
+export const headlineFontFamily = "Lucida Grande";
+export const subheadlineFontFamily = "Lucida Grande";
+export const bodyFontFamily = "Lucida Grande";
+export const footnoteFontFamily = "Lucida Grande";
+export const labelFontFamily = "Lucida Grande";
+export const quoteFontFamily = "Lucida Grande";
+export const titleFontFamily = "Lucida Grande";
+export const calloutFontFamily = "Lucida Grande";
+export const hideOnBILD = true;
+export const hideOnSportBILD = true;
+export const onlyAdvertorial = true;
+export const hideOnAdvertorial = false;
+export const onlyBILD = false;
+export const onlySportBILD = false;
+export const articleImageCaptionFontSizeXS = "13px";
+export const articleImageCaptionFontSizeMD = "13px";
+export const articleImageCaptionFontSizeLG = "16px";
+export const articleImageCaptionFontSizeSM = "13px";
+export const articleImageSourceFontSizeXS = "13px";
+export const articleImageSourceFontSizeSM = "13px";
+export const articleImageSourceFontSizeMD = "13px";
+export const articleImageSourceFontSizeLG = "16px";
+export const articleImageCaptionLineHeightXS = "19.5px";
+export const articleImageCaptionLineHeightMD = "19.5px";
+export const articleImageCaptionLineHeightLG = "24px";
+export const articleImageCaptionLineHeightSM = "19.5px";
+export const articleImageSourceLineHeightMD = "19px";
+export const articleImageSourceLineHeightLG = "24px";
+export const articleImageSourceLineHeightXS = "19px";
+export const articleImageSourceLineHeightSM = "19px";
+export const breadcrumbFontSizeXS = "15px";
+export const breadcrumbFontSizeSM = "15px";
+export const breadcrumbFontSizeMD = "15px";
+export const breadcrumbFontSizeLG = "12px";
+export const breadcrumbLineHeightXS = "15px";
+export const breadcrumbLineHeightSM = "15px";
+export const breadcrumbLineHeightMD = "15px";
+export const breadcrumbLineHeightLG = "12px";
+export const breadcrumbFontFamily = "Lucida Grande";
+export const breadcrumbFontWeight = 700;
+export const menuItemFontSize = "15px";
+export const appTopBarTitleFontSizeMD = "14px";
+export const appTopBarTitleFontSizeLG = "14px";
+export const appTopBarTitleFontSizeXS = "12px";
+export const appTopBarTitleFontSizeSM = "12px";
+export const appTopBarTitleLineHeightMD = "17px";
+export const appTopBarTitleLineHeightLG = "17px";
+export const appTopBarTitleLineHeightXS = "14px";
+export const appTopBarTitleLineHeightSM = "14px";
+export const menuItemFontWeight = "700";
+export const teaserTitleInlineSpaceLG = "12px";
+export const teaserTitleInlineSpaceMD = "12px";
+export const teaserTitleInlineSpaceSM = "8px";
+export const teaserTitleInlineSpaceXS = "8px";
+export const qTeaserTitleInlineSpaceLG = "12px";
+export const qTeaserTitleInlineSpaceMD = "16px";
+export const qTeaserTitleInlineSpaceSM = "8px";
+export const qTeaserTitleInlineSpaceXS = "8px";
+export const aTeaserTitleInlineSpaceLG = "12px";
+export const aTeaserTitleInlineSpaceMD = "12px";
+export const aTeaserTitleInlineSpaceXS = "8px";
+export const aTeaserTitleInlineSpaceSM = "8px";
+export const bTeaserTitleInlineSpace = "8px";
+export const _2xaTeaserTitleInlineSpace = "8px";
+export const miniQTeaserTitleInlineSpaceMD = "8px";
+export const miniQTeaserTitleInlineSpaceLG = "8px";
+export const miniQTeaserTitleInlineSpaceSM = "8px";
+export const miniQTeaserTitleInlineSpaceXS = "8px";
+export const superAteaserTitleInlineSpace = "16px";
+export const avatarFontFamily = "Lucida Grande";
+export const avatarFontSizeSM = "13px";
+export const avatarFontSizeLG = "15px";
+export const breakingNewsContentFontSize = "21px";
+export const accordionLabelFontFamily = "Lucida Grande";
+export const footerLinkFontFamily = "Gotham XNarrow";
+export const videoTimeBadgeFontFamily = "Lucida Grande";
+export const inputFieldLabelFontFamily = "Lucida Grande";
+export const buttonLabelFontWeightSt = "600";
+export const brandName = "Advertorial";

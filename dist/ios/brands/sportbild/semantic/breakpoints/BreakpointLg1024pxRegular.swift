@@ -9,488 +9,885 @@
 import UIKit
 
 public class BreakpointLg1024pxRegular {
-    public static let breakpointName = lg
-    public static let componentAccordionAccordionLabelFontFamily = Inter /** This variable exists specifically for changing the accordion font family across brands. It is subject to review. Bild: GothamXNarrow, SpoBi: Inter, Ads: LucindaGrande */
-    public static let componentArticleAricleMobile1ColGridImageMarginSpace = CGFloat(1152.00)
-    public static let componentArticleArticleContentInlineSpace = CGFloat(2592.00) /** 16 | 16 | 72 | 162 - This variable is used for making the left and right spacings around article content blocks. Current css has the article-body class assigned to a div and article body contains these horizontal padding values. */
-    public static let componentArticleArticleContentStackSpace = CGFloat(512.00) /** 16 - 16 - 24 - 32 - This variable creates the vertical spacing between different article body elements such as avatars, media players, corssheadings, paragraphs, field sets, images, tables, quotes, videos, social embeds, etc. */
-    public static let componentArticleArticleGalleryATeaserWidth = CGFloat(4800.00) /** same as standard teaser width size variable */
-    public static let componentArticleArticleHeadingsInlineSpace = CGFloat(256.00) /** 16 | 16 | 72 | 16 - This variable is used for the left and right space within the article page headings container which holds the article page kicker, headline and subheadline. */
-    public static let componentArticleArticleHeadingsStackSpace = CGFloat(256.00) /** 12 | 12 | 12 | 16 - This spacing variable is used for the space between article page heading kickers, headlines and subheadlines. XS&SM need review; correct value might be 8 */
-    public static let componentArticleArticleHeadlineFontSize = CGFloat(1280.00) /** 40 - 40 - 72 - 100 - This variable uses the semantic variables headline2 for XS&SM, headline1 for MD&LG */
-    public static let componentArticleArticleImageCaptionFontSize = CGFloat(240.00) /** CSS --article-figure-meta-font-size 16-16-18-18 */
-    public static let componentArticleArticleImageCaptionLineHeight = CGFloat(312.00) /** this component level variable references the branding variables */
-    public static let componentArticleArticleImageContainerStackSpace = CGFloat(256.00)
-    public static let componentArticleArticleImageLandscapeInlineSpace = CGFloat(256.00)
-    public static let componentArticleArticleImagePortaitInlineSpace = CGFloat(2592.00)
-    public static let componentArticleArticleImageSourceFontSize = CGFloat(240.00) /** NMT CSS --article-figure-meta-font-size */
-    public static let componentArticleArticleImageSourceLineHeight = CGFloat(304.00)
-    public static let componentArticleArticleInfoboxInlineSpace = CGFloat(512.00)
-    public static let componentArticleArticleInfoboxStackSpace = CGFloat(512.00)
-    public static let componentArticleArticleKickerFontSize = CGFloat(512.00) /** This variable is used to control the font size of kickers in the heading section of article pages. 18 - 18 - 22 - 30 */
-    public static let componentArticleArticleMetaFontFamily = AntennaCond /** This variable is used on the font size of article day&time stamp that usually shows up along with the article author avatars. On app versions this variable is used for the avatar names. This variable references variables from the branding collection. */
-    public static let componentArticleArticleMetaFontSize = CGFloat(256.00) /** This variable is used on the font size of article day&time stamp that usually shows up along with the article author avatars. On app versions this variable is used for the avatar names. 12 - 12 - 14 - 16 */
-    public static let componentArticleArticleTopMarginSpace = CGFloat(256.00) /** 8 | 8 | 12 | 16 - This space variable is used at the top edge of the article main content bounding box. */
-    public static let componentAudioPlayerAudioPlayerFontSize = CGFloat(288.00) /** This variable is used in the text style dedicated to audio player labels for elapsed time, reproduction speed and short functionality description text. 16 - 16 - 16 - 18 */
-    public static let componentAvatarAppAvatarFontFamily = AntennaCond /** This variable is used for setting the font of avatars on iOS and Android platforms. This is subject to review. */
-    public static let componentAvatarAvatarArticleSize = CGFloat(768.00) /** This variable is used for setting the size of avatar images in article pages. It references the sizeConstMD variable from the "generic" semantic collection. Its value is 48 across devices. */
-    public static let componentAvatarAvatarAuthorPageSize = CGFloat(2080.00) /** 96 - 96 - 130 - 130 This variable is used for controlling the size of the avatar image on author pages. */
-    public static let componentAvatarAvatarFontFamily = Inter /** This variable is used in avatar text styles. It receives values from the Brand Tokens Collection. Bild: GothamXNarrow; SpoBi: Inter; Ads: LucidaGrande */
-    public static let componentAvatarAvatarLabelFontSize = CGFloat(240.00) /** This variable is used on avatar names in article pages. Bild: 16 - 16 - 16 - 18; SpoBi&Ads: 13 - 13 - 13 - 15 */
-    public static let componentAvatarAvatarLabelLineHeight = CGFloat(368.00) /** This variable is used for controlling the line height of avatar texts. Its values influence the stacking space between avatar texts. 21 - 21 - 21 - 23 */
-    public static let componentAvatarAvatarLaneGapSpace = CGFloat(384.00) /** This variable is used for setting the inline space between multiple avatars that are horizontally placed in a lane when an article has multiple authors. 16 - 16 - 24 - 24 */
-    public static let componentBadgeAdLabelBadgeHeightSize = CGFloat(480.00) /** 30 - 30 - 30 - 30 - This variable is used on the Advert rectangular badge that is found above an ad containers. */
-    public static let componentBadgeBadgesInnerInlineSpace = CGFloat(64.00) /** This space variable is used for creating the left and right space between a badge's text label and the badge background surface that the text label is on top of. */
-    public static let componentBadgeBadgesInnerStackSpace = CGFloat(32.00) /** This space variable is used for creating the top and bottom space between a badge's text label and the surface that the text label is on top of. */
-    public static let componentBreadcrumbBreadcrumbArrowLeftInlineSpace1 = CGFloat(48.00)
-    public static let componentBreadcrumbBreadcrumbArrowRightInlineSpace2 = CGFloat(80.00)
-    public static let componentBreadcrumbBreadcrumbFontFamily = Inter
-    public static let componentBreadcrumbBreadcrumbFontSize = CGFloat(176.00) /** 15 - 15 - 15 - 12 -- Breadcrumbs have a slightly larger font size on mobile devices compared to when they are rendered on larger desktop devices. */
-    public static let componentBreadcrumbBreadcrumbFontWeight = 400
-    public static let componentBreadcrumbBreadcrumbInlineSpace = CGFloat(0.00)
-    public static let componentBreadcrumbBreadcrumbLineHeight = CGFloat(176.00) /** 15 - 15 - 15 - 12 -- Breadcrumbs have a slightly larger font size on mobile devices compared to when they are rendered on larger desktop devices. */
-    public static let componentBreadcrumbBreadcrumbStackSpace = CGFloat(256.00)
-    public static let componentBreakingNewsBreakingNewsBadgeInlineSpace = CGFloat(416.00)
-    public static let componentBreakingNewsBreakingNewsBadgeLowerTitleFontSize = CGFloat(480.00)
-    public static let componentBreakingNewsBreakingNewsBadgeLowerTitleLineHeight = CGFloat(336.00)
-    public static let componentBreakingNewsBreakingNewsBadgeTitelsStackSpace = CGFloat(64.00)
-    public static let componentBreakingNewsBreakingNewsBadgeUpperTitleFontSize = CGFloat(272.00)
-    public static let componentBreakingNewsBreakingNewsBadgeUpperTitleLineHeight = CGFloat(192.00)
-    public static let componentBreakingNewsBreakingNewsContainerHeightSize = CGFloat(896.00)
-    public static let componentBreakingNewsBreakingNewsScrollingTextFontSize = CGFloat(336.00)
-    public static let componentBreakingNewsBreakingNewsScrollingTextLineHeight = CGFloat(384.00)
-    public static let componentButtonButtonBorderRadius = CGFloat(128.00)
-    public static let componentButtonButtonBorderWidthSize = CGFloat(32.00)
-    public static let componentButtonButtonContentGapSpace = CGFloat(96.00)
-    public static let componentButtonButtonContentMinHeightSize = CGFloat(384.00) /** This fixed height variable ensures that the button maintains a consistent height, even when the icon is not active. */
-    public static let componentButtonButtonInlineSpace = CGFloat(256.00)
-    public static let componentButtonButtonLabelFontSize = CGFloat(240.00)
-    public static let componentButtonButtonLabelLineHeight = CGFloat(240.00)
-    public static let componentButtonButtonStackSpace = CGFloat(96.00)
-    public static let componentButtonPartnerLinkButtonInlineSpace = CGFloat(128.00)
-    public static let componentButtonPartnerLinkButtonLabelFontSize = CGFloat(288.00) /** Use this variable for controlling the font size of partner buttons. 16 - 16 - 16 - 18 */
-    public static let componentButtonPartnerLinkButtonLabelHeightSize = CGFloat(768.00)
-    public static let componentCardsNewstickerImageCardWidthSize = CGFloat(3296.00)
-    public static let componentCardsSearchResultCardImageHeightSizeStacked = CGFloat(3024.00)
-    public static let componentCardsSearchResultCardImageWidthSize = CGFloat(4160.00)
-    public static let componentCarouselAppEpaperCarouseBeilageItemWidth = CGFloat(2752.00)
-    public static let componentCarouselAppEpaperCarouselItemDefaultWidth = CGFloat(2752.00)
-    public static let componentCarouselAppEpaperCarouselItemFocusWidth = CGFloat(3840.00)
-    public static let componentCarouselGalleryTeaserAppGapSpace = CGFloat(128.00) /** This token is used to create more bottom padding space on system teaser headlines inside the gallery to avoid overlapping with the pagination. */
-    public static let componentCarouselGalleryTeaserTitleBottomSpace = CGFloat(576.00) /** This token is used to create more bottom padding space on system teaser headlines inside the gallery to avoid overlapping with the pagination. */
-    public static let componentCarouselStandardTeaserGalleryTeaserWidthApp = CGFloat(7424.00)
-    public static let componentCarouselStandardTeaserGalleryTeaserWidthWeb = CGFloat(4800.00)
-    public static let componentChipsChipsFontSize = CGFloat(288.00) /** This variable is used on the chips font size parameter of the chips text style. The font size changes only for the change between larger device widths and any device smaller than the largest. 16 - 16 -16 - 18 */
-    public static let componentChipsChipsInlineSpace = CGFloat(192.00)
-    public static let componentChipsChipsStackSpace = CGFloat(128.00)
-    public static let componentDSysDocs1columnMobile = CGFloat(10496.00) /** This variable is used only for this design system's component tests. */
-    public static let componentDSysDocsBildDesignFrameSpace = CGFloat(1024.00) /** Variable used in spacing parameters of bild.design webpage mockups. move to bild.design group maybe */
-    public static let componentDSysDocsDSysDocsWidthSize = CGFloat(23040.00)
-    public static let componentDSysDocsDocHeaderHeightSize = CGFloat(2880.00) /** This variable is used on documentation headers that contain info about platfroms and component names. 144 - 144 - 160 - 180 */
-    public static let componentDSysDocsDsCaptionStackSpace05x = CGFloat(128.00) /** This variable is used in documentation pages that have small caption or lables along with a UI component documented. 4 - 4 - 6 - 8 */
-    public static let componentDSysDocsDsCaptionStackSpace1x = CGFloat(256.00)
-    public static let componentDSysDocsDsMainContainerSpace = CGFloat(1088.00) /** This variable is used on documentation pages. This is an alternative variable to the main container max width variable. 0 - 0 - 68 - 68 */
-    public static let componentDSysDocsFoundationsBannerHeightSize = CGFloat(2240.00) /** This variable is used on documentation pages that have an artistic banner at the top of the page that is related to the foundation topic on the page. 80 - 80 -80 - 140 */
-    public static let componentDSysDocsMainContentStageSize = CGFloat(16384.00) /** This variable is used as a max width size for content blocks. For mobile devices this var references the DSysDocsWidthSize var 320 - 750 - 962 - 1024 */
-    public static let componentDSysDocsSpecsFontFamily = Gotham /** This variable is used only for texts and labels that form part of this design system's documentation. */
-    public static let componentDSysDocsThinBannerVerticalHeightSize = CGFloat(2976.00) /** This variable is currently used on a thin gallery that appears on desktop websites with petbook and other "books" content. Its height changes to a large height on mobile sites. 558 - 558 - 558 - 186 */
-    public static let componentDatepickerDatepickerItemDayWidthSize = CGFloat(704.00)
-    public static let componentDatepickerDatepickerItemHeightSize = CGFloat(704.00)
-    public static let componentDatepickerDatepickerItemYearWidthSize = CGFloat(1232.00)
-    public static let componentDrawersMobileMenuDrawerLeftInlineSpace = CGFloat(320.00)
-    public static let componentDrawersMobileMenuDrawerMaxWidthSize = CGFloat(6400.00)
-    public static let componentDrawersMobileMenuDrawerRightInlineSpace = CGFloat(256.00)
-    public static let componentDrawersMobileMenuDrawerStackSpace = CGFloat(320.00)
-    public static let componentDropdownDropDownBorderRadius = CGFloat(64.00)
-    public static let componentDropdownDropDownItemInlineSpace = CGFloat(256.00)
-    public static let componentDropdownDropDownItemStackSpace = CGFloat(128.00)
-    public static let componentFooterFooterFontFamily = Inter
-    public static let componentFooterFooterFontSize = CGFloat(176.00) /** This variable is used on footer links that commonly show up at the bottom of pages. The font size parameter remains constant at 11 px across device sizes. */
-    public static let componentFooterFooterFontSizeUserOfferPages = CGFloat(288.00)
-    public static let componentFooterFooterLineHeight = CGFloat(224.00)
-    public static let componentFooterFooterLineHeightUserOfferPages = CGFloat(416.00)
-    public static let componentIconIconSize = CGFloat(384.00)
-    public static let componentIconIconSizeEmbeddMedia = CGFloat(640.00)
-    public static let componentInfoElementInfoElementTeaserBadgeHeightSize = CGFloat(384.00)
-    public static let componentInfoElementInfoElementTeaserBadgeMarginSpace = CGFloat(128.00)
-    public static let componentInfoElementInfoElementTeaserImageHeightSize = CGFloat(2128.00)
-    public static let componentInfoElementInfoElementTeaserImageWidthSize = CGFloat(3776.00)
-    public static let componentInputfieldHeyInputContainerInlineSpace = CGFloat(256.00)
-    public static let componentInputfieldInputFieldFontFamily = Inter
-    public static let componentInputfieldInputFieldFontSize = CGFloat(256.00) /** This variable controls texts inside of input fields such as dropdowns, date input and other text inputs that appear in forms for example. compact 15 - default 17 - spacious 19 */
-    public static let componentInputfieldInputFieldHeightSize = CGFloat(576.00)
-    public static let componentInputfieldInputFieldIMessageInlineSpace = CGFloat(256.00)
-    public static let componentInputfieldInputFieldInlineSpace = CGFloat(256.00)
-    public static let componentInputfieldInputFieldMessageGapSpace = CGFloat(64.00)
-    public static let componentInputfieldInputFieldMiniLabelInlineSpace = CGFloat(64.00)
-    public static let componentInputfieldInputFieldStackSpace = CGFloat(96.00)
-    public static let componentLivetickerLiveTickerAppCardHeightSize = CGFloat(2048.00)
-    public static let componentLivetickerLiveTickerAppCardWidthSize = CGFloat(4800.00)
-    public static let componentLivetickerLiveTickerHeadlinesFontSize = CGFloat(512.00) /** This variable is used for the font size of live ticker headlines. 22 - 22 - 32 - 32 */
-    public static let componentLivetickerLiveTickerSliderItemWidthMaxSize = CGFloat(8592.00)
-    public static let componentLivetickerLiveTickerTimeHeadlineStackSpace = CGFloat(64.00)
-    public static let componentLivetickerLiveTickerTimeStampFontSize = CGFloat(256.00) /** This variable is used for the live ticker time stamp font size. 14 - 14 - 16 - 16 */
-    public static let componentLivetickerLiveTickerheadlineFontWeight = 600
-    public static let componentLivetickerTimeStampFontFamily = Gotham XNarrow
-    public static let componentMediaplayerAudioPlayerHeaderStackSpace = CGFloat(896.00)
-    public static let componentMediaplayerPodcastPlayButtonSize = CGFloat(768.00)
-    public static let componentMediaplayerVidPlayerBottomBarGapSpace = CGFloat(256.00)
-    public static let componentMediaplayerVidPlayerControlButtonIconSizeHover = CGFloat(448.00)
-    public static let componentMediaplayerVidPlayerControlButtonSize = CGFloat(672.00)
-    public static let componentMediaplayerVidPlayerProgressBarContainerHeightSize = CGFloat(672.00)
-    public static let componentMediaplayerVidPlayerTimecodeContainerMinWidthSize = CGFloat(928.00)
-    public static let componentMediaplayerVidPlayerTimecodeFontSize = CGFloat(288.00)
-    public static let componentMediaplayerVidPlayerUnmuteButtonWidthSize = CGFloat(3520.00)
-    public static let componentMediaplayerVideoTimeBadgeFontFamily = Inter
-    public static let componentMenuAppTopbarStageTitleHeight = CGFloat(272.00)
-    public static let componentMenuAppTopbarTitleFontSize = CGFloat(208.00)
-    public static let componentMenuHeyInputShadowVisibility = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 0.10000000149011612) /** This color type variables are only in this semantic collection for making subtle shadow effects change visibility across device sizes. Shadow alpha: 0 - 0 - 0 - 10 */
-    public static let componentMenuIOSappTopBarHeightSize = CGFloat(768.00)
-    public static let componentMenuIOSappTopBarLeftInlineSpace = CGFloat(304.00)
-    public static let componentMenuIOSappTopBarRightInlineSpace = CGFloat(304.00)
-    public static let componentMenuMenuBottomStackSpace = CGFloat(0.00)
-    public static let componentMenuMenuItemFontSize = CGFloat(288.00) /** This variable is used on the menu link lane and on the mobile side menu drawer. */
-    public static let componentMenuMenuItemSpace = CGFloat(128.00)
-    public static let componentMenuMenuItemUtilFontSize = CGFloat(192.00)
-    public static let componentMenuMenuItemUtilStackSpace = CGFloat(160.00)
-    public static let componentMenuMenuLeftInlineSpace = CGFloat(256.00)
-    public static let componentMenuMenuLinkItemInlineSpace = CGFloat(64.00)
-    public static let componentMenuMenuLinkLaneHeightSize = CGFloat(768.00)
-    public static let componentMenuMenuLogoDefaultSize = CGFloat(2368.00)
-    public static let componentMenuMenuLogoScrolledSize = CGFloat(896.00)
-    public static let componentMenuMenuRightInlineSpace = CGFloat(256.00)
-    public static let componentMenuMenuShadowVisibility = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 0) /** This color type variables are only in this semantic collection for making subtle shadow effects change visibility across device sizes. Shadow alpha: 10 - 10 - 10 - 0 */
-    public static let componentMenuMenuSpecialNaviItemHeightSize = CGFloat(896.00)
-    public static let componentMenuMenuTopStackSpace = CGFloat(192.00)
-    public static let componentMenuMenuUtilityLinksContainerHeightSize = CGFloat(1600.00)
-    public static let componentMenuMenuUtilityLinksDividerHeightSize = CGFloat(768.00)
-    public static let componentMenuMenuUtilityLinksGapSpace = CGFloat(512.00)
-    public static let componentMenuMenuUtillinkItemHeightSize = CGFloat(768.00)
-    public static let componentMenuSubNavBarHeightSize = CGFloat(672.00)
-    public static let componentNewstickerNewsTickerAppCardHeightSize = CGFloat(2400.00)
-    public static let componentNewstickerNewsTickerAppCardWidthSize = CGFloat(4800.00)
-    public static let componentNewstickerNewsTickerBadgesInlineSpace = CGFloat(256.00)
-    public static let componentNewstickerNewsTickerContentStackSpace = CGFloat(64.00)
-    public static let componentNewstickerNewsTickerEntriesLeftInlineSpace = CGFloat(352.00)
-    public static let componentNewstickerNewsTickerEntriesStackSpace = CGFloat(352.00)
-    public static let componentNewstickerNewsTickerKickerInnerInlineSpace = CGFloat(64.00)
-    public static let componentNewstickerNewsTickerKickerInnerStackSpace = CGFloat(32.00)
-    public static let componentNewstickerNewsTickerLineInlineSpace = CGFloat(128.00)
-    public static let componentNewstickerNewsTickerRedDotSize = CGFloat(256.00)
-    public static let componentNewstickerNewsTickerSkeletonBottomSpace = CGFloat(0.00)
-    public static let componentNewstickerNewsTickerTimeFontFamily = AntennaExtraCond
-    public static let componentNewstickerNewsTickerTimeFontSize = CGFloat(288.00) /** similar to kicker3 values - 16 - 16 - 16 - 18 */
-    public static let componentNewstickerNewsTickerTimeFontWeight = 700
-    public static let componentNewstickerNewsTickerTimeKickerStackSpace = CGFloat(96.00)
-    public static let componentNewstickerNewsTickerTimeLineHeight = CGFloat(374.40) /** Figma currently does not allow for percentages in Line Height variables. The values in this token are the result of multiplying the font size by the line height variable defined on the Bild home css -> newsTickerTime line height: 1.3. Line height for this component does not change across devices. */
-    public static let componentNewstickerNewsTickerTitlesInlineSpace = CGFloat(480.00)
-    public static let componentPaginationGalleryPaginationContainerAppInlineSpace = CGFloat(192.00)
-    public static let componentPaginationGalleryPaginationContainerStackSpace = CGFloat(256.00) /** 12 - 12 - 16 - 16 - this component level variable references the semantic */
-    public static let componentPaginationGalleryPaginationContainerWebInlineSpace = CGFloat(192.00) /** 8 - 8 - 12 - 12 - this component level variable references the inlineSpaceConst semantic variables; SM for smaller devices, MD for larger devices */
-    public static let componentPaginationGalleryPaginationItemHeightSize = CGFloat(64.00)
-    public static let componentPaginationScrollBarThicknessSize = CGFloat(128.00)
-    public static let componentPaywallPaywallCardMaxWidthSize = CGFloat(5536.00)
-    public static let componentPaywallPaywallCardPriceNoteFontSize = CGFloat(640.00) /** This variable is used on the paywall card text under the price tag. 40 - 40 - 40 - 40 */
-    public static let componentPaywallPaywallCardPriceNoteLineHeight = CGFloat(640.00)
-    public static let componentPaywallPaywallCardPriceTagFontSize = CGFloat(1024.00) /** This variable is used on the paywall card price tag. 64 constant */
-    public static let componentPaywallPaywallCardPriceTagLineHeight = CGFloat(1024.00)
-    public static let componentPaywallPaywallContainerGapSpace = CGFloat(-768.00)
-    public static let componentPaywallPaywallHeaderBottomStackSpace = CGFloat(1280.00)
-    public static let componentQuotesQuoteContainerInlineSpace = CGFloat(448.00)
-    public static let componentQuotesQuoteContainerStackSpace = CGFloat(512.00)
-    public static let componentQuotesQuoteContentGapSpace = CGFloat(768.00)
-    public static let componentQuotesQuoteQuotationMarksFontSize = CGFloat(576.00)
-    public static let componentRadioButtonsRadioSelectorDotActiveSize = CGFloat(192.00)
-    public static let componentRadioButtonsRadioSelectorSize = CGFloat(320.00)
-    public static let componentSearchSearchResultBadgeHeightSize = CGFloat(288.00)
-    public static let componentSectionTitleSectionTitleArrowInlineSpace = CGFloat(80.00) /** This variable is used on large title headings that are h2 elements in html and indicate a new section in the user interface. This space changes when a user hovers over the large title. */
-    public static let componentSectionTitleSectionTitleArrowInlineSpaceActive = CGFloat(128.00) /** This variable is used for increasing the space between the text and the arrow at the end of the large title text. On mobile devices there is no hover state so this variables values are the same as the default state values. */
-    public static let componentSectionTitleSectionTitleHeightSize = CGFloat(640.00)
-    public static let componentSectionTitleSectionTitleInnerStackBottomSpace = CGFloat(192.00)
-    public static let componentSeparatorsSeparatorThicknessSize = CGFloat(32.00)
-    public static let componentSkeletonsArticleSkeletonImageInlineSpace = CGFloat(768.00)
-    public static let componentSkeletonsArticleSkeletonTextInlineSpace = CGFloat(768.00)
-    public static let componentSkeletonsArticleTextSkeletonHeightSize = CGFloat(11520.00)
-    public static let componentSkeletonsHeadlinesSkeletonImagePlaceholderMaxWidth = CGFloat(2560.00)
-    public static let componentSlidersSliderProgressBarHoverHeightSize = CGFloat(128.00)
-    public static let componentSlidersSliderProgressBarIdleHeightSize = CGFloat(64.00)
-    public static let componentSlidersSliderProgressInactiveHeightSize = CGFloat(32.00)
-    public static let componentSlidersVidPlayerProgressBarHeightSize = CGFloat(192.00)
-    public static let componentSpecialNaviSpecialNaviInlineSpace = CGFloat(512.00)
-    public static let componentSpinnersVideoSpinnerSize = CGFloat(1280.00)
-    public static let componentSpinnersVideoSpinnerSize05x = CGFloat(640.00)
-    public static let componentSpinnersVideoSpinnerStrokeSize = CGFloat(64.00)
-    public static let componentTableTableColumnWidthSize05x = CGFloat(1152.00)
-    public static let componentTableTableColumnWidthSize075x = CGFloat(1600.00)
-    public static let componentTableTableColumnWidthSize15x = CGFloat(2880.00)
-    public static let componentTableTableColumnWidthSize1x = CGFloat(2240.00)
-    public static let componentTableTableColumnWidthSize25x = CGFloat(3840.00)
-    public static let componentTableTableColumnWidthSize2x = CGFloat(3520.00)
-    public static let componentTableTableColumnWidthSize3x = CGFloat(4480.00)
-    public static let componentTableTableItemMaxWidthSize = CGFloat(3584.00)
-    public static let componentTabsAndroidTabbarHeightSize = CGFloat(1184.00)
-    public static let componentTabsAppsTabsLabelFontSize = CGFloat(256.00) /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
-    public static let componentTabsAppsTabsLabelLineHeight = CGFloat(374.40) /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
-    public static let componentTabsIosTabbarHeightSize = CGFloat(784.00)
-    public static let componentTabsTabLabelFontSize = CGFloat(256.00) /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
-    public static let componentTabsTabLabelFontSizeLine = CGFloat(256.00) /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
-    public static let componentTabsTopBarTabItemHeightSize = CGFloat(704.00)
-    public static let componentTeaserATeaserATeaserHeadlineFontSize = CGFloat(800.00) /** This variable references the semantic variables headline3 (XS&SM) and headline2 (MD&LG). 28 - 28 - 48 - 64 */
-    public static let componentTeaserATeaserATeaserHeadlineLineHeight = CGFloat(921.60)
-    public static let componentTeaserATeaserATeaserKickerFontSize = CGFloat(416.00) /** 16 - 16 - 22 - 24 This variable references the semantic variables kicker3fontsize and kicker2fontsize. At the 600px breakpoint smaller devices use the kicker3 variable */
-    public static let componentTeaserATeaserATeaserKickerLineHeight = CGFloat(416.00)
-    public static let componentTeaserATeaserATeaserTitleInlineSpace = CGFloat(256.00)
-    public static let componentTeaserBTeaserBTeaserTitleInlineSpace = CGFloat(256.00)
-    public static let componentTeaserBildPlayBildPlayTeaserWidthSize = CGFloat(3088.00)
-    public static let componentTeaserMQTeaserMQTeaserHeadlineFontSize = CGFloat(544.00) /** XS-headline4FontSize:22 // SM-headline4FontSize:22 // MD-headline3FontSize:36 // LG-headline3FontSize:40 */
-    public static let componentTeaserMQTeaserMQTeaserHeadlineFontWeight = 700
-    public static let componentTeaserMQTeaserMQTeaserHeadlineLineHeight = CGFloat(625.60)
-    public static let componentTeaserMQTeaserMqTeaserTitleInlineSpace = CGFloat(192.00)
-    public static let componentTeaserQTeaserQTeaserTitleInlineSpace = CGFloat(384.00)
-    public static let componentTeaserQTeaserQuadHeadlineFontSize = CGFloat(1280.00) /** This component level variable is used on the quad teaser headline. It references the semantic level variable headline1. 48 - 48 - 72 - 100 */
-    public static let componentTeaserQTeaserQuadHeadlineLineHeight = CGFloat(1408.00)
-    public static let componentTeaserQTeaserQuadKickerFontSize = CGFloat(416.00)
-    public static let componentTeaserStdTeaserStdTeaserBadgesMarginSpace = CGFloat(128.00) /** This variable is used for creating space around the outside of a subscription badge or video icon badge. */
-    public static let componentTeaserStdTeaserStdTeaserImageTitleGapSpace = CGFloat(96.00)
-    public static let componentTeaserStdTeaserStdTeaserKickerHeadlineStackSpace = CGFloat(32.00) /** 2 | 2 | 2 | 2 - This variable is used on the standard teaser vertical spacing between the kicker and the headline. It references the semantic variable stackSpaceConst3XS */
-    public static let componentTeaserSuperASuperATeaserTitleInlineSpace = CGFloat(384.00) /** 16 - 16 - 16 - 16 */
-    public static let componentTeaserTeaserBadgesHeightSizeLg = CGFloat(640.00) /** This token is for controling the height of badges that are inside of teasers. 32 - 32 - 32 - 40 */
-    public static let componentTeaserTeaserBadgesHeightSizeSm = CGFloat(512.00)
-    public static let componentTeaserTeaserBadgesMarginSpace = CGFloat(128.00) /** This variable is used for creating space around the outside of a subscription badge or video icon badge. */
-    public static let componentTeaserTeaserKickerBgInlineSpace = CGFloat(96.00)
-    public static let componentTeaserTeaserKickerBgStackSpace = CGFloat(32.00)
-    public static let componentTeaserTeaserLayoutGridSpace = CGFloat(256.00)
-    public static let componentTeaserTeaserTitleBottomStackSpace = CGFloat(256.00)
-    public static let componentTeaserTeaserTitleGapSpace = CGFloat(64.00)
-    public static let componentTeaserTeaserTitleInlineLeftSpace = CGFloat(0.00)
-    public static let componentTeaserTeaserTitleStackSpace = CGFloat(96.00)
-    public static let componentToggleSwitchAppToggleItemLabelFontSize = CGFloat(288.00) /** This variable is used on labels in list items with toggle switches found in app preferences. 14 - 14 - 16 - 18 */
-    public static let componentToggleSwitchAppToggleItemLabelLineHeight = CGFloat(291.20) /** This variable is used on labels in list items with toggle switches found in app preferences. 14.1 - 14.1 - 16.2 - 18.2 */
-    public static let componentVideoVerticalVideoMockHeadlineFontSize = CGFloat(512.00)
-    public static let componentVideoVideoAdBadgeFontSize = CGFloat(256.00) /** 14 - 14 - 16 - 16 -- This variable is used in the videoAdBadge font size parameter. */
-    public static let componentVideoVideoBadgeTimeLineHeight = CGFloat(380.80)
-    public static let componentVideoVideoFrameInlineSpace = CGFloat(256.00)
-    public static let componentVideoVideoRedPlayIconHeightSize = CGFloat(288.00) /** This variable is used for changing the red play icon inside the white square. */
-    public static let componentVideoVideoRedPlayIconWidthSize = CGFloat(224.00)
-    public static let componentVideoVideoSkeletonContainerHeight = CGFloat(7424.00)
-    public static let componentVideoVideoTimeBadgeCornerSize = CGFloat(32.00) /** This variable is used on video player badges that display a red play icon on top of a white square next to a time stamp. This variable references the borderRadiusXS. Constant value of 2 across device sizes. */
-    public static let componentVideoVideoTimeBadgeFontSize = CGFloat(288.00) /** 16 - 16 - 18 - 18 -- This variable is used to control the videoTimeBadge text style's font size parameter. The typography style that uses this variable is the videoTimeBadge style. The badge that uses this variable appears on the upper right corner of horizontal videos. */
-    public static let componentVideoVideoTimeBadgeSize = CGFloat(640.00) /** 24 - 24 - 32 - 40 - This variable is used on horizontal video badges that contain a red play icon on top of a white square next to a timestamp. */
-    public static let semanticBorderBorderRadiusBorderRadiusFull = CGFloat(159984.00) /** creates fully rounded shapes, typically used for circular elements like avatars. */
-    public static let semanticBorderBorderRadiusBorderRadiusLg = CGFloat(256.00) /** 16-16-16-16 – use for corner rounding on small cards, overlays, and modal surfaces. */
-    public static let semanticBorderBorderRadiusBorderRadiusMd = CGFloat(128.00) /** 8-8-8-8 – Standard radius for buttons, chips, input fields, and medium-sized interactive elements. */
-    public static let semanticBorderBorderRadiusBorderRadiusNone = CGFloat(0.00) /** 0-0-0-0 – no corner rounding. Used as default for flat layouts, content modules, images, and teaser elements. */
-    public static let semanticBorderBorderRadiusBorderRadiusSm = CGFloat(64.00) /** 4-4-4-4 – use for corner rounding on compact components like checkboxes or small input controls. */
-    public static let semanticBorderBorderRadiusBorderRadiusXl = CGFloat(384.00) /** 24-24-24-24 – use for corner rounding on larger cards, overlays, dialogs, and other container components. */
-    public static let semanticBorderBorderRadiusBorderRadiusXs = CGFloat(32.00) /** 2-2-2-2 use for corner rounding on very small UI elements such as tooltips and badges. */
-    public static let semanticBorderBorderWidthBorderWidthHairline = CGFloat(5.28) /** 0.33 -0.33 -0.33 -0.33 – primarily used in mobile app interfaces. Optimized for high-density displays to create subtle dividers and outlines without visual overload. */
-    public static let semanticBorderBorderWidthBorderWidthThick = CGFloat(32.00) /** 2-2-2-2 – use for stronger outlines on form elements (inputs), buttons (outline variants), and interaction states (focus, hover, active) */
-    public static let semanticBorderBorderWidthBorderWidthThin = CGFloat(16.00) /** 1-1-1-1 – use for subtle outlines and dividers */
-    public static let /**
- * 389 - 599 - 1023 - 1024 – Defines the minimum width of the main frame for different breakpoints.
- * Apply this token to the main frame of page layouts to simulate realistic maximum widths across responsive viewports.
- */
-semanticLayoutBreakpointsBreakpointMaxWidthSize = CGFloat(16384.00)
-    public static let /**
- * 320 - 390 - 600 - 1024 – Defines the minimum width of the main frame for different breakpoints.
- * Apply this token to the main frame of page layouts to simulate realistic minimum widths across responsive viewports.
- */
-semanticLayoutBreakpointsBreakpointMinWidthSize = CGFloat(16384.00)
-    public static let /**
- * Common viewport height size based on the selected mode.
- * Apply this token to the main frame of page layouts to simulate realistic vertical space.
- */
-semanticLayoutCanvasHeightSizeApp = CGFloat(13344.00)
-    public static let /**
- * Common viewport height size based on the selected mode.
- * Apply this token to the main frame of page layouts to simulate realistic vertical space.
- */
-semanticLayoutCanvasHeightSizeWeb = CGFloat(12288.00)
-    public static let /**
- * Common viewport width size based on the selected breakpoint.
- * Apply this token to the main frame of page layouts.
- */
-semanticLayoutCanvasWidthSizeApp = CGFloat(19104.00)
-    public static let /**
- * Common viewport width size based on the selected breakpoint.
- * Apply this token to the main frame of page layouts.
- */
-semanticLayoutCanvasWidthSizeWeb = CGFloat(16384.00)
-    public static let semanticLayoutContentWidthContentMaxWidthFull = CGFloat(16384.00) /** Use for content containers that should fill the full width of the page */
-    public static let semanticLayoutContentWidthContentMaxWidthMedium = CGFloat(11200.00) /** Use for content containers that should not fill the full page width on larger viewports. This is commonly used on article body text content and other elements in an article page. */
-    public static let semanticLayoutGridConstantGridSpaceConstLg = CGFloat(256.00) /** 16-16-16-16 – use for fixed side paddings and gutters */
-    public static let semanticLayoutGridConstantGridSpaceConstSm = CGFloat(192.00) /** 12-12-12-12 – use for fixed side paddings and gutters */
-    public static let semanticLayoutGridLayoutGuideLayoutGuideGridColums = CGFloat(192.00) /** Used to set the column count in Figma Layout guide Grids */
-    public static let semanticLayoutGridResponsiveGridSpaceRespBase = CGFloat(256.00) /** 12-12-12-16 – use for side paddings and gutters in responsive layouts */
-    public static let semanticLayoutGridResponsiveGridSpaceRespLg = CGFloat(512.00) /** 24-24-32-32 – use for side paddings and gutters in responsive layouts */
-    public static let semanticLayoutGridResponsiveGridSpaceRespSm = CGFloat(128.00) /** 6-6-6-8 – use for side paddings and gutters in responsive layouts */
-    public static let semanticLayoutGridResponsiveGridSpaceRespXl = CGFloat(1024.00) /** 48-48-64-64 – use for side paddings and gutters in responsive layouts */
-    public static let semanticLayoutGridResponsivePageInlineSpace = CGFloat(256.00) /** 0-0-0-16 – This token is used on the main homepages content container, ensuring full-width layout (no horizontal padding) on mobile and tablet breakpoints. */
-    public static let semanticLayoutSectionParagraphEndSpace = CGFloat(512.00) /** 16-16-32-32 – Use for spacing after paragraphs in text content */
-    public static let semanticLayoutSectionSectionSpaceBase = CGFloat(768.00) /** 36-36-48-48 – Use for vertical spacing between sections in a layout. */
-    public static let semanticLayoutSectionSectionSpaceLg = CGFloat(1536.00) /** 72-72-96-96 – Use for vertical spacing between sections in a layout */
-    public static let semanticLayoutSectionSectionSpaceSm = CGFloat(576.00) /** 24-24-36-36 – Use for vertical spacing between subsections in a layout */
-    public static let semanticSizeConstantSizeConst2Xl = CGFloat(1152.00) /** 72-72-72-72 – Use for setting fixed height and width of UI elements */
-    public static let semanticSizeConstantSizeConst2Xs = CGFloat(384.00) /** 24-24-24-24 – Use for setting fixed height and width of UI elements */
-    public static let semanticSizeConstantSizeConst3Xl = CGFloat(1536.00) /** 96-96-96-96 – Use for setting fixed height and width of UI elements */
-    public static let semanticSizeConstantSizeConst3Xs = CGFloat(256.00) /** 16-16-16-16 – Use for setting fixed height and width of UI elements */
-    public static let semanticSizeConstantSizeConst4Xl = CGFloat(2368.00) /** 148-148-148-148 – Use for setting fixed height and width of UI elements */
-    public static let semanticSizeConstantSizeConst4Xs = CGFloat(128.00) /** 8-8-8-8 – Use for setting fixed height and width of UI elements */
-    public static let semanticSizeConstantSizeConstLg = CGFloat(896.00) /** 56-56-56-56 – Use for setting fixed height and width of UI elements */
-    public static let semanticSizeConstantSizeConstMd = CGFloat(768.00) /** 48-48-48-48 Use for setting fixed height and width of UI elements */
-    public static let semanticSizeConstantSizeConstSm = CGFloat(640.00) /** 40-40-40-40 – Use for setting fixed height and width of UI elements */
-    public static let semanticSizeConstantSizeConstXl = CGFloat(1024.00) /** 64-64-64-64 – Use for setting fixed height and width of UI elements */
-    public static let semanticSizeConstantSizeConstXs = CGFloat(512.00) /** 32-32-32-32 – Use for setting fixed height and width of UI elements */
-    public static let semanticSizeResponsiveSizeResp2Xl = CGFloat(1600.00) /** 72-72-92-100 – Use for setting height and width of UI elements that scale across breakpoints */
-    public static let semanticSizeResponsiveSizeResp2Xs = CGFloat(512.00) /** 24-24-32-32 – Use for setting height and width of UI elements that scale across breakpoints */
-    public static let semanticSizeResponsiveSizeResp3Xl = CGFloat(2368.00) /** 96-96-120-148 – Use for setting height and width of UI elements that scale across breakpoints */
-    public static let semanticSizeResponsiveSizeResp3Xs = CGFloat(384.00) /** 16-16-16-24 – Use for setting height and width of UI elements that scale across breakpoints */
-    public static let semanticSizeResponsiveSizeResp4Xl = CGFloat(2880.00) /** 148-148-160-180 – Use for setting height and width of UI elements that scale across breakpoints */
-    public static let semanticSizeResponsiveSizeResp4Xs = CGFloat(256.00) /** 12-12-14-16 – Use for setting height and width of UI elements that scale across breakpoints */
-    public static let semanticSizeResponsiveSizeRespLg = CGFloat(1472.00) /** 56-56-72-92 – Use for setting height and width of UI elements that scale across breakpoints */
-    public static let semanticSizeResponsiveSizeRespMd = CGFloat(1152.00) /** 48-48-64-72 – Use for setting height and width of UI elements that scale across breakpoints */
-    public static let semanticSizeResponsiveSizeRespSm = CGFloat(896.00) /** 40-40-48-56 – Use for setting height and width of UI elements that scale across breakpoints */
-    public static let semanticSizeResponsiveSizeRespXl = CGFloat(1536.00) /** 64-64-80-96 – Use for setting height and width of UI elements that scale across breakpoints */
-    public static let semanticSizeResponsiveSizeRespXs = CGFloat(768.00) /** 32-32-40-48 – Use for setting height and width of UI elements that scale across breakpoints */
-    public static let semanticSpaceGapConstantGapSpaceConst2Xl = CGFloat(512.00) /** 32-32-32-32 – Use for fixed gaps between items inside of UI elements */
-    public static let semanticSpaceGapConstantGapSpaceConst2Xs = CGFloat(32.00) /** 2-2-2-2 – Use for fixed gaps between items inside of UI elements */
-    public static let semanticSpaceGapConstantGapSpaceConst3Xl = CGFloat(768.00) /** 48-48-48-48 – Use for fixed gaps between items inside of UI elements */
-    public static let semanticSpaceGapConstantGapSpaceConstLg = CGFloat(256.00) /** 16-16-16-16 – Use for fixed gaps between items inside of UI elements */
-    public static let semanticSpaceGapConstantGapSpaceConstMd = CGFloat(192.00) /** 12-12-12-12 – Use for fixed gaps between items inside of UI elements */
-    public static let semanticSpaceGapConstantGapSpaceConstSm = CGFloat(128.00) /** 8-8-8-8 – Use for fixed gaps between items inside of UI elements */
-    public static let semanticSpaceGapConstantGapSpaceConstXl = CGFloat(384.00) /** 24-24-24-24 – Use for fixed gaps between items inside of UI elements */
-    public static let semanticSpaceGapConstantGapSpaceConstXs = CGFloat(64.00) /** 4-4-4-4 – Use for fixed gaps between items inside of UI elements */
-    public static let semanticSpaceGapResponsiveGapSpaceResp2Xl = CGFloat(1024.00) /** 32-32-48-64 – Use for gaps between items inside of UI elements that scale across breakpoints */
-    public static let semanticSpaceGapResponsiveGapSpaceResp2Xs = CGFloat(96.00) /** 2-2-4-6 – Use for gaps between items inside of UI elements that scale across breakpoints */
-    public static let semanticSpaceGapResponsiveGapSpaceResp3Xl = CGFloat(1536.00) /** 48-48-72-96 – Use for gaps between items inside of UI elements that scale across breakpoints */
-    public static let semanticSpaceGapResponsiveGapSpaceRespLg = CGFloat(512.00) /** 16-16-24-32 – Use for gaps between items inside of UI elements that scale across breakpoints */
-    public static let semanticSpaceGapResponsiveGapSpaceRespMd = CGFloat(384.00) /** 12-12-16-24 – Use for gaps between items inside of UI elements that scale across breakpoints */
-    public static let semanticSpaceGapResponsiveGapSpaceRespSm = CGFloat(256.00) /** 8-8-12-16 – Use for gaps between items inside of UI elements that scale across breakpoints */
-    public static let semanticSpaceGapResponsiveGapSpaceRespXl = CGFloat(768.00) /** 24-24-32-48 – Use for gaps between items inside of UI elements that scale across breakpoints */
-    public static let semanticSpaceGapResponsiveGapSpaceRespXs = CGFloat(128.00) /** 4-4-6-8 – Use for gaps between items inside of UI elements that scale across breakpoints */
-    public static let semanticSpaceInlineConstantInlineSpaceConst2Xl = CGFloat(512.00) /** 32-32-32-32 – Use for fixed horizontal (left/right) padding of UI elements */
-    public static let semanticSpaceInlineConstantInlineSpaceConst2Xs = CGFloat(64.00) /** 4-4-4-4 – Use for fixed horizontal (left/right) padding of UI elements */
-    public static let semanticSpaceInlineConstantInlineSpaceConst3Xs = CGFloat(32.00) /** 2-2-2-2 – Use for fixed horizontal (left/right) padding of UI elements */
-    public static let semanticSpaceInlineConstantInlineSpaceConstLg = CGFloat(256.00) /** 16-16-16-16 – Use for fixed horizontal (left/right) padding of UI elements */
-    public static let semanticSpaceInlineConstantInlineSpaceConstMd = CGFloat(192.00) /** 12-12-12-12 – Use for fixed horizontal (left/right) padding of UI elements */
-    public static let semanticSpaceInlineConstantInlineSpaceConstSm = CGFloat(128.00) /** 8-8-8-8 – Use for fixed horizontal (left/right) padding of UI elements */
-    public static let semanticSpaceInlineConstantInlineSpaceConstXl = CGFloat(384.00) /** 24-24-24-24 – Use for fixed horizontal (left/right) padding of UI elements */
-    public static let semanticSpaceInlineConstantInlineSpaceConstXs = CGFloat(96.00) /** 6-6-6-6 – Use for fixed horizontal (left/right) padding of UI elements */
-    public static let semanticSpaceInlineResponsiveInlineSpaceResp2Xl = CGFloat(1024.00) /** 32-32-48-64 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
-    public static let semanticSpaceInlineResponsiveInlineSpaceRespLg = CGFloat(512.00) /** 16-16-24-32 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
-    public static let semanticSpaceInlineResponsiveInlineSpaceRespMd = CGFloat(384.00) /** 12-12-16-24 use for horizontal (left/right) padding of UI elements that scales across breakpoints */
-    public static let semanticSpaceInlineResponsiveInlineSpaceRespSm = CGFloat(256.00) /** 8-8-12-16 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
-    public static let semanticSpaceInlineResponsiveInlineSpaceRespXl = CGFloat(640.00) /** 24-24-32-40 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
-    public static let semanticSpaceStackConstantStackSpaceConst2Xl = CGFloat(512.00) /** 32-32-32-32 – Use for fixed vertical (top/bottom) padding of UI elements */
-    public static let semanticSpaceStackConstantStackSpaceConst2Xs = CGFloat(64.00) /** 4-4-4-4 – Use for fixed vertical (top/bottom) padding of UI elements */
-    public static let semanticSpaceStackConstantStackSpaceConst3Xs = CGFloat(32.00) /** 2-2-2-2 – Use for fixed vertical (top/bottom) padding of UI elements */
-    public static let semanticSpaceStackConstantStackSpaceConstLg = CGFloat(256.00) /** 16-16-16-16 – Use for fixed vertical (top/bottom) padding of UI elements */
-    public static let semanticSpaceStackConstantStackSpaceConstMd = CGFloat(192.00) /** 12-12-12-12 – Use for fixed vertical (top/bottom) padding of UI elements */
-    public static let semanticSpaceStackConstantStackSpaceConstSm = CGFloat(128.00) /** 8-8-8-8 – Use for fixed vertical (top/bottom) padding of UI elements */
-    public static let semanticSpaceStackConstantStackSpaceConstXl = CGFloat(384.00) /** 24-24-24-24 – Use for fixed vertical (top/bottom) padding of UI elements */
-    public static let semanticSpaceStackConstantStackSpaceConstXs = CGFloat(96.00) /** 6-6-6-6 – Use for fixed vertical (top/bottom) padding of UI elements */
-    public static let semanticSpaceStackResponsiveStackSpaceResp2Xl = CGFloat(1024.00) /** 32-32-48-64 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
-    public static let semanticSpaceStackResponsiveStackSpaceRespLg = CGFloat(512.00) /** 16-16-24-32 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
-    public static let semanticSpaceStackResponsiveStackSpaceRespMd = CGFloat(384.00) /** 12-12-16-24 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
-    public static let semanticSpaceStackResponsiveStackSpaceRespSm = CGFloat(256.00) /** 8-8-12-16 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
-    public static let semanticSpaceStackResponsiveStackSpaceRespXl = CGFloat(640.00) /** 24-24-32-40 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
-    public static let semanticTypographyFontFamilyBodyFontFamily = Inter /** This variable references the bodyFontFamily variable from the branding collection. */
-    public static let semanticTypographyFontFamilyCalloutFontFamily = AntennaCond
-    public static let semanticTypographyFontFamilyDisplayFontFamily = AntennaCond
-    public static let semanticTypographyFontFamilyFootnoteFontFamily = Inter
-    public static let semanticTypographyFontFamilyHeadlineFontFamily = AntennaExtraCond
-    public static let semanticTypographyFontFamilyKickerFontFamily = AntennaExtraCond
-    public static let semanticTypographyFontFamilyLabelFontFamily = AntennaExtraCond
-    public static let semanticTypographyFontFamilyQuoteFontFamily = AntennaCond
-    public static let semanticTypographyFontFamilySubheadlineFontFamily = AntennaCond
-    public static let semanticTypographyFontFamilyTitleFontFamily = AntennaCond
-    public static let semanticTypographyFontSizeBodyBodyFontSize = CGFloat(272.00) /** This variable is used on the body text style's font size parameter. It remains constant at 21. */
-    public static let semanticTypographyFontSizeCalloutCallout1FontSize = CGFloat(384.00) /** This token is used for the font size parameter of the callout text style. 18 - 18 - 22 - 22 */
-    public static let semanticTypographyFontSizeDisplayDisplay1FontSize = CGFloat(1824.00) /** This variable is used on the font size parameter for the display1 text style. 40 - 40 - 72 - 120 */
-    public static let semanticTypographyFontSizeDisplayDisplay2FontSize = CGFloat(976.00) /** This variable is used for the font size parameter of the Display2 text style. 36 - 36 - 42 - 64 */
-    public static let semanticTypographyFontSizeDisplayDisplay3FontSize = CGFloat(608.00) /** This variable is used on the display3 font size parameter of the display3 text style. 28 - 28 - 32 - 40 */
-    public static let semanticTypographyFontSizeFootnoteFootnote1FontSize = CGFloat(240.00) /** This token is used on the footnote text style font size parameter. 16 - 16 - 16 - 18 */
-    public static let semanticTypographyFontSizeFootnoteFootnote2FontSize = CGFloat(208.00) /** This token is used in the font size parameter of the footnote2 text style. 12 - 12 - 12 - 16 */
-    public static let semanticTypographyFontSizeHeadlineHeadline1FontSize = CGFloat(1280.00) /** This token is used for the headline1 text style's font size parameter. 48 - 48 - 72 - 100 */
-    public static let semanticTypographyFontSizeHeadlineHeadline2FontSize = CGFloat(800.00) /** This token is used on the headline2 text style's font size parameter. 40 - 40 - 48 - 64 */
-    public static let semanticTypographyFontSizeHeadlineHeadline3FontSize = CGFloat(544.00) /** This token is used on the headline3 text style's font size parameter. 28 - 28 - 36 - 40 */
-    public static let semanticTypographyFontSizeHeadlineHeadline4FontSize = CGFloat(416.00) /** This token controls the headline4 text style's font size parameter: 22 - 22 - 26 - 32 */
-    public static let semanticTypographyFontSizeKickerKicker1FontSize = CGFloat(512.00) /** Values come from NMT Figma File 01_Foundation; in online CSS this is kicker0. 18 - 18 - 22 - 30 - This variable does not exist yet in online css. Online css is called kicker0 for smallest font size. */
-    public static let semanticTypographyFontSizeKickerKicker2FontSize = CGFloat(416.00) /** Values come from comparing NMT Figma File 01_Foundation to online CSS. Online kickers are numbered from 0 to 3. This DS uses 1 to 4 following html convention of h1, h2, h3, etc. 18 - 18 - 22 - 24 */
-    public static let semanticTypographyFontSizeKickerKicker3FontSize = CGFloat(352.00) /** Values come from comparing NMT Figma File 01_Foundation to online CSS. Online kickers are numbered from 0 to 3. 16 - 16 - 18 - 20 */
-    public static let semanticTypographyFontSizeKickerKicker4FontSize = CGFloat(288.00) /** Values come from comparing NMT Figma File 01_Foundation to online CSS. Online kickers are numbered from 0 to 3. 14 - 14 - 16 - 16 */
-    public static let semanticTypographyFontSizeLabelLabel1FontSize = CGFloat(272.00) /** This token is used in the label1 text style font size parameter. Its value remains constant at 17 across device sizes. */
-    public static let semanticTypographyFontSizeLabelLabel1FontSizeResponsive = CGFloat(272.00) /** 10 - 10 - 15 - 17 Use this label font size when you want your label's font size to change across device sizes. */
-    public static let semanticTypographyFontSizeLabelLabel2FontSize = CGFloat(240.00) /** This variable controls the label2 text style's font size parameter. Its value remains constant at 15. */
-    public static let semanticTypographyFontSizeLabelLabel3FontSize = CGFloat(192.00) /** This token is used in the label3 text style's font size parameter. Its value remains constant at 12 across device sizes. */
-    public static let semanticTypographyFontSizeLabelLabel4FontSize = CGFloat(128.00) /** This token is used in the font size parameter of the label4 text style. The value remains constant at 8. */
-    public static let semanticTypographyFontSizeQuoteQuoteFontSize = CGFloat(320.00) /** 16 - 16 - 18 - 20 -- This variable is used for controlling the font size of the quote text style. */
-    public static let semanticTypographyFontSizeSubheadlineSubheadline1FontSize = CGFloat(416.00) /** This token controls the subheadline1 font size parameter. 24 - 24 - 32 - 36 */
-    public static let semanticTypographyFontSizeTitleTitle1FontSize = CGFloat(480.00) /** 22 - 22 - 22 - 28 -- html class stage-block-title__text css var --ressort-header-font-size(sm-md-lg) */
-    public static let semanticTypographyFontSizeTitleTitle2FontSize = CGFloat(320.00) /** 16 - 16 - 18 - 20 - html class stage-block-title__text css var --ressort-header-font-size(sm-md-lg) */
-    public static let semanticTypographyFontWeightBodyBodyFontWeightBold = 700
-    public static let semanticTypographyFontWeightBodyBodyFontWeightBook = 400
-    public static let semanticTypographyFontWeightCalloutCalloutFontWeight = 800
-    public static let semanticTypographyFontWeightDisplayDisplayFontWeight = 800
-    public static let semanticTypographyFontWeightFootnoteFootnoteFontWeightBold = 700
-    public static let semanticTypographyFontWeightFootnoteFootnoteFontWeightBook = 400
-    public static let semanticTypographyFontWeightHeadlineHeadline1FontWeight = 700
-    public static let semanticTypographyFontWeightHeadlineHeadline1FontWeightSt = Bold Italic /** This variable is a string type variable for controlling not only headline font weight but also the italic style for Sport Bild headlines. */
-    public static let semanticTypographyFontWeightHeadlineHeadline2FontWeight = 700
-    public static let semanticTypographyFontWeightHeadlineHeadline3FontWeight = 700
-    public static let semanticTypographyFontWeightHeadlineHeadline4FontWeight = 700
-    public static let semanticTypographyFontWeightKickerKickerFontWeight = 700
-    public static let semanticTypographyFontWeightKickerKickerFontWeightSt = Black Italic
-    public static let semanticTypographyFontWeightLabelLabelFontWeightBold = 700
-    public static let semanticTypographyFontWeightLabelLabelFontWeightBook = 400
-    public static let semanticTypographyFontWeightQuoteQuoteFontWeight = 800
-    public static let semanticTypographyFontWeightSubheadlineSubheadlineFontWeight = 700
-    public static let semanticTypographyFontWeightTitleTitleFontWeight = 800
-    public static let semanticTypographyLetterSpacingDisplayDisplay1LetterSpacing = CGFloat(-32.00) /** -0.5 | -0.5 | -1 | -2 | This variable is used for the letter spacing parameter of the display1 text style. On smaller devices the value is smaller than on larger devices. On desktop devices the letter spacing is further reduced for making the text style more compact. */
-    public static let semanticTypographyLetterSpacingDisplayDisplay2LetterSpacing = CGFloat(-16.00) /** -0.5 | -0.5 | -1 | -1 | This variable is used for the letter spacing parameter of the display2 text style. On smaller devices the value is smaller than on larger devices. */
-    public static let semanticTypographyLetterSpacingDisplayDisplay3LetterSpacing = CGFloat(-16.00) /** -0.5 | -0.5 | -1 | -1 | This variable is used for the letter spacing parameter of the display3 text style. On smaller devices the value is smaller than on larger devices. */
-    public static let semanticTypographyLetterSpacingLetterSpacingNegativeLg = CGFloat(-48.00) /** -2 | -2 | -2 | -3 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
-    public static let semanticTypographyLetterSpacingLetterSpacingNegativeMd = CGFloat(-16.00) /** -1 | -1 | -1 | -1 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
-    public static let semanticTypographyLetterSpacingLetterSpacingNegativeSm = CGFloat(-4.00) /** -0.5 | -0.5 | -0.25 | -0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
-    public static let semanticTypographyLetterSpacingLetterSpacingNegativeXs = CGFloat(-4.00) /** -0.25 | -0.25 | -0.25 | -0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. This letter spacing was only found in large titles on iOS mobile app large title component. */
-    public static let semanticTypographyLetterSpacingLetterSpacingNone = CGFloat(0.00) /** 0 | 0 | 0 | 0 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
-    public static let semanticTypographyLetterSpacingLetterSpacingPositiveLg = CGFloat(48.00) /** 2 | 2 | 2 | 3 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
-    public static let semanticTypographyLetterSpacingLetterSpacingPositiveMd = CGFloat(16.00) /** 1 | 1 | 1 | 1 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
-    public static let semanticTypographyLetterSpacingLetterSpacingPositiveSm = CGFloat(8.00) /** 0.5 | 0.5 | 0.5 | 0.5 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
-    public static let semanticTypographyLetterSpacingLetterSpacingPositiveXs = CGFloat(4.00) /** 0.25 | 0.25 | 0.25 | 0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
-    public static let semanticTypographyLineHeightBodyBodyLineHeight = CGFloat(448.80) /** Figma's font line height currently does not allow for multipliers as is used on current website css var(--body-line-height) */
-    public static let semanticTypographyLineHeightCalloutCalloutLineHeight = CGFloat(499.20)
-    public static let semanticTypographyLineHeightDisplayDisplay1LineHeight = CGFloat(1920.00)
-    public static let semanticTypographyLineHeightDisplayDisplay2LineHeight = CGFloat(1024.00)
-    public static let semanticTypographyLineHeightDisplayDisplay3LineHeight = CGFloat(640.00)
-    public static let semanticTypographyLineHeightFootnoteFootnote1LineHeight = CGFloat(304.00)
-    public static let semanticTypographyLineHeightFootnoteFootnote2LineHeight = CGFloat(272.48)
-    public static let semanticTypographyLineHeightHeadlineHeadline1LineHeight = CGFloat(1408.00)
-    public static let semanticTypographyLineHeightHeadlineHeadline2LineHeight = CGFloat(921.60)
-    public static let semanticTypographyLineHeightHeadlineHeadline3LineHeight = CGFloat(625.60)
-    public static let semanticTypographyLineHeightHeadlineHeadline4LineHeight = CGFloat(478.40)
-    public static let semanticTypographyLineHeightKickerKicker1LineHeight = CGFloat(563.20)
-    public static let semanticTypographyLineHeightKickerKicker2LineHeight = CGFloat(457.60)
-    public static let semanticTypographyLineHeightKickerKicker3LineHeight = CGFloat(387.20)
-    public static let semanticTypographyLineHeightKickerKicker4LineHeight = CGFloat(316.80)
-    public static let semanticTypographyLineHeightLabelLabel1LineHeight = CGFloat(326.40) /** This variable is used in the label1 text style's line height parameter. It references branding variables for brand specific line heights. */
-    public static let semanticTypographyLineHeightLabelLabel1ResponsiveLineHeight = CGFloat(326.40)
-    public static let semanticTypographyLineHeightLabelLabel2LineHeight = CGFloat(307.20)
-    public static let semanticTypographyLineHeightLabelLabel3LineHeight = CGFloat(230.40)
-    public static let semanticTypographyLineHeightLabelLabel4LineHeight = CGFloat(160.00)
-    public static let semanticTypographyLineHeightQuoteQuoteLineHeight = CGFloat(416.00) /** This variable is used in the quote text style line height parameter. */
-    public static let semanticTypographyLineHeightSubheadlineSubheadline1LineHeight = CGFloat(540.80)
-    public static let semanticTypographyLineHeightTitleTitle1LineHeight = CGFloat(528.00)
-    public static let semanticTypographyLineHeightTitleTitle2LineHeight = CGFloat(416.00) /** html class stage-block-title__text css var --ressort-header-font-size(sm-md-lg) */
-    public static let semanticVisibilityBooleanHideOnDesktop = false /** Use for hiding elements on desktop viewport sizes only */
-    public static let semanticVisibilityBooleanHideOnMobile = true /** Use for hiding elements on mobile viewport sizes */
-    public static let semanticVisibilityBooleanVisilbleAbove600px = true /** Use for showing elements on viewport sizes above 600 px */
-    public static let semanticVisibilityBooleanVisilbleBelow600px = false /** Use for showing elements on viewport sizes below 600 px */
-    public static let semanticVisibilityBooleanVisilbleDesktopOnly = true /** Use for showing elements on desktop viewport sizes only */
-    public static let semanticVisibilityBooleanVisilbleMobileOnly = false /** Use for showing elements on mobile viewport sizes only */
-    public static let semanticVisibilityBooleanVisilbleTabletOnly = false /** Use for showing elements on tablet viewport sizes only */
-    public static let semanticVisibilityVariantSwitchBpSpecificApp = regular
-    public static let semanticVisibilityVariantSwitchBpSpecificWeb = lg
-    public static let semanticVisibilityVariantSwitchChangeOnLg = lg
-    public static let semanticVisibilityVariantSwitchChangeOnMd = md/lg /** This variable is used for controlling size changes across device sizes on some components such as the vertical newsticker cards and the search results cards. Both have cards that change layouts at different breakpoints. */
+    public static let BreakpointName = "lg"
+    // MARK: - Component - Accordion
+    /** This variable exists specifically for changing the accordion font family across brands. It is subject to review. Bild: GothamXNarrow, SpoBi: Inter, Ads: LucindaGrande */
+    public static let AccordionLabelFontFamily = "Inter"
+
+    // MARK: - Component - Article
+    public static let AricleMobile1ColGridImageMarginSpace = "72px"
+    /** 8 | 8 | 12 | 16 - This space variable is used at the top edge of the article main content bounding box. */
+    public static let ArticleTopMarginSpace = "16px"
+    /** This variable is used to control the font size of kickers in the heading section of article pages. 18 - 18 - 22 - 30 */
+    public static let ArticleKickerFontSize = "32px"
+    /** 40 - 40 - 72 - 100 - This variable uses the semantic variables headline2 for XS&SM, headline1 for MD&LG */
+    public static let ArticleHeadlineFontSize = "80px"
+    /** same as standard teaser width size variable */
+    public static let ArticleGalleryATeaserWidth = "300px"
+    /** CSS --article-figure-meta-font-size 16-16-18-18 */
+    public static let ArticleImageCaptionFontSize = "15px"
+    /** NMT CSS --article-figure-meta-font-size */
+    public static let ArticleImageSourceFontSize = "15px"
+    /** this component level variable references the branding variables */
+    public static let ArticleImageCaptionLineHeight = "19.5px"
+    public static let ArticleImageSourceLineHeight = "19px"
+    /** 16 - 16 - 24 - 32 - This variable creates the vertical spacing between different article body elements such as avatars, media players, corssheadings, paragraphs, field sets, images, tables, quotes, videos, social embeds, etc. */
+    public static let ArticleContentStackSpace = "32px"
+    /** 12 | 12 | 12 | 16 - This spacing variable is used for the space between article page heading kickers, headlines and subheadlines. XS&SM need review; correct value might be 8 */
+    public static let ArticleHeadingsStackSpace = "16px"
+    public static let ArticleImageLandscapeInlineSpace = "16px"
+    /** This variable is used on the font size of article day&time stamp that usually shows up along with the article author avatars. On app versions this variable is used for the avatar names. This variable references variables from the branding collection. */
+    public static let ArticleMetaFontFamily = "AntennaCond"
+    /** This variable is used on the font size of article day&time stamp that usually shows up along with the article author avatars. On app versions this variable is used for the avatar names. 12 - 12 - 14 - 16 */
+    public static let ArticleMetaFontSize = "16px"
+    /** 16 | 16 | 72 | 162 - This variable is used for making the left and right spacings around article content blocks. Current css has the article-body class assigned to a div and article body contains these horizontal padding values. */
+    public static let ArticleContentInlineSpace = "162px"
+    /** 16 | 16 | 72 | 16 - This variable is used for the left and right space within the article page headings container which holds the article page kicker, headline and subheadline. */
+    public static let ArticleHeadingsInlineSpace = "16px"
+    public static let ArticleImagePortaitInlineSpace = "162px"
+    public static let ArticleImageContainerStackSpace = "16px"
+    public static let ArticleInfoboxInlineSpace = "32px"
+    public static let ArticleInfoboxStackSpace = "32px"
+
+    // MARK: - Component - AudioPlayer
+    /** This variable is used in the text style dedicated to audio player labels for elapsed time, reproduction speed and short functionality description text. 16 - 16 - 16 - 18 */
+    public static let AudioPlayerFontSize = "18px"
+
+    // MARK: - Component - Avatar
+    /** This variable is used on avatar names in article pages. Bild: 16 - 16 - 16 - 18; SpoBi&Ads: 13 - 13 - 13 - 15 */
+    public static let AvatarLabelFontSize = "15px"
+    /** This variable is used for setting the size of avatar images in article pages. It references the sizeConstMD variable from the "generic" semantic collection. Its value is 48 across devices. */
+    public static let AvatarArticleSize = "48px"
+    /** 96 - 96 - 130 - 130 This variable is used for controlling the size of the avatar image on author pages. */
+    public static let AvatarAuthorPageSize = "130px"
+    /** This variable is used in avatar text styles. It receives values from the Brand Tokens Collection. Bild: GothamXNarrow; SpoBi: Inter; Ads: LucidaGrande */
+    public static let AvatarFontFamily = "Inter"
+    /** This variable is used for controlling the line height of avatar texts. Its values influence the stacking space between avatar texts. 21 - 21 - 21 - 23 */
+    public static let AvatarLabelLineHeight = "23px"
+    /** This variable is used for setting the inline space between multiple avatars that are horizontally placed in a lane when an article has multiple authors. 16 - 16 - 24 - 24 */
+    public static let AvatarLaneGapSpace = "24px"
+    /** This variable is used for setting the font of avatars on iOS and Android platforms. This is subject to review. */
+    public static let AppAvatarFontFamily = "AntennaCond"
+
+    // MARK: - Component - Badge
+    /** This space variable is used for creating the top and bottom space between a badge's text label and the surface that the text label is on top of. */
+    public static let BadgesInnerStackSpace = "2px"
+    /** This space variable is used for creating the left and right space between a badge's text label and the badge background surface that the text label is on top of. */
+    public static let BadgesInnerInlineSpace = "4px"
+    /** 30 - 30 - 30 - 30 - This variable is used on the Advert rectangular badge that is found above an ad containers. */
+    public static let AdLabelBadgeHeightSize = "30px"
+
+    // MARK: - Component - Breadcrumb
+    /** 15 - 15 - 15 - 12 -- Breadcrumbs have a slightly larger font size on mobile devices compared to when they are rendered on larger desktop devices. */
+    public static let BreadcrumbFontSize = "11px"
+    public static let BreadcrumbFontFamily = "Inter"
+    public static let Breadcrumb&ArrowLeftInlineSpace1 = "3px"
+    public static let Breadcrumb&ArrowRightInlineSpace2 = "5px"
+    public static let BreadcrumbInlineSpace = "0px"
+    /** 15 - 15 - 15 - 12 -- Breadcrumbs have a slightly larger font size on mobile devices compared to when they are rendered on larger desktop devices. */
+    public static let BreadcrumbLineHeight = "11px"
+    public static let BreadcrumbFontWeight = 400
+    public static let BreadcrumbStackSpace = "16px"
+
+    // MARK: - Component - BreakingNews
+    public static let BreakingNewsContainerHeightSize = "56px"
+    public static let BreakingNewsBadgeUpperTitleFontSize = "17px"
+    public static let BreakingNewsBadgeLowerTitleFontSize = "30px"
+    public static let BreakingNewsBadgeUpperTitleLineHeight = "12px"
+    public static let BreakingNewsBadgeLowerTitleLineHeight = "21px"
+    public static let BreakingNewsBadgeTitelsStackSpace = "4px"
+    public static let BreakingNewsScrollingTextFontSize = "21px"
+    public static let BreakingNewsScrollingTextLineHeight = "24px"
+    public static let BreakingNewsBadgeInlineSpace = "26px"
+
+    // MARK: - Component - Button
+    public static let ButtonLabelFontSize = "15px"
+    public static let ButtonInlineSpace = "16px"
+    /** Use this variable for controlling the font size of partner buttons. 16 - 16 - 16 - 18 */
+    public static let PartnerLinkButtonLabelFontSize = "18px"
+    public static let PartnerLinkButtonLabelHeightSize = "48px"
+    public static let ButtonBorderWidthSize = "2px"
+    /** This fixed height variable ensures that the button maintains a consistent height, even when the icon is not active. */
+    public static let ButtonContentMinHeightSize = "24px"
+    public static let PartnerLinkButtonInlineSpace = "8px"
+    public static let ButtonLabelLineHeight = "15px"
+    public static let ButtonContentGapSpace = "6px"
+    public static let ButtonStackSpace = "6px"
+    public static let ButtonBorderRadius = "8px"
+
+    // MARK: - Component - Cards
+    public static let SearchResultCardImageWidthSize = "260px"
+    public static let SearchResultCardImageHeightSizeStacked = "189px"
+    public static let NewstickerImageCardWidthSize = "206px"
+
+    // MARK: - Component - Carousel
+    /** This token is used to create more bottom padding space on system teaser headlines inside the gallery to avoid overlapping with the pagination. */
+    public static let GalleryTeaserTitleBottomSpace = "36px"
+    /** This token is used to create more bottom padding space on system teaser headlines inside the gallery to avoid overlapping with the pagination. */
+    public static let GalleryTeaserAppGapSpace = "8px"
+    public static let AppEpaperCarouselItemFocusWidth = "240px"
+    public static let AppEpaperCarouselItemDefaultWidth = "172px"
+    public static let AppEpaperCarouseBeilageItemWidth = "172px"
+    public static let StandardTeaserGalleryTeaserWidthWeb = "300px"
+    public static let StandardTeaserGalleryTeaserWidthApp = "464px"
+
+    // MARK: - Component - Chips
+    /** This variable is used on the chips font size parameter of the chips text style. The font size changes only for the change between larger device widths and any device smaller than the largest. 16 - 16 -16 - 18 */
+    public static let ChipsFontSize = "18px"
+    public static let ChipsInlineSpace = "12px"
+    public static let ChipsStackSpace = "8px"
+
+    // MARK: - Component - Datepicker
+    public static let DatepickerItemDayWidthSize = "44px"
+    public static let DatepickerItemHeightSize = "44px"
+    public static let DatepickerItemYearWidthSize = "77px"
+
+    // MARK: - Component - Drawers
+    public static let MobileMenuDrawerStackSpace = "20px"
+    public static let MobileMenuDrawerLeftInlineSpace = "20px"
+    public static let MobileMenuDrawerRightInlineSpace = "16px"
+    public static let MobileMenuDrawerMaxWidthSize = "400px"
+
+    // MARK: - Component - Dropdown
+    public static let DropDownBorderRadius = "4px"
+    public static let DropDownItemStackSpace = "8px"
+    public static let DropDownItemInlineSpace = "16px"
+
+    // MARK: - Component - Footer
+    /** This variable is used on footer links that commonly show up at the bottom of pages. The font size parameter remains constant at 11 px across device sizes. */
+    public static let FooterFontSize = "11px"
+    public static let FooterLineHeight = "14px"
+    public static let FooterFontFamily = "Inter"
+    public static let FooterFontSizeUserOfferPages = "18px"
+    public static let FooterLineHeightUserOfferPages = "26px"
+
+    // MARK: - Component - Icon
+    public static let IconSize = "24px"
+    public static let IconSizeEmbeddMedia = "40px"
+
+    // MARK: - Component - InfoElement
+    public static let InfoElementTeaserBadgeHeightSize = "24px"
+    public static let InfoElementTeaserImageHeightSize = "133px"
+    public static let InfoElementTeaserImageWidthSize = "236px"
+    public static let InfoElementTeaserBadgeMarginSpace = "8px"
+
+    // MARK: - Component - Inputfield
+    public static let InputFieldStackSpace = "6px"
+    public static let InputFieldInlineSpace = "16px"
+    public static let InputFieldMiniLabelInlineSpace = "4px"
+    /** This variable controls texts inside of input fields such as dropdowns, date input and other text inputs that appear in forms for example. compact 15 - default 17 - spacious 19 */
+    public static let InputFieldFontSize = "16px"
+    public static let InputFieldIMessageInlineSpace = "16px"
+    public static let InputFieldHeightSize = "36px"
+    public static let HeyInputContainerInlineSpace = "16px"
+    public static let InputFieldMessageGapSpace = "4px"
+    public static let InputFieldFontFamily = "Inter"
+
+    // MARK: - Component - Liveticker
+    public static let LiveTickerheadlineFontWeight = 600
+    /** This variable is used for the font size of live ticker headlines. 22 - 22 - 32 - 32 */
+    public static let LiveTickerHeadlinesFontSize = "32px"
+    public static let TimeStampFontFamily = "Gotham XNarrow"
+    /** This variable is used for the live ticker time stamp font size. 14 - 14 - 16 - 16 */
+    public static let LiveTickerTimeStampFontSize = "16px"
+    public static let LiveTickerTime&HeadlineStackSpace = "4px"
+    public static let LiveTickerSliderItemWidthMaxSize = "537px"
+    public static let LiveTickerAppCardHeightSize = "128px"
+    public static let LiveTickerAppCardWidthSize = "300px"
+
+    // MARK: - Component - Mediaplayer
+    public static let PodcastPlayButtonSize = "48px"
+    public static let VidPlayerBottomBarGapSpace = "16px"
+    public static let AudioPlayerHeaderStackSpace = "56px"
+    public static let VideoTimeBadgeFontFamily = "Inter"
+    public static let VidPlayerControlButtonSize = "42px"
+    public static let VidPlayerControlButtonIconSizeHover = "28px"
+    public static let VidPlayerTimecodeFontSize = "18px"
+    public static let VidPlayerTimecodeContainerMinWidthSize = "58px"
+    public static let VidPlayerProgressBarContainerHeightSize = "42px"
+    public static let VidPlayerUnmuteButtonWidthSize = "220px"
+
+    // MARK: - Component - Menu
+    public static let MenuItemSpace = "8px"
+    /** This variable is used on the menu link lane and on the mobile side menu drawer. */
+    public static let MenuItemFontSize = "18px"
+    public static let MenuItemUtilFontSize = "12px"
+    public static let MenuItemUtilStackSpace = "10px"
+    public static let MenuLinkLaneHeightSize = "48px"
+    public static let MenuUtillinkItemHeightSize = "48px"
+    public static let MenuLinkItemInlineSpace = "4px"
+    public static let MenuLogoDefaultSize = "148px"
+    public static let MenuLogoScrolledSize = "56px"
+    public static let MenuSpecialNaviItemHeightSize = "56px"
+    public static let SubNavBarHeightSize = "42px"
+    public static let MenuUtilityLinksContainerHeightSize = "100px"
+    public static let MenuTopStackSpace = "12px"
+    public static let MenuLeftInlineSpace = "16px"
+    public static let MenuUtilityLinksGapSpace = "32px"
+    public static let MenuRightInlineSpace = "16px"
+    public static let MenuBottomStackSpace = "0px"
+    public static let MenuUtilityLinksDividerHeightSize = "48px"
+    /** This color type variables are only in this semantic collection for making subtle shadow effects change visibility across device sizes. Shadow alpha: 10 - 10 - 10 - 0 */
+    public static let MenuShadowVisibility = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 0.000)
+    /** This color type variables are only in this semantic collection for making subtle shadow effects change visibility across device sizes. Shadow alpha: 0 - 0 - 0 - 10 */
+    public static let HeyInputShadowVisibility = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 0.100)
+    public static let AppTopbarTitleFontSize = "13px"
+    public static let AppTopbarStageTitleHeight = "17px"
+    public static let IOSappTopBarHeightSize = "48px"
+    public static let IOSappTopBarLeftInlineSpace = "19px"
+    public static let IOSappTopBarRightInlineSpace = "19px"
+
+    // MARK: - Component - Newsticker
+    /** similar to kicker3 values - 16 - 16 - 16 - 18 */
+    public static let NewsTickerTimeFontSize = "18px"
+    public static let NewsTickerTimeFontWeight = 700
+    public static let NewsTickerTimeFontFamily = "AntennaExtraCond"
+    /** Figma currently does not allow for percentages in Line Height variables. The values in this token are the result of multiplying the font size by the line height variable defined on the Bild home css -> newsTickerTime line height: 1.3. Line height for this component does not change across devices. */
+    public static let NewsTickerTimeLineHeight = "23.399999618530273px"
+    public static let NewsTickerContentStackSpace = "4px"
+    public static let NewsTickerKickerInnerStackSpace = "2px"
+    public static let NewsTickerTitlesInlineSpace = "30px"
+    public static let NewsTickerBadgesInlineSpace = "16px"
+    public static let NewsTickerTime&KickerStackSpace = "6px"
+    public static let NewsTickerEntriesStackSpace = "22px"
+    public static let NewsTickerKickerInnerInlineSpace = "4px"
+    public static let NewsTickerSkeletonBottomSpace = "0px"
+    public static let NewsTickerRedDotSize = "16px"
+    public static let NewsTickerEntriesLeftInlineSpace = "22px"
+    public static let NewsTickerLineInlineSpace = "8px"
+    public static let NewsTickerAppCardHeightSize = "150px"
+    public static let NewsTickerAppCardWidthSize = "300px"
+
+    // MARK: - Component - Pagination
+    public static let GalleryPaginationItemHeightSize = "4px"
+    /** 8 - 8 - 12 - 12 - this component level variable references the inlineSpaceConst semantic variables; SM for smaller devices, MD for larger devices */
+    public static let GalleryPaginationContainerWebInlineSpace = "12px"
+    /** 12 - 12 - 16 - 16 - this component level variable references the semantic */
+    public static let GalleryPaginationContainerStackSpace = "16px"
+    public static let GalleryPaginationContainerAppInlineSpace = "12px"
+    public static let ScrollBarThicknessSize = "8px"
+
+    // MARK: - Component - Paywall
+    public static let PaywallContainerGapSpace = "-48px"
+    public static let PaywallHeaderBottomStackSpace = "80px"
+    public static let PaywallCardMaxWidthSize = "346px"
+    /** This variable is used on the paywall card price tag. 64 constant */
+    public static let PaywallCardPriceTagFontSize = "64px"
+    public static let PaywallCardPriceTagLineHeight = "64px"
+    public static let PaywallCardPriceNoteLineHeight = "40px"
+    /** This variable is used on the paywall card text under the price tag. 40 - 40 - 40 - 40 */
+    public static let PaywallCardPriceNoteFontSize = "40px"
+
+    // MARK: - Component - Quotes
+    public static let QuoteContainerInlineSpace = "28px"
+    public static let QuoteContainerStackSpace = "32px"
+    public static let QuoteQuotationMarksFontSize = "36px"
+    public static let QuoteContentGapSpace = "48px"
+
+    // MARK: - Component - RadioButtons
+    public static let RadioSelectorSize = "20px"
+    public static let RadioSelectorDotActiveSize = "12px"
+
+    // MARK: - Component - Search
+    public static let SearchResultBadgeHeightSize = "18px"
+
+    // MARK: - Component - SectionTitle
+    public static let SectionTitleInnerStackBottomSpace = "12px"
+    public static let SectionTitleHeightSize = "40px"
+    /** This variable is used on large title headings that are h2 elements in html and indicate a new section in the user interface. This space changes when a user hovers over the large title. */
+    public static let SectionTitle&ArrowInlineSpace = "5px"
+    /** This variable is used for increasing the space between the text and the arrow at the end of the large title text. On mobile devices there is no hover state so this variables values are the same as the default state values. */
+    public static let SectionTitle&ArrowInlineSpaceActive = "8px"
+
+    // MARK: - Component - Separators
+    public static let SeparatorThicknessSize = "2px"
+
+    // MARK: - Component - Skeletons
+    public static let HeadlinesSkeletonImagePlaceholderMaxWidth = "160px"
+    public static let ArticleSkeletonImageInlineSpace = "48px"
+    public static let ArticleSkeletonTextInlineSpace = "48px"
+    public static let ArticleTextSkeletonHeightSize = "720px"
+
+    // MARK: - Component - Sliders
+    public static let SliderProgressBarIdleHeightSize = "4px"
+    public static let SliderProgressBarHoverHeightSize = "8px"
+    public static let SliderProgressInactiveHeightSize = "2px"
+    public static let VidPlayerProgressBarHeightSize = "12px"
+
+    // MARK: - Component - SpecialNavi
+    public static let SpecialNaviInlineSpace = "32px"
+
+    // MARK: - Component - Spinners
+    public static let VideoSpinnerSize = "80px"
+    public static let VideoSpinnerStrokeSize = "4px"
+    public static let VideoSpinnerSize0_5x = "40px"
+
+    // MARK: - Component - Table
+    public static let TableColumnWidthSize1x = "140px"
+    public static let TableColumnWidthSize2x = "220px"
+    public static let TableColumnWidthSize0_5x = "72px"
+    public static let TableColumnWidthSize1_5x = "180px"
+    public static let TableColumnWidthSize2_5x = "240px"
+    public static let TableColumnWidthSize0_75x = "100px"
+    public static let TableColumnWidthSize3x = "280px"
+    public static let TableItemMaxWidthSize = "224px"
+
+    // MARK: - Component - Tabs
+    /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
+    public static let TabLabelFontSize = "16px"
+    public static let IosTabbarHeightSize = "49px"
+    public static let AndroidTabbarHeightSize = "74px"
+    /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
+    public static let TabLabelFontSizeLine = "16px"
+    /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
+    public static let AppsTabsLabelFontSize = "16px"
+    /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
+    public static let AppsTabsLabelLineHeight = "23.399999618530273px"
+    public static let TopBarTabItemHeightSize = "44px"
+
+    // MARK: - Component - Teaser
+    public static let TeaserTitleInlineLeftSpace = "0px"
+    public static let TeaserTitleStackSpace = "6px"
+    public static let TeaserTitleGapSpace = "4px"
+    public static let TeaserKickerBgInlineSpace = "6px"
+    public static let TeaserKickerBgStackSpace = "2px"
+    /** This variable is used for creating space around the outside of a subscription badge or video icon badge. */
+    public static let TeaserBadgesMarginSpace = "8px"
+    /** This token is for controling the height of badges that are inside of teasers. 32 - 32 - 32 - 40 */
+    public static let TeaserBadgesHeightSizeLG = "40px"
+    public static let TeaserTitleBottomStackSpace = "16px"
+    public static let TeaserBadgesHeightSizeSM = "32px"
+    public static let TeaserLayoutGridSpace = "16px"
+
+    // MARK: - Component - Teaser - aTeaser
+    /** 16 - 16 - 22 - 24 This variable references the semantic variables kicker3fontsize and kicker2fontsize. At the 600px breakpoint smaller devices use the kicker3 variable */
+    public static let ATeaserKickerFontSize = "26px"
+    /** This variable references the semantic variables headline3 (XS&SM) and headline2 (MD&LG). 28 - 28 - 48 - 64 */
+    public static let ATeaserHeadlineFontSize = "50px"
+    public static let ATeaserKickerLineHeight = "26px"
+    public static let ATeaserHeadlineLineHeight = "57.599998474121094px"
+    public static let ATeaserTitleInlineSpace = "16px"
+
+    // MARK: - Component - Teaser - bTeaser
+    public static let BTeaserTitleInlineSpace = "16px"
+
+    // MARK: - Component - Teaser - bildPlay
+    public static let BildPlayTeaserWidthSize = "193px"
+
+    // MARK: - Component - Teaser - mQTeaser
+    /** XS-headline4FontSize:22 // SM-headline4FontSize:22 // MD-headline3FontSize:36 // LG-headline3FontSize:40 */
+    public static let MQTeaserHeadlineFontSize = "34px"
+    public static let MQTeaserHeadlineFontWeight = 700
+    public static let MQTeaserHeadlineLineHeight = "39.099998474121094px"
+    public static let MqTeaserTitleInlineSpace = "12px"
+
+    // MARK: - Component - Teaser - qTeaser
+    /** This component level variable is used on the quad teaser headline. It references the semantic level variable headline1. 48 - 48 - 72 - 100 */
+    public static let QuadHeadlineFontSize = "80px"
+    public static let QuadKickerFontSize = "26px"
+    public static let QuadHeadlineLineHeight = "88px"
+    public static let QTeaserTitleInlineSpace = "24px"
+
+    // MARK: - Component - Teaser - stdTeaser
+    public static let StdTeaserImageTitleGapSpace = "6px"
+    /** This variable is used for creating space around the outside of a subscription badge or video icon badge. */
+    public static let StdTeaserBadgesMarginSpace = "8px"
+    /** 2 | 2 | 2 | 2 - This variable is used on the standard teaser vertical spacing between the kicker and the headline. It references the semantic variable stackSpaceConst3XS */
+    public static let StdTeaserKickerHeadlineStackSpace = "2px"
+
+    // MARK: - Component - Teaser - superA
+    /** 16 - 16 - 16 - 16 */
+    public static let SuperATeaserTitleInlineSpace = "24px"
+
+    // MARK: - Component - ToggleSwitch
+    /** This variable is used on labels in list items with toggle switches found in app preferences. 14 - 14 - 16 - 18 */
+    public static let AppToggleItemLabelFontSize = "18px"
+    /** This variable is used on labels in list items with toggle switches found in app preferences. 14.1 - 14.1 - 16.2 - 18.2 */
+    public static let AppToggleItemLabelLineHeight = "18.200000762939453px"
+
+    // MARK: - Component - Video
+    /** This variable is used on video player badges that display a red play icon on top of a white square next to a time stamp. This variable references the borderRadiusXS. Constant value of 2 across device sizes. */
+    public static let VideoTimeBadgeCornerSize = "2px"
+    /** 16 - 16 - 18 - 18 -- This variable is used to control the videoTimeBadge text style's font size parameter. The typography style that uses this variable is the videoTimeBadge style. The badge that uses this variable appears on the upper right corner of horizontal videos. */
+    public static let VideoTimeBadgeFontSize = "18px"
+    /** 24 - 24 - 32 - 40 - This variable is used on horizontal video badges that contain a red play icon on top of a white square next to a timestamp. */
+    public static let VideoTimeBadgeSize = "40px"
+    public static let VideoRedPlayIconWidthSize = "14px"
+    /** This variable is used for changing the red play icon inside the white square. */
+    public static let VideoRedPlayIconHeightSize = "18px"
+    public static let VideoBadgeTimeLineHeight = "23.799999237060547px"
+    public static let VideoSkeletonContainerHeight = "464px"
+    public static let VideoFrameInlineSpace = "16px"
+    public static let VerticalVideoMockHeadlineFontSize = "32px"
+    /** 14 - 14 - 16 - 16 -- This variable is used in the videoAdBadge font size parameter. */
+    public static let VideoAdBadgeFontSize = "16px"
+
+    // MARK: - Component - _DSysDocs
+    /** Variable used in spacing parameters of bild.design webpage mockups. move to bild.design group maybe */
+    public static let BildDesignFrameSpace = "64px"
+    /** This variable is used on documentation pages. This is an alternative variable to the main container max width variable. 0 - 0 - 68 - 68 */
+    public static let DsMainContainerSpace = "68px"
+    public static let DSysDocsWidthSize = "1440px"
+    /** This variable is used as a max width size for content blocks. For mobile devices this var references the DSysDocsWidthSize var 320 - 750 - 962 - 1024 */
+    public static let MainContentStageSize = "1024px"
+    /** This variable is used on documentation pages that have an artistic banner at the top of the page that is related to the foundation topic on the page. 80 - 80 -80 - 140 */
+    public static let FoundationsBannerHeightSize = "140px"
+    /** This variable is used in documentation pages that have small caption or lables along with a UI component documented. 4 - 4 - 6 - 8 */
+    public static let DsCaptionStackSpace0_5x = "8px"
+    public static let DsCaptionStackSpace1x = "16px"
+    /** This variable is used only for this design system's component tests. */
+    public static let 1columnMobile = "656px"
+    /** This variable is currently used on a thin gallery that appears on desktop websites with petbook and other "books" content. Its height changes to a large height on mobile sites. 558 - 558 - 558 - 186 */
+    public static let ThinBannerVerticalHeightSize = "186px"
+    /** This variable is used only for texts and labels that form part of this design system's documentation. */
+    public static let SpecsFontFamily = "Gotham"
+    /** This variable is used on documentation headers that contain info about platfroms and component names. 144 - 144 - 160 - 180 */
+    public static let DocHeaderHeightSize = "180px"
+
+    // MARK: - Semantic - Border - BorderRadius
+    /** 2-2-2-2 use for corner rounding on very small UI elements such as tooltips and badges. */
+    public static let BorderRadiusXS = "2px"
+    /** 8-8-8-8 – Standard radius for buttons, chips, input fields, and medium-sized interactive elements. */
+    public static let BorderRadiusMD = "8px"
+    /** 4-4-4-4 – use for corner rounding on compact components like checkboxes or small input controls. */
+    public static let BorderRadiusSM = "4px"
+    /** 24-24-24-24 – use for corner rounding on larger cards, overlays, dialogs, and other container components. */
+    public static let BorderRadiusXL = "24px"
+    /** 16-16-16-16 – use for corner rounding on small cards, overlays, and modal surfaces. */
+    public static let BorderRadiusLG = "16px"
+    /** 0-0-0-0 – no corner rounding. Used as default for flat layouts, content modules, images, and teaser elements. */
+    public static let BorderRadiusNone = "0px"
+    /** creates fully rounded shapes, typically used for circular elements like avatars. */
+    public static let BorderRadiusFull = "9999px"
+
+    // MARK: - Semantic - Border - BorderWidth
+    /** 1-1-1-1 – use for subtle outlines and dividers */
+    public static let BorderWidthThin = "1px"
+    /** 2-2-2-2 – use for stronger outlines on form elements (inputs), buttons (outline variants), and interaction states (focus, hover, active) */
+    public static let BorderWidthThick = "2px"
+    /** 0.33 -0.33 -0.33 -0.33 – primarily used in mobile app interfaces. Optimized for high-density displays to create subtle dividers and outlines without visual overload. */
+    public static let BorderWidthHairline = "0.33000001311302185px"
+
+    // MARK: - Semantic - Layout
+    /** Common viewport height size based on the selected mode.
+Apply this token to the main frame of page layouts to simulate realistic vertical space. */
+    public static let CanvasHeightSizeWeb = "768px"
+    /** Common viewport width size based on the selected breakpoint.
+Apply this token to the main frame of page layouts. */
+    public static let CanvasWidthSizeWeb = "1024px"
+    /** Common viewport width size based on the selected breakpoint.
+Apply this token to the main frame of page layouts. */
+    public static let CanvasWidthSizeApp = "1194px"
+    /** Common viewport height size based on the selected mode.
+Apply this token to the main frame of page layouts to simulate realistic vertical space. */
+    public static let CanvasHeightSizeApp = "834px"
+
+    // MARK: - Semantic - Layout - Breakpoints
+    /** 320 - 390 - 600 - 1024 – Defines the minimum width of the main frame for different breakpoints.
+Apply this token to the main frame of page layouts to simulate realistic minimum widths across responsive viewports. */
+    public static let BreakpointMinWidthSize = "1024px"
+    /** 389 - 599 - 1023 - 1024 – Defines the minimum width of the main frame for different breakpoints.
+Apply this token to the main frame of page layouts to simulate realistic maximum widths across responsive viewports. */
+    public static let BreakpointMaxWidthSize = "1024px"
+
+    // MARK: - Semantic - Layout - ContentWidth
+    /** Use for content containers that should not fill the full page width on larger viewports. This is commonly used on article body text content and other elements in an article page. */
+    public static let ContentMaxWidthMedium = "700px"
+    /** Use for content containers that should fill the full width of the page */
+    public static let ContentMaxWidthFull = "1024px"
+
+    // MARK: - Semantic - Layout - Grid - Constant
+    /** 16-16-16-16 – use for fixed side paddings and gutters */
+    public static let GridSpaceConstLG = "16px"
+    /** 12-12-12-12 – use for fixed side paddings and gutters */
+    public static let GridSpaceConstSM = "12px"
+
+    // MARK: - Semantic - Layout - Grid - LayoutGuide
+    /** Used to set the column count in Figma Layout guide Grids */
+    public static let LayoutGuideGridColums = "12px"
+
+    // MARK: - Semantic - Layout - Grid - Responsive
+    /** 24-24-32-32 – use for side paddings and gutters in responsive layouts */
+    public static let GridSpaceRespLG = "32px"
+    /** 48-48-64-64 – use for side paddings and gutters in responsive layouts */
+    public static let GridSpaceRespXL = "64px"
+    /** 12-12-12-16 – use for side paddings and gutters in responsive layouts */
+    public static let GridSpaceRespBase = "16px"
+    /** 6-6-6-8 – use for side paddings and gutters in responsive layouts */
+    public static let GridSpaceRespSM = "8px"
+    /** 0-0-0-16 – This token is used on the main homepages content container, ensuring full-width layout (no horizontal padding) on mobile and tablet breakpoints. */
+    public static let PageInlineSpace = "16px"
+
+    // MARK: - Semantic - Layout - Section
+    /** 36-36-48-48 – Use for vertical spacing between sections in a layout. */
+    public static let SectionSpaceBase = "48px"
+    /** 72-72-96-96 – Use for vertical spacing between sections in a layout */
+    public static let SectionSpaceLG = "96px"
+    /** 16-16-32-32 – Use for spacing after paragraphs in text content */
+    public static let ParagraphEndSpace = "32px"
+    /** 24-24-36-36 – Use for vertical spacing between subsections in a layout */
+    public static let SectionSpaceSM = "36px"
+
+    // MARK: - Semantic - Size - Constant
+    /** 16-16-16-16 – Use for setting fixed height and width of UI elements */
+    public static let SizeConst3XS = "16px"
+    /** 24-24-24-24 – Use for setting fixed height and width of UI elements */
+    public static let SizeConst2XS = "24px"
+    /** 32-32-32-32 – Use for setting fixed height and width of UI elements */
+    public static let SizeConstXS = "32px"
+    /** 40-40-40-40 – Use for setting fixed height and width of UI elements */
+    public static let SizeConstSM = "40px"
+    /** 48-48-48-48 Use for setting fixed height and width of UI elements */
+    public static let SizeConstMD = "48px"
+    /** 56-56-56-56 – Use for setting fixed height and width of UI elements */
+    public static let SizeConstLG = "56px"
+    /** 64-64-64-64 – Use for setting fixed height and width of UI elements */
+    public static let SizeConstXL = "64px"
+    /** 96-96-96-96 – Use for setting fixed height and width of UI elements */
+    public static let SizeConst3XL = "96px"
+    /** 148-148-148-148 – Use for setting fixed height and width of UI elements */
+    public static let SizeConst4XL = "148px"
+    /** 72-72-72-72 – Use for setting fixed height and width of UI elements */
+    public static let SizeConst2XL = "72px"
+    /** 8-8-8-8 – Use for setting fixed height and width of UI elements */
+    public static let SizeConst4XS = "8px"
+
+    // MARK: - Semantic - Size - Responsive
+    /** 16-16-16-24 – Use for setting height and width of UI elements that scale across breakpoints */
+    public static let SizeResp3XS = "24px"
+    /** 24-24-32-32 – Use for setting height and width of UI elements that scale across breakpoints */
+    public static let SizeResp2XS = "32px"
+    /** 32-32-40-48 – Use for setting height and width of UI elements that scale across breakpoints */
+    public static let SizeRespXS = "48px"
+    /** 40-40-48-56 – Use for setting height and width of UI elements that scale across breakpoints */
+    public static let SizeRespSM = "56px"
+    /** 48-48-64-72 – Use for setting height and width of UI elements that scale across breakpoints */
+    public static let SizeRespMD = "72px"
+    /** 56-56-72-92 – Use for setting height and width of UI elements that scale across breakpoints */
+    public static let SizeRespLG = "92px"
+    /** 64-64-80-96 – Use for setting height and width of UI elements that scale across breakpoints */
+    public static let SizeRespXL = "96px"
+    /** 72-72-92-100 – Use for setting height and width of UI elements that scale across breakpoints */
+    public static let SizeResp2XL = "100px"
+    /** 96-96-120-148 – Use for setting height and width of UI elements that scale across breakpoints */
+    public static let SizeResp3XL = "148px"
+    /** 148-148-160-180 – Use for setting height and width of UI elements that scale across breakpoints */
+    public static let SizeResp4XL = "180px"
+    /** 12-12-14-16 – Use for setting height and width of UI elements that scale across breakpoints */
+    public static let SizeResp4XS = "16px"
+
+    // MARK: - Semantic - Space - Gap - Constant
+    /** 2-2-2-2 – Use for fixed gaps between items inside of UI elements */
+    public static let GapSpaceConst2XS = "2px"
+    /** 4-4-4-4 – Use for fixed gaps between items inside of UI elements */
+    public static let GapSpaceConstXS = "4px"
+    /** 8-8-8-8 – Use for fixed gaps between items inside of UI elements */
+    public static let GapSpaceConstSM = "8px"
+    /** 12-12-12-12 – Use for fixed gaps between items inside of UI elements */
+    public static let GapSpaceConstMD = "12px"
+    /** 16-16-16-16 – Use for fixed gaps between items inside of UI elements */
+    public static let GapSpaceConstLG = "16px"
+    /** 24-24-24-24 – Use for fixed gaps between items inside of UI elements */
+    public static let GapSpaceConstXL = "24px"
+    /** 32-32-32-32 – Use for fixed gaps between items inside of UI elements */
+    public static let GapSpaceConst2XL = "32px"
+    /** 48-48-48-48 – Use for fixed gaps between items inside of UI elements */
+    public static let GapSpaceConst3XL = "48px"
+
+    // MARK: - Semantic - Space - Gap - Responsive
+    /** 4-4-6-8 – Use for gaps between items inside of UI elements that scale across breakpoints */
+    public static let GapSpaceRespXS = "8px"
+    /** 16-16-24-32 – Use for gaps between items inside of UI elements that scale across breakpoints */
+    public static let GapSpaceRespLG = "32px"
+    /** 24-24-32-48 – Use for gaps between items inside of UI elements that scale across breakpoints */
+    public static let GapSpaceRespXL = "48px"
+    /** 32-32-48-64 – Use for gaps between items inside of UI elements that scale across breakpoints */
+    public static let GapSpaceResp2XL = "64px"
+    /** 12-12-16-24 – Use for gaps between items inside of UI elements that scale across breakpoints */
+    public static let GapSpaceRespMD = "24px"
+    /** 8-8-12-16 – Use for gaps between items inside of UI elements that scale across breakpoints */
+    public static let GapSpaceRespSM = "16px"
+    /** 2-2-4-6 – Use for gaps between items inside of UI elements that scale across breakpoints */
+    public static let GapSpaceResp2XS = "6px"
+    /** 48-48-72-96 – Use for gaps between items inside of UI elements that scale across breakpoints */
+    public static let GapSpaceResp3XL = "96px"
+
+    // MARK: - Semantic - Space - Inline - Constant
+    /** 8-8-8-8 – Use for fixed horizontal (left/right) padding of UI elements */
+    public static let InlineSpaceConstSM = "8px"
+    /** 12-12-12-12 – Use for fixed horizontal (left/right) padding of UI elements */
+    public static let InlineSpaceConstMD = "12px"
+    /** 16-16-16-16 – Use for fixed horizontal (left/right) padding of UI elements */
+    public static let InlineSpaceConstLG = "16px"
+    /** 32-32-32-32 – Use for fixed horizontal (left/right) padding of UI elements */
+    public static let InlineSpaceConst2XL = "32px"
+    /** 24-24-24-24 – Use for fixed horizontal (left/right) padding of UI elements */
+    public static let InlineSpaceConstXL = "24px"
+    /** 6-6-6-6 – Use for fixed horizontal (left/right) padding of UI elements */
+    public static let InlineSpaceConstXS = "6px"
+    /** 2-2-2-2 – Use for fixed horizontal (left/right) padding of UI elements */
+    public static let InlineSpaceConst3XS = "2px"
+    /** 4-4-4-4 – Use for fixed horizontal (left/right) padding of UI elements */
+    public static let InlineSpaceConst2XS = "4px"
+
+    // MARK: - Semantic - Space - Inline - Responsive
+    /** 8-8-12-16 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
+    public static let InlineSpaceRespSM = "16px"
+    /** 12-12-16-24 use for horizontal (left/right) padding of UI elements that scales across breakpoints */
+    public static let InlineSpaceRespMD = "24px"
+    /** 16-16-24-32 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
+    public static let InlineSpaceRespLG = "32px"
+    /** 32-32-48-64 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
+    public static let InlineSpaceResp2XL = "64px"
+    /** 24-24-32-40 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
+    public static let InlineSpaceRespXL = "40px"
+
+    // MARK: - Semantic - Space - Stack - Constant
+    /** 8-8-8-8 – Use for fixed vertical (top/bottom) padding of UI elements */
+    public static let StackSpaceConstSM = "8px"
+    /** 12-12-12-12 – Use for fixed vertical (top/bottom) padding of UI elements */
+    public static let StackSpaceConstMD = "12px"
+    /** 16-16-16-16 – Use for fixed vertical (top/bottom) padding of UI elements */
+    public static let StackSpaceConstLG = "16px"
+    /** 32-32-32-32 – Use for fixed vertical (top/bottom) padding of UI elements */
+    public static let StackSpaceConst2XL = "32px"
+    /** 24-24-24-24 – Use for fixed vertical (top/bottom) padding of UI elements */
+    public static let StackSpaceConstXL = "24px"
+    /** 6-6-6-6 – Use for fixed vertical (top/bottom) padding of UI elements */
+    public static let StackSpaceConstXS = "6px"
+    /** 2-2-2-2 – Use for fixed vertical (top/bottom) padding of UI elements */
+    public static let StackSpaceConst3XS = "2px"
+    /** 4-4-4-4 – Use for fixed vertical (top/bottom) padding of UI elements */
+    public static let StackSpaceConst2XS = "4px"
+
+    // MARK: - Semantic - Space - Stack - Responsive
+    /** 12-12-16-24 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
+    public static let StackSpaceRespMD = "24px"
+    /** 16-16-24-32 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
+    public static let StackSpaceRespLG = "32px"
+    /** 32-32-48-64 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
+    public static let StackSpaceResp2XL = "64px"
+    /** 8-8-12-16 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
+    public static let StackSpaceRespSM = "16px"
+    /** 24-24-32-40 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
+    public static let StackSpaceRespXL = "40px"
+
+    // MARK: - Semantic - Typography - FontFamily
+    /** This variable references the bodyFontFamily variable from the branding collection. */
+    public static let BodyFontFamily = "Inter"
+    public static let CalloutFontFamily = "AntennaCond"
+    public static let HeadlineFontFamily = "AntennaExtraCond"
+    public static let FootnoteFontFamily = "Inter"
+    public static let LabelFontFamily = "AntennaExtraCond"
+    public static let KickerFontFamily = "AntennaExtraCond"
+    public static let SubheadlineFontFamily = "AntennaCond"
+    public static let TitleFontFamily = "AntennaCond"
+    public static let QuoteFontFamily = "AntennaCond"
+    public static let DisplayFontFamily = "AntennaCond"
+
+    // MARK: - Semantic - Typography - FontSize - Body
+    /** This variable is used on the body text style's font size parameter. It remains constant at 21. */
+    public static let BodyFontSize = "17px"
+
+    // MARK: - Semantic - Typography - FontSize - Callout
+    /** This token is used for the font size parameter of the callout text style. 18 - 18 - 22 - 22 */
+    public static let Callout1FontSize = "24px"
+
+    // MARK: - Semantic - Typography - FontSize - Display
+    /** This variable is used on the font size parameter for the display1 text style. 40 - 40 - 72 - 120 */
+    public static let Display1FontSize = "114px"
+    /** This variable is used for the font size parameter of the Display2 text style. 36 - 36 - 42 - 64 */
+    public static let Display2FontSize = "61px"
+    /** This variable is used on the display3 font size parameter of the display3 text style. 28 - 28 - 32 - 40 */
+    public static let Display3FontSize = "38px"
+
+    // MARK: - Semantic - Typography - FontSize - Footnote
+    /** This token is used on the footnote text style font size parameter. 16 - 16 - 16 - 18 */
+    public static let Footnote1FontSize = "15px"
+    /** This token is used in the font size parameter of the footnote2 text style. 12 - 12 - 12 - 16 */
+    public static let Footnote2FontSize = "13px"
+
+    // MARK: - Semantic - Typography - FontSize - Headline
+    /** This token is used for the headline1 text style's font size parameter. 48 - 48 - 72 - 100 */
+    public static let Headline1FontSize = "80px"
+    /** This token is used on the headline2 text style's font size parameter. 40 - 40 - 48 - 64 */
+    public static let Headline2FontSize = "50px"
+    /** This token is used on the headline3 text style's font size parameter. 28 - 28 - 36 - 40 */
+    public static let Headline3FontSize = "34px"
+    /** This token controls the headline4 text style's font size parameter: 22 - 22 - 26 - 32 */
+    public static let Headline4FontSize = "26px"
+
+    // MARK: - Semantic - Typography - FontSize - Kicker
+    /** Values come from NMT Figma File 01_Foundation; in online CSS this is kicker0. 18 - 18 - 22 - 30 - This variable does not exist yet in online css. Online css is called kicker0 for smallest font size. */
+    public static let Kicker1FontSize = "32px"
+    /** Values come from comparing NMT Figma File 01_Foundation to online CSS. Online kickers are numbered from 0 to 3. This DS uses 1 to 4 following html convention of h1, h2, h3, etc. 18 - 18 - 22 - 24 */
+    public static let Kicker2FontSize = "26px"
+    /** Values come from comparing NMT Figma File 01_Foundation to online CSS. Online kickers are numbered from 0 to 3. 16 - 16 - 18 - 20 */
+    public static let Kicker3FontSize = "22px"
+    /** Values come from comparing NMT Figma File 01_Foundation to online CSS. Online kickers are numbered from 0 to 3. 14 - 14 - 16 - 16 */
+    public static let Kicker4FontSize = "18px"
+
+    // MARK: - Semantic - Typography - FontSize - Label
+    /** This token is used in the label3 text style's font size parameter. Its value remains constant at 12 across device sizes. */
+    public static let Label3FontSize = "12px"
+    /** This variable controls the label2 text style's font size parameter. Its value remains constant at 15. */
+    public static let Label2FontSize = "15px"
+    /** This token is used in the label1 text style font size parameter. Its value remains constant at 17 across device sizes. */
+    public static let Label1FontSize = "17px"
+    /** 10 - 10 - 15 - 17 Use this label font size when you want your label's font size to change across device sizes. */
+    public static let Label1FontSizeResponsive = "17px"
+    /** This token is used in the font size parameter of the label4 text style. The value remains constant at 8. */
+    public static let Label4FontSize = "8px"
+
+    // MARK: - Semantic - Typography - FontSize - Quote
+    /** 16 - 16 - 18 - 20 -- This variable is used for controlling the font size of the quote text style. */
+    public static let QuoteFontSize = "20px"
+
+    // MARK: - Semantic - Typography - FontSize - Subheadline
+    /** This token controls the subheadline1 font size parameter. 24 - 24 - 32 - 36 */
+    public static let Subheadline1FontSize = "26px"
+
+    // MARK: - Semantic - Typography - FontSize - Title
+    /** 22 - 22 - 22 - 28 -- html class stage-block-title__text css var --ressort-header-font-size(sm-md-lg) */
+    public static let Title1FontSize = "30px"
+    /** 16 - 16 - 18 - 20 - html class stage-block-title__text css var --ressort-header-font-size(sm-md-lg) */
+    public static let Title2FontSize = "20px"
+
+    // MARK: - Semantic - Typography - FontWeight - Body
+    public static let BodyFontWeightBook = 400
+    public static let BodyFontWeightBold = 700
+
+    // MARK: - Semantic - Typography - FontWeight - Callout
+    public static let CalloutFontWeight = 800
+
+    // MARK: - Semantic - Typography - FontWeight - Display
+    public static let DisplayFontWeight = 800
+
+    // MARK: - Semantic - Typography - FontWeight - Footnote
+    public static let FootnoteFontWeightBook = 400
+    public static let FootnoteFontWeightBold = 700
+
+    // MARK: - Semantic - Typography - FontWeight - Headline
+    public static let Headline1FontWeight = 700
+    public static let Headline2FontWeight = 700
+    public static let Headline3FontWeight = 700
+    public static let Headline4FontWeight = 700
+    /** This variable is a string type variable for controlling not only headline font weight but also the italic style for Sport Bild headlines. */
+    public static let Headline1FontWeightST = "Bold Italic"
+
+    // MARK: - Semantic - Typography - FontWeight - Kicker
+    public static let KickerFontWeight = 700
+    public static let KickerFontWeightST = "Black Italic"
+
+    // MARK: - Semantic - Typography - FontWeight - Label
+    public static let LabelFontWeightBold = 700
+    public static let LabelFontWeightBook = 400
+
+    // MARK: - Semantic - Typography - FontWeight - Quote
+    public static let QuoteFontWeight = 800
+
+    // MARK: - Semantic - Typography - FontWeight - Subheadline
+    public static let SubheadlineFontWeight = 700
+
+    // MARK: - Semantic - Typography - FontWeight - Title
+    public static let TitleFontWeight = 800
+
+    // MARK: - Semantic - Typography - LetterSpacing
+    /** 0.5 | 0.5 | 0.5 | 0.5 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+    public static let LetterSpacingPositiveSM = "0.5px"
+    /** 2 | 2 | 2 | 3 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+    public static let LetterSpacingPositiveLG = "3px"
+    /** 1 | 1 | 1 | 1 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+    public static let LetterSpacingPositiveMD = "1px"
+    /** 0 | 0 | 0 | 0 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+    public static let LetterSpacingNone = "0px"
+    /** -0.5 | -0.5 | -0.25 | -0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+    public static let LetterSpacingNegativeSM = "-0.25px"
+    /** -1 | -1 | -1 | -1 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+    public static let LetterSpacingNegativeMD = "-1px"
+    /** -2 | -2 | -2 | -3 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+    public static let LetterSpacingNegativeLG = "-3px"
+    /** -0.25 | -0.25 | -0.25 | -0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. This letter spacing was only found in large titles on iOS mobile app large title component. */
+    public static let LetterSpacingNegativeXS = "-0.25px"
+    /** 0.25 | 0.25 | 0.25 | 0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+    public static let LetterSpacingPositiveXS = "0.25px"
+
+    // MARK: - Semantic - Typography - LetterSpacing - display
+    /** -0.5 | -0.5 | -1 | -2 | This variable is used for the letter spacing parameter of the display1 text style. On smaller devices the value is smaller than on larger devices. On desktop devices the letter spacing is further reduced for making the text style more compact. */
+    public static let Display1LetterSpacing = "-2px"
+    /** -0.5 | -0.5 | -1 | -1 | This variable is used for the letter spacing parameter of the display2 text style. On smaller devices the value is smaller than on larger devices. */
+    public static let Display2LetterSpacing = "-1px"
+    /** -0.5 | -0.5 | -1 | -1 | This variable is used for the letter spacing parameter of the display3 text style. On smaller devices the value is smaller than on larger devices. */
+    public static let Display3LetterSpacing = "-1px"
+
+    // MARK: - Semantic - Typography - LineHeight - Body
+    /** Figma's font line height currently does not allow for multipliers as is used on current website css var(--body-line-height) */
+    public static let BodyLineHeight = "28.049999237060547px"
+
+    // MARK: - Semantic - Typography - LineHeight - Callout
+    public static let CalloutLineHeight = "31.200000762939453px"
+
+    // MARK: - Semantic - Typography - LineHeight - Display
+    public static let Display1LineHeight = "120px"
+    public static let Display2LineHeight = "64px"
+    public static let Display3LineHeight = "40px"
+
+    // MARK: - Semantic - Typography - LineHeight - Footnote
+    public static let Footnote1LineHeight = "19px"
+    public static let Footnote2LineHeight = "17.030000686645508px"
+
+    // MARK: - Semantic - Typography - LineHeight - Headline
+    public static let Headline1LineHeight = "88px"
+    public static let Headline2LineHeight = "57.599998474121094px"
+    public static let Headline3LineHeight = "39.099998474121094px"
+    public static let Headline4LineHeight = "29.899999618530273px"
+
+    // MARK: - Semantic - Typography - LineHeight - Kicker
+    public static let Kicker4LineHeight = "19.799999237060547px"
+    public static let Kicker3LineHeight = "24.200000762939453px"
+    public static let Kicker2LineHeight = "28.600000381469727px"
+    public static let Kicker1LineHeight = "35.20000076293945px"
+
+    // MARK: - Semantic - Typography - LineHeight - Label
+    public static let Label3LineHeight = "14.399999618530273px"
+    /** This variable is used in the label1 text style's line height parameter. It references branding variables for brand specific line heights. */
+    public static let Label1LineHeight = "20.399999618530273px"
+    public static let Label1ResponsiveLineHeight = "20.399999618530273px"
+    public static let Label2LineHeight = "19.200000762939453px"
+    public static let Label4LineHeight = "10px"
+
+    // MARK: - Semantic - Typography - LineHeight - Quote
+    /** This variable is used in the quote text style line height parameter. */
+    public static let QuoteLineHeight = "26px"
+
+    // MARK: - Semantic - Typography - LineHeight - Subheadline
+    public static let Subheadline1LineHeight = "33.79999923706055px"
+
+    // MARK: - Semantic - Typography - LineHeight - Title
+    public static let Title1LineHeight = "33px"
+    /** html class stage-block-title__text css var --ressort-header-font-size(sm-md-lg) */
+    public static let Title2LineHeight = "26px"
+
+    // MARK: - Semantic - Visibility - Boolean
+    /** Use for showing elements on mobile viewport sizes only */
+    public static let VisilbleMobileOnly = false
+    /** Use for showing elements on desktop viewport sizes only */
+    public static let VisilbleDesktopOnly = true
+    /** Use for showing elements on viewport sizes above 600 px */
+    public static let VisilbleAbove600px = true
+    /** Use for showing elements on viewport sizes below 600 px */
+    public static let VisilbleBelow600px = false
+    /** Use for hiding elements on mobile viewport sizes */
+    public static let HideOnMobile = true
+    /** Use for showing elements on tablet viewport sizes only */
+    public static let VisilbleTabletOnly = false
+    /** Use for hiding elements on desktop viewport sizes only */
+    public static let HideOnDesktop = false
+
+    // MARK: - Semantic - Visibility - VariantSwitch
+    public static let ChangeOnLG = "lg"
+    /** This variable is used for controlling size changes across device sizes on some components such as the vertical newsticker cards and the search results cards. Both have cards that change layouts at different breakpoints. */
+    public static let ChangeOnMD = "md/lg"
+    public static let BpSpecificWeb = "lg"
+    public static let BpSpecificApp = "regular"
 }

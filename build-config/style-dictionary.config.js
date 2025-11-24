@@ -115,31 +115,39 @@ const sizeRemTransform = {
 
 /**
  * Transform: Name zu CSS Custom Property (Kebab-Case)
+ * Verwendet nur das letzte Pfad-Segment für den Token-Namen
  */
 const nameKebabTransform = {
-  name: 'name/kebab',
+  name: 'name/custom/kebab',
   type: 'name',
   transform: (token) => {
-    // Konvertiert Token-Pfad zu Kebab-Case
-    return token.path.join('-').toLowerCase().replace(/[^a-z0-9-]/g, '-');
+    // Nimm nur das letzte Pfad-Segment
+    const lastSegment = token.path[token.path.length - 1];
+
+    // Konvertiere zu Kebab-Case
+    return lastSegment
+      .replace(/([a-z0-9])([A-Z])/g, '$1-$2')  // camelCase to kebab-case
+      .toLowerCase()
+      .replace(/[^a-z0-9-]/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '');
   }
 };
 
 /**
  * Transform: Name zu gültigem JavaScript Identifier (Camel-Case)
+ * Verwendet nur das letzte Pfad-Segment für den Token-Namen
  */
 const nameJsTransform = {
-  name: 'name/js',
+  name: 'name/custom/js',
   type: 'name',
   transform: (token) => {
-    // Konvertiert Token-Pfad zu einem gültigen JS Identifier
-    return token.path
-      .join('-')
-      .toLowerCase()
-      .replace(/[^a-z0-9-]/g, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '')
-      .replace(/-([a-z0-9])/g, (_, char) => char.toUpperCase())
+    // Nimm nur das letzte Pfad-Segment
+    const lastSegment = token.path[token.path.length - 1];
+
+    // Konvertiere zu camelCase (erstes Zeichen lowercase)
+    return lastSegment
+      .replace(/^[A-Z]/, (c) => c.toLowerCase())  // Erstes Zeichen lowercase
       // Stelle sicher, dass es nicht mit einer Zahl beginnt
       .replace(/^(\d)/, '_$1');
   }
@@ -147,54 +155,35 @@ const nameJsTransform = {
 
 /**
  * Transform: Name für iOS Swift (PascalCase, behält Unterstriche in Dezimalzahlen)
- * Verhindert Namenskollisionen wie size1_25x vs size12_5x -> beide würden Size125x
+ * Verwendet nur das letzte Pfad-Segment für den Token-Namen
  */
 const nameIosSwiftTransform = {
-  name: 'name/ios-swift',
+  name: 'name/custom/ios-swift',
   type: 'name',
   transform: (token) => {
-    // Join path segments with dashes
-    const name = token.path.join('-');
+    // Nimm nur das letzte Pfad-Segment
+    const lastSegment = token.path[token.path.length - 1];
 
-    // Split by dash, capitalize first letter of each part
-    const parts = name.split('-');
-    const pascalCased = parts
-      .map(part => {
-        // Preserve underscores within parts (for decimals like 1_25x)
-        // Only capitalize the first letter
-        if (part.length === 0) return part;
-        return part.charAt(0).toUpperCase() + part.slice(1);
-      })
-      .join('');
-
-    return pascalCased;
+    // Kapitalisiere das erste Zeichen für PascalCase
+    if (lastSegment.length === 0) return lastSegment;
+    return lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1);
   }
 };
 
 /**
  * Transform: Name für Flutter Dart (camelCase, behält Unterstriche in Dezimalzahlen)
+ * Verwendet nur das letzte Pfad-Segment für den Token-Namen
  */
 const nameFlutterDartTransform = {
-  name: 'name/flutter-dart',
+  name: 'name/custom/flutter-dart',
   type: 'name',
   transform: (token) => {
-    // Join path segments with dashes
-    const name = token.path.join('-');
+    // Nimm nur das letzte Pfad-Segment
+    const lastSegment = token.path[token.path.length - 1];
 
-    // Split by dash, capitalize first letter of each part except first
-    const parts = name.split('-');
-    const camelCased = parts
-      .map((part, index) => {
-        if (part.length === 0) return part;
-        // First part stays lowercase, rest get capitalized
-        if (index === 0) {
-          return part.toLowerCase();
-        }
-        return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
-      })
-      .join('');
-
-    return camelCased;
+    // Erstes Zeichen lowercase für camelCase
+    if (lastSegment.length === 0) return lastSegment;
+    return lastSegment.charAt(0).toLowerCase() + lastSegment.slice(1);
   }
 };
 
@@ -203,7 +192,7 @@ const nameFlutterDartTransform = {
 // ============================================================================
 
 /**
- * Format: CSS Custom Properties mit Kategorisierung
+ * Format: CSS Custom Properties mit Kategorisierung und Gruppierung
  */
 const cssVariablesFormat = ({ dictionary, options, file }) => {
   const selector = options.selector || ':root';
@@ -219,15 +208,44 @@ const cssVariablesFormat = ({ dictionary, options, file }) => {
   output += ` * Nicht manuell bearbeiten!\n`;
   output += ` */\n\n`;
 
+  // Gruppiere Tokens nach ihren Pfad-Segmenten
+  const groupedTokens = {};
+  dictionary.allTokens.forEach(token => {
+    // Erstelle Gruppen-Schlüssel aus allen Segmenten außer dem letzten
+    const pathSegments = token.path.slice(0, -1);
+    const groupKey = pathSegments.join(' - ');
+
+    if (!groupedTokens[groupKey]) {
+      groupedTokens[groupKey] = [];
+    }
+    groupedTokens[groupKey].push(token);
+  });
+
   // CSS Custom Properties
   output += `${selector} {\n`;
 
-  dictionary.allTokens.forEach(token => {
-    const comment = token.comment || token.description;
-    if (comment) {
-      output += `  /* ${comment} */\n`;
+  let isFirstGroup = true;
+  Object.keys(groupedTokens).sort().forEach(groupKey => {
+    const tokens = groupedTokens[groupKey];
+
+    // Füge Gruppierungs-Kommentar hinzu
+    if (groupKey) {
+      if (!isFirstGroup) {
+        output += `\n`;
+      }
+      output += `  /* ${groupKey} */\n`;
+      isFirstGroup = false;
     }
-    output += `  --${token.name}: ${token.value};\n`;
+
+    tokens.forEach(token => {
+      const comment = token.comment || token.description;
+      if (comment) {
+        output += `  /**\n`;
+        output += `   * ${comment}\n`;
+        output += `   */\n`;
+      }
+      output += `  --${token.name}: ${token.value};\n`;
+    });
   });
 
   output += `}\n`;
@@ -236,7 +254,7 @@ const cssVariablesFormat = ({ dictionary, options, file }) => {
 };
 
 /**
- * Format: SCSS Variables
+ * Format: SCSS Variables mit Gruppierung
  */
 const scssVariablesFormat = ({ dictionary, options, file }) => {
   const { mode, layer, brand } = options;
@@ -250,19 +268,44 @@ const scssVariablesFormat = ({ dictionary, options, file }) => {
   output += `// Nicht manuell bearbeiten!\n`;
   output += `//\n\n`;
 
+  // Gruppiere Tokens nach ihren Pfad-Segmenten
+  const groupedTokens = {};
   dictionary.allTokens.forEach(token => {
-    const comment = token.comment || token.description;
-    if (comment) {
-      output += `// ${comment}\n`;
+    const pathSegments = token.path.slice(0, -1);
+    const groupKey = pathSegments.join(' - ');
+
+    if (!groupedTokens[groupKey]) {
+      groupedTokens[groupKey] = [];
     }
-    output += `$${token.name}: ${token.value};\n`;
+    groupedTokens[groupKey].push(token);
+  });
+
+  let isFirstGroup = true;
+  Object.keys(groupedTokens).sort().forEach(groupKey => {
+    const tokens = groupedTokens[groupKey];
+
+    if (groupKey) {
+      if (!isFirstGroup) {
+        output += `\n`;
+      }
+      output += `// ${groupKey}\n`;
+      isFirstGroup = false;
+    }
+
+    tokens.forEach(token => {
+      const comment = token.comment || token.description;
+      if (comment) {
+        output += `// ${comment}\n`;
+      }
+      output += `$${token.name}: ${token.value};\n`;
+    });
   });
 
   return output;
 };
 
 /**
- * Format: JavaScript/TypeScript ES6 Module
+ * Format: JavaScript/TypeScript ES6 Module mit Gruppierung
  */
 const javascriptEs6Format = ({ dictionary, options, file }) => {
   const { mode, layer, brand } = options;
@@ -278,14 +321,39 @@ const javascriptEs6Format = ({ dictionary, options, file }) => {
 
   output += `export default {\n`;
 
+  // Gruppiere Tokens nach ihren Pfad-Segmenten
+  const groupedTokens = {};
   dictionary.allTokens.forEach(token => {
-    const comment = token.comment || token.description;
-    if (comment) {
-      output += `  /** ${comment} */\n`;
+    const pathSegments = token.path.slice(0, -1);
+    const groupKey = pathSegments.join(' - ');
+
+    if (!groupedTokens[groupKey]) {
+      groupedTokens[groupKey] = [];
     }
-    // Escape single quotes in values
-    const escapedValue = String(token.value).replace(/'/g, "\\'");
-    output += `  '${token.name}': '${escapedValue}',\n`;
+    groupedTokens[groupKey].push(token);
+  });
+
+  let isFirstGroup = true;
+  Object.keys(groupedTokens).sort().forEach(groupKey => {
+    const tokens = groupedTokens[groupKey];
+
+    if (groupKey) {
+      if (!isFirstGroup) {
+        output += `\n`;
+      }
+      output += `  // ${groupKey}\n`;
+      isFirstGroup = false;
+    }
+
+    tokens.forEach(token => {
+      const comment = token.comment || token.description;
+      if (comment) {
+        output += `  /** ${comment} */\n`;
+      }
+      // Escape single quotes in values
+      const escapedValue = String(token.value).replace(/'/g, "\\'");
+      output += `  '${token.name}': '${escapedValue}',\n`;
+    });
   });
 
   output += `};\n`;
@@ -301,7 +369,7 @@ const jsonNestedFormat = ({ dictionary }) => {
 };
 
 /**
- * Format: iOS Swift Class mit korrekter className Handhabung
+ * Format: iOS Swift Class mit korrekter className Handhabung und Gruppierung
  */
 const iosSwiftClassFormat = ({ dictionary, options, file }) => {
   const className = options.className || file.className || 'StyleDictionary';
@@ -314,49 +382,74 @@ const iosSwiftClassFormat = ({ dictionary, options, file }) => {
   output += `import UIKit\n\n`;
   output += `public class ${className} {\n`;
 
+  // Gruppiere Tokens nach ihren Pfad-Segmenten
+  const groupedTokens = {};
   dictionary.allTokens.forEach(token => {
-    const comment = token.comment || token.description;
-    if (comment) {
-      output += `    /** ${comment} */\n`;
+    const pathSegments = token.path.slice(0, -1);
+    const groupKey = pathSegments.join(' - ');
+
+    if (!groupedTokens[groupKey]) {
+      groupedTokens[groupKey] = [];
     }
+    groupedTokens[groupKey].push(token);
+  });
 
-    // Determine the type based on token type
-    let valueOutput;
-    const value = token.value;
-    const type = token.$type || token.type;
+  let isFirstGroup = true;
+  Object.keys(groupedTokens).sort().forEach(groupKey => {
+    const tokens = groupedTokens[groupKey];
 
-    if (type === 'color') {
-      // Transform color to UIColor directly in format
-      if (value.startsWith('#')) {
-        const hex = value.replace('#', '');
-        const r = (parseInt(hex.substring(0, 2), 16) / 255).toFixed(3);
-        const g = (parseInt(hex.substring(2, 4), 16) / 255).toFixed(3);
-        const b = (parseInt(hex.substring(4, 6), 16) / 255).toFixed(3);
-        const a = hex.length === 8 ? (parseInt(hex.substring(6, 8), 16) / 255).toFixed(3) : '1.000';
-        valueOutput = `UIColor(red: ${r}, green: ${g}, blue: ${b}, alpha: ${a})`;
-      } else if (value.startsWith('rgb')) {
-        const match = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
-        if (match) {
-          const r = (parseInt(match[1]) / 255).toFixed(3);
-          const g = (parseInt(match[2]) / 255).toFixed(3);
-          const b = (parseInt(match[3]) / 255).toFixed(3);
-          const a = match[4] ? parseFloat(match[4]).toFixed(3) : '1.000';
-          valueOutput = `UIColor(red: ${r}, green: ${g}, blue: ${b}, alpha: ${a})`;
-        } else {
-          valueOutput = `"${value}"`;  // Fallback
-        }
-      } else {
-        valueOutput = `"${value}"`;  // Fallback for other color formats
+    if (groupKey) {
+      if (!isFirstGroup) {
+        output += `\n`;
       }
-    } else if (typeof value === 'number') {
-      valueOutput = value;
-    } else if (typeof value === 'string') {
-      valueOutput = `"${value}"`;
-    } else {
-      valueOutput = value;
+      output += `    // MARK: - ${groupKey}\n`;
+      isFirstGroup = false;
     }
 
-    output += `    public static let ${token.name} = ${valueOutput}\n`;
+    tokens.forEach(token => {
+      const comment = token.comment || token.description;
+      if (comment) {
+        output += `    /** ${comment} */\n`;
+      }
+
+      // Determine the type based on token type
+      let valueOutput;
+      const value = token.value;
+      const type = token.$type || token.type;
+
+      if (type === 'color') {
+        // Transform color to UIColor directly in format
+        if (value.startsWith('#')) {
+          const hex = value.replace('#', '');
+          const r = (parseInt(hex.substring(0, 2), 16) / 255).toFixed(3);
+          const g = (parseInt(hex.substring(2, 4), 16) / 255).toFixed(3);
+          const b = (parseInt(hex.substring(4, 6), 16) / 255).toFixed(3);
+          const a = hex.length === 8 ? (parseInt(hex.substring(6, 8), 16) / 255).toFixed(3) : '1.000';
+          valueOutput = `UIColor(red: ${r}, green: ${g}, blue: ${b}, alpha: ${a})`;
+        } else if (value.startsWith('rgb')) {
+          const match = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+          if (match) {
+            const r = (parseInt(match[1]) / 255).toFixed(3);
+            const g = (parseInt(match[2]) / 255).toFixed(3);
+            const b = (parseInt(match[3]) / 255).toFixed(3);
+            const a = match[4] ? parseFloat(match[4]).toFixed(3) : '1.000';
+            valueOutput = `UIColor(red: ${r}, green: ${g}, blue: ${b}, alpha: ${a})`;
+          } else {
+            valueOutput = `"${value}"`;  // Fallback
+          }
+        } else {
+          valueOutput = `"${value}"`;  // Fallback for other color formats
+        }
+      } else if (typeof value === 'number') {
+        valueOutput = value;
+      } else if (typeof value === 'string') {
+        valueOutput = `"${value}"`;
+      } else {
+        valueOutput = value;
+      }
+
+      output += `    public static let ${token.name} = ${valueOutput}\n`;
+    });
   });
 
   output += `}\n`;
@@ -365,7 +458,7 @@ const iosSwiftClassFormat = ({ dictionary, options, file }) => {
 };
 
 /**
- * Format: Flutter Dart Class mit korrekter className Handhabung
+ * Format: Flutter Dart Class mit korrekter className Handhabung und Gruppierung
  */
 const flutterDartClassFormat = ({ dictionary, options, file }) => {
   const className = options.className || file.className || 'StyleDictionary';
@@ -379,54 +472,79 @@ const flutterDartClassFormat = ({ dictionary, options, file }) => {
   output += `class ${className} {\n`;
   output += `    ${className}._();\n\n`;
 
+  // Gruppiere Tokens nach ihren Pfad-Segmenten
+  const groupedTokens = {};
   dictionary.allTokens.forEach(token => {
-    const comment = token.comment || token.description;
-    if (comment) {
-      output += `    /** ${comment} */\n`;
+    const pathSegments = token.path.slice(0, -1);
+    const groupKey = pathSegments.join(' - ');
+
+    if (!groupedTokens[groupKey]) {
+      groupedTokens[groupKey] = [];
+    }
+    groupedTokens[groupKey].push(token);
+  });
+
+  let isFirstGroup = true;
+  Object.keys(groupedTokens).sort().forEach(groupKey => {
+    const tokens = groupedTokens[groupKey];
+
+    if (groupKey) {
+      if (!isFirstGroup) {
+        output += `\n`;
+      }
+      output += `    // ${groupKey}\n`;
+      isFirstGroup = false;
     }
 
-    // Determine the type based on token type
-    let valueOutput;
-    const value = token.value;
-    const type = token.$type || token.type;
+    tokens.forEach(token => {
+      const comment = token.comment || token.description;
+      if (comment) {
+        output += `    /** ${comment} */\n`;
+      }
 
-    if (type === 'color') {
-      // Transform color to Flutter Color directly in format
-      if (value.startsWith('#')) {
-        const hex = value.replace('#', '');
-        let argb;
-        if (hex.length === 6) {
-          argb = 'FF' + hex; // Add full opacity
-        } else if (hex.length === 8) {
-          // Convert RGBA to ARGB
-          argb = hex.substring(6, 8) + hex.substring(0, 6);
-        } else {
-          argb = 'FF000000'; // Fallback
-        }
-        valueOutput = `Color(0x${argb})`;
-      } else if (value.startsWith('rgb')) {
-        const match = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
-        if (match) {
-          const r = parseInt(match[1]).toString(16).padStart(2, '0');
-          const g = parseInt(match[2]).toString(16).padStart(2, '0');
-          const b = parseInt(match[3]).toString(16).padStart(2, '0');
-          const a = match[4] ? Math.round(parseFloat(match[4]) * 255).toString(16).padStart(2, '0') : 'FF';
-          valueOutput = `Color(0x${a}${r}${g}${b})`;
+      // Determine the type based on token type
+      let valueOutput;
+      const value = token.value;
+      const type = token.$type || token.type;
+
+      if (type === 'color') {
+        // Transform color to Flutter Color directly in format
+        if (value.startsWith('#')) {
+          const hex = value.replace('#', '');
+          let argb;
+          if (hex.length === 6) {
+            argb = 'FF' + hex; // Add full opacity
+          } else if (hex.length === 8) {
+            // Convert RGBA to ARGB
+            argb = hex.substring(6, 8) + hex.substring(0, 6);
+          } else {
+            argb = 'FF000000'; // Fallback
+          }
+          valueOutput = `Color(0x${argb})`;
+        } else if (value.startsWith('rgb')) {
+          const match = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+          if (match) {
+            const r = parseInt(match[1]).toString(16).padStart(2, '0');
+            const g = parseInt(match[2]).toString(16).padStart(2, '0');
+            const b = parseInt(match[3]).toString(16).padStart(2, '0');
+            const a = match[4] ? Math.round(parseFloat(match[4]) * 255).toString(16).padStart(2, '0') : 'FF';
+            valueOutput = `Color(0x${a}${r}${g}${b})`;
+          } else {
+            valueOutput = `"${value}"`;
+          }
         } else {
           valueOutput = `"${value}"`;
         }
-      } else {
+      } else if (typeof value === 'number') {
+        valueOutput = value;
+      } else if (typeof value === 'string') {
         valueOutput = `"${value}"`;
+      } else {
+        valueOutput = value;
       }
-    } else if (typeof value === 'number') {
-      valueOutput = value;
-    } else if (typeof value === 'string') {
-      valueOutput = `"${value}"`;
-    } else {
-      valueOutput = value;
-    }
 
-    output += `    static const ${token.name} = ${valueOutput};\n`;
+      output += `    static const ${token.name} = ${valueOutput};\n`;
+    });
   });
 
   output += `}\n`;
@@ -617,6 +735,24 @@ const androidXmlTypographyFormat = ({ dictionary, options }) => {
 };
 
 // ============================================================================
+// TRANSFORM GROUPS
+// ============================================================================
+
+/**
+ * Custom Transform Groups die unsere verkürzten Token-Namen verwenden
+ * WICHTIG: Wir verwenden NICHT 'attribute/cti' oder 'name/cti/*', da diese
+ * den vollständigen Pfad verwenden. Stattdessen nur unsere Custom Name Transforms.
+ */
+const customTransformGroups = {
+  'custom/css': ['name/custom/kebab', 'color/css', 'custom/size/px'],
+  'custom/scss': ['name/custom/kebab', 'color/css', 'custom/size/px'],
+  'custom/js': ['name/custom/js', 'color/css', 'custom/size/px'],
+  'custom/ios-swift': ['name/custom/ios-swift', 'custom/color/UIColor', 'custom/size/px'],
+  'custom/android': ['name/custom/kebab', 'color/hex', 'custom/size/px'],
+  'custom/flutter': ['name/custom/flutter-dart', 'color/hex', 'custom/size/px']
+};
+
+// ============================================================================
 // EXPORTS
 // ============================================================================
 
@@ -626,11 +762,12 @@ module.exports = {
     'custom/color/UIColor': colorUIColorTransform,
     'custom/size/px': sizePxTransform,
     'size/rem': sizeRemTransform,
-    'name/kebab': nameKebabTransform,
-    'name/js': nameJsTransform,
-    'name/ios-swift': nameIosSwiftTransform,
-    'name/flutter-dart': nameFlutterDartTransform
+    'name/custom/kebab': nameKebabTransform,
+    'name/custom/js': nameJsTransform,
+    'name/custom/ios-swift': nameIosSwiftTransform,
+    'name/custom/flutter-dart': nameFlutterDartTransform
   },
+  transformGroups: customTransformGroups,
   formats: {
     // Classic Token Formats
     'css/variables': cssVariablesFormat,

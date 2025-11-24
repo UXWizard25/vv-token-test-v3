@@ -2,7 +2,7 @@
   "Global": {
     "Core": {
       "coreColorPrimary": {
-        "$value": "#dd0000",
+        "$value": "#DD0000",
         "value": "#DD0000",
         "type": "color",
         "$extensions": {
@@ -30,12 +30,8 @@
           "$type": "color",
           "comment": "Bild: 046; SpoBi: 016 current css calls this variable main tenant color"
         },
-        "name": "GlobalCoreCoreColorPrimary",
-        "attributes": {
-          "category": "Global",
-          "type": "Core",
-          "item": "coreColorPrimary"
-        },
+        "name": "coreColorPrimary",
+        "attributes": {},
         "path": [
           "Global",
           "Core",
@@ -43,7 +39,7 @@
         ]
       },
       "coreColorSecondary": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -71,12 +67,8 @@
           "$type": "color",
           "comment": "Bild&SpoBi Tone 100"
         },
-        "name": "GlobalCoreCoreColorSecondary",
-        "attributes": {
-          "category": "Global",
-          "type": "Core",
-          "item": "coreColorSecondary"
-        },
+        "name": "coreColorSecondary",
+        "attributes": {},
         "path": [
           "Global",
           "Core",
@@ -112,12 +104,8 @@
           "$type": "color",
           "comment": "Bild: 015 ; SpoBi: 010"
         },
-        "name": "GlobalCoreCoreColorSecondaryDark",
-        "attributes": {
-          "category": "Global",
-          "type": "Core",
-          "item": "coreColorSecondaryDark"
-        },
+        "name": "coreColorSecondaryDark",
+        "attributes": {},
         "path": [
           "Global",
           "Core",
@@ -153,12 +141,8 @@
           "$type": "color",
           "comment": "Bild: 015 ; SpoBi: 010"
         },
-        "name": "GlobalCoreCoreColorTertiary",
-        "attributes": {
-          "category": "Global",
-          "type": "Core",
-          "item": "coreColorTertiary"
-        },
+        "name": "coreColorTertiary",
+        "attributes": {},
         "path": [
           "Global",
           "Core",
@@ -166,7 +150,7 @@
         ]
       },
       "coreColorTertiaryDark": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -194,12 +178,8 @@
           "$type": "color",
           "comment": "Bild&SpoBi: 100"
         },
-        "name": "GlobalCoreCoreColorTertiaryDark",
-        "attributes": {
-          "category": "Global",
-          "type": "Core",
-          "item": "coreColorTertiaryDark"
-        },
+        "name": "coreColorTertiaryDark",
+        "attributes": {},
         "path": [
           "Global",
           "Core",
@@ -209,7 +189,7 @@
     },
     "Attention": {
       "accentColorPrimary": {
-        "$value": "#dd0000",
+        "$value": "#DD0000",
         "value": "#DD0000",
         "type": "color",
         "$extensions": {
@@ -237,12 +217,8 @@
           "$type": "color",
           "comment": "Bild: Tone 046 ; SpoBi: 016 This variable is used on small UI elements such as the background color for kickers."
         },
-        "name": "GlobalAttentionAccentColorPrimary",
-        "attributes": {
-          "category": "Global",
-          "type": "Attention",
-          "item": "accentColorPrimary"
-        },
+        "name": "accentColorPrimary",
+        "attributes": {},
         "path": [
           "Global",
           "Attention",
@@ -250,7 +226,7 @@
         ]
       },
       "accentColorPrimaryDark": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -278,12 +254,8 @@
           "$type": "color",
           "comment": "Bild: 100 ; SpoBi: 098"
         },
-        "name": "GlobalAttentionAccentColorPrimaryDark",
-        "attributes": {
-          "category": "Global",
-          "type": "Attention",
-          "item": "accentColorPrimaryDark"
-        },
+        "name": "accentColorPrimaryDark",
+        "attributes": {},
         "path": [
           "Global",
           "Attention",
@@ -293,7 +265,7 @@
     },
     "Surface": {
       "surfaceColorPrimary": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -321,12 +293,8 @@
           "$type": "color",
           "comment": "Bild: 100 ; SpoBi: 100"
         },
-        "name": "GlobalSurfaceSurfaceColorPrimary",
-        "attributes": {
-          "category": "Global",
-          "type": "Surface",
-          "item": "surfaceColorPrimary"
-        },
+        "name": "surfaceColorPrimary",
+        "attributes": {},
         "path": [
           "Global",
           "Surface",
@@ -362,12 +330,8 @@
           "$type": "color",
           "comment": "Bild: 015 ; SpoBi: 010"
         },
-        "name": "GlobalSurfaceSurfaceColorPrimaryDark",
-        "attributes": {
-          "category": "Global",
-          "type": "Surface",
-          "item": "surfaceColorPrimaryDark"
-        },
+        "name": "surfaceColorPrimaryDark",
+        "attributes": {},
         "path": [
           "Global",
           "Surface",
@@ -375,7 +339,7 @@
         ]
       },
       "surfaceColorSecondary": {
-        "$value": "#f2f4f5",
+        "$value": "#F2F4F5",
         "value": "#F2F4F5",
         "type": "color",
         "$extensions": {
@@ -403,12 +367,8 @@
           "$type": "color",
           "comment": "Bild: 096 ; SpoBi: 098"
         },
-        "name": "GlobalSurfaceSurfaceColorSecondary",
-        "attributes": {
-          "category": "Global",
-          "type": "Surface",
-          "item": "surfaceColorSecondary"
-        },
+        "name": "surfaceColorSecondary",
+        "attributes": {},
         "path": [
           "Global",
           "Surface",
@@ -416,7 +376,7 @@
         ]
       },
       "surfaceColorSecondaryDark": {
-        "$value": "#2c3138",
+        "$value": "#2C3138",
         "value": "#2C3138",
         "type": "color",
         "$extensions": {
@@ -444,12 +404,8 @@
           "$type": "color",
           "comment": "Bild: 020 ; SpoBi: 016"
         },
-        "name": "GlobalSurfaceSurfaceColorSecondaryDark",
-        "attributes": {
-          "category": "Global",
-          "type": "Surface",
-          "item": "surfaceColorSecondaryDark"
-        },
+        "name": "surfaceColorSecondaryDark",
+        "attributes": {},
         "path": [
           "Global",
           "Surface",
@@ -457,7 +413,7 @@
         ]
       },
       "surfaceColorTertiary": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -485,12 +441,8 @@
           "$type": "color",
           "comment": "Bild: 093 ; SpoBi: 081"
         },
-        "name": "GlobalSurfaceSurfaceColorTertiary",
-        "attributes": {
-          "category": "Global",
-          "type": "Surface",
-          "item": "surfaceColorTertiary"
-        },
+        "name": "surfaceColorTertiary",
+        "attributes": {},
         "path": [
           "Global",
           "Surface",
@@ -498,7 +450,7 @@
         ]
       },
       "surfaceColorTertiaryDark": {
-        "$value": "#343c41",
+        "$value": "#343C41",
         "value": "#343C41",
         "type": "color",
         "$extensions": {
@@ -526,12 +478,8 @@
           "$type": "color",
           "comment": "Bild: 025 ; SpoBi: 029"
         },
-        "name": "GlobalSurfaceSurfaceColorTertiaryDark",
-        "attributes": {
-          "category": "Global",
-          "type": "Surface",
-          "item": "surfaceColorTertiaryDark"
-        },
+        "name": "surfaceColorTertiaryDark",
+        "attributes": {},
         "path": [
           "Global",
           "Surface",
@@ -539,7 +487,7 @@
         ]
       },
       "surfaceColorQuartenary": {
-        "$value": "#ced4da",
+        "$value": "#CED4DA",
         "value": "#CED4DA",
         "type": "color",
         "$extensions": {
@@ -567,12 +515,8 @@
           "$type": "color",
           "comment": "Bild: 085 ; SpoBi: 085"
         },
-        "name": "GlobalSurfaceSurfaceColorQuartenary",
-        "attributes": {
-          "category": "Global",
-          "type": "Surface",
-          "item": "surfaceColorQuartenary"
-        },
+        "name": "surfaceColorQuartenary",
+        "attributes": {},
         "path": [
           "Global",
           "Surface",
@@ -580,7 +524,7 @@
         ]
       },
       "surfaceColorQuartenaryDark": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -608,12 +552,8 @@
           "$type": "color",
           "comment": "Bild: 035 ; SpoBi: 035"
         },
-        "name": "GlobalSurfaceSurfaceColorQuartenaryDark",
-        "attributes": {
-          "category": "Global",
-          "type": "Surface",
-          "item": "surfaceColorQuartenaryDark"
-        },
+        "name": "surfaceColorQuartenaryDark",
+        "attributes": {},
         "path": [
           "Global",
           "Surface",
@@ -623,7 +563,7 @@
     },
     "State": {
       "colorPrimaryActive": {
-        "$value": "#dd0000",
+        "$value": "#DD0000",
         "value": "#DD0000",
         "type": "color",
         "$extensions": {
@@ -651,12 +591,8 @@
           "$type": "color",
           "comment": "Bild: 046 ; SpoBi: 029"
         },
-        "name": "GlobalStateColorPrimaryActive",
-        "attributes": {
-          "category": "Global",
-          "type": "State",
-          "item": "colorPrimaryActive"
-        },
+        "name": "colorPrimaryActive",
+        "attributes": {},
         "path": [
           "Global",
           "State",
@@ -664,7 +600,7 @@
         ]
       },
       "colorPrimaryActiveDark": {
-        "$value": "#dd0000",
+        "$value": "#DD0000",
         "value": "#DD0000",
         "type": "color",
         "$extensions": {
@@ -692,12 +628,8 @@
           "$type": "color",
           "comment": "Bild: 046 ; SpoBi: 098"
         },
-        "name": "GlobalStateColorPrimaryActiveDark",
-        "attributes": {
-          "category": "Global",
-          "type": "State",
-          "item": "colorPrimaryActiveDark"
-        },
+        "name": "colorPrimaryActiveDark",
+        "attributes": {},
         "path": [
           "Global",
           "State",
@@ -735,12 +667,8 @@
           "$type": "color",
           "comment": "Bild & SpoBi: Tone 015"
         },
-        "name": "GlobalTextTextColorPrimary",
-        "attributes": {
-          "category": "Global",
-          "type": "Text",
-          "item": "textColorPrimary"
-        },
+        "name": "textColorPrimary",
+        "attributes": {},
         "path": [
           "Global",
           "Text",
@@ -748,7 +676,7 @@
         ]
       },
       "textColorPrimaryDark": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -776,12 +704,8 @@
           "$type": "color",
           "comment": "Bild & SpoBi: Tone 093"
         },
-        "name": "GlobalTextTextColorPrimaryDark",
-        "attributes": {
-          "category": "Global",
-          "type": "Text",
-          "item": "textColorPrimaryDark"
-        },
+        "name": "textColorPrimaryDark",
+        "attributes": {},
         "path": [
           "Global",
           "Text",
@@ -817,12 +741,8 @@
           "$type": "color",
           "comment": "Bild: 015 ; SpoBi: 016"
         },
-        "name": "GlobalTextHeadlineColorPrimary",
-        "attributes": {
-          "category": "Global",
-          "type": "Text",
-          "item": "headlineColorPrimary"
-        },
+        "name": "headlineColorPrimary",
+        "attributes": {},
         "path": [
           "Global",
           "Text",
@@ -830,7 +750,7 @@
         ]
       },
       "headlineColorPrimaryDark": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -858,12 +778,8 @@
           "$type": "color",
           "comment": "Bild&SpoBi: Tone 100"
         },
-        "name": "GlobalTextHeadlineColorPrimaryDark",
-        "attributes": {
-          "category": "Global",
-          "type": "Text",
-          "item": "headlineColorPrimaryDark"
-        },
+        "name": "headlineColorPrimaryDark",
+        "attributes": {},
         "path": [
           "Global",
           "Text",
@@ -871,7 +787,7 @@
         ]
       },
       "kickerTextColorOnBg": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -899,12 +815,8 @@
           "$type": "color",
           "comment": "This variable is used on kicker texts that are on top of a color that is different from the outer color of the overall user interface. Bild & SpoBi: Tone 100"
         },
-        "name": "GlobalTextKickerTextColorOnBg",
-        "attributes": {
-          "category": "Global",
-          "type": "Text",
-          "item": "kickerTextColorOnBg"
-        },
+        "name": "kickerTextColorOnBg",
+        "attributes": {},
         "path": [
           "Global",
           "Text",
@@ -912,7 +824,7 @@
         ]
       },
       "kickerTextColorOnSurface": {
-        "$value": "#dd0000",
+        "$value": "#DD0000",
         "value": "#DD0000",
         "type": "color",
         "$extensions": {
@@ -940,12 +852,8 @@
           "$type": "color",
           "comment": "This variable is used for the color of kicker texts that are not no top of a different color of the overall user interface. Bild: 046 ; SpoBi: 060"
         },
-        "name": "GlobalTextKickerTextColorOnSurface",
-        "attributes": {
-          "category": "Global",
-          "type": "Text",
-          "item": "kickerTextColorOnSurface"
-        },
+        "name": "kickerTextColorOnSurface",
+        "attributes": {},
         "path": [
           "Global",
           "Text",
@@ -953,7 +861,7 @@
         ]
       },
       "kickerTextColorOnSurfaceDark": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -981,12 +889,8 @@
           "$type": "color",
           "comment": "Use this variable for kicker texts that are directly on top of the color of the overall user interface. Bild & SpoBi tone 060."
         },
-        "name": "GlobalTextKickerTextColorOnSurfaceDark",
-        "attributes": {
-          "category": "Global",
-          "type": "Text",
-          "item": "kickerTextColorOnSurfaceDark"
-        },
+        "name": "kickerTextColorOnSurfaceDark",
+        "attributes": {},
         "path": [
           "Global",
           "Text",
@@ -994,7 +898,7 @@
         ]
       },
       "textColorSecondary": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -1022,12 +926,8 @@
           "$type": "color",
           "comment": "Bild & SpoBi: Tone 060"
         },
-        "name": "GlobalTextTextColorSecondary",
-        "attributes": {
-          "category": "Global",
-          "type": "Text",
-          "item": "textColorSecondary"
-        },
+        "name": "textColorSecondary",
+        "attributes": {},
         "path": [
           "Global",
           "Text",
@@ -1035,7 +935,7 @@
         ]
       },
       "textColorSecondaryDark": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -1063,12 +963,8 @@
           "$type": "color",
           "comment": "Bild & SpoBi: Tone 060"
         },
-        "name": "GlobalTextTextColorSecondaryDark",
-        "attributes": {
-          "category": "Global",
-          "type": "Text",
-          "item": "textColorSecondaryDark"
-        },
+        "name": "textColorSecondaryDark",
+        "attributes": {},
         "path": [
           "Global",
           "Text",
@@ -1076,7 +972,7 @@
         ]
       },
       "kickerBgColorOnSurface": {
-        "$value": "#dd0000",
+        "$value": "#DD0000",
         "value": "#DD0000",
         "type": "color",
         "$extensions": {
@@ -1104,12 +1000,8 @@
           "$type": "color",
           "comment": "Use this variable for the color immediately behind the bounding box of the kicker text element. Bild: 046 ; SpoBi: 029"
         },
-        "name": "GlobalTextKickerBgColorOnSurface",
-        "attributes": {
-          "category": "Global",
-          "type": "Text",
-          "item": "kickerBgColorOnSurface"
-        },
+        "name": "kickerBgColorOnSurface",
+        "attributes": {},
         "path": [
           "Global",
           "Text",
@@ -1117,7 +1009,7 @@
         ]
       },
       "kickerBgColorOnSurfaceDark": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -1145,12 +1037,8 @@
           "$type": "color",
           "comment": "Use this variable for the dark mode color of the background immediately around the kicker text element. Bild: 060 ; SpoBi: 060"
         },
-        "name": "GlobalTextKickerBgColorOnSurfaceDark",
-        "attributes": {
-          "category": "Global",
-          "type": "Text",
-          "item": "kickerBgColorOnSurfaceDark"
-        },
+        "name": "kickerBgColorOnSurfaceDark",
+        "attributes": {},
         "path": [
           "Global",
           "Text",
@@ -1191,13 +1079,8 @@
             "$type": "color",
             "comment": "Bild & SpoBi: Tone 015"
           },
-          "name": "ComponentButtonPrimaryNeutralButtonPrimaryBgColorIdle",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "PrimaryNeutral",
-            "subitem": "buttonPrimaryBgColorIdle"
-          },
+          "name": "buttonPrimaryBgColorIdle",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -1206,7 +1089,7 @@
           ]
         },
         "buttonPrimaryBgColorHover": {
-          "$value": "#4b525a",
+          "$value": "#4B525A",
           "value": "#4B525A",
           "type": "color",
           "$extensions": {
@@ -1234,13 +1117,8 @@
             "$type": "color",
             "comment": "Bild & SpoBi: Tone 035"
           },
-          "name": "ComponentButtonPrimaryNeutralButtonPrimaryBgColorHover",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "PrimaryNeutral",
-            "subitem": "buttonPrimaryBgColorHover"
-          },
+          "name": "buttonPrimaryBgColorHover",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -1249,7 +1127,7 @@
           ]
         },
         "buttonPrimaryBgColorIdleDark": {
-          "$value": "#ffffff",
+          "$value": "#FFFFFF",
           "value": "#FFFFFF",
           "type": "color",
           "$extensions": {
@@ -1277,13 +1155,8 @@
             "$type": "color",
             "comment": "Bild & SpoBi: Tone 100"
           },
-          "name": "ComponentButtonPrimaryNeutralButtonPrimaryBgColorIdleDark",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "PrimaryNeutral",
-            "subitem": "buttonPrimaryBgColorIdleDark"
-          },
+          "name": "buttonPrimaryBgColorIdleDark",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -1292,7 +1165,7 @@
           ]
         },
         "buttonPrimaryBgColorHoverDark": {
-          "$value": "#e9ecef",
+          "$value": "#E9ECEF",
           "value": "#E9ECEF",
           "type": "color",
           "$extensions": {
@@ -1320,13 +1193,8 @@
             "$type": "color",
             "comment": "Bild: 093 ; SpoBi: 081"
           },
-          "name": "ComponentButtonPrimaryNeutralButtonPrimaryBgColorHoverDark",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "PrimaryNeutral",
-            "subitem": "buttonPrimaryBgColorHoverDark"
-          },
+          "name": "buttonPrimaryBgColorHoverDark",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -1337,7 +1205,7 @@
       },
       "PrimaryBrand": {
         "buttonPrimaryBgColorIdle": {
-          "$value": "#dd0000",
+          "$value": "#DD0000",
           "value": "#DD0000",
           "type": "color",
           "$extensions": {
@@ -1365,13 +1233,8 @@
             "$type": "color",
             "comment": "Bild: 046 ; SpoBi: 029"
           },
-          "name": "ComponentButtonPrimaryBrandButtonPrimaryBgColorIdle",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "PrimaryBrand",
-            "subitem": "buttonPrimaryBgColorIdle"
-          },
+          "name": "buttonPrimaryBgColorIdle",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -1380,7 +1243,7 @@
           ]
         },
         "buttonPrimaryBgColorIdleDark": {
-          "$value": "#dd0000",
+          "$value": "#DD0000",
           "value": "#DD0000",
           "type": "color",
           "$extensions": {
@@ -1408,13 +1271,8 @@
             "$type": "color",
             "comment": "This variable controls the primary button idle color for two brands in dark mode. Bild: 046 ; SpoBi: 038"
           },
-          "name": "ComponentButtonPrimaryBrandButtonPrimaryBgColorIdleDark",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "PrimaryBrand",
-            "subitem": "buttonPrimaryBgColorIdleDark"
-          },
+          "name": "buttonPrimaryBgColorIdleDark",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -1423,7 +1281,7 @@
           ]
         },
         "buttonPrimaryBgColorHover": {
-          "$value": "#af0002",
+          "$value": "#AF0002",
           "value": "#AF0002",
           "type": "color",
           "$extensions": {
@@ -1451,13 +1309,8 @@
             "$type": "color",
             "comment": "Bild: 035 ; SpoBi: 016"
           },
-          "name": "ComponentButtonPrimaryBrandButtonPrimaryBgColorHover",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "PrimaryBrand",
-            "subitem": "buttonPrimaryBgColorHover"
-          },
+          "name": "buttonPrimaryBgColorHover",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -1466,7 +1319,7 @@
           ]
         },
         "buttonPrimaryBgColorHoverDark": {
-          "$value": "#af0002",
+          "$value": "#AF0002",
           "value": "#AF0002",
           "type": "color",
           "$extensions": {
@@ -1494,13 +1347,8 @@
             "$type": "color",
             "comment": "This variable stores colors for the hover state of primary buttons for two brands in dark mode. Bild: 035 ; SpoBi: 029"
           },
-          "name": "ComponentButtonPrimaryBrandButtonPrimaryBgColorHoverDark",
-          "attributes": {
-            "category": "Component",
-            "type": "Button",
-            "item": "PrimaryBrand",
-            "subitem": "buttonPrimaryBgColorHoverDark"
-          },
+          "name": "buttonPrimaryBgColorHoverDark",
+          "attributes": {},
           "path": [
             "Component",
             "Button",
@@ -1512,7 +1360,7 @@
     },
     "BreakingNews": {
       "breakingNewsTextContentColor": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -1540,12 +1388,8 @@
           "$type": "color",
           "comment": "This variable is used on the text for headlines in the horizontally animated breaking news strip. Bild: 100 ; SpoBi: 015"
         },
-        "name": "ComponentBreakingNewsBreakingNewsTextContentColor",
-        "attributes": {
-          "category": "Component",
-          "type": "BreakingNews",
-          "item": "breakingNewsTextContentColor"
-        },
+        "name": "breakingNewsTextContentColor",
+        "attributes": {},
         "path": [
           "Component",
           "BreakingNews",
@@ -1581,12 +1425,8 @@
           "$type": "color",
           "comment": "This variable is used on the breaking news strip that has horizontally animated headlines. Bild: 015 ; SpoBi: 081"
         },
-        "name": "ComponentBreakingNewsBreakingNewsSurfaceColor",
-        "attributes": {
-          "category": "Component",
-          "type": "BreakingNews",
-          "item": "breakingNewsSurfaceColor"
-        },
+        "name": "breakingNewsSurfaceColor",
+        "attributes": {},
         "path": [
           "Component",
           "BreakingNews",
@@ -1594,7 +1434,7 @@
         ]
       },
       "breakingNewsTitleSurfaceColor": {
-        "$value": "#fd8227",
+        "$value": "#FD8227",
         "value": "#FD8227",
         "type": "color",
         "$extensions": {
@@ -1622,12 +1462,8 @@
           "$type": "color",
           "comment": "This variable is used for the background color of the \"Breaking News\" title. Bild: 067 ; SpoBi: 016"
         },
-        "name": "ComponentBreakingNewsBreakingNewsTitleSurfaceColor",
-        "attributes": {
-          "category": "Component",
-          "type": "BreakingNews",
-          "item": "breakingNewsTitleSurfaceColor"
-        },
+        "name": "breakingNewsTitleSurfaceColor",
+        "attributes": {},
         "path": [
           "Component",
           "BreakingNews",
@@ -1635,7 +1471,7 @@
         ]
       },
       "breakingNewsTopTitleTextColor": {
-        "$value": "#1c1c1c",
+        "$value": "#1C1C1C",
         "value": "#1C1C1C",
         "type": "color",
         "$extensions": {
@@ -1663,12 +1499,8 @@
           "$type": "color",
           "comment": "This variable is used for the color of the \"breaking\" word in the \"breaking news\" horizontally animated headlines strip. Bild: 010 ; SpoBi: 081"
         },
-        "name": "ComponentBreakingNewsBreakingNewsTopTitleTextColor",
-        "attributes": {
-          "category": "Component",
-          "type": "BreakingNews",
-          "item": "breakingNewsTopTitleTextColor"
-        },
+        "name": "breakingNewsTopTitleTextColor",
+        "attributes": {},
         "path": [
           "Component",
           "BreakingNews",
@@ -1676,7 +1508,7 @@
         ]
       },
       "breakingNewsSurfaceColorDark": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -1704,12 +1536,8 @@
           "$type": "color",
           "comment": "This variable is for the background color of the horizontally animated strip with headlines for breaking news on dark mode.  Bild: 093 ; SpoBi: 081"
         },
-        "name": "ComponentBreakingNewsBreakingNewsSurfaceColorDark",
-        "attributes": {
-          "category": "Component",
-          "type": "BreakingNews",
-          "item": "breakingNewsSurfaceColorDark"
-        },
+        "name": "breakingNewsSurfaceColorDark",
+        "attributes": {},
         "path": [
           "Component",
           "BreakingNews",
@@ -1745,12 +1573,8 @@
           "$type": "color",
           "comment": "This variable is used on the text for headlines in the horizontally animated breaking news strip on dark mode. Bild&SpoBi: 015"
         },
-        "name": "ComponentBreakingNewsBreakingNewsTextContentColorDark",
-        "attributes": {
-          "category": "Component",
-          "type": "BreakingNews",
-          "item": "breakingNewsTextContentColorDark"
-        },
+        "name": "breakingNewsTextContentColorDark",
+        "attributes": {},
         "path": [
           "Component",
           "BreakingNews",
@@ -1758,7 +1582,7 @@
         ]
       },
       "breakingNewsBottomTitleTextColor": {
-        "$value": "#1c1c1c",
+        "$value": "#1C1C1C",
         "value": "#1C1C1C",
         "type": "color",
         "$extensions": {
@@ -1786,12 +1610,8 @@
           "$type": "color",
           "comment": "This variable is used for the color of the \"News\" word in the breaking news horizontal animated headlines strip. Bild: 010 ; SpoBi: 100"
         },
-        "name": "ComponentBreakingNewsBreakingNewsBottomTitleTextColor",
-        "attributes": {
-          "category": "Component",
-          "type": "BreakingNews",
-          "item": "breakingNewsBottomTitleTextColor"
-        },
+        "name": "breakingNewsBottomTitleTextColor",
+        "attributes": {},
         "path": [
           "Component",
           "BreakingNews",
@@ -1801,7 +1621,7 @@
     },
     "Teaser": {
       "teaserTitleBackgroundGradientStart": {
-        "$value": "#000000b2",
+        "$value": "rgba(0, 0, 0, 0.699999988079071)",
         "value": "rgba(0, 0, 0, 0.699999988079071)",
         "type": "color",
         "$extensions": {
@@ -1827,12 +1647,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentTeaserTeaserTitleBackgroundGradientStart",
-        "attributes": {
-          "category": "Component",
-          "type": "Teaser",
-          "item": "teaserTitleBackgroundGradientStart"
-        },
+        "name": "teaserTitleBackgroundGradientStart",
+        "attributes": {},
         "path": [
           "Component",
           "Teaser",
@@ -1840,7 +1656,7 @@
         ]
       },
       "teaserTitleBackgroundGradientStop": {
-        "$value": "#00000000",
+        "$value": "rgba(0, 0, 0, 0)",
         "value": "rgba(0, 0, 0, 0)",
         "type": "color",
         "$extensions": {
@@ -1866,12 +1682,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentTeaserTeaserTitleBackgroundGradientStop",
-        "attributes": {
-          "category": "Component",
-          "type": "Teaser",
-          "item": "teaserTitleBackgroundGradientStop"
-        },
+        "name": "teaserTitleBackgroundGradientStop",
+        "attributes": {},
         "path": [
           "Component",
           "Teaser",
@@ -1881,7 +1693,7 @@
     },
     "Menu": {
       "menuLinkLaneSurfaceColor": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -1909,12 +1721,8 @@
           "$type": "color",
           "comment": "This variable is used for making possible the default color difference between the Bild and SportBild link lanes inside the menu component."
         },
-        "name": "ComponentMenuMenuLinkLaneSurfaceColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "menuLinkLaneSurfaceColor"
-        },
+        "name": "menuLinkLaneSurfaceColor",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -1922,7 +1730,7 @@
         ]
       },
       "menuLinkLaneLabelColor": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -1950,12 +1758,8 @@
           "$type": "color",
           "comment": "This variable is used for making possible the default color difference between the Bild and SportBild link lane labels inside the menu component."
         },
-        "name": "ComponentMenuMenuLinkLaneLabelColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "menuLinkLaneLabelColor"
-        },
+        "name": "menuLinkLaneLabelColor",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -1963,7 +1767,7 @@
         ]
       },
       "menuLinkLaneLabelColorDark": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -1989,12 +1793,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuMenuLinkLaneLabelColorDark",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "menuLinkLaneLabelColorDark"
-        },
+        "name": "menuLinkLaneLabelColorDark",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -2030,12 +1830,8 @@
           "$type": "color",
           "comment": "This variable is used for making possible the default color difference between the Bild and SportBild link lanes inside the menu component on Dark mode."
         },
-        "name": "ComponentMenuMenuLinkLaneSurfaceColorDark",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "menuLinkLaneSurfaceColorDark"
-        },
+        "name": "menuLinkLaneSurfaceColorDark",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -2043,7 +1839,7 @@
         ]
       },
       "menuLinkColorBorderActive": {
-        "$value": "#dd0000",
+        "$value": "#DD0000",
         "value": "#DD0000",
         "type": "color",
         "$extensions": {
@@ -2069,12 +1865,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuMenuLinkColorBorderActive",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "menuLinkColorBorderActive"
-        },
+        "name": "menuLinkColorBorderActive",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -2082,7 +1874,7 @@
         ]
       },
       "menuLinkColorBorderActiveDark": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -2108,12 +1900,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuMenuLinkColorBorderActiveDark",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "menuLinkColorBorderActiveDark"
-        },
+        "name": "menuLinkColorBorderActiveDark",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -2149,12 +1937,8 @@
           "$type": "color",
           "comment": "This variable is used for making possible the active color difference between the Bild and SportBild link lane labels inside the menu component."
         },
-        "name": "ComponentMenuMenuLinkLaneLabelColorActive",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "menuLinkLaneLabelColorActive"
-        },
+        "name": "menuLinkLaneLabelColorActive",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -2162,7 +1946,7 @@
         ]
       },
       "appTopBarSurfaceColor": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -2188,12 +1972,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuAppTopBarSurfaceColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTopBarSurfaceColor"
-        },
+        "name": "appTopBarSurfaceColor",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -2201,7 +1981,7 @@
         ]
       },
       "appTopBarBgColorDark": {
-        "$value": "#343c41",
+        "$value": "#343C41",
         "value": "#343C41",
         "type": "color",
         "$extensions": {
@@ -2227,12 +2007,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuAppTopBarBgColorDark",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTopBarBgColorDark"
-        },
+        "name": "appTopBarBgColorDark",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -2240,7 +2016,7 @@
         ]
       },
       "appBottomTabBarBgColor": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -2266,12 +2042,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuAppBottomTabBarBgColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appBottomTabBarBgColor"
-        },
+        "name": "appBottomTabBarBgColor",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -2279,7 +2051,7 @@
         ]
       },
       "appBottomTabBarBgDark": {
-        "$value": "#343c41",
+        "$value": "#343C41",
         "value": "#343C41",
         "type": "color",
         "$extensions": {
@@ -2305,12 +2077,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuAppBottomTabBarBgDark",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appBottomTabBarBgDark"
-        },
+        "name": "appBottomTabBarBgDark",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -2318,7 +2086,7 @@
         ]
       },
       "appTopBarIconColor": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -2344,12 +2112,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuAppTopBarIconColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTopBarIconColor"
-        },
+        "name": "appTopBarIconColor",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -2357,7 +2121,7 @@
         ]
       },
       "appTopBarIconColorDark": {
-        "$value": "#8c9196",
+        "$value": "#8C9196",
         "value": "#8C9196",
         "type": "color",
         "$extensions": {
@@ -2383,12 +2147,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuAppTopBarIconColorDark",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTopBarIconColorDark"
-        },
+        "name": "appTopBarIconColorDark",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -2422,12 +2182,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuAppTopBarTextColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTopBarTextColor"
-        },
+        "name": "appTopBarTextColor",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -2435,7 +2191,7 @@
         ]
       },
       "appTopBarTextColorDark": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -2461,12 +2217,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuAppTopBarTextColorDark",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTopBarTextColorDark"
-        },
+        "name": "appTopBarTextColorDark",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -2474,7 +2226,7 @@
         ]
       },
       "appTobBarTabNavBottomBorder": {
-        "$value": "#e9ecef",
+        "$value": "#E9ECEF",
         "value": "#E9ECEF",
         "type": "color",
         "$extensions": {
@@ -2500,12 +2252,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuAppTobBarTabNavBottomBorder",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTobBarTabNavBottomBorder"
-        },
+        "name": "appTobBarTabNavBottomBorder",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -2513,7 +2261,7 @@
         ]
       },
       "appTobBarTabNavBottomBorderDark": {
-        "$value": "#4b525a",
+        "$value": "#4B525A",
         "value": "#4B525A",
         "type": "color",
         "$extensions": {
@@ -2539,12 +2287,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuAppTobBarTabNavBottomBorderDark",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTobBarTabNavBottomBorderDark"
-        },
+        "name": "appTobBarTabNavBottomBorderDark",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -2552,7 +2296,7 @@
         ]
       },
       "appTobBarTabNavBottomBorderActive": {
-        "$value": "#dd0000",
+        "$value": "#DD0000",
         "value": "#DD0000",
         "type": "color",
         "$extensions": {
@@ -2578,12 +2322,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuAppTobBarTabNavBottomBorderActive",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTobBarTabNavBottomBorderActive"
-        },
+        "name": "appTobBarTabNavBottomBorderActive",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -2591,7 +2331,7 @@
         ]
       },
       "appTobBarTabNavBottomBorderActiveDark": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -2617,12 +2357,8 @@
           },
           "$type": "color"
         },
-        "name": "ComponentMenuAppTobBarTabNavBottomBorderActiveDark",
-        "attributes": {
-          "category": "Component",
-          "type": "Menu",
-          "item": "appTobBarTabNavBottomBorderActiveDark"
-        },
+        "name": "appTobBarTabNavBottomBorderActiveDark",
+        "attributes": {},
         "path": [
           "Component",
           "Menu",
@@ -2660,12 +2396,8 @@
           "$type": "color",
           "comment": "09-2025 css --article-author-name-color // Bild: 015; SpoBi: 045"
         },
-        "name": "ComponentAvatarAvatarLabelColor",
-        "attributes": {
-          "category": "Component",
-          "type": "Avatar",
-          "item": "avatarLabelColor"
-        },
+        "name": "avatarLabelColor",
+        "attributes": {},
         "path": [
           "Component",
           "Avatar",
@@ -2673,7 +2405,7 @@
         ]
       },
       "avatarLabelColorDark": {
-        "$value": "#ffffff",
+        "$value": "#FFFFFF",
         "value": "#FFFFFF",
         "type": "color",
         "$extensions": {
@@ -2701,12 +2433,8 @@
           "$type": "color",
           "comment": "09-2025 css --article-author-name-color // Bild: 100; SpoBi: 093"
         },
-        "name": "ComponentAvatarAvatarLabelColorDark",
-        "attributes": {
-          "category": "Component",
-          "type": "Avatar",
-          "item": "avatarLabelColorDark"
-        },
+        "name": "avatarLabelColorDark",
+        "attributes": {},
         "path": [
           "Component",
           "Avatar",
@@ -2714,7 +2442,7 @@
         ]
       },
       "avatarLabelColorHover": {
-        "$value": "#dd0000",
+        "$value": "#DD0000",
         "value": "#DD0000",
         "type": "color",
         "$extensions": {
@@ -2742,12 +2470,8 @@
           "$type": "color",
           "comment": "This variable is used for decorating the avatar text's underline color. Bild: 046; SpoBi: 029"
         },
-        "name": "ComponentAvatarAvatarLabelColorHover",
-        "attributes": {
-          "category": "Component",
-          "type": "Avatar",
-          "item": "avatarLabelColorHover"
-        },
+        "name": "avatarLabelColorHover",
+        "attributes": {},
         "path": [
           "Component",
           "Avatar",
@@ -2756,7 +2480,7 @@
       }
     },
     "chipColorActive": {
-      "$value": "#dd0000",
+      "$value": "#DD0000",
       "value": "#DD0000",
       "type": "color",
       "$extensions": {
@@ -2782,11 +2506,8 @@
         },
         "$type": "color"
       },
-      "name": "ComponentChipColorActive",
-      "attributes": {
-        "category": "Component",
-        "type": "chipColorActive"
-      },
+      "name": "chipColorActive",
+      "attributes": {},
       "path": [
         "Component",
         "chipColorActive"
