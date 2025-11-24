@@ -56,6 +56,7 @@ export const SemanticCoreCoreColorTertiaryConstant = "#232629";
 export const SemanticCoreCoreColorTertiaryVvPipeTest = "#476d93";
 export const SemanticCoreNpmTest = "#476d93";
 export const SemanticCoreFelipeTestColor = "#e9580a";
+export const SemanticCoreMariotest = "#e9580a";
 export const SemanticIconIconColorPrimary = "#4b525a";
 export const SemanticIconIconColorInverse = "#ced4da";
 export const SemanticIconIconColorSecondaryConstant = "#8c9196";

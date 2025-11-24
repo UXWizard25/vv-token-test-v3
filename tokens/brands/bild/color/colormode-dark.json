@@ -766,6 +766,20 @@
         },
         "$type": "color",
         "comment": "this is a test for the token pipeline"
+      },
+      "mariotest": {
+        "$value": "#031A31",
+        "value": "#031A31",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:20854:75"
+          }
+        },
+        "$type": "color",
+        "comment": "this is a test for the token pipeline"
       }
     },
     "Icon": {

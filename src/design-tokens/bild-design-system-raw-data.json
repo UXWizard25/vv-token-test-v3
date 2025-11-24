@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2025-11-24T09:08:09.726Z",
+  "lastModified": "2025-11-24T09:09:53.138Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -2092,7 +2092,8 @@
         "VariableID:19881:148841",
         "VariableID:20773:45",
         "VariableID:20790:160",
-        "VariableID:20798:160"
+        "VariableID:20798:160",
+        "VariableID:20854:75"
       ],
       "variables": [
         {
@@ -6566,6 +6567,21 @@
         {
           "id": "VariableID:20798:160",
           "name": "Semantic/Core/felipeTestColor",
+          "description": "this is a test for the token pipeline",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "588:0": "#E9580A",
+            "592:1": "#031A31"
+          },
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "hiddenFromPublishing": false,
+          "variableCollectionId": "VariableCollectionId:588:1979"
+        },
+        {
+          "id": "VariableID:20854:75",
+          "name": "Semantic/Core/mariotest",
           "description": "this is a test for the token pipeline",
           "resolvedType": "COLOR",
           "valuesByMode": {

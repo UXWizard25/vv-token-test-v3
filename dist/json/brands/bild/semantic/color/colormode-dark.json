@@ -2224,6 +2224,47 @@
           "Core",
           "felipeTestColor"
         ]
+      },
+      "mariotest": {
+        "$value": "#031a31",
+        "value": "#031A31",
+        "type": "color",
+        "$extensions": {
+          "com.figma": {
+            "collectionId": "VariableCollectionId:588:1979",
+            "collectionName": "ColorMode",
+            "variableId": "VariableID:20854:75"
+          }
+        },
+        "$type": "color",
+        "comment": "this is a test for the token pipeline",
+        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "isSource": true,
+        "original": {
+          "$value": "#031A31",
+          "value": "#031A31",
+          "type": "color",
+          "$extensions": {
+            "com.figma": {
+              "collectionId": "VariableCollectionId:588:1979",
+              "collectionName": "ColorMode",
+              "variableId": "VariableID:20854:75"
+            }
+          },
+          "$type": "color",
+          "comment": "this is a test for the token pipeline"
+        },
+        "name": "SemanticCoreMariotest",
+        "attributes": {
+          "category": "Semantic",
+          "type": "Core",
+          "item": "mariotest"
+        },
+        "path": [
+          "Semantic",
+          "Core",
+          "mariotest"
+        ]
       }
     },
     "Icon": {
