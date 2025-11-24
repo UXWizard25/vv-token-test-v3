@@ -28,7 +28,7 @@ public class Spaceprimitive {
     public static let Space10x = "80px"
     public static let Space20x = "160px"
     public static let Space25x = "20px"
-    public static let Space025x = "-2px"
+    public static let SpaceNeg025x = "-2px"
     public static let Space075x = "6px"
     public static let Space125x = "10px"
     public static let Space275x = "22px"

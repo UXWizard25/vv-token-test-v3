@@ -355,7 +355,7 @@
           "BILD093"
         ]
       },
-      "BILD085-50": {
+      "BILD085-alpha50": {
         "$value": "rgba(206, 212, 218, 0.5)",
         "value": "rgba(206, 212, 218, 0.5)",
         "type": "color",
@@ -384,12 +384,12 @@
           "$type": "color",
           "comment": "The 50% opacity on this color makes it equivalent to BILD093."
         },
-        "name": "bild08550",
+        "name": "bild085Alpha50",
         "attributes": {},
         "path": [
           "BILD",
           "gray",
-          "BILD085-50"
+          "BILD085-alpha50"
         ]
       },
       "BILD073": {
@@ -750,7 +750,7 @@
           "BILDGreen093"
         ]
       },
-      "BILDGreen093-50": {
+      "BILDGreen093-alpha50": {
         "$value": "rgba(206, 244, 228, 0.5)",
         "value": "rgba(206, 244, 228, 0.5)",
         "type": "color",
@@ -777,15 +777,15 @@
           },
           "$type": "color"
         },
-        "name": "bildgreen09350",
+        "name": "bildgreen093Alpha50",
         "attributes": {},
         "path": [
           "BILD",
           "green",
-          "BILDGreen093-50"
+          "BILDGreen093-alpha50"
         ]
       },
-      "BILDGreen056-50": {
+      "BILDGreen056-alpha50": {
         "$value": "rgba(0, 155, 90, 0.5)",
         "value": "rgba(0, 155, 90, 0.5)",
         "type": "color",
@@ -812,12 +812,12 @@
           },
           "$type": "color"
         },
-        "name": "bildgreen05650",
+        "name": "bildgreen056Alpha50",
         "attributes": {},
         "path": [
           "BILD",
           "green",
-          "BILDGreen056-50"
+          "BILDGreen056-alpha50"
         ]
       },
       "BILDGreen040": {
@@ -2247,7 +2247,7 @@
       }
     },
     "alpha": {
-      "spobiBlue016-0": {
+      "spobiBlue016-alpha0": {
         "$value": "rgba(10, 39, 80, 0)",
         "value": "rgba(10, 39, 80, 0)",
         "type": "color",
@@ -2274,15 +2274,15 @@
           },
           "$type": "color"
         },
-        "name": "spobiBlue0160",
+        "name": "spobiBlue016Alpha0",
         "attributes": {},
         "path": [
           "SportBILD",
           "alpha",
-          "spobiBlue016-0"
+          "spobiBlue016-alpha0"
         ]
       },
-      "spobiBlue016-70": {
+      "spobiBlue016-alpha70": {
         "$value": "rgba(10, 39, 80, 0.699999988079071)",
         "value": "rgba(10, 39, 80, 0.699999988079071)",
         "type": "color",
@@ -2309,12 +2309,12 @@
           },
           "$type": "color"
         },
-        "name": "spobiBlue01670",
+        "name": "spobiBlue016Alpha70",
         "attributes": {},
         "path": [
           "SportBILD",
           "alpha",
-          "spobiBlue016-70"
+          "spobiBlue016-alpha70"
         ]
       }
     }

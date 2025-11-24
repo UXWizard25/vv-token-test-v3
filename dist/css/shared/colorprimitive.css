@@ -1,6 +1,6 @@
 /**
  * colorprimitive.css
- * Generiert am: 2025-11-24T20:34:43.006Z
+ * Generiert am: 2025-11-24T20:36:11.715Z
  * Nicht manuell bearbeiten!
  */
 
@@ -67,7 +67,7 @@
   /**
    * The 50% opacity on this color makes it equivalent to BILD093.
    */
-  --bild085-50: rgba(206, 212, 218, 0.5);
+  --bild085-alpha50: rgba(206, 212, 218, 0.5);
   --bild073: #AEB4B9;
   --bild045: #666B70;
   --bild010: #1C1C1C;
@@ -77,8 +77,8 @@
   --bildgreen070: #00C373;
   --bildgreen063: #00AF67;
   --bildgreen093: #CEF4E4;
-  --bildgreen093-50: rgba(206, 244, 228, 0.5);
-  --bildgreen056-50: rgba(0, 155, 90, 0.5);
+  --bildgreen093-alpha50: rgba(206, 244, 228, 0.5);
+  --bildgreen056-alpha50: rgba(0, 155, 90, 0.5);
   /**
    * This value of green was found in a text field's text color.
    */
@@ -171,8 +171,8 @@
      ============================================ */
 
   /* SportBILD - alpha */
-  --spobi-blue016-0: rgba(10, 39, 80, 0);
-  --spobi-blue016-70: rgba(10, 39, 80, 0.699999988079071);
+  --spobi-blue016-alpha0: rgba(10, 39, 80, 0);
+  --spobi-blue016-alpha70: rgba(10, 39, 80, 0.699999988079071);
 
   /* SportBILD - blue */
   --spobi-blue098: #F7F9FD;

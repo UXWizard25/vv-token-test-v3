@@ -53,7 +53,7 @@ public class Colorprimitive {
     public static let Bild096 = UIColor(red: 0.949, green: 0.957, blue: 0.961, alpha: 1.000)
     public static let Bild093 = UIColor(red: 0.914, green: 0.925, blue: 0.937, alpha: 1.000)
     /** The 50% opacity on this color makes it equivalent to BILD093. */
-    public static let Bild08550 = UIColor(red: 0.808, green: 0.831, blue: 0.855, alpha: 0.500)
+    public static let Bild085Alpha50 = UIColor(red: 0.808, green: 0.831, blue: 0.855, alpha: 0.500)
     public static let Bild073 = UIColor(red: 0.682, green: 0.706, blue: 0.725, alpha: 1.000)
     public static let Bild045 = UIColor(red: 0.400, green: 0.420, blue: 0.439, alpha: 1.000)
     public static let Bild010 = UIColor(red: 0.110, green: 0.110, blue: 0.110, alpha: 1.000)
@@ -63,8 +63,8 @@ public class Colorprimitive {
     public static let Bildgreen070 = UIColor(red: 0.000, green: 0.765, blue: 0.451, alpha: 1.000)
     public static let Bildgreen063 = UIColor(red: 0.000, green: 0.686, blue: 0.404, alpha: 1.000)
     public static let Bildgreen093 = UIColor(red: 0.808, green: 0.957, blue: 0.894, alpha: 1.000)
-    public static let Bildgreen09350 = UIColor(red: 0.808, green: 0.957, blue: 0.894, alpha: 0.500)
-    public static let Bildgreen05650 = UIColor(red: 0.000, green: 0.608, blue: 0.353, alpha: 0.500)
+    public static let Bildgreen093Alpha50 = UIColor(red: 0.808, green: 0.957, blue: 0.894, alpha: 0.500)
+    public static let Bildgreen056Alpha50 = UIColor(red: 0.000, green: 0.608, blue: 0.353, alpha: 0.500)
     /** This value of green was found in a text field's text color. */
     public static let Bildgreen040 = UIColor(red: 0.000, green: 0.431, blue: 0.243, alpha: 1.000)
     public static let Bildgreen056 = UIColor(red: 0.094, green: 0.600, blue: 0.361, alpha: 1.000)
@@ -147,8 +147,8 @@ public class Colorprimitive {
     // MARK: - ============================================
 
     // MARK: - SportBILD - alpha
-    public static let SpobiBlue0160 = UIColor(red: 0.039, green: 0.153, blue: 0.314, alpha: 0.000)
-    public static let SpobiBlue01670 = UIColor(red: 0.039, green: 0.153, blue: 0.314, alpha: 0.700)
+    public static let SpobiBlue016Alpha0 = UIColor(red: 0.039, green: 0.153, blue: 0.314, alpha: 0.000)
+    public static let SpobiBlue016Alpha70 = UIColor(red: 0.039, green: 0.153, blue: 0.314, alpha: 0.700)
 
     // MARK: - SportBILD - blue
     public static let SpobiBlue098 = UIColor(red: 0.969, green: 0.976, blue: 0.992, alpha: 1.000)

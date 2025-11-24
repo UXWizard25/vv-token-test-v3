@@ -1,6 +1,6 @@
 /**
  * typography-sm.js
- * Generiert am: 2025-11-24T20:34:47.503Z
+ * Generiert am: 2025-11-24T20:36:16.157Z
  * Nicht manuell bearbeiten!
  */
 

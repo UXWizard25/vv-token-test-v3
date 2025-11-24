@@ -1,6 +1,6 @@
 /**
  * colorprimitive.js
- * Generiert am: 2025-11-24T20:34:43.009Z
+ * Generiert am: 2025-11-24T20:36:11.718Z
  * Nicht manuell bearbeiten!
  */
 
@@ -48,7 +48,7 @@ export const bild060 = "#8C9196";
 export const bild096 = "#F2F4F5";
 export const bild093 = "#E9ECEF";
 /** The 50% opacity on this color makes it equivalent to BILD093. */
-export const bild08550 = "rgba(206, 212, 218, 0.5)";
+export const bild085Alpha50 = "rgba(206, 212, 218, 0.5)";
 export const bild073 = "#AEB4B9";
 export const bild045 = "#666B70";
 export const bild010 = "#1C1C1C";
@@ -58,8 +58,8 @@ export const bild020 = "#2C3138";
 export const bildgreen070 = "#00C373";
 export const bildgreen063 = "#00AF67";
 export const bildgreen093 = "#CEF4E4";
-export const bildgreen09350 = "rgba(206, 244, 228, 0.5)";
-export const bildgreen05650 = "rgba(0, 155, 90, 0.5)";
+export const bildgreen093Alpha50 = "rgba(206, 244, 228, 0.5)";
+export const bildgreen056Alpha50 = "rgba(0, 155, 90, 0.5)";
 /** This value of green was found in a text field's text color. */
 export const bildgreen040 = "#006E3E";
 export const bildgreen056 = "#18995C";
@@ -142,8 +142,8 @@ export const travelbookCore = "#8EF0ED";
 // ============================================
 
 // SportBILD - alpha
-export const spobiBlue0160 = "rgba(10, 39, 80, 0)";
-export const spobiBlue01670 = "rgba(10, 39, 80, 0.699999988079071)";
+export const spobiBlue016Alpha0 = "rgba(10, 39, 80, 0)";
+export const spobiBlue016Alpha70 = "rgba(10, 39, 80, 0.699999988079071)";
 
 // SportBILD - blue
 export const spobiBlue098 = "#F7F9FD";

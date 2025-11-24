@@ -56,7 +56,7 @@ class Colorprimitive {
     static const bild096 = Color(0xFFF2F4F5);
     static const bild093 = Color(0xFFE9ECEF);
     /** The 50% opacity on this color makes it equivalent to BILD093. */
-    static const bild08550 = Color(0x80ced4da);
+    static const bild085Alpha50 = Color(0x80ced4da);
     static const bild073 = Color(0xFFAEB4B9);
     static const bild045 = Color(0xFF666B70);
     static const bild010 = Color(0xFF1C1C1C);
@@ -66,8 +66,8 @@ class Colorprimitive {
     static const bildgreen070 = Color(0xFF00C373);
     static const bildgreen063 = Color(0xFF00AF67);
     static const bildgreen093 = Color(0xFFCEF4E4);
-    static const bildgreen09350 = Color(0x80cef4e4);
-    static const bildgreen05650 = Color(0x80009b5a);
+    static const bildgreen093Alpha50 = Color(0x80cef4e4);
+    static const bildgreen056Alpha50 = Color(0x80009b5a);
     /** This value of green was found in a text field's text color. */
     static const bildgreen040 = Color(0xFF006E3E);
     static const bildgreen056 = Color(0xFF18995C);
@@ -150,8 +150,8 @@ class Colorprimitive {
     // ============================================
 
     // SportBILD - alpha
-    static const spobiBlue0160 = Color(0x000a2750);
-    static const spobiBlue01670 = Color(0xb20a2750);
+    static const spobiBlue016Alpha0 = Color(0x000a2750);
+    static const spobiBlue016Alpha70 = Color(0xb20a2750);
 
     // SportBILD - blue
     static const spobiBlue098 = Color(0xFFF7F9FD);

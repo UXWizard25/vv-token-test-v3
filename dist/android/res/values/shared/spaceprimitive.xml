@@ -19,7 +19,7 @@
   <dimen name="space10x">80px</dimen>
   <dimen name="space20x">160px</dimen>
   <dimen name="space2-5x">20px</dimen>
-  <dimen name="space-0-25x">-2px</dimen>
+  <dimen name="space-neg0-25x">-2px</dimen>
   <dimen name="space0-75x">6px</dimen>
   <dimen name="space1-25x">10px</dimen>
   <dimen name="space2-75x">22px</dimen>

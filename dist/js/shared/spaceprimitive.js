@@ -1,6 +1,6 @@
 /**
  * spaceprimitive.js
- * Generiert am: 2025-11-24T20:34:43.198Z
+ * Generiert am: 2025-11-24T20:36:11.913Z
  * Nicht manuell bearbeiten!
  */
 
@@ -23,7 +23,7 @@ export const space0x = "0px";
 export const space10x = "80px";
 export const space20x = "160px";
 export const space25x = "20px";
-export const space025x = "-2px";
+export const spaceNeg025x = "-2px";
 export const space075x = "6px";
 export const space125x = "10px";
 export const space275x = "22px";
