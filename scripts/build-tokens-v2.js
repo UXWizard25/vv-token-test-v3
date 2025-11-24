@@ -49,7 +49,7 @@ function createStandardPlatformConfig(buildPath, fileName) {
       buildPath: `${buildPath}/`,
       files: [{
         destination: `${fileName}.css`,
-        format: 'css/variables',
+        format: 'custom/css/variables',
         filter: tokenFilter,
         options: { outputReferences: false }
       }]
@@ -59,7 +59,7 @@ function createStandardPlatformConfig(buildPath, fileName) {
       buildPath: `${DIST_DIR}/scss/${buildPath.replace(DIST_DIR + '/css/', '')}/`,
       files: [{
         destination: `${fileName}.scss`,
-        format: 'scss/variables',
+        format: 'custom/scss/variables',
         filter: tokenFilter,
         options: { outputReferences: false }
       }]
@@ -69,7 +69,7 @@ function createStandardPlatformConfig(buildPath, fileName) {
       buildPath: `${DIST_DIR}/js/${buildPath.replace(DIST_DIR + '/css/', '')}/`,
       files: [{
         destination: `${fileName}.js`,
-        format: 'javascript/es6',
+        format: 'custom/javascript/es6',
         filter: tokenFilter,
         options: { outputReferences: false }
       }]
@@ -204,18 +204,18 @@ function createTypographyConfig(brand, breakpoint) {
         }]
       },
 
-      // SCSS: Standard variables
+      // SCSS: Custom variables with hierarchical grouping
       scss: {
         transformGroup: 'scss',
         buildPath: `${DIST_DIR}/scss/brands/${brand}/semantic/typography/`,
-        files: [{ destination: `${fileName}.scss`, format: 'scss/variables', options: { outputReferences: false } }]
+        files: [{ destination: `${fileName}.scss`, format: 'custom/scss/variables', options: { outputReferences: false } }]
       },
 
-      // JS: Standard ES6
+      // JS: Custom ES6 with hierarchical grouping
       js: {
         transformGroup: 'js',
         buildPath: `${DIST_DIR}/js/brands/${brand}/semantic/typography/`,
-        files: [{ destination: `${fileName}.js`, format: 'javascript/es6', options: { outputReferences: false } }]
+        files: [{ destination: `${fileName}.js`, format: 'custom/javascript/es6', options: { outputReferences: false } }]
       },
 
       // JSON: Standard JSON
@@ -305,18 +305,18 @@ function createEffectConfig(brand, colorMode) {
         }]
       },
 
-      // SCSS: Standard variables
+      // SCSS: Custom variables with hierarchical grouping
       scss: {
         transformGroup: 'scss',
         buildPath: `${DIST_DIR}/scss/brands/${brand}/semantic/effects/`,
-        files: [{ destination: `${fileName}.scss`, format: 'scss/variables', options: { outputReferences: false } }]
+        files: [{ destination: `${fileName}.scss`, format: 'custom/scss/variables', options: { outputReferences: false } }]
       },
 
-      // JS: Standard ES6
+      // JS: Custom ES6 with hierarchical grouping
       js: {
         transformGroup: 'js',
         buildPath: `${DIST_DIR}/js/brands/${brand}/semantic/effects/`,
-        files: [{ destination: `${fileName}.js`, format: 'javascript/es6', options: { outputReferences: false } }]
+        files: [{ destination: `${fileName}.js`, format: 'custom/javascript/es6', options: { outputReferences: false } }]
       },
 
       // JSON: Standard JSON

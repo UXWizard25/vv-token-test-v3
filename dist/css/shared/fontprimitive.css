@@ -1,0 +1,115 @@
+/**
+ * fontprimitive.css
+ * Generiert am: 2025-11-24T18:28:16.859Z
+ * Nicht manuell bearbeiten!
+ */
+
+:root {
+  /* ============================================
+     FONTFAMILY
+     ============================================ */
+
+  /* FontFamily - Advertorial */
+  --font-family-lucida-grande: Lucida Grande;
+
+  /* FontFamily - BILD */
+  --font-family-gotham-xnarrow: Gotham XNarrow;
+  --font-family-gotham-cond: Gotham Condensed;
+  --font-family-gotham: Gotham;
+
+  /* FontFamily - SportBILD */
+  --font-family-antenna-extra-cond: AntennaExtraCond;
+  --font-family-antenna-cond: AntennaCond;
+  --font-family-inter: Inter;
+
+
+  /* ============================================
+     FONTWEIGHT
+     ============================================ */
+
+  /**
+   * 700 is considered black weight because Gotham Condensed is the primary font family (most used in headlines). In other font families 700 is not black weight but bold.
+   */
+  --font-weight-700-black-font-weight: 700;
+  --font-weight-900-extra-black-font-weight: 900;
+  --font-weight-400-book-font-weight: 400;
+  --font-weight-1000-ultra-font-weight: 1000;
+  --font-weight-800-black-font-weight: 800;
+  --font-weight-350-book-font-weight: 350;
+  --font-weight-600-bold-font-weight: 600;
+  --font-weight-100-thin-font-weight: 100;
+  --300-light-font-weight: 300;
+  --font-weight-200-extra-light-font-weight: 200;
+  --font-weight-500-medium-font-weight: 500;
+  --bold-italic-font-weight-st: Bold Italic;
+  --black-font-weight-st: Black;
+
+
+  /* ============================================
+     FONTWEIGHTSTRING
+     ============================================ */
+
+  --font-weight-string-1000-ultra-font-weight: 1000;
+  --font-weight-string-900-extra-black-font-weight: 900;
+  --font-weight-string-800-black-font-weight: 800;
+  --font-weight-string-700-black-font-weight: 700;
+  --font-weight-string-600-bold-font-weight: 600;
+  --font-weight-string-500-medium-font-weight: 500;
+  --font-weight-string-400-book-font-weight: 400;
+  --font-weight-string-350-book-font-weight: 350;
+  --font-weight-string-200-extra-light-font-weight: 200;
+  --font-weight-string-100-thin-font-weight: 100;
+  --600-bold-italic-font-weight: Bold Italic;
+  --700-black-italic-font-weight: Black Italic;
+
+
+  /* ============================================
+     LETTERSPACING
+     ============================================ */
+
+  /**
+   * This variable is a primitive for use in creating semantic text styles that need to use a subtle small letter spacing value of -0.25.
+   */
+  --letter-space-0-25: -0.25px;
+  /**
+   * This variable is a primitive for use in creating semantic text styles that need to use a default letter spacing value of 0.
+   */
+  --letter-space-0: 0px;
+  /**
+   * This variable is a primitive for use in creating semantic text styles that need to use a positive letter spacing value of 1.
+   */
+  --letter-space1: 1px;
+  /**
+   * This variable is a primitive for use in creating semantic text styles that need to use a slight positive letter spacing value of 0.5.
+   */
+  --letter-space0-5: 0.5px;
+  /**
+   * This variable is a primitive for use in creating semantic text styles that need to use a subtle positive letter spacing value of 0.25.
+   */
+  --letter-space0-25: 0.25px;
+  /**
+   * This variable is a primitive for use in creating semantic variables that need to use a subtle negative letter spacing value of -0.5.
+   */
+  --letter-space-0-5: -0.5px;
+  /**
+   * This variable is a primitive for use in creating semantic text styles that need to use a large letter spacing value of 2.
+   */
+  --letter-space2: 2px;
+  /**
+   * This variable is a primitive for use in creating semantic variables that need to use a negative letter spacing value of -1.
+   */
+  --letter-space-1: -1px;
+  /**
+   * This variable is a primitive for use in creating semantic text styles that need to use a large negative letter spacing value of -2. This is usually reserved for large texts styles that are used on titles or headlines.
+   */
+  --letter-space-2: -2px;
+  /**
+   * This variable is a primitive for use in creating semantic text styles that need to use a much larger letter spacing value of 3. Text styles that have smaller font sizes should use increasingly positive values for their letter spacings on smaller device sizes.
+   */
+  --letter-space3: 3px;
+  /**
+   * This variable is a primitive for use in creating semantic text styles that need to use a large negative letter spacing value of -3. Text styles that have larger font sizes should use increasingly negative values for their letter spacings on larger device sizes.
+   */
+  --letter-space-3: -3px;
+
+}
