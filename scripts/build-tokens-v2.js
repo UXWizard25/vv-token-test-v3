@@ -34,33 +34,63 @@ const SIZE_CLASS_MAPPING = {
  * Erstellt Plattform-Konfiguration für Standard-Token (Primitives, Brand-spezifisch, etc.)
  */
 function createStandardPlatformConfig(buildPath, fileName) {
+  // Filter to exclude documentation-only tokens that cause collisions
+  const tokenFilter = (token) => {
+    // Exclude TextLabels tokens - these are documentation-only and cause name collisions
+    if (token.path && token.path.includes('TextLabels')) {
+      return false;
+    }
+    return true;
+  };
+
   return {
     css: {
-      transformGroup: 'css',
+      transformGroup: 'custom/css',
       buildPath: `${buildPath}/`,
-      files: [{ destination: `${fileName}.css`, format: 'css/variables', options: { outputReferences: false } }]
+      files: [{
+        destination: `${fileName}.css`,
+        format: 'css/variables',
+        filter: tokenFilter,
+        options: { outputReferences: false }
+      }]
     },
     scss: {
-      transformGroup: 'scss',
+      transformGroup: 'custom/scss',
       buildPath: `${DIST_DIR}/scss/${buildPath.replace(DIST_DIR + '/css/', '')}/`,
-      files: [{ destination: `${fileName}.scss`, format: 'scss/variables', options: { outputReferences: false } }]
+      files: [{
+        destination: `${fileName}.scss`,
+        format: 'scss/variables',
+        filter: tokenFilter,
+        options: { outputReferences: false }
+      }]
     },
     js: {
-      transformGroup: 'js',
+      transformGroup: 'custom/js',
       buildPath: `${DIST_DIR}/js/${buildPath.replace(DIST_DIR + '/css/', '')}/`,
-      files: [{ destination: `${fileName}.js`, format: 'javascript/es6', options: { outputReferences: false } }]
+      files: [{
+        destination: `${fileName}.js`,
+        format: 'javascript/es6',
+        filter: tokenFilter,
+        options: { outputReferences: false }
+      }]
     },
     json: {
-      transformGroup: 'js',
+      transformGroup: 'custom/js',
       buildPath: `${DIST_DIR}/json/${buildPath.replace(DIST_DIR + '/css/', '')}/`,
-      files: [{ destination: `${fileName}.json`, format: 'json', options: { outputReferences: false } }]
+      files: [{
+        destination: `${fileName}.json`,
+        format: 'json',
+        filter: tokenFilter,
+        options: { outputReferences: false }
+      }]
     },
     ios: {
-      transformGroup: 'ios-swift',
+      transformGroup: 'custom/ios-swift',
       buildPath: `${DIST_DIR}/ios/${buildPath.replace(DIST_DIR + '/css/', '')}/`,
       files: [{
         destination: `${fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}.swift`,
-        format: 'ios-swift/class.swift',
+        format: 'ios-swift/class',
+        filter: tokenFilter,
         options: {
           outputReferences: false,
           className: fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')
@@ -68,16 +98,22 @@ function createStandardPlatformConfig(buildPath, fileName) {
       }]
     },
     android: {
-      transformGroup: 'android',
+      transformGroup: 'custom/android',
       buildPath: `${DIST_DIR}/android/res/values/${buildPath.replace(DIST_DIR + '/css/', '')}/`,
-      files: [{ destination: `${fileName}.xml`, format: 'android/resources', options: { outputReferences: false } }]
+      files: [{
+        destination: `${fileName}.xml`,
+        format: 'android/resources',
+        filter: tokenFilter,
+        options: { outputReferences: false }
+      }]
     },
     flutter: {
-      transformGroup: 'flutter',
+      transformGroup: 'custom/flutter',
       buildPath: `${DIST_DIR}/flutter/${buildPath.replace(DIST_DIR + '/css/', '')}/`,
       files: [{
         destination: `${fileName}.dart`,
-        format: 'flutter/class.dart',
+        format: 'flutter/class',
+        filter: tokenFilter,
         options: {
           outputReferences: false,
           className: fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')
@@ -99,7 +135,7 @@ function cleanDist() {
 }
 
 /**
- * Registriert Custom Transforms und Formats
+ * Registriert Custom Transforms, Transform Groups und Formats
  */
 function registerCustomConfig() {
   // Registriere Transforms
@@ -110,6 +146,20 @@ function registerCustomConfig() {
       // Already registered
     }
   });
+
+  // Registriere Transform Groups
+  if (customConfig.transformGroups) {
+    Object.entries(customConfig.transformGroups).forEach(([name, transforms]) => {
+      try {
+        StyleDictionary.registerTransformGroup({
+          name: name,
+          transforms: transforms
+        });
+      } catch (e) {
+        // Already registered
+      }
+    });
+  }
 
   // Registriere Formats
   Object.entries(customConfig.formats).forEach(([name, format]) => {
