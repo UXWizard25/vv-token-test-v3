@@ -1,6 +1,6 @@
 /**
  * typography-lg.js
- * Generiert am: 2025-11-24T21:40:44.472Z
+ * Generiert am: 2025-11-24T21:42:45.518Z
  * Nicht manuell bearbeiten!
  */
 

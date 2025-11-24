@@ -1,6 +1,6 @@
 /**
  * typography-xs.js
- * Generiert am: 2025-11-24T21:40:44.043Z
+ * Generiert am: 2025-11-24T21:42:45.096Z
  * Nicht manuell bearbeiten!
  */
 

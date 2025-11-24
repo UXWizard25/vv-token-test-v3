@@ -1,6 +1,6 @@
 /**
  * colorprimitive.js
- * Generiert am: 2025-11-24T21:40:39.353Z
+ * Generiert am: 2025-11-24T21:42:40.413Z
  * Nicht manuell bearbeiten!
  */
 

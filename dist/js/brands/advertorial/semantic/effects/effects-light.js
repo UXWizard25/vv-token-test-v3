@@ -1,6 +1,6 @@
 /**
  * effects-light.js
- * Generiert am: 2025-11-24T21:40:45.446Z
+ * Generiert am: 2025-11-24T21:42:46.393Z
  * Nicht manuell bearbeiten!
  */
 

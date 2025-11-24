@@ -1,6 +1,6 @@
 /**
  * breakpoint-sm-390px-compact.js
- * Generiert am: 2025-11-24T21:40:43.037Z
+ * Generiert am: 2025-11-24T21:42:44.091Z
  * Nicht manuell bearbeiten!
  */
 
