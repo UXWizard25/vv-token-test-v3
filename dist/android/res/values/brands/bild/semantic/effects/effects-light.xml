@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Do not edit directly, this file was auto-generated.
+-->
+<resources>
+  <string name="dropshadowsoft_shadowsoftsm">[object Object],[object Object]</string><!-- Broad and soft shadows with low contrast. Best for cards, sheets, or subtle surface separation. -->
+  <string name="dropshadowsoft_shadowsoftmd">[object Object],[object Object]</string><!-- Broad and soft shadows with low contrast. Best for cards, sheets, or subtle surface separation. -->
+  <string name="dropshadowsoft_shadowsoftlg">[object Object],[object Object]</string><!-- Broad and soft shadows with low contrast. Best for cards, sheets, or subtle surface separation. -->
+  <string name="dropshadowsoft_shadowsoftxl">[object Object],[object Object]</string><!-- Broad and soft shadows with low contrast. Best for cards, sheets, or subtle surface separation. -->
+  <string name="dropshadowhard_shadowhardsm">[object Object],[object Object]</string><!-- Sharper, higher-contrast shadows. Best for dialogs, modals, dropdowns and overlays that require stronger focus. -->
+  <string name="dropshadowhard_shadowhardmd">[object Object],[object Object]</string><!-- Sharper, higher-contrast shadows. Best for dialogs, modals, dropdowns and overlays that require stronger focus. -->
+  <string name="dropshadowhard_shadowhardlg">[object Object],[object Object]</string><!-- Sharper, higher-contrast shadows. Best for dialogs, modals, dropdowns and overlays that require stronger focus. -->
+  <string name="dropshadowhard_shadowhardxl">[object Object],[object Object]</string><!-- Sharper, higher-contrast shadows. Best for dialogs, modals, dropdowns and overlays that require stronger focus. -->
+  <string name="alert_alertshadowdown">[object Object]</string>
+  <string name="alert_alertshadowup">[object Object]</string>
+  <string name="menu_menushadow">[object Object]</string>
+  <string name="menu_heyinputshadow">[object Object]</string>
+  <string name="teaser_teaserheadlinesshadow">[object Object]</string>
+</resources>
