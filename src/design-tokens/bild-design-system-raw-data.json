@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2025-11-23T09:30:07.177Z",
+  "lastModified": "2025-11-24T09:01:26.466Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -2005,7 +2005,6 @@
         "VariableID:14345:7767",
         "VariableID:14345:14512",
         "VariableID:14610:19321",
-        "VariableID:16118:8473",
         "VariableID:16118:8474",
         "VariableID:16118:8475",
         "VariableID:16118:8476",
@@ -4717,28 +4716,6 @@
           },
           "scopes": [
             "ALL_SCOPES"
-          ],
-          "hiddenFromPublishing": true,
-          "variableCollectionId": "VariableCollectionId:588:1979"
-        },
-        {
-          "id": "VariableID:16118:8473",
-          "name": "Component/Kicker/Partner/kickerStylebookBgColor",
-          "description": "",
-          "resolvedType": "COLOR",
-          "valuesByMode": {
-            "588:0": {
-              "type": "VARIABLE_ALIAS",
-              "id": "VariableID:16104:163534"
-            },
-            "592:1": {
-              "type": "VARIABLE_ALIAS",
-              "id": "VariableID:16104:163534"
-            }
-          },
-          "scopes": [
-            "FRAME_FILL",
-            "SHAPE_FILL"
           ],
           "hiddenFromPublishing": true,
           "variableCollectionId": "VariableCollectionId:588:1979"
