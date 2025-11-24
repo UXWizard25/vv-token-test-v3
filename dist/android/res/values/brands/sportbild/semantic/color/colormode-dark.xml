@@ -98,7 +98,7 @@ Behavior: Constant — retains the same red warning tone in both Light and Dark 
   <color name="semantic_core_core_color_tertiary_vv_pipe_test">#ffb0d1f3</color><!-- this is a test for the token pipeline -->
   <color name="semantic_core_npm_test">#ffb0d1f3</color><!-- this is a test for the token pipeline -->
   <color name="semantic_core_felipe_test_color">#ff031a31</color><!-- this is a test for the token pipeline -->
-  <color name="semantic_core_mariotest">#ff031a31</color><!-- this is a test for the token pipeline -->
+  <color name="semantic_core_goliani_test_color">#ff031a31</color><!-- this is a test for the token pipeline -->
   <color name="semantic_icon_icon_color_primary">#ff8c9196</color><!-- Primary icon color on primary surfaces. -->
   <color name="semantic_icon_icon_color_inverse">#ff4b525a</color><!-- Inverse icon color for use on contrasting backgrounds (e.g., light icons on dark surfaces or dark icons on bright surfaces).
 Behavior: Dynamic — switches between light and dark. -->

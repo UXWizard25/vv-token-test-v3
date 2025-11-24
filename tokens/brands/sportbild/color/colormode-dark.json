@@ -767,7 +767,7 @@
         "$type": "color",
         "comment": "this is a test for the token pipeline"
       },
-      "mariotest": {
+      "golianiTestColor": {
         "$value": "#031A31",
         "value": "#031A31",
         "type": "color",
@@ -775,7 +775,7 @@
           "com.figma": {
             "collectionId": "VariableCollectionId:588:1979",
             "collectionName": "ColorMode",
-            "variableId": "VariableID:20854:75"
+            "variableId": "VariableID:20855:76"
           }
         },
         "$type": "color",

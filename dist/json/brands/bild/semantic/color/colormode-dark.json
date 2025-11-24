@@ -2225,7 +2225,7 @@
           "felipeTestColor"
         ]
       },
-      "mariotest": {
+      "golianiTestColor": {
         "$value": "#031a31",
         "value": "#031A31",
         "type": "color",
@@ -2233,7 +2233,7 @@
           "com.figma": {
             "collectionId": "VariableCollectionId:588:1979",
             "collectionName": "ColorMode",
-            "variableId": "VariableID:20854:75"
+            "variableId": "VariableID:20855:76"
           }
         },
         "$type": "color",
@@ -2248,22 +2248,22 @@
             "com.figma": {
               "collectionId": "VariableCollectionId:588:1979",
               "collectionName": "ColorMode",
-              "variableId": "VariableID:20854:75"
+              "variableId": "VariableID:20855:76"
             }
           },
           "$type": "color",
           "comment": "this is a test for the token pipeline"
         },
-        "name": "SemanticCoreMariotest",
+        "name": "SemanticCoreGolianiTestColor",
         "attributes": {
           "category": "Semantic",
           "type": "Core",
-          "item": "mariotest"
+          "item": "golianiTestColor"
         },
         "path": [
           "Semantic",
           "Core",
-          "mariotest"
+          "golianiTestColor"
         ]
       }
     },

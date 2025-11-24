@@ -178,7 +178,7 @@ semanticBorderBorderColorWarning = Color(0xFFDD0000);
     static const semanticCoreCoreColorTertiaryConstant = Color(0xFF232629); /** Use this on elements that need to maintain the dark color across themes and color modes. */
     static const semanticCoreCoreColorTertiaryVvPipeTest = Color(0xFF476D93); /** this is a test for the token pipeline */
     static const semanticCoreFelipeTestColor = Color(0xFFE9580A); /** this is a test for the token pipeline */
-    static const semanticCoreMariotest = Color(0xFFE9580A); /** this is a test for the token pipeline */
+    static const semanticCoreGolianiTestColor = Color(0xFF00FFF2); /** this is a test for the token pipeline */
     static const semanticCoreNpmTest = Color(0xFF476D93); /** this is a test for the token pipeline */
     static const /**
  * Primary color for headings and display typography. Ensures clear hierarchy and optimal readability on main surfaces. Adapds it´s color based on the brand mode for brand recognition.
