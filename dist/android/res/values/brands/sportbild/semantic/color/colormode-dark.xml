@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Do not edit directly, this file was auto-generated.
+-->
+<resources>
+  <color name="semantic_text_text_color_accent_constant">#ffdd0000</color><!-- Applies to text elements requiring fixed brand color usage (e.g., permanent links, brand slogans on constant backgrounds).
+Behavior: Constant — maintains identical red tone across Light and Dark mode. -->
+  <color name="semantic_text_text_color_primary">#ffe9ecef</color><!-- Main text color used for body copy and all primary textual content. Ensures optimal readability and contrast on standard surfaces.
+Behavior: Dynamic — switches between dark text on light backgrounds and light text on dark backgrounds. -->
+  <color name="semantic_text_text_color_muted">#ffced4da</color><!-- Muted text tone for subtle information, timestamps, or inactive text elements.
+Behavior: Dynamic — adjusts between mid-gray in Light mode and lighter gray in Dark mode. -->
+  <color name="semantic_text_text_color_primary_inverse">#ff232629</color><!-- Inverse text color used on opposing surfaces (e.g., white text on red or dark backgrounds).
+Behavior: Dynamic — alternates between light and dark mode. -->
+  <color name="semantic_text_text_color_primary_constant">#ff232629</color><!-- Used when primary text color must remain fixed regardless of mode (e.g., on light constant backgrounds).
+Behavior: Constant — same tone across Light and Dark mode. -->
+  <color name="semantic_text_text_color_success_constant">#ff006e3e</color><!-- Used for positive or success-related messages (e.g., “Saved”, “Success”, or confirmation text) on success surface colors.
+Behavior: Constant — green tone remains consistent across both modes. -->
+  <color name="semantic_text_text_color_primary_inverse_constant">#ffe9ecef</color><!-- Fixed inverse tone for text that always appears on dark surfaces (e.g., hero headlines or persistent dark cards).
+Behavior: Constant — unchanged across modes. -->
+  <color name="semantic_text_text_color_secondary">#ff8c9196</color><!-- Secondary text color used for supportive information, subtitles, and less prominent text.
+Behavior: Dynamic — adapts between neutral tones to maintain proper contrast per theme. In 2025 css it is called figure meta. -->
+  <color name="semantic_text_text_color_attention_high">#ffdd0000</color><!-- Used for strong warnings, errors, or destructive action labels.
+Behavior: Constant — red color remains unchanged between Light and Dark mode for visibility and recognition. -->
+  <color name="semantic_text_text_color_accent">#ffffffff</color><!-- Accent text color used for links, interactive text, or highlighted key words. Changes from a red in light mode to a white in dark mode. -->
+  <color name="semantic_text_text_color_attention_medium">#fffd8227</color><!-- Represents medium attention states, often used in warnings or pending states.
+Behavior: Constant — same orange tone across Light and Dark mode. -->
+  <color name="semantic_text_text_color_on_dark_surface">#ffffffff</color><!-- Used for text displayed on dark surfaces to ensure maximum legibility and contrast.
+Behavior: Constant — always light neutral to guarantee accessibility on dark backgrounds. -->
+  <color name="semantic_surface_surface_color_primary">#ff232629</color><!-- Primary surface color used for main backgrounds and large layout areas (e.g., page background, primary containers).
+Behavior: Dynamic — adapts between light and dark surface tokens to maintain legibility and hierarchy. -->
+  <color name="semantic_surface_surface_color_secondary">#ff2c3138</color><!-- Used for secondary surface layers such as cards, panels, or nested containers that need to differentiate themselves from the primary surface. .
+Behavior: Dynamic — adapts brightness level based on mode for appropriate depth contrast. -->
+  <color name="semantic_surface_surface_color_primary_inverse">#ffffffff</color><!-- Inverse of the primary surface, used when Light and Dark surfaces are swapped (e.g., inverse cards or elevated sections).
+Behavior: Dynamic — switches between dark and light values depending on mode. -->
+  <color name="semantic_surface_surface_color_primary_constant_light">#ffffffff</color><!-- A fixed light surface tone used when a consistent light background is required (e.g., light panels within dark layouts).
+Behavior: Constant — remains the same in both modes. -->
+  <color name="semantic_surface_surface_color_primary_constant_dark">#ff232629</color><!-- A fixed dark surface tone used for dark overlays or nested dark sections inside light layouts.
+Behavior: Constant — identical across Light and Dark mode. -->
+  <color name="semantic_surface_surface_color_quartenary">#ff4b525a</color><!-- HIghtest elevation surface color, typically used for grouping or background accents to differentiate themselves from all previous surface color options. Uses corresponding light/dark tones for consistent layering. -->
+  <color name="semantic_surface_surface_color_success">#ffcef4e4</color><!-- Success-related background used for positive notifications, confirmation surfaces, or success banners.
+Behavior: Constant — remains the same across Light and Dark mode to ensure brand alignment. -->
+  <color name="semantic_surface_surface_color_tertiary">#ff343c41</color><!-- Tertiary background layer for inner containers, grouped content, or subtle elevation steps  that need to differentiate themselves from the primary and secondary surfaces.
+Behavior: Dynamic — switches between light and dark tertiary tones. -->
+  <color name="semantic_surface_surface_color_tertiary_gradient_stop">#00343c41</color><!-- Represents tertiary-level gradient background.
+Currently used on skeletons. -->
+  <color name="semantic_surface_surface_color_tertiary_inverse">#ffe9ecef</color><!-- Inverse tertiary background, applied when Light and Dark surfaces are reversed (e.g., dark-on-light cards).
+Behavior: Dynamic — swaps values between modes for contrast preservation. -->
+  <color name="semantic_surface_surface_color_primary_gradient_stop">#00232629</color><!-- Defines the end stops for primary surface gradients, creating visual depth or elevation. Used next to sliders buttons and slider container edges for fading out content. Behavior: Dynamic — light gradients in Light mode, dark gradients in Dark mode. -->
+  <color name="semantic_surface_surface_color_secondary_gradient_stop">#002c3138</color><!-- Used for secondary surface gradients or subtle depth layers across backgrounds.
+Behavior: Dynamic — adapts to mode brightness for smooth gradient transitions. -->
+  <color name="semantic_surface_surface_color_quartenary_inverse">#ffced4da</color><!-- Inverse of the quartenary surface, used for background reversals in mixed-layout areas.
+Behavior: Dynamic — inverts between dark and light tones depending on mode. -->
+  <color name="semantic_heading_kicker_text_color_on_surface">#ff8c9196</color><!-- Used for kicker text and category labels placed directly on standard surface backgrounds.
+Behavior: Dynamic — adjusts between red for Light and a neutral tone in Dark modes. -->
+  <color name="semantic_heading_headline_color_primary">#ffffffff</color><!-- Primary color for headings and display typography. Ensures clear hierarchy and optimal readability on main surfaces. Adapds it´s color based on the brand mode for brand recognition.
+Behavior: Dynamic — dark text in Light mode, light text in Dark mode. -->
+  <color name="semantic_heading_headline_color_white_const">#ffffffff</color><!-- Fixed white heading color used on dark or colored backgrounds (e.g., hero sections, banners) that remain constant across modes.
+Behavior: Constant — remains white in both Light and Dark mode. -->
+  <color name="semantic_heading_kicker_text_color_on_red">#ffffffff</color><!-- Specialized kicker color for use on red or brand-colored backgrounds (e.g., red kicker bg within teaser cards).
+Behavior: Constant — remains consistent across light and darkmode. -->
+  <color name="semantic_heading_kicker_text_color_on_dark_bg">#ccffffff</color><!-- Applied to kicker or meta text on dark colored backgrounds to maintain high legibility.
+Behavior: Constant — always uses semi-transparent white for consistent readability. -->
+  <color name="semantic_heading_kicker_text_color_on_bright_bg">#b2000000</color><!-- Used for kicker text placed on bright or light colored backgrounds. Ensures balanced contrast without harsh visual dominance.
+Behavior: Constant — remains semi-transparent black across both modes. -->
+  <color name="semantic_state_color_secondary_active">#fff2f4f5</color><!-- Defines the active state color for secondary actions (e.g., secondary buttons, tabs, or toggles).
+Behavior: Dynamic — light gray in Light mode and bright gray in Dark mode to maintain perceptual balance. -->
+  <color name="semantic_state_color_primary_active">#ffdd0000</color><!-- Used to represent the active or pressed state of primary actions such as tabs or links.
+Behavior: Constant — identical value across modes for consistent interaction feedback. -->
+  <color name="semantic_state_color_secondary_disabled">#ff4b525a</color><!-- Used for disabled secondary elements, ensuring reduced visual prominence while maintaining legibility.
+Behavior: Dynamic — adapts neutral tones based on theme brightness. -->
+  <color name="semantic_state_color_primary_disabled">#ff343c41</color><!-- Defines the disabled color for primary components (e.g., disabled primary buttons, inputs). Reduces emphasis and contrast to signal inactivity.
+Behavior: Dynamic — slightly lighter in Light mode and darker in Dark mode to remain visually accessible. -->
+  <color name="semantic_state_color_secondary_active_inverse">#ff232629</color><!-- Inverse variant of the secondary active state, applied on dark backgrounds or inverse layouts.
+Behavior: Dynamic — switches between bright and dark tones depending on the background. -->
+  <color name="semantic_state_color_tertiary_active">#ff00c373</color><!-- Represents active or pressed states for tertiary elements (e.g., link highlights, icons, or subtle interactive surfaces).
+Behavior: Constant — uses the same green success tone across Light and Dark mode. -->
+  <color name="semantic_state_color_tertiary_disabled">#ff666b70</color><!-- Represents disabled states for tertiary levels, maintaining subtle visibility without drawing attention.
+Behavior: Dynamic — adjusts between gray tones for Light and Dark mode consistency. -->
+  <color name="semantic_border_border_color_medium_contrast">#ff666b70</color><!-- Medium-emphasis border color for standard outlines, input fields, or separators that require visible yet non-dominant contrast.
+Behavior: Dynamic — adjusts to maintain legibility in Light and Dark themes. -->
+  <color name="semantic_border_border_color_low_contrast">#ff4b525a</color><!-- Used for subtle dividers and low-emphasis borders in neutral areas (e.g., card outlines, input containers).
+Dynamic — light gray in Light mode, dark gray in Dark mode. -->
+  <color name="semantic_border_border_color_high_contrast">#ffffffff</color><!-- High-emphasis border color for clear delineation between surfaces (e.g., focus rings, high-contrast UI zones).
+Behavior: Dynamic — light surfaces use a darker neutral, dark surfaces a light neutral tone. -->
+  <color name="semantic_border_border_color_low_contrast_constant">#ffe9ecef</color><!-- Applies to UI elements that must visually remain the same regardless of theme (e.g., brand containers, static illustrations). Identical tone across Light and Dark mode. -->
+  <color name="semantic_border_border_color_success">#ff00c373</color><!-- Used for success states and validation borders (e.g., input success outlines or confirmation frames).
+Behavior: Constant — same success tone across modes for consistent feedback semantics. -->
+  <color name="semantic_border_border_color_warning">#ffdd0000</color><!-- Defines border color for warning and error-related components, typically used for input validation or caution zones.
+Behavior: Constant — retains the same red warning tone in both Light and Dark modes. -->
+  <color name="semantic_border_border_color_primary_disabled">#ff343c41</color><!-- Applied to disabled states of primary elements (e.g., buttons, inputs) to visually reduce emphasis and indicate inactivity. -->
+  <color name="semantic_border_border_color_secondary_disabled">#ff4b525a</color><!-- Used for secondary component borders in a disabled state (e.g., secondary buttons, inactive input outlines). -->
+  <color name="semantic_core_core_color_primary">#ffdd0000</color><!-- Used as the main brand color for key interactive elements such as primary buttons, active states, and prominent highlights. It remains constant across Light and Dark Mode. -->
+  <color name="semantic_core_core_color_secondary">#ff232629</color><!-- Defines the secondary brand tone. This variable changes across Light and Dark Mode. -->
+  <color name="semantic_core_core_color_tertiary">#ffffffff</color><!-- Represents tertiary brand accents. This variable changes across Light and Dark Mode. -->
+  <color name="semantic_core_core_color_secondary_constant">#ffffffff</color><!-- Use this on elements that must maintain the white color even in dark mode. -->
+  <color name="semantic_core_core_color_tertiary_constant">#ff232629</color><!-- Use this on elements that need to maintain the dark color across themes and color modes. -->
+  <color name="semantic_core_core_color_tertiary_vv_pipe_test">#ffb0d1f3</color><!-- this is a test for the token pipeline -->
+  <color name="semantic_core_npm_test">#ffb0d1f3</color><!-- this is a test for the token pipeline -->
+  <color name="semantic_core_felipe_test_color">#ff031a31</color><!-- this is a test for the token pipeline -->
+  <color name="semantic_icon_icon_color_primary">#ff8c9196</color><!-- Primary icon color on primary surfaces. -->
+  <color name="semantic_icon_icon_color_inverse">#ff4b525a</color><!-- Inverse icon color for use on contrasting backgrounds (e.g., light icons on dark surfaces or dark icons on bright surfaces).
+Behavior: Dynamic — switches between light and dark. -->
+  <color name="semantic_icon_icon_color_secondary_constant">#ff8c9196</color><!-- Secondary icon tone for less prominent actions or supportive iconography (e.g., secondary buttons, tool icons). Remains unchanged across modes. -->
+  <color name="semantic_icon_icon_color_constant_on_dark">#fff2f4f5</color><!-- Used for icons displayed on dark backgrounds that don´t change colors, ensuring sufficient contrast and legibility.
+Behavior: Constant — always uses a neutral bright value. -->
+  <color name="semantic_icon_icon_color_primary_constant">#ff4b525a</color><!-- Used for icons that must remain visually consistent regardless of mode (e.g.,  icons that are on surfaces that don't change color).
+Identical tone in both Light and Dark mode. -->
+  <color name="semantic_icon_icon_color_success">#ff00c373</color><!-- Represents success or confirmation icons (e.g., checkmarks, completion indicators).
+Behavior: Constant — same success green tone across Light and Dark mode. -->
+  <color name="semantic_label_label_color_primary">#ffe9ecef</color><!-- Primary label color used for labels, badges, or tag text on light backgrounds. Ensures strong readability and visual hierarchy.
+Behavior: Dynamic — dark neutral in Light mode, light neutral in Dark mode. -->
+  <color name="semantic_label_label_color_secondary">#ffced4da</color><!-- Secondary label tone used for less prominent text such as secondary badges or supporting labels.
+Behavior: Dynamic — adapts between mid-grays for Light and Dark surfaces. -->
+  <color name="semantic_label_label_color_disabled">#ff4b525a</color><!-- Disabled label tone indicating inactive or unavailable states in UI elements.
+Behavior: Dynamic — lighter gray in Light mode, darker neutral in Dark mode. -->
+  <color name="semantic_label_label_color_primary_constant">#ff232629</color><!-- Used when primary label color should remain unchanged across modes in static UI areas.
+Behavior: Constant — identical tone in both Light and Dark mode. -->
+  <color name="semantic_label_label_color_primary_inverse_constant">#ffe9ecef</color><!-- Fixed inverse label tone applied where white or bright text must always appear, regardless of theme.
+Behavior: Constant — remains bright neutral in both Light and Dark mode. -->
+  <color name="semantic_label_label_color_tertiary">#ff8c9196</color><!-- Tertiary label tone for subtle, low-emphasis UI text such as placeholder text or tertiary badges.
+Behavior: Constant — identical tone across both modes for stable hierarchy. -->
+  <color name="semantic_label_label_color_primary_inverse">#ff232629</color><!-- Inverse version of the primary label color, used on dark or colored backgrounds.
+Behavior: Dynamic — switches between light and dark. -->
+  <color name="semantic_attention_attention_color_high">#ffdd0000</color><!-- High-level attention color used for errors, destructive actions, and critical alerts (e.g., delete actions, error states). Remains red in both Light and Dark mode for immediate recognition. -->
+  <color name="semantic_attention_accent_color_primary">#ffffffff</color><!-- Primary accent color used to emphasize interactive or highlight elements such as links, selection states, or focus indicators. Adapts in Darkmode to a fully white tone. -->
+  <color name="semantic_attention_attention_color_medium">#fffd8227</color><!-- Medium-level attention tone representing stronger caution or intermediate alert states. Commonly applied in warning messages. Constant — identical in both modes. -->
+  <color name="semantic_attention_attention_color_low">#ffffbf00</color><!-- Low-level warning or attention tone, typically used for informational or cautionary messages. Same yellow tone across Light and Dark to maintain recognition. -->
+  <color name="semantic_attention_accent_color_primary_constant">#ffdd0000</color><!-- Used for accent highlights that must remain visually consistent across themes (e.g., brand identifiers, logos, or fixed emphasis areas). Color value does not change between Light and Dark mode. -->
+  <color name="semantic_attention_attention_color_success_primary">#ff00c373</color><!-- Primary success color used to indicate positive states, confirmations, or completed actions (e.g., success banners, icons, or badges). Remains the same across modes to ensure recognizability and consistency. -->
+  <color name="semantic_attention_attention_color_extra_low">#ff343c41</color><!-- Very low-contrast background tone used for information or system-neutral surfaces, often for tooltips or quiet information highlights. Dynamic — light neutral in Light mode and dark neutral in Dark mode. -->
+  <color name="semantic_attention_attention_color_success_secondary">#ff006e3e</color><!-- Secondary success tone used for secondary states. Maintains the same color in both Light and Dark mode for clarity. -->
+  <color name="semantic_overlay_overlay_scrim_black">#b2000000</color><!-- A semi-transparent black overlay used to dim background content when modals, drawers, or dialogs are active. Identical opacity and tone in both Light and Dark mode to ensure consistent overlay depth. -->
+  <color name="semantic_overlay_overlay_scrim_white">#b2ffffff</color><!-- A semi-transparent white overlay used to brighten or fade background layers, often applied behind bottom sheets or temporary panels.
+Behavior: Constant — same opacity level across modes to preserve uniform layering behavior. -->
+  <string name="semantic_layer_opacity_layer_opacity05">5px</string>
+  <string name="semantic_layer_opacity_layer_opacity10">10px</string>
+  <string name="semantic_layer_opacity_layer_opacity20">20px</string>
+  <string name="semantic_layer_opacity_layer_opacity30">30px</string>
+  <string name="semantic_layer_opacity_layer_opacity40">40px</string>
+  <string name="semantic_layer_opacity_layer_opacity50">50px</string>
+  <string name="semantic_layer_opacity_layer_opacity60">60px</string>
+  <string name="semantic_layer_opacity_layer_opacity70">70px</string>
+  <string name="semantic_layer_opacity_layer_opacity80">80px</string>
+  <string name="semantic_layer_opacity_layer_opacity90">90px</string>
+  <string name="semantic_layer_opacity_layer_opacity100">100px</string>
+  <string name="semantic_layer_opacity_layer_opacity00">0px</string>
+  <color name="component_subheader_subheaders_color">#ffe9ecef</color>
+  <color name="component_breadcrumb_breadcrumb_text_color_idle">#fff2f4f5</color><!-- Use this token on breadcrumbs that are in their default idle state. This token changes color between light and dark modes. L:035 / D:096 -->
+  <color name="component_breadcrumb_breadcrumb_text_color_hover">#ffffffff</color><!-- Use this token on breadcrumbs that the user's pointer is hovering on or clicked on. This token changes color between light and dark modes. L:015 / D:100 -->
+  <color name="component_breaking_news_breaking_news_title_surface_color">#fffd8227</color>
+  <color name="component_breaking_news_breaking_news_surface_color">#ffe9ecef</color>
+  <color name="component_breaking_news_breaking_news_text_content_color">#ff232629</color>
+  <color name="component_breaking_news_breaking_news_top_title_text_color">#ff1c1c1c</color>
+  <color name="component_breaking_news_breaking_news_bottom_title_text_color">#ff1c1c1c</color>
+  <color name="component_menu_menu_surface_color">#ff232629</color>
+  <color name="component_menu_menu_scrolled_surface_gradient_color">#f2232629</color><!-- Used on a thin part at the top of header in navigation menu. -->
+  <color name="component_menu_menu_link_lane_surface_color">#ff232629</color>
+  <color name="component_menu_menu_link_lane_label_color">#ff8c9196</color>
+  <color name="component_menu_menu_link_lane_label_color_active">#ffffffff</color>
+  <color name="component_menu_app_top_bar_surface_color">#ff343c41</color>
+  <color name="component_menu_app_top_bar_icon_color">#ff8c9196</color>
+  <color name="component_menu_app_top_bar_text_color_primary">#ffe9ecef</color>
+  <color name="component_menu_app_tob_bar_tab_nav_bottom_border">#ff4b525a</color>
+  <color name="component_menu_app_tob_bar_tab_nav_bottom_border_active">#ffffffff</color>
+  <color name="component_partner_links_partner_links_border_color_idle">#ffced4da</color><!-- !do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons. -->
+  <color name="component_partner_links_partner_links_border_color_active">#ffe9ecef</color><!-- !do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons. -->
+  <color name="component_partner_links_partner_links_bg_color_idle">#ff343c41</color><!-- !do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons. -->
+  <color name="component_partner_links_partner_links_bg_color_active">#ff8c9196</color><!-- !do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons. -->
+  <color name="component_partner_links_partner_links_container_border_color">#ff4b525a</color><!-- !do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons. -->
+  <color name="component_social_share_button_social_share_button_label_color_default">#ffffffff</color>
+  <color name="component_social_share_button_social_share_button_label_color_active">#ffffffff</color>
+  <color name="component_social_share_button_social_share_button_bg_color_active">#ff343c41</color>
+  <color name="component_social_share_button_social_share_button_bg_color_default">#ff4b525a</color>
+  <color name="component_button_primary_button_primary_brand_bg_color_idle">#ffdd0000</color>
+  <color name="component_button_primary_button_primary_brand_bg_color_hover">#ffaf0002</color>
+  <color name="component_button_primary_button_primary_label_color">#ffffffff</color>
+  <color name="component_button_primary_button_primary_success_color_idle">#ff18995c</color>
+  <color name="component_button_primary_button_primary_success_color_hover">#ff006e3e</color>
+  <color name="component_button_primary_button_primary_neutral_bg_color_idle">#ffffffff</color><!-- Use this variable on the neutral color primary button. Tone changes between light and dark mode. Light mode Bild & SpoBi: Tone 015 ; Dark mode Bild & SpoBi: Tone 100 -->
+  <color name="component_button_primary_button_primary_neutral_bg_color_hover">#ffe9ecef</color>
+  <color name="component_button_tertiary_button_tertiary_label_color">#fff2f4f5</color>
+  <color name="component_button_tertiary_button_tertiary_border_color_idle">#ff4b525a</color>
+  <color name="component_button_tertiary_button_tertiary_border_color_hover">#ffffffff</color>
+  <color name="component_button_tertiary_button_tertiary_success_bg_color_hover">#80009b5a</color>
+  <color name="component_button_tertiary_button_tertiary_success_border_color">#ff18995c</color>
+  <color name="component_button_secondary_button_secondary_bg_color_hover">#80ced4da</color>
+  <color name="component_button_secondary_button_secondary_label_color">#ffe9ecef</color>
+  <color name="component_button_secondary_button_secondary_bg_color_idle">#ff4b525a</color>
+  <color name="component_button_button_live_ticker_load_new_surface_color">#ff232629</color>
+  <color name="component_button_button_live_ticker_load_new_label_color">#fff2f4f5</color>
+  <color name="component_button_ghost_button_ghost_bg_color_hover">#80ced4da</color>
+  <color name="component_input_field_input_field_border_color_idle">#ff8c9196</color>
+  <color name="component_input_field_input_field_border_color_active">#ffe9ecef</color>
+  <color name="component_input_field_input_field_border_color_dark">#ffced4da</color>
+  <color name="component_input_field_input_field_border_color_dark_active">#ffffffff</color>
+  <color name="component_input_field_input_field_bg_color_dark_low_contrast">#ff343c41</color>
+  <color name="component_input_field_input_field_bg_color_dark_medium_contrast">#ff4b525a</color>
+  <color name="component_input_field_input_field_bg_color_dark_high_contrast">#ffe9ecef</color>
+  <color name="component_dropdown_dropdown_bg_color_hover">#ff4b525a</color>
+  <color name="component_dropdown_dropdown_bg_color_idle">#ff343c41</color>
+  <color name="component_text_link_text_link_color_secondary">#ffced4da</color>
+  <color name="component_text_link_text_link_color_secondary_active">#ffe9ecef</color>
+  <color name="component_text_link_text_link_color_primary">#ff8c9196</color>
+  <color name="component_tab_tab_bg_color_hover">#ff343c41</color>
+  <color name="component_tab_tab_label_color_active">#fff2f4f5</color>
+  <color name="component_tab_tab_label_color_default">#ffffffff</color>
+  <color name="component_tab_app_bottom_tab_bar_bg_color">#ff343c41</color>
+  <color name="component_menu_item_menu_item_border_color_active">#ffffffff</color>
+  <color name="component_menu_item_menu_item_label_color_primary">#ff8c9196</color>
+  <color name="component_menu_item_menu_item_label_color_primary_active">#fff2f4f5</color>
+  <color name="component_menu_item_menu_item_label_color_secondary">#ffffffff</color><!-- The variable can be used on secondary menus that many times show up on dedicated home pages specific to a topic. The menu labels are often times using the color white across color modes. -->
+  <color name="component_foldout_foldout_label_color_active">#fff2f4f5</color>
+  <color name="component_foldout_foldout_label_color_idle">#ffced4da</color>
+  <color name="component_newsticker_news_ticker_timestamp_color">#ff8c9196</color>
+  <color name="component_newsticker_news_ticker_badge_icons_color">#ff8c9196</color>
+  <color name="component_alert_alert_surface_color">#ff343c41</color><!-- On marketing offer surfaces this variable is usually not used. The alertSurfaceConstant variables should be used. This token changes color between light and dark modes. L:100 / D:025 -->
+  <color name="component_alert_alert_surface_color_constant">#ffffffff</color><!-- On marketing offer surfaces this variable is  used. -->
+  <color name="component_empties_empties_bg_color">#ff343c41</color>
+  <color name="component_empties_empties_logo_color">#ff2c3138</color>
+  <color name="component_chips_chips_bg_color_hover">#ffced4da</color>
+  <color name="component_chips_chips_label_color_hover">#ff232629</color>
+  <color name="component_chips_chips_bg_color_active">#ffffffff</color>
+  <color name="component_chips_chips_bg_color_idle">#ff4b525a</color>
+  <color name="component_chips_chips_label_color_idle">#ffffffff</color>
+  <color name="component_card_card_surface_bg_color">#ff2c3138</color>
+  <color name="component_selection_selection_border_color">#ff8c9196</color><!-- Checkboxes and Radio buttons use this variable for their border. -->
+  <string name="component_d_sys_doc_d_sys_docs_label_text_surface_color_primary_primitive_name">BILD010</string><!-- This variable is only for use in Figma's Design System File. It is automating some of the content in documentation pages. -->
+  <string name="component_d_sys_doc_d_sys_docs_label_text_color_mode">(Dark Mode)</string><!-- This is currently for use in this design system's documentation texts. It is a text string made for being used in light and dark mode documentation texts. -->
+  <color name="component_d_sys_doc_ds_doc_spacing_item_bg_color">#33ffffff</color>
+  <color name="component_d_sys_doc_ds_doc_spacing_item_border_color">#ccffffff</color>
+  <color name="component_hey_hey_fav_input_field_surface_color">#ff4b525a</color>
+  <color name="component_hey_hey_text_color">#ffe9ecef</color>
+  <color name="component_hey_hey_icon_util_color">#ffffffff</color>
+  <color name="component_hey_hey_separator_color">#ff666b70</color><!-- This is the most used color for separators across Bild products. -->
+  <color name="component_hey_hey_drawer_surface_color">#ff343c41</color>
+  <color name="component_pagination_pagination_element_color_default">#ff8c9196</color>
+  <color name="component_pagination_pagination_element_color_active">#ffffffff</color>
+  <string name="component_pagination_gallery_pagination_element_active_opacity">100px</string><!-- Use this on gallery slider pagination elements. This can also be applied to hover states of those elements. -->
+  <color name="component_pagination_scroll_bar_track_bg_color">#1affffff</color><!-- Used as the background surface color scroll bars. Found on components that vertically or horizontally stack elements. -->
+  <color name="component_pagination_scroll_bar_thumb_bg_color">#ff8c9196</color><!-- Use on the scroll bar interactive element which shows where the scroll view is positioned inside the full extent of the scrolling space. -->
+  <color name="component_kicker_standard_kicker_bg_color_on_surface">#ff8c9196</color>
+  <color name="component_kicker_partner_kicker_fitbook_bg_color">#ffff97b7</color>
+  <color name="component_kicker_partner_kicker_petbook_bg_color">#ffb9db91</color>
+  <color name="component_kicker_partner_kicker_myhomebook_bg_color">#ff66cccc</color>
+  <color name="component_kicker_partner_kicker_travelbook_bg_color">#ff8ef0ed</color>
+  <color name="component_kicker_partner_kicker_techbook_bg_color">#ff93e4ff</color>
+  <color name="component_kicker_partner_kicker_kaufberater_bg_color">#ff55476e</color>
+  <color name="component_kicker_partner_kicker_cobi_bg_color">#ffdc231c</color>
+  <color name="component_kicker_partner_kicker_aubi_bg_color">#fff00000</color>
+  <color name="component_kicker_partner_kicker_spobi_bg_color">#ff174482</color>
+  <color name="component_kicker_partner_kicker_bz_bg_color">#ffe3001b</color>
+  <string name="component_teaser_teaser_hover_opacity">80px</string><!-- When users hover over graphical teasers the image reduces opacity to 80%. -->
+  <color name="component_teaser_teaser_title_background_gradient_start">#b2000000</color>
+  <color name="component_teaser_teaser_title_background_gradient_stop">#00000000</color>
+  <string name="component_slider_slider_button_opacity">90px</string><!-- When users hover on gallery slider buttons the opacity changes to 90%. -->
+  <color name="component_slider_slider_track_bg_color">#59ffffff</color><!-- This variable is used on audio player slider bars. It references a pure white with 35% opacity. -->
+  <color name="component_mediaplayer_vid_player_controls_autoplay_button_bg_color">#33000000</color>
+  <color name="component_mediaplayer_vid_player_control_buttons_bg_hover_color">#ccdd0000</color><!-- This variable is used for hover states of video player control buttons. -->
+  <color name="component_mediaplayer_vid_player_control_buttons_bg_color_hover">#33000000</color>
+  <color name="component_mediaplayer_vid_player_overlay_scrim_color">#80000000</color>
+  <color name="component_mediaplayer_audio_player_play_button_bg_color">#4dffffff</color>
+  <color name="component_mediaplayer_vid_player_tooltip_bg_color">#b2000000</color>
+  <color name="component_mediaplayer_vid_player_control_buttons_bg_color_pressed">#0d000000</color>
+  <color name="component_mediaplayer_vid_player_progress_bar_preload_bg_color">#4dffffff</color>
+  <color name="component_mediaplayer_vid_player_unmute_button_bg_color">#33000000</color>
+  <color name="component_mediaplayer_vid_player_unmute_button_bg_color_hover">#59000000</color>
+  <color name="component_avatar_avatar_label_color">#ffffffff</color><!-- 09-2025 css --article-author-name-color -->
+  <color name="component_avatar_avatar_label_color_hover">#ffdd0000</color><!-- 09-2025 css --article-author-name-color -->
+  <color name="component_gallery_app_image_lightbox_gallery_bg_color">#ff000000</color>
+</resources>
