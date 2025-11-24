@@ -1,0 +1,53 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+export const size6x = "48px";
+export const size3x = "24px";
+export const size1x = "8px";
+export const size025x = "2px";
+export const size05x = "4px";
+export const size2x = "16px";
+export const size45x = "36px";
+export const size5x = "40px";
+export const size35x = "28px";
+export const size25x = "20px";
+export const size125x = "100px";
+export const size275x = "22px";
+export const size325x = "26px";
+export const size4x = "32px";
+export const size375x = "30px";
+export const size225x = "18px";
+export const size7x = "56px";
+export const size15x = "12px";
+export const size075x = "6px";
+export const size225x = "180px";
+export const size40x = "320px";
+export const size8x = "64px";
+export const size115x = "92px";
+export const size175x = "14px";
+export const size525x = "42px";
+export const size125x = "10px";
+export const size80x = "640px";
+export const size175x = "140px";
+export const size20x = "160px";
+export const size128x = "1024px";
+export const size124x = "992px";
+export const size12x = "96px";
+export const size35x = "280px";
+export const size15x = "120px";
+export const size1625 = "130px";
+export const size875x = "700px";
+export const size10x = "80px";
+export const size30x = "240px";
+export const size25x = "200px";
+export const size168x = "1344px";
+export const size60x = "480px";
+export const size9x = "72px";
+export const size275x = "220px";
+export const size50x = "400px";
+export const size11625x = "930px";
+export const size185x = "148px";
+export const size100x = "800px";
+export const size0x = "0px";
+export const size0125x = "1px";

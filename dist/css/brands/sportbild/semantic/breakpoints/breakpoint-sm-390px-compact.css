@@ -1,0 +1,490 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --aricle-mobile1-col-grid-image-margin-space: 0px;
+  --article-top-margin-space: 8px; /** 8 | 8 | 12 | 16 - This space variable is used at the top edge of the article main content bounding box. */
+  --article-kicker-font-size: 20px; /** This variable is used to control the font size of kickers in the heading section of article pages. 18 - 18 - 22 - 30 */
+  --article-headline-font-size: 42px; /** 40 - 40 - 72 - 100 - This variable uses the semantic variables headline2 for XS&SM, headline1 for MD&LG */
+  --article-gallery-ateaser-width: 145px; /** same as standard teaser width size variable */
+  --article-image-caption-font-size: 13px; /** CSS --article-figure-meta-font-size 16-16-18-18 */
+  --article-image-source-font-size: 13px; /** NMT CSS --article-figure-meta-font-size */
+  --article-image-caption-line-height: 16.899999618530273px; /** this component level variable references the branding variables */
+  --article-image-source-line-height: 17px;
+  --article-content-stack-space: 16px; /** 16 - 16 - 24 - 32 - This variable creates the vertical spacing between different article body elements such as avatars, media players, corssheadings, paragraphs, field sets, images, tables, quotes, videos, social embeds, etc. */
+  --article-headings-stack-space: 12px; /** 12 | 12 | 12 | 16 - This spacing variable is used for the space between article page heading kickers, headlines and subheadlines. XS&SM need review; correct value might be 8 */
+  --article-image-landscape-inline-space: 0px;
+  --article-meta-font-family: AntennaCond; /** This variable is used on the font size of article day&time stamp that usually shows up along with the article author avatars. On app versions this variable is used for the avatar names. This variable references variables from the branding collection. */
+  --article-meta-font-size: 12px; /** This variable is used on the font size of article day&time stamp that usually shows up along with the article author avatars. On app versions this variable is used for the avatar names. 12 - 12 - 14 - 16 */
+  --article-content-inline-space: 16px; /** 16 | 16 | 72 | 162 - This variable is used for making the left and right spacings around article content blocks. Current css has the article-body class assigned to a div and article body contains these horizontal padding values. */
+  --article-headings-inline-space: 16px; /** 16 | 16 | 72 | 16 - This variable is used for the left and right space within the article page headings container which holds the article page kicker, headline and subheadline. */
+  --article-image-portait-inline-space: 0px;
+  --article-image-container-stack-space: 8px;
+  --article-infobox-inline-space: 16px;
+  --article-infobox-stack-space: 16px;
+  --bild-design-frame-space: 12px; /** Variable used in spacing parameters of bild.design webpage mockups. move to bild.design group maybe */
+  --ds-main-container-space: 0px; /** This variable is used on documentation pages. This is an alternative variable to the main container max width variable. 0 - 0 - 68 - 68 */
+  --dsys-docs-width-size: 750px;
+  --main-content-stage-size: 750px; /** This variable is used as a max width size for content blocks. For mobile devices this var references the DSysDocsWidthSize var 320 - 750 - 962 - 1024 */
+  --foundations-banner-height-size: 80px; /** This variable is used on documentation pages that have an artistic banner at the top of the page that is related to the foundation topic on the page. 80 - 80 -80 - 140 */
+  --ds-caption-stack-space0-5x: 4px; /** This variable is used in documentation pages that have small caption or lables along with a UI component documented. 4 - 4 - 6 - 8 */
+  --ds-caption-stack-space1x: 8px;
+  --1column-mobile: 320px; /** This variable is used only for this design system's component tests. */
+  --thin-banner-vertical-height-size: 558px; /** This variable is currently used on a thin gallery that appears on desktop websites with petbook and other "books" content. Its height changes to a large height on mobile sites. 558 - 558 - 558 - 186 */
+  --specs-font-family: Gotham; /** This variable is used only for texts and labels that form part of this design system's documentation. */
+  --doc-header-height-size: 144px; /** This variable is used on documentation headers that contain info about platfroms and component names. 144 - 144 - 160 - 180 */
+  --menu-item-space: 8px;
+  --menu-item-font-size: 18px; /** This variable is used on the menu link lane and on the mobile side menu drawer. */
+  --menu-item-util-font-size: 12px;
+  --menu-item-util-stack-space: 10px;
+  --menu-link-lane-height-size: 48px;
+  --menu-utillink-item-height-size: 48px;
+  --menu-link-item-inline-space: 4px;
+  --menu-logo-default-size: 56px;
+  --menu-logo-scrolled-size: 56px;
+  --menu-special-navi-item-height-size: 48px;
+  --sub-nav-bar-height-size: 42px;
+  --menu-utility-links-container-height-size: 56px;
+  --menu-top-stack-space: 8px;
+  --menu-left-inline-space: 8px;
+  --menu-utility-links-gap-space: 24px;
+  --menu-right-inline-space: 0px;
+  --menu-bottom-stack-space: 8px;
+  --menu-utility-links-divider-height-size: 40px;
+  --menu-shadow-visibility: rgba(0, 0, 0, 0.10000000149011612); /** This color type variables are only in this semantic collection for making subtle shadow effects change visibility across device sizes. Shadow alpha: 10 - 10 - 10 - 0 */
+  --hey-input-shadow-visibility: rgba(0, 0, 0, 0); /** This color type variables are only in this semantic collection for making subtle shadow effects change visibility across device sizes. Shadow alpha: 0 - 0 - 0 - 10 */
+  --app-topbar-title-font-size: 12px;
+  --app-topbar-stage-title-height: 14px;
+  --i-osapp-top-bar-height-size: 44px;
+  --i-osapp-top-bar-left-inline-space: 12px;
+  --i-osapp-top-bar-right-inline-space: 16px;
+  --teaser-title-inline-left-space: 12px;
+  --teaser-title-stack-space: 4px;
+  --m-qteaser-headline-font-size: 21px; /** XS-headline4FontSize:22 // SM-headline4FontSize:22 // MD-headline3FontSize:36 // LG-headline3FontSize:40 */
+  --m-qteaser-headline-font-weight: 700;
+  --m-qteaser-headline-line-height: 23.100000381469727px;
+  --mq-teaser-title-inline-space: 12px;
+  --a-teaser-kicker-font-size: 16px; /** 16 - 16 - 22 - 24 This variable references the semantic variables kicker3fontsize and kicker2fontsize. At the 600px breakpoint smaller devices use the kicker3 variable */
+  --a-teaser-headline-font-size: 30px; /** This variable references the semantic variables headline3 (XS&SM) and headline2 (MD&LG). 28 - 28 - 48 - 64 */
+  --a-teaser-kicker-line-height: 16px;
+  --a-teaser-headline-line-height: 30px;
+  --a-teaser-title-inline-space: 12px;
+  --teaser-title-gap-space: 4px;
+  --std-teaser-image-title-gap-space: 4px;
+  --std-teaser-badges-margin-space: 4px; /** This variable is used for creating space around the outside of a subscription badge or video icon badge. */
+  --std-teaser-kicker-headline-stack-space: 2px; /** 2 | 2 | 2 | 2 - This variable is used on the standard teaser vertical spacing between the kicker and the headline. It references the semantic variable stackSpaceConst3XS */
+  --teaser-kicker-bg-inline-space: 6px;
+  --teaser-kicker-bg-stack-space: 2px;
+  --quad-headline-font-size: 42px; /** This component level variable is used on the quad teaser headline. It references the semantic level variable headline1. 48 - 48 - 72 - 100 */
+  --quad-kicker-font-size: 20px;
+  --quad-headline-line-height: 42px;
+  --q-teaser-title-inline-space: 12px;
+  --teaser-badges-margin-space: 8px; /** This variable is used for creating space around the outside of a subscription badge or video icon badge. */
+  --teaser-badges-height-size-lg: 32px; /** This token is for controling the height of badges that are inside of teasers. 32 - 32 - 32 - 40 */
+  --teaser-title-bottom-stack-space: 12px;
+  --teaser-badges-height-size-sm: 24px;
+  --bild-play-teaser-width-size: 145px;
+  --teaser-layout-grid-space: 12px;
+  --super-ateaser-title-inline-space: 24px; /** 16 - 16 - 16 - 16 */
+  --b-teaser-title-inline-space: 16px;
+  --table-column-width-size1x: 80px;
+  --table-column-width-size2x: 140px;
+  --table-column-width-size0-5x: 40px;
+  --table-column-width-size1-5x: 120px;
+  --table-column-width-size2-5x: 180px;
+  --table-column-width-size0-75x: 56px;
+  --table-column-width-size3x: 200px;
+  --table-item-max-width-size: 224px;
+  --separator-thickness-size: 2px;
+  --avatar-label-font-size: 13px; /** This variable is used on avatar names in article pages. Bild: 16 - 16 - 16 - 18; SpoBi&Ads: 13 - 13 - 13 - 15 */
+  --avatar-article-size: 48px; /** This variable is used for setting the size of avatar images in article pages. It references the sizeConstMD variable from the "generic" semantic collection. Its value is 48 across devices. */
+  --avatar-author-page-size: 96px; /** 96 - 96 - 130 - 130 This variable is used for controlling the size of the avatar image on author pages. */
+  --avatar-font-family: Inter; /** This variable is used in avatar text styles. It receives values from the Brand Tokens Collection. Bild: GothamXNarrow; SpoBi: Inter; Ads: LucidaGrande */
+  --avatar-label-line-height: 21px; /** This variable is used for controlling the line height of avatar texts. Its values influence the stacking space between avatar texts. 21 - 21 - 21 - 23 */
+  --avatar-lane-gap-space: 16px; /** This variable is used for setting the inline space between multiple avatars that are horizontally placed in a lane when an article has multiple authors. 16 - 16 - 24 - 24 */
+  --app-avatar-font-family: AntennaCond; /** This variable is used for setting the font of avatars on iOS and Android platforms. This is subject to review. */
+  --button-label-font-size: 15px;
+  --button-inline-space: 16px;
+  --partner-link-button-label-font-size: 16px; /** Use this variable for controlling the font size of partner buttons. 16 - 16 - 16 - 18 */
+  --partner-link-button-label-height-size: 48px;
+  --button-border-width-size: 2px;
+  --button-content-min-height-size: 24px; /** This fixed height variable ensures that the button maintains a consistent height, even when the icon is not active. */
+  --partner-link-button-inline-space: 8px;
+  --button-label-line-height: 15px;
+  --button-content-gap-space: 6px;
+  --button-stack-space: 6px;
+  --button-border-radius: 8px;
+  --news-ticker-time-font-size: 16px; /** similar to kicker3 values - 16 - 16 - 16 - 18 */
+  --news-ticker-time-font-weight: 700;
+  --news-ticker-time-font-family: AntennaExtraCond;
+  --news-ticker-time-line-height: 20.799999237060547px; /** Figma currently does not allow for percentages in Line Height variables. The values in this token are the result of multiplying the font size by the line height variable defined on the Bild home css -> newsTickerTime line height: 1.3. Line height for this component does not change across devices. */
+  --news-ticker-content-stack-space: 4px;
+  --news-ticker-kicker-inner-stack-space: 2px;
+  --news-ticker-titles-inline-space: 18px;
+  --news-ticker-badges-inline-space: 8px;
+  --news-ticker-time-kicker-stack-space: 4px;
+  --news-ticker-entries-stack-space: 22px;
+  --news-ticker-kicker-inner-inline-space: 4px;
+  --news-ticker-skeleton-bottom-space: 64px;
+  --news-ticker-red-dot-size: 12px;
+  --news-ticker-entries-left-inline-space: 22px;
+  --news-ticker-line-inline-space: 6px;
+  --news-ticker-app-card-height-size: 116px;
+  --news-ticker-app-card-width-size: 250px;
+  --live-tickerheadline-font-weight: 600;
+  --live-ticker-headlines-font-size: 22px; /** This variable is used for the font size of live ticker headlines. 22 - 22 - 32 - 32 */
+  --time-stamp-font-family: Gotham XNarrow;
+  --live-ticker-time-stamp-font-size: 14px; /** This variable is used for the live ticker time stamp font size. 14 - 14 - 16 - 16 */
+  --live-ticker-time-headline-stack-space: 4px;
+  --live-ticker-slider-item-width-max-size: 257px;
+  --live-ticker-app-card-height-size: 96px;
+  --live-ticker-app-card-width-size: 250px;
+  --video-time-badge-corner-size: 2px; /** This variable is used on video player badges that display a red play icon on top of a white square next to a time stamp. This variable references the borderRadiusXS. Constant value of 2 across device sizes. */
+  --video-time-badge-font-size: 16px; /** 16 - 16 - 18 - 18 -- This variable is used to control the videoTimeBadge text style's font size parameter. The typography style that uses this variable is the videoTimeBadge style. The badge that uses this variable appears on the upper right corner of horizontal videos. */
+  --video-time-badge-size: 24px; /** 24 - 24 - 32 - 40 - This variable is used on horizontal video badges that contain a red play icon on top of a white square next to a timestamp. */
+  --video-red-play-icon-width-size: 8px;
+  --video-red-play-icon-height-size: 10px; /** This variable is used for changing the red play icon inside the white square. */
+  --video-badge-time-line-height: 21px;
+  --video-skeleton-container-height: 180px;
+  --video-frame-inline-space: 0px;
+  --vertical-video-mock-headline-font-size: 22px;
+  --video-ad-badge-font-size: 14px; /** 14 - 14 - 16 - 16 -- This variable is used in the videoAdBadge font size parameter. */
+  --gallery-pagination-item-height-size: 4px;
+  --gallery-pagination-container-web-inline-space: 8px; /** 8 - 8 - 12 - 12 - this component level variable references the inlineSpaceConst semantic variables; SM for smaller devices, MD for larger devices */
+  --gallery-pagination-container-stack-space: 12px; /** 12 - 12 - 16 - 16 - this component level variable references the semantic */
+  --gallery-pagination-container-app-inline-space: 12px;
+  --scroll-bar-thickness-size: 8px;
+  --drop-down-border-radius: 4px;
+  --drop-down-item-stack-space: 8px;
+  --drop-down-item-inline-space: 12px;
+  --input-field-stack-space: 6px;
+  --input-field-inline-space: 16px;
+  --input-field-mini-label-inline-space: 4px;
+  --input-field-font-size: 16px; /** This variable controls texts inside of input fields such as dropdowns, date input and other text inputs that appear in forms for example. compact 15 - default 17 - spacious 19 */
+  --input-field-imessage-inline-space: 16px;
+  --input-field-height-size: 36px;
+  --hey-input-container-inline-space: 8px;
+  --input-field-message-gap-space: 4px;
+  --input-field-font-family: Inter;
+  --breadcrumb-font-size: 14px; /** 15 - 15 - 15 - 12 -- Breadcrumbs have a slightly larger font size on mobile devices compared to when they are rendered on larger desktop devices. */
+  --breadcrumb-font-family: Inter;
+  --breadcrumb-arrow-left-inline-space1: 3px;
+  --breadcrumb-arrow-right-inline-space2: 5px;
+  --breadcrumb-inline-space: 12px;
+  --breadcrumb-line-height: 14px; /** 15 - 15 - 15 - 12 -- Breadcrumbs have a slightly larger font size on mobile devices compared to when they are rendered on larger desktop devices. */
+  --breadcrumb-font-weight: 400;
+  --breadcrumb-stack-space: 14px;
+  --icon-size: 24px;
+  --icon-size-embedd-media: 40px;
+  --badges-inner-stack-space: 2px; /** This space variable is used for creating the top and bottom space between a badge's text label and the surface that the text label is on top of. */
+  --badges-inner-inline-space: 4px; /** This space variable is used for creating the left and right space between a badge's text label and the badge background surface that the text label is on top of. */
+  --ad-label-badge-height-size: 30px; /** 30 - 30 - 30 - 30 - This variable is used on the Advert rectangular badge that is found above an ad containers. */
+  --section-title-inner-stack-bottom-space: 12px;
+  --section-title-height-size: 32px;
+  --section-title-arrow-inline-space: 5px; /** This variable is used on large title headings that are h2 elements in html and indicate a new section in the user interface. This space changes when a user hovers over the large title. */
+  --section-title-arrow-inline-space-active: 5px; /** This variable is used for increasing the space between the text and the arrow at the end of the large title text. On mobile devices there is no hover state so this variables values are the same as the default state values. */
+  --audio-player-font-size: 16px; /** This variable is used in the text style dedicated to audio player labels for elapsed time, reproduction speed and short functionality description text. 16 - 16 - 16 - 18 */
+  --special-navi-inline-space: 24px;
+  --chips-font-size: 16px; /** This variable is used on the chips font size parameter of the chips text style. The font size changes only for the change between larger device widths and any device smaller than the largest. 16 - 16 -16 - 18 */
+  --chips-inline-space: 12px;
+  --chips-stack-space: 8px;
+  --search-result-badge-height-size: 18px;
+  --radio-selector-size: 20px;
+  --radio-selector-dot-active-size: 12px;
+  --headlines-skeleton-image-placeholder-max-width: 282px;
+  --article-skeleton-image-inline-space: 12px;
+  --article-skeleton-text-inline-space: 0px;
+  --article-text-skeleton-height-size: 270px;
+  --video-spinner-size: 40px;
+  --video-spinner-stroke-size: 2px;
+  --video-spinner-size0-5x: 20px;
+  --breaking-news-container-height-size: 56px;
+  --breaking-news-badge-upper-title-font-size: 13px;
+  --breaking-news-badge-lower-title-font-size: 23px;
+  --breaking-news-badge-upper-title-line-height: 13px;
+  --breaking-news-badge-lower-title-line-height: 21px;
+  --breaking-news-badge-titels-stack-space: 0px;
+  --breaking-news-scrolling-text-font-size: 21px;
+  --breaking-news-scrolling-text-line-height: 24px;
+  --breaking-news-badge-inline-space: 6px;
+  --info-element-teaser-badge-height-size: 16px;
+  --info-element-teaser-image-height-size: 80px;
+  --info-element-teaser-image-width-size: 80px;
+  --info-element-teaser-badge-margin-space: 4px;
+  --podcast-play-button-size: 48px;
+  --vid-player-bottom-bar-gap-space: 0px;
+  --audio-player-header-stack-space: 56px;
+  --video-time-badge-font-family: Inter;
+  --vid-player-control-button-size: 42px;
+  --vid-player-control-button-icon-size-hover: 28px;
+  --vid-player-timecode-font-size: 14px;
+  --vid-player-timecode-container-min-width-size: 45px;
+  --vid-player-progress-bar-container-height-size: 24px;
+  --vid-player-unmute-button-width-size: 220px;
+  --tab-label-font-size: 16px; /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
+  --ios-tabbar-height-size: 49px;
+  --android-tabbar-height-size: 56px;
+  --tab-label-font-size-line: 12px; /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
+  --apps-tabs-label-font-size: 12px; /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
+  --apps-tabs-label-line-height: 14.399999618530273px; /** Tab labels font size remain constant at 16px across devices and breakpoints. This behavior can be seen on the Mein Konto page tabs for purchases and payment data. */
+  --top-bar-tab-item-height-size: 44px;
+  --mobile-menu-drawer-stack-space: 20px;
+  --mobile-menu-drawer-left-inline-space: 20px;
+  --mobile-menu-drawer-right-inline-space: 16px;
+  --mobile-menu-drawer-max-width-size: 400px;
+  --quote-container-inline-space: 16px;
+  --quote-container-stack-space: 16px;
+  --quote-quotation-marks-font-size: 28px;
+  --quote-content-gap-space: 16px;
+  --gallery-teaser-title-bottom-space: 28px; /** This token is used to create more bottom padding space on system teaser headlines inside the gallery to avoid overlapping with the pagination. */
+  --gallery-teaser-app-gap-space: 0px; /** This token is used to create more bottom padding space on system teaser headlines inside the gallery to avoid overlapping with the pagination. */
+  --app-epaper-carousel-item-focus-width: 182px;
+  --app-epaper-carousel-item-default-width: 144px;
+  --app-epaper-carouse-beilage-item-width: 110px;
+  --standard-teaser-gallery-teaser-width-web: 145px;
+  --standard-teaser-gallery-teaser-width-app: 280px;
+  --slider-progress-bar-idle-height-size: 4px;
+  --slider-progress-bar-hover-height-size: 8px;
+  --slider-progress-inactive-height-size: 2px;
+  --vid-player-progress-bar-height-size: 12px;
+  --footer-font-size: 11px; /** This variable is used on footer links that commonly show up at the bottom of pages. The font size parameter remains constant at 11 px across device sizes. */
+  --footer-line-height: 14px;
+  --footer-font-family: Inter;
+  --footer-font-size-user-offer-pages: 18px;
+  --footer-line-height-user-offer-pages: 26px;
+  --accordion-label-font-family: Inter; /** This variable exists specifically for changing the accordion font family across brands. It is subject to review. Bild: GothamXNarrow, SpoBi: Inter, Ads: LucindaGrande */
+  --paywall-container-gap-space: -48px;
+  --paywall-header-bottom-stack-space: 80px;
+  --paywall-card-max-width-size: 346px;
+  --paywall-card-price-tag-font-size: 64px; /** This variable is used on the paywall card price tag. 64 constant */
+  --paywall-card-price-tag-line-height: 64px;
+  --paywall-card-price-note-line-height: 40px;
+  --paywall-card-price-note-font-size: 40px; /** This variable is used on the paywall card text under the price tag. 40 - 40 - 40 - 40 */
+  --app-toggle-item-label-font-size: 14px; /** This variable is used on labels in list items with toggle switches found in app preferences. 14 - 14 - 16 - 18 */
+  --app-toggle-item-label-line-height: 14.100000381469727px; /** This variable is used on labels in list items with toggle switches found in app preferences. 14.1 - 14.1 - 16.2 - 18.2 */
+  --search-result-card-image-width-size: 216px;
+  --search-result-card-image-height-size-stacked: 189px;
+  --newsticker-image-card-width-size: 206px;
+  --datepicker-item-day-width-size: 44px;
+  --datepicker-item-height-size: 44px;
+  --datepicker-item-year-width-size: 77px;
+  --grid-space-resp-lg: 24px; /** 24-24-32-32 – use for side paddings and gutters in responsive layouts */
+  --grid-space-resp-xl: 48px; /** 48-48-64-64 – use for side paddings and gutters in responsive layouts */
+  --grid-space-resp-base: 12px; /** 12-12-12-16 – use for side paddings and gutters in responsive layouts */
+  --grid-space-resp-sm: 6px; /** 6-6-6-8 – use for side paddings and gutters in responsive layouts */
+  --page-inline-space: 0px; /** 0-0-0-16 – This token is used on the main homepages content container, ensuring full-width layout (no horizontal padding) on mobile and tablet breakpoints. */
+  --grid-space-const-lg: 16px; /** 16-16-16-16 – use for fixed side paddings and gutters */
+  --grid-space-const-sm: 12px; /** 12-12-12-12 – use for fixed side paddings and gutters */
+  --layout-guide-grid-colums: 4px; /** Used to set the column count in Figma Layout guide Grids */
+  --section-space-base: 36px; /** 36-36-48-48 – Use for vertical spacing between sections in a layout. */
+  --section-space-lg: 72px; /** 72-72-96-96 – Use for vertical spacing between sections in a layout */
+  --paragraph-end-space: 16px; /** 16-16-32-32 – Use for spacing after paragraphs in text content */
+  --section-space-sm: 24px; /** 24-24-36-36 – Use for vertical spacing between subsections in a layout */
+  /**
+   * 320 - 390 - 600 - 1024 – Defines the minimum width of the main frame for different breakpoints.
+   * Apply this token to the main frame of page layouts to simulate realistic minimum widths across responsive viewports.
+   */
+  --breakpoint-min-width-size: 390px;
+  /**
+   * 389 - 599 - 1023 - 1024 – Defines the minimum width of the main frame for different breakpoints.
+   * Apply this token to the main frame of page layouts to simulate realistic maximum widths across responsive viewports.
+   */
+  --breakpoint-max-width-size: 599px;
+  /**
+   * Common viewport height size based on the selected mode.
+   * Apply this token to the main frame of page layouts to simulate realistic vertical space.
+   */
+  --canvas-height-size-web: 844px;
+  --content-max-width-medium: 700px; /** Use for content containers that should not fill the full page width on larger viewports. This is commonly used on article body text content and other elements in an article page. */
+  --content-max-width-full: 1024px; /** Use for content containers that should fill the full width of the page */
+  /**
+   * Common viewport width size based on the selected breakpoint.
+   * Apply this token to the main frame of page layouts.
+   */
+  --canvas-width-size-web: 390px;
+  /**
+   * Common viewport width size based on the selected breakpoint.
+   * Apply this token to the main frame of page layouts.
+   */
+  --canvas-width-size-app: 390px;
+  /**
+   * Common viewport height size based on the selected mode.
+   * Apply this token to the main frame of page layouts to simulate realistic vertical space.
+   */
+  --canvas-height-size-app: 844px;
+  --title1-font-size: 24px; /** 22 - 22 - 22 - 28 -- html class stage-block-title__text css var --ressort-header-font-size(sm-md-lg) */
+  --title2-font-size: 16px; /** 16 - 16 - 18 - 20 - html class stage-block-title__text css var --ressort-header-font-size(sm-md-lg) */
+  --display1-font-size: 38px; /** This variable is used on the font size parameter for the display1 text style. 40 - 40 - 72 - 120 */
+  --display2-font-size: 34px; /** This variable is used for the font size parameter of the Display2 text style. 36 - 36 - 42 - 64 */
+  --display3-font-size: 27px; /** This variable is used on the display3 font size parameter of the display3 text style. 28 - 28 - 32 - 40 */
+  --headline1-font-size: 42px; /** This token is used for the headline1 text style's font size parameter. 48 - 48 - 72 - 100 */
+  --headline2-font-size: 42px; /** This token is used on the headline2 text style's font size parameter. 40 - 40 - 48 - 64 */
+  --headline3-font-size: 30px; /** This token is used on the headline3 text style's font size parameter. 28 - 28 - 36 - 40 */
+  --headline4-font-size: 21px; /** This token controls the headline4 text style's font size parameter: 22 - 22 - 26 - 32 */
+  --body-font-size: 17px; /** This variable is used on the body text style's font size parameter. It remains constant at 21. */
+  --label3-font-size: 12px; /** This token is used in the label3 text style's font size parameter. Its value remains constant at 12 across device sizes. */
+  --label2-font-size: 15px; /** This variable controls the label2 text style's font size parameter. Its value remains constant at 15. */
+  --label1-font-size: 17px; /** This token is used in the label1 text style font size parameter. Its value remains constant at 17 across device sizes. */
+  --label1-font-size-responsive: 10px; /** 10 - 10 - 15 - 17 Use this label font size when you want your label's font size to change across device sizes. */
+  --label4-font-size: 8px; /** This token is used in the font size parameter of the label4 text style. The value remains constant at 8. */
+  --callout1-font-size: 18px; /** This token is used for the font size parameter of the callout text style. 18 - 18 - 22 - 22 */
+  --footnote1-font-size: 13px; /** This token is used on the footnote text style font size parameter. 16 - 16 - 16 - 18 */
+  --footnote2-font-size: 10px; /** This token is used in the font size parameter of the footnote2 text style. 12 - 12 - 12 - 16 */
+  --kicker1-font-size: 20px; /** Values come from NMT Figma File 01_Foundation; in online CSS this is kicker0. 18 - 18 - 22 - 30 - This variable does not exist yet in online css. Online css is called kicker0 for smallest font size. */
+  --kicker2-font-size: 16px; /** Values come from comparing NMT Figma File 01_Foundation to online CSS. Online kickers are numbered from 0 to 3. This DS uses 1 to 4 following html convention of h1, h2, h3, etc. 18 - 18 - 22 - 24 */
+  --kicker3-font-size: 16px; /** Values come from comparing NMT Figma File 01_Foundation to online CSS. Online kickers are numbered from 0 to 3. 16 - 16 - 18 - 20 */
+  --kicker4-font-size: 14px; /** Values come from comparing NMT Figma File 01_Foundation to online CSS. Online kickers are numbered from 0 to 3. 14 - 14 - 16 - 16 */
+  --subheadline1-font-size: 18px; /** This token controls the subheadline1 font size parameter. 24 - 24 - 32 - 36 */
+  --quote-font-size: 16px; /** 16 - 16 - 18 - 20 -- This variable is used for controlling the font size of the quote text style. */
+  --body-font-family: Inter; /** This variable references the bodyFontFamily variable from the branding collection. */
+  --callout-font-family: AntennaCond;
+  --headline-font-family: AntennaExtraCond;
+  --footnote-font-family: Inter;
+  --label-font-family: AntennaExtraCond;
+  --kicker-font-family: AntennaExtraCond;
+  --subheadline-font-family: AntennaCond;
+  --title-font-family: AntennaCond;
+  --quote-font-family: AntennaCond;
+  --display-font-family: AntennaCond;
+  --callout-font-weight: 800;
+  --label-font-weight-bold: 700;
+  --label-font-weight-book: 400;
+  --body-font-weight-book: 400;
+  --body-font-weight-bold: 700;
+  --kicker-font-weight: 700;
+  --kicker-font-weight-st: Black Italic;
+  --subheadline-font-weight: 700;
+  --headline1-font-weight: 700;
+  --headline2-font-weight: 700;
+  --headline3-font-weight: 700;
+  --headline4-font-weight: 700;
+  --headline1-font-weight-st: Bold Italic; /** This variable is a string type variable for controlling not only headline font weight but also the italic style for Sport Bild headlines. */
+  --title-font-weight: 800;
+  --display-font-weight: 800;
+  --quote-font-weight: 800;
+  --footnote-font-weight-book: 400;
+  --footnote-font-weight-bold: 700;
+  --body-line-height: 28.049999237060547px; /** Figma's font line height currently does not allow for multipliers as is used on current website css var(--body-line-height) */
+  --kicker4-line-height: 15.399999618530273px;
+  --kicker3-line-height: 17.600000381469727px;
+  --kicker2-line-height: 17.600000381469727px;
+  --kicker1-line-height: 22px;
+  --label3-line-height: 14.399999618530273px;
+  --label1-line-height: 20.399999618530273px; /** This variable is used in the label1 text style's line height parameter. It references branding variables for brand specific line heights. */
+  --label1-responsive-line-height: 12px;
+  --label2-line-height: 19.200000762939453px;
+  --label4-line-height: 10px;
+  --display1-line-height: 40px;
+  --display2-line-height: 36px;
+  --display3-line-height: 28px;
+  --title1-line-height: 26.399999618530273px;
+  --title2-line-height: 20.799999237060547px; /** html class stage-block-title__text css var --ressort-header-font-size(sm-md-lg) */
+  --quote-line-height: 20.799999237060547px; /** This variable is used in the quote text style line height parameter. */
+  --footnote1-line-height: 17.030000686645508px;
+  --footnote2-line-height: 13px;
+  --headline1-line-height: 42px;
+  --headline2-line-height: 42px;
+  --headline3-line-height: 33px;
+  --headline4-line-height: 23.100000381469727px;
+  --callout-line-height: 23.399999618530273px;
+  --subheadline1-line-height: 23.399999618530273px;
+  --letter-spacing-positive-sm: 0.5px; /** 0.5 | 0.5 | 0.5 | 0.5 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+  --letter-spacing-positive-lg: 2px; /** 2 | 2 | 2 | 3 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+  --letter-spacing-positive-md: 1px; /** 1 | 1 | 1 | 1 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+  --letter-spacing-none: 0px; /** 0 | 0 | 0 | 0 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+  --letter-spacing-negative-sm: -0.5px; /** -0.5 | -0.5 | -0.25 | -0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+  --letter-spacing-negative-md: -1px; /** -1 | -1 | -1 | -1 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+  --letter-spacing-negative-lg: -2px; /** -2 | -2 | -2 | -3 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+  --letter-spacing-negative-xs: -0.25px; /** -0.25 | -0.25 | -0.25 | -0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. This letter spacing was only found in large titles on iOS mobile app large title component. */
+  --letter-spacing-positive-xs: 0.25px; /** 0.25 | 0.25 | 0.25 | 0.25 | This variable takes primitive letter spacing variables and creates this semantic variable for use on designs that change across device sizes. */
+  --display1-letter-spacing: -0.5px; /** -0.5 | -0.5 | -1 | -2 | This variable is used for the letter spacing parameter of the display1 text style. On smaller devices the value is smaller than on larger devices. On desktop devices the letter spacing is further reduced for making the text style more compact. */
+  --display2-letter-spacing: -0.5px; /** -0.5 | -0.5 | -1 | -1 | This variable is used for the letter spacing parameter of the display2 text style. On smaller devices the value is smaller than on larger devices. */
+  --display3-letter-spacing: -0.5px; /** -0.5 | -0.5 | -1 | -1 | This variable is used for the letter spacing parameter of the display3 text style. On smaller devices the value is smaller than on larger devices. */
+  --border-radius-xs: 2px; /** 2-2-2-2 use for corner rounding on very small UI elements such as tooltips and badges. */
+  --border-radius-md: 8px; /** 8-8-8-8 – Standard radius for buttons, chips, input fields, and medium-sized interactive elements. */
+  --border-radius-sm: 4px; /** 4-4-4-4 – use for corner rounding on compact components like checkboxes or small input controls. */
+  --border-radius-xl: 24px; /** 24-24-24-24 – use for corner rounding on larger cards, overlays, dialogs, and other container components. */
+  --border-radius-lg: 16px; /** 16-16-16-16 – use for corner rounding on small cards, overlays, and modal surfaces. */
+  --border-radius-none: 0px; /** 0-0-0-0 – no corner rounding. Used as default for flat layouts, content modules, images, and teaser elements. */
+  --border-radius-full: 9999px; /** creates fully rounded shapes, typically used for circular elements like avatars. */
+  --border-width-thin: 1px; /** 1-1-1-1 – use for subtle outlines and dividers */
+  --border-width-thick: 2px; /** 2-2-2-2 – use for stronger outlines on form elements (inputs), buttons (outline variants), and interaction states (focus, hover, active) */
+  --border-width-hairline: 0.33000001311302185px; /** 0.33 -0.33 -0.33 -0.33 – primarily used in mobile app interfaces. Optimized for high-density displays to create subtle dividers and outlines without visual overload. */
+  --visilble-mobile-only: true; /** Use for showing elements on mobile viewport sizes only */
+  --visilble-desktop-only: false; /** Use for showing elements on desktop viewport sizes only */
+  --visilble-above600px: false; /** Use for showing elements on viewport sizes above 600 px */
+  --visilble-below600px: true; /** Use for showing elements on viewport sizes below 600 px */
+  --hide-on-mobile: false; /** Use for hiding elements on mobile viewport sizes */
+  --visilble-tablet-only: false; /** Use for showing elements on tablet viewport sizes only */
+  --hide-on-desktop: true; /** Use for hiding elements on desktop viewport sizes only */
+  --change-on-lg: xs/sm/md;
+  --change-on-md: xs/sm; /** This variable is used for controlling size changes across device sizes on some components such as the vertical newsticker cards and the search results cards. Both have cards that change layouts at different breakpoints. */
+  --bp-specific-web: xs/sm;
+  --bp-specific-app: compact;
+  --inline-space-resp-sm: 8px; /** 8-8-12-16 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
+  --inline-space-resp-md: 12px; /** 12-12-16-24 use for horizontal (left/right) padding of UI elements that scales across breakpoints */
+  --inline-space-resp-lg: 16px; /** 16-16-24-32 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
+  --inline-space-resp2-xl: 32px; /** 32-32-48-64 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
+  --inline-space-resp-xl: 24px; /** 24-24-32-40 – use for horizontal (left/right) padding of UI elements that scales across breakpoints */
+  --inline-space-const-sm: 8px; /** 8-8-8-8 – Use for fixed horizontal (left/right) padding of UI elements */
+  --inline-space-const-md: 12px; /** 12-12-12-12 – Use for fixed horizontal (left/right) padding of UI elements */
+  --inline-space-const-lg: 16px; /** 16-16-16-16 – Use for fixed horizontal (left/right) padding of UI elements */
+  --inline-space-const2-xl: 32px; /** 32-32-32-32 – Use for fixed horizontal (left/right) padding of UI elements */
+  --inline-space-const-xl: 24px; /** 24-24-24-24 – Use for fixed horizontal (left/right) padding of UI elements */
+  --inline-space-const-xs: 6px; /** 6-6-6-6 – Use for fixed horizontal (left/right) padding of UI elements */
+  --inline-space-const3-xs: 2px; /** 2-2-2-2 – Use for fixed horizontal (left/right) padding of UI elements */
+  --inline-space-const2-xs: 4px; /** 4-4-4-4 – Use for fixed horizontal (left/right) padding of UI elements */
+  --stack-space-resp-md: 12px; /** 12-12-16-24 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
+  --stack-space-resp-lg: 16px; /** 16-16-24-32 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
+  --stack-space-resp2-xl: 32px; /** 32-32-48-64 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
+  --stack-space-resp-sm: 8px; /** 8-8-12-16 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
+  --stack-space-resp-xl: 24px; /** 24-24-32-40 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints */
+  --stack-space-const-sm: 8px; /** 8-8-8-8 – Use for fixed vertical (top/bottom) padding of UI elements */
+  --stack-space-const-md: 12px; /** 12-12-12-12 – Use for fixed vertical (top/bottom) padding of UI elements */
+  --stack-space-const-lg: 16px; /** 16-16-16-16 – Use for fixed vertical (top/bottom) padding of UI elements */
+  --stack-space-const2-xl: 32px; /** 32-32-32-32 – Use for fixed vertical (top/bottom) padding of UI elements */
+  --stack-space-const-xl: 24px; /** 24-24-24-24 – Use for fixed vertical (top/bottom) padding of UI elements */
+  --stack-space-const-xs: 6px; /** 6-6-6-6 – Use for fixed vertical (top/bottom) padding of UI elements */
+  --stack-space-const3-xs: 2px; /** 2-2-2-2 – Use for fixed vertical (top/bottom) padding of UI elements */
+  --stack-space-const2-xs: 4px; /** 4-4-4-4 – Use for fixed vertical (top/bottom) padding of UI elements */
+  --gap-space-resp-xs: 4px; /** 4-4-6-8 – Use for gaps between items inside of UI elements that scale across breakpoints */
+  --gap-space-resp-lg: 16px; /** 16-16-24-32 – Use for gaps between items inside of UI elements that scale across breakpoints */
+  --gap-space-resp-xl: 24px; /** 24-24-32-48 – Use for gaps between items inside of UI elements that scale across breakpoints */
+  --gap-space-resp2-xl: 32px; /** 32-32-48-64 – Use for gaps between items inside of UI elements that scale across breakpoints */
+  --gap-space-resp-md: 12px; /** 12-12-16-24 – Use for gaps between items inside of UI elements that scale across breakpoints */
+  --gap-space-resp-sm: 8px; /** 8-8-12-16 – Use for gaps between items inside of UI elements that scale across breakpoints */
+  --gap-space-resp2-xs: 2px; /** 2-2-4-6 – Use for gaps between items inside of UI elements that scale across breakpoints */
+  --gap-space-resp3-xl: 48px; /** 48-48-72-96 – Use for gaps between items inside of UI elements that scale across breakpoints */
+  --gap-space-const2-xs: 2px; /** 2-2-2-2 – Use for fixed gaps between items inside of UI elements */
+  --gap-space-const-xs: 4px; /** 4-4-4-4 – Use for fixed gaps between items inside of UI elements */
+  --gap-space-const-sm: 8px; /** 8-8-8-8 – Use for fixed gaps between items inside of UI elements */
+  --gap-space-const-md: 12px; /** 12-12-12-12 – Use for fixed gaps between items inside of UI elements */
+  --gap-space-const-lg: 16px; /** 16-16-16-16 – Use for fixed gaps between items inside of UI elements */
+  --gap-space-const-xl: 24px; /** 24-24-24-24 – Use for fixed gaps between items inside of UI elements */
+  --gap-space-const2-xl: 32px; /** 32-32-32-32 – Use for fixed gaps between items inside of UI elements */
+  --gap-space-const3-xl: 48px; /** 48-48-48-48 – Use for fixed gaps between items inside of UI elements */
+  --size-const3-xs: 16px; /** 16-16-16-16 – Use for setting fixed height and width of UI elements */
+  --size-const2-xs: 24px; /** 24-24-24-24 – Use for setting fixed height and width of UI elements */
+  --size-const-xs: 32px; /** 32-32-32-32 – Use for setting fixed height and width of UI elements */
+  --size-const-sm: 40px; /** 40-40-40-40 – Use for setting fixed height and width of UI elements */
+  --size-const-md: 48px; /** 48-48-48-48 Use for setting fixed height and width of UI elements */
+  --size-const-lg: 56px; /** 56-56-56-56 – Use for setting fixed height and width of UI elements */
+  --size-const-xl: 64px; /** 64-64-64-64 – Use for setting fixed height and width of UI elements */
+  --size-const3-xl: 96px; /** 96-96-96-96 – Use for setting fixed height and width of UI elements */
+  --size-const4-xl: 148px; /** 148-148-148-148 – Use for setting fixed height and width of UI elements */
+  --size-const2-xl: 72px; /** 72-72-72-72 – Use for setting fixed height and width of UI elements */
+  --size-const4-xs: 8px; /** 8-8-8-8 – Use for setting fixed height and width of UI elements */
+  --size-resp3-xs: 16px; /** 16-16-16-24 – Use for setting height and width of UI elements that scale across breakpoints */
+  --size-resp2-xs: 24px; /** 24-24-32-32 – Use for setting height and width of UI elements that scale across breakpoints */
+  --size-resp-xs: 32px; /** 32-32-40-48 – Use for setting height and width of UI elements that scale across breakpoints */
+  --size-resp-sm: 40px; /** 40-40-48-56 – Use for setting height and width of UI elements that scale across breakpoints */
+  --size-resp-md: 48px; /** 48-48-64-72 – Use for setting height and width of UI elements that scale across breakpoints */
+  --size-resp-lg: 56px; /** 56-56-72-92 – Use for setting height and width of UI elements that scale across breakpoints */
+  --size-resp-xl: 64px; /** 64-64-80-96 – Use for setting height and width of UI elements that scale across breakpoints */
+  --size-resp2-xl: 72px; /** 72-72-92-100 – Use for setting height and width of UI elements that scale across breakpoints */
+  --size-resp3-xl: 96px; /** 96-96-120-148 – Use for setting height and width of UI elements that scale across breakpoints */
+  --size-resp4-xl: 148px; /** 148-148-160-180 – Use for setting height and width of UI elements that scale across breakpoints */
+  --size-resp4-xs: 12px; /** 12-12-14-16 – Use for setting height and width of UI elements that scale across breakpoints */
+  --breakpoint-name: sm;
+}

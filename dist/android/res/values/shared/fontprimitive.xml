@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Do not edit directly, this file was auto-generated.
+-->
+<resources>
+  <string name="font-family-gotham-xnarrow">Gotham XNarrow</string>
+  <string name="font-family-gotham-cond">Gotham Condensed</string>
+  <string name="font-family-gotham">Gotham</string>
+  <string name="font-family-lucida-grande">Lucida Grande</string>
+  <string name="font-family-antenna-extra-cond">AntennaExtraCond</string>
+  <string name="font-family-antenna-cond">AntennaCond</string>
+  <string name="font-family-inter">Inter</string>
+  <string name="700-black-font-weight">700</string><!-- 700 is considered black weight because Gotham Condensed is the primary font family (most used in headlines). In other font families 700 is not black weight but bold. -->
+  <string name="900-extra-black-font-weight">900</string>
+  <string name="400-book-font-weight">400</string>
+  <string name="1000-ultra-font-weight">1000</string>
+  <string name="800-black-font-weight">800</string>
+  <string name="350-book-font-weight">350</string>
+  <string name="600-bold-font-weight">600</string>
+  <string name="100-thin-font-weight">100</string>
+  <string name="300-light-font-weight">300</string>
+  <string name="200-extra-light-font-weight">200</string>
+  <string name="500-medium-font-weight">500</string>
+  <string name="bold-italic-font-weight-st">Bold Italic</string>
+  <string name="black-font-weight-st">Black</string>
+  <string name="letter-space-0-25">-0.25px</string><!-- This variable is a primitive for use in creating semantic text styles that need to use a subtle small letter spacing value of -0.25. -->
+  <string name="letter-space-0">0px</string><!-- This variable is a primitive for use in creating semantic text styles that need to use a default letter spacing value of 0. -->
+  <string name="letter-space1">1px</string><!-- This variable is a primitive for use in creating semantic text styles that need to use a positive letter spacing value of 1. -->
+  <string name="letter-space0-5">0.5px</string><!-- This variable is a primitive for use in creating semantic text styles that need to use a slight positive letter spacing value of 0.5. -->
+  <string name="letter-space0-25">0.25px</string><!-- This variable is a primitive for use in creating semantic text styles that need to use a subtle positive letter spacing value of 0.25. -->
+  <string name="letter-space-0-5">-0.5px</string><!-- This variable is a primitive for use in creating semantic variables that need to use a subtle negative letter spacing value of -0.5. -->
+  <string name="letter-space2">2px</string><!-- This variable is a primitive for use in creating semantic text styles that need to use a large letter spacing value of 2. -->
+  <string name="letter-space-1">-1px</string><!-- This variable is a primitive for use in creating semantic variables that need to use a negative letter spacing value of -1. -->
+  <string name="letter-space-2">-2px</string><!-- This variable is a primitive for use in creating semantic text styles that need to use a large negative letter spacing value of -2. This is usually reserved for large texts styles that are used on titles or headlines. -->
+  <string name="letter-space3">3px</string><!-- This variable is a primitive for use in creating semantic text styles that need to use a much larger letter spacing value of 3. Text styles that have smaller font sizes should use increasingly positive values for their letter spacings on smaller device sizes. -->
+  <string name="letter-space-3">-3px</string><!-- This variable is a primitive for use in creating semantic text styles that need to use a large negative letter spacing value of -3. Text styles that have larger font sizes should use increasingly negative values for their letter spacings on larger device sizes. -->
+  <string name="1000-ultra-font-weight">1000</string>
+  <string name="900-extra-black-font-weight">900</string>
+  <string name="800-black-font-weight">800</string>
+  <string name="700-black-font-weight">700</string>
+  <string name="600-bold-font-weight">600</string>
+  <string name="500-medium-font-weight">500</string>
+  <string name="400-book-font-weight">400</string>
+  <string name="350-book-font-weight">350</string>
+  <string name="200-extra-light-font-weight">200</string>
+  <string name="100-thin-font-weight">100</string>
+  <string name="600-bold-italic-font-weight">Bold Italic</string>
+  <string name="700-black-italic-font-weight">Black Italic</string>
+</resources>

@@ -1,0 +1,14 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --button-content-gap-space: 8px; /** This variable is in the SpaceScaling Collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes. */
+  --button-stack-space: 12px; /** This variable is in the SpaceScaling collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes. */
+  --button-label-font-size: 19px; /** This variable is in the SpaceScaling Collection. It was made to experiment with how scaling size could work across different content scaling / size / contrast themes. Font size across devices: 15 - 17 - 19 */
+  --button-inline-space: 24px; /** This variable is in the SpaceScaling Collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes. */
+  --input-field-inline-space: 16px;
+  --input-field-stack-space: 12px;
+  --input-field-height-size: 48px;
+  --input-field-label-font-size: 19px; /** This variable is in the SpaceScaling Collection. It was made to experiment with how scaling size could work across different content scaling / size / contrast themes. Font size across scaling options: compact 15 - default 17 - spacious 19 */
+}

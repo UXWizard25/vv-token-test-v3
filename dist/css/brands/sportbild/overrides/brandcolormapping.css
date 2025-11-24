@@ -1,0 +1,74 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --core-color-primary: #0A2750; /** Bild: 046; SpoBi: 016 current css calls this variable main tenant color */
+  --core-color-secondary: #FFFFFF; /** Bild&SpoBi Tone 100 */
+  --core-color-secondary-dark: #081828; /** Bild: 015 ; SpoBi: 010 */
+  --core-color-tertiary: #081828; /** Bild: 015 ; SpoBi: 010 */
+  --core-color-tertiary-dark: #FFFFFF; /** Bild&SpoBi: 100 */
+  --accent-color-primary: #174482; /** Bild: Tone 046 ; SpoBi: 016 This variable is used on small UI elements such as the background color for kickers. */
+  --accent-color-primary-dark: #F7F9FD; /** Bild: 100 ; SpoBi: 098 */
+  --surface-color-primary: #FFFFFF; /** Bild: 100 ; SpoBi: 100 */
+  --surface-color-primary-dark: #081828; /** Bild: 015 ; SpoBi: 010 */
+  --surface-color-secondary: #F7F9FD; /** Bild: 096 ; SpoBi: 098 */
+  --surface-color-secondary-dark: #0A2750; /** Bild: 020 ; SpoBi: 016 */
+  --surface-color-tertiary: #BDCADB; /** Bild: 093 ; SpoBi: 081 */
+  --surface-color-tertiary-dark: #174482; /** Bild: 025 ; SpoBi: 029 */
+  --surface-color-quartenary: #CED4DA; /** Bild: 085 ; SpoBi: 085 */
+  --surface-color-quartenary-dark: #4B525A; /** Bild: 035 ; SpoBi: 035 */
+  --color-primary-active: #174482; /** Bild: 046 ; SpoBi: 029 */
+  --color-primary-active-dark: #F7F9FD; /** Bild: 046 ; SpoBi: 098 */
+  --text-color-primary: #232629; /** Bild & SpoBi: Tone 015 */
+  --text-color-primary-dark: #E9ECEF; /** Bild & SpoBi: Tone 093 */
+  --headline-color-primary: #0A2750; /** Bild: 015 ; SpoBi: 016 */
+  --headline-color-primary-dark: #FFFFFF; /** Bild&SpoBi: Tone 100 */
+  --kicker-text-color-on-bg: #FFFFFF; /** This variable is used on kicker texts that are on top of a color that is different from the outer color of the overall user interface. Bild & SpoBi: Tone 100 */
+  --kicker-text-color-on-surface: #8C9196; /** This variable is used for the color of kicker texts that are not no top of a different color of the overall user interface. Bild: 046 ; SpoBi: 060 */
+  --kicker-text-color-on-surface-dark: #8C9196; /** Use this variable for kicker texts that are directly on top of the color of the overall user interface. Bild & SpoBi tone 060. */
+  --text-color-secondary: #8C9196; /** Bild & SpoBi: Tone 060 */
+  --text-color-secondary-dark: #8C9196; /** Bild & SpoBi: Tone 060 */
+  --kicker-bg-color-on-surface: #174482; /** Use this variable for the color immediately behind the bounding box of the kicker text element. Bild: 046 ; SpoBi: 029 */
+  --kicker-bg-color-on-surface-dark: #8C9196; /** Use this variable for the dark mode color of the background immediately around the kicker text element. Bild: 060 ; SpoBi: 060 */
+  --button-primary-bg-color-idle: #232629; /** Bild & SpoBi: Tone 015 */
+  --button-primary-bg-color-hover: #4B525A; /** Bild & SpoBi: Tone 035 */
+  --button-primary-bg-color-idle-dark: #FFFFFF; /** Bild & SpoBi: Tone 100 */
+  --button-primary-bg-color-hover-dark: #BDCADB; /** Bild: 093 ; SpoBi: 081 */
+  --button-primary-bg-color-idle: #174482; /** Bild: 046 ; SpoBi: 029 */
+  --button-primary-bg-color-idle-dark: #315998; /** This variable controls the primary button idle color for two brands in dark mode. Bild: 046 ; SpoBi: 038 */
+  --button-primary-bg-color-hover: #0A2750; /** Bild: 035 ; SpoBi: 016 */
+  --button-primary-bg-color-hover-dark: #174482; /** This variable stores colors for the hover state of primary buttons for two brands in dark mode. Bild: 035 ; SpoBi: 029 */
+  --breaking-news-text-content-color: #232629; /** This variable is used on the text for headlines in the horizontally animated breaking news strip. Bild: 100 ; SpoBi: 015 */
+  --breaking-news-surface-color: #FFBF00; /** This variable is used on the breaking news strip that has horizontally animated headlines. Bild: 015 ; SpoBi: 081 */
+  --breaking-news-title-surface-color: #0A2750; /** This variable is used for the background color of the "Breaking News" title. Bild: 067 ; SpoBi: 016 */
+  --breaking-news-top-title-text-color: #FFBF00; /** This variable is used for the color of the "breaking" word in the "breaking news" horizontally animated headlines strip. Bild: 010 ; SpoBi: 081 */
+  --breaking-news-surface-color-dark: #FFBF00; /** This variable is for the background color of the horizontally animated strip with headlines for breaking news on dark mode.  Bild: 093 ; SpoBi: 081 */
+  --breaking-news-text-content-color-dark: #232629; /** This variable is used on the text for headlines in the horizontally animated breaking news strip on dark mode. Bild&SpoBi: 015 */
+  --breaking-news-bottom-title-text-color: #FFFFFF; /** This variable is used for the color of the "News" word in the breaking news horizontal animated headlines strip. Bild: 010 ; SpoBi: 100 */
+  --teaser-title-background-gradient-start: rgba(10, 39, 80, 0.699999988079071);
+  --teaser-title-background-gradient-stop: rgba(10, 39, 80, 0);
+  --menu-link-lane-surface-color: #0A2750; /** This variable is used for making possible the default color difference between the Bild and SportBild link lanes inside the menu component. */
+  --menu-link-lane-label-color: #CED4DA; /** This variable is used for making possible the default color difference between the Bild and SportBild link lane labels inside the menu component. */
+  --menu-link-lane-label-color-dark: #AEB4B9;
+  --menu-link-lane-surface-color-dark: #0A2750; /** This variable is used for making possible the default color difference between the Bild and SportBild link lanes inside the menu component on Dark mode. */
+  --menu-link-color-border-active: #0A2750;
+  --menu-link-color-border-active-dark: #F7F9FD;
+  --menu-link-lane-label-color-active: #FFFFFF; /** This variable is used for making possible the active color difference between the Bild and SportBild link lane labels inside the menu component. */
+  --app-top-bar-surface-color: #2C3138;
+  --app-top-bar-bg-color-dark: #2C3138;
+  --app-bottom-tab-bar-bg-color: #FFFFFF;
+  --app-bottom-tab-bar-bg-dark: #2C3138;
+  --app-top-bar-icon-color: #8C9196;
+  --app-top-bar-icon-color-dark: #8C9196;
+  --app-top-bar-text-color: #E9ECEF;
+  --app-top-bar-text-color-dark: #E9ECEF;
+  --app-tob-bar-tab-nav-bottom-border: #174482;
+  --app-tob-bar-tab-nav-bottom-border-dark: #174482;
+  --app-tob-bar-tab-nav-bottom-border-active: #CED4DA;
+  --app-tob-bar-tab-nav-bottom-border-active-dark: #FFFFFF;
+  --avatar-label-color: #666B70; /** 09-2025 css --article-author-name-color // Bild: 015; SpoBi: 045 */
+  --avatar-label-color-dark: #E9ECEF; /** 09-2025 css --article-author-name-color // Bild: 100; SpoBi: 093 */
+  --avatar-label-color-hover: #174482; /** This variable is used for decorating the avatar text's underline color. Bild: 046; SpoBi: 029 */
+  --chip-color-active: #174482;
+}

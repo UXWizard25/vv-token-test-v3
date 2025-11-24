@@ -1,0 +1,277 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --display1-font-size-xs: 40px; /** Bild: 40 | SpoBi: 38 | Ads: 39 | This variable is used in the display1 text style font size parameter for small device sizes. */
+  --display1-font-size-sm: 40px; /** Bild: 40 | SpoBi: 38 | Ads: 39 | This variable is used in the display1 text style font size parameter for small device sizes. */
+  --display1-font-size-md: 72px; /** Bild: 72 | SpoBi: 68 | Ads: 70 | This variable is used in the display1 text style font size parameter for medium device sizes. */
+  --display1-font-size-lg: 120px; /** Bild: 120 | SpoBi: 114 | Ads: 116 | This variable is used in the display1 text style font size parameter for large device sizes. */
+  --display2-font-size-xs: 36px; /** Bild: 36 | SpoBi: 34 | Ads: 35 | This variable is used in the display2 text style font size parameter for small device sizes. */
+  --display2-font-size-sm: 36px; /** Bild: 36 | SpoBi: 34 | Ads: 35 | This variable is used in the display2 text style font size parameter for small device sizes. */
+  --display2-font-size-md: 42px; /** Bild: 42 | SpoBi: 40 | Ads: 41 | This variable is used in the display2 text style font size parameter for medium device sizes. */
+  --display2-font-size-lg: 64px; /** Bild: 64 | SpoBi: 61 | Ads: 62 | This variable is used in the display2 text style font size parameter for large device sizes. */
+  --display3-font-size-sm: 28px; /** Bild: 28 | SpoBi: 27 | Ads: 27 | This variable is used in the display3 text style font size parameter for small device sizes. */
+  --display3-font-size-md: 32px; /** Bild: 32 | SpoBi: 30 | Ads: 31 | This variable is used in the display3 text style font size parameter for medium device sizes. */
+  --display3-font-size-lg: 40px; /** Bild: 40 | SpoBi: 38 | Ads: 39 | This variable is used in the display3 text style font size parameter for large device sizes. */
+  --display3-font-size-xs: 28px; /** Bild: 28 | SpoBi: 27 | Ads: 27 | This variable is used in the display3 text style font size parameter for small device sizes. */
+  --headline1-font-size-xs: 48px; /** Bild: 48 | SpoBi: 42 | Ads: 36 | This variable is used in the headline1 text style font size parameter for small device sizes. */
+  --headline1-font-size-sm: 48px; /** Bild: 48 | SpoBi: 42 | Ads: 36 | This variable is used in the headline1 text style font size parameter for small device sizes. */
+  --headline1-font-size-md: 72px; /** Bild: 72 | SpoBi: 60 | Ads: 54 | This variable is used in the headline1 text style font size parameter for medium device sizes. */
+  --headline1-font-size-lg: 100px; /** Bild: 100 | SpoBi: 80 | Ads: 70 | This variable is used in the headline1 text style font size parameter for large device sizes. */
+  --headline2-font-size-xs: 40px; /** Bild: 40 | SpoBi: 42 | Ads: 30 | This variable is used in the headline2 text style font size parameter for small device sizes. */
+  --headline2-font-size-sm: 40px; /** Bild: 40 | SpoBi: 42 | Ads: 30 | This variable is used in the headline2 text style font size parameter for small device sizes. */
+  --headline2-font-size-md: 48px; /** Bild: 48 | SpoBi: 44 | Ads: 36 | This variable is used in the headline2 text style font size parameter for medium device sizes. */
+  --headline2-font-size-lg: 64px; /** Bild: 64 | SpoBi: 50 | Ads: 48 | This variable is used in the headline2 text style font size parameter for large device sizes. */
+  --headline3-font-size-xs: 28px; /** Bild: 28 | SpoBi: 30 | Ads: 24 | This variable is used in the headline3 text style font size parameter for small device sizes. */
+  --headline3-font-size-sm: 28px; /** Bild: 28 | SpoBi: 30 | Ads: 24 | This variable is used in the headline3 text style font size parameter for small device sizes. */
+  --headline3-font-size-md: 36px; /** Bild: 36 | SpoBi: 30 | Ads: 26 | This variable is used in the headline3 text style font size parameter for medium device sizes. */
+  --headline3-font-size-lg: 40px; /** Bild: 40 | SpoBi: 34 | Ads: 32 | This variable is used in the headline3 text style font size parameter for large device sizes. */
+  --headline4-font-size-xs: 22px; /** Bild: 22 | SpoBi: 21 | Ads: 16 | This variable is used in the headline4 text style font size parameter for small device sizes. */
+  --headline4-font-size-sm: 22px; /** Bild: 22 | SpoBi: 21 | Ads: 16 | This variable is used in the headline4 text style font size parameter for small device sizes. */
+  --headline4-font-size-md: 26px; /** Bild: 26 | SpoBi: 26 | Ads: 20 | This variable is used in the headline4 text style font size parameter for medium device sizes. */
+  --headline4-font-size-lg: 32px; /** Bild: 32 | SpoBi: 26 | Ads: 22 | This variable is used in the headline4 text style font size parameter for large device sizes. */
+  --headline-text-align: center; /** This variable is used for controlling the alignment of headlines across brands. current online css example var: --headline-text-align-lg */
+  --kicker1-font-size-xs: 18px; /** Bild: 18 | SpoBi: 20 | Ads: 16 | This variable is used in the kicker1 text style font size parameter for small device sizes. Current online css: --kicker-0-font-size-sm */
+  --kicker1-font-size-sm: 18px; /** Bild: 18 | SpoBi: 20 | Ads: 16 | This variable is used in the kicker1 text style font size parameter for small device sizes. Current online css: --kicker-0-font-size-sm */
+  --kicker1-font-size-md: 22px; /** Bild: 22 | SpoBi: 26 | Ads: 18 | This variable is used in the kicker1 text style font size parameter for medium device sizes. Current online css: --kicker-0-font-size-md */
+  --kicker1-font-size-lg: 30px; /** Bild: 30 | SpoBi: 32 | Ads: 25 | This variable is used in the kicker1 text style font size parameter for large device sizes. Current online css: --kicker-0-font-size-lg */
+  --kicker2-font-size-xs: 18px; /** Bild: 18 | SpoBi: 16 | Ads: 16 | This variable is used in the kicker2 text style font size parameter for small device sizes. Current online css: --kicker-1-font-size-sm */
+  --kicker2-font-size-sm: 18px; /** Bild: 18 | SpoBi: 16 | Ads: 16 | This variable is used in the kicker2 text style font size parameter for small device sizes. Current online css: --kicker-1-font-size-sm */
+  --kicker2-font-size-md: 22px; /** Bild: 22 | SpoBi: 26 | Ads: 18 | This variable is used in the kicker2 text style font size parameter for medium device sizes. Current online css: --kicker-1-font-size-md */
+  --kicker2-font-size-lg: 24px; /** Bild: 24 | SpoBi: 26 | Ads: 21 | This variable is used in the kicker2 text style font size parameter for large device sizes. Current online css: --kicker-1-font-size-lg */
+  --kicker3-font-size-xs: 16px; /** Bild: 16 | SpoBi: 16 | Ads: 14 | This variable is used in the kicker3 text style font size parameter for small device sizes. Current online css: --kicker-2-font-size-sm */
+  --kicker3-font-size-sm: 16px; /** Bild: 16 | SpoBi: 16 | Ads: 14 | This variable is used in the kicker3 text style font size parameter for small device sizes. Current online css: --kicker-2-font-size-sm */
+  --kicker3-font-size-md: 18px; /** Bild: 18 | SpoBi: 20 | Ads: 14 | This variable is used in the kicker3 text style font size parameter for medium device sizes. Current online css: --kicker-2-font-size-md */
+  --kicker3-font-size-lg: 20px; /** Bild: 20 | SpoBi: 22 | Ads: 16 | This variable is used in the kicker3 text style font size parameter for large device sizes. Current online css: --kicker-2-font-size-lg */
+  --kicker4-font-size-xs: 14px; /** Bild: 14 | SpoBi: 14 | Ads: 12 | This variable is used in the kicker4 text style font size parameter for small device sizes. Current online css: --kicker-3-font-size-sm */
+  --kicker4-font-size-sm: 14px; /** Bild: 14 | SpoBi: 14 | Ads: 12 | This variable is used in the kicker4 text style font size parameter for small device sizes. Current online css: --kicker-3-font-size-sm */
+  --kicker4-font-size-md: 16px; /** Bild: 16 | SpoBi: 16 | Ads: 14 | This variable is used in the kicker4 text style font size parameter for medium device sizes. Current online css: --kicker-3-font-size-md */
+  --kicker4-font-size-lg: 16px; /** Bild: 16 | SpoBi: 18 | Ads: 14 | This variable is used in the kicker4 text style font size parameter for large device sizes. Current online css: --kicker-3-font-size-lg */
+  --subheadline1-font-size-xs: 24px; /** Bild: 24 | SpoBi: 18 | Ads: 18 | This variable is used in the subheadline1 text style font size parameter for small device sizes. */
+  --subheadline1-font-size-sm: 24px; /** Bild: 24 | SpoBi: 18 | Ads: 18 | This variable is used in the subheadline1 text style font size parameter for small device sizes. */
+  --subheadline1-font-size-md: 32px; /** Bild: 32 | SpoBi: 22 | Ads: 18 | This variable is used in the subheadline1 text style font size parameter for medium device sizes. */
+  --subheadline1-font-size-lg: 36px; /** Bild: 36 | SpoBi: 26 | Ads: 28 | This variable is used in the subheadline1 text style font size parameter for large device sizes. */
+  --title1-font-size-xs: 22px; /** Bild 22 | SpoBi 24 | Ads 22 | current online css: --ressort-header-font-size-sm */
+  --title1-font-size-sm: 22px; /** Bild 22 | SpoBi 24 | Ads 22 | current online css: --ressort-header-font-size-sm */
+  --title1-font-size-md: 22px; /** Bild 22 | SpoBi 28 | Ads 22 | current online css: --ressort-header-font-size-md */
+  --title1-font-size-lg: 28px; /** Bild 28 | SpoBi 30 | Ads 28 | current online css: --ressort-header-font-size-lg */
+  --title2-font-size-xs: 16px; /** Bild 16 | SpoBi 16 | Ads 14 | current online css var: --caption-1-font-size-sm */
+  --title2-font-size-sm: 16px; /** Bild 16 | SpoBi 16 | Ads 14 | current online css: --caption-1-font-size-sm */
+  --title2-font-size-md: 18px; /** Bild 18 | SpoBi 18 | Ads 16 | current online css: --caption-1-font-size-md */
+  --title2-font-size-lg: 20px; /** Bild 20 | SpoBi 20 | Ads 18 | current online css: --caption-1-font-size-lg */
+  --callout1-font-size-xs: 18px; /** Bild: 18 | SpoBi: 18 | Ads: 16 | This variable is used in the callout1 text style font size parameter for small device sizes. Current online css: */
+  --callout1-font-size-sm: 18px; /** Bild: 18 | SpoBi: 18 | Ads: 16 | This variable is used in the callout1 text style font size parameter for small device sizes. Current online css: */
+  --callout1-font-size-md: 22px; /** Bild: 22 | SpoBi: 24 | Ads: 22 | This variable is used in the callout1 text style font size parameter for medium device sizes. Current online css: */
+  --callout1-font-size-lg: 22px; /** Bild: 22 | SpoBi: 24 | Ads: 22 | This variable is used in the callout1 text style font size parameter for large device sizes. Current online css: */
+  --body-font-size-xs: 21px; /** Bild: 21 | SpoBi: 17 | Ads: 17 | This variable is used in the body text style font size parameter for small device sizes. Current online css: --body-font-size */
+  --body-font-size-sm: 21px; /** Bild: 21 | SpoBi: 17 | Ads: 17 | This variable is used in the body text style font size parameter for small device sizes. Current online css: --body-font-size */
+  --body-font-size-md: 21px; /** Bild: 21 | SpoBi: 17 | Ads: 17 | This variable is used in the body text style font size parameter for medium device sizes. Current online css: --body-font-size */
+  --body-font-size-lg: 21px; /** Bild: 21 | SpoBi: 17 | Ads: 17 | This variable is used in the body text style font size parameter for large device sizes. Current online css: --body-font-size */
+  --footnote1-font-size-xs: 16px; /** --footnote-font-size-sm */
+  --footnote1-font-size-sm: 16px; /** --footnote-font-size-sm */
+  --footnote1-font-size-md: 16px;
+  --footnote1-font-size-lg: 18px; /** --footnote-font-size-lg */
+  --footnote2-font-size-xs: 12px;
+  --footnote2-font-size-sm: 12px;
+  --footnote2-font-size-md: 12px;
+  --footnote2-font-size-lg: 16px;
+  --quote-font-size-xs: 16px;
+  --quote-font-size-sm: 16px;
+  --quote-font-size-md: 18px;
+  --quote-font-size-lg: 20px;
+  --label1-font-size: 17px;
+  --label2-font-size: 15px;
+  --label3-font-size: 12px;
+  --label4-font-size: 8px;
+  --label1-resp-font-size-xs: 10px;
+  --label1-resp-font-size-sm: 10px;
+  --label1-resp-font-size-md: 15px;
+  --label1-resp-font-size-lg: 17px;
+  --display1-line-height-xs: 40px;
+  --display1-line-height-sm: 40px;
+  --display1-line-height-md: 72px;
+  --display1-line-height-lg: 120px;
+  --display2-line-height-xs: 36px;
+  --display2-line-height-sm: 36px;
+  --display2-line-height-md: 42px;
+  --display2-line-height-lg: 64px;
+  --display3-line-height-lg: 40px;
+  --display3-line-height-md: 32px;
+  --display3-line-height-sm: 28px;
+  --display3-line-height-xs: 28px;
+  --headline1-line-height-xs: 48px;
+  --headline1-line-height-sm: 48px;
+  --headline1-line-height-md: 72px;
+  --headline1-line-height-lg: 100px;
+  --headline2-line-height-xs: 40px;
+  --headline2-line-height-sm: 40px;
+  --headline2-line-height-md: 48px;
+  --headline2-line-height-lg: 64px;
+  --headline3-line-height-xs: 28px;
+  --headline3-line-height-sm: 28px;
+  --headline3-line-height-md: 36px;
+  --headline3-line-height-lg: 40px;
+  --headline4-line-height-xs: 22px;
+  --headline4-line-height-sm: 22px;
+  --headline4-line-height-md: 22px;
+  --headline4-line-height-lg: 30px;
+  --subheadline1-line-height-xs: 24px;
+  --subheadline1-line-height-sm: 24px;
+  --subheadline1-line-height-md: 32px;
+  --subheadline1-line-height-lg: 36px;
+  --kicker1-line-height-xs: 19.799999237060547px;
+  --kicker1-line-height-sm: 19.799999237060547px;
+  --kicker1-line-height-md: 22px;
+  --kicker1-line-height-lg: 30px;
+  --kicker2-line-height-xs: 19.799999237060547px;
+  --kicker2-line-height-sm: 19.799999237060547px;
+  --kicker2-line-height-md: 22px;
+  --kicker2-line-height-lg: 24px;
+  --kicker3-line-height-xs: 17.600000381469727px;
+  --kicker3-line-height-sm: 17.600000381469727px;
+  --kicker3-line-height-md: 18px;
+  --kicker3-line-height-lg: 20px;
+  --kicker4-line-height-xs: 15.399999618530273px;
+  --kicker4-line-height-sm: 15.399999618530273px;
+  --kicker4-line-height-md: 17.600000381469727px;
+  --kicker4-line-height-lg: 16px;
+  --title1-line-height-xs: 22px;
+  --title1-line-height-sm: 22px;
+  --title1-line-height-md: 22px;
+  --title1-line-height-lg: 28px;
+  --title2-line-height-xs: 17.600000381469727px;
+  --title2-line-height-sm: 17.600000381469727px;
+  --title2-line-height-md: 19.799999237060547px;
+  --title2-line-height-lg: 22px;
+  --callout1-line-height-xs: 18px;
+  --callout1-line-height-sm: 18px;
+  --callout1-line-height-md: 22px;
+  --callout1-line-height-lg: 22px;
+  --body-line-height-xs: 28px;
+  --body-line-height-sm: 28px;
+  --body-line-height-md: 28px;
+  --body-line-height-lg: 32px;
+  --footnote1-line-height-xs: 21px;
+  --footnote1-line-height-sm: 21px;
+  --footnote1-line-height-md: 21px;
+  --footnote1-line-height-lg: 23px;
+  --footnote2-line-height-xs: 15.600000381469727px;
+  --footnote2-line-height-sm: 15.600000381469727px;
+  --footnote2-line-height-md: 15.800000190734863px;
+  --footnote2-line-height-lg: 21px;
+  --label1-line-height: 17px; /** Bild 17 | SpoBi 20.4 | Ads 20.4 | The label 1 text style uses this variable for its line height parameter. */
+  --label1-resp-line-height-xs: 10px; /** Bild 10 | SpoBi 12 | Ads 10 | The label1 responsive text style uses this variable for its line height parameter. */
+  --label1-resp-line-height-sm: 10px; /** Bild 10 | SpoBi 12 | Ads 10 | The label1 responsive text style uses this variable for its line height parameter. */
+  --label1-resp-line-height-md: 15px; /** Bild 15 | SpoBi 18 | Ads 15 | The label1 responsive text style uses this variable for its line height parameter. */
+  --label1-resp-line-height-lg: 17px; /** Bild 17 | SpoBi 20.4 | Ads 17 | The label1 responsive text style uses this variable for its line height parameter. */
+  --label2-line-height: 16px; /** Bild 16 | SpoBi 19.2 | Ads 16 | The label 2 text style uses this variable for its line height parameter. */
+  --label3-line-height: 14.399999618530273px; /** Bild 14.4 | SpoBi 14.4 | Ads 14.4 | The label 3 text style uses this variable for its line height parameter. */
+  --label4-line-height: 10px; /** Bild 10 | SpoBi 10 | Ads 10 | The label 4 text style uses this variable for its line height parameter. */
+  --quote-line-height-xs: 16px;
+  --quote-line-height-sm: 16px;
+  --quote-line-height-md: 18px;
+  --quote-line-height-lg: 22px;
+  --body-font-weight-book: 400;
+  --body-font-weight-bold: 700;
+  --footnote-font-weight-book: 400;
+  --footnote-font-weight-bold: 700;
+  --label-font-weight-book: 400;
+  --label-font-weight-bold: 700;
+  --quote-font-weight: 800;
+  --display-font-weight: 800;
+  --headline1-font-weight-st: 700;
+  --headline1-font-weight: 700;
+  --headline2-font-weight: 700;
+  --headline3-font-weight: 700;
+  --headline4-font-weight: 600;
+  --headline2-font-weight-st: 700;
+  --headline3-font-weight-st: 700;
+  --headline4-font-weight-st: 600;
+  --subheadline-font-weight: 700;
+  --kicker-font-weight: 700;
+  --kicker-font-weight-st: 700;
+  --callout-font-weight: 800;
+  --title-font-weight: 800;
+  --kicker-font-family: Gotham XNarrow; /** Bild: GothamXNarrow | SpoBi: AntennaExtraCond | Ads: LucidaGrande | This variable is used in the kickers text styles font family parameter. */
+  --display-font-family: Gotham; /** Bild: Gotham | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the display text style font family parameter. */
+  --headline-font-family: Gotham Condensed; /** Bild: GothamCond | SpoBi: AntennaExtraCond | Ads: LucidaGrande | This variable is used in the headlines text style font family parameter. */
+  --subheadline-font-family: Gotham Condensed; /** Bild: GothamCond | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the subheadlines text style font family parameter. */
+  --body-font-family: Gotham XNarrow; /** Bild: GothamXNarrow | SpoBi: Inter | Ads: LucidaGrande | This variable is used in the body text style font family parameter. */
+  --footnote-font-family: Gotham XNarrow; /** Bild: GothamXNarrow | SpoBi: Inter | Ads: LucidaGrande | This variable is used in the footnotes text style font family parameter. */
+  --label-font-family: Gotham XNarrow; /** Bild: GothamXNarrow | SpoBi: AntennaExtraCond | Ads: LucidaGrande | This variable is used in the labels text styles font family parameter. */
+  --quote-font-family: Gotham; /** Bild: Gotham | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the quotes text style font family parameter. */
+  --title-font-family: Gotham; /** Bild: Gotham | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the titles text style font family parameter. */
+  --callout-font-family: Gotham; /** Bild: Gotham | SpoBi: AntennaCond | Ads: LucidaGrande | This variable is used in the callouts text style font family parameter. */
+  --hide-on-bild: false;
+  --hide-on-sport-bild: true;
+  --only-advertorial: false;
+  --hide-on-advertorial: true;
+  --only-bild: true;
+  --only-sport-bild: false;
+  --article-image-caption-font-size-xs: 16px; /** --article-figure-caption-font-size-sm */
+  --article-image-caption-font-size-md: 18px; /** --article-figure-caption-font-size-md */
+  --article-image-caption-font-size-lg: 18px; /** --article-figure-caption-font-size-lg */
+  --article-image-caption-font-size-sm: 16px; /** --article-figure-caption-font-size-sm */
+  --article-image-source-font-size-xs: 16px; /** --article-figure-meta-font-size-sm */
+  --article-image-source-font-size-sm: 16px; /** --article-figure-meta-font-size-sm */
+  --article-image-source-font-size-md: 16px; /** --article-figure-meta-font-size-sm */
+  --article-image-source-font-size-lg: 18px; /** --article-figure-meta-font-size-lg */
+  --article-image-caption-line-height-xs: 19.5px; /** --article-figure-caption-line-height-sm ; Bild: 19.5 // SpoBi: 16.9 // Ad: 19.5 */
+  --article-image-caption-line-height-md: 24.75px; /** --article-figure-caption-line-height-md ; Bild: 24.75 // SpoBi: 16.9 // Ad: 19.5 */
+  --article-image-caption-line-height-lg: 24.75px; /** --article-figure-caption-line-height-lg ; Bild: 24.75 // SpoBi: 19.5 // Ad: 24 */
+  --article-image-caption-line-height-sm: 19.5px; /** --article-figure-caption-line-height-sm ; Bild: 19.5 // SpoBi: 16.9 // Ad: 19.5 */
+  --article-image-source-line-height-md: 21px; /** --article-figure-meta-line-height-sm ; Bild: 21 // SpoBi: 17 // Ad: 19 */
+  --article-image-source-line-height-lg: 23px; /** --article-figure-meta-line-height-lg ; Bild: 23 // SpoBi: 19 // Ad: 24 */
+  --article-image-source-line-height-xs: 21px; /** --article-figure-meta-line-height-sm ; Bild: 21 // SpoBi: 17 // Ad: 19 */
+  --article-image-source-line-height-sm: 21px; /** --article-figure-meta-line-height-sm ; Bild: 21 // SpoBi: 17 // Ad: 19 */
+  --breadcrumb-font-size-xs: 15px; /** --breadcrumb-font-size-sm */
+  --breadcrumb-font-size-sm: 15px; /** --breadcrumb-font-size-sm */
+  --breadcrumb-font-size-md: 15px; /** --breadcrumb-font-size-sm */
+  --breadcrumb-font-size-lg: 12px; /** --breadcrumb-font-size-lg */
+  --breadcrumb-line-height-xs: 15px; /** not defined as variable */
+  --breadcrumb-line-height-sm: 15px; /** not defined as variable */
+  --breadcrumb-line-height-md: 15px; /** not defined as variable */
+  --breadcrumb-line-height-lg: 12px; /** not defined as variable */
+  --breadcrumb-font-family: Gotham XNarrow; /** --breadcrumb-font */
+  --breadcrumb-font-weight: 700; /** --breadcrumb-font-size-sm */
+  --menu-item-font-size: 15px; /** --nav-btn-font-size */
+  --app-top-bar-title-font-size-md: 14px; /** --caption-1-font-size-md */
+  --app-top-bar-title-font-size-lg: 14px; /** --caption-1-font-size-lg */
+  --app-top-bar-title-font-size-xs: 12px; /** --caption-1-font-size-sm */
+  --app-top-bar-title-font-size-sm: 12px; /** --caption-1-font-size-sm */
+  --app-top-bar-title-line-height-md: 17px;
+  --app-top-bar-title-line-height-lg: 17px;
+  --app-top-bar-title-line-height-xs: 14px;
+  --app-top-bar-title-line-height-sm: 14px;
+  --menu-item-font-weight: 700;
+  --teaser-title-inline-space-lg: 12px; /** --teaser-title-padding-lg */
+  --teaser-title-inline-space-md: 12px; /** --teaser-title-padding-md */
+  --teaser-title-inline-space-sm: 8px; /** --teaser-title-padding-sm */
+  --teaser-title-inline-space-xs: 8px; /** --teaser-title-padding-xs */
+  --q-teaser-title-inline-space-lg: 12px;
+  --q-teaser-title-inline-space-md: 16px;
+  --q-teaser-title-inline-space-sm: 8px;
+  --q-teaser-title-inline-space-xs: 8px;
+  --a-teaser-title-inline-space-lg: 12px;
+  --a-teaser-title-inline-space-md: 12px;
+  --a-teaser-title-inline-space-xs: 8px;
+  --a-teaser-title-inline-space-sm: 8px;
+  --b-teaser-title-inline-space: 8px;
+  --2xa-teaser-title-inline-space: 8px;
+  --mini-qteaser-title-inline-space-md: 8px;
+  --mini-qteaser-title-inline-space-lg: 8px;
+  --mini-qteaser-title-inline-space-sm: 8px;
+  --mini-qteaser-title-inline-space-xs: 8px;
+  --super-ateaser-title-inline-space: 16px;
+  --avatar-font-family: Gotham XNarrow; /** current css 09-2025 --article-author-font // Bild: GothamXNarrow; SpoBi: Inter; Ads: LucidaGrande */
+  --avatar-font-size-sm: 16px; /** 09-2025 css using footnote var for font sizes SM & LG // Bild: 16; SpoBi: 13; Ads: 13 */
+  --avatar-font-size-lg: 18px; /** 09-2025 css using footnote var for font sizes SM & LG // Bild: 18; SpoBi: 15; Ads: 15 */
+  --breaking-news-content-font-size: 21px;
+  --accordion-label-font-family: Gotham XNarrow;
+  --footer-link-font-family: Gotham XNarrow;
+  --video-time-badge-font-family: Gotham XNarrow;
+  --input-field-label-font-family: Gotham XNarrow;
+  --button-label-font-weight-st: 600;
+  --brand-name: BILD;
+}

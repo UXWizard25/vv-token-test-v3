@@ -1,0 +1,66 @@
+/**
+ * Effect Classes - Advertorial / dark
+ * Generiert am: 2025-11-24T15:10:48.539Z
+ * Nicht manuell bearbeiten!
+ */
+
+/* Broad and soft shadows with low contrast. Best for cards, sheets, or subtle surface separation. */
+.dropshadowsoft-shadowsoftsm {
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.03999999910593033), 0px 2px 6px 0px rgba(0, 0, 0, 0.07999999821186066);
+}
+
+/* Broad and soft shadows with low contrast. Best for cards, sheets, or subtle surface separation. */
+.dropshadowsoft-shadowsoftmd {
+  box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.029999999329447746), 0px 4px 12px 0px rgba(0, 0, 0, 0.07000000029802322);
+}
+
+/* Broad and soft shadows with low contrast. Best for cards, sheets, or subtle surface separation. */
+.dropshadowsoft-shadowsoftlg {
+  box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.029999999329447746), 0px 8px 16px 0px rgba(0, 0, 0, 0.07000000029802322);
+}
+
+/* Broad and soft shadows with low contrast. Best for cards, sheets, or subtle surface separation. */
+.dropshadowsoft-shadowsoftxl {
+  box-shadow: 0px 0px 64px 0px rgba(0, 0, 0, 0.05000000074505806), 0px 16px 32px 0px rgba(0, 0, 0, 0.10000000149011612);
+}
+
+/* Sharper, higher-contrast shadows. Best for dialogs, modals, dropdowns and overlays that require stronger focus. */
+.dropshadowhard-shadowhardsm {
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.20000000298023224), 0px 1px 3px 1px rgba(0, 0, 0, 0.10000000149011612);
+}
+
+/* Sharper, higher-contrast shadows. Best for dialogs, modals, dropdowns and overlays that require stronger focus. */
+.dropshadowhard-shadowhardmd {
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.10000000149011612), 0px 2px 4px 0px rgba(0, 0, 0, 0.1599999964237213);
+}
+
+/* Sharper, higher-contrast shadows. Best for dialogs, modals, dropdowns and overlays that require stronger focus. */
+.dropshadowhard-shadowhardlg {
+  box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.20000000298023224), 0px 6px 10px 4px rgba(0, 0, 0, 0.10000000149011612);
+}
+
+/* Sharper, higher-contrast shadows. Best for dialogs, modals, dropdowns and overlays that require stronger focus. */
+.dropshadowhard-shadowhardxl {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.20000000298023224), 0px 8px 12px 6px rgba(0, 0, 0, 0.10000000149011612);
+}
+
+.alert-alertshadowdown {
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.20000000298023224);
+}
+
+.alert-alertshadowup {
+  box-shadow: 0px -2px 10px 0px rgba(0, 0, 0, 0.20000000298023224);
+}
+
+.menu-menushadow {
+  box-shadow: 0px 8px 10px -8px rgba(0, 0, 0, 0.10000000149011612);
+}
+
+.menu-heyinputshadow {
+  box-shadow: 0px 8px 10px -8px rgba(0, 0, 0, 0);
+}
+
+.teaser-teaserheadlinesshadow {
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.6000000238418579);
+}
+
