@@ -1,0 +1,852 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Typography Styles - Sportbild / sm
+  Do not edit directly, this file was auto-generated.
+-->
+<resources>
+    <!-- ============================================
+         DISPLAY
+         ============================================ -->
+
+    <style name="display1">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">38sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">40sp</item>
+        <item name="android:letterSpacing">-0.03125</item>
+    </style>
+    <style name="display2">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">34sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">36sp</item>
+        <item name="android:letterSpacing">-0.03125</item>
+    </style>
+    <style name="display3">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">27sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">28sp</item>
+        <item name="android:letterSpacing">-0.03125</item>
+    </style>
+
+    <!-- ============================================
+         HEADLINE
+         ============================================ -->
+
+    <style name="headline1">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">42sp</item>
+        <item name="android:lineHeight">42sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="headline2">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">42sp</item>
+        <item name="android:lineHeight">42sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="headline3">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:lineHeight">33sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="headline4">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">21sp</item>
+        <item name="android:lineHeight">21sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         SUBHEADLINE
+         ============================================ -->
+
+    <style name="subheadline1">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">23.399999618530273sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         KICKER
+         ============================================ -->
+
+    <style name="kicker1">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineHeight">22sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="kicker2">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">17.600000381469727sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="kicker3">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">17.600000381469727sp</item>
+    </style>
+    <style name="kicker4">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">15.399999618530273sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         TITLE
+         ============================================ -->
+
+    <style name="title1">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">26.399999618530273sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="title1uppercase">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">26.399999618530273sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="title2">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">20.799999237060547sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="title2uppercase">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">20.799999237060547sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         CALLOUT
+         ============================================ -->
+
+    <style name="callout">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">23.399999618530273sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         BODY
+         ============================================ -->
+
+    <style name="body">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:lineHeight">28.049999237060547sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="bodyitalic">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:lineHeight">28.049999237060547sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="bodybold">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">28.049999237060547sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="bodybolditalic">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:lineHeight">28.049999237060547sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         TEXTLINK
+         ============================================ -->
+
+    <style name="textlink">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:lineHeight">28.049999237060547sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="textlinkitalic">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:lineHeight">28.049999237060547sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="textlinkbold">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">28.049999237060547sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="textlinkhover">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:lineHeight">28.049999237060547sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="textlinkboldhover">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">28.049999237060547sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         FOOTNOTE
+         ============================================ -->
+
+    <style name="footnote1">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineHeight">17.030000686645508sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="footnote1bold">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">17.030000686645508sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="footnote2">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:lineHeight">13sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="footnote2bold">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">13sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         LABEL
+         ============================================ -->
+
+    <style name="label1">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:lineHeight">20.399999618530273sp</item>
+        <item name="android:letterSpacing">0.015625</item>
+    </style>
+    <style name="label1bold">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">20.399999618530273sp</item>
+        <item name="android:letterSpacing">0.015625</item>
+    </style>
+    <style name="label1boldresp">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">12sp</item>
+        <item name="android:letterSpacing">0.015625</item>
+    </style>
+    <style name="label1uppercasebold">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">20.399999618530273sp</item>
+        <item name="android:letterSpacing">0.03125</item>
+    </style>
+    <style name="label2">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineHeight">19.200000762939453sp</item>
+        <item name="android:letterSpacing">0.015625</item>
+    </style>
+    <style name="label2uppercase">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineHeight">19.200000762939453sp</item>
+        <item name="android:letterSpacing">0.015625</item>
+    </style>
+    <style name="label2bold">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">19.200000762939453sp</item>
+        <item name="android:letterSpacing">0.015625</item>
+    </style>
+    <style name="label2uppercasebold">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">19.200000762939453sp</item>
+        <item name="android:letterSpacing">0.015625</item>
+    </style>
+    <style name="label3">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineHeight">14.399999618530273sp</item>
+        <item name="android:letterSpacing">0.015625</item>
+    </style>
+    <style name="label3uppercase">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineHeight">14.399999618530273sp</item>
+        <item name="android:letterSpacing">0.03125</item>
+    </style>
+    <style name="label3bold">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">14.399999618530273sp</item>
+        <item name="android:letterSpacing">0.015625</item>
+    </style>
+    <style name="label3uppercasebold">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">14.399999618530273sp</item>
+        <item name="android:letterSpacing">0.03125</item>
+    </style>
+    <style name="label4">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">8sp</item>
+        <item name="android:lineHeight">10sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         QUOTE
+         ============================================ -->
+
+    <style name="quote">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">20.799999237060547sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         ACCORDION
+         ============================================ -->
+
+    <style name="accordionlabel">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         ARTICLE
+         ============================================ -->
+
+    <style name="articlekicker">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineHeight">22sp</item>
+    </style>
+    <style name="articleimagecaption">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">16.899999618530273sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="articleheadline">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">42sp</item>
+        <item name="android:lineHeight">42sp</item>
+    </style>
+    <style name="articlemetasource">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineHeight">17sp</item>
+    </style>
+    <style name="articletimestamp">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- ============================================
+         AUDIOPLAYER
+         ============================================ -->
+
+    <style name="audioplayerlabel">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">16sp</item>
+    </style>
+
+    <!-- ============================================
+         AVATAR
+         ============================================ -->
+
+    <style name="appavatar">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="avatardefault">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">21sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="avatarhover">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">21sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="avatarsecondaryinfo">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineHeight">21sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="avatarsecondaryinfohover">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineHeight">21sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         BADGES
+         ============================================ -->
+
+    <style name="videoadbadge">
+        <item name="android:fontFamily">Gotham XNarrow</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="videotimebadge">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">21sp</item>
+    </style>
+
+    <!-- ============================================
+         BREADCRUMB
+         ============================================ -->
+
+    <style name="breadcrumb">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">14sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="breadcrumblink">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">14sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="breadcrumblinkhover">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">14sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         BREAKINGNEWS
+         ============================================ -->
+
+    <style name="breakingnewstext">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">21sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">24sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="breakingnewsuppertitle">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">13sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="breakingnewslowertitle">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">23sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">21sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         BUTTON
+         ============================================ -->
+
+    <style name="buttonlabel">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineHeight">15sp</item>
+        <item name="android:letterSpacing">0.03125</item>
+    </style>
+    <style name="partnerlinkbuttonlabel">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">16sp</item>
+    </style>
+
+    <!-- ============================================
+         CHIPS
+         ============================================ -->
+
+    <style name="chipslabel">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+
+    <style name="footercardlink">
+        <item name="android:fontFamily">Gotham XNarrow</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+    <style name="footerlinkseparator">
+        <item name="android:fontFamily">Gotham XNarrow</item>
+    </style>
+    <style name="footerlinks">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">14sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="footerlinkuser&offerpages">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineHeight">26sp</item>
+    </style>
+
+    <!-- ============================================
+         INPUTFIELD
+         ============================================ -->
+
+    <style name="textinputfieldlabel">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">16sp</item>
+    </style>
+
+    <!-- ============================================
+         LIVETICKER
+         ============================================ -->
+
+    <style name="livetickerheadline">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:lineHeight">22sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="livetickertimestamp">
+        <item name="android:fontFamily">Gotham XNarrow</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">14sp</item>
+    </style>
+
+    <!-- ============================================
+         MEDIAPLAYERS
+         ============================================ -->
+
+    <style name="podcastplayerlabel">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">16sp</item>
+    </style>
+    <style name="videoadtime">
+        <item name="android:fontFamily">Gotham</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="videoplayertime">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- ============================================
+         MENU
+         ============================================ -->
+
+    <style name="apptopbarstagetitle">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">14sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="apptopbartabstitle">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">14sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="menuitemlabel">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineHeight">18sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="menuitemutillabel">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineHeight">12sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         NEWSTICKER
+         ============================================ -->
+
+    <style name="newstickertimestamp">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">20.799999237060547sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="newstickerkicker">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">17.600000381469727sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="newstickerheadline">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:lineHeight">33sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         PAGINATION
+         ============================================ -->
+
+    <style name="numberedpaginationactive">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">20.399999618530273sp</item>
+        <item name="android:letterSpacing">0.015625</item>
+    </style>
+
+    <!-- ============================================
+         PAYWALL
+         ============================================ -->
+
+    <style name="paywallcardpricetag">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">64sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">64sp</item>
+        <item name="android:letterSpacing">-0.03125</item>
+    </style>
+    <style name="paywallcardnote">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">40sp</item>
+        <item name="android:letterSpacing">-0.03125</item>
+    </style>
+
+    <!-- ============================================
+         SPECIALNAVI
+         ============================================ -->
+
+    <style name="specianaviitemlabel">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineHeight">18sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         TABS
+         ============================================ -->
+
+    <style name="tablabel">
+        <item name="android:fontFamily">Gotham XNarrow</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="appbottombarlabeldefault">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineHeight">14.399999618530273sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="appbottombarlabelactive">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">14.399999618530273sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         ATEASER
+         ============================================ -->
+
+    <style name="ateaserkicker">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">16sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="ateaserheadline">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:lineHeight">30sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         MQTEASER
+         ============================================ -->
+
+    <style name="mqteaserkicker">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">15.399999618530273sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="mqteaserheadline">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">21sp</item>
+        <item name="android:lineHeight">23.100000381469727sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         QTEASER
+         ============================================ -->
+
+    <style name="qteaserheadline">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">42sp</item>
+        <item name="android:lineHeight">42sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         STDTEASER
+         ============================================ -->
+
+    <style name="stdteaserheadline">
+        <item name="android:fontFamily">AntennaExtraCond</item>
+        <item name="android:textSize">21sp</item>
+        <item name="android:lineHeight">23.100000381469727sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         TOGGLESWITCHES
+         ============================================ -->
+
+    <style name="apptoogleitemlabel">
+        <item name="android:fontFamily">AntennaCond</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineHeight">14.100000381469727sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ============================================
+         .DSDOCSSTYLES
+         ============================================ -->
+
+    <style name=".pageheaderdescription">
+        <item name="android:fontFamily">Inter</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name=".codesnippets">
+        <item name="android:fontFamily">Source Code Pro</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:lineHeight">13sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name=".bilddesignsidemenu">
+        <item name="android:fontFamily">Gotham XNarrow</item>
+    </style>
+    <style name=".bilddesignsidemenuactive">
+        <item name="android:fontFamily">Gotham XNarrow</item>
+    </style>
+    <style name=".bilddesignsidemenuhover">
+        <item name="android:fontFamily">Gotham XNarrow</item>
+    </style>
+    <style name=".verticalvideosmockheadlines">
+        <item name="android:fontFamily">Gotham Condensed</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:lineHeight">22sp</item>
+    </style>
+    <style name=".tokenspecl">
+        <item name="android:fontFamily">Source Code Pro</item>
+    </style>
+
+    <!-- ============================================
+         .SPECS
+         ============================================ -->
+
+    <style name=".specsxs">
+        <item name="android:fontFamily">Gotham</item>
+    </style>
+    <style name=".specss">
+        <item name="android:fontFamily">Gotham</item>
+    </style>
+    <style name=".specsms">
+        <item name="android:fontFamily">Gotham</item>
+    </style>
+    <style name=".specsm">
+        <item name="android:fontFamily">Gotham</item>
+    </style>
+    <style name=".specsml">
+        <item name="android:fontFamily">Gotham</item>
+        <item name="android:textSize">64sp</item>
+        <item name="android:lineHeight">80sp</item>
+    </style>
+    <style name=".specsl">
+        <item name="android:fontFamily">Gotham</item>
+    </style>
+    <style name=".specsxl">
+        <item name="android:fontFamily">Gotham</item>
+    </style>
+    <style name=".specsxxl">
+        <item name="android:fontFamily">Gotham</item>
+    </style>
+</resources>

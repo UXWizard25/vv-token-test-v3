@@ -336,7 +336,7 @@ const cssVariablesFormat = ({ dictionary, options, file }) => {
   output += `${selector} {\n`;
 
   let isFirstTopLevel = true;
-  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
     const subGroups = hierarchicalGroups[topLevel];
 
     // Add top-level header
@@ -349,7 +349,7 @@ const cssVariablesFormat = ({ dictionary, options, file }) => {
     isFirstTopLevel = false;
 
     // Sort sub-level keys
-    Object.keys(subGroups).sort().forEach(subLevel => {
+    Object.keys(subGroups).forEach(subLevel => {
       const tokens = subGroups[subLevel];
 
       // Add sub-level header if exists
@@ -391,7 +391,7 @@ const scssVariablesFormat = ({ dictionary, options, file }) => {
   const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
   let isFirstTopLevel = true;
-  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
     const subGroups = hierarchicalGroups[topLevel];
 
     if (!isFirstTopLevel) {
@@ -402,7 +402,7 @@ const scssVariablesFormat = ({ dictionary, options, file }) => {
     output += `// ============================================\n\n`;
     isFirstTopLevel = false;
 
-    Object.keys(subGroups).sort().forEach(subLevel => {
+    Object.keys(subGroups).forEach(subLevel => {
       const tokens = subGroups[subLevel];
 
       if (subLevel) {
@@ -441,7 +441,7 @@ const javascriptEs6Format = ({ dictionary, options, file }) => {
   const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
   let isFirstTopLevel = true;
-  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
     const subGroups = hierarchicalGroups[topLevel];
 
     if (!isFirstTopLevel) {
@@ -452,7 +452,7 @@ const javascriptEs6Format = ({ dictionary, options, file }) => {
     output += `// ============================================\n\n`;
     isFirstTopLevel = false;
 
-    Object.keys(subGroups).sort().forEach(subLevel => {
+    Object.keys(subGroups).forEach(subLevel => {
       const tokens = subGroups[subLevel];
 
       if (subLevel) {
@@ -496,7 +496,7 @@ const iosSwiftClassFormat = ({ dictionary, options, file }) => {
   const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
   let isFirstTopLevel = true;
-  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
     const subGroups = hierarchicalGroups[topLevel];
 
     if (!isFirstTopLevel) {
@@ -507,7 +507,7 @@ const iosSwiftClassFormat = ({ dictionary, options, file }) => {
     output += `    // MARK: - ============================================\n\n`;
     isFirstTopLevel = false;
 
-    Object.keys(subGroups).sort().forEach(subLevel => {
+    Object.keys(subGroups).forEach(subLevel => {
       const tokens = subGroups[subLevel];
 
       if (subLevel) {
@@ -580,7 +580,7 @@ const flutterDartClassFormat = ({ dictionary, options, file }) => {
   const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
   let isFirstTopLevel = true;
-  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
     const subGroups = hierarchicalGroups[topLevel];
 
     if (!isFirstTopLevel) {
@@ -591,7 +591,7 @@ const flutterDartClassFormat = ({ dictionary, options, file }) => {
     output += `    // ============================================\n\n`;
     isFirstTopLevel = false;
 
-    Object.keys(subGroups).sort().forEach(subLevel => {
+    Object.keys(subGroups).forEach(subLevel => {
       const tokens = subGroups[subLevel];
 
       if (subLevel) {
@@ -674,7 +674,7 @@ const cssTypographyClassesFormat = ({ dictionary, options }) => {
   const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
   let isFirstTopLevel = true;
-  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
     const subGroups = hierarchicalGroups[topLevel];
 
     // Add top-level header
@@ -686,7 +686,7 @@ const cssTypographyClassesFormat = ({ dictionary, options }) => {
     output += `   ============================================ */\n\n`;
     isFirstTopLevel = false;
 
-    Object.keys(subGroups).sort().forEach(subLevel => {
+    Object.keys(subGroups).forEach(subLevel => {
       const tokens = subGroups[subLevel];
 
       // Add sub-level header if exists
@@ -746,7 +746,7 @@ const cssEffectClassesFormat = ({ dictionary, options }) => {
   const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
   let isFirstTopLevel = true;
-  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
     const subGroups = hierarchicalGroups[topLevel];
 
     // Add top-level header
@@ -758,7 +758,7 @@ const cssEffectClassesFormat = ({ dictionary, options }) => {
     output += `   ============================================ */\n\n`;
     isFirstTopLevel = false;
 
-    Object.keys(subGroups).sort().forEach(subLevel => {
+    Object.keys(subGroups).forEach(subLevel => {
       const tokens = subGroups[subLevel];
 
       // Add sub-level header if exists
@@ -821,7 +821,7 @@ const iosSwiftTypographyFormat = ({ dictionary, options }) => {
   const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
   let isFirstTopLevel = true;
-  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
     const subGroups = hierarchicalGroups[topLevel];
 
     // Add top-level header
@@ -833,7 +833,7 @@ const iosSwiftTypographyFormat = ({ dictionary, options }) => {
     output += `        // MARK: - ============================================\n\n`;
     isFirstTopLevel = false;
 
-    Object.keys(subGroups).sort().forEach(subLevel => {
+    Object.keys(subGroups).forEach(subLevel => {
       const tokens = subGroups[subLevel];
 
       // Add sub-level header if exists
@@ -891,7 +891,7 @@ const androidResourcesFormat = ({ dictionary, options, file }) => {
   const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
   let isFirstTopLevel = true;
-  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
     const subGroups = hierarchicalGroups[topLevel];
 
     if (!isFirstTopLevel) {
@@ -902,7 +902,7 @@ const androidResourcesFormat = ({ dictionary, options, file }) => {
     output += `       ============================================ -->\n\n`;
     isFirstTopLevel = false;
 
-    Object.keys(subGroups).sort().forEach(subLevel => {
+    Object.keys(subGroups).forEach(subLevel => {
       const tokens = subGroups[subLevel];
 
       if (subLevel) {
@@ -953,7 +953,7 @@ const androidXmlTypographyFormat = ({ dictionary, options }) => {
   const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
   let isFirstTopLevel = true;
-  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
     const subGroups = hierarchicalGroups[topLevel];
 
     // Add top-level header
@@ -965,7 +965,7 @@ const androidXmlTypographyFormat = ({ dictionary, options }) => {
     output += `         ============================================ -->\n\n`;
     isFirstTopLevel = false;
 
-    Object.keys(subGroups).sort().forEach(subLevel => {
+    Object.keys(subGroups).forEach(subLevel => {
       const tokens = subGroups[subLevel];
 
       // Add sub-level header if exists
