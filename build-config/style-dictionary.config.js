@@ -10,6 +10,40 @@
 // ============================================================================
 
 /**
+ * Groups tokens hierarchically by path segments
+ * Returns a structure: { topLevel: { subLevel: [tokens] } }
+ */
+function groupTokensHierarchically(tokens) {
+  const grouped = {};
+
+  tokens.forEach(token => {
+    const pathSegments = token.path.slice(0, -1); // All segments except last (token name)
+
+    if (pathSegments.length === 0) {
+      if (!grouped['Other']) grouped['Other'] = {};
+      if (!grouped['Other']['']) grouped['Other'][''] = [];
+      grouped['Other'][''].push(token);
+      return;
+    }
+
+    const topLevel = pathSegments[0]; // First segment (e.g., "Semantic", "Component")
+    const subLevel = pathSegments.slice(1).join(' - '); // Remaining segments (e.g., "Text", "Button - Primary")
+
+    if (!grouped[topLevel]) {
+      grouped[topLevel] = {};
+    }
+
+    if (!grouped[topLevel][subLevel]) {
+      grouped[topLevel][subLevel] = [];
+    }
+
+    grouped[topLevel][subLevel].push(token);
+  });
+
+  return grouped;
+}
+
+/**
  * Name transformation functions for different platforms
  */
 const nameTransformers = {
@@ -289,62 +323,55 @@ const cssVariablesFormat = ({ dictionary, options, file }) => {
   const selector = options.selector || ':root';
   const { mode, layer, brand } = options;
 
-  // Generate unique names with collision detection
   const uniqueNames = generateUniqueNames(dictionary.allTokens, 'kebab');
 
-  // Header
-  let output = `/**\n`;
-  output += ` * ${file.destination}\n`;
-  output += ` * Generiert am: ${new Date().toISOString()}\n`;
+  let output = `/**\n * ${file.destination}\n * Generiert am: ${new Date().toISOString()}\n`;
   if (layer) output += ` * Layer: ${layer}\n`;
   if (mode) output += ` * Mode: ${mode}\n`;
   if (brand) output += ` * Brand: ${brand}\n`;
-  output += ` * Nicht manuell bearbeiten!\n`;
-  output += ` */\n\n`;
+  output += ` * Nicht manuell bearbeiten!\n */\n\n`;
 
-  // Gruppiere Tokens nach ihren Pfad-Segmenten
-  const groupedTokens = {};
-  dictionary.allTokens.forEach(token => {
-    // Erstelle Gruppen-Schlüssel aus allen Segmenten außer dem letzten
-    const pathSegments = token.path.slice(0, -1);
-    const groupKey = pathSegments.join(' - ');
+  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
-    if (!groupedTokens[groupKey]) {
-      groupedTokens[groupKey] = [];
-    }
-    groupedTokens[groupKey].push(token);
-  });
-
-  // CSS Custom Properties
   output += `${selector} {\n`;
 
-  let isFirstGroup = true;
-  Object.keys(groupedTokens).sort().forEach(groupKey => {
-    const tokens = groupedTokens[groupKey];
+  let isFirstTopLevel = true;
+  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
 
-    // Füge Gruppierungs-Kommentar hinzu
-    if (groupKey) {
-      if (!isFirstGroup) {
-        output += `\n`;
-      }
-      output += `  /* ${groupKey} */\n`;
-      isFirstGroup = false;
+    // Add top-level header
+    if (!isFirstTopLevel) {
+      output += `\n`;
     }
+    output += `  /* ============================================\n`;
+    output += `     ${topLevel.toUpperCase()}\n`;
+    output += `     ============================================ */\n\n`;
+    isFirstTopLevel = false;
 
-    tokens.forEach(token => {
-      const uniqueName = uniqueNames.get(token.path.join('.'));
-      const comment = token.comment || token.description;
-      if (comment) {
-        output += `  /**\n`;
-        output += `   * ${comment}\n`;
-        output += `   */\n`;
+    // Sort sub-level keys
+    Object.keys(subGroups).sort().forEach(subLevel => {
+      const tokens = subGroups[subLevel];
+
+      // Add sub-level header if exists
+      if (subLevel) {
+        output += `  /* ${topLevel} - ${subLevel} */\n`;
       }
-      output += `  --${uniqueName}: ${token.value};\n`;
+
+      // Add tokens
+      tokens.forEach(token => {
+        const uniqueName = uniqueNames.get(token.path.join('.'));
+        const comment = token.comment || token.description;
+        if (comment) {
+          output += `  /**\n   * ${comment}\n   */\n`;
+        }
+        output += `  --${uniqueName}: ${token.value};\n`;
+      });
+
+      output += `\n`;
     });
   });
 
   output += `}\n`;
-
   return output;
 };
 
@@ -353,50 +380,45 @@ const cssVariablesFormat = ({ dictionary, options, file }) => {
  */
 const scssVariablesFormat = ({ dictionary, options, file }) => {
   const { mode, layer, brand } = options;
-
-  // Generate unique names with collision detection
   const uniqueNames = generateUniqueNames(dictionary.allTokens, 'kebab');
 
-  let output = `//\n`;
-  output += `// ${file.destination}\n`;
-  output += `// Generiert am: ${new Date().toISOString()}\n`;
+  let output = `//\n// ${file.destination}\n// Generiert am: ${new Date().toISOString()}\n`;
   if (layer) output += `// Layer: ${layer}\n`;
   if (mode) output += `// Mode: ${mode}\n`;
   if (brand) output += `// Brand: ${brand}\n`;
-  output += `// Nicht manuell bearbeiten!\n`;
-  output += `//\n\n`;
+  output += `// Nicht manuell bearbeiten!\n//\n\n`;
 
-  // Gruppiere Tokens nach ihren Pfad-Segmenten
-  const groupedTokens = {};
-  dictionary.allTokens.forEach(token => {
-    const pathSegments = token.path.slice(0, -1);
-    const groupKey = pathSegments.join(' - ');
+  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
-    if (!groupedTokens[groupKey]) {
-      groupedTokens[groupKey] = [];
+  let isFirstTopLevel = true;
+  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
+
+    if (!isFirstTopLevel) {
+      output += `\n`;
     }
-    groupedTokens[groupKey].push(token);
-  });
+    output += `// ============================================\n`;
+    output += `// ${topLevel.toUpperCase()}\n`;
+    output += `// ============================================\n\n`;
+    isFirstTopLevel = false;
 
-  let isFirstGroup = true;
-  Object.keys(groupedTokens).sort().forEach(groupKey => {
-    const tokens = groupedTokens[groupKey];
+    Object.keys(subGroups).sort().forEach(subLevel => {
+      const tokens = subGroups[subLevel];
 
-    if (groupKey) {
-      if (!isFirstGroup) {
-        output += `\n`;
+      if (subLevel) {
+        output += `// ${topLevel} - ${subLevel}\n`;
       }
-      output += `// ${groupKey}\n`;
-      isFirstGroup = false;
-    }
 
-    tokens.forEach(token => {
-      const uniqueName = uniqueNames.get(token.path.join('.'));
-      const comment = token.comment || token.description;
-      if (comment) {
-        output += `// ${comment}\n`;
-      }
-      output += `$${uniqueName}: ${token.value};\n`;
+      tokens.forEach(token => {
+        const uniqueName = uniqueNames.get(token.path.join('.'));
+        const comment = token.comment || token.description;
+        if (comment) {
+          output += `// ${comment}\n`;
+        }
+        output += `$${uniqueName}: ${token.value};\n`;
+      });
+
+      output += `\n`;
     });
   });
 
@@ -408,58 +430,47 @@ const scssVariablesFormat = ({ dictionary, options, file }) => {
  */
 const javascriptEs6Format = ({ dictionary, options, file }) => {
   const { mode, layer, brand } = options;
-
-  // Generate unique names with collision detection (camelCase for JS)
   const uniqueNames = generateUniqueNames(dictionary.allTokens, 'camel');
 
-  let output = `/**\n`;
-  output += ` * ${file.destination}\n`;
-  output += ` * Generiert am: ${new Date().toISOString()}\n`;
+  let output = `/**\n * ${file.destination}\n * Generiert am: ${new Date().toISOString()}\n`;
   if (layer) output += ` * Layer: ${layer}\n`;
   if (mode) output += ` * Mode: ${mode}\n`;
   if (brand) output += ` * Brand: ${brand}\n`;
-  output += ` * Nicht manuell bearbeiten!\n`;
-  output += ` */\n\n`;
+  output += ` * Nicht manuell bearbeiten!\n */\n\n`;
 
-  output += `export default {\n`;
+  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
-  // Gruppiere Tokens nach ihren Pfad-Segmenten
-  const groupedTokens = {};
-  dictionary.allTokens.forEach(token => {
-    const pathSegments = token.path.slice(0, -1);
-    const groupKey = pathSegments.join(' - ');
+  let isFirstTopLevel = true;
+  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
 
-    if (!groupedTokens[groupKey]) {
-      groupedTokens[groupKey] = [];
+    if (!isFirstTopLevel) {
+      output += `\n`;
     }
-    groupedTokens[groupKey].push(token);
-  });
+    output += `// ============================================\n`;
+    output += `// ${topLevel.toUpperCase()}\n`;
+    output += `// ============================================\n\n`;
+    isFirstTopLevel = false;
 
-  let isFirstGroup = true;
-  Object.keys(groupedTokens).sort().forEach(groupKey => {
-    const tokens = groupedTokens[groupKey];
+    Object.keys(subGroups).sort().forEach(subLevel => {
+      const tokens = subGroups[subLevel];
 
-    if (groupKey) {
-      if (!isFirstGroup) {
-        output += `\n`;
+      if (subLevel) {
+        output += `// ${topLevel} - ${subLevel}\n`;
       }
-      output += `  // ${groupKey}\n`;
-      isFirstGroup = false;
-    }
 
-    tokens.forEach(token => {
-      const uniqueName = uniqueNames.get(token.path.join('.'));
-      const comment = token.comment || token.description;
-      if (comment) {
-        output += `  /** ${comment} */\n`;
-      }
-      // Escape single quotes in values
-      const escapedValue = String(token.value).replace(/'/g, "\\'");
-      output += `  '${uniqueName}': '${escapedValue}',\n`;
+      tokens.forEach(token => {
+        const uniqueName = uniqueNames.get(token.path.join('.'));
+        const comment = token.comment || token.description;
+        if (comment) {
+          output += `/** ${comment} */\n`;
+        }
+        output += `export const ${uniqueName} = "${token.value}";\n`;
+      });
+
+      output += `\n`;
     });
   });
-
-  output += `};\n`;
 
   return output;
 };
@@ -476,91 +487,82 @@ const jsonNestedFormat = ({ dictionary }) => {
  */
 const iosSwiftClassFormat = ({ dictionary, options, file }) => {
   const className = options.className || file.className || 'StyleDictionary';
-
-  // Generate unique names with collision detection (PascalCase for Swift)
   const uniqueNames = generateUniqueNames(dictionary.allTokens, 'pascal');
 
-  let output = `\n`;
-  output += `//\n`;
-  output += `// ${file.destination}\n`;
-  output += `//\n\n`;
+  let output = `\n//\n// ${file.destination}\n//\n\n`;
   output += `// Do not edit directly, this file was auto-generated.\n\n\n`;
-  output += `import UIKit\n\n`;
-  output += `public class ${className} {\n`;
+  output += `import UIKit\n\npublic class ${className} {\n`;
 
-  // Gruppiere Tokens nach ihren Pfad-Segmenten
-  const groupedTokens = {};
-  dictionary.allTokens.forEach(token => {
-    const pathSegments = token.path.slice(0, -1);
-    const groupKey = pathSegments.join(' - ');
+  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
-    if (!groupedTokens[groupKey]) {
-      groupedTokens[groupKey] = [];
+  let isFirstTopLevel = true;
+  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
+
+    if (!isFirstTopLevel) {
+      output += `\n`;
     }
-    groupedTokens[groupKey].push(token);
-  });
+    output += `    // MARK: - ============================================\n`;
+    output += `    // MARK: - ${topLevel.toUpperCase()}\n`;
+    output += `    // MARK: - ============================================\n\n`;
+    isFirstTopLevel = false;
 
-  let isFirstGroup = true;
-  Object.keys(groupedTokens).sort().forEach(groupKey => {
-    const tokens = groupedTokens[groupKey];
+    Object.keys(subGroups).sort().forEach(subLevel => {
+      const tokens = subGroups[subLevel];
 
-    if (groupKey) {
-      if (!isFirstGroup) {
-        output += `\n`;
-      }
-      output += `    // MARK: - ${groupKey}\n`;
-      isFirstGroup = false;
-    }
-
-    tokens.forEach(token => {
-      const uniqueName = uniqueNames.get(token.path.join('.'));
-      const comment = token.comment || token.description;
-      if (comment) {
-        output += `    /** ${comment} */\n`;
+      if (subLevel) {
+        output += `    // MARK: - ${topLevel} - ${subLevel}\n`;
       }
 
-      // Determine the type based on token type
-      let valueOutput;
-      const value = token.value;
-      const type = token.$type || token.type;
-
-      if (type === 'color') {
-        // Transform color to UIColor directly in format
-        if (value.startsWith('#')) {
-          const hex = value.replace('#', '');
-          const r = (parseInt(hex.substring(0, 2), 16) / 255).toFixed(3);
-          const g = (parseInt(hex.substring(2, 4), 16) / 255).toFixed(3);
-          const b = (parseInt(hex.substring(4, 6), 16) / 255).toFixed(3);
-          const a = hex.length === 8 ? (parseInt(hex.substring(6, 8), 16) / 255).toFixed(3) : '1.000';
-          valueOutput = `UIColor(red: ${r}, green: ${g}, blue: ${b}, alpha: ${a})`;
-        } else if (value.startsWith('rgb')) {
-          const match = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
-          if (match) {
-            const r = (parseInt(match[1]) / 255).toFixed(3);
-            const g = (parseInt(match[2]) / 255).toFixed(3);
-            const b = (parseInt(match[3]) / 255).toFixed(3);
-            const a = match[4] ? parseFloat(match[4]).toFixed(3) : '1.000';
-            valueOutput = `UIColor(red: ${r}, green: ${g}, blue: ${b}, alpha: ${a})`;
-          } else {
-            valueOutput = `"${value}"`;  // Fallback
-          }
-        } else {
-          valueOutput = `"${value}"`;  // Fallback for other color formats
+      tokens.forEach(token => {
+        const uniqueName = uniqueNames.get(token.path.join('.'));
+        const comment = token.comment || token.description;
+        if (comment) {
+          output += `    /** ${comment} */\n`;
         }
-      } else if (typeof value === 'number') {
-        valueOutput = value;
-      } else if (typeof value === 'string') {
-        valueOutput = `"${value}"`;
-      } else {
-        valueOutput = value;
-      }
 
-      output += `    public static let ${uniqueName} = ${valueOutput}\n`;
+        let valueOutput;
+        const value = token.value;
+        const type = token.$type || token.type;
+
+        if (type === 'color') {
+          if (value.startsWith('#')) {
+            const hex = value.replace('#', '');
+            const r = (parseInt(hex.substring(0, 2), 16) / 255).toFixed(3);
+            const g = (parseInt(hex.substring(2, 4), 16) / 255).toFixed(3);
+            const b = (parseInt(hex.substring(4, 6), 16) / 255).toFixed(3);
+            const a = hex.length === 8 ? (parseInt(hex.substring(6, 8), 16) / 255).toFixed(3) : '1.000';
+            valueOutput = `UIColor(red: ${r}, green: ${g}, blue: ${b}, alpha: ${a})`;
+          } else if (value.startsWith('rgb')) {
+            const match = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+            if (match) {
+              const r = (parseInt(match[1]) / 255).toFixed(3);
+              const g = (parseInt(match[2]) / 255).toFixed(3);
+              const b = (parseInt(match[3]) / 255).toFixed(3);
+              const a = match[4] ? parseFloat(match[4]).toFixed(3) : '1.000';
+              valueOutput = `UIColor(red: ${r}, green: ${g}, blue: ${b}, alpha: ${a})`;
+            } else {
+              valueOutput = `"${value}"`;
+            }
+          } else {
+            valueOutput = `"${value}"`;
+          }
+        } else if (typeof value === 'number') {
+          valueOutput = value;
+        } else if (typeof value === 'string') {
+          valueOutput = `"${value}"`;
+        } else {
+          valueOutput = value;
+        }
+
+        output += `    public static let ${uniqueName} = ${valueOutput}\n`;
+      });
+
+      output += `\n`;
     });
   });
 
   output += `}\n`;
-
   return output;
 };
 
@@ -569,97 +571,86 @@ const iosSwiftClassFormat = ({ dictionary, options, file }) => {
  */
 const flutterDartClassFormat = ({ dictionary, options, file }) => {
   const className = options.className || file.className || 'StyleDictionary';
-
-  // Generate unique names with collision detection (camelCase for Flutter)
   const uniqueNames = generateUniqueNames(dictionary.allTokens, 'camel');
 
-  let output = `\n`;
-  output += `//\n`;
-  output += `// ${file.destination}\n`;
-  output += `//\n\n`;
+  let output = `\n//\n// ${file.destination}\n//\n\n`;
   output += `// Do not edit directly, this file was auto-generated.\n\n\n`;
-  output += `\nimport 'dart:ui';\n\n`;
-  output += `class ${className} {\n`;
-  output += `    ${className}._();\n\n`;
+  output += `\nimport 'dart:ui';\n\nclass ${className} {\n    ${className}._();\n\n`;
 
-  // Gruppiere Tokens nach ihren Pfad-Segmenten
-  const groupedTokens = {};
-  dictionary.allTokens.forEach(token => {
-    const pathSegments = token.path.slice(0, -1);
-    const groupKey = pathSegments.join(' - ');
+  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
-    if (!groupedTokens[groupKey]) {
-      groupedTokens[groupKey] = [];
+  let isFirstTopLevel = true;
+  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
+
+    if (!isFirstTopLevel) {
+      output += `\n`;
     }
-    groupedTokens[groupKey].push(token);
-  });
+    output += `    // ============================================\n`;
+    output += `    // ${topLevel.toUpperCase()}\n`;
+    output += `    // ============================================\n\n`;
+    isFirstTopLevel = false;
 
-  let isFirstGroup = true;
-  Object.keys(groupedTokens).sort().forEach(groupKey => {
-    const tokens = groupedTokens[groupKey];
+    Object.keys(subGroups).sort().forEach(subLevel => {
+      const tokens = subGroups[subLevel];
 
-    if (groupKey) {
-      if (!isFirstGroup) {
-        output += `\n`;
-      }
-      output += `    // ${groupKey}\n`;
-      isFirstGroup = false;
-    }
-
-    tokens.forEach(token => {
-      const uniqueName = uniqueNames.get(token.path.join('.'));
-      const comment = token.comment || token.description;
-      if (comment) {
-        output += `    /** ${comment} */\n`;
+      if (subLevel) {
+        output += `    // ${topLevel} - ${subLevel}\n`;
       }
 
-      // Determine the type based on token type
-      let valueOutput;
-      const value = token.value;
-      const type = token.$type || token.type;
+      tokens.forEach(token => {
+        const uniqueName = uniqueNames.get(token.path.join('.'));
+        const comment = token.comment || token.description;
+        if (comment) {
+          output += `    /** ${comment} */\n`;
+        }
 
-      if (type === 'color') {
-        // Transform color to Flutter Color directly in format
-        if (value.startsWith('#')) {
-          const hex = value.replace('#', '');
-          let argb;
-          if (hex.length === 6) {
-            argb = 'FF' + hex; // Add full opacity
-          } else if (hex.length === 8) {
-            // Convert RGBA to ARGB
-            argb = hex.substring(6, 8) + hex.substring(0, 6);
-          } else {
-            argb = 'FF000000'; // Fallback
-          }
-          valueOutput = `Color(0x${argb})`;
-        } else if (value.startsWith('rgb')) {
-          const match = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
-          if (match) {
-            const r = parseInt(match[1]).toString(16).padStart(2, '0');
-            const g = parseInt(match[2]).toString(16).padStart(2, '0');
-            const b = parseInt(match[3]).toString(16).padStart(2, '0');
-            const a = match[4] ? Math.round(parseFloat(match[4]) * 255).toString(16).padStart(2, '0') : 'FF';
-            valueOutput = `Color(0x${a}${r}${g}${b})`;
+        let valueOutput;
+        const value = token.value;
+        const type = token.$type || token.type;
+
+        if (type === 'color') {
+          if (value.startsWith('#')) {
+            const hex = value.replace('#', '');
+            let argb;
+            if (hex.length === 6) {
+              argb = 'FF' + hex;
+            } else if (hex.length === 8) {
+              argb = hex.substring(6, 8) + hex.substring(0, 6);
+            } else {
+              argb = 'FF000000';
+            }
+            valueOutput = `Color(0x${argb})`;
+          } else if (value.startsWith('rgb')) {
+            const match = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+            if (match) {
+              const r = parseInt(match[1]).toString(16).padStart(2, '0');
+              const g = parseInt(match[2]).toString(16).padStart(2, '0');
+              const b = parseInt(match[3]).toString(16).padStart(2, '0');
+              const a = match[4] ? Math.round(parseFloat(match[4]) * 255).toString(16).padStart(2, '0') : 'FF';
+              valueOutput = `Color(0x${a}${r}${g}${b})`;
+            } else {
+              valueOutput = `"${value}"`;
+            }
           } else {
             valueOutput = `"${value}"`;
           }
-        } else {
+        } else if (typeof value === 'number') {
+          valueOutput = value;
+        } else if (typeof value === 'string') {
           valueOutput = `"${value}"`;
+        } else {
+          valueOutput = value;
         }
-      } else if (typeof value === 'number') {
-        valueOutput = value;
-      } else if (typeof value === 'string') {
-        valueOutput = `"${value}"`;
-      } else {
-        valueOutput = value;
-      }
 
-      output += `    static const ${uniqueName} = ${valueOutput};\n`;
+        output += `    static const ${uniqueName} = ${valueOutput};\n`;
+      });
+
+      output += `\n`;
     });
   });
 
   output += `}\n`;
-
   return output;
 };
 
@@ -802,6 +793,65 @@ const iosSwiftTypographyFormat = ({ dictionary, options }) => {
 };
 
 /**
+ * Format: Android XML Resources with hierarchical grouping
+ */
+const androidResourcesFormat = ({ dictionary, options, file }) => {
+  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'kebab');
+
+  let output = `<?xml version="1.0" encoding="UTF-8"?>\n\n`;
+  output += `<!--\n  Do not edit directly, this file was auto-generated.\n-->\n`;
+  output += `<resources>\n`;
+
+  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
+
+  let isFirstTopLevel = true;
+  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
+
+    if (!isFirstTopLevel) {
+      output += `\n`;
+    }
+    output += `  <!-- ============================================\n`;
+    output += `       ${topLevel.toUpperCase()}\n`;
+    output += `       ============================================ -->\n\n`;
+    isFirstTopLevel = false;
+
+    Object.keys(subGroups).sort().forEach(subLevel => {
+      const tokens = subGroups[subLevel];
+
+      if (subLevel) {
+        output += `  <!-- ${topLevel} - ${subLevel} -->\n`;
+      }
+
+      tokens.forEach(token => {
+        const uniqueName = uniqueNames.get(token.path.join('.'));
+        const value = token.value;
+        const type = token.$type || token.type;
+        const comment = token.comment || token.description;
+
+        let resourceType = 'string';
+        if (type === 'color') {
+          resourceType = 'color';
+        } else if (type === 'dimension' || type === 'number') {
+          resourceType = 'dimen';
+        }
+
+        output += `  <${resourceType} name="${uniqueName}">${value}</${resourceType}>`;
+        if (comment) {
+          output += `<!-- ${comment} -->`;
+        }
+        output += `\n`;
+      });
+
+      output += `\n`;
+    });
+  });
+
+  output += `</resources>\n`;
+  return output;
+};
+
+/**
  * Format: Android XML Typography Styles
  */
 const androidXmlTypographyFormat = ({ dictionary, options }) => {
@@ -880,13 +930,14 @@ module.exports = {
   },
   transformGroups: customTransformGroups,
   formats: {
-    // Classic Token Formats
-    'css/variables': cssVariablesFormat,
-    'scss/variables': scssVariablesFormat,
-    'javascript/es6': javascriptEs6Format,
-    'json/nested': jsonNestedFormat,
+    // Classic Token Formats - Custom versions with hierarchical grouping
+    'custom/css/variables': cssVariablesFormat,
+    'custom/scss/variables': scssVariablesFormat,
+    'custom/javascript/es6': javascriptEs6Format,
+    'custom/json/nested': jsonNestedFormat,
     'ios-swift/class': iosSwiftClassFormat,
     'flutter/class': flutterDartClassFormat,
+    'android/resources': androidResourcesFormat,
 
     // Composite Token Formats
     'css/typography-classes': cssTypographyClassesFormat,
