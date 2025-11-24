@@ -671,30 +671,60 @@ const cssTypographyClassesFormat = ({ dictionary, options }) => {
   output += ` * Nicht manuell bearbeiten!\n`;
   output += ` */\n\n`;
 
-  dictionary.allTokens.forEach(token => {
-    if (token.$type === 'typography' && token.$value) {
-      const style = token.$value;
-      const className = token.path.join('-');
+  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
-      if (token.comment) {
-        output += `/* ${token.comment} */\n`;
-      }
+  let isFirstTopLevel = true;
+  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
 
-      output += `.${className} {\n`;
-      if (style.fontFamily) output += `  font-family: ${style.fontFamily};\n`;
-      if (style.fontWeight) output += `  font-weight: ${style.fontWeight};\n`;
-      if (style.fontSize) output += `  font-size: ${style.fontSize};\n`;
-      if (style.lineHeight) output += `  line-height: ${style.lineHeight};\n`;
-      if (style.letterSpacing) output += `  letter-spacing: ${style.letterSpacing};\n`;
-      if (style.fontStyle && style.fontStyle !== 'null') output += `  font-style: ${style.fontStyle.toLowerCase()};\n`;
-      if (style.textCase && style.textCase !== 'ORIGINAL') {
-        output += `  text-transform: ${style.textCase.toLowerCase()};\n`;
-      }
-      if (style.textDecoration && style.textDecoration !== 'NONE') {
-        output += `  text-decoration: ${style.textDecoration.toLowerCase()};\n`;
-      }
-      output += `}\n\n`;
+    // Add top-level header
+    if (!isFirstTopLevel) {
+      output += `\n`;
     }
+    output += `/* ============================================\n`;
+    output += `   ${topLevel.toUpperCase()}\n`;
+    output += `   ============================================ */\n\n`;
+    isFirstTopLevel = false;
+
+    Object.keys(subGroups).sort().forEach(subLevel => {
+      const tokens = subGroups[subLevel];
+
+      // Add sub-level header if exists
+      if (subLevel) {
+        output += `/* ${topLevel} - ${subLevel} */\n`;
+      }
+
+      tokens.forEach(token => {
+        if (token.$type === 'typography' && token.$value) {
+          const style = token.$value;
+          // Use only the last path segment as class name
+          let className = token.path[token.path.length - 1];
+          // Remove leading dot if present (token names may already include it)
+          if (className.startsWith('.')) {
+            className = className.substring(1);
+          }
+
+          if (token.comment) {
+            output += `/* ${token.comment} */\n`;
+          }
+
+          output += `.${className} {\n`;
+          if (style.fontFamily) output += `  font-family: ${style.fontFamily};\n`;
+          if (style.fontWeight) output += `  font-weight: ${style.fontWeight};\n`;
+          if (style.fontSize) output += `  font-size: ${style.fontSize};\n`;
+          if (style.lineHeight) output += `  line-height: ${style.lineHeight};\n`;
+          if (style.letterSpacing) output += `  letter-spacing: ${style.letterSpacing};\n`;
+          if (style.fontStyle && style.fontStyle !== 'null') output += `  font-style: ${style.fontStyle.toLowerCase()};\n`;
+          if (style.textCase && style.textCase !== 'ORIGINAL') {
+            output += `  text-transform: ${style.textCase.toLowerCase()};\n`;
+          }
+          if (style.textDecoration && style.textDecoration !== 'NONE') {
+            output += `  text-decoration: ${style.textDecoration.toLowerCase()};\n`;
+          }
+          output += `}\n\n`;
+        }
+      });
+    });
   });
 
   return output;
@@ -713,30 +743,60 @@ const cssEffectClassesFormat = ({ dictionary, options }) => {
   output += ` * Nicht manuell bearbeiten!\n`;
   output += ` */\n\n`;
 
-  dictionary.allTokens.forEach(token => {
-    if (token.$type === 'shadow' && Array.isArray(token.$value)) {
-      const className = token.path.join('-');
+  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
-      if (token.comment) {
-        output += `/* ${token.comment} */\n`;
-      }
+  let isFirstTopLevel = true;
+  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
 
-      output += `.${className} {\n`;
-
-      // Convert to CSS box-shadow
-      const shadows = token.$value.map(effect => {
-        if (effect.type === 'dropShadow') {
-          return `${effect.offsetX}px ${effect.offsetY}px ${effect.radius}px ${effect.spread}px ${effect.color}`;
-        }
-        return null;
-      }).filter(Boolean);
-
-      if (shadows.length > 0) {
-        output += `  box-shadow: ${shadows.join(', ')};\n`;
-      }
-
-      output += `}\n\n`;
+    // Add top-level header
+    if (!isFirstTopLevel) {
+      output += `\n`;
     }
+    output += `/* ============================================\n`;
+    output += `   ${topLevel.toUpperCase()}\n`;
+    output += `   ============================================ */\n\n`;
+    isFirstTopLevel = false;
+
+    Object.keys(subGroups).sort().forEach(subLevel => {
+      const tokens = subGroups[subLevel];
+
+      // Add sub-level header if exists
+      if (subLevel) {
+        output += `/* ${topLevel} - ${subLevel} */\n`;
+      }
+
+      tokens.forEach(token => {
+        if (token.$type === 'shadow' && Array.isArray(token.$value)) {
+          // Use only the last path segment as class name
+          let className = token.path[token.path.length - 1];
+          // Remove leading dot if present (token names may already include it)
+          if (className.startsWith('.')) {
+            className = className.substring(1);
+          }
+
+          if (token.comment) {
+            output += `/* ${token.comment} */\n`;
+          }
+
+          output += `.${className} {\n`;
+
+          // Convert to CSS box-shadow
+          const shadows = token.$value.map(effect => {
+            if (effect.type === 'dropShadow') {
+              return `${effect.offsetX}px ${effect.offsetY}px ${effect.radius}px ${effect.spread}px ${effect.color}`;
+            }
+            return null;
+          }).filter(Boolean);
+
+          if (shadows.length > 0) {
+            output += `  box-shadow: ${shadows.join(', ')};\n`;
+          }
+
+          output += `}\n\n`;
+        }
+      });
+    });
   });
 
   return output;
@@ -758,32 +818,58 @@ const iosSwiftTypographyFormat = ({ dictionary, options }) => {
   output += `extension UIFont {\n`;
   output += `    struct ${className} {\n`;
 
-  dictionary.allTokens.forEach(token => {
-    if (token.$type === 'typography' && token.$value) {
-      const style = token.$value;
-      const propName = token.path.join('_');
+  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
-      if (token.comment) {
-        output += `        /** ${token.comment} */\n`;
+  let isFirstTopLevel = true;
+  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
+
+    // Add top-level header
+    if (!isFirstTopLevel) {
+      output += `\n`;
+    }
+    output += `        // MARK: - ============================================\n`;
+    output += `        // MARK: - ${topLevel.toUpperCase()}\n`;
+    output += `        // MARK: - ============================================\n\n`;
+    isFirstTopLevel = false;
+
+    Object.keys(subGroups).sort().forEach(subLevel => {
+      const tokens = subGroups[subLevel];
+
+      // Add sub-level header if exists
+      if (subLevel) {
+        output += `        // MARK: - ${topLevel} - ${subLevel}\n`;
       }
 
-      const family = style.fontFamily || 'System';
-      const size = parseFloat(style.fontSize) || 16;
-      const weight = style.fontWeight || 400;
+      tokens.forEach(token => {
+        if (token.$type === 'typography' && token.$value) {
+          const style = token.$value;
+          // Use only the last path segment as property name
+          const propName = token.path[token.path.length - 1];
 
-      // Map weight to UIFont.Weight
-      let weightString = 'regular';
-      if (weight >= 900) weightString = 'black';
-      else if (weight >= 800) weightString = 'heavy';
-      else if (weight >= 700) weightString = 'bold';
-      else if (weight >= 600) weightString = 'semibold';
-      else if (weight >= 500) weightString = 'medium';
-      else if (weight >= 300) weightString = 'light';
-      else if (weight >= 200) weightString = 'ultraLight';
-      else if (weight >= 100) weightString = 'thin';
+          if (token.comment) {
+            output += `        /** ${token.comment} */\n`;
+          }
 
-      output += `        static let ${propName} = UIFont(name: "${family}", size: ${size})?.withWeight(.${weightString}) ?? UIFont.systemFont(ofSize: ${size}, weight: .${weightString})\n`;
-    }
+          const family = style.fontFamily || 'System';
+          const size = parseFloat(style.fontSize) || 16;
+          const weight = style.fontWeight || 400;
+
+          // Map weight to UIFont.Weight
+          let weightString = 'regular';
+          if (weight >= 900) weightString = 'black';
+          else if (weight >= 800) weightString = 'heavy';
+          else if (weight >= 700) weightString = 'bold';
+          else if (weight >= 600) weightString = 'semibold';
+          else if (weight >= 500) weightString = 'medium';
+          else if (weight >= 300) weightString = 'light';
+          else if (weight >= 200) weightString = 'ultraLight';
+          else if (weight >= 100) weightString = 'thin';
+
+          output += `        static let ${propName} = UIFont(name: "${family}", size: ${size})?.withWeight(.${weightString}) ?? UIFont.systemFont(ofSize: ${size}, weight: .${weightString})\n`;
+        }
+      });
+    });
   });
 
   output += `    }\n`;
@@ -864,30 +950,56 @@ const androidXmlTypographyFormat = ({ dictionary, options }) => {
   output += `-->\n`;
   output += `<resources>\n`;
 
-  dictionary.allTokens.forEach(token => {
-    if (token.$type === 'typography' && token.$value) {
-      const style = token.$value;
-      const styleName = token.path.join('_');
+  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
-      output += `    <style name="${styleName}">\n`;
-      if (style.fontFamily) output += `        <item name="android:fontFamily">${style.fontFamily}</item>\n`;
-      if (style.fontSize) {
-        const size = parseFloat(style.fontSize);
-        output += `        <item name="android:textSize">${size}sp</item>\n`;
-      }
-      if (style.fontWeight && style.fontWeight >= 700) {
-        output += `        <item name="android:textStyle">bold</item>\n`;
-      }
-      if (style.lineHeight) {
-        const lineHeight = parseFloat(style.lineHeight);
-        output += `        <item name="android:lineHeight">${lineHeight}sp</item>\n`;
-      }
-      if (style.letterSpacing) {
-        const letterSpacing = parseFloat(style.letterSpacing);
-        output += `        <item name="android:letterSpacing">${letterSpacing / 16}</item>\n`;
-      }
-      output += `    </style>\n`;
+  let isFirstTopLevel = true;
+  Object.keys(hierarchicalGroups).sort().forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
+
+    // Add top-level header
+    if (!isFirstTopLevel) {
+      output += `\n`;
     }
+    output += `    <!-- ============================================\n`;
+    output += `         ${topLevel.toUpperCase()}\n`;
+    output += `         ============================================ -->\n\n`;
+    isFirstTopLevel = false;
+
+    Object.keys(subGroups).sort().forEach(subLevel => {
+      const tokens = subGroups[subLevel];
+
+      // Add sub-level header if exists
+      if (subLevel) {
+        output += `    <!-- ${topLevel} - ${subLevel} -->\n`;
+      }
+
+      tokens.forEach(token => {
+        if (token.$type === 'typography' && token.$value) {
+          const style = token.$value;
+          // Use only the last path segment as style name
+          const styleName = token.path[token.path.length - 1];
+
+          output += `    <style name="${styleName}">\n`;
+          if (style.fontFamily) output += `        <item name="android:fontFamily">${style.fontFamily}</item>\n`;
+          if (style.fontSize) {
+            const size = parseFloat(style.fontSize);
+            output += `        <item name="android:textSize">${size}sp</item>\n`;
+          }
+          if (style.fontWeight && style.fontWeight >= 700) {
+            output += `        <item name="android:textStyle">bold</item>\n`;
+          }
+          if (style.lineHeight) {
+            const lineHeight = parseFloat(style.lineHeight);
+            output += `        <item name="android:lineHeight">${lineHeight}sp</item>\n`;
+          }
+          if (style.letterSpacing) {
+            const letterSpacing = parseFloat(style.letterSpacing);
+            output += `        <item name="android:letterSpacing">${letterSpacing / 16}</item>\n`;
+          }
+          output += `    </style>\n`;
+        }
+      });
+    });
   });
 
   output += `</resources>\n`;
