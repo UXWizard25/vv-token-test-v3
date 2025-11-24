@@ -1,6 +1,6 @@
 /**
  * colormode-dark.js
- * Generiert am: 2025-11-24T18:28:19.464Z
+ * Generiert am: 2025-11-24T20:34:45.745Z
  * Nicht manuell bearbeiten!
  */
 
@@ -105,7 +105,6 @@ export const inputFieldBgColorDarkMediumContrast = "#4B525A";
 export const inputFieldBgColorDarkHighContrast = "#E9ECEF";
 
 // Component - Kicker - Partner
-export const kickerStylebookBgColor = "UNRESOLVED_VariableID:16104:163534";
 export const kickerFitbookBgColor = "#FF97B7";
 export const kickerPetbookBgColor = "#B9DB91";
 export const kickerMyhomebookBgColor = "#66CCCC";
@@ -286,6 +285,8 @@ export const coreColorTertiaryVvPipeTest = "#B0D1F3";
 export const npmTest = "#B0D1F3";
 /** this is a test for the token pipeline */
 export const felipeTestColor = "#031A31";
+/** this is a test for the token pipeline */
+export const golianiTestColor = "#031A31";
 
 // Semantic - Heading
 /** Used for kicker text and category labels placed directly on standard surface backgrounds.

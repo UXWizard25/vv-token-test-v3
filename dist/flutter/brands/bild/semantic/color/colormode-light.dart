@@ -113,7 +113,6 @@ class ColormodeLight {
     static const inputFieldBgColorDarkHighContrast = Color(0xFFE9ECEF);
 
     // Component - Kicker - Partner
-    static const kickerStylebookBgColor = "UNRESOLVED_VariableID:16104:163534";
     static const kickerFitbookBgColor = Color(0xFFFF97B7);
     static const kickerPetbookBgColor = Color(0xFFB9DB91);
     static const kickerMyhomebookBgColor = Color(0xFF66CCCC);
@@ -294,6 +293,8 @@ Behavior: Constant — retains the same red warning tone in both Light and Dark 
     static const npmTest = Color(0xFF476D93);
     /** this is a test for the token pipeline */
     static const felipeTestColor = Color(0xFFE9580A);
+    /** this is a test for the token pipeline */
+    static const golianiTestColor = Color(0xFF00FFF2);
 
     // Semantic - Heading
     /** Used for kicker text and category labels placed directly on standard surface backgrounds.

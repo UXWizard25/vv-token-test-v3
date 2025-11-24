@@ -1,6 +1,6 @@
 /**
  * colormode-dark.css
- * Generiert am: 2025-11-24T18:28:18.078Z
+ * Generiert am: 2025-11-24T20:34:44.264Z
  * Nicht manuell bearbeiten!
  */
 
@@ -122,7 +122,6 @@
   --input-field-bg-color-dark-high-contrast: #E9ECEF;
 
   /* Component - Kicker - Partner */
-  --kicker-stylebook-bg-color: UNRESOLVED_VariableID:16104:163534;
   --kicker-fitbook-bg-color: #FF97B7;
   --kicker-petbook-bg-color: #B9DB91;
   --kicker-myhomebook-bg-color: #66CCCC;
@@ -385,6 +384,10 @@ Behavior: Constant — retains the same red warning tone in both Light and Dark 
    * this is a test for the token pipeline
    */
   --felipe-test-color: #031A31;
+  /**
+   * this is a test for the token pipeline
+   */
+  --goliani-test-color: #031A31;
 
   /* Semantic - Heading */
   /**
