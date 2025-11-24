@@ -204,18 +204,18 @@ function createTypographyConfig(brand, breakpoint) {
         }]
       },
 
-      // SCSS: Custom variables with hierarchical grouping
-      scss: {
-        transformGroup: 'scss',
-        buildPath: `${DIST_DIR}/scss/brands/${brand}/semantic/typography/`,
-        files: [{ destination: `${fileName}.scss`, format: 'custom/scss/variables', options: { outputReferences: false } }]
-      },
-
-      // JS: Custom ES6 with hierarchical grouping
+      // JS: Custom Typography format
       js: {
-        transformGroup: 'js',
+        transforms: ['attribute/cti'],
         buildPath: `${DIST_DIR}/js/brands/${brand}/semantic/typography/`,
-        files: [{ destination: `${fileName}.js`, format: 'custom/javascript/es6', options: { outputReferences: false } }]
+        files: [{
+          destination: `${fileName}.js`,
+          format: 'javascript/typography',
+          options: {
+            brand: brandName,
+            breakpoint
+          }
+        }]
       },
 
       // JSON: Standard JSON
@@ -225,16 +225,17 @@ function createTypographyConfig(brand, breakpoint) {
         files: [{ destination: `${fileName}.json`, format: 'json', options: { outputReferences: false } }]
       },
 
-      // Flutter: Standard class
+      // Flutter: Custom Typography format
       flutter: {
-        transformGroup: 'flutter',
+        transforms: ['attribute/cti'],
         buildPath: `${DIST_DIR}/flutter/brands/${brand}/semantic/typography/`,
         files: [{
           destination: `${fileName}.dart`,
-          format: 'flutter/class.dart',
+          format: 'flutter/typography',
           options: {
-            outputReferences: false,
-            className: `Typography${brandName}${breakpoint.toUpperCase()}`
+            brand: brandName,
+            breakpoint,
+            sizeClass: SIZE_CLASS_MAPPING[breakpoint] || breakpoint
           }
         }]
       },
@@ -305,18 +306,18 @@ function createEffectConfig(brand, colorMode) {
         }]
       },
 
-      // SCSS: Custom variables with hierarchical grouping
-      scss: {
-        transformGroup: 'scss',
-        buildPath: `${DIST_DIR}/scss/brands/${brand}/semantic/effects/`,
-        files: [{ destination: `${fileName}.scss`, format: 'custom/scss/variables', options: { outputReferences: false } }]
-      },
-
-      // JS: Custom ES6 with hierarchical grouping
+      // JS: Custom Effects format
       js: {
-        transformGroup: 'js',
+        transforms: ['attribute/cti'],
         buildPath: `${DIST_DIR}/js/brands/${brand}/semantic/effects/`,
-        files: [{ destination: `${fileName}.js`, format: 'custom/javascript/es6', options: { outputReferences: false } }]
+        files: [{
+          destination: `${fileName}.js`,
+          format: 'javascript/effects',
+          options: {
+            brand: brandName,
+            colorMode
+          }
+        }]
       },
 
       // JSON: Standard JSON
@@ -326,37 +327,30 @@ function createEffectConfig(brand, colorMode) {
         files: [{ destination: `${fileName}.json`, format: 'json', options: { outputReferences: false } }]
       },
 
-      // iOS: Standard Swift class
+      // iOS: Custom Swift Effects format
       ios: {
-        transformGroup: 'ios-swift',
+        transforms: ['attribute/cti'],
         buildPath: `${DIST_DIR}/ios/brands/${brand}/semantic/effects/`,
         files: [{
           destination: `${fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}.swift`,
-          format: 'ios-swift/class.swift',
+          format: 'ios-swift/effects',
           options: {
-            outputReferences: false,
-            className: `Effects${brandName}${colorMode.charAt(0).toUpperCase() + colorMode.slice(1)}`
+            brand: brandName,
+            colorMode
           }
         }]
       },
 
-      // Android: Standard resources
-      android: {
-        transformGroup: 'android',
-        buildPath: `${DIST_DIR}/android/res/values/brands/${brand}/semantic/effects/`,
-        files: [{ destination: `${fileName}.xml`, format: 'android/resources', options: { outputReferences: false } }]
-      },
-
-      // Flutter: Standard class
+      // Flutter: Custom Effects format
       flutter: {
-        transformGroup: 'flutter',
+        transforms: ['attribute/cti'],
         buildPath: `${DIST_DIR}/flutter/brands/${brand}/semantic/effects/`,
         files: [{
           destination: `${fileName}.dart`,
-          format: 'flutter/class.dart',
+          format: 'flutter/effects',
           options: {
-            outputReferences: false,
-            className: `Effects${brandName}${colorMode.charAt(0).toUpperCase() + colorMode.slice(1)}`
+            brand: brandName,
+            colorMode
           }
         }]
       }
