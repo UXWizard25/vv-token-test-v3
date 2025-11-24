@@ -2225,15 +2225,15 @@
           "felipeTestColor"
         ]
       },
-      "mariotest": {
-        "$value": "#e9580a",
-        "value": "#E9580A",
+      "golianiTestColor": {
+        "$value": "#00fff2",
+        "value": "#00FFF2",
         "type": "color",
         "$extensions": {
           "com.figma": {
             "collectionId": "VariableCollectionId:588:1979",
             "collectionName": "ColorMode",
-            "variableId": "VariableID:20854:75"
+            "variableId": "VariableID:20855:76"
           }
         },
         "$type": "color",
@@ -2241,29 +2241,29 @@
         "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/sportbild/color/colormode-light.json",
         "isSource": true,
         "original": {
-          "$value": "#E9580A",
-          "value": "#E9580A",
+          "$value": "#00FFF2",
+          "value": "#00FFF2",
           "type": "color",
           "$extensions": {
             "com.figma": {
               "collectionId": "VariableCollectionId:588:1979",
               "collectionName": "ColorMode",
-              "variableId": "VariableID:20854:75"
+              "variableId": "VariableID:20855:76"
             }
           },
           "$type": "color",
           "comment": "this is a test for the token pipeline"
         },
-        "name": "SemanticCoreMariotest",
+        "name": "SemanticCoreGolianiTestColor",
         "attributes": {
           "category": "Semantic",
           "type": "Core",
-          "item": "mariotest"
+          "item": "golianiTestColor"
         },
         "path": [
           "Semantic",
           "Core",
-          "mariotest"
+          "golianiTestColor"
         ]
       }
     },

@@ -175,7 +175,7 @@ semanticBorderBorderColorWarning = UIColor(red: 0.867, green: 0.000, blue: 0.000
     public static let semanticCoreCoreColorTertiaryConstant = UIColor(red: 0.137, green: 0.149, blue: 0.161, alpha: 1) /** Use this on elements that need to maintain the dark color across themes and color modes. */
     public static let semanticCoreCoreColorTertiaryVvPipeTest = UIColor(red: 0.690, green: 0.820, blue: 0.953, alpha: 1) /** this is a test for the token pipeline */
     public static let semanticCoreFelipeTestColor = UIColor(red: 0.012, green: 0.102, blue: 0.192, alpha: 1) /** this is a test for the token pipeline */
-    public static let semanticCoreMariotest = UIColor(red: 0.012, green: 0.102, blue: 0.192, alpha: 1) /** this is a test for the token pipeline */
+    public static let semanticCoreGolianiTestColor = UIColor(red: 0.012, green: 0.102, blue: 0.192, alpha: 1) /** this is a test for the token pipeline */
     public static let semanticCoreNpmTest = UIColor(red: 0.690, green: 0.820, blue: 0.953, alpha: 1) /** this is a test for the token pipeline */
     public static let /**
  * Primary color for headings and display typography. Ensures clear hierarchy and optimal readability on main surfaces. Adapds it´s color based on the brand mode for brand recognition.
