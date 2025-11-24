@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2025-11-24T09:16:49.886Z",
+  "lastModified": "2025-11-24T20:35:53.346Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -1113,7 +1113,7 @@
         },
         {
           "id": "VariableID:3746:1642",
-          "name": "BILD/gray/BILD085-50",
+          "name": "BILD/gray/BILD085-alpha50",
           "description": "The 50% opacity on this color makes it equivalent to BILD093.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1125,7 +1125,7 @@
         },
         {
           "id": "VariableID:3756:1744",
-          "name": "BILD/green/BILDGreen093-50",
+          "name": "BILD/green/BILDGreen093-alpha50",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1137,7 +1137,7 @@
         },
         {
           "id": "VariableID:3765:1756",
-          "name": "BILD/green/BILDGreen056-50",
+          "name": "BILD/green/BILDGreen056-alpha50",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1660,7 +1660,7 @@
         },
         {
           "id": "VariableID:18355:65196",
-          "name": "SportBILD/alpha/spobiBlue016-0",
+          "name": "SportBILD/alpha/spobiBlue016-alpha0",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1672,7 +1672,7 @@
         },
         {
           "id": "VariableID:18355:65197",
-          "name": "SportBILD/alpha/spobiBlue016-70",
+          "name": "SportBILD/alpha/spobiBlue016-alpha70",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -6818,7 +6818,7 @@
         },
         {
           "id": "VariableID:3249:2456",
-          "name": "space-0_25x",
+          "name": "spaceNeg0_25x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
