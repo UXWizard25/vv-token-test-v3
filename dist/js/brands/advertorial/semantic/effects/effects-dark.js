@@ -1,6 +1,6 @@
 /**
  * effects-dark.js
- * Generiert am: 2025-11-24T20:36:17.997Z
+ * Generiert am: 2025-11-24T20:37:04.567Z
  * Nicht manuell bearbeiten!
  */
 

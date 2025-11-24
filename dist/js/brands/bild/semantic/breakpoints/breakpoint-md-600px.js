@@ -1,6 +1,6 @@
 /**
  * breakpoint-md-600px.js
- * Generiert am: 2025-11-24T20:36:12.449Z
+ * Generiert am: 2025-11-24T20:36:58.825Z
  * Nicht manuell bearbeiten!
  */
 

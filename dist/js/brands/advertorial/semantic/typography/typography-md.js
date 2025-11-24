@@ -1,6 +1,6 @@
 /**
  * typography-md.js
- * Generiert am: 2025-11-24T20:36:17.453Z
+ * Generiert am: 2025-11-24T20:37:03.997Z
  * Nicht manuell bearbeiten!
  */
 

@@ -1,6 +1,6 @@
 /**
  * brandtokenmapping.js
- * Generiert am: 2025-11-24T20:36:13.328Z
+ * Generiert am: 2025-11-24T20:36:59.727Z
  * Nicht manuell bearbeiten!
  */
 
