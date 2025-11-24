@@ -14,7 +14,7 @@
         },
         "$type": "dimension",
         "comment": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/density/density-default.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/density/density-default.json",
         "isSource": true,
         "original": {
           "$value": "8px",
@@ -55,7 +55,7 @@
         },
         "$type": "dimension",
         "comment": "This variable is in the SpaceScaling collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/density/density-default.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/density/density-default.json",
         "isSource": true,
         "original": {
           "$value": "8px",
@@ -96,7 +96,7 @@
         },
         "$type": "dimension",
         "comment": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling size could work across different content scaling / size / contrast themes. Font size across devices: 15 - 17 - 19",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/density/density-default.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/density/density-default.json",
         "isSource": true,
         "original": {
           "$value": "17px",
@@ -137,7 +137,7 @@
         },
         "$type": "dimension",
         "comment": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/density/density-default.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/density/density-default.json",
         "isSource": true,
         "original": {
           "$value": "20px",
@@ -179,7 +179,7 @@
           }
         },
         "$type": "dimension",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/density/density-default.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/density/density-default.json",
         "isSource": true,
         "original": {
           "$value": "16px",
@@ -218,7 +218,7 @@
           }
         },
         "$type": "dimension",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/density/density-default.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/density/density-default.json",
         "isSource": true,
         "original": {
           "$value": "8px",
@@ -257,7 +257,7 @@
           }
         },
         "$type": "dimension",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/density/density-default.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/density/density-default.json",
         "isSource": true,
         "original": {
           "$value": "40px",
@@ -297,7 +297,7 @@
         },
         "$type": "dimension",
         "comment": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling size could work across different content scaling / size / contrast themes. Font size across scaling options: compact 15 - default 17 - spacious 19",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/density/density-default.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/density/density-default.json",
         "isSource": true,
         "original": {
           "$value": "17px",

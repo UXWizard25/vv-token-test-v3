@@ -14,7 +14,7 @@
         },
         "$type": "color",
         "comment": "Applies to text elements requiring fixed brand color usage (e.g., permanent links, brand slogans on constant backgrounds).\nBehavior: Constant — maintains identical red tone across Light and Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#DD0000",
@@ -55,7 +55,7 @@
         },
         "$type": "color",
         "comment": "Main text color used for body copy and all primary textual content. Ensures optimal readability and contrast on standard surfaces.\nBehavior: Dynamic — switches between dark text on light backgrounds and light text on dark backgrounds.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#E9ECEF",
@@ -96,7 +96,7 @@
         },
         "$type": "color",
         "comment": "Muted text tone for subtle information, timestamps, or inactive text elements.\nBehavior: Dynamic — adjusts between mid-gray in Light mode and lighter gray in Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#CED4DA",
@@ -137,7 +137,7 @@
         },
         "$type": "color",
         "comment": "Inverse text color used on opposing surfaces (e.g., white text on red or dark backgrounds).\nBehavior: Dynamic — alternates between light and dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#232629",
@@ -178,7 +178,7 @@
         },
         "$type": "color",
         "comment": "Used when primary text color must remain fixed regardless of mode (e.g., on light constant backgrounds).\nBehavior: Constant — same tone across Light and Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#232629",
@@ -219,7 +219,7 @@
         },
         "$type": "color",
         "comment": "Used for positive or success-related messages (e.g., “Saved”, “Success”, or confirmation text) on success surface colors.\nBehavior: Constant — green tone remains consistent across both modes.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#006E3E",
@@ -260,7 +260,7 @@
         },
         "$type": "color",
         "comment": "Fixed inverse tone for text that always appears on dark surfaces (e.g., hero headlines or persistent dark cards).\nBehavior: Constant — unchanged across modes.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#E9ECEF",
@@ -301,7 +301,7 @@
         },
         "$type": "color",
         "comment": "Secondary text color used for supportive information, subtitles, and less prominent text.\nBehavior: Dynamic — adapts between neutral tones to maintain proper contrast per theme. In 2025 css it is called figure meta.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#8C9196",
@@ -342,7 +342,7 @@
         },
         "$type": "color",
         "comment": "Used for strong warnings, errors, or destructive action labels.\nBehavior: Constant — red color remains unchanged between Light and Dark mode for visibility and recognition.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#DD0000",
@@ -383,7 +383,7 @@
         },
         "$type": "color",
         "comment": "Accent text color used for links, interactive text, or highlighted key words. Changes from a red in light mode to a white in dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -424,7 +424,7 @@
         },
         "$type": "color",
         "comment": "Represents medium attention states, often used in warnings or pending states.\nBehavior: Constant — same orange tone across Light and Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FD8227",
@@ -465,7 +465,7 @@
         },
         "$type": "color",
         "comment": "Used for text displayed on dark surfaces to ensure maximum legibility and contrast.\nBehavior: Constant — always light neutral to guarantee accessibility on dark backgrounds.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -508,7 +508,7 @@
         },
         "$type": "color",
         "comment": "Primary surface color used for main backgrounds and large layout areas (e.g., page background, primary containers).\nBehavior: Dynamic — adapts between light and dark surface tokens to maintain legibility and hierarchy.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#232629",
@@ -549,7 +549,7 @@
         },
         "$type": "color",
         "comment": "Used for secondary surface layers such as cards, panels, or nested containers that need to differentiate themselves from the primary surface. .\nBehavior: Dynamic — adapts brightness level based on mode for appropriate depth contrast.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#2C3138",
@@ -590,7 +590,7 @@
         },
         "$type": "color",
         "comment": "Inverse of the primary surface, used when Light and Dark surfaces are swapped (e.g., inverse cards or elevated sections).\nBehavior: Dynamic — switches between dark and light values depending on mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -631,7 +631,7 @@
         },
         "$type": "color",
         "comment": "A fixed light surface tone used when a consistent light background is required (e.g., light panels within dark layouts).\nBehavior: Constant — remains the same in both modes.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -672,7 +672,7 @@
         },
         "$type": "color",
         "comment": "A fixed dark surface tone used for dark overlays or nested dark sections inside light layouts.\nBehavior: Constant — identical across Light and Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#232629",
@@ -713,7 +713,7 @@
         },
         "$type": "color",
         "comment": "HIghtest elevation surface color, typically used for grouping or background accents to differentiate themselves from all previous surface color options. Uses corresponding light/dark tones for consistent layering.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#4B525A",
@@ -754,7 +754,7 @@
         },
         "$type": "color",
         "comment": "Success-related background used for positive notifications, confirmation surfaces, or success banners.\nBehavior: Constant — remains the same across Light and Dark mode to ensure brand alignment.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#CEF4E4",
@@ -795,7 +795,7 @@
         },
         "$type": "color",
         "comment": "Tertiary background layer for inner containers, grouped content, or subtle elevation steps  that need to differentiate themselves from the primary and secondary surfaces.\nBehavior: Dynamic — switches between light and dark tertiary tones.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#343C41",
@@ -836,7 +836,7 @@
         },
         "$type": "color",
         "comment": "Represents tertiary-level gradient background.\nCurrently used on skeletons.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(52, 60, 65, 0)",
@@ -877,7 +877,7 @@
         },
         "$type": "color",
         "comment": "Inverse tertiary background, applied when Light and Dark surfaces are reversed (e.g., dark-on-light cards).\nBehavior: Dynamic — swaps values between modes for contrast preservation.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#E9ECEF",
@@ -918,7 +918,7 @@
         },
         "$type": "color",
         "comment": "Defines the end stops for primary surface gradients, creating visual depth or elevation. Used next to sliders buttons and slider container edges for fading out content. Behavior: Dynamic — light gradients in Light mode, dark gradients in Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(35, 38, 41, 0)",
@@ -959,7 +959,7 @@
         },
         "$type": "color",
         "comment": "Used for secondary surface gradients or subtle depth layers across backgrounds.\nBehavior: Dynamic — adapts to mode brightness for smooth gradient transitions.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(44, 49, 56, 0)",
@@ -1000,7 +1000,7 @@
         },
         "$type": "color",
         "comment": "Inverse of the quartenary surface, used for background reversals in mixed-layout areas.\nBehavior: Dynamic — inverts between dark and light tones depending on mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#CED4DA",
@@ -1043,7 +1043,7 @@
         },
         "$type": "color",
         "comment": "Used for kicker text and category labels placed directly on standard surface backgrounds.\nBehavior: Dynamic — adjusts between red for Light and a neutral tone in Dark modes.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#8C9196",
@@ -1084,7 +1084,7 @@
         },
         "$type": "color",
         "comment": "Primary color for headings and display typography. Ensures clear hierarchy and optimal readability on main surfaces. Adapds it´s color based on the brand mode for brand recognition.\nBehavior: Dynamic — dark text in Light mode, light text in Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -1125,7 +1125,7 @@
         },
         "$type": "color",
         "comment": "Fixed white heading color used on dark or colored backgrounds (e.g., hero sections, banners) that remain constant across modes.\nBehavior: Constant — remains white in both Light and Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -1166,7 +1166,7 @@
         },
         "$type": "color",
         "comment": "Specialized kicker color for use on red or brand-colored backgrounds (e.g., red kicker bg within teaser cards).\nBehavior: Constant — remains consistent across light and darkmode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -1207,7 +1207,7 @@
         },
         "$type": "color",
         "comment": "Applied to kicker or meta text on dark colored backgrounds to maintain high legibility.\nBehavior: Constant — always uses semi-transparent white for consistent readability.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(255, 255, 255, 0.800000011920929)",
@@ -1248,7 +1248,7 @@
         },
         "$type": "color",
         "comment": "Used for kicker text placed on bright or light colored backgrounds. Ensures balanced contrast without harsh visual dominance.\nBehavior: Constant — remains semi-transparent black across both modes.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(0, 0, 0, 0.699999988079071)",
@@ -1291,7 +1291,7 @@
         },
         "$type": "color",
         "comment": "Defines the active state color for secondary actions (e.g., secondary buttons, tabs, or toggles).\nBehavior: Dynamic — light gray in Light mode and bright gray in Dark mode to maintain perceptual balance.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#F2F4F5",
@@ -1332,7 +1332,7 @@
         },
         "$type": "color",
         "comment": "Used to represent the active or pressed state of primary actions such as tabs or links.\nBehavior: Constant — identical value across modes for consistent interaction feedback.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#DD0000",
@@ -1373,7 +1373,7 @@
         },
         "$type": "color",
         "comment": "Used for disabled secondary elements, ensuring reduced visual prominence while maintaining legibility.\nBehavior: Dynamic — adapts neutral tones based on theme brightness.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#4B525A",
@@ -1414,7 +1414,7 @@
         },
         "$type": "color",
         "comment": "Defines the disabled color for primary components (e.g., disabled primary buttons, inputs). Reduces emphasis and contrast to signal inactivity.\nBehavior: Dynamic — slightly lighter in Light mode and darker in Dark mode to remain visually accessible.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#343C41",
@@ -1455,7 +1455,7 @@
         },
         "$type": "color",
         "comment": "Inverse variant of the secondary active state, applied on dark backgrounds or inverse layouts.\nBehavior: Dynamic — switches between bright and dark tones depending on the background.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#232629",
@@ -1496,7 +1496,7 @@
         },
         "$type": "color",
         "comment": "Represents active or pressed states for tertiary elements (e.g., link highlights, icons, or subtle interactive surfaces).\nBehavior: Constant — uses the same green success tone across Light and Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#00C373",
@@ -1537,7 +1537,7 @@
         },
         "$type": "color",
         "comment": "Represents disabled states for tertiary levels, maintaining subtle visibility without drawing attention.\nBehavior: Dynamic — adjusts between gray tones for Light and Dark mode consistency.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#666B70",
@@ -1580,7 +1580,7 @@
         },
         "$type": "color",
         "comment": "Medium-emphasis border color for standard outlines, input fields, or separators that require visible yet non-dominant contrast.\nBehavior: Dynamic — adjusts to maintain legibility in Light and Dark themes.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#666B70",
@@ -1621,7 +1621,7 @@
         },
         "$type": "color",
         "comment": "Used for subtle dividers and low-emphasis borders in neutral areas (e.g., card outlines, input containers).\nDynamic — light gray in Light mode, dark gray in Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#4B525A",
@@ -1662,7 +1662,7 @@
         },
         "$type": "color",
         "comment": "High-emphasis border color for clear delineation between surfaces (e.g., focus rings, high-contrast UI zones).\nBehavior: Dynamic — light surfaces use a darker neutral, dark surfaces a light neutral tone.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -1703,7 +1703,7 @@
         },
         "$type": "color",
         "comment": "Applies to UI elements that must visually remain the same regardless of theme (e.g., brand containers, static illustrations). Identical tone across Light and Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#E9ECEF",
@@ -1744,7 +1744,7 @@
         },
         "$type": "color",
         "comment": "Used for success states and validation borders (e.g., input success outlines or confirmation frames).\nBehavior: Constant — same success tone across modes for consistent feedback semantics.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#00C373",
@@ -1785,7 +1785,7 @@
         },
         "$type": "color",
         "comment": "Defines border color for warning and error-related components, typically used for input validation or caution zones.\nBehavior: Constant — retains the same red warning tone in both Light and Dark modes.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#DD0000",
@@ -1826,7 +1826,7 @@
         },
         "$type": "color",
         "comment": "Applied to disabled states of primary elements (e.g., buttons, inputs) to visually reduce emphasis and indicate inactivity.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#343C41",
@@ -1867,7 +1867,7 @@
         },
         "$type": "color",
         "comment": "Used for secondary component borders in a disabled state (e.g., secondary buttons, inactive input outlines).",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#4B525A",
@@ -1910,7 +1910,7 @@
         },
         "$type": "color",
         "comment": "Used as the main brand color for key interactive elements such as primary buttons, active states, and prominent highlights. It remains constant across Light and Dark Mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#DD0000",
@@ -1951,7 +1951,7 @@
         },
         "$type": "color",
         "comment": "Defines the secondary brand tone. This variable changes across Light and Dark Mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#232629",
@@ -1992,7 +1992,7 @@
         },
         "$type": "color",
         "comment": "Represents tertiary brand accents. This variable changes across Light and Dark Mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -2033,7 +2033,7 @@
         },
         "$type": "color",
         "comment": "Use this on elements that must maintain the white color even in dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -2074,7 +2074,7 @@
         },
         "$type": "color",
         "comment": "Use this on elements that need to maintain the dark color across themes and color modes.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#232629",
@@ -2115,7 +2115,7 @@
         },
         "$type": "color",
         "comment": "this is a test for the token pipeline",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#B0D1F3",
@@ -2156,7 +2156,7 @@
         },
         "$type": "color",
         "comment": "this is a test for the token pipeline",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#B0D1F3",
@@ -2197,7 +2197,7 @@
         },
         "$type": "color",
         "comment": "this is a test for the token pipeline",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#031A31",
@@ -2240,7 +2240,7 @@
         },
         "$type": "color",
         "comment": "Primary icon color on primary surfaces.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#8C9196",
@@ -2281,7 +2281,7 @@
         },
         "$type": "color",
         "comment": "Inverse icon color for use on contrasting backgrounds (e.g., light icons on dark surfaces or dark icons on bright surfaces).\nBehavior: Dynamic — switches between light and dark.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#4B525A",
@@ -2322,7 +2322,7 @@
         },
         "$type": "color",
         "comment": "Secondary icon tone for less prominent actions or supportive iconography (e.g., secondary buttons, tool icons). Remains unchanged across modes.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#8C9196",
@@ -2363,7 +2363,7 @@
         },
         "$type": "color",
         "comment": "Used for icons displayed on dark backgrounds that don´t change colors, ensuring sufficient contrast and legibility.\nBehavior: Constant — always uses a neutral bright value.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#F2F4F5",
@@ -2404,7 +2404,7 @@
         },
         "$type": "color",
         "comment": "Used for icons that must remain visually consistent regardless of mode (e.g.,  icons that are on surfaces that don't change color).\nIdentical tone in both Light and Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#4B525A",
@@ -2445,7 +2445,7 @@
         },
         "$type": "color",
         "comment": "Represents success or confirmation icons (e.g., checkmarks, completion indicators).\nBehavior: Constant — same success green tone across Light and Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#00C373",
@@ -2488,7 +2488,7 @@
         },
         "$type": "color",
         "comment": "Primary label color used for labels, badges, or tag text on light backgrounds. Ensures strong readability and visual hierarchy.\nBehavior: Dynamic — dark neutral in Light mode, light neutral in Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#E9ECEF",
@@ -2529,7 +2529,7 @@
         },
         "$type": "color",
         "comment": "Secondary label tone used for less prominent text such as secondary badges or supporting labels.\nBehavior: Dynamic — adapts between mid-grays for Light and Dark surfaces.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#CED4DA",
@@ -2570,7 +2570,7 @@
         },
         "$type": "color",
         "comment": "Disabled label tone indicating inactive or unavailable states in UI elements.\nBehavior: Dynamic — lighter gray in Light mode, darker neutral in Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#4B525A",
@@ -2611,7 +2611,7 @@
         },
         "$type": "color",
         "comment": "Used when primary label color should remain unchanged across modes in static UI areas.\nBehavior: Constant — identical tone in both Light and Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#232629",
@@ -2652,7 +2652,7 @@
         },
         "$type": "color",
         "comment": "Fixed inverse label tone applied where white or bright text must always appear, regardless of theme.\nBehavior: Constant — remains bright neutral in both Light and Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#E9ECEF",
@@ -2693,7 +2693,7 @@
         },
         "$type": "color",
         "comment": "Tertiary label tone for subtle, low-emphasis UI text such as placeholder text or tertiary badges.\nBehavior: Constant — identical tone across both modes for stable hierarchy.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#8C9196",
@@ -2734,7 +2734,7 @@
         },
         "$type": "color",
         "comment": "Inverse version of the primary label color, used on dark or colored backgrounds.\nBehavior: Dynamic — switches between light and dark.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#232629",
@@ -2777,7 +2777,7 @@
         },
         "$type": "color",
         "comment": "High-level attention color used for errors, destructive actions, and critical alerts (e.g., delete actions, error states). Remains red in both Light and Dark mode for immediate recognition.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#DD0000",
@@ -2818,7 +2818,7 @@
         },
         "$type": "color",
         "comment": "Primary accent color used to emphasize interactive or highlight elements such as links, selection states, or focus indicators. Adapts in Darkmode to a fully white tone.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -2859,7 +2859,7 @@
         },
         "$type": "color",
         "comment": "Medium-level attention tone representing stronger caution or intermediate alert states. Commonly applied in warning messages. Constant — identical in both modes.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FD8227",
@@ -2900,7 +2900,7 @@
         },
         "$type": "color",
         "comment": "Low-level warning or attention tone, typically used for informational or cautionary messages. Same yellow tone across Light and Dark to maintain recognition.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFBF00",
@@ -2941,7 +2941,7 @@
         },
         "$type": "color",
         "comment": "Used for accent highlights that must remain visually consistent across themes (e.g., brand identifiers, logos, or fixed emphasis areas). Color value does not change between Light and Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#DD0000",
@@ -2982,7 +2982,7 @@
         },
         "$type": "color",
         "comment": "Primary success color used to indicate positive states, confirmations, or completed actions (e.g., success banners, icons, or badges). Remains the same across modes to ensure recognizability and consistency.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#00C373",
@@ -3023,7 +3023,7 @@
         },
         "$type": "color",
         "comment": "Very low-contrast background tone used for information or system-neutral surfaces, often for tooltips or quiet information highlights. Dynamic — light neutral in Light mode and dark neutral in Dark mode.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#343C41",
@@ -3064,7 +3064,7 @@
         },
         "$type": "color",
         "comment": "Secondary success tone used for secondary states. Maintains the same color in both Light and Dark mode for clarity.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#006E3E",
@@ -3107,7 +3107,7 @@
         },
         "$type": "color",
         "comment": "A semi-transparent black overlay used to dim background content when modals, drawers, or dialogs are active. Identical opacity and tone in both Light and Dark mode to ensure consistent overlay depth.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(0, 0, 0, 0.699999988079071)",
@@ -3148,7 +3148,7 @@
         },
         "$type": "color",
         "comment": "A semi-transparent white overlay used to brighten or fade background layers, often applied behind bottom sheets or temporary panels.\nBehavior: Constant — same opacity level across modes to preserve uniform layering behavior.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(255, 255, 255, 0.699999988079071)",
@@ -3189,7 +3189,7 @@
             "variableId": "VariableID:18980:34211"
           }
         },
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "5px",
@@ -3226,7 +3226,7 @@
             "variableId": "VariableID:18980:34212"
           }
         },
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "10px",
@@ -3263,7 +3263,7 @@
             "variableId": "VariableID:18980:34213"
           }
         },
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "20px",
@@ -3300,7 +3300,7 @@
             "variableId": "VariableID:18980:34214"
           }
         },
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "30px",
@@ -3337,7 +3337,7 @@
             "variableId": "VariableID:18980:34215"
           }
         },
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "40px",
@@ -3374,7 +3374,7 @@
             "variableId": "VariableID:18980:34216"
           }
         },
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "50px",
@@ -3411,7 +3411,7 @@
             "variableId": "VariableID:18980:34217"
           }
         },
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "60px",
@@ -3448,7 +3448,7 @@
             "variableId": "VariableID:18980:34218"
           }
         },
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "70px",
@@ -3485,7 +3485,7 @@
             "variableId": "VariableID:18980:34220"
           }
         },
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "80px",
@@ -3522,7 +3522,7 @@
             "variableId": "VariableID:18980:34221"
           }
         },
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "90px",
@@ -3559,7 +3559,7 @@
             "variableId": "VariableID:18980:34222"
           }
         },
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "100px",
@@ -3596,7 +3596,7 @@
             "variableId": "VariableID:18980:34223"
           }
         },
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "0px",
@@ -3638,7 +3638,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#E9ECEF",
@@ -3680,7 +3680,7 @@
         },
         "$type": "color",
         "comment": "Use this token on breadcrumbs that are in their default idle state. This token changes color between light and dark modes. L:035 / D:096",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#F2F4F5",
@@ -3721,7 +3721,7 @@
         },
         "$type": "color",
         "comment": "Use this token on breadcrumbs that the user's pointer is hovering on or clicked on. This token changes color between light and dark modes. L:015 / D:100",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -3763,7 +3763,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FD8227",
@@ -3802,7 +3802,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#E9ECEF",
@@ -3841,7 +3841,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#232629",
@@ -3880,7 +3880,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#1C1C1C",
@@ -3919,7 +3919,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#1C1C1C",
@@ -3960,7 +3960,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#232629",
@@ -4000,7 +4000,7 @@
         },
         "$type": "color",
         "comment": "Used on a thin part at the top of header in navigation menu.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(35, 38, 41, 0.949999988079071)",
@@ -4040,7 +4040,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#232629",
@@ -4079,7 +4079,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#8C9196",
@@ -4118,7 +4118,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -4157,7 +4157,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#343C41",
@@ -4196,7 +4196,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#8C9196",
@@ -4235,7 +4235,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#E9ECEF",
@@ -4274,7 +4274,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#4B525A",
@@ -4313,7 +4313,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -4355,7 +4355,7 @@
         },
         "$type": "color",
         "comment": "!do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#CED4DA",
@@ -4396,7 +4396,7 @@
         },
         "$type": "color",
         "comment": "!do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#E9ECEF",
@@ -4437,7 +4437,7 @@
         },
         "$type": "color",
         "comment": "!do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#343C41",
@@ -4478,7 +4478,7 @@
         },
         "$type": "color",
         "comment": "!do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#8C9196",
@@ -4519,7 +4519,7 @@
         },
         "$type": "color",
         "comment": "!do not use! these variables have been deprecated and multitext link buttons are now classified as partner buttons.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#4B525A",
@@ -4561,7 +4561,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -4600,7 +4600,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -4639,7 +4639,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#343C41",
@@ -4678,7 +4678,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#4B525A",
@@ -4720,7 +4720,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#DD0000",
@@ -4761,7 +4761,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#AF0002",
@@ -4802,7 +4802,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#FFFFFF",
@@ -4843,7 +4843,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#18995C",
@@ -4884,7 +4884,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#006E3E",
@@ -4926,7 +4926,7 @@
           },
           "$type": "color",
           "comment": "Use this variable on the neutral color primary button. Tone changes between light and dark mode. Light mode Bild & SpoBi: Tone 015 ; Dark mode Bild & SpoBi: Tone 100",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#FFFFFF",
@@ -4968,7 +4968,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#E9ECEF",
@@ -5011,7 +5011,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#F2F4F5",
@@ -5052,7 +5052,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#4B525A",
@@ -5093,7 +5093,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#FFFFFF",
@@ -5134,7 +5134,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "rgba(0, 155, 90, 0.5)",
@@ -5175,7 +5175,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#18995C",
@@ -5218,7 +5218,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "rgba(206, 212, 218, 0.5)",
@@ -5259,7 +5259,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#E9ECEF",
@@ -5300,7 +5300,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#4B525A",
@@ -5342,7 +5342,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#232629",
@@ -5381,7 +5381,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#F2F4F5",
@@ -5421,7 +5421,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "rgba(206, 212, 218, 0.5)",
@@ -5465,7 +5465,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#8C9196",
@@ -5504,7 +5504,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#E9ECEF",
@@ -5543,7 +5543,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#CED4DA",
@@ -5582,7 +5582,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -5621,7 +5621,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#343C41",
@@ -5660,7 +5660,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#4B525A",
@@ -5699,7 +5699,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#E9ECEF",
@@ -5740,7 +5740,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#4B525A",
@@ -5779,7 +5779,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#343C41",
@@ -5820,7 +5820,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#CED4DA",
@@ -5859,7 +5859,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#E9ECEF",
@@ -5898,7 +5898,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#8C9196",
@@ -5939,7 +5939,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#343C41",
@@ -5978,7 +5978,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#F2F4F5",
@@ -6017,7 +6017,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -6056,7 +6056,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#343C41",
@@ -6097,7 +6097,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -6136,7 +6136,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#8C9196",
@@ -6175,7 +6175,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#F2F4F5",
@@ -6215,7 +6215,7 @@
         },
         "$type": "color",
         "comment": "The variable can be used on secondary menus that many times show up on dedicated home pages specific to a topic. The menu labels are often times using the color white across color modes.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -6257,7 +6257,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#F2F4F5",
@@ -6296,7 +6296,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#CED4DA",
@@ -6337,7 +6337,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#8C9196",
@@ -6376,7 +6376,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#8C9196",
@@ -6418,7 +6418,7 @@
         },
         "$type": "color",
         "comment": "On marketing offer surfaces this variable is usually not used. The alertSurfaceConstant variables should be used. This token changes color between light and dark modes. L:100 / D:025",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#343C41",
@@ -6459,7 +6459,7 @@
         },
         "$type": "color",
         "comment": "On marketing offer surfaces this variable is  used.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -6501,7 +6501,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#343C41",
@@ -6540,7 +6540,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#2C3138",
@@ -6581,7 +6581,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#CED4DA",
@@ -6620,7 +6620,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#232629",
@@ -6659,7 +6659,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -6698,7 +6698,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#4B525A",
@@ -6737,7 +6737,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -6778,7 +6778,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#2C3138",
@@ -6820,7 +6820,7 @@
         },
         "$type": "color",
         "comment": "Checkboxes and Radio buttons use this variable for their border.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#8C9196",
@@ -6862,7 +6862,7 @@
           }
         },
         "comment": "This variable is only for use in Figma's Design System File. It is automating some of the content in documentation pages.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "BILD010",
@@ -6901,7 +6901,7 @@
           }
         },
         "comment": "This is currently for use in this design system's documentation texts. It is a text string made for being used in light and dark mode documentation texts.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "(Dark Mode)",
@@ -6940,7 +6940,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(255, 255, 255, 0.20000000298023224)",
@@ -6979,7 +6979,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(255, 255, 255, 0.800000011920929)",
@@ -7020,7 +7020,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#4B525A",
@@ -7059,7 +7059,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#E9ECEF",
@@ -7098,7 +7098,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -7138,7 +7138,7 @@
         },
         "$type": "color",
         "comment": "This is the most used color for separators across Bild products.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#666B70",
@@ -7178,7 +7178,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#343C41",
@@ -7219,7 +7219,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#8C9196",
@@ -7258,7 +7258,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -7297,7 +7297,7 @@
           }
         },
         "comment": "Use this on gallery slider pagination elements. This can also be applied to hover states of those elements.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "100px",
@@ -7337,7 +7337,7 @@
         },
         "$type": "color",
         "comment": "Used as the background surface color scroll bars. Found on components that vertically or horizontally stack elements.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(255, 255, 255, 0.10000000149011612)",
@@ -7378,7 +7378,7 @@
         },
         "$type": "color",
         "comment": "Use on the scroll bar interactive element which shows where the scroll view is positioned inside the full extent of the scrolling space.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#8C9196",
@@ -7421,7 +7421,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#8C9196",
@@ -7464,7 +7464,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "UNRESOLVED_VariableID:16104:163534",
@@ -7505,7 +7505,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#FF97B7",
@@ -7546,7 +7546,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#B9DB91",
@@ -7587,7 +7587,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#66CCCC",
@@ -7628,7 +7628,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#8EF0ED",
@@ -7669,7 +7669,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#93E4FF",
@@ -7710,7 +7710,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#55476E",
@@ -7751,7 +7751,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#DC231C",
@@ -7792,7 +7792,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#F00000",
@@ -7833,7 +7833,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#174482",
@@ -7874,7 +7874,7 @@
             }
           },
           "$type": "color",
-          "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+          "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
           "isSource": true,
           "original": {
             "$value": "#E3001B",
@@ -7918,7 +7918,7 @@
           }
         },
         "comment": "When users hover over graphical teasers the image reduces opacity to 80%.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "80px",
@@ -7957,7 +7957,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(0, 0, 0, 0.699999988079071)",
@@ -7996,7 +7996,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(0, 0, 0, 0)",
@@ -8037,7 +8037,7 @@
           }
         },
         "comment": "When users hover on gallery slider buttons the opacity changes to 90%.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "90px",
@@ -8077,7 +8077,7 @@
         },
         "$type": "color",
         "comment": "This variable is used on audio player slider bars. It references a pure white with 35% opacity.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(255, 255, 255, 0.3499999940395355)",
@@ -8119,7 +8119,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(0, 0, 0, 0.20000000298023224)",
@@ -8159,7 +8159,7 @@
         },
         "$type": "color",
         "comment": "This variable is used for hover states of video player control buttons.",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(221, 0, 0, 0.800000011920929)",
@@ -8199,7 +8199,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(0, 0, 0, 0.20000000298023224)",
@@ -8238,7 +8238,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(0, 0, 0, 0.5)",
@@ -8277,7 +8277,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(255, 255, 255, 0.30000001192092896)",
@@ -8316,7 +8316,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(0, 0, 0, 0.699999988079071)",
@@ -8355,7 +8355,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(0, 0, 0, 0.05000000074505806)",
@@ -8394,7 +8394,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(255, 255, 255, 0.30000001192092896)",
@@ -8433,7 +8433,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(0, 0, 0, 0.20000000298023224)",
@@ -8472,7 +8472,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "rgba(0, 0, 0, 0.3499999940395355)",
@@ -8514,7 +8514,7 @@
         },
         "$type": "color",
         "comment": "09-2025 css --article-author-name-color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#FFFFFF",
@@ -8555,7 +8555,7 @@
         },
         "$type": "color",
         "comment": "09-2025 css --article-author-name-color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#DD0000",
@@ -8597,7 +8597,7 @@
           }
         },
         "$type": "color",
-        "filePath": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
+        "filePath": "/home/user/vv-token-test-v3/tokens/brands/bild/color/colormode-dark.json",
         "isSource": true,
         "original": {
           "$value": "#000000",
