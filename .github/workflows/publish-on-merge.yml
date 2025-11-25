@@ -105,7 +105,22 @@ jobs:
           echo "📁 Package will contain:"
           npm pack --dry-run 2>&1 | grep -E "npm notice.*B " | head -20 || true
 
-      # 8. Tag erstellen (Version ist nur lokal für Publishing)
+      # 8. Package erstellen und Größe ermitteln
+      - name: Create Package and Get Size
+        id: package
+        run: |
+          echo "📦 Creating package..."
+          npm pack
+
+          # Ermittle Package-Größe
+          PACKAGE_FILE=$(ls -t *.tgz | head -1)
+          PACKAGE_SIZE=$(ls -lh "$PACKAGE_FILE" | awk '{print $5}')
+
+          echo "package_file=$PACKAGE_FILE" >> $GITHUB_OUTPUT
+          echo "package_size=$PACKAGE_SIZE" >> $GITHUB_OUTPUT
+          echo "✅ Package: $PACKAGE_FILE ($PACKAGE_SIZE)"
+
+      # 9. Tag erstellen (Version ist nur lokal für Publishing)
       - name: Create Git Tag
         run: |
           TAG_NAME="v${{ steps.version.outputs.new }}"
@@ -118,7 +133,7 @@ jobs:
             echo "✅ Created tag: $TAG_NAME"
           fi
 
-      # 9. Push Tag (Version Bump wird nicht committed, nur Tag)
+      # 10. Push Tag (Version Bump wird nicht committed, nur Tag)
       - name: Push Tag
         run: |
           TAG_NAME="v${{ steps.version.outputs.new }}"
@@ -133,7 +148,7 @@ jobs:
 
           echo "ℹ️  Note: Version bump is not committed to main (avoids race conditions)"
 
-      # 10. Package veröffentlichen
+      # 11. Package veröffentlichen
       - name: Publish to npmjs.org
         run: |
           echo "📦 Publishing @marioschmidt/design-system-tokens@${{ steps.version.outputs.new }} to npmjs.org..."
@@ -142,7 +157,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      # 11. Changelog generieren (aus letztem Tag)
+      # 12. Changelog generieren (aus letztem Tag)
       - name: Generate Changelog
         id: changelog
         run: |
@@ -158,7 +173,7 @@ jobs:
           echo "$CHANGELOG" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      # 12. GitHub Release erstellen
+      # 13. GitHub Release erstellen
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
@@ -182,7 +197,8 @@ jobs:
             ### 📊 Build Statistics
 
             - **Successful Builds:** ${{ steps.build.outputs.successful_builds }}/${{ steps.build.outputs.total_builds }}
-            - **Package Size:** $(ls -lh *.tgz 2>/dev/null | awk '{print $5}' || echo "N/A")
+            - **Package Size:** ${{ steps.package.outputs.package_size }}
+            - **Package File:** `${{ steps.package.outputs.package_file }}`
             - **Formats:** CSS, SCSS, JavaScript, JSON
             - **Brands:** BILD, SportBILD, Advertorial
             - **Modes:** Light/Dark, Responsive Breakpoints, Density Variations
@@ -199,7 +215,7 @@ jobs:
           prerelease: false
           generate_release_notes: false
 
-      # 13. Success Summary
+      # 14. Success Summary
       - name: Create Publish Summary
         run: |
           echo "## 🚀 Package Published Successfully!" >> $GITHUB_STEP_SUMMARY
@@ -220,7 +236,7 @@ jobs:
           echo "- [📋 Release Notes](https://github.com/${{ github.repository }}/releases/tag/v${{ steps.version.outputs.new }})" >> $GITHUB_STEP_SUMMARY
           echo "- [🎨 Pull Requests](https://github.com/${{ github.repository }}/pulls?q=is%3Apr+is%3Amerged)" >> $GITHUB_STEP_SUMMARY
 
-      # 14. Bei Fehler benachrichtigen
+      # 15. Bei Fehler benachrichtigen
       - name: Notify on Failure
         if: failure()
         run: |

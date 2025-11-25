@@ -4,16 +4,20 @@ A comprehensive multi-platform token transformation pipeline based on **Style Di
 
 ## 📋 Table of Contents
 
-- [Overview](#overview)
-- [Features](#features)
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Token Architecture](#token-architecture)
-- [Output Structure](#output-structure)
-- [Platform Usage](#platform-usage)
-- [Development](#development)
-- [CI/CD Integration](#cicd-integration)
-- [Troubleshooting](#troubleshooting)
+- [🎯 Overview](#-overview)
+- [✨ Features](#-features)
+- [📦 Installation](#-installation)
+- [🚀 Quick Start](#-quick-start)
+- [🏗️ Token Architecture](#️-token-architecture)
+- [📁 Output Structure](#-output-structure)
+- [🎨 Platform Usage](#-platform-usage)
+- [🔧 Development](#-development)
+- [🔄 CI/CD Integration](#-cicd-integration)
+- [🧪 Testing & Verification](#-testing--verification)
+- [🆘 Troubleshooting](#-troubleshooting)
+- [📊 Technical Details](#-technical-details)
+- [📝 Changelog](#-changelog)
+- [🔗 Resources](#-resources)
 
 ---
 
