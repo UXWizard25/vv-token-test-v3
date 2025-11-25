@@ -1,6 +1,6 @@
 /**
  * Effect Tokens - Bild / light
- * Generiert am: 2025-11-25T08:27:20.721Z
+ * Generiert am: 2025-11-25T08:40:44.143Z
  * Nicht manuell bearbeiten!
  */
 
