@@ -76,11 +76,11 @@ jobs:
           echo "⚙️ Preprocessing Figma tokens..."
           npm run preprocess
 
-      - name: Build Tokens with Style Dictionary
+      - name: Build Tokens and Bundles
         id: build
         run: |
-          echo "🎨 Building tokens with Style Dictionary..."
-          npm run build:tokens 2>&1 | tee build-output.log
+          echo "🎨 Building tokens and bundles..."
+          npm run build 2>&1 | tee build-output.log
 
           # Extrahiere Build-Statistiken
           SUCCESSFUL_BUILDS=$(grep -oP 'Builds erfolgreich: \K\d+' build-output.log || echo "0")
@@ -118,21 +118,21 @@ jobs:
 
           echo "### 📁 Generated Files" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "#### Base Layer" >> $GITHUB_STEP_SUMMARY
+          echo "#### CSS Bundles" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          ls -1 dist/base/*.css 2>/dev/null | head -5 || echo "No files generated"
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-
-          echo "#### Mapping Layer" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          ls -1 dist/mapping/*.css 2>/dev/null | head -5 || echo "No files generated"
+          ls -1 dist/bundles/quick-start/*.css 2>/dev/null || echo "No bundles generated"
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
-          echo "#### Density Layer" >> $GITHUB_STEP_SUMMARY
+          echo "#### Brand Tokens" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          ls -1 dist/density/*.css 2>/dev/null | head -5 || echo "No files generated"
+          ls -1 dist/css/brands/bild/semantic/color/*.css 2>/dev/null | head -5 || echo "No files generated"
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          echo "#### Shared Primitives" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          ls -1 dist/css/shared/*.css 2>/dev/null | head -5 || echo "No files generated"
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
@@ -171,7 +171,8 @@ jobs:
             [⬇️ **Download Build Artifacts**](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
             **Enthalten:**
-            - \`dist/css/\` - CSS Custom Properties
+            - \`dist/bundles/\` - **Optimized CSS Bundles** (Quick Start, Semantic, Components)
+            - \`dist/css/\` - CSS Custom Properties (with data-attributes)
             - \`dist/scss/\` - SCSS Variables
             - \`dist/js/\` - JavaScript ES6
             - \`dist/json/\` - JSON Data
@@ -256,14 +257,19 @@ jobs:
             - `design-tokens-${{ github.ref_name }}.tar.gz` - All generated token files (TAR.GZ)
 
             ### Contents
-            - Base Layer: Primitive tokens (color, space, size, font)
-            - Mapping Layer: Brand-specific tokens (BILD, SportBILD, Advertorial)
-            - Density Layer: Density variations (compact, default, spacious)
+            - **CSS Bundles**: Optimized bundles (Quick Start, Semantic, Components)
+            - **Brand Tokens**: BILD, SportBILD, Advertorial with data-attribute scoping
+            - **Shared Primitives**: Color, space, size, font primitives
+            - **Component Tokens**: Component-specific tokens with full scoping
 
             ### Formats
-            - CSS Custom Properties (with data attributes & :root)
+            - CSS Custom Properties (with data-attribute scoping for theme switching)
+            - CSS Bundles (clean format: no comments, optimized)
             - SCSS Variables
             - JavaScript ES6 Modules
             - JSON (structured)
+            - iOS Swift Classes
+            - Android XML Resources
+            - Flutter Dart Classes
 
             See [README.md](README.md) for usage instructions.
