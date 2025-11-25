@@ -545,6 +545,65 @@ async function buildBrandSpecificTokens() {
 }
 
 /**
+ * Builds Component Tokens
+ * Components are organized in brands/{brand}/components/{Component}/
+ */
+async function buildComponentTokens() {
+  console.log('\n🧩 Building Component Tokens:\n');
+
+  let totalBuilds = 0;
+  let successfulBuilds = 0;
+
+  for (const brand of BRANDS) {
+    console.log(`  🏷️  ${brand}:`);
+
+    const componentsDir = path.join(TOKENS_DIR, 'brands', brand, 'components');
+    if (!fs.existsSync(componentsDir)) {
+      console.log(`     ⚠️  No components directory found`);
+      continue;
+    }
+
+    const componentNames = fs.readdirSync(componentsDir).filter(name => {
+      const componentPath = path.join(componentsDir, name);
+      return fs.statSync(componentPath).isDirectory();
+    });
+
+    for (const componentName of componentNames) {
+      const componentDir = path.join(componentsDir, componentName);
+      const files = fs.readdirSync(componentDir).filter(f => f.endsWith('.json'));
+
+      let componentSuccessful = 0;
+
+      for (const file of files) {
+        const fileName = path.basename(file, '.json');
+        const config = {
+          source: [path.join(componentDir, file)],
+          platforms: createStandardPlatformConfig(
+            `${DIST_DIR}/css/brands/${brand}/components/${componentName}`,
+            fileName
+          )
+        };
+
+        try {
+          totalBuilds++;
+          await new StyleDictionary(config).buildAllPlatforms();
+          successfulBuilds++;
+          componentSuccessful++;
+        } catch (error) {
+          console.error(`     ❌ ${componentName}/${fileName}: ${error.message}`);
+        }
+      }
+
+      if (componentSuccessful > 0) {
+        console.log(`     ✅ ${componentName} (${componentSuccessful}/${files.length} files)`);
+      }
+    }
+  }
+
+  return { totalBuilds, successfulBuilds };
+}
+
+/**
  * Builds Typography Tokens (brand-specific)
  */
 async function buildTypographyTokens() {
@@ -631,6 +690,7 @@ function createManifest(stats) {
     statistics: {
       sharedPrimitives: stats.sharedPrimitives || { total: 0, successful: 0 },
       brandSpecific: stats.brandSpecific || { totalBuilds: 0, successfulBuilds: 0 },
+      componentTokens: stats.componentTokens || { totalBuilds: 0, successfulBuilds: 0 },
       typographyTokens: stats.typographyTokens || { totalBuilds: 0, successfulBuilds: 0 },
       effectTokens: stats.effectTokens || { totalBuilds: 0, successfulBuilds: 0 }
     },
@@ -712,6 +772,9 @@ async function main() {
   // Build brand-specific tokens
   stats.brandSpecific = await buildBrandSpecificTokens();
 
+  // Build component tokens
+  stats.componentTokens = await buildComponentTokens();
+
   // Build typography tokens
   stats.typographyTokens = await buildTypographyTokens();
 
@@ -728,13 +791,16 @@ async function main() {
 
   // Calculate total statistics for GitHub Actions
   const totalBuilds = stats.sharedPrimitives.total + stats.brandSpecific.totalBuilds +
-                      stats.typographyTokens.totalBuilds + stats.effectTokens.totalBuilds;
+                      stats.componentTokens.totalBuilds + stats.typographyTokens.totalBuilds +
+                      stats.effectTokens.totalBuilds;
   const successfulBuilds = stats.sharedPrimitives.successful + stats.brandSpecific.successfulBuilds +
-                           stats.typographyTokens.successfulBuilds + stats.effectTokens.successfulBuilds;
+                           stats.componentTokens.successfulBuilds + stats.typographyTokens.successfulBuilds +
+                           stats.effectTokens.successfulBuilds;
 
   console.log(`📊 Statistiken:`);
   console.log(`   - Shared Primitives: ${stats.sharedPrimitives.successful}/${stats.sharedPrimitives.total}`);
   console.log(`   - Brand-spezifische Tokens: ${stats.brandSpecific.successfulBuilds}/${stats.brandSpecific.totalBuilds}`);
+  console.log(`   - Component Tokens: ${stats.componentTokens.successfulBuilds}/${stats.componentTokens.totalBuilds}`);
   console.log(`   - Typography Builds: ${stats.typographyTokens.successfulBuilds}/${stats.typographyTokens.totalBuilds}`);
   console.log(`   - Effect Builds: ${stats.effectTokens.successfulBuilds}/${stats.effectTokens.totalBuilds}`);
   console.log(`   - Builds erfolgreich: ${successfulBuilds}/${totalBuilds}`);
@@ -755,6 +821,8 @@ async function main() {
   console.log(`   - brands/{brand}/`);
   console.log(`       ├── density/       (3 modes)`);
   console.log(`       ├── overrides/     (brand mappings)`);
+  console.log(`       ├── components/    (component-specific tokens)`);
+  console.log(`       │   └── {Component}/  (color, density, breakpoint modes)`);
   console.log(`       └── semantic/`);
   console.log(`           ├── breakpoints/  (4 modes)`);
   console.log(`           ├── color/        (2 modes)`);

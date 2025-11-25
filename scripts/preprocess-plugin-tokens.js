@@ -54,6 +54,44 @@ const COLLECTION_IDS = {
 };
 
 /**
+ * Checks if a token path represents a component token
+ */
+function isComponentToken(tokenPath) {
+  return tokenPath.startsWith('Component/');
+}
+
+/**
+ * Extracts component name from token path
+ * Example: "Component/Button/Primary/buttonPrimaryBgColor" → "Button"
+ */
+function getComponentName(tokenPath) {
+  const parts = tokenPath.split('/');
+  if (parts[0] === 'Component' && parts.length >= 2) {
+    return parts[1];
+  }
+  return null;
+}
+
+/**
+ * Determines collection type for component organization
+ */
+function getCollectionType(collectionId) {
+  switch (collectionId) {
+    case COLLECTION_IDS.COLOR_MODE:
+      return 'color';
+    case COLLECTION_IDS.DENSITY:
+      return 'density';
+    case COLLECTION_IDS.BREAKPOINT_MODE:
+      return 'breakpoint';
+    case COLLECTION_IDS.BRAND_TOKEN_MAPPING:
+    case COLLECTION_IDS.BRAND_COLOR_MAPPING:
+      return 'brand-override';
+    default:
+      return null;
+  }
+}
+
+/**
  * Loads the plugin JSON file
  */
 function loadPluginTokens() {
@@ -418,6 +456,11 @@ function processBrandSpecificTokens(collections, aliasLookup) {
         const tokens = {};
 
         collection.variables.forEach(variable => {
+          // Skip component tokens - they will be processed separately
+          if (isComponentToken(variable.name)) {
+            return;
+          }
+
           const pathArray = variable.name.split('/').filter(part => part);
           const modeValue = variable.valuesByMode[mode.modeId];
 
@@ -588,6 +631,232 @@ function processBrandOverrides(collections, aliasLookup) {
   });
 
   return outputs;
+}
+
+/**
+ * Processes Component Tokens
+ * Extracts component tokens from collections and organizes by:
+ * - Component name (Button, Inputfield, etc.)
+ * - Collection type (color, density, breakpoint)
+ * - Brand and mode
+ *
+ * Output: brands/{brand}/components/{Component}/{component}-{type}-{mode}.json
+ */
+function processComponentTokens(collections, aliasLookup) {
+  console.log('\n🧩 Processing Component Tokens:\n');
+
+  const componentCollectionIds = [
+    COLLECTION_IDS.COLOR_MODE,
+    COLLECTION_IDS.DENSITY,
+    COLLECTION_IDS.BREAKPOINT_MODE,
+    COLLECTION_IDS.BRAND_TOKEN_MAPPING,
+    COLLECTION_IDS.BRAND_COLOR_MAPPING
+  ];
+
+  // Structure: { brand: { componentName: { type-mode: tokens } } }
+  const componentOutputs = {
+    bild: {},
+    sportbild: {},
+    advertorial: {}
+  };
+
+  collections.forEach(collection => {
+    if (!componentCollectionIds.includes(collection.id)) return;
+
+    const collectionType = getCollectionType(collection.id);
+    if (!collectionType) return;
+
+    console.log(`  📦 ${collection.name} (type: ${collectionType})`);
+
+    // For each brand
+    Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
+      const brandKey = brandName.toLowerCase();
+
+      // Skip ColorMode for brands without BrandColorMapping
+      if (collectionType === 'color' && !hasBrandColorMapping(collections, brandName)) {
+        return;
+      }
+
+      // For brand-override collections, find the brand-specific mode
+      if (collectionType === 'brand-override') {
+        const mode = collection.modes.find(m => m.name === brandName);
+        if (!mode) return; // Brand doesn't exist in this collection
+
+        // Process variables for this brand mode
+        collection.variables.forEach(variable => {
+          if (!isComponentToken(variable.name)) return;
+
+          const componentName = getComponentName(variable.name);
+          if (!componentName) return;
+
+          const modeValue = variable.valuesByMode[mode.modeId];
+          if (modeValue === undefined || modeValue === null) return;
+
+          // Initialize component structure
+          if (!componentOutputs[brandKey][componentName]) {
+            componentOutputs[brandKey][componentName] = {};
+          }
+
+          // Determine target key based on the source collection
+          let targetKey;
+          if (collection.id === COLLECTION_IDS.BRAND_COLOR_MAPPING) {
+            // These override color tokens
+            COLOR_MODES.light && (targetKey = 'color-light');
+            COLOR_MODES.dark && (targetKey = 'color-dark');
+            // We'll merge these into both light and dark
+            ['color-light', 'color-dark'].forEach(key => {
+              if (!componentOutputs[brandKey][componentName][key]) {
+                componentOutputs[brandKey][componentName][key] = {};
+              }
+            });
+          } else {
+            // BRAND_TOKEN_MAPPING - can override any type
+            // For now, we'll add these to a general override structure
+            targetKey = 'overrides';
+            if (!componentOutputs[brandKey][componentName][targetKey]) {
+              componentOutputs[brandKey][componentName][targetKey] = {};
+            }
+          }
+
+          // Process the token value
+          let processedValue;
+          if (modeValue.type === 'VARIABLE_ALIAS') {
+            const context = { brandModeId };
+            processedValue = resolveAliasWithContext(modeValue.id, aliasLookup, context, new Set());
+          } else {
+            processedValue = processDirectValue(modeValue, variable.resolvedType, variable.name);
+          }
+
+          if (processedValue !== null) {
+            const pathArray = variable.name.split('/').filter(part => part);
+            const tokenObject = {
+              $value: processedValue,
+              value: processedValue,
+              type: variable.resolvedType.toLowerCase(),
+              $extensions: {
+                'com.figma': {
+                  collectionId: collection.id,
+                  collectionName: collection.name,
+                  variableId: variable.id
+                }
+              }
+            };
+
+            if (variable.resolvedType === 'COLOR') {
+              tokenObject.$type = 'color';
+            } else {
+              const typeInfo = determineTokenType(variable.name, collection.name, processedValue);
+              if (typeInfo.$type) {
+                tokenObject.$type = typeInfo.$type;
+              }
+            }
+
+            if (variable.description) {
+              tokenObject.comment = variable.description;
+            }
+
+            if (collection.id === COLLECTION_IDS.BRAND_COLOR_MAPPING) {
+              // Add to both light and dark
+              ['color-light', 'color-dark'].forEach(key => {
+                setNestedPath(componentOutputs[brandKey][componentName][key], pathArray, tokenObject);
+              });
+            } else {
+              setNestedPath(componentOutputs[brandKey][componentName][targetKey], pathArray, tokenObject);
+            }
+          }
+        });
+      } else {
+        // For mode-based collections (ColorMode, Density, Breakpoint)
+        collection.modes.forEach(mode => {
+          const tokens = {};
+
+          collection.variables.forEach(variable => {
+            if (!isComponentToken(variable.name)) return;
+
+            const componentName = getComponentName(variable.name);
+            if (!componentName) return;
+
+            const pathArray = variable.name.split('/').filter(part => part);
+            const modeValue = variable.valuesByMode[mode.modeId];
+
+            if (modeValue !== undefined && modeValue !== null) {
+              let processedValue;
+
+              if (modeValue.type === 'VARIABLE_ALIAS') {
+                const context = {
+                  brandModeId,
+                  breakpointModeId: collection.id === COLLECTION_IDS.BREAKPOINT_MODE ? mode.modeId : undefined,
+                  colorModeModeId: collection.id === COLLECTION_IDS.COLOR_MODE ? mode.modeId : undefined
+                };
+
+                if (collection.id === COLLECTION_IDS.DENSITY) {
+                  context.breakpointModeId = mode.modeId;
+                }
+
+                processedValue = resolveAliasWithContext(modeValue.id, aliasLookup, context, new Set());
+              } else {
+                processedValue = processDirectValue(modeValue, variable.resolvedType, variable.name);
+              }
+
+              if (processedValue !== null) {
+                const tokenObject = {
+                  $value: processedValue,
+                  value: processedValue,
+                  type: variable.resolvedType.toLowerCase(),
+                  $extensions: {
+                    'com.figma': {
+                      collectionId: collection.id,
+                      collectionName: collection.name,
+                      variableId: variable.id
+                    }
+                  }
+                };
+
+                if (variable.resolvedType === 'COLOR') {
+                  tokenObject.$type = 'color';
+                } else {
+                  const typeInfo = determineTokenType(variable.name, collection.name, processedValue);
+                  if (typeInfo.$type) {
+                    tokenObject.$type = typeInfo.$type;
+                  }
+                }
+
+                if (variable.description) {
+                  tokenObject.comment = variable.description;
+                }
+
+                setNestedPath(tokens, pathArray, tokenObject);
+              }
+            }
+          });
+
+          // Save tokens for this component + mode
+          if (Object.keys(tokens).length > 0 && tokens.Component) {
+            const cleanModeName = mode.name
+              .toLowerCase()
+              .replace(/\s+/g, '-')
+              .replace(/[()]/g, '')
+              .replace(/[^a-z0-9-]/g, '-')
+              .replace(/--+/g, '-')
+              .replace(/^-|-$/g, '');
+
+            const modeKey = `${collectionType}-${cleanModeName}`;
+
+            // Group by component (note: "Component" is capitalized in the token structure)
+            Object.keys(tokens.Component || {}).forEach(componentName => {
+              if (!componentOutputs[brandKey][componentName]) {
+                componentOutputs[brandKey][componentName] = {};
+              }
+              componentOutputs[brandKey][componentName][modeKey] = tokens.Component[componentName];
+            });
+          }
+        });
+      }
+    });
+  });
+
+  console.log(`\n  ✅ Component extraction complete`);
+  return componentOutputs;
 }
 
 /**
@@ -906,6 +1175,54 @@ function saveEffectTokens(effectOutputs) {
 }
 
 /**
+ * Saves Component Tokens
+ * Output: brands/{brand}/components/{ComponentName}/{component}-{type}-{mode}.json
+ */
+function saveComponentTokens(componentOutputs) {
+  console.log('\n💾 Saving Component Tokens:\n');
+
+  let totalComponents = 0;
+  let totalFiles = 0;
+
+  Object.entries(componentOutputs).forEach(([brand, components]) => {
+    if (Object.keys(components).length === 0) {
+      console.log(`  🏷️  ${brand}: No components found`);
+      return;
+    }
+
+    console.log(`  🏷️  ${brand}:`);
+
+    Object.entries(components).forEach(([componentName, modes]) => {
+      const componentDir = path.join(OUTPUT_DIR, 'brands', brand, 'components', componentName);
+      if (!fs.existsSync(componentDir)) {
+        fs.mkdirSync(componentDir, { recursive: true });
+      }
+
+      let fileCount = 0;
+      Object.entries(modes).forEach(([modeKey, tokens]) => {
+        // Skip empty token objects
+        if (!tokens || Object.keys(tokens).length === 0) {
+          return;
+        }
+
+        const fileName = `${componentName.toLowerCase()}-${modeKey}.json`;
+        const filePath = path.join(componentDir, fileName);
+        fs.writeFileSync(filePath, JSON.stringify(tokens, null, 2), 'utf8');
+        fileCount++;
+        totalFiles++;
+      });
+
+      if (fileCount > 0) {
+        console.log(`     ✅ ${componentName} (${fileCount} files)`);
+        totalComponents++;
+      }
+    });
+  });
+
+  console.log(`\n  📊 Total: ${totalComponents} components, ${totalFiles} files`);
+}
+
+/**
  * Main function
  */
 function main() {
@@ -930,6 +1247,9 @@ function main() {
   const brandSpecificTokens = processBrandSpecificTokens(pluginData.collections, aliasLookup);
   const brandOverrides = processBrandOverrides(pluginData.collections, aliasLookup);
 
+  // Process component tokens
+  const componentTokens = processComponentTokens(pluginData.collections, aliasLookup);
+
   // Process composite tokens
   const typographyTokens = processTypographyTokens(pluginData.textStyles || [], aliasLookup);
   const effectTokens = processEffectTokens(pluginData.effectStyles || [], aliasLookup);
@@ -938,8 +1258,19 @@ function main() {
   saveSharedPrimitives(sharedPrimitives);
   saveBrandSpecificTokens(brandSpecificTokens);
   saveBrandOverrides(brandOverrides);
+  saveComponentTokens(componentTokens);
   saveTypographyTokens(typographyTokens);
   saveEffectTokens(effectTokens);
+
+  // Calculate component statistics
+  let totalComponentCount = 0;
+  let totalComponentFiles = 0;
+  Object.values(componentTokens).forEach(brand => {
+    Object.values(brand).forEach(component => {
+      totalComponentCount++;
+      totalComponentFiles += Object.keys(component).length;
+    });
+  });
 
   // Statistics
   console.log('\n✨ Preprocessing completed!\n');
@@ -947,6 +1278,7 @@ function main() {
   console.log(`   - Shared Primitives: ${Object.keys(sharedPrimitives).length}`);
   console.log(`   - Brand-specific Collections: ${Object.keys(brandSpecificTokens).length} brands`);
   console.log(`   - Brand Overrides: ${Object.keys(brandOverrides).length} brands`);
+  console.log(`   - Component Tokens: ${totalComponentCount} components (${totalComponentFiles} files)`);
   console.log(`   - Typography Outputs: ${Object.keys(typographyTokens).length}`);
   console.log(`   - Effect Outputs: ${Object.keys(effectTokens).length}`);
   console.log(`   - Output Directory: ${path.relative(process.cwd(), OUTPUT_DIR)}\n`);
