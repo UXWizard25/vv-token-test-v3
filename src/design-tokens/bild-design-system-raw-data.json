@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2025-11-25T11:39:02.079Z",
+  "lastModified": "2025-11-25T11:44:35.690Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -2090,11 +2090,7 @@
         "VariableID:19709:71129",
         "VariableID:19709:71141",
         "VariableID:19881:148841",
-        "VariableID:20773:45",
-        "VariableID:20790:160",
-        "VariableID:20798:160",
-        "VariableID:20855:76",
-        "VariableID:20901:3878"
+        "VariableID:20773:45"
       ],
       "variables": [
         {
@@ -6537,72 +6533,12 @@
         },
         {
           "id": "VariableID:20773:45",
-          "name": "Semantic/Core/coreColorTertiaryVvPipeTEST",
+          "name": "Semantic/Core/pipeTestRenaming",
           "description": "this is a test for the token pipeline",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": "#476D93",
             "592:1": "#B0D1F3"
-          },
-          "scopes": [
-            "ALL_SCOPES"
-          ],
-          "hiddenFromPublishing": false,
-          "variableCollectionId": "VariableCollectionId:588:1979"
-        },
-        {
-          "id": "VariableID:20790:160",
-          "name": "Semantic/Core/npmTest",
-          "description": "this is a test for the token pipeline",
-          "resolvedType": "COLOR",
-          "valuesByMode": {
-            "588:0": "#476D93",
-            "592:1": "#B0D1F3"
-          },
-          "scopes": [
-            "ALL_SCOPES"
-          ],
-          "hiddenFromPublishing": false,
-          "variableCollectionId": "VariableCollectionId:588:1979"
-        },
-        {
-          "id": "VariableID:20798:160",
-          "name": "Semantic/Core/felipeTestColor",
-          "description": "this is a test for the token pipeline",
-          "resolvedType": "COLOR",
-          "valuesByMode": {
-            "588:0": "#E9580A",
-            "592:1": "#031A31"
-          },
-          "scopes": [
-            "ALL_SCOPES"
-          ],
-          "hiddenFromPublishing": false,
-          "variableCollectionId": "VariableCollectionId:588:1979"
-        },
-        {
-          "id": "VariableID:20855:76",
-          "name": "Semantic/Core/golianiTestColor",
-          "description": "this is a test for the token pipeline",
-          "resolvedType": "COLOR",
-          "valuesByMode": {
-            "588:0": "#00FFF2",
-            "592:1": "#031A31"
-          },
-          "scopes": [
-            "ALL_SCOPES"
-          ],
-          "hiddenFromPublishing": false,
-          "variableCollectionId": "VariableCollectionId:588:1979"
-        },
-        {
-          "id": "VariableID:20901:3878",
-          "name": "Semantic/Core/newTestColor",
-          "description": "this is a test for the token pipeline",
-          "resolvedType": "COLOR",
-          "valuesByMode": {
-            "588:0": "#00FFF2",
-            "592:1": "#031A31"
           },
           "scopes": [
             "ALL_SCOPES"
