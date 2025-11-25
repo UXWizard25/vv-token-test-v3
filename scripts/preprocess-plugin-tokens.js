@@ -182,10 +182,11 @@ function processDirectValue(value, resolvedType, tokenPath = '') {
  * Resolves an alias value with context
  * @param {string} variableId - Variable ID
  * @param {Map} aliasLookup - Lookup Map
- * @param {object} context - { brandModeId, breakpointModeId, colorModeModeId }
+ * @param {object} context - { brandName, brandModeId, breakpointModeId, colorModeModeId }
  * @param {Set} visited - Circular reference protection
+ * @param {Array} collections - All collections (for dynamic brand mode lookup)
  */
-function resolveAliasWithContext(variableId, aliasLookup, context = {}, visited = new Set()) {
+function resolveAliasWithContext(variableId, aliasLookup, context = {}, visited = new Set(), collections = []) {
   const variable = aliasLookup.get(variableId);
 
   if (!variable) {
@@ -211,10 +212,21 @@ function resolveAliasWithContext(variableId, aliasLookup, context = {}, visited 
   else if (variable.collectionId === COLLECTION_IDS.COLOR_MODE && context.colorModeModeId) {
     targetModeId = context.colorModeModeId;
   }
-  // If variable comes from Brand collection, use Brand mode
+  // If variable comes from Brand collection, find the brand mode by name (not ID!)
   else if ((variable.collectionId === COLLECTION_IDS.BRAND_TOKEN_MAPPING ||
-             variable.collectionId === COLLECTION_IDS.BRAND_COLOR_MAPPING) && context.brandModeId) {
-    targetModeId = context.brandModeId;
+             variable.collectionId === COLLECTION_IDS.BRAND_COLOR_MAPPING) && context.brandName) {
+    // Find the collection and get the brand mode by name
+    const collection = collections.find(c => c.id === variable.collectionId);
+    if (collection) {
+      const brandMode = collection.modes.find(m => m.name === context.brandName);
+      if (brandMode) {
+        targetModeId = brandMode.modeId;
+      }
+    }
+    // Fallback to brandModeId if brand name lookup fails
+    if (!targetModeId && context.brandModeId) {
+      targetModeId = context.brandModeId;
+    }
   }
   // Otherwise: take first available mode
   else {
@@ -240,7 +252,7 @@ function resolveAliasWithContext(variableId, aliasLookup, context = {}, visited 
 
   // If value is itself an alias, resolve recursively
   if (value.type === 'VARIABLE_ALIAS') {
-    return resolveAliasWithContext(value.id, aliasLookup, context, visited);
+    return resolveAliasWithContext(value.id, aliasLookup, context, visited, collections);
   }
 
   // Process direct value
@@ -355,7 +367,7 @@ function processSharedPrimitives(collections, aliasLookup) {
         let processedValue;
 
         if (modeValue.type === 'VARIABLE_ALIAS') {
-          processedValue = resolveAliasWithContext(modeValue.id, aliasLookup, {}, new Set());
+          processedValue = resolveAliasWithContext(modeValue.id, aliasLookup, {}, new Set(), collections);
         } else {
           processedValue = processDirectValue(modeValue, variable.resolvedType, variable.name);
         }
@@ -470,6 +482,7 @@ function processBrandSpecificTokens(collections, aliasLookup) {
             if (modeValue.type === 'VARIABLE_ALIAS') {
               // Context with Brand + Mode
               const context = {
+                brandName,
                 brandModeId,
                 breakpointModeId: collection.id === COLLECTION_IDS.BREAKPOINT_MODE ? mode.modeId : undefined,
                 colorModeModeId: collection.id === COLLECTION_IDS.COLOR_MODE ? mode.modeId : undefined
@@ -479,7 +492,7 @@ function processBrandSpecificTokens(collections, aliasLookup) {
                 context.breakpointModeId = mode.modeId;
               }
 
-              processedValue = resolveAliasWithContext(modeValue.id, aliasLookup, context, new Set());
+              processedValue = resolveAliasWithContext(modeValue.id, aliasLookup, context, new Set(), collections);
             } else {
               processedValue = processDirectValue(modeValue, variable.resolvedType, variable.name);
             }
@@ -582,8 +595,8 @@ function processBrandOverrides(collections, aliasLookup) {
           if (modeValue.type === 'VARIABLE_ALIAS') {
             // Use the GLOBAL brand mode ID (from BRANDS) for alias resolution
             // since aliases can point to other collections (e.g. BrandTokenMapping)
-            const context = { brandModeId };
-            processedValue = resolveAliasWithContext(modeValue.id, aliasLookup, context, new Set());
+            const context = { brandName, brandModeId };
+            processedValue = resolveAliasWithContext(modeValue.id, aliasLookup, context, new Set(), collections);
           } else {
             processedValue = processDirectValue(modeValue, variable.resolvedType, variable.name);
           }
@@ -721,8 +734,8 @@ function processComponentTokens(collections, aliasLookup) {
           // Process the token value
           let processedValue;
           if (modeValue.type === 'VARIABLE_ALIAS') {
-            const context = { brandModeId };
-            processedValue = resolveAliasWithContext(modeValue.id, aliasLookup, context, new Set());
+            const context = { brandName, brandModeId };
+            processedValue = resolveAliasWithContext(modeValue.id, aliasLookup, context, new Set(), collections);
           } else {
             processedValue = processDirectValue(modeValue, variable.resolvedType, variable.name);
           }
@@ -784,6 +797,7 @@ function processComponentTokens(collections, aliasLookup) {
 
               if (modeValue.type === 'VARIABLE_ALIAS') {
                 const context = {
+                  brandName,
                   brandModeId,
                   breakpointModeId: collection.id === COLLECTION_IDS.BREAKPOINT_MODE ? mode.modeId : undefined,
                   colorModeModeId: collection.id === COLLECTION_IDS.COLOR_MODE ? mode.modeId : undefined
@@ -793,7 +807,7 @@ function processComponentTokens(collections, aliasLookup) {
                   context.breakpointModeId = mode.modeId;
                 }
 
-                processedValue = resolveAliasWithContext(modeValue.id, aliasLookup, context, new Set());
+                processedValue = resolveAliasWithContext(modeValue.id, aliasLookup, context, new Set(), collections);
               } else {
                 processedValue = processDirectValue(modeValue, variable.resolvedType, variable.name);
               }
@@ -863,7 +877,7 @@ function processComponentTokens(collections, aliasLookup) {
  * Processes Typography Composite Tokens (textStyles)
  * Generates Brand × Breakpoint matrix
  */
-function processTypographyTokens(textStyles, aliasLookup) {
+function processTypographyTokens(textStyles, aliasLookup, collections) {
   console.log('\n✍️  Processing Typography Composite Tokens:\n');
 
   const typographyOutputs = {};
@@ -875,6 +889,7 @@ function processTypographyTokens(textStyles, aliasLookup) {
     // For each breakpoint
     Object.entries(BREAKPOINTS).forEach(([breakpointName, breakpointModeId]) => {
       const context = {
+        brandName,
         brandModeId,
         breakpointModeId
       };
@@ -900,7 +915,7 @@ function processTypographyTokens(textStyles, aliasLookup) {
         if (textStyle.boundVariables) {
           Object.entries(textStyle.boundVariables).forEach(([property, alias]) => {
             if (alias.type === 'VARIABLE_ALIAS') {
-              const resolved = resolveAliasWithContext(alias.id, aliasLookup, context, new Set());
+              const resolved = resolveAliasWithContext(alias.id, aliasLookup, context, new Set(), collections);
               resolvedStyle[property] = resolved;
             }
           });
@@ -949,7 +964,7 @@ function processTypographyTokens(textStyles, aliasLookup) {
  * Processes Effect Composite Tokens (effectStyles)
  * Generates Brand × ColorMode matrix
  */
-function processEffectTokens(effectStyles, aliasLookup) {
+function processEffectTokens(effectStyles, aliasLookup, collections) {
   console.log('\n🎨 Processing Effect Composite Tokens:\n');
 
   const effectOutputs = {};
@@ -961,6 +976,7 @@ function processEffectTokens(effectStyles, aliasLookup) {
     // For each ColorMode
     Object.entries(COLOR_MODES).forEach(([modeName, colorModeModeId]) => {
       const context = {
+        brandName,
         brandModeId,
         colorModeModeId
       };
@@ -993,7 +1009,8 @@ function processEffectTokens(effectStyles, aliasLookup) {
                     effect.boundVariables.color.id,
                     aliasLookup,
                     context,
-                    new Set()
+                    new Set(),
+                    collections
                   );
                   shadowEffect.color = resolved;
                 }
@@ -1251,8 +1268,8 @@ function main() {
   const componentTokens = processComponentTokens(pluginData.collections, aliasLookup);
 
   // Process composite tokens
-  const typographyTokens = processTypographyTokens(pluginData.textStyles || [], aliasLookup);
-  const effectTokens = processEffectTokens(pluginData.effectStyles || [], aliasLookup);
+  const typographyTokens = processTypographyTokens(pluginData.textStyles || [], aliasLookup, pluginData.collections);
+  const effectTokens = processEffectTokens(pluginData.effectStyles || [], aliasLookup, pluginData.collections);
 
   // Save everything
   saveSharedPrimitives(sharedPrimitives);
