@@ -876,12 +876,25 @@ function processComponentTokens(collections, aliasLookup) {
 /**
  * Processes Typography Composite Tokens (textStyles)
  * Generates Brand × Breakpoint matrix
+ * Separates component-specific typography into component folders
  */
 function processTypographyTokens(textStyles, aliasLookup, collections) {
   console.log('\n✍️  Processing Typography Composite Tokens:\n');
 
   const typographyOutputs = {};
+  const componentTypographyOutputs = {
+    bild: {},
+    sportbild: {},
+    advertorial: {}
+  };
 
+  // Separate component and semantic typography
+  const semanticTextStyles = textStyles.filter(ts => !ts.name.startsWith('Component/'));
+  const componentTextStyles = textStyles.filter(ts => ts.name.startsWith('Component/'));
+
+  console.log(`  ℹ️  ${semanticTextStyles.length} semantic styles, ${componentTextStyles.length} component styles`);
+
+  // Process semantic typography (existing logic)
   // For each brand
   Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
     console.log(`  🏷️  Brand: ${brandName}`);
@@ -896,7 +909,7 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
 
       const tokens = {};
 
-      textStyles.forEach(textStyle => {
+      semanticTextStyles.forEach(textStyle => {
         const styleName = textStyle.name.split('/').pop(); // e.g. "display1"
         const category = textStyle.name.split('/').slice(-2, -1)[0]; // e.g. "Display"
 
@@ -957,18 +970,109 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
     });
   });
 
-  return typographyOutputs;
+  // Process component typography
+  if (componentTextStyles.length > 0) {
+    console.log('\n  🧩 Processing Component Typography:\n');
+
+    Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
+      const brandKey = brandName.toLowerCase();
+      console.log(`  🏷️  Brand: ${brandName}`);
+
+      Object.entries(BREAKPOINTS).forEach(([breakpointName, breakpointModeId]) => {
+        const context = {
+          brandName,
+          brandModeId,
+          breakpointModeId
+        };
+
+        componentTextStyles.forEach(textStyle => {
+          // Extract component name: "Component/Button/buttonLabel" → "Button"
+          const pathParts = textStyle.name.split('/');
+          if (pathParts.length < 3) return; // Invalid path
+
+          const componentName = pathParts[1];
+          const styleName = pathParts.slice(2).join('/');
+
+          const resolvedStyle = {
+            fontFamily: null,
+            fontWeight: null,
+            fontSize: null,
+            lineHeight: null,
+            letterSpacing: null,
+            fontStyle: null,
+            textCase: textStyle.textCase || 'ORIGINAL',
+            textDecoration: textStyle.textDecoration || 'NONE'
+          };
+
+          // Resolve boundVariables
+          if (textStyle.boundVariables) {
+            Object.entries(textStyle.boundVariables).forEach(([property, alias]) => {
+              if (alias.type === 'VARIABLE_ALIAS') {
+                const resolved = resolveAliasWithContext(alias.id, aliasLookup, context, new Set(), collections);
+                resolvedStyle[property] = resolved;
+              }
+            });
+          }
+
+          // Fallback to direct values
+          if (!resolvedStyle.fontFamily && textStyle.fontName) {
+            resolvedStyle.fontFamily = textStyle.fontName.family;
+          }
+
+          // Initialize component structure
+          if (!componentTypographyOutputs[brandKey][componentName]) {
+            componentTypographyOutputs[brandKey][componentName] = {};
+          }
+          if (!componentTypographyOutputs[brandKey][componentName][`typography-${breakpointName}`]) {
+            componentTypographyOutputs[brandKey][componentName][`typography-${breakpointName}`] = {};
+          }
+
+          // Add to component typography output
+          componentTypographyOutputs[brandKey][componentName][`typography-${breakpointName}`][styleName.toLowerCase().replace(/\//g, '-')] = {
+            $value: resolvedStyle,
+            value: resolvedStyle,
+            type: 'typography',
+            $type: 'typography',
+            comment: textStyle.description || '',
+            $extensions: {
+              'com.figma': {
+                styleId: textStyle.id,
+                styleName: textStyle.name
+              }
+            }
+          };
+        });
+      });
+
+      console.log(`     ✅ ${brandKey}`);
+    });
+  }
+
+  return { semantic: typographyOutputs, component: componentTypographyOutputs };
 }
 
 /**
  * Processes Effect Composite Tokens (effectStyles)
  * Generates Brand × ColorMode matrix
+ * Separates component-specific effects into component folders
  */
 function processEffectTokens(effectStyles, aliasLookup, collections) {
   console.log('\n🎨 Processing Effect Composite Tokens:\n');
 
   const effectOutputs = {};
+  const componentEffectOutputs = {
+    bild: {},
+    sportbild: {},
+    advertorial: {}
+  };
 
+  // Separate component and semantic effects
+  const semanticEffectStyles = effectStyles.filter(es => !es.name.startsWith('Component/'));
+  const componentEffectStyles = effectStyles.filter(es => es.name.startsWith('Component/'));
+
+  console.log(`  ℹ️  ${semanticEffectStyles.length} semantic styles, ${componentEffectStyles.length} component styles`);
+
+  // Process semantic effects (existing logic)
   // For each brand
   Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
     console.log(`  🏷️  Brand: ${brandName}`);
@@ -983,7 +1087,7 @@ function processEffectTokens(effectStyles, aliasLookup, collections) {
 
       const tokens = {};
 
-      effectStyles.forEach(effectStyle => {
+      semanticEffectStyles.forEach(effectStyle => {
         const styleName = effectStyle.name.split('/').pop();
         const category = effectStyle.name.split('/').slice(-2, -1)[0];
 
@@ -1051,7 +1155,93 @@ function processEffectTokens(effectStyles, aliasLookup, collections) {
     });
   });
 
-  return effectOutputs;
+  // Process component effects
+  if (componentEffectStyles.length > 0) {
+    console.log('\n  🧩 Processing Component Effects:\n');
+
+    Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
+      const brandKey = brandName.toLowerCase();
+      console.log(`  🏷️  Brand: ${brandName}`);
+
+      Object.entries(COLOR_MODES).forEach(([modeName, colorModeModeId]) => {
+        const context = {
+          brandName,
+          brandModeId,
+          colorModeModeId
+        };
+
+        componentEffectStyles.forEach(effectStyle => {
+          // Extract component name: "Component/Alert/alertShadowDown" → "Alert"
+          const pathParts = effectStyle.name.split('/');
+          if (pathParts.length < 3) return; // Invalid path
+
+          const componentName = pathParts[1];
+          const styleName = pathParts.slice(2).join('/');
+
+          const resolvedEffects = [];
+
+          if (effectStyle.effects && Array.isArray(effectStyle.effects)) {
+            effectStyle.effects.forEach(effect => {
+              if (effect.type === 'DROP_SHADOW' && effect.visible) {
+                const shadowEffect = {
+                  type: 'dropShadow',
+                  color: colorToHex(effect.color),
+                  offsetX: effect.offset.x,
+                  offsetY: effect.offset.y,
+                  radius: effect.radius,
+                  spread: effect.spread || 0,
+                  blendMode: effect.blendMode || 'NORMAL'
+                };
+
+                // Resolve boundVariables if present
+                if (effect.boundVariables && effect.boundVariables.color) {
+                  if (effect.boundVariables.color.type === 'VARIABLE_ALIAS') {
+                    const resolved = resolveAliasWithContext(
+                      effect.boundVariables.color.id,
+                      aliasLookup,
+                      context,
+                      new Set(),
+                      collections
+                    );
+                    shadowEffect.color = resolved;
+                  }
+                }
+
+                resolvedEffects.push(shadowEffect);
+              }
+            });
+          }
+
+          // Initialize component structure
+          if (!componentEffectOutputs[brandKey][componentName]) {
+            componentEffectOutputs[brandKey][componentName] = {};
+          }
+          if (!componentEffectOutputs[brandKey][componentName][`effects-${modeName}`]) {
+            componentEffectOutputs[brandKey][componentName][`effects-${modeName}`] = {};
+          }
+
+          // Add to component effects output
+          componentEffectOutputs[brandKey][componentName][`effects-${modeName}`][styleName.toLowerCase().replace(/\//g, '-')] = {
+            $value: resolvedEffects,
+            value: resolvedEffects,
+            type: 'shadow',
+            $type: 'shadow',
+            comment: effectStyle.description || '',
+            $extensions: {
+              'com.figma': {
+                styleId: effectStyle.id,
+                styleName: effectStyle.name
+              }
+            }
+          };
+        });
+      });
+
+      console.log(`     ✅ ${brandKey}`);
+    });
+  }
+
+  return { semantic: effectOutputs, component: componentEffectOutputs };
 }
 
 /**
@@ -1124,10 +1314,10 @@ function saveBrandOverrides(overrideOutputs) {
 }
 
 /**
- * Saves Typography Tokens
+ * Saves Typography Tokens (semantic only, component typography saved separately)
  */
 function saveTypographyTokens(typographyOutputs) {
-  console.log('\n💾 Saving Typography Tokens:\n');
+  console.log('\n💾 Saving Semantic Typography Tokens:\n');
 
   // Group by brand
   const byBrand = {};
@@ -1158,10 +1348,10 @@ function saveTypographyTokens(typographyOutputs) {
 }
 
 /**
- * Saves Effect Tokens
+ * Saves Effect Tokens (semantic only, component effects saved separately)
  */
 function saveEffectTokens(effectOutputs) {
-  console.log('\n💾 Saving Effect Tokens:\n');
+  console.log('\n💾 Saving Semantic Effect Tokens:\n');
 
   // Group by brand
   const byBrand = {};
@@ -1268,16 +1458,40 @@ function main() {
   const componentTokens = processComponentTokens(pluginData.collections, aliasLookup);
 
   // Process composite tokens
-  const typographyTokens = processTypographyTokens(pluginData.textStyles || [], aliasLookup, pluginData.collections);
-  const effectTokens = processEffectTokens(pluginData.effectStyles || [], aliasLookup, pluginData.collections);
+  const typographyResults = processTypographyTokens(pluginData.textStyles || [], aliasLookup, pluginData.collections);
+  const effectResults = processEffectTokens(pluginData.effectStyles || [], aliasLookup, pluginData.collections);
+
+  // Merge component typography and effects into componentTokens
+  console.log('\n🔄 Merging component typography and effects...\n');
+  Object.keys(componentTokens).forEach(brand => {
+    // Merge typography
+    if (typographyResults.component[brand]) {
+      Object.entries(typographyResults.component[brand]).forEach(([componentName, typographyModes]) => {
+        if (!componentTokens[brand][componentName]) {
+          componentTokens[brand][componentName] = {};
+        }
+        Object.assign(componentTokens[brand][componentName], typographyModes);
+      });
+    }
+
+    // Merge effects
+    if (effectResults.component[brand]) {
+      Object.entries(effectResults.component[brand]).forEach(([componentName, effectModes]) => {
+        if (!componentTokens[brand][componentName]) {
+          componentTokens[brand][componentName] = {};
+        }
+        Object.assign(componentTokens[brand][componentName], effectModes);
+      });
+    }
+  });
 
   // Save everything
   saveSharedPrimitives(sharedPrimitives);
   saveBrandSpecificTokens(brandSpecificTokens);
   saveBrandOverrides(brandOverrides);
   saveComponentTokens(componentTokens);
-  saveTypographyTokens(typographyTokens);
-  saveEffectTokens(effectTokens);
+  saveTypographyTokens(typographyResults.semantic);
+  saveEffectTokens(effectResults.semantic);
 
   // Calculate component statistics
   let totalComponentCount = 0;
@@ -1296,8 +1510,8 @@ function main() {
   console.log(`   - Brand-specific Collections: ${Object.keys(brandSpecificTokens).length} brands`);
   console.log(`   - Brand Overrides: ${Object.keys(brandOverrides).length} brands`);
   console.log(`   - Component Tokens: ${totalComponentCount} components (${totalComponentFiles} files)`);
-  console.log(`   - Typography Outputs: ${Object.keys(typographyTokens).length}`);
-  console.log(`   - Effect Outputs: ${Object.keys(effectTokens).length}`);
+  console.log(`   - Semantic Typography Outputs: ${Object.keys(typographyResults.semantic).length}`);
+  console.log(`   - Semantic Effect Outputs: ${Object.keys(effectResults.semantic).length}`);
   console.log(`   - Output Directory: ${path.relative(process.cwd(), OUTPUT_DIR)}\n`);
 }
 
