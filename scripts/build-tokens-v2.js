@@ -32,8 +32,13 @@ const SIZE_CLASS_MAPPING = {
 
 /**
  * Creates platform configuration for standard tokens (Primitives, Brand-specific, etc.)
+ * CSS version with data-attributes for runtime theme switching
+ *
+ * @param {string} buildPath - Base build path
+ * @param {string} fileName - Output file name
+ * @param {object} cssOptions - CSS-specific options { brand, mode, modeType }
  */
-function createStandardPlatformConfig(buildPath, fileName) {
+function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
   // Filter to exclude documentation-only tokens that cause collisions
   const tokenFilter = (token) => {
     // Exclude TextLabels tokens - these are documentation-only and cause name collisions
@@ -49,9 +54,12 @@ function createStandardPlatformConfig(buildPath, fileName) {
       buildPath: `${buildPath}/`,
       files: [{
         destination: `${fileName}.css`,
-        format: 'custom/css/variables',
+        format: cssOptions.brand || cssOptions.mode ? 'custom/css/themed-variables' : 'custom/css/variables',
         filter: tokenFilter,
-        options: { outputReferences: false }
+        options: {
+          outputReferences: false,
+          ...cssOptions  // brand, mode, modeType for data-attributes
+        }
       }]
     },
     scss: {
@@ -458,9 +466,21 @@ async function buildBrandSpecificTokens() {
       const files = fs.readdirSync(densityDir).filter(f => f.endsWith('.json'));
       for (const file of files) {
         const fileName = path.basename(file, '.json');
+        // Extract density mode from filename (e.g., "density-compact" -> "compact")
+        const densityMatch = fileName.match(/density-(\w+)/);
+        const densityMode = densityMatch ? densityMatch[1] : null;
+
         const config = {
           source: [path.join(densityDir, file)],
-          platforms: createStandardPlatformConfig(`${DIST_DIR}/css/brands/${brand}/density`, fileName)
+          platforms: createStandardPlatformConfig(
+            `${DIST_DIR}/css/brands/${brand}/density`,
+            fileName,
+            {
+              brand,
+              mode: densityMode,
+              modeType: 'density'
+            }
+          )
         };
 
         try {
@@ -480,9 +500,21 @@ async function buildBrandSpecificTokens() {
       const files = fs.readdirSync(breakpointsDir).filter(f => f.endsWith('.json'));
       for (const file of files) {
         const fileName = path.basename(file, '.json');
+        // Extract breakpoint from filename (e.g., "breakpoint-lg" -> "lg")
+        const breakpointMatch = fileName.match(/breakpoint-(\w+)/);
+        const breakpointMode = breakpointMatch ? breakpointMatch[1] : null;
+
         const config = {
           source: [path.join(breakpointsDir, file)],
-          platforms: createStandardPlatformConfig(`${DIST_DIR}/css/brands/${brand}/semantic/breakpoints`, fileName)
+          platforms: createStandardPlatformConfig(
+            `${DIST_DIR}/css/brands/${brand}/semantic/breakpoints`,
+            fileName,
+            {
+              brand,
+              mode: breakpointMode,
+              modeType: 'breakpoint'
+            }
+          )
         };
 
         try {
@@ -502,9 +534,21 @@ async function buildBrandSpecificTokens() {
       const files = fs.readdirSync(colorDir).filter(f => f.endsWith('.json'));
       for (const file of files) {
         const fileName = path.basename(file, '.json');
+        // Extract color mode from filename (e.g., "colormode-light" -> "light")
+        const colorModeMatch = fileName.match(/colormode-(\w+)/);
+        const colorMode = colorModeMatch ? colorModeMatch[1] : null;
+
         const config = {
           source: [path.join(colorDir, file)],
-          platforms: createStandardPlatformConfig(`${DIST_DIR}/css/brands/${brand}/semantic/color`, fileName)
+          platforms: createStandardPlatformConfig(
+            `${DIST_DIR}/css/brands/${brand}/semantic/color`,
+            fileName,
+            {
+              brand,
+              mode: colorMode,
+              modeType: 'theme'
+            }
+          )
         };
 
         try {
@@ -538,6 +582,301 @@ async function buildBrandSpecificTokens() {
         }
       }
       console.log(`     ✅ overrides (${files.length} collections)`);
+    }
+  }
+
+  return { totalBuilds, successfulBuilds };
+}
+
+/**
+ * Creates platform config for component typography tokens
+ */
+function createComponentTypographyConfig(sourceFile, brand, componentName, fileName) {
+  const brandName = brand.charAt(0).toUpperCase() + brand.slice(1);
+  // Extract breakpoint from fileName (e.g., "button-typography-lg" -> "lg")
+  const breakpointMatch = fileName.match(/typography-(\w+)$/);
+  const breakpoint = breakpointMatch ? breakpointMatch[1] : null;
+
+  return {
+    source: [sourceFile],
+    platforms: {
+      css: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/css/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.css`,
+          format: 'css/typography-classes',
+          options: {
+            brand: brandName,
+            breakpoint: breakpoint || 'default',
+            componentName
+          }
+        }]
+      },
+      scss: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/scss/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.scss`,
+          format: 'scss/typography',
+          options: {
+            brand: brandName,
+            breakpoint: breakpoint || 'default',
+            componentName
+          }
+        }]
+      },
+      js: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/js/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.js`,
+          format: 'javascript/typography',
+          options: {
+            brand: brandName,
+            breakpoint: breakpoint || 'default',
+            componentName
+          }
+        }]
+      },
+      json: {
+        transformGroup: 'js',
+        buildPath: `${DIST_DIR}/json/brands/${brand}/components/${componentName}/`,
+        files: [{ destination: `${fileName}.json`, format: 'json', options: { outputReferences: false } }]
+      },
+      ios: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/ios/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}.swift`,
+          format: 'ios-swift/typography',
+          options: {
+            brand: brandName,
+            breakpoint,
+            componentName,
+            sizeClass: SIZE_CLASS_MAPPING[breakpoint] || breakpoint
+          }
+        }]
+      },
+      flutter: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/flutter/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.dart`,
+          format: 'flutter/typography',
+          options: {
+            brand: brandName,
+            breakpoint,
+            componentName,
+            sizeClass: SIZE_CLASS_MAPPING[breakpoint] || breakpoint
+          }
+        }]
+      },
+      android: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/android/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.xml`,
+          format: 'android/typography-styles',
+          options: {
+            brand: brandName,
+            breakpoint,
+            componentName
+          }
+        }]
+      }
+    }
+  };
+}
+
+/**
+ * Creates platform config for component effects tokens
+ */
+function createComponentEffectsConfig(sourceFile, brand, componentName, fileName) {
+  const brandName = brand.charAt(0).toUpperCase() + brand.slice(1);
+  // Extract colorMode from fileName (e.g., "alert-effects-light" -> "light")
+  const colorModeMatch = fileName.match(/effects-(\w+)$/);
+  const colorMode = colorModeMatch ? colorModeMatch[1] : null;
+
+  return {
+    source: [sourceFile],
+    platforms: {
+      css: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/css/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.css`,
+          format: 'css/effect-classes',
+          options: {
+            brand: brandName,
+            colorMode: colorMode || 'default',
+            componentName
+          }
+        }]
+      },
+      scss: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/scss/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.scss`,
+          format: 'scss/effects',
+          options: {
+            brand: brandName,
+            colorMode: colorMode || 'default',
+            componentName
+          }
+        }]
+      },
+      js: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/js/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.js`,
+          format: 'javascript/effects',
+          options: {
+            brand: brandName,
+            colorMode: colorMode || 'default',
+            componentName
+          }
+        }]
+      },
+      json: {
+        transformGroup: 'js',
+        buildPath: `${DIST_DIR}/json/brands/${brand}/components/${componentName}/`,
+        files: [{ destination: `${fileName}.json`, format: 'json', options: { outputReferences: false } }]
+      },
+      ios: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/ios/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}.swift`,
+          format: 'ios-swift/effects',
+          options: {
+            brand: brandName,
+            colorMode,
+            componentName
+          }
+        }]
+      },
+      flutter: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/flutter/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.dart`,
+          format: 'flutter/effects',
+          options: {
+            brand: brandName,
+            colorMode,
+            componentName
+          }
+        }]
+      },
+      android: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/android/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.xml`,
+          format: 'android/effects',
+          options: {
+            brand: brandName,
+            colorMode,
+            componentName
+          }
+        }]
+      }
+    }
+  };
+}
+
+/**
+ * Builds Component Tokens
+ * Components are organized in brands/{brand}/components/{Component}/
+ */
+async function buildComponentTokens() {
+  console.log('\n🧩 Building Component Tokens:\n');
+
+  let totalBuilds = 0;
+  let successfulBuilds = 0;
+
+  for (const brand of BRANDS) {
+    console.log(`  🏷️  ${brand}:`);
+
+    const componentsDir = path.join(TOKENS_DIR, 'brands', brand, 'components');
+    if (!fs.existsSync(componentsDir)) {
+      console.log(`     ⚠️  No components directory found`);
+      continue;
+    }
+
+    const componentNames = fs.readdirSync(componentsDir).filter(name => {
+      const componentPath = path.join(componentsDir, name);
+      return fs.statSync(componentPath).isDirectory();
+    });
+
+    for (const componentName of componentNames) {
+      const componentDir = path.join(componentsDir, componentName);
+      const files = fs.readdirSync(componentDir).filter(f => f.endsWith('.json'));
+
+      let componentSuccessful = 0;
+
+      for (const file of files) {
+        const fileName = path.basename(file, '.json');
+        const sourcePath = path.join(componentDir, file);
+
+        // Determine config based on file type
+        let config;
+        if (fileName.includes('typography-')) {
+          config = createComponentTypographyConfig(sourcePath, brand, componentName, fileName);
+        } else if (fileName.includes('effects-')) {
+          config = createComponentEffectsConfig(sourcePath, brand, componentName, fileName);
+        } else {
+          // Standard token config for color, density, breakpoint tokens
+          // Extract mode and modeType from filename
+          let cssOptions = { brand };
+
+          // Check for color mode (e.g., "alert-color-light" -> mode: "light", modeType: "theme")
+          const colorModeMatch = fileName.match(/color-(\w+)/);
+          if (colorModeMatch) {
+            cssOptions.mode = colorModeMatch[1];
+            cssOptions.modeType = 'theme';
+          }
+
+          // Check for density mode (e.g., "button-density-compact" -> mode: "compact", modeType: "density")
+          const densityMatch = fileName.match(/density-(\w+)/);
+          if (densityMatch) {
+            cssOptions.mode = densityMatch[1];
+            cssOptions.modeType = 'density';
+          }
+
+          // Check for breakpoint mode (e.g., "audioplayer-breakpoint-lg-1024px-regular" -> mode: "lg", modeType: "breakpoint")
+          const breakpointMatch = fileName.match(/breakpoint-(\w+)/);
+          if (breakpointMatch) {
+            cssOptions.mode = breakpointMatch[1];
+            cssOptions.modeType = 'breakpoint';
+          }
+
+          config = {
+            source: [sourcePath],
+            platforms: createStandardPlatformConfig(
+              `${DIST_DIR}/css/brands/${brand}/components/${componentName}`,
+              fileName,
+              cssOptions
+            )
+          };
+        }
+
+        try {
+          totalBuilds++;
+          await new StyleDictionary(config).buildAllPlatforms();
+          successfulBuilds++;
+          componentSuccessful++;
+        } catch (error) {
+          console.error(`     ❌ ${componentName}/${fileName}: ${error.message}`);
+        }
+      }
+
+      if (componentSuccessful > 0) {
+        console.log(`     ✅ ${componentName} (${componentSuccessful}/${files.length} files)`);
+      }
     }
   }
 
@@ -631,6 +970,7 @@ function createManifest(stats) {
     statistics: {
       sharedPrimitives: stats.sharedPrimitives || { total: 0, successful: 0 },
       brandSpecific: stats.brandSpecific || { totalBuilds: 0, successfulBuilds: 0 },
+      componentTokens: stats.componentTokens || { totalBuilds: 0, successfulBuilds: 0 },
       typographyTokens: stats.typographyTokens || { totalBuilds: 0, successfulBuilds: 0 },
       effectTokens: stats.effectTokens || { totalBuilds: 0, successfulBuilds: 0 }
     },
@@ -642,7 +982,7 @@ function createManifest(stats) {
       outputPaths: {
         css: {
           shared: 'css/shared/',
-          brands: 'css/brands/{brand}/'
+          brands: 'css/brands/{brand}/ (with data-attributes)'
         },
         scss: {
           shared: 'scss/shared/',
@@ -712,6 +1052,9 @@ async function main() {
   // Build brand-specific tokens
   stats.brandSpecific = await buildBrandSpecificTokens();
 
+  // Build component tokens
+  stats.componentTokens = await buildComponentTokens();
+
   // Build typography tokens
   stats.typographyTokens = await buildTypographyTokens();
 
@@ -728,13 +1071,16 @@ async function main() {
 
   // Calculate total statistics for GitHub Actions
   const totalBuilds = stats.sharedPrimitives.total + stats.brandSpecific.totalBuilds +
-                      stats.typographyTokens.totalBuilds + stats.effectTokens.totalBuilds;
+                      stats.componentTokens.totalBuilds + stats.typographyTokens.totalBuilds +
+                      stats.effectTokens.totalBuilds;
   const successfulBuilds = stats.sharedPrimitives.successful + stats.brandSpecific.successfulBuilds +
-                           stats.typographyTokens.successfulBuilds + stats.effectTokens.successfulBuilds;
+                           stats.componentTokens.successfulBuilds + stats.typographyTokens.successfulBuilds +
+                           stats.effectTokens.successfulBuilds;
 
   console.log(`📊 Statistiken:`);
   console.log(`   - Shared Primitives: ${stats.sharedPrimitives.successful}/${stats.sharedPrimitives.total}`);
   console.log(`   - Brand-spezifische Tokens: ${stats.brandSpecific.successfulBuilds}/${stats.brandSpecific.totalBuilds}`);
+  console.log(`   - Component Tokens: ${stats.componentTokens.successfulBuilds}/${stats.componentTokens.totalBuilds}`);
   console.log(`   - Typography Builds: ${stats.typographyTokens.successfulBuilds}/${stats.typographyTokens.totalBuilds}`);
   console.log(`   - Effect Builds: ${stats.effectTokens.successfulBuilds}/${stats.effectTokens.totalBuilds}`);
   console.log(`   - Builds erfolgreich: ${successfulBuilds}/${totalBuilds}`);
@@ -742,7 +1088,7 @@ async function main() {
 
   console.log(`📁 Struktur:`);
   console.log(`   dist/`);
-  console.log(`   ├── css/        (CSS custom properties)`);
+  console.log(`   ├── css/        (CSS with data-attributes for theme switching)`);
   console.log(`   ├── scss/       (SCSS variables)`);
   console.log(`   ├── js/         (JavaScript ES6)`);
   console.log(`   ├── json/       (JSON)`);
@@ -755,6 +1101,8 @@ async function main() {
   console.log(`   - brands/{brand}/`);
   console.log(`       ├── density/       (3 modes)`);
   console.log(`       ├── overrides/     (brand mappings)`);
+  console.log(`       ├── components/    (component-specific tokens)`);
+  console.log(`       │   └── {Component}/  (color, density, breakpoint modes)`);
   console.log(`       └── semantic/`);
   console.log(`           ├── breakpoints/  (4 modes)`);
   console.log(`           ├── color/        (2 modes)`);

@@ -767,6 +767,10 @@ const cssTypographyClassesFormat = ({ dictionary, options }) => {
 
   const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
+  // Build data-attribute selector for Strategy A (full brand + breakpoint scoping)
+  const brandLowercase = brand.toLowerCase();
+  const dataSelector = `[data-brand="${brandLowercase}"][data-breakpoint="${breakpoint}"]`;
+
   let isFirstTopLevel = true;
   Object.keys(hierarchicalGroups).forEach(topLevel => {
     const subGroups = hierarchicalGroups[topLevel];
@@ -802,7 +806,8 @@ const cssTypographyClassesFormat = ({ dictionary, options }) => {
             output += `/* ${token.comment} */\n`;
           }
 
-          output += `.${className} {\n`;
+          // Wrap class selector with data-attribute selector (Strategy A)
+          output += `${dataSelector} .${className} {\n`;
           if (style.fontFamily) output += `  font-family: ${style.fontFamily};\n`;
           if (style.fontWeight) output += `  font-weight: ${style.fontWeight};\n`;
           if (style.fontSize) output += `  font-size: ${style.fontSize};\n`;
@@ -840,6 +845,10 @@ const cssEffectClassesFormat = ({ dictionary, options }) => {
 
   const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
+  // Build data-attribute selector for Strategy A (full brand + theme scoping)
+  const brandLowercase = brand.toLowerCase();
+  const dataSelector = `[data-brand="${brandLowercase}"][data-theme="${colorMode}"]`;
+
   let isFirstTopLevel = true;
   Object.keys(hierarchicalGroups).forEach(topLevel => {
     const subGroups = hierarchicalGroups[topLevel];
@@ -874,7 +883,8 @@ const cssEffectClassesFormat = ({ dictionary, options }) => {
             output += `/* ${token.comment} */\n`;
           }
 
-          output += `.${className} {\n`;
+          // Wrap class selector with data-attribute selector (Strategy A)
+          output += `${dataSelector} .${className} {\n`;
 
           // Convert to CSS box-shadow
           const shadows = token.$value.map(effect => {
@@ -1711,6 +1721,114 @@ const customTransformGroups = {
 };
 
 // ============================================================================
+// THEMED CSS FORMAT - Data-Attribute Based Theme Switching
+// ============================================================================
+
+/**
+ * Format: CSS Themed Variables with Data-Attributes
+ * Generates CSS with [data-brand] and [data-theme/data-breakpoint] selectors
+ * for runtime theme switching without file swapping.
+ *
+ * Options:
+ * - brand: Brand name (e.g., 'bild', 'sportbild')
+ * - mode: Color mode, breakpoint, or density (e.g., 'light', 'dark', 'xs', 'compact')
+ * - modeType: Type of mode ('theme', 'breakpoint', 'density')
+ * - includeRoot: Whether to include default :root fallback (default: false)
+ */
+const cssThemedVariablesFormat = ({ dictionary, options, file }) => {
+  const { brand, mode, modeType = 'theme', includeRoot = false } = options;
+  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'kebab');
+
+  let output = generateFileHeader({
+    fileName: file.destination,
+    commentStyle: 'block',
+    brand: brand ? brand.charAt(0).toUpperCase() + brand.slice(1) : 'All Brands',
+    context: modeType && mode ? `${modeType}: ${mode}` : 'All Modes'
+  });
+
+  // Build selector based on brand and mode
+  let selector;
+  if (brand && mode) {
+    // Specific brand + mode combination
+    const dataMode = modeType === 'theme' ? 'data-theme' :
+                     modeType === 'breakpoint' ? 'data-breakpoint' :
+                     modeType === 'density' ? 'data-density' : 'data-mode';
+    selector = `[data-brand="${brand}"][${dataMode}="${mode}"]`;
+  } else if (brand) {
+    // Brand only
+    selector = `[data-brand="${brand}"]`;
+  } else if (mode) {
+    // Mode only
+    const dataMode = modeType === 'theme' ? 'data-theme' :
+                     modeType === 'breakpoint' ? 'data-breakpoint' :
+                     modeType === 'density' ? 'data-density' : 'data-mode';
+    selector = `[${dataMode}="${mode}"]`;
+  } else {
+    // Fallback to root if no brand/mode specified
+    selector = ':root';
+  }
+
+  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
+
+  // Optional: Include :root fallback for default values
+  if (includeRoot) {
+    output += `:root {\n`;
+    output += `  /* Default values (will be overridden by data-attributes) */\n`;
+
+    Object.keys(hierarchicalGroups).forEach(topLevel => {
+      const subGroups = hierarchicalGroups[topLevel];
+      Object.keys(subGroups).forEach(subLevel => {
+        const tokens = subGroups[subLevel];
+        tokens.forEach(token => {
+          const uniqueName = uniqueNames.get(token.path.join('.'));
+          output += `  --${uniqueName}: ${token.value};\n`;
+        });
+      });
+    });
+
+    output += `}\n\n`;
+  }
+
+  // Main themed selector
+  output += `${selector} {\n`;
+
+  let isFirstTopLevel = true;
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
+
+    if (!isFirstTopLevel) {
+      output += `\n`;
+    }
+    output += `  /* ============================================\n`;
+    output += `     ${topLevel.toUpperCase()}\n`;
+    output += `     ============================================ */\n\n`;
+    isFirstTopLevel = false;
+
+    Object.keys(subGroups).forEach(subLevel => {
+      const tokens = subGroups[subLevel];
+
+      if (subLevel) {
+        output += `  /* ${topLevel} - ${subLevel} */\n`;
+      }
+
+      tokens.forEach(token => {
+        const uniqueName = uniqueNames.get(token.path.join('.'));
+        const comment = token.comment || token.description;
+        if (comment) {
+          output += `  /**\n   * ${comment}\n   */\n`;
+        }
+        output += `  --${uniqueName}: ${token.value};\n`;
+      });
+
+      output += `\n`;
+    });
+  });
+
+  output += `}\n`;
+  return output;
+};
+
+// ============================================================================
 // EXPORTS
 // ============================================================================
 
@@ -1735,6 +1853,9 @@ module.exports = {
     'ios-swift/class': iosSwiftClassFormat,
     'flutter/class': flutterDartClassFormat,
     'android/resources': androidResourcesFormat,
+
+    // Themed CSS Format - Data-attribute based theme switching
+    'custom/css/themed-variables': cssThemedVariablesFormat,
 
     // Composite Token Formats
     'css/typography-classes': cssTypographyClassesFormat,
