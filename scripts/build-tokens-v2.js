@@ -1,37 +1,37 @@
 #!/usr/bin/env node
 
 /**
- * Build Script für Style Dictionary Token-Pipeline v2
+ * Build Script for Style Dictionary Token Pipeline v2
  *
- * Dieses Script orchestriert den Build-Prozess für:
- * - Klassische Tokens (variables)
+ * This script orchestrates the build process for:
+ * - Classic Tokens (variables)
  * - Composite Tokens (typography & effects)
- * - Brand × Breakpoint/ColorMode Matrix
+ * - Brand × Breakpoint/ColorMode matrix
  */
 
 const StyleDictionary = require('style-dictionary').default;
 const fs = require('fs');
 const path = require('path');
 
-// Importiere Custom Config
+// Import custom config
 const customConfig = require('../build-config/style-dictionary.config.js');
 
 const TOKENS_DIR = path.join(__dirname, '../tokens');
 const DIST_DIR = path.join(__dirname, '../dist');
 
-// Brands und Breakpoints
+// Brands and breakpoints
 const BRANDS = ['bild', 'sportbild', 'advertorial'];
 const BREAKPOINTS = ['xs', 'sm', 'md', 'lg'];
 const COLOR_MODES = ['light', 'dark'];
 
-// Size Class Mapping für Native Platforms
+// Size class mapping for native platforms
 const SIZE_CLASS_MAPPING = {
   sm: 'compact',
   lg: 'regular'
 };
 
 /**
- * Erstellt Plattform-Konfiguration für Standard-Token (Primitives, Brand-spezifisch, etc.)
+ * Creates platform configuration for standard tokens (Primitives, Brand-specific, etc.)
  */
 function createStandardPlatformConfig(buildPath, fileName) {
   // Filter to exclude documentation-only tokens that cause collisions
@@ -124,10 +124,10 @@ function createStandardPlatformConfig(buildPath, fileName) {
 }
 
 /**
- * Bereinigt das Dist-Verzeichnis
+ * Cleans the dist directory
  */
 function cleanDist() {
-  console.log('🧹 Bereinige Dist-Verzeichnis...');
+  console.log('🧹 Cleaning dist directory...');
   if (fs.existsSync(DIST_DIR)) {
     fs.rmSync(DIST_DIR, { recursive: true });
   }
@@ -135,10 +135,10 @@ function cleanDist() {
 }
 
 /**
- * Registriert Custom Transforms, Transform Groups und Formats
+ * Registers custom transforms, transform groups and formats
  */
 function registerCustomConfig() {
-  // Registriere Transforms
+  // Register transforms
   Object.entries(customConfig.transforms).forEach(([name, transform]) => {
     try {
       StyleDictionary.registerTransform(transform);
@@ -147,7 +147,7 @@ function registerCustomConfig() {
     }
   });
 
-  // Registriere Transform Groups
+  // Register transform groups
   if (customConfig.transformGroups) {
     Object.entries(customConfig.transformGroups).forEach(([name, transforms]) => {
       try {
@@ -161,7 +161,7 @@ function registerCustomConfig() {
     });
   }
 
-  // Registriere Formats
+  // Register formats
   Object.entries(customConfig.formats).forEach(([name, format]) => {
     try {
       StyleDictionary.registerFormat({
@@ -175,7 +175,7 @@ function registerCustomConfig() {
 }
 
 /**
- * Erstellt Style Dictionary Config für Typography Tokens
+ * Creates Style Dictionary config for Typography tokens
  */
 function createTypographyConfig(brand, breakpoint) {
   const sourceFile = path.join(TOKENS_DIR, 'brands', brand, 'semantic', 'typography', `typography-${breakpoint}.json`);
@@ -190,7 +190,7 @@ function createTypographyConfig(brand, breakpoint) {
   return {
     source: [sourceFile],
     platforms: {
-      // CSS: Custom format für Typography Classes
+      // CSS: Custom format for Typography classes
       css: {
         transforms: ['attribute/cti'],
         buildPath: `${DIST_DIR}/css/brands/${brand}/semantic/typography/`,
@@ -254,7 +254,7 @@ function createTypographyConfig(brand, breakpoint) {
         }]
       },
 
-      // iOS: Nur compact (sm) und regular (lg) mit custom format
+      // iOS: Only compact (sm) and regular (lg) with custom format
       ...(SIZE_CLASS_MAPPING[breakpoint] ? {
         ios: {
           transforms: ['attribute/cti'],
@@ -271,7 +271,7 @@ function createTypographyConfig(brand, breakpoint) {
         }
       } : {}),
 
-      // Android: Nur compact (sm) und regular (lg) mit custom format
+      // Android: Only compact (sm) and regular (lg) with custom format
       ...(SIZE_CLASS_MAPPING[breakpoint] ? {
         android: {
           transforms: ['attribute/cti'],
@@ -291,7 +291,7 @@ function createTypographyConfig(brand, breakpoint) {
 }
 
 /**
- * Erstellt Style Dictionary Config für Effect Tokens
+ * Creates Style Dictionary config for Effect tokens
  */
 function createEffectConfig(brand, colorMode) {
   const sourceFile = path.join(TOKENS_DIR, 'brands', brand, 'semantic', 'effects', `effects-${colorMode}.json`);
@@ -306,7 +306,7 @@ function createEffectConfig(brand, colorMode) {
   return {
     source: [sourceFile],
     platforms: {
-      // CSS: Custom format für Effect Classes
+      // CSS: Custom format for Effect classes
       css: {
         transforms: ['attribute/cti'],
         buildPath: `${DIST_DIR}/css/brands/${brand}/semantic/effects/`,
@@ -401,14 +401,14 @@ function createEffectConfig(brand, colorMode) {
 }
 
 /**
- * Baut Shared Primitive Tokens
+ * Builds Shared Primitive Tokens
  */
 async function buildSharedPrimitives() {
-  console.log('\n📦 Baue Shared Primitives:\n');
+  console.log('\n📦 Building Shared Primitives:\n');
 
   const sharedDir = path.join(TOKENS_DIR, 'shared');
   if (!fs.existsSync(sharedDir)) {
-    console.log('  ⚠️  Kein shared/ Verzeichnis gefunden');
+    console.log('  ⚠️  No shared/ directory found');
     return { total: 0, successful: 0 };
   }
 
@@ -438,10 +438,10 @@ async function buildSharedPrimitives() {
 }
 
 /**
- * Baut Brand-spezifische Token Collections
+ * Builds Brand-specific Token Collections
  */
 async function buildBrandSpecificTokens() {
-  console.log('\n🏷️  Baue Brand-spezifische Tokens:\n');
+  console.log('\n🏷️  Building Brand-specific Tokens:\n');
 
   let totalBuilds = 0;
   let successfulBuilds = 0;
@@ -545,10 +545,10 @@ async function buildBrandSpecificTokens() {
 }
 
 /**
- * Baut Typography Tokens (brand-spezifisch)
+ * Builds Typography Tokens (brand-specific)
  */
 async function buildTypographyTokens() {
-  console.log('\n✍️  Baue Typography Tokens:\n');
+  console.log('\n✍️  Building Typography Tokens:\n');
 
   let totalBuilds = 0;
   let successfulBuilds = 0;
@@ -560,7 +560,7 @@ async function buildTypographyTokens() {
       const config = createTypographyConfig(brand, breakpoint);
 
       if (!config) {
-        console.log(`     ⚠️  Keine Daten für ${brand}-${breakpoint}`);
+        console.log(`     ⚠️  No data for ${brand}-${breakpoint}`);
         continue;
       }
 
@@ -583,10 +583,10 @@ async function buildTypographyTokens() {
 }
 
 /**
- * Baut Effect Tokens
+ * Builds Effect Tokens
  */
 async function buildEffectTokens() {
-  console.log('\n🎨 Baue Effect Tokens:\n');
+  console.log('\n🎨 Building Effect Tokens:\n');
 
   let totalBuilds = 0;
   let successfulBuilds = 0;
@@ -598,7 +598,7 @@ async function buildEffectTokens() {
       const config = createEffectConfig(brand, colorMode);
 
       if (!config) {
-        console.log(`     ⚠️  Keine Daten für ${brand}-${colorMode}`);
+        console.log(`     ⚠️  No data for ${brand}-${colorMode}`);
         continue;
       }
 
@@ -620,10 +620,10 @@ async function buildEffectTokens() {
 }
 
 /**
- * Erstellt Manifest
+ * Creates Manifest
  */
 function createManifest(stats) {
-  console.log('\n📋 Erstelle Manifest...');
+  console.log('\n📋 Creating Manifest...');
 
   const manifest = {
     generated: new Date().toISOString(),
@@ -680,53 +680,53 @@ function createManifest(stats) {
     'utf8'
   );
 
-  console.log('  ✅ Manifest erstellt: dist/manifest.json');
+  console.log('  ✅ Manifest created: dist/manifest.json');
 }
 
 /**
- * Hauptfunktion
+ * Main function
  */
 async function main() {
   console.log('🎨 ============================================');
   console.log('   BILD Design System - Token Build v2');
   console.log('   ============================================\n');
 
-  // Bereinige Dist
+  // Clean dist
   cleanDist();
 
-  // Registriere Custom Config
+  // Register custom config
   registerCustomConfig();
 
-  // Prüfe ob Tokens-Verzeichnis existiert
+  // Check if tokens directory exists
   if (!fs.existsSync(TOKENS_DIR)) {
-    console.error('❌ Tokens-Verzeichnis nicht gefunden!');
-    console.error('   Führe zuerst "npm run preprocess" aus.\n');
+    console.error('❌ Tokens directory not found!');
+    console.error('   Run "npm run preprocess" first.\n');
     process.exit(1);
   }
 
   const stats = {};
 
-  // Baue Shared Primitives
+  // Build shared primitives
   stats.sharedPrimitives = await buildSharedPrimitives();
 
-  // Baue Brand-spezifische Tokens
+  // Build brand-specific tokens
   stats.brandSpecific = await buildBrandSpecificTokens();
 
-  // Baue Typography Tokens
+  // Build typography tokens
   stats.typographyTokens = await buildTypographyTokens();
 
-  // Baue Effect Tokens
+  // Build effect tokens
   stats.effectTokens = await buildEffectTokens();
 
-  // Erstelle Manifest
+  // Create manifest
   createManifest(stats);
 
-  // Zusammenfassung
+  // Summary
   console.log('\n✨ ============================================');
-  console.log('   Build abgeschlossen!');
+  console.log('   Build completed!');
   console.log('   ============================================\n');
 
-  // Berechne Gesamtstatistik für GitHub Actions
+  // Calculate total statistics for GitHub Actions
   const totalBuilds = stats.sharedPrimitives.total + stats.brandSpecific.totalBuilds +
                       stats.typographyTokens.totalBuilds + stats.effectTokens.totalBuilds;
   const successfulBuilds = stats.sharedPrimitives.successful + stats.brandSpecific.successfulBuilds +
@@ -750,7 +750,7 @@ async function main() {
   console.log(`   ├── android/    (Android XML resources)`);
   console.log(`   └── flutter/    (Dart classes)`);
   console.log(``);
-  console.log(`   Jede Plattform enthält:`);
+  console.log(`   Each platform contains:`);
   console.log(`   - shared/              (primitives)`);
   console.log(`   - brands/{brand}/`);
   console.log(`       ├── density/       (3 modes)`);

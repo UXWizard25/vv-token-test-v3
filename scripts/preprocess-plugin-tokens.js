@@ -1,27 +1,27 @@
 #!/usr/bin/env node
 
 /**
- * Preprocessing Script für Custom Plugin Export
+ * Preprocessing Script for Custom Plugin Export
  *
- * Dieses Script transformiert den Plugin-Export in eine Style Dictionary-kompatible Struktur.
- * Es verarbeitet sowohl klassische Tokens als auch Composite Tokens (Typography & Effects).
+ * This script transforms the plugin export into a Style Dictionary-compatible structure.
+ * It processes both classic tokens and composite tokens (Typography & Effects).
  *
  * Features:
- * - Verarbeitet Hex-Farben direkt (bereits im Input)
- * - Fixt FontWeight-px-Bug
- * - Context-aware Alias Resolution (Brand × Breakpoint/ColorMode)
- * - Generiert Brand × Breakpoint Matrix für Typography
- * - Generiert Brand × ColorMode Matrix für Effects
+ * - Processes hex colors directly (already in input)
+ * - Fixes FontWeight-px bug
+ * - Context-aware alias resolution (Brand × Breakpoint/ColorMode)
+ * - Generates Brand × Breakpoint matrix for Typography
+ * - Generates Brand × ColorMode matrix for Effects
  */
 
 const fs = require('fs');
 const path = require('path');
 
-// Pfade
+// Paths
 const INPUT_JSON_PATH = path.join(__dirname, '../src/design-tokens/bild-design-system-raw-data.json');
 const OUTPUT_DIR = path.join(__dirname, '../tokens');
 
-// Brand und Mode Mappings
+// Brand and mode mappings
 const BRANDS = {
   BILD: '18038:0',
   SportBILD: '18094:0',
@@ -40,7 +40,7 @@ const COLOR_MODES = {
   dark: '592:1'
 };
 
-// Collection IDs (stabil)
+// Collection IDs (stable)
 const COLLECTION_IDS = {
   FONT_PRIMITIVE: 'VariableCollectionId:470:1450',
   COLOR_PRIMITIVE: 'VariableCollectionId:539:2238',
@@ -54,16 +54,16 @@ const COLLECTION_IDS = {
 };
 
 /**
- * Lädt die Plugin JSON Datei
+ * Loads the plugin JSON file
  */
 function loadPluginTokens() {
-  console.log('📥 Lade Plugin Token-Datei...');
+  console.log('📥 Loading plugin token file...');
   const data = fs.readFileSync(INPUT_JSON_PATH, 'utf8');
   return JSON.parse(data);
 }
 
 /**
- * Erstellt ein Alias-Lookup-Map für schnellere Referenzauflösung
+ * Creates an alias lookup map for faster reference resolution
  */
 function createAliasLookup(collections) {
   const lookup = new Map();
@@ -85,11 +85,11 @@ function createAliasLookup(collections) {
 }
 
 /**
- * Fixt den FontWeight-px-Bug
+ * Fixes the FontWeight-px bug
  * Input: "700px" → Output: 700
  */
 function fixFontWeightValue(value, tokenPath, resolvedType) {
-  // Nur für FontWeight-Tokens
+  // Only for FontWeight tokens
   if (resolvedType === 'FLOAT' && tokenPath.toLowerCase().includes('fontweight')) {
     if (typeof value === 'string' && value.endsWith('px')) {
       const numericValue = parseInt(value.replace('px', ''), 10);
@@ -100,11 +100,11 @@ function fixFontWeightValue(value, tokenPath, resolvedType) {
 }
 
 /**
- * Konvertiert Figma RGBA-Farbobjekt zu Hex/RGBA-String
+ * Converts Figma RGBA color object to Hex/RGBA string
  */
 function colorToHex(color) {
   if (typeof color === 'string') {
-    // Bereits ein String (Hex oder RGB)
+    // Already a string (Hex or RGB)
     return color;
   }
 
@@ -122,10 +122,10 @@ function colorToHex(color) {
 }
 
 /**
- * Verarbeitet einen Wert basierend auf Typ
+ * Processes a value based on type
  */
 function processDirectValue(value, resolvedType, tokenPath = '') {
-  // Fix FontWeight-px-Bug
+  // Fix FontWeight-px bug
   const fixedValue = fixFontWeightValue(value, tokenPath, resolvedType);
 
   switch (resolvedType) {
@@ -141,44 +141,44 @@ function processDirectValue(value, resolvedType, tokenPath = '') {
 }
 
 /**
- * Löst einen Alias-Wert mit Context auf
+ * Resolves an alias value with context
  * @param {string} variableId - Variable ID
  * @param {Map} aliasLookup - Lookup Map
  * @param {object} context - { brandModeId, breakpointModeId, colorModeModeId }
- * @param {Set} visited - Zirkelschutz
+ * @param {Set} visited - Circular reference protection
  */
 function resolveAliasWithContext(variableId, aliasLookup, context = {}, visited = new Set()) {
   const variable = aliasLookup.get(variableId);
 
   if (!variable) {
-    console.warn(`⚠️  Variable nicht gefunden: ${variableId}`);
+    console.warn(`⚠️  Variable not found: ${variableId}`);
     return `UNRESOLVED_${variableId}`;
   }
 
   if (visited.has(variableId)) {
-    console.warn(`⚠️  Zirkuläre Referenz: ${variable.name}`);
+    console.warn(`⚠️  Circular reference: ${variable.name}`);
     return `CIRCULAR_REF_${variableId}`;
   }
 
   visited.add(variableId);
 
-  // Bestimme den richtigen Mode basierend auf Collection und Context
+  // Determine the correct mode based on collection and context
   let targetModeId = null;
 
-  // Wenn Variable aus Breakpoint-Collection kommt, nutze Breakpoint-Mode
+  // If variable comes from Breakpoint collection, use Breakpoint mode
   if (variable.collectionId === COLLECTION_IDS.BREAKPOINT_MODE && context.breakpointModeId) {
     targetModeId = context.breakpointModeId;
   }
-  // Wenn Variable aus ColorMode-Collection kommt, nutze ColorMode
+  // If variable comes from ColorMode collection, use ColorMode
   else if (variable.collectionId === COLLECTION_IDS.COLOR_MODE && context.colorModeModeId) {
     targetModeId = context.colorModeModeId;
   }
-  // Wenn Variable aus Brand-Collection kommt, nutze Brand-Mode
+  // If variable comes from Brand collection, use Brand mode
   else if ((variable.collectionId === COLLECTION_IDS.BRAND_TOKEN_MAPPING ||
              variable.collectionId === COLLECTION_IDS.BRAND_COLOR_MAPPING) && context.brandModeId) {
     targetModeId = context.brandModeId;
   }
-  // Sonst: nimm ersten verfügbaren Mode
+  // Otherwise: take first available mode
   else {
     const modes = Object.keys(variable.valuesByMode);
     targetModeId = modes[0];
@@ -186,7 +186,7 @@ function resolveAliasWithContext(variableId, aliasLookup, context = {}, visited 
 
   let value = variable.valuesByMode[targetModeId];
 
-  // Fallback wenn Mode nicht existiert
+  // Fallback if mode doesn't exist
   if (value === undefined || value === null) {
     const modes = Object.keys(variable.valuesByMode);
     if (modes.length > 0) {
@@ -196,21 +196,21 @@ function resolveAliasWithContext(variableId, aliasLookup, context = {}, visited 
   }
 
   if (value === undefined || value === null) {
-    console.warn(`⚠️  Kein Wert für ${variable.name} in Mode ${targetModeId}`);
+    console.warn(`⚠️  No value for ${variable.name} in mode ${targetModeId}`);
     return `NO_VALUE_${variableId}`;
   }
 
-  // Wenn Wert selbst ein Alias ist, rekursiv auflösen
+  // If value is itself an alias, resolve recursively
   if (value.type === 'VARIABLE_ALIAS') {
     return resolveAliasWithContext(value.id, aliasLookup, context, visited);
   }
 
-  // Direkten Wert verarbeiten
+  // Process direct value
   return processDirectValue(value, variable.resolvedType, variable.name);
 }
 
 /**
- * Bestimmt den Token-Typ für Style Dictionary
+ * Determines the token type for Style Dictionary
  */
 function determineTokenType(tokenName, collectionName, value) {
   const tokenPath = tokenName.toLowerCase();
@@ -221,7 +221,7 @@ function determineTokenType(tokenName, collectionName, value) {
     return { $type: 'color' };
   }
 
-  // String-Werte: kein $type
+  // String values: no $type
   if (typeof value === 'string' && !value.endsWith('px')) {
     return { $type: null };
   }
@@ -231,7 +231,7 @@ function determineTokenType(tokenName, collectionName, value) {
     return { $type: 'fontWeight' };
   }
 
-  // Dimension-Typen (nur wenn numerisch oder px-String)
+  // Dimension types (only if numeric or px-string)
   if (typeof value === 'number' || (typeof value === 'string' && value.endsWith('px'))) {
     if (tokenPath.includes('fontsize') || tokenPath.includes('font-size')) {
       return { $type: 'dimension' };
@@ -253,7 +253,7 @@ function determineTokenType(tokenName, collectionName, value) {
 }
 
 /**
- * Konvertiert Token-Namen zu verschachteltem Pfad
+ * Converts token name to nested path
  */
 function convertTokenName(name) {
   return name
@@ -265,7 +265,7 @@ function convertTokenName(name) {
 }
 
 /**
- * Setzt einen Wert in verschachtelten Objekt-Pfad
+ * Sets a value in a nested object path
  */
 function setNestedPath(obj, pathArray, value) {
   let current = obj;
@@ -283,11 +283,11 @@ function setNestedPath(obj, pathArray, value) {
 }
 
 /**
- * Verarbeitet Shared Primitive Collections (kein Brand-Kontext)
+ * Processes Shared Primitive Collections (no brand context)
  * Output: shared/{collectionName}.json
  */
 function processSharedPrimitives(collections, aliasLookup) {
-  console.log('\n📦 Verarbeite Shared Primitives:\n');
+  console.log('\n📦 Processing Shared Primitives:\n');
 
   const sharedCollectionIds = [
     COLLECTION_IDS.FONT_PRIMITIVE,
@@ -305,7 +305,7 @@ function processSharedPrimitives(collections, aliasLookup) {
 
     const tokens = {};
 
-    // Shared primitives haben nur einen Mode ("Value")
+    // Shared primitives have only one mode ("Value")
     const mode = collection.modes[0];
     if (!mode) return;
 
@@ -366,7 +366,7 @@ function processSharedPrimitives(collections, aliasLookup) {
 }
 
 /**
- * Prüft ob eine Brand BrandColorMapping hat
+ * Checks if a brand has BrandColorMapping
  */
 function hasBrandColorMapping(collections, brandName) {
   const brandColorMappingCollection = collections.find(c => c.id === COLLECTION_IDS.BRAND_COLOR_MAPPING);
@@ -375,11 +375,11 @@ function hasBrandColorMapping(collections, brandName) {
 }
 
 /**
- * Verarbeitet Brand-spezifische Token Collections
+ * Processes Brand-specific Token Collections
  * Output: brands/{brand}/{category}/{collectionName}-{mode}.json
  */
 function processBrandSpecificTokens(collections, aliasLookup) {
-  console.log('\n🏷️  Verarbeite Brand-spezifische Tokens:\n');
+  console.log('\n🏷️  Processing Brand-specific Tokens:\n');
 
   const brandCollectionIds = [
     COLLECTION_IDS.DENSITY,
@@ -390,7 +390,7 @@ function processBrandSpecificTokens(collections, aliasLookup) {
   const outputs = {
     bild: { density: {}, breakpoints: {}, color: {} },
     sportbild: { density: {}, breakpoints: {}, color: {} },
-    advertorial: { density: {}, breakpoints: {} } // Advertorial hat kein BrandColorMapping
+    advertorial: { density: {}, breakpoints: {} } // Advertorial has no BrandColorMapping
   };
 
   collections.forEach(collection => {
@@ -398,22 +398,22 @@ function processBrandSpecificTokens(collections, aliasLookup) {
 
     console.log(`  📦 ${collection.name}`);
 
-    // Bestimme Kategorie
+    // Determine category
     let category;
     if (collection.id === COLLECTION_IDS.DENSITY) category = 'density';
     else if (collection.id === COLLECTION_IDS.BREAKPOINT_MODE) category = 'breakpoints';
     else if (collection.id === COLLECTION_IDS.COLOR_MODE) category = 'color';
 
-    // Für jede Brand
+    // For each brand
     Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
       const brandKey = brandName.toLowerCase();
 
-      // Skip ColorMode für Brands ohne BrandColorMapping
+      // Skip ColorMode for brands without BrandColorMapping
       if (category === 'color' && !hasBrandColorMapping(collections, brandName)) {
         return;
       }
 
-      // Für jeden Mode in dieser Collection
+      // For each mode in this collection
       collection.modes.forEach(mode => {
         const tokens = {};
 
@@ -425,7 +425,7 @@ function processBrandSpecificTokens(collections, aliasLookup) {
             let processedValue;
 
             if (modeValue.type === 'VARIABLE_ALIAS') {
-              // Context mit Brand + Mode
+              // Context with Brand + Mode
               const context = {
                 brandModeId,
                 breakpointModeId: collection.id === COLLECTION_IDS.BREAKPOINT_MODE ? mode.modeId : undefined,
@@ -473,7 +473,7 @@ function processBrandSpecificTokens(collections, aliasLookup) {
           }
         });
 
-        // Speichere brand-spezifischen Output
+        // Save brand-specific output
         const cleanModeName = mode.name
           .toLowerCase()
           .replace(/\s+/g, '-')
@@ -493,11 +493,11 @@ function processBrandSpecificTokens(collections, aliasLookup) {
 }
 
 /**
- * Verarbeitet Brand Overrides (BrandTokenMapping, BrandColorMapping)
+ * Processes Brand Overrides (BrandTokenMapping, BrandColorMapping)
  * Output: brands/{brand}/overrides/{collectionName}.json
  */
 function processBrandOverrides(collections, aliasLookup) {
-  console.log('\n🎨 Verarbeite Brand Overrides:\n');
+  console.log('\n🎨 Processing Brand Overrides:\n');
 
   const overrideCollectionIds = [
     COLLECTION_IDS.BRAND_TOKEN_MAPPING,
@@ -515,15 +515,15 @@ function processBrandOverrides(collections, aliasLookup) {
 
     console.log(`  📦 ${collection.name}`);
 
-    // Jeder Mode ist ein Brand - matche nach Mode-Namen statt Mode-ID
+    // Each mode is a brand - match by mode name instead of mode ID
     Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
       const brandKey = brandName.toLowerCase();
 
-      // Finde Mode nach Namen (nicht ID), da jede Collection eigene Mode-IDs hat
+      // Find mode by name (not ID), since each collection has its own mode IDs
       const mode = collection.modes.find(m => m.name === brandName);
 
       if (!mode) {
-        // Brand existiert in dieser Collection nicht (z.B. Advertorial in BrandColorMapping)
+        // Brand doesn't exist in this collection (e.g. Advertorial in BrandColorMapping)
         return;
       }
 
@@ -537,8 +537,8 @@ function processBrandOverrides(collections, aliasLookup) {
           let processedValue;
 
           if (modeValue.type === 'VARIABLE_ALIAS') {
-            // Verwende die GLOBALE Brand-Mode-ID (aus BRANDS) für Alias-Resolution
-            // da Aliase auf andere Collections (z.B. BrandTokenMapping) verweisen können
+            // Use the GLOBAL brand mode ID (from BRANDS) for alias resolution
+            // since aliases can point to other collections (e.g. BrandTokenMapping)
             const context = { brandModeId };
             processedValue = resolveAliasWithContext(modeValue.id, aliasLookup, context, new Set());
           } else {
@@ -591,19 +591,19 @@ function processBrandOverrides(collections, aliasLookup) {
 }
 
 /**
- * Verarbeitet Typography Composite Tokens (textStyles)
- * Generiert Brand × Breakpoint Matrix
+ * Processes Typography Composite Tokens (textStyles)
+ * Generates Brand × Breakpoint matrix
  */
 function processTypographyTokens(textStyles, aliasLookup) {
-  console.log('\n✍️  Verarbeite Typography Composite Tokens:\n');
+  console.log('\n✍️  Processing Typography Composite Tokens:\n');
 
   const typographyOutputs = {};
 
-  // Für jeden Brand
+  // For each brand
   Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
     console.log(`  🏷️  Brand: ${brandName}`);
 
-    // Für jeden Breakpoint
+    // For each breakpoint
     Object.entries(BREAKPOINTS).forEach(([breakpointName, breakpointModeId]) => {
       const context = {
         brandModeId,
@@ -613,8 +613,8 @@ function processTypographyTokens(textStyles, aliasLookup) {
       const tokens = {};
 
       textStyles.forEach(textStyle => {
-        const styleName = textStyle.name.split('/').pop(); // z.B. "display1"
-        const category = textStyle.name.split('/').slice(-2, -1)[0]; // z.B. "Display"
+        const styleName = textStyle.name.split('/').pop(); // e.g. "display1"
+        const category = textStyle.name.split('/').slice(-2, -1)[0]; // e.g. "Display"
 
         const resolvedStyle = {
           fontFamily: null,
@@ -637,12 +637,12 @@ function processTypographyTokens(textStyles, aliasLookup) {
           });
         }
 
-        // Fallback zu direkten Werten
+        // Fallback to direct values
         if (!resolvedStyle.fontFamily && textStyle.fontName) {
           resolvedStyle.fontFamily = textStyle.fontName.family;
         }
 
-        // Token-Struktur: category/styleName
+        // Token structure: category/styleName
         const pathArray = [category.toLowerCase(), styleName.toLowerCase()];
 
         setNestedPath(tokens, pathArray, {
@@ -677,19 +677,19 @@ function processTypographyTokens(textStyles, aliasLookup) {
 }
 
 /**
- * Verarbeitet Effect Composite Tokens (effectStyles)
- * Generiert Brand × ColorMode Matrix
+ * Processes Effect Composite Tokens (effectStyles)
+ * Generates Brand × ColorMode matrix
  */
 function processEffectTokens(effectStyles, aliasLookup) {
-  console.log('\n🎨 Verarbeite Effect Composite Tokens:\n');
+  console.log('\n🎨 Processing Effect Composite Tokens:\n');
 
   const effectOutputs = {};
 
-  // Für jeden Brand
+  // For each brand
   Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
     console.log(`  🏷️  Brand: ${brandName}`);
 
-    // Für jeden ColorMode
+    // For each ColorMode
     Object.entries(COLOR_MODES).forEach(([modeName, colorModeModeId]) => {
       const context = {
         brandModeId,
@@ -717,7 +717,7 @@ function processEffectTokens(effectStyles, aliasLookup) {
                 blendMode: effect.blendMode || 'NORMAL'
               };
 
-              // Resolve boundVariables wenn vorhanden
+              // Resolve boundVariables if present
               if (effect.boundVariables && effect.boundVariables.color) {
                 if (effect.boundVariables.color.type === 'VARIABLE_ALIAS') {
                   const resolved = resolveAliasWithContext(
@@ -769,10 +769,10 @@ function processEffectTokens(effectStyles, aliasLookup) {
 }
 
 /**
- * Speichert Shared Primitives
+ * Saves Shared Primitives
  */
 function saveSharedPrimitives(sharedOutputs) {
-  console.log('\n💾 Speichere Shared Primitives:\n');
+  console.log('\n💾 Saving Shared Primitives:\n');
 
   const sharedDir = path.join(OUTPUT_DIR, 'shared');
   if (!fs.existsSync(sharedDir)) {
@@ -787,10 +787,10 @@ function saveSharedPrimitives(sharedOutputs) {
 }
 
 /**
- * Speichert Brand-spezifische Tokens
+ * Saves Brand-specific Tokens
  */
 function saveBrandSpecificTokens(brandOutputs) {
-  console.log('\n💾 Speichere Brand-spezifische Tokens:\n');
+  console.log('\n💾 Saving Brand-specific Tokens:\n');
 
   Object.entries(brandOutputs).forEach(([brand, categories]) => {
     console.log(`  🏷️  ${brand}:`);
@@ -815,10 +815,10 @@ function saveBrandSpecificTokens(brandOutputs) {
 }
 
 /**
- * Speichert Brand Overrides
+ * Saves Brand Overrides
  */
 function saveBrandOverrides(overrideOutputs) {
-  console.log('\n💾 Speichere Brand Overrides:\n');
+  console.log('\n💾 Saving Brand Overrides:\n');
 
   Object.entries(overrideOutputs).forEach(([brand, collections]) => {
     console.log(`  🏷️  ${brand}: (${Object.keys(collections).length} collections)`);
@@ -838,12 +838,12 @@ function saveBrandOverrides(overrideOutputs) {
 }
 
 /**
- * Speichert Typography Tokens
+ * Saves Typography Tokens
  */
 function saveTypographyTokens(typographyOutputs) {
-  console.log('\n💾 Speichere Typography Tokens:\n');
+  console.log('\n💾 Saving Typography Tokens:\n');
 
-  // Gruppiere nach Brand
+  // Group by brand
   const byBrand = {};
   Object.entries(typographyOutputs).forEach(([key, data]) => {
     const brand = data.brand.toLowerCase();
@@ -853,7 +853,7 @@ function saveTypographyTokens(typographyOutputs) {
     byBrand[brand][breakpoint] = data.tokens;
   });
 
-  // Speichere in brands/{brand}/semantic/typography/
+  // Save in brands/{brand}/semantic/typography/
   Object.entries(byBrand).forEach(([brand, breakpoints]) => {
     console.log(`  🏷️  ${brand}:`);
 
@@ -872,12 +872,12 @@ function saveTypographyTokens(typographyOutputs) {
 }
 
 /**
- * Speichert Effect Tokens
+ * Saves Effect Tokens
  */
 function saveEffectTokens(effectOutputs) {
-  console.log('\n💾 Speichere Effect Tokens:\n');
+  console.log('\n💾 Saving Effect Tokens:\n');
 
-  // Gruppiere nach Brand
+  // Group by brand
   const byBrand = {};
   Object.entries(effectOutputs).forEach(([key, data]) => {
     const brand = data.brand.toLowerCase();
@@ -887,7 +887,7 @@ function saveEffectTokens(effectOutputs) {
     byBrand[brand][colorMode] = data.tokens;
   });
 
-  // Speichere in brands/{brand}/semantic/effects/
+  // Save in brands/{brand}/semantic/effects/
   Object.entries(byBrand).forEach(([brand, colorModes]) => {
     console.log(`  🏷️  ${brand}:`);
 
@@ -906,58 +906,58 @@ function saveEffectTokens(effectOutputs) {
 }
 
 /**
- * Hauptfunktion
+ * Main function
  */
 function main() {
-  console.log('🚀 Starte Plugin Token Preprocessing...\n');
+  console.log('🚀 Starting Plugin Token Preprocessing...\n');
 
-  // Leere Output-Verzeichnis
+  // Clear output directory
   if (fs.existsSync(OUTPUT_DIR)) {
     fs.rmSync(OUTPUT_DIR, { recursive: true });
   }
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
-  // Lade Plugin Tokens
+  // Load plugin tokens
   const pluginData = loadPluginTokens();
 
-  // Erstelle Alias-Lookup
-  console.log('🔍 Erstelle Alias-Lookup...');
+  // Create alias lookup
+  console.log('🔍 Creating Alias Lookup...');
   const aliasLookup = createAliasLookup(pluginData.collections);
-  console.log(`   ℹ️  ${aliasLookup.size} Variablen indexiert`);
+  console.log(`   ℹ️  ${aliasLookup.size} variables indexed`);
 
-  // Verarbeite klassische Tokens
+  // Process classic tokens
   const sharedPrimitives = processSharedPrimitives(pluginData.collections, aliasLookup);
   const brandSpecificTokens = processBrandSpecificTokens(pluginData.collections, aliasLookup);
   const brandOverrides = processBrandOverrides(pluginData.collections, aliasLookup);
 
-  // Verarbeite Composite Tokens
+  // Process composite tokens
   const typographyTokens = processTypographyTokens(pluginData.textStyles || [], aliasLookup);
   const effectTokens = processEffectTokens(pluginData.effectStyles || [], aliasLookup);
 
-  // Speichere alles
+  // Save everything
   saveSharedPrimitives(sharedPrimitives);
   saveBrandSpecificTokens(brandSpecificTokens);
   saveBrandOverrides(brandOverrides);
   saveTypographyTokens(typographyTokens);
   saveEffectTokens(effectTokens);
 
-  // Statistiken
-  console.log('\n✨ Preprocessing abgeschlossen!\n');
-  console.log(`📊 Statistiken:`);
+  // Statistics
+  console.log('\n✨ Preprocessing completed!\n');
+  console.log(`📊 Statistics:`);
   console.log(`   - Shared Primitives: ${Object.keys(sharedPrimitives).length}`);
-  console.log(`   - Brand-spezifische Collections: ${Object.keys(brandSpecificTokens).length} brands`);
+  console.log(`   - Brand-specific Collections: ${Object.keys(brandSpecificTokens).length} brands`);
   console.log(`   - Brand Overrides: ${Object.keys(brandOverrides).length} brands`);
   console.log(`   - Typography Outputs: ${Object.keys(typographyTokens).length}`);
   console.log(`   - Effect Outputs: ${Object.keys(effectTokens).length}`);
-  console.log(`   - Output-Verzeichnis: ${path.relative(process.cwd(), OUTPUT_DIR)}\n`);
+  console.log(`   - Output Directory: ${path.relative(process.cwd(), OUTPUT_DIR)}\n`);
 }
 
-// Führe Script aus
+// Execute script
 if (require.main === module) {
   try {
     main();
   } catch (error) {
-    console.error('❌ Fehler beim Preprocessing:', error);
+    console.error('❌ Error during preprocessing:', error);
     process.exit(1);
   }
 }

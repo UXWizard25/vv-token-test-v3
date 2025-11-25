@@ -164,7 +164,7 @@ const colorCssTransform = {
   type: 'value',
   filter: (token) => token.$type === 'color' || token.type === 'color',
   transform: (token) => {
-    // Wenn bereits ein gültiger Farbwert, direkt zurückgeben
+    // If already a valid color value, return directly
     if (typeof token.$value === 'string' || typeof token.value === 'string') {
       return token.$value || token.value;
     }
@@ -1570,9 +1570,9 @@ const androidXmlEffectsFormat = ({ dictionary, options }) => {
 // ============================================================================
 
 /**
- * Custom Transform Groups die unsere verkürzten Token-Namen verwenden
- * WICHTIG: Wir verwenden NICHT 'attribute/cti' oder 'name/cti/*', da diese
- * den vollständigen Pfad verwenden. Stattdessen nur unsere Custom Name Transforms.
+ * Custom Transform Groups that use our shortened token names
+ * IMPORTANT: We do NOT use 'attribute/cti' or 'name/cti/*', as these
+ * use the full path. Instead, we only use our custom name transforms.
  */
 const customTransformGroups = {
   'custom/css': ['name/custom/kebab', 'color/css', 'custom/size/px'],
