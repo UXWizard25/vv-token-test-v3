@@ -1,6 +1,6 @@
 /**
  * Typography Tokens - Sportbild / xs
- * Generiert am: 2025-11-25T08:27:20.048Z
+ * Generiert am: 2025-11-25T08:28:12.616Z
  * Nicht manuell bearbeiten!
  */
 

@@ -1,6 +1,6 @@
 /**
  * Effect Tokens - Bild / dark
- * Generiert am: 2025-11-25T08:27:20.756Z
+ * Generiert am: 2025-11-25T08:28:13.283Z
  * Nicht manuell bearbeiten!
  */
 

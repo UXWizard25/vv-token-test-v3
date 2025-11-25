@@ -1,6 +1,6 @@
 /**
  * Typography Tokens - Bild / xs
- * Generiert am: 2025-11-25T08:27:19.677Z
+ * Generiert am: 2025-11-25T08:28:12.272Z
  * Nicht manuell bearbeiten!
  */
 

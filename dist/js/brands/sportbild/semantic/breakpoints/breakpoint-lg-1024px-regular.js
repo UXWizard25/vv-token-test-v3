@@ -1,6 +1,6 @@
 /**
  * breakpoint-lg-1024px-regular.js
- * Generiert am: 2025-11-25T08:27:17.469Z
+ * Generiert am: 2025-11-25T08:28:10.110Z
  * Nicht manuell bearbeiten!
  */
 

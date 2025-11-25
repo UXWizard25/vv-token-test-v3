@@ -1,6 +1,6 @@
 /**
  * Typography Tokens - Advertorial / lg
- * Generiert am: 2025-11-25T08:27:20.669Z
+ * Generiert am: 2025-11-25T08:28:13.197Z
  * Nicht manuell bearbeiten!
  */
 
