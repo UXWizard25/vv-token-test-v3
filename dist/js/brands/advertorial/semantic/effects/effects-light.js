@@ -1,6 +1,6 @@
 /**
  * Effect Tokens - Advertorial / light
- * Generiert am: 2025-11-25T09:41:25.355Z
+ * Generiert am: 2025-11-25T09:43:00.077Z
  * Nicht manuell bearbeiten!
  */
 

@@ -1,6 +1,6 @@
 /**
  * breakpoint-xs-320px.js
- * Generiert am: 2025-11-25T09:41:23.820Z
+ * Generiert am: 2025-11-25T09:42:58.543Z
  * Nicht manuell bearbeiten!
  */
 

@@ -1,6 +1,6 @@
 /**
  * Effect Tokens - Sportbild / dark
- * Generiert am: 2025-11-25T09:41:25.313Z
+ * Generiert am: 2025-11-25T09:43:00.035Z
  * Nicht manuell bearbeiten!
  */
 

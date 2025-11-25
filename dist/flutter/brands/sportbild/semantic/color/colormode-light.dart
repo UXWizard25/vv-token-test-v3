@@ -175,6 +175,8 @@ Behavior: Constant — retains the same red warning tone in both Light and Dark 
     static const npmTest = Color(0xFF476D93);
     /** this is a test for the token pipeline */
     static const felipeTestColor = Color(0xFFE9580A);
+    /** this is a test for the token pipeline */
+    static const golianiTestColor = Color(0xFF00FFF2);
 
     // Semantic - Icon
     /** Primary icon color on primary surfaces. */
@@ -430,7 +432,6 @@ Behavior: Constant — same opacity level across modes to preserve uniform layer
     static const kickerBgColorOnSurface = Color(0xFFDD0000);
 
     // Component - Kicker - Partner
-    static const kickerStylebookBgColor = "UNRESOLVED_VariableID:16104:163534";
     static const kickerFitbookBgColor = Color(0xFFFF97B7);
     static const kickerPetbookBgColor = Color(0xFFB9DB91);
     static const kickerMyhomebookBgColor = Color(0xFF66CCCC);

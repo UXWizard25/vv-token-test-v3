@@ -1,6 +1,6 @@
 /**
  * colormode-light.js
- * Generiert am: 2025-11-25T09:41:21.355Z
+ * Generiert am: 2025-11-25T09:42:56.100Z
  * Nicht manuell bearbeiten!
  */
 
@@ -167,6 +167,8 @@ export const coreColorTertiaryVvPipeTest = "#476D93";
 export const npmTest = "#476D93";
 /** this is a test for the token pipeline */
 export const felipeTestColor = "#E9580A";
+/** this is a test for the token pipeline */
+export const golianiTestColor = "#00FFF2";
 
 // Semantic - Icon
 /** Primary icon color on primary surfaces. */
@@ -422,7 +424,6 @@ export const scrollBarThumbBgColor = "#8C9196";
 export const kickerBgColorOnSurface = "#DD0000";
 
 // Component - Kicker - Partner
-export const kickerStylebookBgColor = "UNRESOLVED_VariableID:16104:163534";
 export const kickerFitbookBgColor = "#FF97B7";
 export const kickerPetbookBgColor = "#B9DB91";
 export const kickerMyhomebookBgColor = "#66CCCC";

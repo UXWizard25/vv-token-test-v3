@@ -1,6 +1,6 @@
 /**
  * Typography Tokens - Advertorial / xs
- * Generiert am: 2025-11-25T09:41:24.824Z
+ * Generiert am: 2025-11-25T09:42:59.538Z
  * Nicht manuell bearbeiten!
  */
 

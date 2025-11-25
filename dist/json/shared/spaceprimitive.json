@@ -494,7 +494,7 @@
       "space2_5x"
     ]
   },
-  "space-0_25x": {
+  "spaceNeg0_25x": {
     "$value": "-2px",
     "value": "-2px",
     "type": "float",
@@ -521,10 +521,10 @@
       },
       "$type": "dimension"
     },
-    "name": "space025x",
+    "name": "spaceNeg025x",
     "attributes": {},
     "path": [
-      "space-0_25x"
+      "spaceNeg0_25x"
     ]
   },
   "space0_75x": {

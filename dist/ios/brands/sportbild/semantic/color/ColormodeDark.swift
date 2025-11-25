@@ -172,6 +172,8 @@ Behavior: Constant — retains the same red warning tone in both Light and Dark 
     public static let NpmTest = UIColor(red: 0.690, green: 0.820, blue: 0.953, alpha: 1.000)
     /** this is a test for the token pipeline */
     public static let FelipeTestColor = UIColor(red: 0.012, green: 0.102, blue: 0.192, alpha: 1.000)
+    /** this is a test for the token pipeline */
+    public static let GolianiTestColor = UIColor(red: 0.012, green: 0.102, blue: 0.192, alpha: 1.000)
 
     // MARK: - Semantic - Icon
     /** Primary icon color on primary surfaces. */
@@ -427,7 +429,6 @@ Behavior: Constant — same opacity level across modes to preserve uniform layer
     public static let KickerBgColorOnSurface = UIColor(red: 0.549, green: 0.569, blue: 0.588, alpha: 1.000)
 
     // MARK: - Component - Kicker - Partner
-    public static let KickerStylebookBgColor = "UNRESOLVED_VariableID:16104:163534"
     public static let KickerFitbookBgColor = UIColor(red: 1.000, green: 0.592, blue: 0.718, alpha: 1.000)
     public static let KickerPetbookBgColor = UIColor(red: 0.725, green: 0.859, blue: 0.569, alpha: 1.000)
     public static let KickerMyhomebookBgColor = UIColor(red: 0.400, green: 0.800, blue: 0.800, alpha: 1.000)

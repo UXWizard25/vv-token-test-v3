@@ -31,7 +31,7 @@ class Spaceprimitive {
     static const space10x = "80px";
     static const space20x = "160px";
     static const space25x = "20px";
-    static const space025x = "-2px";
+    static const spaceNeg025x = "-2px";
     static const space075x = "6px";
     static const space125x = "10px";
     static const space275x = "22px";

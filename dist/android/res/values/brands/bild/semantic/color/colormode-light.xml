@@ -98,6 +98,7 @@ Behavior: Constant — retains the same red warning tone in both Light and Dark 
   <color name="core-color-tertiary-vv-pipe-test">#476d93</color><!-- this is a test for the token pipeline -->
   <color name="npm-test">#476d93</color><!-- this is a test for the token pipeline -->
   <color name="felipe-test-color">#e9580a</color><!-- this is a test for the token pipeline -->
+  <color name="goliani-test-color">#00fff2</color><!-- this is a test for the token pipeline -->
   <color name="icon-color-primary">#4b525a</color><!-- Primary icon color on primary surfaces. -->
   <color name="icon-color-inverse">#ced4da</color><!-- Inverse icon color for use on contrasting backgrounds (e.g., light icons on dark surfaces or dark icons on bright surfaces).
 Behavior: Dynamic — switches between light and dark. -->
@@ -240,7 +241,6 @@ Behavior: Constant — same opacity level across modes to preserve uniform layer
   <color name="scroll-bar-track-bg-color">#0000001a</color><!-- Used as the background surface color scroll bars. Found on components that vertically or horizontally stack elements. -->
   <color name="scroll-bar-thumb-bg-color">#8c9196</color><!-- Use on the scroll bar interactive element which shows where the scroll view is positioned inside the full extent of the scrolling space. -->
   <color name="kicker-bg-color-on-surface">#dd0000</color>
-  <color name="kicker-stylebook-bg-color">UNRESOLVED_VariableID:16104:163534</color>
   <color name="kicker-fitbook-bg-color">#ff97b7</color>
   <color name="kicker-petbook-bg-color">#b9db91</color>
   <color name="kicker-myhomebook-bg-color">#66cccc</color>

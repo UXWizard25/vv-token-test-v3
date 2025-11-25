@@ -1,6 +1,6 @@
 /**
  * Typography Tokens - Bild / lg
- * Generiert am: 2025-11-25T09:41:24.352Z
+ * Generiert am: 2025-11-25T09:42:59.073Z
  * Nicht manuell bearbeiten!
  */
 

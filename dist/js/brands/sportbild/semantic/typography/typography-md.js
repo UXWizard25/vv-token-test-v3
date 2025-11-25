@@ -1,6 +1,6 @@
 /**
  * Typography Tokens - Sportbild / md
- * Generiert am: 2025-11-25T09:41:24.618Z
+ * Generiert am: 2025-11-25T09:42:59.355Z
  * Nicht manuell bearbeiten!
  */
 

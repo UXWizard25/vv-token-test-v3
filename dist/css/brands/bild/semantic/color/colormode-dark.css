@@ -1,6 +1,6 @@
 /**
  * colormode-dark.css
- * Generiert am: 2025-11-25T09:41:21.219Z
+ * Generiert am: 2025-11-25T09:42:55.965Z
  * Nicht manuell bearbeiten!
  */
 
@@ -276,6 +276,10 @@ Behavior: Constant — retains the same red warning tone in both Light and Dark 
    * this is a test for the token pipeline
    */
   --felipe-test-color: #031A31;
+  /**
+   * this is a test for the token pipeline
+   */
+  --goliani-test-color: #031A31;
 
   /* Semantic - Icon */
   /**
@@ -615,7 +619,6 @@ Behavior: Constant — same opacity level across modes to preserve uniform layer
   --kicker-bg-color-on-surface: #8C9196;
 
   /* Component - Kicker - Partner */
-  --kicker-stylebook-bg-color: UNRESOLVED_VariableID:16104:163534;
   --kicker-fitbook-bg-color: #FF97B7;
   --kicker-petbook-bg-color: #B9DB91;
   --kicker-myhomebook-bg-color: #66CCCC;

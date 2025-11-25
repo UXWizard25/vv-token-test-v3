@@ -14,7 +14,7 @@
   <color name="bild060">#8c9196</color>
   <color name="bild096">#f2f4f5</color>
   <color name="bild093">#e9ecef</color>
-  <color name="bild085-50">#ced4da80</color><!-- The 50% opacity on this color makes it equivalent to BILD093. -->
+  <color name="bild085-alpha50">#ced4da80</color><!-- The 50% opacity on this color makes it equivalent to BILD093. -->
   <color name="bild073">#aeb4b9</color>
   <color name="bild045">#666b70</color>
   <color name="bild010">#1c1c1c</color>
@@ -25,8 +25,8 @@
   <color name="bildgreen070">#00c373</color>
   <color name="bildgreen063">#00af67</color>
   <color name="bildgreen093">#cef4e4</color>
-  <color name="bildgreen093-50">#cef4e480</color>
-  <color name="bildgreen056-50">#009b5a80</color>
+  <color name="bildgreen093-alpha50">#cef4e480</color>
+  <color name="bildgreen056-alpha50">#009b5a80</color>
   <color name="bildgreen040">#006e3e</color><!-- This value of green was found in a text field's text color. -->
   <color name="bildgreen056">#18995c</color>
   <color name="bildyellow">#ffbf00</color><!-- Tone: 081 -->
@@ -66,8 +66,8 @@
   <color name="spobi-blue010">#081828</color>
   <color name="spobi-blue038">#315998</color>
   <color name="spobi-red">#e52528</color>
-  <color name="spobi-blue016-0">#0a275000</color>
-  <color name="spobi-blue016-70">#0a2750b2</color>
+  <color name="spobi-blue016-alpha0">#0a275000</color>
+  <color name="spobi-blue016-alpha70">#0a2750b2</color>
   <string name="opacity05">5px</string>
   <string name="opacity10">10px</string>
   <string name="opacity20">20px</string>
