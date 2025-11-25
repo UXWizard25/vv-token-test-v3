@@ -59,32 +59,16 @@ jobs:
 
           echo "✅ Build successful: $SUCCESSFUL_BUILDS/$TOTAL_BUILDS"
 
-      # 5. Commit generierte Dateien zurück in Branch
-      - name: Commit Generated Files
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-
-          # Füge generierte Dateien hinzu (dist/ ist in .gitignore, daher -f)
-          git add dist/ -f
-          git add tokens/ -f 2>/dev/null || true
-
-          # Prüfe ob es Änderungen gibt
-          if git diff --staged --quiet; then
-            echo "✅ No changes in generated files"
-          else
-            git commit -m "$(cat <<'EOF'
-          chore: update generated design tokens [skip ci]
-
-          Generated from Figma tokens
-          Successful Builds: ${{ steps.build.outputs.successful_builds }}/${{ steps.build.outputs.total_builds }}
-          Commit: ${{ github.sha }}
-          EOF
-          )"
-
-            git push origin figma-tokens
-            echo "✅ Generated files committed and pushed to figma-tokens branch"
-          fi
+      # 5. Upload Build Artifacts
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: figma-tokens-${{ github.sha }}
+          path: |
+            dist/
+            tokens/
+            build-output.log
+          retention-days: 30
 
       # 6. Extrahiere geänderte Token-Dateien
       - name: Get Changed Token Files
@@ -163,6 +147,12 @@ jobs:
           - **Successful Builds:** ${{ steps.build.outputs.successful_builds }}/${{ steps.build.outputs.total_builds }}
           - **Warnings:** 0
 
+          ### 📥 Review Generated Files
+
+          [⬇️ **Download Build Artifacts**](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+          The generated `dist/` files are available as build artifacts (30 days retention) for review.
+
           ### 📝 Changed Files
 
           **Files Changed:** ${{ steps.changes.outputs.change_count }}
@@ -180,7 +170,7 @@ jobs:
           When you merge this PR:
           1. ✅ Tokens will be rebuilt
           2. ✅ Package version will be bumped (patch)
-          3. ✅ Package will be published to GitHub Packages
+          3. ✅ Package will be published to npm
           4. ✅ GitHub Release will be created
 
           ### 📊 Build Statistics
