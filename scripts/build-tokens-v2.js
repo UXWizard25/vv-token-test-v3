@@ -545,6 +545,206 @@ async function buildBrandSpecificTokens() {
 }
 
 /**
+ * Creates platform config for component typography tokens
+ */
+function createComponentTypographyConfig(sourceFile, brand, componentName, fileName) {
+  const brandName = brand.charAt(0).toUpperCase() + brand.slice(1);
+  // Extract breakpoint from fileName (e.g., "button-typography-lg" -> "lg")
+  const breakpointMatch = fileName.match(/typography-(\w+)$/);
+  const breakpoint = breakpointMatch ? breakpointMatch[1] : null;
+
+  return {
+    source: [sourceFile],
+    platforms: {
+      css: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/css/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.css`,
+          format: 'css/typography-classes',
+          options: {
+            brand: brandName,
+            breakpoint: breakpoint || 'default',
+            componentName
+          }
+        }]
+      },
+      scss: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/scss/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.scss`,
+          format: 'scss/typography',
+          options: {
+            brand: brandName,
+            breakpoint: breakpoint || 'default',
+            componentName
+          }
+        }]
+      },
+      js: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/js/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.js`,
+          format: 'javascript/typography',
+          options: {
+            brand: brandName,
+            breakpoint: breakpoint || 'default',
+            componentName
+          }
+        }]
+      },
+      json: {
+        transformGroup: 'js',
+        buildPath: `${DIST_DIR}/json/brands/${brand}/components/${componentName}/`,
+        files: [{ destination: `${fileName}.json`, format: 'json', options: { outputReferences: false } }]
+      },
+      ios: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/ios/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}.swift`,
+          format: 'ios-swift/typography',
+          options: {
+            brand: brandName,
+            breakpoint,
+            componentName,
+            sizeClass: SIZE_CLASS_MAPPING[breakpoint] || breakpoint
+          }
+        }]
+      },
+      flutter: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/flutter/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.dart`,
+          format: 'flutter/typography',
+          options: {
+            brand: brandName,
+            breakpoint,
+            componentName,
+            sizeClass: SIZE_CLASS_MAPPING[breakpoint] || breakpoint
+          }
+        }]
+      },
+      android: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/android/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.xml`,
+          format: 'android/typography-styles',
+          options: {
+            brand: brandName,
+            breakpoint,
+            componentName
+          }
+        }]
+      }
+    }
+  };
+}
+
+/**
+ * Creates platform config for component effects tokens
+ */
+function createComponentEffectsConfig(sourceFile, brand, componentName, fileName) {
+  const brandName = brand.charAt(0).toUpperCase() + brand.slice(1);
+  // Extract colorMode from fileName (e.g., "alert-effects-light" -> "light")
+  const colorModeMatch = fileName.match(/effects-(\w+)$/);
+  const colorMode = colorModeMatch ? colorModeMatch[1] : null;
+
+  return {
+    source: [sourceFile],
+    platforms: {
+      css: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/css/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.css`,
+          format: 'css/effect-classes',
+          options: {
+            brand: brandName,
+            colorMode: colorMode || 'default',
+            componentName
+          }
+        }]
+      },
+      scss: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/scss/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.scss`,
+          format: 'scss/effects',
+          options: {
+            brand: brandName,
+            colorMode: colorMode || 'default',
+            componentName
+          }
+        }]
+      },
+      js: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/js/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.js`,
+          format: 'javascript/effects',
+          options: {
+            brand: brandName,
+            colorMode: colorMode || 'default',
+            componentName
+          }
+        }]
+      },
+      json: {
+        transformGroup: 'js',
+        buildPath: `${DIST_DIR}/json/brands/${brand}/components/${componentName}/`,
+        files: [{ destination: `${fileName}.json`, format: 'json', options: { outputReferences: false } }]
+      },
+      ios: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/ios/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}.swift`,
+          format: 'ios-swift/effects',
+          options: {
+            brand: brandName,
+            colorMode,
+            componentName
+          }
+        }]
+      },
+      flutter: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/flutter/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.dart`,
+          format: 'flutter/effects',
+          options: {
+            brand: brandName,
+            colorMode,
+            componentName
+          }
+        }]
+      },
+      android: {
+        transforms: ['attribute/cti'],
+        buildPath: `${DIST_DIR}/android/brands/${brand}/components/${componentName}/`,
+        files: [{
+          destination: `${fileName}.xml`,
+          format: 'android/effects',
+          options: {
+            brand: brandName,
+            colorMode,
+            componentName
+          }
+        }]
+      }
+    }
+  };
+}
+
+/**
  * Builds Component Tokens
  * Components are organized in brands/{brand}/components/{Component}/
  */
@@ -576,13 +776,24 @@ async function buildComponentTokens() {
 
       for (const file of files) {
         const fileName = path.basename(file, '.json');
-        const config = {
-          source: [path.join(componentDir, file)],
-          platforms: createStandardPlatformConfig(
-            `${DIST_DIR}/css/brands/${brand}/components/${componentName}`,
-            fileName
-          )
-        };
+        const sourcePath = path.join(componentDir, file);
+
+        // Determine config based on file type
+        let config;
+        if (fileName.includes('typography-')) {
+          config = createComponentTypographyConfig(sourcePath, brand, componentName, fileName);
+        } else if (fileName.includes('effects-')) {
+          config = createComponentEffectsConfig(sourcePath, brand, componentName, fileName);
+        } else {
+          // Standard token config for color, density, breakpoint tokens
+          config = {
+            source: [sourcePath],
+            platforms: createStandardPlatformConfig(
+              `${DIST_DIR}/css/brands/${brand}/components/${componentName}`,
+              fileName
+            )
+          };
+        }
 
         try {
           totalBuilds++;
