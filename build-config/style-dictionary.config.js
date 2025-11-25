@@ -1007,6 +1007,360 @@ const androidXmlTypographyFormat = ({ dictionary, options }) => {
   return output;
 };
 
+/**
+ * Format: iOS Swift Effects
+ * Exports shadow tokens as properly formatted Swift code
+ */
+const iosSwiftEffectsFormat = ({ dictionary, options }) => {
+  const { brand, colorMode } = options;
+  const className = `Effects${brand}${colorMode.charAt(0).toUpperCase() + colorMode.slice(1)}`;
+  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'pascal');
+
+  let output = `\n//\n// Effects - ${brand} / ${colorMode}\n//\n\n`;
+  output += `// Do not edit directly, this file was auto-generated.\n\n`;
+  output += `import UIKit\n\n`;
+  output += `public class ${className} {\n`;
+
+  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
+
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
+
+    output += `    // MARK: - ============================================\n`;
+    output += `    // MARK: - ${topLevel.toUpperCase()}\n`;
+    output += `    // MARK: - ============================================\n\n`;
+
+    Object.keys(subGroups).forEach(subLevel => {
+      const tokens = subGroups[subLevel];
+
+      if (subLevel) {
+        output += `    // MARK: - ${topLevel} - ${subLevel}\n`;
+      }
+
+      tokens.forEach(token => {
+        if (token.$type === 'shadow' && Array.isArray(token.$value)) {
+          const uniqueName = uniqueNames.get(token.path.join('.'));
+
+          if (token.comment) {
+            output += `    /** ${token.comment} */\n`;
+          }
+
+          // Convert shadow array to NSShadow array
+          const shadowsSwift = token.$value.map(effect => {
+            if (effect.type === 'dropShadow') {
+              // Parse color
+              let colorValue = 'UIColor.black';
+              if (effect.color) {
+                const colorStr = effect.color.replace(/\s/g, '');
+                if (colorStr.startsWith('rgba')) {
+                  const match = colorStr.match(/rgba?\((\d+),(\d+),(\d+),?([\d.]*)\)/);
+                  if (match) {
+                    const r = (parseInt(match[1]) / 255).toFixed(3);
+                    const g = (parseInt(match[2]) / 255).toFixed(3);
+                    const b = (parseInt(match[3]) / 255).toFixed(3);
+                    const a = match[4] || '1';
+                    colorValue = `UIColor(red: ${r}, green: ${g}, blue: ${b}, alpha: ${a})`;
+                  }
+                }
+              }
+
+              return `NSShadow(offset: CGSize(width: ${effect.offsetX || 0}, height: ${effect.offsetY || 0}), blurRadius: ${effect.radius || 0}, color: ${colorValue})`;
+            }
+            return null;
+          }).filter(Boolean);
+
+          output += `    public static let ${uniqueName}: [NSShadow] = [${shadowsSwift.join(', ')}]\n`;
+        }
+      });
+
+      output += `\n`;
+    });
+  });
+
+  output += `}\n`;
+  return output;
+};
+
+/**
+ * Format: JavaScript/TypeScript Effects
+ * Exports shadow tokens as properly formatted objects
+ */
+const javascriptEffectsFormat = ({ dictionary, options }) => {
+  const { brand, colorMode } = options;
+  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'camel');
+
+  let output = `/**\n`;
+  output += ` * Effect Tokens - ${brand} / ${colorMode}\n`;
+  output += ` * Generiert am: ${new Date().toISOString()}\n`;
+  output += ` * Nicht manuell bearbeiten!\n`;
+  output += ` */\n\n`;
+
+  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
+
+  let isFirstTopLevel = true;
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
+
+    if (!isFirstTopLevel) {
+      output += `\n`;
+    }
+    output += `// ============================================\n`;
+    output += `// ${topLevel.toUpperCase()}\n`;
+    output += `// ============================================\n\n`;
+    isFirstTopLevel = false;
+
+    Object.keys(subGroups).forEach(subLevel => {
+      const tokens = subGroups[subLevel];
+
+      if (subLevel) {
+        output += `// ${topLevel} - ${subLevel}\n`;
+      }
+
+      tokens.forEach(token => {
+        if (token.$type === 'shadow' && Array.isArray(token.$value)) {
+          const uniqueName = uniqueNames.get(token.path.join('.'));
+
+          if (token.comment) {
+            output += `/** ${token.comment} */\n`;
+          }
+
+          // Convert shadow array to JS object array
+          const shadowsJS = token.$value.map(effect => {
+            if (effect.type === 'dropShadow') {
+              return `{
+    offsetX: ${effect.offsetX || 0},
+    offsetY: ${effect.offsetY || 0},
+    radius: ${effect.radius || 0},
+    spread: ${effect.spread || 0},
+    color: "${effect.color || 'rgba(0, 0, 0, 0)'}"
+  }`;
+            }
+            return null;
+          }).filter(Boolean);
+
+          output += `export const ${uniqueName} = [\n  ${shadowsJS.join(',\n  ')}\n];\n`;
+        }
+      });
+
+      output += `\n`;
+    });
+  });
+
+  return output;
+};
+
+/**
+ * Format: Flutter Dart Effects
+ * Exports shadow tokens as properly formatted Dart objects
+ */
+const flutterEffectsFormat = ({ dictionary, options }) => {
+  const { brand, colorMode } = options;
+  const className = `Effects${brand.charAt(0).toUpperCase() + brand.slice(1)}${colorMode.charAt(0).toUpperCase() + colorMode.slice(1)}`;
+  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'camel');
+
+  let output = `\n//\n// effects-${colorMode}.dart\n//\n\n`;
+  output += `// Do not edit directly, this file was auto-generated.\n\n\n`;
+  output += `import 'dart:ui';\n\n`;
+  output += `class ${className} {\n`;
+  output += `    ${className}._();\n\n`;
+
+  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
+
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
+
+    output += `    // ============================================\n`;
+    output += `    // ${topLevel.toUpperCase()}\n`;
+    output += `    // ============================================\n\n`;
+
+    Object.keys(subGroups).forEach(subLevel => {
+      const tokens = subGroups[subLevel];
+
+      if (subLevel) {
+        output += `    // ${topLevel} - ${subLevel}\n`;
+      }
+
+      tokens.forEach(token => {
+        if (token.$type === 'shadow' && Array.isArray(token.$value)) {
+          const uniqueName = uniqueNames.get(token.path.join('.'));
+
+          if (token.comment) {
+            output += `    /** ${token.comment} */\n`;
+          }
+
+          // Convert shadow array to Dart BoxShadow list
+          const shadowsDart = token.$value.map(effect => {
+            if (effect.type === 'dropShadow') {
+              // Parse color
+              let colorValue = 'Color(0xFF000000)';
+              if (effect.color) {
+                const colorStr = effect.color.replace(/\s/g, '');
+                if (colorStr.startsWith('rgba')) {
+                  const match = colorStr.match(/rgba?\((\d+),(\d+),(\d+),?([\d.]*)\)/);
+                  if (match) {
+                    const r = parseInt(match[1]).toString(16).padStart(2, '0');
+                    const g = parseInt(match[2]).toString(16).padStart(2, '0');
+                    const b = parseInt(match[3]).toString(16).padStart(2, '0');
+                    const a = match[4] ? Math.round(parseFloat(match[4]) * 255).toString(16).padStart(2, '0') : 'FF';
+                    colorValue = `Color(0x${a}${r}${g}${b})`;
+                  }
+                } else if (colorStr.startsWith('#')) {
+                  const hex = colorStr.replace('#', '');
+                  if (hex.length === 6) {
+                    colorValue = `Color(0xFF${hex})`;
+                  } else if (hex.length === 8) {
+                    colorValue = `Color(0x${hex.substring(6, 8)}${hex.substring(0, 6)})`;
+                  }
+                }
+              }
+
+              return `BoxShadow(
+      offset: Offset(${effect.offsetX || 0}, ${effect.offsetY || 0}),
+      blurRadius: ${effect.radius || 0},
+      spreadRadius: ${effect.spread || 0},
+      color: ${colorValue}
+    )`;
+            }
+            return null;
+          }).filter(Boolean);
+
+          output += `    static const ${uniqueName} = [\n      ${shadowsDart.join(',\n      ')}\n    ];\n`;
+        }
+      });
+
+      output += `\n`;
+    });
+  });
+
+  output += `}\n`;
+  return output;
+};
+
+/**
+ * Format: JavaScript/TypeScript Typography
+ * Exports typography tokens as properly formatted objects
+ */
+const javascriptTypographyFormat = ({ dictionary, options }) => {
+  const { brand, breakpoint } = options;
+  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'camel');
+
+  let output = `/**\n`;
+  output += ` * Typography Tokens - ${brand} / ${breakpoint}\n`;
+  output += ` * Generiert am: ${new Date().toISOString()}\n`;
+  output += ` * Nicht manuell bearbeiten!\n`;
+  output += ` */\n\n`;
+
+  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
+
+  let isFirstTopLevel = true;
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
+
+    if (!isFirstTopLevel) {
+      output += `\n`;
+    }
+    output += `// ============================================\n`;
+    output += `// ${topLevel.toUpperCase()}\n`;
+    output += `// ============================================\n\n`;
+    isFirstTopLevel = false;
+
+    Object.keys(subGroups).forEach(subLevel => {
+      const tokens = subGroups[subLevel];
+
+      if (subLevel) {
+        output += `// ${topLevel} - ${subLevel}\n`;
+      }
+
+      tokens.forEach(token => {
+        if (token.$type === 'typography' && token.$value) {
+          const uniqueName = uniqueNames.get(token.path.join('.'));
+          const style = token.$value;
+
+          if (token.comment) {
+            output += `/** ${token.comment} */\n`;
+          }
+
+          output += `export const ${uniqueName} = {\n`;
+          if (style.fontFamily) output += `  fontFamily: "${style.fontFamily}",\n`;
+          if (style.fontWeight) output += `  fontWeight: ${style.fontWeight},\n`;
+          if (style.fontSize) output += `  fontSize: "${style.fontSize}",\n`;
+          if (style.lineHeight) output += `  lineHeight: "${style.lineHeight}",\n`;
+          if (style.letterSpacing) output += `  letterSpacing: "${style.letterSpacing}",\n`;
+          if (style.fontStyle && style.fontStyle !== 'null') output += `  fontStyle: "${style.fontStyle.toLowerCase()}",\n`;
+          if (style.textCase && style.textCase !== 'ORIGINAL') output += `  textTransform: "${style.textCase.toLowerCase()}",\n`;
+          if (style.textDecoration && style.textDecoration !== 'NONE') output += `  textDecoration: "${style.textDecoration.toLowerCase()}",\n`;
+          output += `};\n`;
+        }
+      });
+
+      output += `\n`;
+    });
+  });
+
+  return output;
+};
+
+/**
+ * Format: Flutter Dart Typography
+ * Exports typography tokens as properly formatted Dart objects
+ */
+const flutterTypographyFormat = ({ dictionary, options }) => {
+  const { brand, breakpoint, sizeClass } = options;
+  const className = `Typography${brand.charAt(0).toUpperCase() + brand.slice(1)}${(sizeClass || breakpoint).charAt(0).toUpperCase() + (sizeClass || breakpoint).slice(1)}`;
+  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'camel');
+
+  let output = `\n//\n// typography-${sizeClass || breakpoint}.dart\n//\n\n`;
+  output += `// Do not edit directly, this file was auto-generated.\n\n\n`;
+  output += `import 'dart:ui';\n\n`;
+  output += `class ${className} {\n`;
+  output += `    ${className}._();\n\n`;
+
+  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
+
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
+
+    output += `    // ============================================\n`;
+    output += `    // ${topLevel.toUpperCase()}\n`;
+    output += `    // ============================================\n\n`;
+
+    Object.keys(subGroups).forEach(subLevel => {
+      const tokens = subGroups[subLevel];
+
+      if (subLevel) {
+        output += `    // ${topLevel} - ${subLevel}\n`;
+      }
+
+      tokens.forEach(token => {
+        if (token.$type === 'typography' && token.$value) {
+          const uniqueName = uniqueNames.get(token.path.join('.'));
+          const style = token.$value;
+
+          if (token.comment) {
+            output += `    /** ${token.comment} */\n`;
+          }
+
+          output += `    static const ${uniqueName} = {\n`;
+          if (style.fontFamily) output += `      'fontFamily': '${style.fontFamily}',\n`;
+          if (style.fontWeight) output += `      'fontWeight': ${style.fontWeight},\n`;
+          if (style.fontSize) output += `      'fontSize': '${style.fontSize}',\n`;
+          if (style.lineHeight) output += `      'lineHeight': '${style.lineHeight}',\n`;
+          if (style.letterSpacing) output += `      'letterSpacing': '${style.letterSpacing}',\n`;
+          if (style.fontStyle && style.fontStyle !== 'null') output += `      'fontStyle': '${style.fontStyle.toLowerCase()}',\n`;
+          if (style.textCase && style.textCase !== 'ORIGINAL') output += `      'textTransform': '${style.textCase.toLowerCase()}',\n`;
+          if (style.textDecoration && style.textDecoration !== 'NONE') output += `      'textDecoration': '${style.textDecoration.toLowerCase()}',\n`;
+          output += `    };\n`;
+        }
+      });
+
+      output += `\n`;
+    });
+  });
+
+  output += `}\n`;
+  return output;
+};
+
 // ============================================================================
 // TRANSFORM GROUPS
 // ============================================================================
@@ -1054,6 +1408,11 @@ module.exports = {
     // Composite Token Formats
     'css/typography-classes': cssTypographyClassesFormat,
     'css/effect-classes': cssEffectClassesFormat,
+    'javascript/effects': javascriptEffectsFormat,
+    'javascript/typography': javascriptTypographyFormat,
+    'flutter/effects': flutterEffectsFormat,
+    'flutter/typography': flutterTypographyFormat,
+    'ios-swift/effects': iosSwiftEffectsFormat,
     'ios-swift/typography': iosSwiftTypographyFormat,
     'android/typography-styles': androidXmlTypographyFormat
   }
