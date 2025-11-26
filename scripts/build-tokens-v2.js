@@ -1011,6 +1011,34 @@ async function convertToResponsiveCSS() {
       }
     }
 
+    // Process semantic breakpoints
+    const semanticBreakpointsDir = path.join(brandDir, 'semantic', 'breakpoints');
+    if (fs.existsSync(semanticBreakpointsDir)) {
+      const breakpointFiles = fs.readdirSync(semanticBreakpointsDir)
+        .filter(f => f.includes('-xs-') && f.endsWith('.css'));
+
+      for (const baseFile of breakpointFiles) {
+        totalConversions++;
+
+        try {
+          const responsiveContent = await generateResponsiveBreakpointFile(
+            semanticBreakpointsDir,
+            brand,
+            breakpointConfig
+          );
+
+          const outputPath = path.join(semanticBreakpointsDir, 'breakpoint-responsive.css');
+          fs.writeFileSync(outputPath, responsiveContent, 'utf-8');
+          successfulConversions++;
+          console.log(`     ✅ semantic/breakpoint-responsive.css`);
+          break; // Only generate once per brand
+        } catch (error) {
+          console.error(`     ❌ Error: semantic/breakpoints - ${error.message}`);
+          break;
+        }
+      }
+    }
+
     // Process component typography
     const componentsDir = path.join(brandDir, 'components');
     if (fs.existsSync(componentsDir)) {
@@ -1113,6 +1141,97 @@ async function generateResponsiveFile(dir, baseName, brand, breakpointConfig) {
   output += `}\n`;
 
   return output;
+}
+
+/**
+ * Generates a responsive breakpoint CSS file with media queries from breakpoint files
+ */
+async function generateResponsiveBreakpointFile(dir, brand, breakpointConfig) {
+  const breakpointFiles = {};
+
+  // Read all breakpoint files
+  for (const bp of BREAKPOINTS) {
+    const files = fs.readdirSync(dir).filter(f => f.includes(`-${bp}-`) && f.endsWith('.css'));
+    if (files.length > 0) {
+      const filePath = path.join(dir, files[0]);
+      if (fs.existsSync(filePath)) {
+        breakpointFiles[bp] = fs.readFileSync(filePath, 'utf-8');
+      }
+    }
+  }
+
+  if (Object.keys(breakpointFiles).length === 0) {
+    throw new Error('No breakpoint files found');
+  }
+
+  // Extract header from first file
+  const firstFile = breakpointFiles.xs || breakpointFiles.sm || breakpointFiles.md || breakpointFiles.lg;
+  const headerMatch = firstFile.match(/^\/\*\*[\s\S]*?\*\//);
+  let header = headerMatch ? headerMatch[0] : '';
+  header = header.replace(/Breakpoint: \w+/, 'Responsive (Media Queries)');
+
+  let output = header + '\n\n';
+
+  // Extract CSS variables from each breakpoint
+  const breakpointVars = {};
+  for (const [bp, content] of Object.entries(breakpointFiles)) {
+    breakpointVars[bp] = extractRootVariables(content);
+  }
+
+  // Generate responsive CSS with media queries
+  // Base styles (XS)
+  output += `:root {\n`;
+  if (breakpointVars.xs && breakpointVars.xs.length > 0) {
+    for (const varDecl of breakpointVars.xs) {
+      output += `  ${varDecl}\n`;
+    }
+  }
+  output += `}\n\n`;
+
+  // Media queries for SM, MD, LG
+  for (const bp of ['sm', 'md', 'lg']) {
+    if (breakpointVars[bp] && breakpointVars[bp].length > 0 && breakpointConfig[bp]) {
+      output += `@media (min-width: ${breakpointConfig[bp]}) {\n`;
+      output += `  :root {\n`;
+      for (const varDecl of breakpointVars[bp]) {
+        output += `    ${varDecl}\n`;
+      }
+      output += `  }\n`;
+      output += `}\n\n`;
+    }
+  }
+
+  return output;
+}
+
+/**
+ * Extracts CSS custom property declarations from data-attribute selector
+ */
+function extractRootVariables(content) {
+  const variables = [];
+
+  // Match [data-brand="..."][data-breakpoint="..."] { ... } or :root { ... }
+  const selectorMatch = content.match(/(?:\[data-brand="[^"]+"\]\[data-breakpoint="[^"]+"\]|:root)\s*\{([\s\S]*)\}/);
+  if (selectorMatch) {
+    const selectorContent = selectorMatch[1];
+
+    // Extract all CSS custom properties (--variable-name: value;)
+    // This regex handles multi-line values and comments
+    const lines = selectorContent.split('\n');
+    for (const line of lines) {
+      const trimmed = line.trim();
+      // Match CSS custom property declaration
+      if (trimmed.startsWith('--') && trimmed.includes(':')) {
+        // Remove inline comments but keep the declaration
+        const cleanLine = trimmed.replace(/\/\*.*?\*\//g, '').trim();
+        if (cleanLine && cleanLine.endsWith(';')) {
+          variables.push(cleanLine);
+        }
+      }
+    }
+  }
+
+  return variables;
 }
 
 /**

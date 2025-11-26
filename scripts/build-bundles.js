@@ -370,11 +370,15 @@ async function buildQuickStartBundles() {
       // Find all CSS files for this brand
       let files = await glob(`${brandCssDir}/**/*.css`);
 
-      // Exclude individual breakpoint typography files (we use responsive version instead)
+      // Exclude individual breakpoint files (we use responsive versions instead)
       files = files.filter(f => {
         const basename = path.basename(f);
         // Exclude typography-xs/sm/md/lg.css but keep typography-responsive.css
-        return !(basename.match(/^typography-(xs|sm|md|lg)\.css$/));
+        // Exclude breakpoint-*.css but keep breakpoint-responsive.css
+        return !(
+          basename.match(/^typography-(xs|sm|md|lg)\.css$/) ||
+          basename.match(/^breakpoint-(xs|sm|md|lg)/)
+        );
       });
 
       if (files.length === 0) {
@@ -427,11 +431,15 @@ async function buildSemanticBundles() {
       // Find all semantic CSS files
       let files = await glob(`${brandSemanticDir}/**/*.css`);
 
-      // Exclude individual breakpoint typography files (we use responsive version instead)
+      // Exclude individual breakpoint files (we use responsive versions instead)
       files = files.filter(f => {
         const basename = path.basename(f);
         // Exclude typography-xs/sm/md/lg.css but keep typography-responsive.css
-        return !(basename.match(/^typography-(xs|sm|md|lg)\.css$/));
+        // Exclude breakpoint-*.css but keep breakpoint-responsive.css
+        return !(
+          basename.match(/^typography-(xs|sm|md|lg)\.css$/) ||
+          basename.match(/^breakpoint-(xs|sm|md|lg)/)
+        );
       });
 
       if (files.length === 0) {
