@@ -30,7 +30,8 @@ This pipeline processes the multi-layer, multi-brand BILD Design System architec
 - **3 Brands**: BILD, SportBILD, Advertorial
 - **7 Platforms**: CSS, SCSS, JavaScript, JSON, iOS (Swift), Android (XML), Flutter (Dart)
 - **Multiple Modes**: Density (3), Breakpoints (4), Color Modes (2)
-- **Composite Tokens**: Typography, Effects/Shadows
+- **Token Types**: Primitives, Semantic Tokens, Component Tokens (~917 files)
+- **Composite Tokens**: Typography, Effects/Shadows (semantic + component-specific)
 
 ### Pipeline Flow
 
@@ -53,6 +54,7 @@ This pipeline processes the multi-layer, multi-brand BILD Design System architec
 │ Preprocessing (scripts/preprocess-*.js)    │
 │ • Scope-based type determination            │
 │ • Alias resolution                          │
+│ • Component token detection & organization  │
 │ • Opacity conversion (Figma % → 0-1)       │
 │ • Floating-point rounding                   │
 └─────────────────────────────────────────────┘
@@ -144,20 +146,39 @@ Raw Figma Variables export containing:
 **Key Properties:**
 ```json
 {
-  "variables": [{
-    "name": "Semantic/LayerOpacity/layerOpacity05",
-    "resolvedType": "FLOAT",
-    "scopes": ["OPACITY"],
-    "valuesByMode": {
-      "539:2": 5  // Figma opacity as percentage
+  "variables": [
+    {
+      "name": "Semantic/LayerOpacity/layerOpacity05",
+      "resolvedType": "FLOAT",
+      "scopes": ["OPACITY"],
+      "valuesByMode": {
+        "539:2": 5  // Figma opacity as percentage
+      }
+    },
+    {
+      "name": "Component/Button/buttonPrimaryBgColor",
+      "resolvedType": "COLOR",
+      "scopes": ["ALL_SCOPES"],
+      "valuesByMode": {
+        "588:0": { "type": "VARIABLE_ALIAS", "id": "..." }  // Alias to semantic token
+      }
     }
-  }]
+  ]
 }
 ```
 
 #### 2️⃣ **Preprocessing** (`tokens/`)
 
 Transforms raw Figma data into Style Dictionary format:
+
+**Component Token Detection:**
+```javascript
+// Automatic detection based on path prefix
+"Component/Button/buttonPrimaryBgColor" → Component Token (organized in components/Button/)
+"Component/Alert/alertBorderWidth" → Component Token (organized in components/Alert/)
+"Semantic/TextColor/textColorPrimary" → Semantic Token (organized in semantic/)
+"ColorPrimitive/red500" → Primitive Token (organized in shared/)
+```
 
 **Scope-Based Type Determination:**
 ```javascript
@@ -382,14 +403,19 @@ The pipeline expects Figma Variables with the following structure:
 
 ```
 Variables:
-├── Collections (e.g., "ColorMode", "BreakpointMode")
+├── Collections (e.g., "ColorMode", "BreakpointMode", "Density")
 │   └── Modes (e.g., "light", "dark", "xs", "sm", "md", "lg")
 └── Variables
-    ├── name: "Semantic/LayerOpacity/layerOpacity05"
+    ├── name: "Semantic/LayerOpacity/layerOpacity05" OR "Component/Button/buttonPrimaryBgColor"
     ├── resolvedType: "FLOAT" | "COLOR" | "STRING" | "BOOLEAN"
     ├── scopes: ["OPACITY"] | ["WIDTH_HEIGHT"] | ["FONT_SIZE"] | etc.
     └── valuesByMode: { "mode-id": value | alias }
 ```
+
+**Token Path Patterns:**
+- **Semantic Tokens**: `Semantic/Category/tokenName` → Organized in `semantic/` folders
+- **Component Tokens**: `Component/ComponentName/tokenName` → Organized in `components/ComponentName/` folders
+- **Primitive Tokens**: `ColorPrimitive/colorName` → Organized in `shared/` folder
 
 ### Supported Figma Scopes
 
@@ -406,6 +432,58 @@ The pipeline uses Figma scopes to determine token types semantically:
 | `LINE_HEIGHT` | `dimension` | Always px (per requirement) | `48` → `48px` |
 | `LETTER_SPACING` | `dimension` | px with transform | `-0.5` → `-0.5px` |
 | `FONT_WEIGHT` | `fontWeight` | Unitless integer | `700` → `700` |
+
+### Component Tokens Organization
+
+Component tokens are automatically detected and organized by the preprocessing pipeline:
+
+**Detection Logic:**
+```javascript
+// Any token starting with "Component/" is a component token
+Component/Button/Primary/buttonPrimaryBgColor  → Component Token
+Component/Inputfield/inputBorderWidth           → Component Token
+Semantic/TextColor/textColorPrimary             → Semantic Token
+```
+
+**Automatic Organization:**
+```
+Component Tokens in Figma:
+├── Component/Button/buttonPrimaryBgColor
+├── Component/Button/buttonPrimaryTextColor
+├── Component/Alert/alertBorderWidth
+└── Component/Alert/alertShadow
+
+Generated Output Structure:
+dist/css/brands/bild/components/
+├── Button/
+│   ├── colormode-light.css    (color tokens for Button)
+│   ├── density-default.css    (density tokens for Button)
+│   └── breakpoints.css        (breakpoint tokens for Button)
+└── Alert/
+    ├── colormode-light.css
+    └── effects-light.css      (shadow/effect tokens for Alert)
+```
+
+**Collection-Based Routing:**
+- **ColorMode collection** → `components/{ComponentName}/colormode-{mode}.css`
+- **Density collection** → `components/{ComponentName}/density-{mode}.css`
+- **BreakpointMode collection** → `components/{ComponentName}/breakpoints.css`
+- **BrandTokenMapping/BrandColorMapping** → `components/{ComponentName}/overrides/`
+
+**Composite Component Tokens:**
+```
+Typography:
+  Component/Button/buttonLabelStyle → dist/.../components/Button/typography-{breakpoint}.css
+
+Effects:
+  Component/Alert/alertShadowDown → dist/.../components/Alert/effects-{colormode}.css
+```
+
+**Key Benefits:**
+- ✅ Automatic component isolation (Button tokens separate from Alert tokens)
+- ✅ Brand × Mode matrix applied to component tokens
+- ✅ ~917 component token files across all platforms
+- ✅ Clear separation: `semantic/` vs `components/` folders
 
 ### What is Stable (✅ Safe Changes)
 
@@ -455,6 +533,33 @@ Action: Add new breakpoint "xl"
 Result: New mode exports with variables
 Pipeline: Builds new token files for mode
 Risk: None (additive change)
+```
+
+#### ✅ Creating Component Tokens
+```
+Action: Add "Component/Button/buttonPrimaryBgColor" in Figma
+Result: Automatically detected as component token
+Pipeline: Organized in dist/.../components/Button/ folder
+Risk: None
+Note: Component name extracted from path (2nd segment: "Button")
+```
+
+#### ✅ Creating New Components
+```
+Action: Add first token "Component/Card/cardBgColor"
+Result: New component folder created automatically
+Pipeline: dist/.../components/Card/ folder generated
+Risk: None (additive change)
+Note: ~917 component token files currently in pipeline
+```
+
+#### ✅ Adding Component Typography/Effects
+```
+Action: Add textStyle "Component/Button/buttonLabelStyle"
+Result: Treated as composite component token
+Pipeline: Generated in components/Button/typography-{breakpoint}.css
+Risk: None
+Note: Component typography/effects separated from semantic styles
 ```
 
 ### What is NOT Stable (⚠️ Pipeline Breaks)
@@ -514,6 +619,38 @@ Risk: LOW - Detected but token unusable
 Fix: Break circular reference in Figma
 ```
 
+#### ⚠️ Renaming Component in Token Path
+```
+Action: Rename "Component/Button/..." → "Component/Btn/..."
+Result: Component name extracted from path changes
+Pipeline: ✅ Builds successfully but in different folder
+Risk: MEDIUM - Breaking change for consumers
+Impact: Old path: components/Button/, New path: components/Btn/
+Fix: Consumer code must update import paths
+Note: Semantic versioning major bump required
+```
+
+#### ⚠️ Moving Token Between Component/Semantic
+```
+Action: "Component/Button/bgColor" → "Semantic/Button/bgColor"
+Result: Token moves from components/ to semantic/ folder
+Pipeline: ✅ Builds successfully in new location
+Risk: MEDIUM - Breaking change for consumers
+Impact: Import path changes from components/ to semantic/
+Fix: Consumer code must update import paths
+Note: Pipeline detects by "Component/" prefix
+```
+
+#### ⚠️ Invalid Component Token Paths
+```
+Action: Create token "Component/buttonBgColor" (only 2 segments)
+Result: Missing component name in path
+Pipeline: ⚠️ Token skipped or misprocessed
+Risk: LOW - Validation catches most cases
+Fix: Use proper path: "Component/{ComponentName}/{tokenName}"
+Note: Minimum 3 path segments required for component tokens
+```
+
 ### Pipeline Stability Matrix
 
 | Change Type | Detection | Impact | Auto-Recovery | Fix Required |
@@ -530,6 +667,12 @@ Fix: Break circular reference in Figma
 | Rename mode | ⚠️ Warning | ⚠️ May not match | ⚠️ Usually | ⚠️ Check matching |
 | Remove scope | ⚠️ Warning | ⚠️ Fallback to name | ⚠️ Usually | ⚠️ Check type |
 | Circular alias | ⚠️ Warning | ⚠️ Token unresolved | ❌ No | ✅ Fix in Figma |
+| **New component token** | ✅ Auto | ➕ Component folder | ✅ Yes | ❌ No |
+| **New component** | ✅ Auto | ➕ Folder created | ✅ Yes | ❌ No |
+| **Component typography/effects** | ✅ Auto | ➕ Composite output | ✅ Yes | ❌ No |
+| **Rename component in path** | ✅ Auto | 🔄 Folder renamed | ✅ Yes | ⚠️ Consumer breaking |
+| **Move Component↔Semantic** | ✅ Auto | 🔄 Folder changed | ✅ Yes | ⚠️ Consumer breaking |
+| **Invalid component path** | ⚠️ Warning | ⚠️ Token skipped | ❌ No | ✅ Fix path in Figma |
 
 ### Best Practices
 
@@ -539,6 +682,9 @@ Fix: Break circular reference in Figma
 - ✅ Test exports in `figma-tokens` branch before merging
 - ✅ Review CI build artifacts before publishing
 - ✅ Use aliases for design tokens (single source of truth)
+- ✅ Use proper component paths: `Component/{ComponentName}/{tokenName}` (min 3 segments)
+- ✅ Organize by component in Figma (Button, Alert, Card, etc.)
+- ✅ Use consistent component naming (PascalCase recommended)
 
 **DON'T:**
 - ❌ Delete collections without updating preprocessing code
@@ -546,6 +692,9 @@ Fix: Break circular reference in Figma
 - ❌ Use ambiguous token names without scopes
 - ❌ Push directly to `main` without review
 - ❌ Manually edit generated files in `dist/`
+- ❌ Use invalid component paths like `Component/tokenName` (too few segments)
+- ❌ Rename component folders in Figma without coordinating with consumers
+- ❌ Mix component and semantic tokens in same path structure
 
 ---
 
