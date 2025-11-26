@@ -12,6 +12,7 @@
 const StyleDictionary = require('style-dictionary').default;
 const fs = require('fs');
 const path = require('path');
+const { glob } = require('glob');
 
 // Import custom config
 const customConfig = require('../build-config/style-dictionary.config.js');
@@ -1352,6 +1353,112 @@ function createManifest(stats) {
 }
 
 /**
+ * Rounds CSS values to remove floating-point precision errors
+ * Processes all CSS files in dist/css directory
+ */
+async function roundCSSValues() {
+  console.log('\n🔢 Rounding CSS Values:\n');
+
+  const cssDir = path.join(DIST_DIR, 'css');
+  const cssFiles = await glob(`${cssDir}/**/*.css`);
+
+  let totalFiles = 0;
+  let processedFiles = 0;
+
+  for (const file of cssFiles) {
+    totalFiles++;
+    let content = fs.readFileSync(file, 'utf-8');
+    let modified = false;
+
+    // Round rgba() alpha values (0.699999988079071 -> 0.7)
+    const rgbaRegex = /rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/g;
+    content = content.replace(rgbaRegex, (match, r, g, b, a) => {
+      const roundedAlpha = Math.round(parseFloat(a) * 100) / 100;
+      modified = true;
+      return `rgba(${r}, ${g}, ${b}, ${roundedAlpha})`;
+    });
+
+    // Round pixel values (0.33000001311302185px -> 0.33px, 16.0px -> 16px)
+    const pxRegex = /([\d.]+)px/g;
+    content = content.replace(pxRegex, (match, value) => {
+      const num = parseFloat(value);
+      // If it's a whole number, don't add decimals
+      if (Number.isInteger(num)) {
+        modified = true;
+        return `${num}px`;
+      }
+      // Round to 2 decimal places for fractional values
+      const rounded = Math.round(num * 100) / 100;
+      modified = true;
+      return `${rounded}px`;
+    });
+
+    // Round rem values (1.33333333rem -> 1.33rem)
+    const remRegex = /([\d.]+)rem/g;
+    content = content.replace(remRegex, (match, value) => {
+      const num = parseFloat(value);
+      if (Number.isInteger(num)) {
+        modified = true;
+        return `${num}rem`;
+      }
+      const rounded = Math.round(num * 100) / 100;
+      modified = true;
+      return `${rounded}rem`;
+    });
+
+    // Round em values (1.33333333em -> 1.33em)
+    const emRegex = /([\d.]+)em/g;
+    content = content.replace(emRegex, (match, value) => {
+      const num = parseFloat(value);
+      if (Number.isInteger(num)) {
+        modified = true;
+        return `${num}em`;
+      }
+      const rounded = Math.round(num * 100) / 100;
+      modified = true;
+      return `${rounded}em`;
+    });
+
+    // Round percentage values (70.00000001% -> 70%)
+    const percentRegex = /([\d.]+)%/g;
+    content = content.replace(percentRegex, (match, value) => {
+      const num = parseFloat(value);
+      if (Number.isInteger(num)) {
+        modified = true;
+        return `${num}%`;
+      }
+      const rounded = Math.round(num * 100) / 100;
+      modified = true;
+      return `${rounded}%`;
+    });
+
+    // Round standalone decimal numbers in CSS (used in opacity, line-height, etc.)
+    // Match CSS property values that are just numbers
+    const numberRegex = /:(\s*)([\d.]+);/g;
+    content = content.replace(numberRegex, (match, space, value) => {
+      const num = parseFloat(value);
+      // Only process if it has a long decimal
+      if (value.includes('.') && value.split('.')[1].length > 2) {
+        const rounded = Math.round(num * 100) / 100;
+        modified = true;
+        return `:${space}${rounded};`;
+      }
+      return match;
+    });
+
+    if (modified) {
+      fs.writeFileSync(file, content, 'utf-8');
+      processedFiles++;
+    }
+  }
+
+  console.log(`   ✅ Processed ${processedFiles}/${totalFiles} CSS files`);
+  console.log(`   📁 Directory: ${cssDir}\n`);
+
+  return { totalFiles, processedFiles };
+}
+
+/**
  * Main function
  */
 async function main() {
@@ -1392,6 +1499,9 @@ async function main() {
   // Convert to responsive CSS
   stats.responsiveCSS = await convertToResponsiveCSS();
 
+  // Round CSS values to remove floating-point precision errors
+  stats.roundedValues = await roundCSSValues();
+
   // Create manifest
   createManifest(stats);
 
@@ -1415,6 +1525,7 @@ async function main() {
   console.log(`   - Typography Builds: ${stats.typographyTokens.successfulBuilds}/${stats.typographyTokens.totalBuilds}`);
   console.log(`   - Effect Builds: ${stats.effectTokens.successfulBuilds}/${stats.effectTokens.totalBuilds}`);
   console.log(`   - Responsive CSS Files: ${stats.responsiveCSS.successfulConversions}/${stats.responsiveCSS.totalConversions}`);
+  console.log(`   - Rounded CSS Values: ${stats.roundedValues.processedFiles}/${stats.roundedValues.totalFiles}`);
   console.log(`   - Builds erfolgreich: ${successfulBuilds}/${totalBuilds}`);
   console.log(`   - Output-Verzeichnis: dist/\n`);
 
