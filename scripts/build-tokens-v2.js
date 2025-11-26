@@ -620,6 +620,214 @@ async function buildEffectTokens() {
 }
 
 /**
+ * Converts breakpoint-based typography files to responsive CSS with media queries
+ */
+async function convertToResponsiveCSS() {
+  console.log('\n📱 Converting to Responsive CSS with Media Queries:\n');
+
+  const breakpointConfig = {
+    xs: null,           // base, no media query
+    sm: '390px',
+    md: '600px',
+    lg: '1024px'
+  };
+
+  let totalConversions = 0;
+  let successfulConversions = 0;
+
+  // Only process CSS files
+  const cssDir = path.join(DIST_DIR, 'css', 'brands');
+
+  for (const brand of BRANDS) {
+    const brandDir = path.join(cssDir, brand);
+    if (!fs.existsSync(brandDir)) continue;
+
+    console.log(`  🏷️  ${brand}:`);
+
+    // Process semantic typography
+    const semanticTypographyDir = path.join(brandDir, 'semantic', 'typography');
+    if (fs.existsSync(semanticTypographyDir)) {
+      const semanticFiles = fs.readdirSync(semanticTypographyDir)
+        .filter(f => f.endsWith('-xs.css'));
+
+      for (const baseFile of semanticFiles) {
+        const baseName = baseFile.replace('-xs.css', '');
+        totalConversions++;
+
+        try {
+          const responsiveContent = await generateResponsiveFile(
+            semanticTypographyDir,
+            baseName,
+            brand,
+            breakpointConfig
+          );
+
+          const outputPath = path.join(semanticTypographyDir, `${baseName}-responsive.css`);
+          fs.writeFileSync(outputPath, responsiveContent, 'utf-8');
+          successfulConversions++;
+          console.log(`     ✅ semantic/${baseName}-responsive.css`);
+        } catch (error) {
+          console.error(`     ❌ Error: semantic/${baseName} - ${error.message}`);
+        }
+      }
+    }
+
+    // Process component typography
+    const componentsDir = path.join(brandDir, 'components');
+    if (fs.existsSync(componentsDir)) {
+      const componentFolders = fs.readdirSync(componentsDir)
+        .filter(f => fs.statSync(path.join(componentsDir, f)).isDirectory());
+
+      for (const component of componentFolders) {
+        const componentDir = path.join(componentsDir, component);
+        const typographyFiles = fs.readdirSync(componentDir)
+          .filter(f => f.endsWith('-xs.css') && f.includes('typography'));
+
+        for (const baseFile of typographyFiles) {
+          const baseName = baseFile.replace('-xs.css', '');
+          totalConversions++;
+
+          try {
+            const responsiveContent = await generateResponsiveFile(
+              componentDir,
+              baseName,
+              brand,
+              breakpointConfig
+            );
+
+            const outputPath = path.join(componentDir, `${baseName}-responsive.css`);
+            fs.writeFileSync(outputPath, responsiveContent, 'utf-8');
+            successfulConversions++;
+            console.log(`     ✅ ${component}/${baseName}-responsive.css`);
+          } catch (error) {
+            console.error(`     ❌ Error: ${component}/${baseName} - ${error.message}`);
+          }
+        }
+      }
+    }
+  }
+
+  return { totalConversions, successfulConversions };
+}
+
+/**
+ * Generates a responsive CSS file with media queries from breakpoint files
+ */
+async function generateResponsiveFile(dir, baseName, brand, breakpointConfig) {
+  const breakpointFiles = {};
+
+  // Read all breakpoint files
+  for (const bp of BREAKPOINTS) {
+    const filePath = path.join(dir, `${baseName}-${bp}.css`);
+    if (fs.existsSync(filePath)) {
+      breakpointFiles[bp] = fs.readFileSync(filePath, 'utf-8');
+    }
+  }
+
+  if (Object.keys(breakpointFiles).length === 0) {
+    throw new Error('No breakpoint files found');
+  }
+
+  // Extract header from first file
+  const firstFile = breakpointFiles.xs || breakpointFiles.sm || breakpointFiles.md || breakpointFiles.lg;
+  const headerMatch = firstFile.match(/^\/\*\*[\s\S]*?\*\//);
+  const header = headerMatch ? headerMatch[0].replace(/Breakpoint: \w+/, 'Responsive (Media Queries)') : '';
+
+  let output = header + '\n\n';
+
+  // Extract CSS classes from each breakpoint
+  const breakpointClasses = {};
+  for (const [bp, content] of Object.entries(breakpointFiles)) {
+    const classes = extractClasses(content, brand, bp);
+    breakpointClasses[bp] = classes;
+  }
+
+  // Generate responsive CSS with media queries
+  output += `[data-brand="${brand}"] {\n`;
+
+  // Base styles (XS)
+  if (breakpointClasses.xs && breakpointClasses.xs.length > 0) {
+    for (const cls of breakpointClasses.xs) {
+      output += `  .${cls.name} {\n`;
+      for (const prop of cls.properties) {
+        output += `    ${prop}\n`;
+      }
+      output += `  }\n\n`;
+    }
+  }
+
+  // Media queries for SM, MD, LG
+  for (const bp of ['sm', 'md', 'lg']) {
+    if (breakpointClasses[bp] && breakpointClasses[bp].length > 0 && breakpointConfig[bp]) {
+      output += `  @media (min-width: ${breakpointConfig[bp]}) {\n`;
+      for (const cls of breakpointClasses[bp]) {
+        output += `    .${cls.name} {\n`;
+        for (const prop of cls.properties) {
+          output += `      ${prop}\n`;
+        }
+        output += `    }\n\n`;
+      }
+      output += `  }\n\n`;
+    }
+  }
+
+  output += `}\n`;
+
+  return output;
+}
+
+/**
+ * Extracts CSS classes from a file
+ */
+function extractClasses(content, brand, breakpoint) {
+  const classes = [];
+
+  // Check if content uses data-attribute selectors or plain classes
+  const hasDataAttributes = content.includes(`[data-brand="${brand}"][data-breakpoint="${breakpoint}"]`);
+
+  if (hasDataAttributes) {
+    // Component typography with data attributes
+    const selector = `[data-brand="${brand}"][data-breakpoint="${breakpoint}"]`;
+    const classRegex = new RegExp(`\\/\\*[\\s\\S]*?\\*\\/\\s*${selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s+\\.(\\S+)\\s*{([^}]*)}`, 'g');
+    let match;
+
+    while ((match = classRegex.exec(content)) !== null) {
+      const className = match[1];
+      const properties = match[2]
+        .split(';')
+        .map(p => p.trim())
+        .filter(p => p.length > 0)
+        .map(p => p + ';');
+
+      classes.push({
+        name: className,
+        properties
+      });
+    }
+  } else {
+    // Semantic typography without data attributes
+    const classRegex = /\/\*[\s\S]*?\*\/\s*\.([\w-]+)\s*{([^}]*)}/g;
+    let match;
+
+    while ((match = classRegex.exec(content)) !== null) {
+      const className = match[1];
+      const properties = match[2]
+        .split(';')
+        .map(p => p.trim())
+        .filter(p => p.length > 0)
+        .map(p => p + ';');
+
+      classes.push({
+        name: className,
+        properties
+      });
+    }
+  }
+
+  return classes;
+}
+
+/**
  * Creates Manifest
  */
 function createManifest(stats) {
@@ -632,7 +840,8 @@ function createManifest(stats) {
       sharedPrimitives: stats.sharedPrimitives || { total: 0, successful: 0 },
       brandSpecific: stats.brandSpecific || { totalBuilds: 0, successfulBuilds: 0 },
       typographyTokens: stats.typographyTokens || { totalBuilds: 0, successfulBuilds: 0 },
-      effectTokens: stats.effectTokens || { totalBuilds: 0, successfulBuilds: 0 }
+      effectTokens: stats.effectTokens || { totalBuilds: 0, successfulBuilds: 0 },
+      responsiveCSS: stats.responsiveCSS || { totalConversions: 0, successfulConversions: 0 }
     },
     structure: {
       brands: BRANDS,
@@ -718,6 +927,9 @@ async function main() {
   // Build effect tokens
   stats.effectTokens = await buildEffectTokens();
 
+  // Convert to responsive CSS
+  stats.responsiveCSS = await convertToResponsiveCSS();
+
   // Create manifest
   createManifest(stats);
 
@@ -737,6 +949,7 @@ async function main() {
   console.log(`   - Brand-spezifische Tokens: ${stats.brandSpecific.successfulBuilds}/${stats.brandSpecific.totalBuilds}`);
   console.log(`   - Typography Builds: ${stats.typographyTokens.successfulBuilds}/${stats.typographyTokens.totalBuilds}`);
   console.log(`   - Effect Builds: ${stats.effectTokens.successfulBuilds}/${stats.effectTokens.totalBuilds}`);
+  console.log(`   - Responsive CSS Files: ${stats.responsiveCSS.successfulConversions}/${stats.responsiveCSS.totalConversions}`);
   console.log(`   - Builds erfolgreich: ${successfulBuilds}/${totalBuilds}`);
   console.log(`   - Output-Verzeichnis: dist/\n`);
 
