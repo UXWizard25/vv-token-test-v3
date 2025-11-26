@@ -358,6 +358,35 @@ const sizeRemTransform = {
 };
 
 /**
+ * Transform: Dimension zu iOS Points (CGFloat - reine Zahlen ohne Einheit)
+ * iOS nutzt Points statt Pixels. 1pt ≈ 1px auf @1x screens
+ */
+const sizeIosPointsTransform = {
+  name: 'custom/size/ios-points',
+  type: 'value',
+  filter: (token) => {
+    const type = token.$type || token.type;
+    const value = token.$value || token.value;
+
+    // Only match if type is dimension-related AND value is numeric
+    const isMatchingType = ['spacing', 'size', 'fontSize', 'dimension'].includes(type);
+    const isNumeric = typeof value === 'number';
+
+    return isMatchingType && isNumeric;
+  },
+  transform: (token) => {
+    const value = token.$value || token.value;
+
+    // Return rounded number (CGFloat) without any unit
+    if (typeof value === 'number') {
+      return roundValue(value);
+    }
+
+    return value;
+  }
+};
+
+/**
  * Transform: Name zu CSS Custom Property (Kebab-Case)
  * Verwendet nur das letzte Pfad-Segment für den Token-Namen
  */
@@ -1874,7 +1903,7 @@ const customTransformGroups = {
   'custom/css': ['name/custom/kebab', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/scss': ['name/custom/kebab', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/js': ['name/custom/js', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
-  'custom/ios-swift': ['name/custom/ios-swift', 'custom/color/UIColor', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/ios-swift': ['name/custom/ios-swift', 'custom/color/UIColor', 'custom/size/ios-points', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/android': ['name/custom/kebab', 'color/hex', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/flutter': ['name/custom/flutter-dart', 'color/hex', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round']
 };
@@ -1998,6 +2027,7 @@ module.exports = {
     'color/css': colorCssTransform,
     'custom/color/UIColor': colorUIColorTransform,
     'custom/size/px': sizePxTransform,
+    'custom/size/ios-points': sizeIosPointsTransform,
     'size/rem': sizeRemTransform,
     'custom/opacity': opacityTransform,
     'custom/fontWeight': fontWeightTransform,
