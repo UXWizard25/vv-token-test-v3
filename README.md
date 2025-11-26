@@ -39,7 +39,7 @@ This pipeline processes the multi-layer, multi-brand BILD Design System architec
 │ Figma Variables (Design Source)            │
 │ • BILD Design System file                   │
 │ • Variables with Scopes & Aliases           │
-│ • Figma Variable Visualizer plugin export   │
+│ • TokenSync plugin export                   │
 └─────────────────────────────────────────────┘
                   ↓
 ┌─────────────────────────────────────────────┐
@@ -875,7 +875,7 @@ dist/
 ### Development Workflow
 
 1. **Export from Figma**
-   - Use Figma Variable Visualizer plugin
+   - Use TokenSync plugin (custom-built)
    - Target branch: `figma-tokens` (recommended)
    - Exports to: `src/design-tokens/bild-design-system-raw-data.json`
 
