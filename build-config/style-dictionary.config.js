@@ -410,6 +410,57 @@ const nameFlutterDartTransform = {
 };
 
 /**
+ * Transform: Opacity - Convert Figma % (5, 10, 70) to CSS decimal (0.05, 0.1, 0.7)
+ */
+const opacityTransform = {
+  name: 'custom/opacity',
+  type: 'value',
+  filter: (token) => {
+    const type = token.$type || token.type;
+    const value = token.$value || token.value;
+    return type === 'opacity' && typeof value === 'number';
+  },
+  transform: (token) => {
+    const value = token.$value || token.value;
+    // Figma exports % (5, 10, 70), CSS needs 0-1 (0.05, 0.1, 0.7)
+    const cssValue = value / 100;
+    return roundValue(cssValue); // Round to avoid precision errors
+  }
+};
+
+/**
+ * Transform: Font Weight - Unitless integer
+ */
+const fontWeightTransform = {
+  name: 'custom/fontWeight',
+  type: 'value',
+  filter: (token) => {
+    const type = token.$type || token.type;
+    const value = token.$value || token.value;
+    return type === 'fontWeight' && typeof value === 'number';
+  },
+  transform: (token) => {
+    return Math.round(token.$value || token.value); // 700, no "px"
+  }
+};
+
+/**
+ * Transform: Number - Unitless rounded number (for columns, z-index, etc.)
+ */
+const numberTransform = {
+  name: 'custom/number',
+  type: 'value',
+  filter: (token) => {
+    const type = token.$type || token.type;
+    const value = token.$value || token.value;
+    return type === 'number' && typeof value === 'number';
+  },
+  transform: (token) => {
+    return Math.round(token.$value || token.value); // Unitless integer
+  }
+};
+
+/**
  * Transform: Round numeric values to remove floating-point precision errors
  * This transform runs AFTER all other value transforms (color, size, etc.)
  * and rounds numeric values in strings to 2 decimal places
@@ -546,7 +597,9 @@ const cssVariablesFormat = ({ dictionary, options, file }) => {
         if (comment) {
           output += `  /**\n   * ${comment}\n   */\n`;
         }
-        output += `  --${uniqueName}: ${token.value};\n`;
+        // Use $value (transformed) or fallback to value (original)
+        const finalValue = token.$value !== undefined ? token.$value : token.value;
+        output += `  --${uniqueName}: ${finalValue};\n`;
       });
 
       output += `\n`;
@@ -598,7 +651,7 @@ const scssVariablesFormat = ({ dictionary, options, file }) => {
         if (comment) {
           output += `// ${comment}\n`;
         }
-        output += `$${uniqueName}: ${token.value};\n`;
+        output += `$${uniqueName}: ${token.$value !== undefined ? token.$value : token.value};\n`;
       });
 
       output += `\n`;
@@ -649,7 +702,7 @@ const javascriptEs6Format = ({ dictionary, options, file }) => {
         if (comment) {
           output += `/** ${comment} */\n`;
         }
-        output += `export const ${uniqueName} = "${token.value}";\n`;
+        output += `export const ${uniqueName} = "${token.$value !== undefined ? token.$value : token.value}";\n`;
       });
 
       output += `\n`;
@@ -712,7 +765,7 @@ const iosSwiftClassFormat = ({ dictionary, options, file }) => {
         }
 
         let valueOutput;
-        const value = token.value;
+        const value = token.$value !== undefined ? token.$value : token.value;
         const type = token.$type || token.type;
 
         if (type === 'color') {
@@ -802,7 +855,7 @@ const flutterDartClassFormat = ({ dictionary, options, file }) => {
         }
 
         let valueOutput;
-        const value = token.value;
+        const value = token.$value !== undefined ? token.$value : token.value;
         const type = token.$type || token.type;
 
         if (type === 'color') {
@@ -1127,7 +1180,7 @@ const androidResourcesFormat = ({ dictionary, options, file }) => {
 
       tokens.forEach(token => {
         const uniqueName = uniqueNames.get(token.path.join('.'));
-        const value = token.value;
+        const value = token.$value !== undefined ? token.$value : token.value;
         const type = token.$type || token.type;
         const comment = token.comment || token.description;
 
@@ -1818,12 +1871,12 @@ const androidXmlEffectsFormat = ({ dictionary, options }) => {
  * AFTER all other transforms (color conversion, size conversion, etc.)
  */
 const customTransformGroups = {
-  'custom/css': ['name/custom/kebab', 'color/css', 'custom/size/px', 'value/round'],
-  'custom/scss': ['name/custom/kebab', 'color/css', 'custom/size/px', 'value/round'],
-  'custom/js': ['name/custom/js', 'color/css', 'custom/size/px', 'value/round'],
-  'custom/ios-swift': ['name/custom/ios-swift', 'custom/color/UIColor', 'custom/size/px', 'value/round'],
-  'custom/android': ['name/custom/kebab', 'color/hex', 'custom/size/px', 'value/round'],
-  'custom/flutter': ['name/custom/flutter-dart', 'color/hex', 'custom/size/px', 'value/round']
+  'custom/css': ['name/custom/kebab', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/scss': ['name/custom/kebab', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/js': ['name/custom/js', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/ios-swift': ['name/custom/ios-swift', 'custom/color/UIColor', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/android': ['name/custom/kebab', 'color/hex', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/flutter': ['name/custom/flutter-dart', 'color/hex', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round']
 };
 
 // ============================================================================
@@ -1887,7 +1940,8 @@ const cssThemedVariablesFormat = ({ dictionary, options, file }) => {
         const tokens = subGroups[subLevel];
         tokens.forEach(token => {
           const uniqueName = uniqueNames.get(token.path.join('.'));
-          output += `  --${uniqueName}: ${token.value};\n`;
+          const finalValue = token.$value !== undefined ? token.$value : token.value;
+          output += `  --${uniqueName}: ${finalValue};\n`;
         });
       });
     });
@@ -1923,7 +1977,8 @@ const cssThemedVariablesFormat = ({ dictionary, options, file }) => {
         if (comment) {
           output += `  /**\n   * ${comment}\n   */\n`;
         }
-        output += `  --${uniqueName}: ${token.value};\n`;
+        const finalValue = token.$value !== undefined ? token.$value : token.value;
+        output += `  --${uniqueName}: ${finalValue};\n`;
       });
 
       output += `\n`;
@@ -1944,6 +1999,9 @@ module.exports = {
     'custom/color/UIColor': colorUIColorTransform,
     'custom/size/px': sizePxTransform,
     'size/rem': sizeRemTransform,
+    'custom/opacity': opacityTransform,
+    'custom/fontWeight': fontWeightTransform,
+    'custom/number': numberTransform,
     'name/custom/kebab': nameKebabTransform,
     'name/custom/js': nameJsTransform,
     'name/custom/ios-swift': nameIosSwiftTransform,
