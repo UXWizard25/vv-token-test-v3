@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2025-11-26T16:19:37.068Z",
+  "lastModified": "2025-11-26T22:06:31.080Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -25939,7 +25939,7 @@
         },
         {
           "id": "VariableID:20361:19933",
-          "name": "Component/buttonLabelFontWeightSt",
+          "name": "Component/Button/buttonLabelFontWeightSt",
           "description": "",
           "resolvedType": "STRING",
           "valuesByMode": {
