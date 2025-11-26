@@ -959,6 +959,181 @@ async function buildEffectTokens() {
 }
 
 /**
+ * Breakpoint configuration for media queries (mobile-first)
+ */
+const BREAKPOINT_CONFIG = {
+  xs: { minWidth: null, order: 1 },      // Base, no media query
+  sm: { minWidth: '390px', order: 2 },   // @media (min-width: 390px)
+  md: { minWidth: '600px', order: 3 },   // @media (min-width: 600px)
+  lg: { minWidth: '1024px', order: 4 }   // @media (min-width: 1024px)
+};
+
+/**
+ * Converts data-breakpoint CSS files to responsive CSS with media queries
+ * Mobile-first approach: XS = base, then min-width media queries
+ */
+async function convertToResponsiveCSS() {
+  console.log('\n📱 Converting to Responsive CSS (Media Queries):\n');
+
+  let successfulConversions = 0;
+
+  for (const brand of BRANDS) {
+    console.log(`  🏷️  ${brand}:`);
+
+    // Process Typography files
+    const typographyFiles = {};
+    for (const breakpoint of BREAKPOINTS) {
+      const filePath = path.join(DIST_DIR, 'css', 'brands', brand, 'semantic', 'typography', `typography-${breakpoint}.css`);
+      if (fs.existsSync(filePath)) {
+        typographyFiles[breakpoint] = fs.readFileSync(filePath, 'utf8');
+      }
+    }
+
+    if (Object.keys(typographyFiles).length > 0) {
+      const responsiveCSS = generateResponsiveTypographyCSS(typographyFiles, brand);
+      const outputPath = path.join(DIST_DIR, 'css', 'brands', brand, 'semantic', 'typography', `typography-responsive.css`);
+      fs.writeFileSync(outputPath, responsiveCSS);
+      successfulConversions++;
+      console.log(`     ✅ typography-responsive.css`);
+    }
+
+    // Process Component Typography files
+    const componentsDir = path.join(TOKENS_DIR, 'brands', brand, 'components');
+    if (fs.existsSync(componentsDir)) {
+      const components = fs.readdirSync(componentsDir).filter(name => {
+        return fs.statSync(path.join(componentsDir, name)).isDirectory();
+      });
+
+      for (const component of components) {
+        const componentTypographyFiles = {};
+        for (const breakpoint of BREAKPOINTS) {
+          const filePath = path.join(DIST_DIR, 'css', 'brands', brand, 'components', component, `${component.toLowerCase()}-typography-${breakpoint}.css`);
+          if (fs.existsSync(filePath)) {
+            componentTypographyFiles[breakpoint] = fs.readFileSync(filePath, 'utf8');
+          }
+        }
+
+        if (Object.keys(componentTypographyFiles).length > 0) {
+          const responsiveCSS = generateResponsiveTypographyCSS(componentTypographyFiles, brand, component);
+          const outputPath = path.join(DIST_DIR, 'css', 'brands', brand, 'components', component, `${component.toLowerCase()}-typography-responsive.css`);
+          fs.writeFileSync(outputPath, responsiveCSS);
+          successfulConversions++;
+        }
+      }
+      console.log(`     ✅ ${components.length} component typography files`);
+    }
+  }
+
+  console.log(`\n  Total: ${successfulConversions} responsive files generated`);
+  return { totalConversions: successfulConversions };
+}
+
+/**
+ * Generates responsive CSS with media queries from breakpoint-specific files
+ */
+function generateResponsiveTypographyCSS(breakpointFiles, brand, component = null) {
+  const packageVersion = require('../package.json').version;
+  const date = new Date().toISOString().split('T')[0];
+  const brandName = brand.charAt(0).toUpperCase() + brand.slice(1);
+  const context = component ? `Component: ${component}` : 'Semantic Typography';
+
+  // Header
+  let output = `/**
+ * ============================================================================
+ * ${brandName} Design System - Responsive Typography${component ? ` (${component})` : ''}
+ * ============================================================================
+ *
+ * Brand: ${brandName}
+ * ${context}
+ * Version: ${packageVersion}
+ * Generated: ${date}
+ *
+ * Uses CSS Media Queries (Mobile-First)
+ * Base: XS (320px+) - No media query
+ * SM: 390px+ - @media (min-width: 390px)
+ * MD: 600px+ - @media (min-width: 600px)
+ * LG: 1024px+ - @media (min-width: 1024px)
+ *
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ * Proprietary and confidential. All rights reserved.
+ * ============================================================================
+ */
+
+`;
+
+  // Parse all breakpoint files and extract classes
+  const classesByName = {};
+
+  for (const breakpoint of BREAKPOINTS) {
+    const css = breakpointFiles[breakpoint];
+    if (!css) continue;
+
+    // Extract all class definitions
+    const classRegex = /\[data-brand="[^"]+"\]\[data-breakpoint="[^"]+"\]\s+\.([a-zA-Z0-9_-]+)\s*\{([^}]+)\}/g;
+    let match;
+
+    while ((match = classRegex.exec(css)) !== null) {
+      const className = match[1];
+      const properties = match[2].trim();
+
+      if (!classesByName[className]) {
+        classesByName[className] = {};
+      }
+
+      classesByName[className][breakpoint] = properties;
+    }
+  }
+
+  // Generate mobile-first responsive CSS
+  const brandLowercase = brand.toLowerCase();
+
+  output += `/* === RESPONSIVE TYPOGRAPHY${component ? ` - ${component.toUpperCase()}` : ''} === */\n\n`;
+  output += `[data-brand="${brandLowercase}"][data-theme="light"],\n`;
+  output += `[data-brand="${brandLowercase}"][data-theme="dark"] {\n`;
+
+  // For each class, generate base + media queries
+  Object.keys(classesByName).forEach(className => {
+    const breakpointStyles = classesByName[className];
+
+    // Base styles (XS)
+    if (breakpointStyles.xs) {
+      output += `  .${className} {\n`;
+      const props = breakpointStyles.xs.split(';').map(p => p.trim()).filter(p => p);
+      props.forEach(prop => {
+        output += `    ${prop};\n`;
+      });
+      output += `  }\n\n`;
+    }
+
+    // Media queries for larger breakpoints (only if different from base)
+    ['sm', 'md', 'lg'].forEach(breakpoint => {
+      const currentStyles = breakpointStyles[breakpoint];
+      if (!currentStyles) return;
+
+      // Check if styles are different from XS
+      const baseStyles = breakpointStyles.xs || '';
+      if (currentStyles === baseStyles) return; // Skip if identical
+
+      const config = BREAKPOINT_CONFIG[breakpoint];
+      if (!config.minWidth) return;
+
+      output += `  @media (min-width: ${config.minWidth}) {\n`;
+      output += `    .${className} {\n`;
+      const props = currentStyles.split(';').map(p => p.trim()).filter(p => p);
+      props.forEach(prop => {
+        output += `      ${prop};\n`;
+      });
+      output += `    }\n`;
+      output += `  }\n\n`;
+    });
+  });
+
+  output += `}\n`;
+
+  return output;
+}
+
+/**
  * Creates Manifest
  */
 function createManifest(stats) {
@@ -1058,6 +1233,9 @@ async function main() {
   // Build typography tokens
   stats.typographyTokens = await buildTypographyTokens();
 
+  // Convert to responsive CSS with media queries
+  stats.responsiveCSS = await convertToResponsiveCSS();
+
   // Build effect tokens
   stats.effectTokens = await buildEffectTokens();
 
@@ -1082,6 +1260,7 @@ async function main() {
   console.log(`   - Brand-spezifische Tokens: ${stats.brandSpecific.successfulBuilds}/${stats.brandSpecific.totalBuilds}`);
   console.log(`   - Component Tokens: ${stats.componentTokens.successfulBuilds}/${stats.componentTokens.totalBuilds}`);
   console.log(`   - Typography Builds: ${stats.typographyTokens.successfulBuilds}/${stats.typographyTokens.totalBuilds}`);
+  console.log(`   - Responsive CSS Files: ${stats.responsiveCSS.totalConversions}`);
   console.log(`   - Effect Builds: ${stats.effectTokens.successfulBuilds}/${stats.effectTokens.totalBuilds}`);
   console.log(`   - Builds erfolgreich: ${successfulBuilds}/${totalBuilds}`);
   console.log(`   - Output-Verzeichnis: dist/\n`);
