@@ -15,6 +15,7 @@
     "./scss/*": "./dist/scss/*",
     "./js/*": "./dist/js/*",
     "./json/*": "./dist/json/*",
+    "./bundles/*": "./dist/bundles/*",
     "./package.json": "./package.json"
   },
   "files": [
@@ -25,7 +26,8 @@
   "scripts": {
     "preprocess": "node scripts/preprocess-plugin-tokens.js",
     "build:tokens": "npm run preprocess && node scripts/build-tokens-v2.js",
-    "build": "npm run build:tokens",
+    "build:bundles": "node scripts/build-bundles.js",
+    "build": "npm run build:tokens && npm run build:bundles",
     "watch": "nodemon --watch src/design-tokens --ext json --exec npm run build:tokens",
     "clean": "rm -rf dist tokens",
     "prepublishOnly": "npm run build"
