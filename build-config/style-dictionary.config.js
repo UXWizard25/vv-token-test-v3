@@ -966,9 +966,9 @@ const cssTypographyClassesFormat = ({ dictionary, options }) => {
           output += `${dataSelector} .${className} {\n`;
           if (style.fontFamily) output += `  font-family: ${style.fontFamily};\n`;
           if (style.fontWeight) output += `  font-weight: ${style.fontWeight};\n`;
-          if (style.fontSize) output += `  font-size: ${style.fontSize};\n`;
-          if (style.lineHeight) output += `  line-height: ${style.lineHeight};\n`;
-          if (style.letterSpacing) output += `  letter-spacing: ${style.letterSpacing};\n`;
+          if (style.fontSize) output += `  font-size: ${typeof style.fontSize === 'number' ? style.fontSize + 'px' : style.fontSize};\n`;
+          if (style.lineHeight) output += `  line-height: ${typeof style.lineHeight === 'number' ? style.lineHeight + 'px' : style.lineHeight};\n`;
+          if (style.letterSpacing) output += `  letter-spacing: ${typeof style.letterSpacing === 'number' ? style.letterSpacing + 'px' : style.letterSpacing};\n`;
           if (style.fontStyle && style.fontStyle !== 'null') output += `  font-style: ${style.fontStyle.toLowerCase()};\n`;
           if (style.textCase && style.textCase !== 'ORIGINAL') {
             output += `  text-transform: ${style.textCase.toLowerCase()};\n`;
@@ -1566,9 +1566,9 @@ const javascriptTypographyFormat = ({ dictionary, options }) => {
           output += `export const ${uniqueName} = {\n`;
           if (style.fontFamily) output += `  fontFamily: "${style.fontFamily}",\n`;
           if (style.fontWeight) output += `  fontWeight: ${style.fontWeight},\n`;
-          if (style.fontSize) output += `  fontSize: "${style.fontSize}",\n`;
-          if (style.lineHeight) output += `  lineHeight: "${style.lineHeight}",\n`;
-          if (style.letterSpacing) output += `  letterSpacing: "${style.letterSpacing}",\n`;
+          if (style.fontSize) output += `  fontSize: "${typeof style.fontSize === 'number' ? style.fontSize + 'px' : style.fontSize}",\n`;
+          if (style.lineHeight) output += `  lineHeight: "${typeof style.lineHeight === 'number' ? style.lineHeight + 'px' : style.lineHeight}",\n`;
+          if (style.letterSpacing) output += `  letterSpacing: "${typeof style.letterSpacing === 'number' ? style.letterSpacing + 'px' : style.letterSpacing}",\n`;
           if (style.fontStyle && style.fontStyle !== 'null') output += `  fontStyle: "${style.fontStyle.toLowerCase()}",\n`;
           if (style.textCase && style.textCase !== 'ORIGINAL') output += `  textTransform: "${style.textCase.toLowerCase()}",\n`;
           if (style.textDecoration && style.textDecoration !== 'NONE') output += `  textDecoration: "${style.textDecoration.toLowerCase()}",\n`;
@@ -1631,9 +1631,9 @@ const flutterTypographyFormat = ({ dictionary, options }) => {
           output += `    static const ${uniqueName} = {\n`;
           if (style.fontFamily) output += `      'fontFamily': '${style.fontFamily}',\n`;
           if (style.fontWeight) output += `      'fontWeight': ${style.fontWeight},\n`;
-          if (style.fontSize) output += `      'fontSize': '${style.fontSize}',\n`;
-          if (style.lineHeight) output += `      'lineHeight': '${style.lineHeight}',\n`;
-          if (style.letterSpacing) output += `      'letterSpacing': '${style.letterSpacing}',\n`;
+          if (style.fontSize) output += `      'fontSize': '${typeof style.fontSize === 'number' ? style.fontSize + 'px' : style.fontSize}',\n`;
+          if (style.lineHeight) output += `      'lineHeight': '${typeof style.lineHeight === 'number' ? style.lineHeight + 'px' : style.lineHeight}',\n`;
+          if (style.letterSpacing) output += `      'letterSpacing': '${typeof style.letterSpacing === 'number' ? style.letterSpacing + 'px' : style.letterSpacing}',\n`;
           if (style.fontStyle && style.fontStyle !== 'null') output += `      'fontStyle': '${style.fontStyle.toLowerCase()}',\n`;
           if (style.textCase && style.textCase !== 'ORIGINAL') output += `      'textTransform': '${style.textCase.toLowerCase()}',\n`;
           if (style.textDecoration && style.textDecoration !== 'NONE') output += `      'textDecoration': '${style.textDecoration.toLowerCase()}',\n`;
@@ -1758,9 +1758,9 @@ const scssTypographyFormat = ({ dictionary, options }) => {
           output += `$${uniqueName}: (\n`;
           if (style.fontFamily) output += `  fontFamily: ${style.fontFamily},\n`;
           if (style.fontWeight) output += `  fontWeight: ${style.fontWeight},\n`;
-          if (style.fontSize) output += `  fontSize: ${style.fontSize},\n`;
-          if (style.lineHeight) output += `  lineHeight: ${style.lineHeight},\n`;
-          if (style.letterSpacing) output += `  letterSpacing: ${style.letterSpacing},\n`;
+          if (style.fontSize) output += `  fontSize: ${typeof style.fontSize === 'number' ? style.fontSize + 'px' : style.fontSize},\n`;
+          if (style.lineHeight) output += `  lineHeight: ${typeof style.lineHeight === 'number' ? style.lineHeight + 'px' : style.lineHeight},\n`;
+          if (style.letterSpacing) output += `  letterSpacing: ${typeof style.letterSpacing === 'number' ? style.letterSpacing + 'px' : style.letterSpacing},\n`;
           if (style.fontStyle && style.fontStyle !== 'null') output += `  fontStyle: ${style.fontStyle.toLowerCase()},\n`;
           if (style.textCase && style.textCase !== 'ORIGINAL') output += `  textTransform: ${style.textCase.toLowerCase()},\n`;
           if (style.textDecoration && style.textDecoration !== 'NONE') output += `  textDecoration: ${style.textDecoration.toLowerCase()},\n`;
