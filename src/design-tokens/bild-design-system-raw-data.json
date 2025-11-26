@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2025-11-26T22:29:46.973Z",
+  "lastModified": "2025-11-26T22:34:24.999Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -2160,7 +2160,8 @@
         "VariableID:19709:71129",
         "VariableID:19709:71141",
         "VariableID:19881:148841",
-        "VariableID:20773:45"
+        "VariableID:20773:45",
+        "VariableID:20978:45"
       ],
       "variables": [
         {
@@ -6604,6 +6605,21 @@
         {
           "id": "VariableID:20773:45",
           "name": "Semantic/Core/pipeTestRenaming",
+          "description": "this is a test for the token pipeline",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "588:0": "#476D93",
+            "592:1": "#B0D1F3"
+          },
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "hiddenFromPublishing": false,
+          "variableCollectionId": "VariableCollectionId:588:1979"
+        },
+        {
+          "id": "VariableID:20978:45",
+          "name": "Semantic/Core/newTestPipe",
           "description": "this is a test for the token pipeline",
           "resolvedType": "COLOR",
           "valuesByMode": {
