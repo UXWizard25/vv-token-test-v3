@@ -123,26 +123,32 @@ function createAliasLookup(collections) {
 }
 
 /**
- * Fixes the FontWeight-px bug
- * Input: "700px" → Output: 700
+ * Converts Figma RGBA color object to Hex/RGBA string
  */
-function fixFontWeightValue(value, tokenPath, resolvedType) {
-  // Only for FontWeight tokens
-  if (resolvedType === 'FLOAT' && tokenPath.toLowerCase().includes('fontweight')) {
-    if (typeof value === 'string' && value.endsWith('px')) {
-      const numericValue = parseInt(value.replace('px', ''), 10);
-      return numericValue;
+/**
+ * Rounds a numeric value to 2 decimal places, removing floating-point precision errors
+ */
+function roundNumericValue(value) {
+  if (typeof value === 'number') {
+    // If it's a whole number, return as-is
+    if (Number.isInteger(value)) {
+      return value;
     }
+    // Round to 2 decimal places
+    return Math.round(value * 100) / 100;
   }
   return value;
 }
 
-/**
- * Converts Figma RGBA color object to Hex/RGBA string
- */
 function colorToHex(color) {
   if (typeof color === 'string') {
-    // Already a string (Hex or RGB)
+    // Already a string (Hex or RGBA) - round any decimal values in rgba()
+    if (color.startsWith('rgba(')) {
+      return color.replace(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/, (match, r, g, b, a) => {
+        const roundedAlpha = roundNumericValue(parseFloat(a));
+        return `rgba(${r}, ${g}, ${b}, ${roundedAlpha})`;
+      });
+    }
     return color;
   }
 
@@ -152,7 +158,9 @@ function colorToHex(color) {
   const a = color.a !== undefined ? color.a : 1;
 
   if (a < 1) {
-    return `rgba(${r}, ${g}, ${b}, ${a})`;
+    // Round alpha to 2 decimal places to remove precision errors
+    const roundedAlpha = roundNumericValue(a);
+    return `rgba(${r}, ${g}, ${b}, ${roundedAlpha})`;
   }
 
   const toHex = (n) => n.toString(16).padStart(2, '0');
@@ -161,20 +169,22 @@ function colorToHex(color) {
 
 /**
  * Processes a value based on type
+ * FLOAT values come as pure numbers from Figma (no "px" suffix)
+ * Unit conversion happens in Style Dictionary transforms based on token type
  */
 function processDirectValue(value, resolvedType, tokenPath = '') {
-  // Fix FontWeight-px bug
-  const fixedValue = fixFontWeightValue(value, tokenPath, resolvedType);
-
   switch (resolvedType) {
     case 'COLOR':
-      return colorToHex(fixedValue);
+      return colorToHex(value);
     case 'FLOAT':
+      // Round FLOAT values to remove floating-point precision errors
+      // Values are pure numbers - no units at this stage
+      return roundNumericValue(value);
     case 'STRING':
     case 'BOOLEAN':
-      return fixedValue;
+      return value;
     default:
-      return fixedValue;
+      return value;
   }
 }
 
@@ -260,13 +270,17 @@ function resolveAliasWithContext(variableId, aliasLookup, context = {}, visited 
 }
 
 /**
- * Determines the token type for Style Dictionary
+ * Determines the token type for Style Dictionary based on Figma scopes and fallback heuristics
+ * @param {string} tokenName - Token name
+ * @param {string} collectionName - Collection name
+ * @param {any} value - Processed value
+ * @param {object} variable - Figma variable object (optional, contains scopes and resolvedType)
  */
-function determineTokenType(tokenName, collectionName, value) {
+function determineTokenType(tokenName, collectionName, value, variable = null) {
   const tokenPath = tokenName.toLowerCase();
   const collection = collectionName.toLowerCase();
 
-  // Color
+  // Color (by value format)
   if (typeof value === 'string' && (value.startsWith('#') || value.startsWith('rgb'))) {
     return { $type: 'color' };
   }
@@ -276,25 +290,88 @@ function determineTokenType(tokenName, collectionName, value) {
     return { $type: null };
   }
 
-  // FontWeight
-  if (tokenPath.includes('fontweight') || tokenPath.includes('font-weight')) {
+  // PRIORITY 1: Scope-based type determination (Figma semantic info)
+  if (variable && variable.scopes && variable.scopes.length > 0) {
+    const scopes = variable.scopes;
+
+    // Dimensions → px
+    if (scopes.includes('WIDTH_HEIGHT') ||
+        scopes.includes('GAP') ||
+        scopes.includes('STROKE_FLOAT') ||
+        scopes.includes('CORNER_RADIUS') ||
+        scopes.includes('LINE_HEIGHT') ||
+        scopes.includes('LETTER_SPACING')) {
+      return { $type: 'dimension' };
+    }
+
+    // Font Size → px
+    if (scopes.includes('FONT_SIZE')) {
+      return { $type: 'fontSize' };
+    }
+
+    // Font Weight → unitless
+    if (scopes.includes('FONT_WEIGHT')) {
+      return { $type: 'fontWeight' };
+    }
+
+    // Opacity → unitless (will be /100 in processDirectValue)
+    if (scopes.includes('OPACITY')) {
+      return { $type: 'opacity' };
+    }
+  }
+
+  // PRIORITY 2: Fallback for scopes: [] - Token name-based heuristics
+
+  // 1. Opacity (must be before "size" check)
+  if (tokenPath.includes('opacity') || tokenPath.includes('alpha')) {
+    return { $type: 'opacity' };
+  }
+
+  // 2. Font Weight
+  if (tokenPath.includes('fontweight') ||
+      tokenPath.includes('font-weight') ||
+      (tokenPath.includes('weight') && !tokenPath.includes('fontsize'))) {
     return { $type: 'fontWeight' };
   }
 
-  // Dimension types (only if numeric or px-string)
-  if (typeof value === 'number' || (typeof value === 'string' && value.endsWith('px'))) {
-    if (tokenPath.includes('fontsize') || tokenPath.includes('font-size')) {
-      return { $type: 'dimension' };
-    }
-    if (tokenPath.includes('lineheight') || tokenPath.includes('line-height')) {
-      if (typeof value === 'number' && value < 10) {
-        return { $type: 'number' }; // Relative LineHeight
-      }
-      return { $type: 'dimension' };
-    }
-    if (collection.includes('size') || collection.includes('space') ||
-        collection.includes('breakpoint') || collection.includes('density') ||
-        tokenPath.includes('width') || tokenPath.includes('height')) {
+  // 3. Font Size
+  if (tokenPath.includes('fontsize') || tokenPath.includes('font-size')) {
+    return { $type: 'fontSize' };
+  }
+
+  // 4. Unitless numbers (Counts, Columns, Z-Index, etc.)
+  const unitlessKeywords = ['columns', 'colums', 'rows', 'count', 'index', 'order',
+                            'z-index', 'zindex', 'layer', 'elevation',
+                            'aspect', 'ratio', 'scale', 'factor'];
+  if (unitlessKeywords.some(keyword => tokenPath.includes(keyword))) {
+    return { $type: 'number' };
+  }
+
+  // 5. Dimensions (px) - comprehensive list
+  const dimensionKeywords = [
+    'size', 'sizes', 'width', 'height',
+    'space', 'spacing', 'gap', 'margin', 'padding', 'inset',
+    'lineheight', 'line-height',
+    'letterspacing', 'letter-spacing',
+    'border', 'stroke', 'radius', 'cornerradius',
+    'offset', 'top', 'bottom', 'left', 'right',
+    'blur', 'spread', 'shadow'
+  ];
+  if (dimensionKeywords.some(keyword => tokenPath.includes(keyword))) {
+    return { $type: 'dimension' };
+  }
+
+  // 6. Collection-based fallback
+  if (collection.includes('size') || collection.includes('space') ||
+      collection.includes('breakpoint') || collection.includes('density')) {
+    return { $type: 'dimension' };
+  }
+
+  // 7. Safe default for FLOAT without clear assignment
+  if (variable && variable.resolvedType === 'FLOAT') {
+    // Log warning for debugging
+    if (typeof value === 'number') {
+      console.warn(`⚠️  FLOAT token without clear type: ${tokenName} - defaulting to dimension`);
       return { $type: 'dimension' };
     }
   }
@@ -389,7 +466,7 @@ function processSharedPrimitives(collections, aliasLookup) {
           if (variable.resolvedType === 'COLOR') {
             tokenObject.$type = 'color';
           } else {
-            const typeInfo = determineTokenType(variable.name, collection.name, processedValue);
+            const typeInfo = determineTokenType(variable.name, collection.name, processedValue, variable);
             if (typeInfo.$type) {
               tokenObject.$type = typeInfo.$type;
             }
@@ -514,7 +591,7 @@ function processBrandSpecificTokens(collections, aliasLookup) {
               if (variable.resolvedType === 'COLOR') {
                 tokenObject.$type = 'color';
               } else {
-                const typeInfo = determineTokenType(variable.name, collection.name, processedValue);
+                const typeInfo = determineTokenType(variable.name, collection.name, processedValue, variable);
                 if (typeInfo.$type) {
                   tokenObject.$type = typeInfo.$type;
                 }
@@ -618,7 +695,7 @@ function processBrandOverrides(collections, aliasLookup) {
             if (variable.resolvedType === 'COLOR') {
               tokenObject.$type = 'color';
             } else {
-              const typeInfo = determineTokenType(variable.name, collection.name, processedValue);
+              const typeInfo = determineTokenType(variable.name, collection.name, processedValue, variable);
               if (typeInfo.$type) {
                 tokenObject.$type = typeInfo.$type;
               }
@@ -758,7 +835,7 @@ function processComponentTokens(collections, aliasLookup) {
             if (variable.resolvedType === 'COLOR') {
               tokenObject.$type = 'color';
             } else {
-              const typeInfo = determineTokenType(variable.name, collection.name, processedValue);
+              const typeInfo = determineTokenType(variable.name, collection.name, processedValue, variable);
               if (typeInfo.$type) {
                 tokenObject.$type = typeInfo.$type;
               }
@@ -829,7 +906,7 @@ function processComponentTokens(collections, aliasLookup) {
                 if (variable.resolvedType === 'COLOR') {
                   tokenObject.$type = 'color';
                 } else {
-                  const typeInfo = determineTokenType(variable.name, collection.name, processedValue);
+                  const typeInfo = determineTokenType(variable.name, collection.name, processedValue, variable);
                   if (typeInfo.$type) {
                     tokenObject.$type = typeInfo.$type;
                   }

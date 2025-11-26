@@ -290,7 +290,22 @@ const colorUIColorTransform = {
 };
 
 /**
- * Transform: Dimension zu px
+ * Helper function to round numeric values (defined here for use in transforms)
+ */
+function roundValue(value) {
+  if (typeof value === 'number') {
+    // If it's a whole number, return as-is
+    if (Number.isInteger(value)) {
+      return value;
+    }
+    // Round to 2 decimal places
+    return Math.round(value * 100) / 100;
+  }
+  return value;
+}
+
+/**
+ * Transform: Dimension zu px (with rounding)
  */
 const sizePxTransform = {
   name: 'custom/size/px',  // Renamed to avoid conflicts with built-in transforms
@@ -310,7 +325,9 @@ const sizePxTransform = {
 
     // Safety check: only transform if value is actually a number
     if (typeof value === 'number') {
-      return `${value}px`;
+      // Round the value before adding 'px' to remove floating-point precision errors
+      const rounded = roundValue(value);
+      return `${rounded}px`;
     }
 
     // If not a number, return unchanged (shouldn't happen due to filter, but safety first)
@@ -319,7 +336,7 @@ const sizePxTransform = {
 };
 
 /**
- * Transform: Spacing/Sizing zu rem
+ * Transform: Spacing/Sizing zu rem (with rounding)
  */
 const sizeRemTransform = {
   name: 'size/rem',
@@ -331,9 +348,40 @@ const sizeRemTransform = {
   transform: (token) => {
     const value = token.$value || token.value;
     if (typeof value === 'number') {
-      // Konvertiere px zu rem (angenommen 16px = 1rem)
-      return `${value / 16}rem`;
+      // Konvertiere px zu rem (angenommen 16px = 1rem) and round
+      const remValue = value / 16;
+      const rounded = roundValue(remValue);
+      return `${rounded}rem`;
     }
+    return value;
+  }
+};
+
+/**
+ * Transform: Dimension zu iOS Points (CGFloat - reine Zahlen ohne Einheit)
+ * iOS nutzt Points statt Pixels. 1pt ≈ 1px auf @1x screens
+ */
+const sizeIosPointsTransform = {
+  name: 'custom/size/ios-points',
+  type: 'value',
+  filter: (token) => {
+    const type = token.$type || token.type;
+    const value = token.$value || token.value;
+
+    // Only match if type is dimension-related AND value is numeric
+    const isMatchingType = ['spacing', 'size', 'fontSize', 'dimension'].includes(type);
+    const isNumeric = typeof value === 'number';
+
+    return isMatchingType && isNumeric;
+  },
+  transform: (token) => {
+    const value = token.$value || token.value;
+
+    // Return rounded number (CGFloat) without any unit
+    if (typeof value === 'number') {
+      return roundValue(value);
+    }
+
     return value;
   }
 };
@@ -390,6 +438,141 @@ const nameFlutterDartTransform = {
   }
 };
 
+/**
+ * Transform: Opacity - Convert Figma % (5, 10, 70) to CSS decimal (0.05, 0.1, 0.7)
+ */
+const opacityTransform = {
+  name: 'custom/opacity',
+  type: 'value',
+  filter: (token) => {
+    const type = token.$type || token.type;
+    const value = token.$value || token.value;
+    return type === 'opacity' && typeof value === 'number';
+  },
+  transform: (token) => {
+    const value = token.$value || token.value;
+    // Figma exports % (5, 10, 70), CSS needs 0-1 (0.05, 0.1, 0.7)
+    const cssValue = value / 100;
+    return roundValue(cssValue); // Round to avoid precision errors
+  }
+};
+
+/**
+ * Transform: Font Weight - Unitless integer
+ */
+const fontWeightTransform = {
+  name: 'custom/fontWeight',
+  type: 'value',
+  filter: (token) => {
+    const type = token.$type || token.type;
+    const value = token.$value || token.value;
+    return type === 'fontWeight' && typeof value === 'number';
+  },
+  transform: (token) => {
+    return Math.round(token.$value || token.value); // 700, no "px"
+  }
+};
+
+/**
+ * Transform: Number - Unitless rounded number (for columns, z-index, etc.)
+ */
+const numberTransform = {
+  name: 'custom/number',
+  type: 'value',
+  filter: (token) => {
+    const type = token.$type || token.type;
+    const value = token.$value || token.value;
+    return type === 'number' && typeof value === 'number';
+  },
+  transform: (token) => {
+    return Math.round(token.$value || token.value); // Unitless integer
+  }
+};
+
+/**
+ * Transform: Round numeric values to remove floating-point precision errors
+ * This transform runs AFTER all other value transforms (color, size, etc.)
+ * and rounds numeric values in strings to 2 decimal places
+ */
+const valueRoundTransform = {
+  name: 'value/round',
+  type: 'value',
+  transitive: true,
+  filter: () => true,
+  transform: (token) => {
+    let value = token.$value || token.value;
+
+    // Only process string values that might contain numbers
+    if (typeof value !== 'string') {
+      return value;
+    }
+
+    // Round rgba() alpha values (0.699999988079071 -> 0.7)
+    value = value.replace(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/g, (match, r, g, b, a) => {
+      const roundedAlpha = Math.round(parseFloat(a) * 100) / 100;
+      return `rgba(${r}, ${g}, ${b}, ${roundedAlpha})`;
+    });
+
+    // Round UIColor values (for iOS)
+    value = value.replace(/(red|green|blue|alpha):\s*([\d.]+)/g, (match, component, num) => {
+      const rounded = Math.round(parseFloat(num) * 1000) / 1000; // 3 decimals for UIColor
+      return `${component}: ${rounded}`;
+    });
+
+    // Round pixel values (0.33000001311302185px -> 0.33px, 16.0px -> 16px)
+    value = value.replace(/([\d.]+)px/g, (match, num) => {
+      const n = parseFloat(num);
+      if (Number.isInteger(n)) {
+        return `${n}px`;
+      }
+      const rounded = Math.round(n * 100) / 100;
+      return `${rounded}px`;
+    });
+
+    // Round rem values
+    value = value.replace(/([\d.]+)rem/g, (match, num) => {
+      const n = parseFloat(num);
+      if (Number.isInteger(n)) {
+        return `${n}rem`;
+      }
+      const rounded = Math.round(n * 100) / 100;
+      return `${rounded}rem`;
+    });
+
+    // Round em values
+    value = value.replace(/([\d.]+)em/g, (match, num) => {
+      const n = parseFloat(num);
+      if (Number.isInteger(n)) {
+        return `${n}em`;
+      }
+      const rounded = Math.round(n * 100) / 100;
+      return `${rounded}em`;
+    });
+
+    // Round percentage values
+    value = value.replace(/([\d.]+)%/g, (match, num) => {
+      const n = parseFloat(num);
+      if (Number.isInteger(n)) {
+        return `${n}%`;
+      }
+      const rounded = Math.round(n * 100) / 100;
+      return `${rounded}%`;
+    });
+
+    // Round standalone decimal numbers (for opacity, line-height, etc.)
+    // Only if they have more than 2 decimal places
+    if (/^[\d.]+$/.test(value) && value.includes('.')) {
+      const num = parseFloat(value);
+      if (!Number.isInteger(num) && value.split('.')[1].length > 2) {
+        const rounded = Math.round(num * 100) / 100;
+        return rounded.toString();
+      }
+    }
+
+    return value;
+  }
+};
+
 // ============================================================================
 // CUSTOM FORMATS
 // ============================================================================
@@ -443,7 +626,9 @@ const cssVariablesFormat = ({ dictionary, options, file }) => {
         if (comment) {
           output += `  /**\n   * ${comment}\n   */\n`;
         }
-        output += `  --${uniqueName}: ${token.value};\n`;
+        // Use $value (transformed) or fallback to value (original)
+        const finalValue = token.$value !== undefined ? token.$value : token.value;
+        output += `  --${uniqueName}: ${finalValue};\n`;
       });
 
       output += `\n`;
@@ -495,7 +680,7 @@ const scssVariablesFormat = ({ dictionary, options, file }) => {
         if (comment) {
           output += `// ${comment}\n`;
         }
-        output += `$${uniqueName}: ${token.value};\n`;
+        output += `$${uniqueName}: ${token.$value !== undefined ? token.$value : token.value};\n`;
       });
 
       output += `\n`;
@@ -546,7 +731,7 @@ const javascriptEs6Format = ({ dictionary, options, file }) => {
         if (comment) {
           output += `/** ${comment} */\n`;
         }
-        output += `export const ${uniqueName} = "${token.value}";\n`;
+        output += `export const ${uniqueName} = "${token.$value !== undefined ? token.$value : token.value}";\n`;
       });
 
       output += `\n`;
@@ -609,11 +794,14 @@ const iosSwiftClassFormat = ({ dictionary, options, file }) => {
         }
 
         let valueOutput;
-        const value = token.value;
+        const value = token.$value !== undefined ? token.$value : token.value;
         const type = token.$type || token.type;
 
         if (type === 'color') {
-          if (value.startsWith('#')) {
+          // Value from custom/color/UIColor transform is already formatted as UIColor constructor
+          if (value.startsWith('UIColor(')) {
+            valueOutput = value;  // Use directly without quotes
+          } else if (value.startsWith('#')) {
             const hex = value.replace('#', '');
             const r = (parseInt(hex.substring(0, 2), 16) / 255).toFixed(3);
             const g = (parseInt(hex.substring(2, 4), 16) / 255).toFixed(3);
@@ -699,7 +887,7 @@ const flutterDartClassFormat = ({ dictionary, options, file }) => {
         }
 
         let valueOutput;
-        const value = token.value;
+        const value = token.$value !== undefined ? token.$value : token.value;
         const type = token.$type || token.type;
 
         if (type === 'color') {
@@ -810,9 +998,9 @@ const cssTypographyClassesFormat = ({ dictionary, options }) => {
           output += `${dataSelector} .${className} {\n`;
           if (style.fontFamily) output += `  font-family: ${style.fontFamily};\n`;
           if (style.fontWeight) output += `  font-weight: ${style.fontWeight};\n`;
-          if (style.fontSize) output += `  font-size: ${style.fontSize};\n`;
-          if (style.lineHeight) output += `  line-height: ${style.lineHeight};\n`;
-          if (style.letterSpacing) output += `  letter-spacing: ${style.letterSpacing};\n`;
+          if (style.fontSize) output += `  font-size: ${typeof style.fontSize === 'number' ? style.fontSize + 'px' : style.fontSize};\n`;
+          if (style.lineHeight) output += `  line-height: ${typeof style.lineHeight === 'number' ? style.lineHeight + 'px' : style.lineHeight};\n`;
+          if (style.letterSpacing) output += `  letter-spacing: ${typeof style.letterSpacing === 'number' ? style.letterSpacing + 'px' : style.letterSpacing};\n`;
           if (style.fontStyle && style.fontStyle !== 'null') output += `  font-style: ${style.fontStyle.toLowerCase()};\n`;
           if (style.textCase && style.textCase !== 'ORIGINAL') {
             output += `  text-transform: ${style.textCase.toLowerCase()};\n`;
@@ -1024,7 +1212,7 @@ const androidResourcesFormat = ({ dictionary, options, file }) => {
 
       tokens.forEach(token => {
         const uniqueName = uniqueNames.get(token.path.join('.'));
-        const value = token.value;
+        const value = token.$value !== undefined ? token.$value : token.value;
         const type = token.$type || token.type;
         const comment = token.comment || token.description;
 
@@ -1410,9 +1598,9 @@ const javascriptTypographyFormat = ({ dictionary, options }) => {
           output += `export const ${uniqueName} = {\n`;
           if (style.fontFamily) output += `  fontFamily: "${style.fontFamily}",\n`;
           if (style.fontWeight) output += `  fontWeight: ${style.fontWeight},\n`;
-          if (style.fontSize) output += `  fontSize: "${style.fontSize}",\n`;
-          if (style.lineHeight) output += `  lineHeight: "${style.lineHeight}",\n`;
-          if (style.letterSpacing) output += `  letterSpacing: "${style.letterSpacing}",\n`;
+          if (style.fontSize) output += `  fontSize: "${typeof style.fontSize === 'number' ? style.fontSize + 'px' : style.fontSize}",\n`;
+          if (style.lineHeight) output += `  lineHeight: "${typeof style.lineHeight === 'number' ? style.lineHeight + 'px' : style.lineHeight}",\n`;
+          if (style.letterSpacing) output += `  letterSpacing: "${typeof style.letterSpacing === 'number' ? style.letterSpacing + 'px' : style.letterSpacing}",\n`;
           if (style.fontStyle && style.fontStyle !== 'null') output += `  fontStyle: "${style.fontStyle.toLowerCase()}",\n`;
           if (style.textCase && style.textCase !== 'ORIGINAL') output += `  textTransform: "${style.textCase.toLowerCase()}",\n`;
           if (style.textDecoration && style.textDecoration !== 'NONE') output += `  textDecoration: "${style.textDecoration.toLowerCase()}",\n`;
@@ -1475,9 +1663,9 @@ const flutterTypographyFormat = ({ dictionary, options }) => {
           output += `    static const ${uniqueName} = {\n`;
           if (style.fontFamily) output += `      'fontFamily': '${style.fontFamily}',\n`;
           if (style.fontWeight) output += `      'fontWeight': ${style.fontWeight},\n`;
-          if (style.fontSize) output += `      'fontSize': '${style.fontSize}',\n`;
-          if (style.lineHeight) output += `      'lineHeight': '${style.lineHeight}',\n`;
-          if (style.letterSpacing) output += `      'letterSpacing': '${style.letterSpacing}',\n`;
+          if (style.fontSize) output += `      'fontSize': '${typeof style.fontSize === 'number' ? style.fontSize + 'px' : style.fontSize}',\n`;
+          if (style.lineHeight) output += `      'lineHeight': '${typeof style.lineHeight === 'number' ? style.lineHeight + 'px' : style.lineHeight}',\n`;
+          if (style.letterSpacing) output += `      'letterSpacing': '${typeof style.letterSpacing === 'number' ? style.letterSpacing + 'px' : style.letterSpacing}',\n`;
           if (style.fontStyle && style.fontStyle !== 'null') output += `      'fontStyle': '${style.fontStyle.toLowerCase()}',\n`;
           if (style.textCase && style.textCase !== 'ORIGINAL') output += `      'textTransform': '${style.textCase.toLowerCase()}',\n`;
           if (style.textDecoration && style.textDecoration !== 'NONE') output += `      'textDecoration': '${style.textDecoration.toLowerCase()}',\n`;
@@ -1602,9 +1790,9 @@ const scssTypographyFormat = ({ dictionary, options }) => {
           output += `$${uniqueName}: (\n`;
           if (style.fontFamily) output += `  fontFamily: ${style.fontFamily},\n`;
           if (style.fontWeight) output += `  fontWeight: ${style.fontWeight},\n`;
-          if (style.fontSize) output += `  fontSize: ${style.fontSize},\n`;
-          if (style.lineHeight) output += `  lineHeight: ${style.lineHeight},\n`;
-          if (style.letterSpacing) output += `  letterSpacing: ${style.letterSpacing},\n`;
+          if (style.fontSize) output += `  fontSize: ${typeof style.fontSize === 'number' ? style.fontSize + 'px' : style.fontSize},\n`;
+          if (style.lineHeight) output += `  lineHeight: ${typeof style.lineHeight === 'number' ? style.lineHeight + 'px' : style.lineHeight},\n`;
+          if (style.letterSpacing) output += `  letterSpacing: ${typeof style.letterSpacing === 'number' ? style.letterSpacing + 'px' : style.letterSpacing},\n`;
           if (style.fontStyle && style.fontStyle !== 'null') output += `  fontStyle: ${style.fontStyle.toLowerCase()},\n`;
           if (style.textCase && style.textCase !== 'ORIGINAL') output += `  textTransform: ${style.textCase.toLowerCase()},\n`;
           if (style.textDecoration && style.textDecoration !== 'NONE') output += `  textDecoration: ${style.textDecoration.toLowerCase()},\n`;
@@ -1710,14 +1898,17 @@ const androidXmlEffectsFormat = ({ dictionary, options }) => {
  * Custom Transform Groups that use our shortened token names
  * IMPORTANT: We do NOT use 'attribute/cti' or 'name/cti/*', as these
  * use the full path. Instead, we only use our custom name transforms.
+ *
+ * NOTE: 'value/round' is placed LAST in each group to round values
+ * AFTER all other transforms (color conversion, size conversion, etc.)
  */
 const customTransformGroups = {
-  'custom/css': ['name/custom/kebab', 'color/css', 'custom/size/px'],
-  'custom/scss': ['name/custom/kebab', 'color/css', 'custom/size/px'],
-  'custom/js': ['name/custom/js', 'color/css', 'custom/size/px'],
-  'custom/ios-swift': ['name/custom/ios-swift', 'custom/color/UIColor', 'custom/size/px'],
-  'custom/android': ['name/custom/kebab', 'color/hex', 'custom/size/px'],
-  'custom/flutter': ['name/custom/flutter-dart', 'color/hex', 'custom/size/px']
+  'custom/css': ['name/custom/kebab', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/scss': ['name/custom/kebab', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/js': ['name/custom/js', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/ios-swift': ['name/custom/ios-swift', 'custom/color/UIColor', 'custom/size/ios-points', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/android': ['name/custom/kebab', 'color/hex', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/flutter': ['name/custom/flutter-dart', 'color/hex', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round']
 };
 
 // ============================================================================
@@ -1781,7 +1972,8 @@ const cssThemedVariablesFormat = ({ dictionary, options, file }) => {
         const tokens = subGroups[subLevel];
         tokens.forEach(token => {
           const uniqueName = uniqueNames.get(token.path.join('.'));
-          output += `  --${uniqueName}: ${token.value};\n`;
+          const finalValue = token.$value !== undefined ? token.$value : token.value;
+          output += `  --${uniqueName}: ${finalValue};\n`;
         });
       });
     });
@@ -1817,7 +2009,8 @@ const cssThemedVariablesFormat = ({ dictionary, options, file }) => {
         if (comment) {
           output += `  /**\n   * ${comment}\n   */\n`;
         }
-        output += `  --${uniqueName}: ${token.value};\n`;
+        const finalValue = token.$value !== undefined ? token.$value : token.value;
+        output += `  --${uniqueName}: ${finalValue};\n`;
       });
 
       output += `\n`;
@@ -1837,11 +2030,16 @@ module.exports = {
     'color/css': colorCssTransform,
     'custom/color/UIColor': colorUIColorTransform,
     'custom/size/px': sizePxTransform,
+    'custom/size/ios-points': sizeIosPointsTransform,
     'size/rem': sizeRemTransform,
+    'custom/opacity': opacityTransform,
+    'custom/fontWeight': fontWeightTransform,
+    'custom/number': numberTransform,
     'name/custom/kebab': nameKebabTransform,
     'name/custom/js': nameJsTransform,
     'name/custom/ios-swift': nameIosSwiftTransform,
-    'name/custom/flutter-dart': nameFlutterDartTransform
+    'name/custom/flutter-dart': nameFlutterDartTransform,
+    'value/round': valueRoundTransform
   },
   transformGroups: customTransformGroups,
   formats: {
