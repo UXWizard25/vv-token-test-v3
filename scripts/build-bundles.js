@@ -234,58 +234,10 @@ function organizeWithSections(grouped) {
     output += generateNestedCSS(new Map(sections.colorDark)) + '\n\n';
   }
 
-  // Breakpoint Tokens - Convert to Media Queries
+  // Breakpoint Tokens - Now handled by responsive files
+  // Skip breakpoint tokens here as they're included via typography-responsive.css
   if (sections.breakpoints.length > 0) {
-    output += `/* === RESPONSIVE TOKENS & TYPOGRAPHY === */\n\n`;
-
-    // Group by brand
-    const byBrand = {};
-    for (const [selector, data] of sections.breakpoints) {
-      const brandMatch = selector.match(/data-brand="([^"]+)"/);
-      const bpMatch = selector.match(/data-breakpoint="([^"]+)"/);
-      if (!brandMatch || !bpMatch) continue;
-
-      const brand = brandMatch[1];
-      const bp = bpMatch[1];
-
-      if (!byBrand[brand]) byBrand[brand] = {};
-      byBrand[brand][bp] = data;
-    }
-
-    // Generate with media queries
-    const bpConfig = { xs: null, sm: '390px', md: '600px', lg: '1024px' };
-
-    for (const [brand, breakpoints] of Object.entries(byBrand)) {
-      output += `[data-brand="${brand}"] {\n`;
-
-      // Base (XS)
-      if (breakpoints.xs?.classes) {
-        for (const cls of breakpoints.xs.classes) {
-          output += `  .${cls.className} {\n`;
-          cls.properties.split(';').filter(p => p.trim()).forEach(p => {
-            output += `    ${p.trim()};\n`;
-          });
-          output += `  }\n\n`;
-        }
-      }
-
-      // Media queries
-      ['sm', 'md', 'lg'].forEach(bp => {
-        if (breakpoints[bp]?.classes && bpConfig[bp]) {
-          output += `  @media (min-width: ${bpConfig[bp]}) {\n`;
-          for (const cls of breakpoints[bp].classes) {
-            output += `    .${cls.className} {\n`;
-            cls.properties.split(';').filter(p => p.trim()).forEach(p => {
-              output += `      ${p.trim()};\n`;
-            });
-            output += `    }\n\n`;
-          }
-          output += `  }\n\n`;
-        }
-      });
-
-      output += `}\n\n`;
-    }
+    // Breakpoint tokens are now in responsive files, skip parsing them here
   }
 
   // Density Tokens
@@ -333,22 +285,56 @@ function optimizeBundleCSS(css, brand, bundleType) {
  * Combines and optimizes multiple CSS files
  */
 async function combineAndOptimize(files, brand, bundleType) {
-  let combined = '';
+  let combinedStandard = '';
+  let combinedResponsive = '';
 
-  for (const file of files) {
+  // Separate responsive files from standard files
+  const responsiveFiles = files.filter(f => path.basename(f).includes('-responsive.css'));
+  const standardFiles = files.filter(f => !path.basename(f).includes('-responsive.css'));
+
+  // Process standard files (these get parsed and optimized)
+  for (const file of standardFiles) {
     if (fs.existsSync(file)) {
       const content = fs.readFileSync(file, 'utf8');
       if (content.trim()) {
-        combined += content + '\n\n';
+        combinedStandard += content + '\n\n';
       }
     }
   }
 
-  if (!combined.trim()) {
+  // Process responsive files (keep as-is, just remove their headers)
+  for (const file of responsiveFiles) {
+    if (fs.existsSync(file)) {
+      let content = fs.readFileSync(file, 'utf8');
+      // Remove the file header but keep the CSS structure
+      content = content.replace(/^\/\*\*[\s\S]*?\*\/\s*/, '');
+      if (content.trim()) {
+        combinedResponsive += content + '\n\n';
+      }
+    }
+  }
+
+  if (!combinedStandard.trim() && !combinedResponsive.trim()) {
     return '';
   }
 
-  return optimizeBundleCSS(combined, brand, bundleType);
+  // Optimize standard files
+  let result = '';
+  if (combinedStandard.trim()) {
+    result = optimizeBundleCSS(combinedStandard, brand, bundleType);
+  } else {
+    // If only responsive files, still add header
+    result = generateBundleHeader(brand, bundleType);
+  }
+
+  // Append responsive files (already correctly structured with media queries)
+  if (combinedResponsive.trim()) {
+    // Add section comment before responsive content
+    result += '\n/* === RESPONSIVE TOKENS & TYPOGRAPHY === */\n\n';
+    result += combinedResponsive.trim();
+  }
+
+  return result;
 }
 
 /**
@@ -382,7 +368,14 @@ async function buildQuickStartBundles() {
 
     try {
       // Find all CSS files for this brand
-      const files = await glob(`${brandCssDir}/**/*.css`);
+      let files = await glob(`${brandCssDir}/**/*.css`);
+
+      // Exclude individual breakpoint typography files (we use responsive version instead)
+      files = files.filter(f => {
+        const basename = path.basename(f);
+        // Exclude typography-xs/sm/md/lg.css but keep typography-responsive.css
+        return !(basename.match(/^typography-(xs|sm|md|lg)\.css$/));
+      });
 
       if (files.length === 0) {
         console.log(`  ⚠️  ${brand}: No CSS files to bundle`);
@@ -432,7 +425,14 @@ async function buildSemanticBundles() {
 
     try {
       // Find all semantic CSS files
-      const files = await glob(`${brandSemanticDir}/**/*.css`);
+      let files = await glob(`${brandSemanticDir}/**/*.css`);
+
+      // Exclude individual breakpoint typography files (we use responsive version instead)
+      files = files.filter(f => {
+        const basename = path.basename(f);
+        // Exclude typography-xs/sm/md/lg.css but keep typography-responsive.css
+        return !(basename.match(/^typography-(xs|sm|md|lg)\.css$/));
+      });
 
       if (files.length === 0) {
         console.log(`  ⚠️  ${brand}: No semantic CSS files to bundle`);
