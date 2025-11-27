@@ -12,8 +12,8 @@ Automated build process for Design Tokens from Figma exports.
 - Push to `main`, `develop`, or `claude/**` branches
 - Only when files in the following paths are changed:
   - `src/design-tokens/**` (Figma exports)
-  - `scripts/**` (Build scripts)
-  - `build-config/**` (Style Dictionary config)
+  - `scripts/tokens/**` (Build scripts)
+  - `build-config/tokens/**` (Style Dictionary config)
   - `package.json` (Dependencies)
 
 **Manual:**
@@ -120,8 +120,8 @@ on:
 ```yaml
 paths:
   - 'src/design-tokens/**'  # Token sources
-  - 'scripts/**'            # Build scripts
-  - 'build-config/**'       # Configuration
+  - 'scripts/tokens/**'     # Build scripts
+  - 'build-config/tokens/**'  # Configuration
 ```
 
 **Enable auto-commit:**

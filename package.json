@@ -24,9 +24,9 @@
     "LICENSE"
   ],
   "scripts": {
-    "preprocess": "node scripts/preprocess-plugin-tokens.js",
-    "build:tokens": "npm run preprocess && node scripts/build-tokens-v2.js",
-    "build:bundles": "node scripts/build-bundles.js",
+    "preprocess": "node scripts/tokens/preprocess.js",
+    "build:tokens": "npm run preprocess && node scripts/tokens/build.js",
+    "build:bundles": "node scripts/tokens/bundles.js",
     "build": "npm run build:tokens && npm run build:bundles",
     "watch": "nodemon --watch src/design-tokens --ext json --exec npm run build:tokens",
     "clean": "rm -rf dist tokens",

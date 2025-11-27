@@ -18,8 +18,8 @@ const fs = require('fs');
 const path = require('path');
 
 // Paths
-const INPUT_JSON_PATH = path.join(__dirname, '../src/design-tokens/bild-design-system-raw-data.json');
-const OUTPUT_DIR = path.join(__dirname, '../tokens');
+const INPUT_JSON_PATH = path.join(__dirname, '../../src/design-tokens/bild-design-system-raw-data.json');
+const OUTPUT_DIR = path.join(__dirname, '../../tokens');
 
 // Brand and mode mappings
 const BRANDS = {

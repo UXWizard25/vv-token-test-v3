@@ -18,10 +18,10 @@ const fs = require('fs');
 const path = require('path');
 const { glob } = require('glob');
 
-const DIST_DIR = path.join(__dirname, '..', 'dist');
+const DIST_DIR = path.join(__dirname, '../..', 'dist');
 const BUNDLES_DIR = path.join(DIST_DIR, 'bundles');
 const BRANDS = ['bild', 'sportbild', 'advertorial'];
-const PACKAGE_VERSION = require('../package.json').version;
+const PACKAGE_VERSION = require('../../package.json').version;
 
 /**
  * Generates bundle header with metadata

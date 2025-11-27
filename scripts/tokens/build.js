@@ -14,10 +14,10 @@ const fs = require('fs');
 const path = require('path');
 
 // Import custom config
-const customConfig = require('../build-config/style-dictionary.config.js');
+const customConfig = require('../../build-config/tokens/style-dictionary.config.js');
 
-const TOKENS_DIR = path.join(__dirname, '../tokens');
-const DIST_DIR = path.join(__dirname, '../dist');
+const TOKENS_DIR = path.join(__dirname, '../../tokens');
+const DIST_DIR = path.join(__dirname, '../../dist');
 
 // Brands and breakpoints
 const BRANDS = ['bild', 'sportbild', 'advertorial'];

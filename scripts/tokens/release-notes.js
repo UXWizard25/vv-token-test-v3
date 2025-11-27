@@ -34,7 +34,7 @@ const IMPACT_LABELS = {
 
 const PLATFORM_ORDER = ['css', 'scss', 'js', 'swift', 'xml', 'dart', 'json'];
 
-const DIST_DIR = path.join(__dirname, '../dist');
+const DIST_DIR = path.join(__dirname, '../../dist');
 
 // =============================================================================
 // UTILITIES

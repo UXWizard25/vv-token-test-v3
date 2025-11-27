@@ -10,8 +10,8 @@ on:
       - 'claude/**'
     paths:
       - 'src/design-tokens/**'
-      - 'scripts/**'
-      - 'build-config/**'
+      - 'scripts/tokens/**'
+      - 'build-config/tokens/**'
       - 'package.json'
 
   # Manueller Trigger über GitHub UI

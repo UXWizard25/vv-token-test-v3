@@ -6,7 +6,7 @@ pnpm-lock.yaml
 
 # Build outputs
 dist/
-tokens/
+/tokens/
 
 # Icon build comparison
 dist-icons-old/

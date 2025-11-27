@@ -227,9 +227,12 @@ vv-token-test-v3/
 │       └── .codepoints.json            # Flutter codepoint registry
 │
 ├── 📁 scripts/
-│   ├── preprocess-plugin-tokens.js     # Token preprocessing
-│   ├── build-tokens-v2.js              # Token build orchestrator
-│   ├── build-bundles.js                # Bundle generation
+│   ├── tokens/                         # Token scripts
+│   │   ├── preprocess.js               # Token preprocessing
+│   │   ├── build.js                    # Token build orchestrator
+│   │   ├── bundles.js                  # Bundle generation
+│   │   ├── compare-builds.js           # Dist comparison
+│   │   └── release-notes.js            # Release notes generator
 │   └── icons/                          # Icon scripts
 │       ├── build-icons.js              # Main orchestrator
 │       ├── optimize-svg.js             # SVGO + validation
@@ -240,7 +243,8 @@ vv-token-test-v3/
 │       └── generate-ios.js             # iOS xcassets
 │
 ├── 📁 build-config/
-│   ├── style-dictionary.config.js      # Token transforms
+│   ├── tokens/
+│   │   └── style-dictionary.config.js  # Token transforms
 │   └── icons/
 │       └── svgo.config.js              # SVG optimization
 │

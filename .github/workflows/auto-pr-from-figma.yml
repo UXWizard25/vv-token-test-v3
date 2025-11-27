@@ -121,7 +121,7 @@ jobs:
             echo ""
           fi
 
-          node scripts/compare-dist-builds.js \
+          node scripts/tokens/compare-builds.js \
             --old dist-old/ \
             --new dist/ \
             --output dist-diff.json
@@ -180,7 +180,7 @@ jobs:
           echo "📝 Generating platform-specific release notes..."
 
           # Generate release notes mit Dist-Diff-Datei
-          node scripts/generate-release-notes.js \
+          node scripts/tokens/release-notes.js \
             --diff-file "dist-diff.json" \
             --format "pr-comment" \
             --commit-sha "${{ github.sha }}" \

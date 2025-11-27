@@ -52,7 +52,7 @@ This pipeline processes the multi-layer, multi-brand BILD Design System architec
 └───────────────────────┬─────────────────────────┘
                         ↓
 ┌─────────────────────────────────────────────────┐
-│ Preprocessing (scripts/preprocess-*.js)         │
+│ Preprocessing (scripts/tokens/preprocess.js)    │
 │ • Scope-based type determination                │
 │ • Alias resolution                              │
 │ • Component token detection                     │
