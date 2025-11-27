@@ -1,15 +1,12 @@
 name: Publish Package on Merge
 
-# Trigger: Wenn PR zu main gemerged wird
+# Trigger: Only when design token source files change (not pipeline code)
 on:
   push:
     branches:
       - main
     paths:
       - 'src/design-tokens/**'
-      - 'scripts/**'
-      - 'build-config/**'
-      - 'package.json'
 
 permissions:
   contents: write
