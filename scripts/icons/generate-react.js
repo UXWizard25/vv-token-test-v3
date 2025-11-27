@@ -52,6 +52,42 @@ function toPascalCase(str) {
 }
 
 /**
+ * Convert SVG attributes to JSX camelCase
+ * stroke-width -> strokeWidth
+ * stroke-linecap -> strokeLinecap
+ */
+function convertToJsxAttributes(svgContent) {
+  const attributeMap = {
+    'stroke-width': 'strokeWidth',
+    'stroke-linecap': 'strokeLinecap',
+    'stroke-linejoin': 'strokeLinejoin',
+    'stroke-miterlimit': 'strokeMiterlimit',
+    'stroke-dasharray': 'strokeDasharray',
+    'stroke-dashoffset': 'strokeDashoffset',
+    'stroke-opacity': 'strokeOpacity',
+    'fill-rule': 'fillRule',
+    'fill-opacity': 'fillOpacity',
+    'clip-rule': 'clipRule',
+    'clip-path': 'clipPath',
+    'font-size': 'fontSize',
+    'font-family': 'fontFamily',
+    'font-weight': 'fontWeight',
+    'text-anchor': 'textAnchor',
+    'dominant-baseline': 'dominantBaseline',
+    'xlink:href': 'xlinkHref',
+    'xml:space': 'xmlSpace',
+  };
+
+  let result = svgContent;
+  for (const [kebab, camel] of Object.entries(attributeMap)) {
+    // Replace attribute names (e.g., stroke-width="2" -> strokeWidth="2")
+    result = result.replace(new RegExp(`${kebab}=`, 'g'), `${camel}=`);
+  }
+
+  return result;
+}
+
+/**
  * Get all SVG files from input directory
  */
 function getSvgFiles() {
@@ -90,7 +126,10 @@ function generateComponentTemplate(componentName, svgContent) {
 
   // Extract inner content (everything inside <svg>...</svg>)
   const innerMatch = svgContent.match(/<svg[^>]*>([\s\S]*?)<\/svg>/);
-  const innerContent = innerMatch ? innerMatch[1].trim() : '';
+  const rawInnerContent = innerMatch ? innerMatch[1].trim() : '';
+
+  // Convert SVG attributes to JSX camelCase
+  const innerContent = convertToJsxAttributes(rawInnerContent);
 
   return `import * as React from 'react';
 
@@ -138,8 +177,8 @@ const ${componentName} = React.forwardRef<SVGSVGElement, ${componentName}Props>(
         height={size}
         fill="currentColor"
         role="img"
-        aria-hidden={isDecorative}
-        aria-label={ariaLabel}
+        aria-hidden={isDecorative ? true : undefined}
+        aria-label={ariaLabel || undefined}
         {...props}
       >
         {title && <title>{title}</title>}

@@ -103,6 +103,9 @@ function parseViewBox(svgContent) {
 function convertToVectorDrawable(svgContent, config) {
   const { width, height } = parseViewBox(svgContent);
 
+  // Check if SVG uses stroke (outline icons) or fill
+  const usesStroke = svgContent.includes('stroke=');
+
   // Extract path data from SVG
   const pathMatches = svgContent.matchAll(/<path[^>]*d="([^"]+)"[^>]*\/?>/g);
   const paths = [];
@@ -111,16 +114,44 @@ function convertToVectorDrawable(svgContent, config) {
     paths.push(match[1]);
   }
 
+  // Extract circle elements
+  const circleMatches = svgContent.matchAll(/<circle[^>]*cx="([^"]+)"[^>]*cy="([^"]+)"[^>]*r="([^"]+)"[^>]*\/?>/g);
+  const circles = [];
+
+  for (const match of circleMatches) {
+    circles.push({ cx: match[1], cy: match[2], r: match[3] });
+  }
+
   // Build Vector Drawable XML
+  const colorAttr = usesStroke ? 'android:strokeColor' : 'android:fillColor';
+  const extraAttrs = usesStroke ? `\n        android:strokeWidth="2"` : '';
+
+  let pathElements = paths.map(pathData => `    <path
+        ${colorAttr}="${config.fillColor}"${extraAttrs}
+        android:pathData="${pathData}"/>`).join('\n');
+
+  // Add circles as paths
+  if (circles.length > 0) {
+    const circleElements = circles.map(c => {
+      // Convert circle to arc path
+      const r = parseFloat(c.r);
+      const cx = parseFloat(c.cx);
+      const cy = parseFloat(c.cy);
+      const pathData = `M${cx - r},${cy}a${r},${r} 0 1,0 ${r * 2},0a${r},${r} 0 1,0 -${r * 2},0`;
+      return `    <path
+        ${colorAttr}="${config.fillColor}"${extraAttrs}
+        android:pathData="${pathData}"/>`;
+    }).join('\n');
+    pathElements = pathElements + '\n' + circleElements;
+  }
+
   const xml = `<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="${config.width}dp"
     android:height="${config.height}dp"
     android:viewportWidth="${width}"
     android:viewportHeight="${height}">
-${paths.map(pathData => `    <path
-        android:fillColor="${config.fillColor}"
-        android:pathData="${pathData}"/>`).join('\n')}
+${pathElements}
 </vector>
 `;
 
@@ -148,10 +179,12 @@ async function generateVectorDrawable(converter, filename) {
         xmlTag: true,
       });
 
-      // Replace fill colors with theme attribute
+      // Replace fill and stroke colors with theme attribute
       xmlContent = xmlContent
         .replace(/android:fillColor="#[0-9a-fA-F]+"/g, `android:fillColor="${ANDROID_CONFIG.fillColor}"`)
-        .replace(/android:fillColor="currentColor"/g, `android:fillColor="${ANDROID_CONFIG.fillColor}"`);
+        .replace(/android:fillColor="currentColor"/g, `android:fillColor="${ANDROID_CONFIG.fillColor}"`)
+        .replace(/android:strokeColor="#[0-9a-fA-F]+"/g, `android:strokeColor="${ANDROID_CONFIG.fillColor}"`)
+        .replace(/android:strokeColor="currentColor"/g, `android:strokeColor="${ANDROID_CONFIG.fillColor}"`);
 
       // Set default dimensions
       xmlContent = xmlContent
