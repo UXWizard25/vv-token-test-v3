@@ -157,65 +157,114 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      # 12. Changelog generieren (aus letztem Tag)
-      - name: Generate Changelog
-        id: changelog
+      # 12. Build Baseline für Vergleich (vom vorherigen Tag)
+      - name: Build Baseline for Comparison
+        id: baseline
         run: |
+          echo "📊 Building baseline for token comparison..."
+
+          # Aktuellen dist speichern
+          mv dist/ dist-new/
+
+          # Vorherigen Tag finden
           PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD~1 2>/dev/null || echo "")
 
-          if [ -z "$PREVIOUS_TAG" ]; then
-            CHANGELOG="Initial release"
+          if [ -n "$PREVIOUS_TAG" ]; then
+            echo "Building baseline from $PREVIOUS_TAG..."
+
+            # Zu vorherigem Tag wechseln und bauen
+            git checkout "$PREVIOUS_TAG" -- src/design-tokens/ 2>/dev/null || true
+            npm run build 2>/dev/null || true
+
+            if [ -d "dist" ]; then
+              mv dist/ dist-old/
+              echo "has_baseline=true" >> $GITHUB_OUTPUT
+            else
+              echo "has_baseline=false" >> $GITHUB_OUTPUT
+            fi
+
+            # Zurück zum aktuellen Stand
+            git checkout HEAD -- src/design-tokens/ 2>/dev/null || true
           else
-            CHANGELOG=$(git log ${PREVIOUS_TAG}..HEAD --pretty=format:"- %s (%h)" --no-merges | grep -v "skip ci" || echo "- Token updates")
+            echo "No previous tag found, skipping baseline"
+            echo "has_baseline=false" >> $GITHUB_OUTPUT
           fi
 
-          echo "changelog<<EOF" >> $GITHUB_OUTPUT
-          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          # dist-new zurück zu dist
+          mv dist-new/ dist/
+
+      # 13. Token-Diff generieren
+      - name: Generate Token Diff
+        id: diff
+        run: |
+          if [ "${{ steps.baseline.outputs.has_baseline }}" = "true" ] && [ -d "dist-old" ]; then
+            echo "🔍 Comparing token builds..."
+            node scripts/compare-dist-builds.js \
+              --old dist-old/ \
+              --new dist/ \
+              --output dist-diff.json
+
+            echo "has_diff=true" >> $GITHUB_OUTPUT
+          else
+            echo "No baseline available, skipping diff"
+            echo "has_diff=false" >> $GITHUB_OUTPUT
+          fi
+
+      # 14. Release Notes generieren
+      - name: Generate Release Notes
+        id: release_notes
+        run: |
+          if [ "${{ steps.diff.outputs.has_diff }}" = "true" ] && [ -f "dist-diff.json" ]; then
+            echo "📝 Generating token-based release notes..."
+            node scripts/generate-release-notes.js \
+              --diff-file dist-diff.json \
+              --format github-release \
+              --version "${{ steps.version.outputs.new }}" \
+              --successful-builds "${{ steps.build.outputs.successful_builds }}" \
+              --total-builds "${{ steps.build.outputs.total_builds }}" \
+              --package-size "${{ steps.package.outputs.package_size }}" \
+              --output release-notes.md
+
+            RELEASE_BODY=$(cat release-notes.md)
+          else
+            echo "📝 Generating fallback release notes..."
+            RELEASE_BODY="## 🎨 Design Tokens v${{ steps.version.outputs.new }}
+
+### 📦 Installation
+
+\`\`\`bash
+npm install @marioschmidt/design-system-tokens@${{ steps.version.outputs.new }}
+\`\`\`
+
+### 📋 Build Info
+
+- **Build Status:** ✅ ${{ steps.build.outputs.successful_builds }}/${{ steps.build.outputs.total_builds }} successful
+- **Package Size:** ${{ steps.package.outputs.package_size }}
+- **Formats:** CSS, SCSS, JavaScript, Swift, Android XML, Flutter Dart, JSON
+
+### 🔗 Links
+
+- [📖 Documentation](https://github.com/${{ github.repository }}#readme)
+- [📦 npm Package](https://www.npmjs.com/package/@marioschmidt/design-system-tokens)"
+          fi
+
+          # Output für GitHub Release
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          echo "$RELEASE_BODY" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      # 13. GitHub Release erstellen
+      # 15. GitHub Release erstellen
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ steps.version.outputs.new }}
           name: Release v${{ steps.version.outputs.new }}
-          body: |
-            ## 🎨 Design Tokens Release v${{ steps.version.outputs.new }}
-
-            Automated release from Figma token updates.
-
-            ### 📦 Installation
-
-            ```bash
-            npm install @marioschmidt/design-system-tokens@${{ steps.version.outputs.new }}
-            ```
-
-            ### ✨ Changes
-
-            ${{ steps.changelog.outputs.changelog }}
-
-            ### 📊 Build Statistics
-
-            - **Successful Builds:** ${{ steps.build.outputs.successful_builds }}/${{ steps.build.outputs.total_builds }}
-            - **Package Size:** ${{ steps.package.outputs.package_size }}
-            - **Package File:** `${{ steps.package.outputs.package_file }}`
-            - **Formats:** CSS, SCSS, JavaScript, JSON
-            - **Brands:** BILD, SportBILD, Advertorial
-            - **Modes:** Light/Dark, Responsive Breakpoints, Density Variations
-
-            ### 📖 Documentation
-
-            See [README.md](https://github.com/${{ github.repository }}#readme) for usage instructions.
-
-            ---
-
-            **Previous Version:** v${{ steps.version.outputs.current }}
-            **New Version:** v${{ steps.version.outputs.new }}
+          body: ${{ steps.release_notes.outputs.body }}
           draft: false
           prerelease: false
           generate_release_notes: false
 
-      # 14. Success Summary
+      # 16. Success Summary
       - name: Create Publish Summary
         run: |
           echo "## 🚀 Package Published Successfully!" >> $GITHUB_STEP_SUMMARY
@@ -236,7 +285,7 @@ jobs:
           echo "- [📋 Release Notes](https://github.com/${{ github.repository }}/releases/tag/v${{ steps.version.outputs.new }})" >> $GITHUB_STEP_SUMMARY
           echo "- [🎨 Pull Requests](https://github.com/${{ github.repository }}/pulls?q=is%3Apr+is%3Amerged)" >> $GITHUB_STEP_SUMMARY
 
-      # 15. Bei Fehler benachrichtigen
+      # 17. Bei Fehler benachrichtigen
       - name: Notify on Failure
         if: failure()
         run: |

@@ -666,6 +666,127 @@ function generateConsoleOutput(diff) {
   return output;
 }
 
+/**
+ * Generate GitHub Release format (summary-first, consumer-focused)
+ */
+function generateGitHubRelease(diff, options = {}) {
+  const { version = 'latest', packageSize = '', successfulBuilds = 0, totalBuilds = 0 } = options;
+  const repo = process.env.GITHUB_REPOSITORY || 'UXWizard25/vv-token-test-v3';
+
+  let md = `## 🎨 Design Tokens v${version}\n\n`;
+
+  // Installation
+  md += '### 📦 Installation\n\n';
+  md += '```bash\n';
+  md += `npm install @marioschmidt/design-system-tokens@${version}\n`;
+  md += '```\n\n';
+
+  // Breaking changes first (if any)
+  if (diff?.byUniqueToken?.removed?.length > 0) {
+    md += '### ⚠️ Breaking Changes\n\n';
+    md += `**${diff.byUniqueToken.removed.length} token(s) removed** - Migration may be required\n\n`;
+
+    const removed = diff.byUniqueToken.removed.slice(0, 5);
+    md += '| Removed Token | Previous Value |\n';
+    md += '|---------------|----------------|\n';
+    for (const token of removed) {
+      md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.value, 25)}\` |\n`;
+    }
+    if (diff.byUniqueToken.removed.length > 5) {
+      md += `| ... | *${diff.byUniqueToken.removed.length - 5} more* |\n`;
+    }
+    md += '\n';
+  }
+
+  // Summary table
+  if (diff?.summary) {
+    const s = diff.summary;
+    const uniqueRemoved = s.uniqueTokensRemoved ?? s.tokensRemoved ?? 0;
+    const uniqueModified = s.uniqueTokensModified ?? s.tokensModified ?? 0;
+    const uniqueAdded = s.uniqueTokensAdded ?? s.tokensAdded ?? 0;
+    const total = uniqueRemoved + uniqueModified + uniqueAdded;
+
+    if (total > 0) {
+      md += '### 📊 Changes Summary\n\n';
+      md += '| Type | Count | Impact |\n';
+      md += '|------|------:|--------|\n';
+      if (uniqueRemoved > 0) {
+        md += `| 🔴 Removed | ${uniqueRemoved} | ⚠️ Breaking |\n`;
+      }
+      if (uniqueModified > 0) {
+        md += `| 🟡 Modified | ${uniqueModified} | Visual changes |\n`;
+      }
+      if (uniqueAdded > 0) {
+        md += `| 🟢 Added | ${uniqueAdded} | New features |\n`;
+      }
+      md += '\n';
+    }
+  }
+
+  // Token changes (collapsible)
+  if (diff?.byUniqueToken) {
+    const { added, modified, removed } = diff.byUniqueToken;
+    const hasChanges = added.length > 0 || modified.length > 0 || removed.length > 0;
+
+    if (hasChanges) {
+      md += '<details>\n';
+      md += '<summary>📝 <b>View All Token Changes</b></summary>\n\n';
+
+      // Modified tokens
+      if (modified.length > 0) {
+        md += `#### 🟡 Modified (${modified.length})\n\n`;
+        md += '| Token | Change |\n';
+        md += '|-------|--------|\n';
+        for (const token of modified.slice(0, 15)) {
+          const change = formatValueChange(token.oldValue, token.newValue);
+          md += `| \`${truncate(token.displayName, 30)}\` | ${change} |\n`;
+        }
+        if (modified.length > 15) {
+          md += `| ... | *${modified.length - 15} more* |\n`;
+        }
+        md += '\n';
+      }
+
+      // Added tokens
+      if (added.length > 0) {
+        md += `#### 🟢 Added (${added.length})\n\n`;
+        md += '| Token | Value |\n';
+        md += '|-------|-------|\n';
+        for (const token of added.slice(0, 10)) {
+          md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.value, 30)}\` |\n`;
+        }
+        if (added.length > 10) {
+          md += `| ... | *${added.length - 10} more* |\n`;
+        }
+        md += '\n';
+      }
+
+      md += '</details>\n\n';
+    }
+  }
+
+  // Build info
+  md += '### 📋 Build Info\n\n';
+  if (successfulBuilds > 0 && totalBuilds > 0) {
+    md += `- **Build Status:** ✅ ${successfulBuilds}/${totalBuilds} successful\n`;
+  }
+  if (packageSize) {
+    md += `- **Package Size:** ${packageSize}\n`;
+  }
+  md += '- **Formats:** CSS, SCSS, JavaScript, Swift, Android XML, Flutter Dart, JSON\n';
+  md += '- **Brands:** BILD, SportBILD, Advertorial\n';
+  md += '- **Modes:** Light/Dark, Responsive Breakpoints\n';
+  md += '\n';
+
+  // Links
+  md += '### 🔗 Links\n\n';
+  md += `- [📖 Documentation](https://github.com/${repo}#readme)\n`;
+  md += `- [📦 npm Package](https://www.npmjs.com/package/@marioschmidt/design-system-tokens)\n`;
+  md += `- [🐛 Report Issue](https://github.com/${repo}/issues)\n`;
+
+  return md;
+}
+
 // =============================================================================
 // CLI
 // =============================================================================
@@ -681,7 +802,8 @@ function parseArgs() {
     buildSuccess: true,
     successfulBuilds: 0,
     totalBuilds: 0,
-    runId: ''
+    runId: '',
+    packageSize: ''
   };
 
   for (let i = 0; i < args.length; i++) {
@@ -715,6 +837,9 @@ function parseArgs() {
     } else if (arg === '--run-id' && nextArg) {
       options.runId = nextArg;
       i++;
+    } else if (arg === '--package-size' && nextArg) {
+      options.packageSize = nextArg;
+      i++;
     }
   }
 
@@ -735,6 +860,9 @@ function main() {
       break;
     case 'console':
       output = generateConsoleOutput(diff);
+      break;
+    case 'github-release':
+      output = generateGitHubRelease(diff, options);
       break;
     case 'pr-comment':
     default:
@@ -759,5 +887,6 @@ module.exports = {
   generatePRComment,
   generateChangelog,
   generateConsoleOutput,
+  generateGitHubRelease,
   loadDiffFile
 };
