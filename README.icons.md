@@ -1,6 +1,10 @@
 # BILD Design System Icons
 
+> **Part of the [BILD Design Ops Pipeline](./README.md)**
+
 Multi-platform icon transformation pipeline for the BILD Design System.
+
+[![npm version](https://img.shields.io/npm/v/@marioschmidt/design-system-icons.svg)](https://www.npmjs.com/package/@marioschmidt/design-system-icons)
 
 ## Overview
 
@@ -9,7 +13,7 @@ This pipeline transforms SVG icons from Figma into optimized, production-ready a
 | Platform | Output | Format |
 |----------|--------|--------|
 | **Web** | `dist/icons/svg/` | Optimized SVG |
-| **React** | `dist/icons/react/` | TypeScript TSX Components |
+| **React** | `dist/icons/react/` | ESM JavaScript + TypeScript Declarations |
 | **Android** | `dist/icons/android/` | Vector Drawable XML |
 | **Flutter** | `dist/icons/flutter/` | TTF Font + Dart Class |
 | **iOS** | `dist/icons/ios/` | Asset Catalog + Swift |
@@ -46,10 +50,13 @@ Figma Plugin
 │       │                                         │
 │       ▼                                         │
 │  ┌─────────────────────────────────────────┐   │
-│  │  Platform Generators (parallel)          │   │
-│  │  ┌───────┐ ┌─────────┐ ┌───────┐        │   │
-│  │  │ React │ │ Android │ │Flutter│ │ iOS │ │   │
-│  │  └───────┘ └─────────┘ └───────┘ └─────┘ │   │
+│  │  Platform Generators                      │   │
+│  │  ┌───────────────────┐                   │   │
+│  │  │ React (TSX → JS)  │ ← TypeScript      │   │
+│  │  └───────────────────┘   Compilation     │   │
+│  │  ┌─────────┐ ┌───────┐ ┌─────┐          │   │
+│  │  │ Android │ │Flutter│ │ iOS │          │   │
+│  │  └─────────┘ └───────┘ └─────┘          │   │
 │  └─────────────────────────────────────────┘   │
 └────────┬────────────────────────────────────────┘
          │
@@ -151,8 +158,9 @@ src/icons/
 
 scripts/icons/
 ├── build-icons.js         ← Main orchestrator
-├── optimize-svg.js        ← SVGO optimization
-├── generate-react.js      ← React TSX generation
+├── optimize-svg.js        ← SVGO optimization + SVG validation
+├── generate-react.js      ← React TSX generation → react-src/
+├── compile-react.js       ← TypeScript compilation → react/
 ├── generate-android.js    ← Android XML generation
 ├── generate-flutter.js    ← Flutter font generation
 ├── generate-ios.js        ← iOS asset generation
@@ -165,8 +173,13 @@ build-config/icons/
 
 dist/icons/                 ← Generated output (gitignored)
 ├── svg/                   ← Optimized SVGs
-├── react/                 ← React components + index.ts
-├── android/               ← Vector drawables
+├── react-src/             ← TSX source (intermediate)
+├── react/                 ← Compiled ESM JavaScript
+│   ├── *.js               ← ESM modules
+│   ├── *.d.ts             ← TypeScript declarations
+│   ├── *.js.map           ← Source maps
+│   └── package.json       ← Module configuration
+├── android/
 │   ├── drawable/          ← ic_*.xml files
 │   └── values/            ← attrs_icons.xml
 ├── flutter/
@@ -265,6 +278,21 @@ npm run clean:icons
 - Comments and doctype
 - Unused definitions
 - Hardcoded colors (replaced with `currentColor`)
+
+### Security Validation
+
+The build pipeline validates all SVGs before processing:
+
+| Check | Action |
+|-------|--------|
+| Missing `<svg>` element | Build fails |
+| Missing `</svg>` tag | Build fails |
+| `<script>` elements | Blocked (XSS risk) |
+| `<foreignObject>`, `<iframe>`, `<embed>` | Blocked |
+| Event handlers (`onclick`, etc.) | Blocked |
+| `javascript:` URLs | Blocked |
+| External `xlink:href` | Blocked |
+| Missing `viewBox` | Warning (continues with default)
 
 ## Accessibility
 
@@ -392,6 +420,8 @@ Build-time only (not shipped with package):
 | @svgr/core | ^8.1.0 | React component generation |
 | svg2vectordrawable | ^2.9.1 | Android conversion |
 | fantasticon | ^3.0.0 | Flutter font generation |
+| typescript | ^5.3.0 | React TypeScript compilation |
+| @types/react | ^18.2.0 | React type definitions |
 
 ## Package Exports
 
@@ -412,5 +442,10 @@ UNLICENSED - Internal use only.
 
 ## Related
 
-- [BILD Design System Tokens](./README.md) - Design tokens package
+- [Main README](./README.md) - Project overview
+- [Token Documentation](./README.tokens.md) - Design tokens package
 - [Figma BILD Icons Plugin](#) - Figma export plugin
+
+---
+
+**Part of the BILD Design Ops Pipeline**
