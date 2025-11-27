@@ -256,25 +256,19 @@ function generateUnifiedTokenChanges(diff, options = {}) {
 
   let md = '## 📝 Token Changes\n\n';
 
-  // Helper to format platform icons
-  const formatPlatforms = (platforms) => {
-    const uniquePlatforms = [...new Map(platforms.map(p => [p.key, p])).values()];
-    return uniquePlatforms.map(p => p.icon).join(' ');
-  };
-
   // Breaking changes (removed)
   if (removed.length > 0) {
     md += `### 🔴 Removed (${removed.length})\n\n`;
-    md += '| Token | Value | Platforms |\n';
-    md += '|-------|-------|:---------:|\n';
+    md += '| Token | Value |\n';
+    md += '|-------|-------|\n';
 
     const displayTokens = removed.slice(0, maxTokensPerSection);
     for (const token of displayTokens) {
-      md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.value, 25)}\` | ${formatPlatforms(token.platforms)} |\n`;
+      md += `| \`${truncate(token.displayName, 40)}\` | \`${truncate(token.value, 30)}\` |\n`;
     }
 
     if (removed.length > maxTokensPerSection) {
-      md += `| ... | *${removed.length - maxTokensPerSection} more* | |\n`;
+      md += `| ... | *${removed.length - maxTokensPerSection} more* |\n`;
     }
 
     // Platform-specific names (collapsible) - deduplicated by platform
@@ -295,18 +289,18 @@ function generateUnifiedTokenChanges(diff, options = {}) {
   // Modified tokens
   if (modified.length > 0) {
     md += `### 🟡 Modified (${modified.length})\n\n`;
-    md += '> ℹ️ Values shown are representative. Actual values may vary by brand/mode.\n\n';
-    md += '| Token | Change | Platforms |\n';
-    md += '|-------|--------|:---------:|\n';
+    md += '> ℹ️ Values may vary by brand/mode.\n\n';
+    md += '| Token | Change |\n';
+    md += '|-------|--------|\n';
 
     const displayTokens = modified.slice(0, maxTokensPerSection);
     for (const token of displayTokens) {
       const changeDisplay = formatValueChange(token.oldValue, token.newValue);
-      md += `| \`${truncate(token.displayName, 30)}\` | ${changeDisplay} | ${formatPlatforms(token.platforms)} |\n`;
+      md += `| \`${truncate(token.displayName, 35)}\` | ${changeDisplay} |\n`;
     }
 
     if (modified.length > maxTokensPerSection) {
-      md += `| ... | *${modified.length - maxTokensPerSection} more* | |\n`;
+      md += `| ... | *${modified.length - maxTokensPerSection} more* |\n`;
     }
 
     // Platform-specific names (collapsible) - deduplicated by platform
@@ -327,17 +321,17 @@ function generateUnifiedTokenChanges(diff, options = {}) {
   // Added tokens
   if (added.length > 0) {
     md += `### 🟢 Added (${added.length})\n\n`;
-    md += '> ℹ️ Values shown are representative. Actual values may vary by brand/mode.\n\n';
-    md += '| Token | Value | Platforms |\n';
-    md += '|-------|-------|:---------:|\n';
+    md += '> ℹ️ Values may vary by brand/mode.\n\n';
+    md += '| Token | Value |\n';
+    md += '|-------|-------|\n';
 
     const displayTokens = added.slice(0, maxTokensPerSection);
     for (const token of displayTokens) {
-      md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.value, 25)}\` | ${formatPlatforms(token.platforms)} |\n`;
+      md += `| \`${truncate(token.displayName, 40)}\` | \`${truncate(token.value, 30)}\` |\n`;
     }
 
     if (added.length > maxTokensPerSection) {
-      md += `| ... | *${added.length - maxTokensPerSection} more* | |\n`;
+      md += `| ... | *${added.length - maxTokensPerSection} more* |\n`;
     }
 
     // Platform-specific names (collapsible) - deduplicated by platform
