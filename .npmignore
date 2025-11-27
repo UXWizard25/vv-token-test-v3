@@ -4,6 +4,12 @@ scripts/
 build-config/
 tokens/
 
+# Baseline comparison folders (should never be in package)
+dist-old/
+dist-new/
+dist-diff.json
+release-notes.md
+
 # Development files
 node_modules/
 .git/
