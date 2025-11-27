@@ -1,38 +1,44 @@
 #!/usr/bin/env node
 
 /**
- * Release Notes Generator v2
+ * Generate Release Notes - Platform-Specific Release Notes Generator
  *
- * Generates layered release notes with progressive disclosure:
- * - Layer 1: Executive Summary (5 second scan)
- * - Layer 2: Change Categories (30 second scan)
- * - Layer 3: Detailed Changes (2 minute review)
- * - Layer 4: Technical Details (on demand)
+ * Generates multi-layered release notes from dist comparison data.
+ * Supports multiple output formats: PR comment, CHANGELOG, console.
  *
  * Usage:
- *   node scripts/generate-release-notes.js \
- *     --diff-file token-diff.json \
- *     --commit-sha "abc1234" \
- *     --build-success true \
- *     --successful-builds 969 \
- *     --total-builds 969 \
- *     --run-id 12345678
+ *   node generate-release-notes.js --diff-file diff.json --format pr-comment
  */
 
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-// ============================================================================
-// CONFIGURATION
-// ============================================================================
+// =============================================================================
+// CONSTANTS
+// =============================================================================
+
+const IMPACT_EMOJI = {
+  breaking: '🔴',
+  moderate: '🟡',
+  minor: '🟢',
+  none: '⚪'
+};
+
+const IMPACT_LABELS = {
+  breaking: 'Breaking Change',
+  moderate: 'Modified',
+  minor: 'Added',
+  none: 'No Changes'
+};
+
+const PLATFORM_ORDER = ['css', 'scss', 'js', 'swift', 'xml', 'dart', 'json'];
 
 const DIST_DIR = path.join(__dirname, '../dist');
-const SOURCE_PATH = path.join(__dirname, '../src/design-tokens/bild-design-system-raw-data.json');
 
-// ============================================================================
+// =============================================================================
 // UTILITIES
-// ============================================================================
+// =============================================================================
 
 function exec(command) {
   try {
@@ -42,17 +48,23 @@ function exec(command) {
   }
 }
 
-function countFiles(pattern) {
-  const result = exec(`find ${DIST_DIR} -name '${pattern}' 2>/dev/null | wc -l`);
-  return parseInt(result) || 0;
+function truncate(str, maxLength) {
+  if (!str) return '';
+  str = String(str);
+  if (str.length <= maxLength) return str;
+  return str.substring(0, maxLength - 3) + '...';
 }
 
-function getDirSize(dir) {
+function loadDiffFile(filePath) {
+  if (!filePath || !fs.existsSync(filePath)) {
+    return null;
+  }
   try {
-    const result = exec(`du -sh ${dir} 2>/dev/null | cut -f1`);
-    return result || '0';
-  } catch (error) {
-    return '0';
+    const content = fs.readFileSync(filePath, 'utf-8');
+    return JSON.parse(content);
+  } catch (e) {
+    console.error(`Error parsing diff file: ${e.message}`);
+    return null;
   }
 }
 
@@ -60,460 +72,555 @@ function tableRow(...cells) {
   return `| ${cells.join(' | ')} |`;
 }
 
-function loadDiffFile(diffFilePath) {
-  try {
-    if (fs.existsSync(diffFilePath)) {
-      return JSON.parse(fs.readFileSync(diffFilePath, 'utf8'));
-    }
-  } catch (error) {
-    console.warn(`Warning: Could not load diff file: ${error.message}`);
-  }
-  return null;
-}
-
-// ============================================================================
+// =============================================================================
 // LAYER 1: EXECUTIVE SUMMARY
-// ============================================================================
+// =============================================================================
 
-function generateExecutiveSummary(diff, options) {
-  const { commitSha, buildSuccess, successfulBuilds, totalBuilds } = options;
-  const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 16) + ' UTC';
+function generateExecutiveSummary(diff, options = {}) {
+  const { commitSha = '', buildSuccess = true, successfulBuilds = 0, totalBuilds = 0 } = options;
 
-  if (!diff) {
-    return `# 🎨 Design Token Update
+  if (!diff || !diff.summary) {
+    return `## ⚪ Token Update
 
 **Status**: ${buildSuccess ? '✅ Build Successful' : '❌ Build Failed'} (${successfulBuilds}/${totalBuilds})
-**Commit**: \`${commitSha}\`
-**Date**: ${timestamp}
+${commitSha ? `**Commit**: \`${commitSha}\`` : ''}
 
-> ℹ️ Token-Diff nicht verfügbar. Details siehe Build-Statistiken unten.
+> ℹ️ No changes detected or diff data unavailable.
 
 ---
 `;
   }
 
-  const { impact, counts } = diff.summary;
-  const changesSummary = [];
-  if (counts.added > 0) changesSummary.push(`+${counts.added}`);
-  if (counts.modified > 0) changesSummary.push(`~${counts.modified}`);
-  if (counts.deleted > 0) changesSummary.push(`-${counts.deleted}`);
+  const { summary } = diff;
+  const impactEmoji = IMPACT_EMOJI[summary.impactLevel] || '⚪';
 
-  let markdown = `# ${impact.emoji} ${impact.label}
+  let md = `## ${impactEmoji} Token Update\n\n`;
 
-`;
+  // Quick stats - use unique token counts for clear summary
+  const stats = [];
+  const uniqueRemoved = summary.uniqueTokensRemoved ?? summary.tokensRemoved;
+  const uniqueModified = summary.uniqueTokensModified ?? summary.tokensModified;
+  const uniqueAdded = summary.uniqueTokensAdded ?? summary.tokensAdded;
 
-  // Breaking changes warning
-  if (impact.level === 'breaking') {
-    markdown += `> ⚠️ **Achtung:** ${impact.reason}. Migration erforderlich!
-
-`;
+  if (uniqueRemoved > 0) {
+    stats.push(`🔴 **${uniqueRemoved} Removed**`);
+  }
+  if (uniqueModified > 0) {
+    stats.push(`🟡 **${uniqueModified} Modified**`);
+  }
+  if (uniqueAdded > 0) {
+    stats.push(`🟢 **${uniqueAdded} Added**`);
   }
 
-  markdown += `**${changesSummary.join(' | ')} Tokens** | `;
-  markdown += `${buildSuccess ? '✅' : '❌'} Build (${successfulBuilds}/${totalBuilds}) | `;
-  markdown += `\`${commitSha}\`
+  if (stats.length > 0) {
+    md += stats.join(' | ') + '\n\n';
+  } else {
+    md += '⚪ **No token changes detected**\n\n';
+  }
 
----
-`;
+  // Build status
+  if (totalBuilds > 0) {
+    md += `**Build:** ${buildSuccess ? '✅' : '❌'} (${successfulBuilds}/${totalBuilds})`;
+    if (commitSha) md += ` | **Commit:** \`${commitSha}\``;
+    md += '\n';
+  }
 
-  return markdown;
+  // Affected brands
+  const brands = Object.keys(diff.byBrand || {});
+  if (brands.length > 0) {
+    md += `**Brands:** ${brands.map(b => b.charAt(0).toUpperCase() + b.slice(1)).join(', ')}\n`;
+  }
+
+  // Affected components
+  const components = Object.keys(diff.byComponent || {});
+  if (components.length > 0) {
+    const displayComponents = components.slice(0, 5);
+    const more = components.length > 5 ? ` +${components.length - 5} more` : '';
+    md += `**Components:** ${displayComponents.join(', ')}${more}\n`;
+  }
+
+  md += '\n---\n\n';
+
+  return md;
 }
 
-// ============================================================================
-// LAYER 2: CHANGE CATEGORIES
-// ============================================================================
+// =============================================================================
+// LAYER 2: PLATFORM OVERVIEW
+// =============================================================================
 
-function generateCategoryOverview(diff) {
-  if (!diff) return '';
+function generatePlatformOverview(diff) {
+  if (!diff || !diff.platforms) return '';
 
-  const { byCategory, byBrand } = diff;
+  let md = '## 📊 Platform Overview\n\n';
 
-  let markdown = `## 📊 Änderungen nach Kategorie
+  md += '| Platform | Added | Modified | Removed | Files |\n';
+  md += '|----------|------:|--------:|--------:|------:|\n';
 
-`;
+  let hasAnyChanges = false;
 
-  // Category table
-  const categoriesWithChanges = Object.entries(byCategory)
-    .filter(([_, data]) => data.total > 0)
-    .sort((a, b) => b[1].total - a[1].total);
+  for (const platformKey of PLATFORM_ORDER) {
+    const platform = diff.platforms[platformKey];
+    if (!platform) continue;
 
-  if (categoriesWithChanges.length === 0) {
-    markdown += `Keine Token-Änderungen erkannt.
+    const totalChanges = platform.tokensAdded + platform.tokensModified + platform.tokensRemoved;
+    const totalFiles = platform.filesAdded + platform.filesModified + platform.filesRemoved;
 
-`;
-    return markdown;
-  }
-
-  markdown += `${tableRow('Kategorie', 'Hinzugefügt', 'Modifiziert', 'Entfernt')}
-${tableRow(':-------', ':----------:', ':----------:', ':-------:')}
-`;
-
-  for (const [category, data] of categoriesWithChanges) {
-    const added = data.added.length > 0 ? `+${data.added.length}` : '-';
-    const modified = data.modified.length > 0 ? `~${data.modified.length}` : '-';
-    const deleted = data.deleted.length > 0 ? `-${data.deleted.length}` : '-';
-
-    markdown += `${tableRow(`${data.icon} ${data.label}`, added, modified, deleted)}
-`;
-  }
-
-  // Brand summary
-  const brandsWithChanges = Object.entries(byBrand)
-    .filter(([_, data]) => data.total > 0)
-    .map(([brand, data]) => `${brand} (${data.total})`)
-    .join(', ');
-
-  if (brandsWithChanges) {
-    markdown += `
-**Betroffene Brands:** ${brandsWithChanges}
-`;
-  }
-
-  // Mode summary
-  if (diff.byMode) {
-    const modesWithChanges = Object.entries(diff.byMode)
-      .filter(([_, data]) => data.total > 0)
-      .map(([mode, data]) => `${mode} (${data.total})`)
-      .join(', ');
-
-    if (modesWithChanges) {
-      markdown += `**Betroffene Modes:** ${modesWithChanges}
-`;
+    if (totalChanges === 0 && totalFiles === 0) {
+      continue;
     }
+
+    hasAnyChanges = true;
+    md += `| ${platform.icon} ${platform.name} | +${platform.tokensAdded} | ~${platform.tokensModified} | -${platform.tokensRemoved} | ${totalFiles} |\n`;
   }
 
-  markdown += `
----
-`;
+  if (!hasAnyChanges) {
+    return '';
+  }
 
-  return markdown;
+  md += '\n---\n\n';
+
+  return md;
 }
 
-// ============================================================================
-// LAYER 3: DETAILED CHANGES
-// ============================================================================
+// =============================================================================
+// LAYER 3: PLATFORM DETAILS
+// =============================================================================
 
-function generateDetailedChanges(diff) {
-  if (!diff) return '';
+function generatePlatformDetails(diff, options = {}) {
+  if (!diff || !diff.platforms) return '';
 
-  let markdown = `## 📝 Detaillierte Änderungen
+  const { maxTokensPerSection = 15 } = options;
 
-`;
+  let md = '## 📝 Platform Details\n\n';
 
-  const { byCategory, breakingChanges, colorPreview } = diff;
+  for (const platformKey of PLATFORM_ORDER) {
+    const platform = diff.platforms[platformKey];
+    if (!platform) continue;
 
-  // Breaking changes first (if any)
-  if (breakingChanges && breakingChanges.deleted.length > 0) {
-    markdown += `<details>
-<summary>⚠️ <b>Breaking Changes</b> (${breakingChanges.deleted.length} Tokens entfernt)</summary>
-
-> Diese Tokens wurden entfernt. Bitte prüfe deine Codebase auf Verwendung.
-
-${tableRow('Token', 'Typ', 'Brand')}
-${tableRow(':----', ':--', ':----')}
-`;
-
-    for (const token of breakingChanges.deleted.slice(0, 20)) {
-      markdown += `${tableRow(`\`${token.tokenPath}\``, token.type || '-', token.brand || '-')}
-`;
+    const totalChanges = platform.tokensAdded + platform.tokensModified + platform.tokensRemoved;
+    if (totalChanges === 0 && platform.changes.length === 0) {
+      continue;
     }
 
-    if (breakingChanges.deleted.length > 20) {
-      markdown += `
-*... und ${breakingChanges.deleted.length - 20} weitere*
-`;
-    }
+    // Platform header as collapsible section
+    md += `<details>\n`;
+    md += `<summary>${platform.icon} <b>${platform.name}</b> — `;
+    md += `+${platform.tokensAdded} / ~${platform.tokensModified} / -${platform.tokensRemoved} tokens`;
+    md += `</summary>\n\n`;
 
-    markdown += `
-</details>
+    // Group changes by type
+    const removedFiles = platform.changes.filter(c => c.type === 'removed');
+    const modifiedFiles = platform.changes.filter(c => c.type === 'modified');
+    const addedFiles = platform.changes.filter(c => c.type === 'added');
 
-`;
-  }
+    // Breaking changes (removed)
+    const hasRemovedTokens = removedFiles.length > 0 || modifiedFiles.some(f => f.changes?.removed?.length > 0);
+    if (hasRemovedTokens) {
+      md += '#### 🔴 Breaking Changes (Removed)\n\n';
+      md += '| Token | Previous Value | File |\n';
+      md += '|-------|----------------|------|\n';
 
-  // Color changes with preview
-  if (colorPreview && colorPreview.length > 0) {
-    markdown += `<details>
-<summary>🎨 <b>Farb-Änderungen</b> (${colorPreview.length})</summary>
+      let count = 0;
 
-${tableRow('Token', 'Vorher', 'Nachher', 'Mode')}
-${tableRow(':----', ':-----', ':------', ':---')}
-`;
-
-    for (const color of colorPreview) {
-      markdown += `${tableRow(`\`${color.name}\``, `\`${color.oldValue}\``, `\`${color.newValue}\``, color.mode)}
-`;
-    }
-
-    markdown += `
-</details>
-
-`;
-  }
-
-  // Other categories
-  for (const [category, data] of Object.entries(byCategory)) {
-    if (category === 'color' || data.total === 0) continue;
-
-    const hasDetails = data.modified.length > 0 || data.added.length > 0;
-    if (!hasDetails) continue;
-
-    markdown += `<details>
-<summary>${data.icon} <b>${data.label}</b> (+${data.added.length} | ~${data.modified.length})</summary>
-
-`;
-
-    // Added tokens
-    if (data.added.length > 0) {
-      markdown += `**Neue Tokens:**
-`;
-      for (const token of data.added.slice(0, 10)) {
-        markdown += `- \`${token.tokenPath}\`: \`${formatValue(token.value)}\`
-`;
+      for (const file of removedFiles) {
+        for (const token of file.tokens.slice(0, 5)) {
+          if (count >= maxTokensPerSection) break;
+          md += `| \`${truncate(token.name, 35)}\` | \`${truncate(token.value, 25)}\` | \`${truncate(path.basename(file.file), 30)}\` |\n`;
+          count++;
+        }
+        if (file.tokens.length > 5 && count < maxTokensPerSection) {
+          md += `| ... | *${file.tokens.length - 5} more in file* | |\n`;
+        }
       }
-      if (data.added.length > 10) {
-        markdown += `- *... und ${data.added.length - 10} weitere*
-`;
+
+      for (const file of modifiedFiles) {
+        if (!file.changes?.removed) continue;
+        for (const token of file.changes.removed.slice(0, 3)) {
+          if (count >= maxTokensPerSection) break;
+          md += `| \`${truncate(token.name, 35)}\` | \`${truncate(token.value, 25)}\` | \`${truncate(path.basename(file.file), 30)}\` |\n`;
+          count++;
+        }
       }
-      markdown += `
-`;
+
+      if (count >= maxTokensPerSection) {
+        const totalRemoved = removedFiles.reduce((sum, f) => sum + f.tokens.length, 0) +
+          modifiedFiles.reduce((sum, f) => sum + (f.changes?.removed?.length || 0), 0);
+        md += `| ... | *${totalRemoved - count} more* | |\n`;
+      }
+
+      md += '\n';
     }
 
     // Modified tokens
-    if (data.modified.length > 0) {
-      markdown += `**Geänderte Tokens:**
+    const allModified = modifiedFiles.filter(f => f.changes?.modified?.length > 0);
+    if (allModified.length > 0) {
+      md += '#### 🟡 Modified\n\n';
+      md += '| Token | Old | New | File |\n';
+      md += '|-------|-----|-----|------|\n';
 
-${tableRow('Token', 'Vorher', 'Nachher')}
-${tableRow(':----', ':-----', ':------')}
-`;
-      for (const token of data.modified.slice(0, 10)) {
-        markdown += `${tableRow(`\`${token.tokenPath}\``, `\`${formatValue(token.oldValue)}\``, `\`${formatValue(token.newValue)}\``)}
-`;
+      let count = 0;
+      for (const file of allModified) {
+        for (const token of file.changes.modified) {
+          if (count >= maxTokensPerSection) break;
+          md += `| \`${truncate(token.name, 30)}\` | \`${truncate(token.oldValue, 18)}\` | \`${truncate(token.newValue, 18)}\` | \`${truncate(path.basename(file.file), 25)}\` |\n`;
+          count++;
+        }
+        if (count >= maxTokensPerSection) break;
       }
-      if (data.modified.length > 10) {
-        markdown += `
-*... und ${data.modified.length - 10} weitere*
-`;
+
+      if (count >= maxTokensPerSection) {
+        const totalModified = allModified.reduce((sum, f) => sum + f.changes.modified.length, 0);
+        md += `| ... | | *${totalModified - count} more* | |\n`;
       }
+
+      md += '\n';
     }
 
-    markdown += `
-</details>
+    // Added tokens
+    const hasAddedTokens = addedFiles.length > 0 || modifiedFiles.some(f => f.changes?.added?.length > 0);
+    if (hasAddedTokens) {
+      md += '#### 🟢 Added\n\n';
+      md += '| Token | Value | File |\n';
+      md += '|-------|-------|------|\n';
 
-`;
+      let count = 0;
+
+      for (const file of addedFiles) {
+        for (const token of file.tokens.slice(0, 5)) {
+          if (count >= maxTokensPerSection) break;
+          md += `| \`${truncate(token.name, 35)}\` | \`${truncate(token.value, 25)}\` | \`${truncate(path.basename(file.file), 30)}\` |\n`;
+          count++;
+        }
+      }
+
+      for (const file of modifiedFiles) {
+        if (!file.changes?.added) continue;
+        for (const token of file.changes.added.slice(0, 3)) {
+          if (count >= maxTokensPerSection) break;
+          md += `| \`${truncate(token.name, 35)}\` | \`${truncate(token.value, 25)}\` | \`${truncate(path.basename(file.file), 30)}\` |\n`;
+          count++;
+        }
+      }
+
+      if (count >= maxTokensPerSection) {
+        md += `| ... | *more tokens* | |\n`;
+      }
+
+      md += '\n';
+    }
+
+    md += '</details>\n\n';
   }
 
-  markdown += `---
-`;
-
-  return markdown;
+  return md;
 }
 
-function formatValue(value) {
-  if (value === null || value === undefined) return 'null';
-  if (typeof value === 'object') return JSON.stringify(value);
-  const str = String(value);
-  return str.length > 30 ? str.substring(0, 27) + '...' : str;
-}
-
-// ============================================================================
+// =============================================================================
 // LAYER 4: TECHNICAL DETAILS
-// ============================================================================
+// =============================================================================
 
-function generateTechnicalDetails(options, diff) {
-  const { runId, successfulBuilds, totalBuilds } = options;
-  const repo = process.env.GITHUB_REPOSITORY || options.repository || 'UXWizard25/vv-token-test-v3';
+function generateTechnicalDetails(diff, options = {}) {
+  const { runId = '' } = options;
+  const repo = process.env.GITHUB_REPOSITORY || 'UXWizard25/vv-token-test-v3';
 
-  const platforms = [
-    { name: 'CSS', pattern: '*.css' },
-    { name: 'SCSS', pattern: '*.scss' },
-    { name: 'JavaScript', pattern: '*.js' },
-    { name: 'JSON', pattern: '*.json' },
-    { name: 'iOS Swift', pattern: '*.swift' },
-    { name: 'Android XML', pattern: '*.xml' },
-    { name: 'Flutter Dart', pattern: '*.dart' }
-  ];
+  let md = '## ⚙️ Technical Details\n\n';
 
-  let markdown = `<details>
-<summary>⚙️ <b>Build & Pipeline Details</b></summary>
+  // Changed files by platform
+  md += '<details>\n';
+  md += '<summary>📁 <b>All Changed Files</b></summary>\n\n';
 
-### 📦 Build Output
+  if (diff && diff.platforms) {
+    for (const platformKey of PLATFORM_ORDER) {
+      const platform = diff.platforms[platformKey];
+      if (!platform || platform.changes.length === 0) continue;
 
-${tableRow('Platform', 'Files', 'Size')}
-${tableRow(':-------', '----:', ':---')}
-`;
+      md += `#### ${platform.icon} ${platform.name}\n\n`;
 
-  let totalFiles = 0;
-  for (const platform of platforms) {
-    const files = countFiles(platform.pattern);
-    totalFiles += files;
-    if (files > 0) {
-      markdown += `${tableRow(`**${platform.name}**`, files, '-')}
-`;
+      const files = platform.changes.map(c => c.file).slice(0, 15);
+      for (const file of files) {
+        md += `- \`${file}\`\n`;
+      }
+
+      if (platform.changes.length > 15) {
+        md += `- *... and ${platform.changes.length - 15} more files*\n`;
+      }
+
+      md += '\n';
     }
   }
 
-  markdown += `${tableRow('**Total**', totalFiles, getDirSize(DIST_DIR))}
+  md += '</details>\n\n';
 
-### 📥 Downloads
+  // Statistics
+  md += '<details>\n';
+  md += '<summary>📊 <b>Build Statistics</b></summary>\n\n';
 
-`;
+  if (diff && diff.summary) {
+    const s = diff.summary;
+    const uniqueAdded = s.uniqueTokensAdded ?? s.tokensAdded;
+    const uniqueModified = s.uniqueTokensModified ?? s.tokensModified;
+    const uniqueRemoved = s.uniqueTokensRemoved ?? s.tokensRemoved;
 
-  if (runId) {
-    markdown += `- ⬇️ [**Build Artifacts herunterladen**](https://github.com/${repo}/actions/runs/${runId})
-`;
+    md += '```\n';
+    md += `Files Changed:  ${s.filesAdded + s.filesModified + s.filesRemoved}\n`;
+    md += `  - Added:      ${s.filesAdded}\n`;
+    md += `  - Modified:   ${s.filesModified}\n`;
+    md += `  - Removed:    ${s.filesRemoved}\n`;
+    md += `\n`;
+    md += `Unique Tokens Changed: ${uniqueAdded + uniqueModified + uniqueRemoved}\n`;
+    md += `  - Added:      ${uniqueAdded}\n`;
+    md += `  - Modified:   ${uniqueModified}\n`;
+    md += `  - Removed:    ${uniqueRemoved}\n`;
+    md += `\n`;
+    md += `Platform Occurrences: ${s.tokensAdded + s.tokensModified + s.tokensRemoved}\n`;
+    md += `  - Added:      ${s.tokensAdded}\n`;
+    md += `  - Modified:   ${s.tokensModified}\n`;
+    md += `  - Removed:    ${s.tokensRemoved}\n`;
+    md += `\n`;
+    md += `Impact Level:   ${s.impactLevel}\n`;
+    md += '```\n\n';
   }
 
-  markdown += `- 📄 [Source-Änderungen anzeigen](https://github.com/${repo}/compare/main...figma-tokens)
+  md += '</details>\n\n';
 
-### 🔧 Pipeline Info
+  // Downloads
+  if (runId) {
+    md += `📥 [Download Build Artifacts](https://github.com/${repo}/actions/runs/${runId})\n\n`;
+  }
 
-- **Node.js**: 20.x
-- **Style Dictionary**: 4.x
-- **Platforms**: ${platforms.filter(p => countFiles(p.pattern) > 0).length}/7
-- **Total Files**: ${totalFiles}
-- **Artifact Retention**: 30 Tage
-
-</details>
-
-`;
-
-  return markdown;
+  return md;
 }
 
-// ============================================================================
-// AFTER MERGE INFO
-// ============================================================================
+// =============================================================================
+// REVIEW CHECKLIST
+// =============================================================================
 
-function generateAfterMergeInfo() {
-  return `<details>
-<summary>🚀 <b>Was passiert nach dem Merge?</b></summary>
+function generateReviewChecklist(diff) {
+  const hasBreaking = diff?.summary?.tokensRemoved > 0;
+  const hasModified = diff?.summary?.tokensModified > 0;
 
-1. ✅ **Fresh Build** — Tokens werden neu gebaut
-2. 📦 **Version Bump** — Automatische Patch-Version
-3. 📤 **NPM Publish** — Package wird veröffentlicht
-4. 🏷️ **GitHub Release** — Tag mit Release Notes
-
-</details>
-
-`;
-}
-
-// ============================================================================
-// QUICK ACTIONS
-// ============================================================================
-
-function generateQuickActions(diff) {
-  const hasBreaking = diff?.breakingChanges?.deleted?.length > 0;
-
-  let markdown = `## ⚡ Review Checklist
-
-`;
+  let md = '## ✅ Review Checklist\n\n';
 
   if (hasBreaking) {
-    markdown += `- [ ] ⚠️ Breaking Changes geprüft
-- [ ] Migration-Plan erstellt
-`;
+    md += '- [ ] ⚠️ Breaking changes reviewed\n';
+    md += '- [ ] Migration plan created\n';
   }
 
-  markdown += `- [ ] Token-Änderungen geprüft
-- [ ] Betroffene Komponenten identifiziert
-`;
+  md += '- [ ] Token changes reviewed\n';
+  md += '- [ ] Affected components identified\n';
 
-  if (diff?.summary?.counts?.modified > 0) {
-    markdown += `- [ ] Visuelle Änderungen validiert
-`;
+  if (hasModified) {
+    md += '- [ ] Visual changes validated\n';
   }
 
-  markdown += `
----
-`;
+  md += '\n---\n\n';
 
-  return markdown;
+  return md;
 }
 
-// ============================================================================
-// MAIN GENERATOR
-// ============================================================================
+// =============================================================================
+// POST-MERGE INFO
+// =============================================================================
 
-function generateReleaseNotes(options = {}) {
-  const {
-    diffFile,
-    commitSha = exec('git rev-parse HEAD').substring(0, 7),
-    buildSuccess = true,
-    successfulBuilds = 969,
-    totalBuilds = 969,
-    runId = ''
-  } = options;
+function generatePostMergeInfo() {
+  return `<details>
+<summary>🚀 <b>What happens after merge?</b></summary>
 
-  // Load diff if available
-  const diff = diffFile ? loadDiffFile(diffFile) : null;
+1. ✅ **Fresh Build** — Tokens rebuilt from source
+2. 📦 **Version Bump** — Automatic patch version
+3. 📤 **NPM Publish** — Package published
+4. 🏷️ **GitHub Release** — Tag with release notes
 
-  let markdown = '';
+</details>
 
-  // Layer 1: Executive Summary
-  markdown += generateExecutiveSummary(diff, {
-    commitSha,
-    buildSuccess,
-    successfulBuilds,
-    totalBuilds
-  });
+`;
+}
 
-  // Layer 2: Category Overview
-  markdown += generateCategoryOverview(diff);
+// =============================================================================
+// OUTPUT FORMATS
+// =============================================================================
 
-  // Layer 3: Detailed Changes
-  markdown += generateDetailedChanges(diff);
+/**
+ * Generate PR Comment format (compact)
+ */
+function generatePRComment(diff, options = {}) {
+  let md = '';
 
-  // Quick Actions / Checklist
-  markdown += generateQuickActions(diff);
-
-  // Layer 4: Technical Details (collapsed)
-  markdown += generateTechnicalDetails({ runId, successfulBuilds, totalBuilds }, diff);
-
-  // After Merge Info (collapsed)
-  markdown += generateAfterMergeInfo();
+  md += generateExecutiveSummary(diff, options);
+  md += generatePlatformOverview(diff);
+  md += generatePlatformDetails(diff, { maxTokensPerSection: 10 });
+  md += generateReviewChecklist(diff);
+  md += generateTechnicalDetails(diff, options);
+  md += generatePostMergeInfo();
 
   // Footer
-  const repo = process.env.GITHUB_REPOSITORY || options.repository || 'UXWizard25/vv-token-test-v3';
-  markdown += `---
+  const repo = process.env.GITHUB_REPOSITORY || 'UXWizard25/vv-token-test-v3';
+  md += `---\n\n`;
+  md += `**Questions?** [Documentation](https://github.com/${repo}#readme) | [Create Issue](https://github.com/${repo}/issues)\n`;
 
-**Fragen?** [Troubleshooting Guide](https://github.com/${repo}#-troubleshooting) | [Issue erstellen](https://github.com/${repo}/issues)
-`;
-
-  return markdown;
+  return md;
 }
 
-// ============================================================================
+/**
+ * Generate full CHANGELOG format
+ */
+function generateChangelog(diff, options = {}) {
+  const version = options.version || 'Unreleased';
+  const date = new Date().toISOString().split('T')[0];
+
+  let md = `# ${version} (${date})\n\n`;
+
+  md += generateExecutiveSummary(diff, options);
+  md += generatePlatformOverview(diff);
+  md += generatePlatformDetails(diff, { maxTokensPerSection: 50 });
+  md += generateTechnicalDetails(diff, options);
+
+  return md;
+}
+
+/**
+ * Generate console output
+ */
+function generateConsoleOutput(diff) {
+  if (!diff || !diff.summary) {
+    return '\n⚪ No changes detected.\n';
+  }
+
+  const { summary } = diff;
+  const uniqueAdded = summary.uniqueTokensAdded ?? summary.tokensAdded;
+  const uniqueModified = summary.uniqueTokensModified ?? summary.tokensModified;
+  const uniqueRemoved = summary.uniqueTokensRemoved ?? summary.tokensRemoved;
+
+  let output = '\n';
+  output += '═══════════════════════════════════════════════════════════\n';
+  output += '                    🎨 TOKEN UPDATE\n';
+  output += '═══════════════════════════════════════════════════════════\n\n';
+
+  // Impact
+  const impactEmoji = IMPACT_EMOJI[summary.impactLevel] || '⚪';
+  output += `  Impact: ${impactEmoji} ${summary.impactLevel.toUpperCase()}\n\n`;
+
+  // Stats - show unique counts
+  output += '  Unique Token Changes:\n';
+  output += `    🔴 Removed:  ${uniqueRemoved} tokens\n`;
+  output += `    🟡 Modified: ${uniqueModified} tokens\n`;
+  output += `    🟢 Added:    ${uniqueAdded} tokens\n\n`;
+
+  // Files
+  output += '  Files:\n';
+  output += `    📁 Added:    ${summary.filesAdded}\n`;
+  output += `    📝 Modified: ${summary.filesModified}\n`;
+  output += `    🗑️  Removed:  ${summary.filesRemoved}\n\n`;
+
+  // Platform breakdown
+  output += '  By Platform:\n';
+  for (const platformKey of PLATFORM_ORDER) {
+    const platform = diff.platforms[platformKey];
+    if (!platform) continue;
+
+    const total = platform.tokensAdded + platform.tokensModified + platform.tokensRemoved;
+    if (total === 0) continue;
+
+    output += `    ${platform.icon} ${platform.name.padEnd(16)} +${platform.tokensAdded} / ~${platform.tokensModified} / -${platform.tokensRemoved}\n`;
+  }
+
+  output += '\n═══════════════════════════════════════════════════════════\n';
+
+  return output;
+}
+
+// =============================================================================
 // CLI
-// ============================================================================
+// =============================================================================
 
-if (require.main === module) {
+function parseArgs() {
   const args = process.argv.slice(2);
-  const options = {};
+  const options = {
+    diffFile: null,
+    format: 'pr-comment',
+    output: null,
+    version: null,
+    commitSha: '',
+    buildSuccess: true,
+    successfulBuilds: 0,
+    totalBuilds: 0,
+    runId: ''
+  };
 
-  for (let i = 0; i < args.length; i += 2) {
-    const key = args[i]?.replace('--', '').replace(/-/g, '_');
-    const value = args[i + 1];
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    const nextArg = args[i + 1];
 
-    if (!key || value === undefined) continue;
-
-    if (key === 'successful_builds' || key === 'total_builds') {
-      options[key === 'successful_builds' ? 'successfulBuilds' : 'totalBuilds'] = parseInt(value);
-    } else if (key === 'build_success') {
-      options.buildSuccess = value === 'true';
-    } else if (key === 'diff_file') {
-      options.diffFile = value;
-    } else if (key === 'commit_sha') {
-      options.commitSha = value;
-    } else if (key === 'run_id') {
-      options.runId = value;
-    } else {
-      options[key] = value;
+    if (arg === '--diff-file' && nextArg) {
+      options.diffFile = nextArg;
+      i++;
+    } else if (arg === '--format' && nextArg) {
+      options.format = nextArg;
+      i++;
+    } else if (arg === '--output' && nextArg) {
+      options.output = nextArg;
+      i++;
+    } else if (arg === '--version' && nextArg) {
+      options.version = nextArg;
+      i++;
+    } else if (arg === '--commit-sha' && nextArg) {
+      options.commitSha = nextArg;
+      i++;
+    } else if (arg === '--build-success' && nextArg) {
+      options.buildSuccess = nextArg === 'true';
+      i++;
+    } else if (arg === '--successful-builds' && nextArg) {
+      options.successfulBuilds = parseInt(nextArg) || 0;
+      i++;
+    } else if (arg === '--total-builds' && nextArg) {
+      options.totalBuilds = parseInt(nextArg) || 0;
+      i++;
+    } else if (arg === '--run-id' && nextArg) {
+      options.runId = nextArg;
+      i++;
     }
   }
 
-  const markdown = generateReleaseNotes(options);
-  console.log(markdown);
+  return options;
 }
 
-module.exports = { generateReleaseNotes };
+function main() {
+  const options = parseArgs();
+
+  // Load diff file
+  const diff = options.diffFile ? loadDiffFile(options.diffFile) : null;
+
+  // Generate output based on format
+  let output;
+  switch (options.format) {
+    case 'changelog':
+      output = generateChangelog(diff, options);
+      break;
+    case 'console':
+      output = generateConsoleOutput(diff);
+      break;
+    case 'pr-comment':
+    default:
+      output = generatePRComment(diff, options);
+      break;
+  }
+
+  // Write or print output
+  if (options.output) {
+    fs.writeFileSync(options.output, output, 'utf-8');
+    console.log(`📄 Release notes written to: ${options.output}`);
+  } else {
+    console.log(output);
+  }
+}
+
+if (require.main === module) {
+  main();
+}
+
+module.exports = {
+  generatePRComment,
+  generateChangelog,
+  generateConsoleOutput,
+  loadDiffFile
+};

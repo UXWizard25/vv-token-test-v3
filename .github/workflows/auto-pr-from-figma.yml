@@ -59,13 +59,13 @@ jobs:
 
           echo "✅ Build successful: $SUCCESSFUL_BUILDS/$TOTAL_BUILDS"
 
-      # 5. Build Baseline Tokens (Main Branch) für Vergleich
-      - name: Build Baseline Tokens
+      # 5. Build Baseline (Main Branch) für Vergleich
+      - name: Build Baseline for Comparison
         id: baseline
         run: |
-          echo "📦 Building baseline tokens from main branch..."
+          echo "📦 Building baseline from main branch for full dist/ comparison..."
 
-          # Sichere neue Token-Dateien
+          # Sichere neue Builds
           mv tokens/ tokens-new/
           mv dist/ dist-new/
 
@@ -80,22 +80,22 @@ jobs:
             # Build mit main Source
             npm run build 2>&1 || echo "Baseline build completed"
 
-            # Verschiebe zu tokens-old
-            if [ -d "tokens" ]; then
-              mv tokens/ tokens-old/
+            # Verschiebe zu dist-old für Vergleich
+            if [ -d "dist" ]; then
+              mv dist/ dist-old/
               echo "baseline_available=true" >> $GITHUB_OUTPUT
             else
-              mkdir -p tokens-old
+              mkdir -p dist-old
               echo "baseline_available=false" >> $GITHUB_OUTPUT
             fi
+
+            # Aufräumen
+            rm -rf tokens/
           else
             echo "⚠️ No main branch source found (first PR?)"
-            mkdir -p tokens-old
+            mkdir -p dist-old
             echo "baseline_available=false" >> $GITHUB_OUTPUT
           fi
-
-          # Lösche baseline dist/ (wird nicht benötigt, nur tokens-old/ für Vergleich)
-          rm -rf dist/
 
           # Stelle neue Source und Builds wieder her
           mv /tmp/new-source.json src/design-tokens/bild-design-system-raw-data.json
@@ -103,32 +103,35 @@ jobs:
           mv dist-new/ dist/
 
           echo "✅ Baseline comparison ready"
-          echo "📁 Final state: tokens/ and dist/ contain NEW version"
+          echo "📁 dist-old/ = main branch, dist/ = new version"
 
-      # 6. Vergleiche Token Builds
-      - name: Compare Token Builds
+      # 6. Vergleiche Dist Builds (alle Plattformen)
+      - name: Compare Dist Builds
         id: diff
         run: |
-          echo "🔍 Comparing token builds..."
+          echo "🔍 Comparing full dist/ builds across all platforms..."
 
-          node scripts/compare-token-builds.js \
-            --old tokens-old/ \
-            --new tokens/ \
-            --output token-diff.json
+          node scripts/compare-dist-builds.js \
+            --old dist-old/ \
+            --new dist/ \
+            --output dist-diff.json
 
           # Extrahiere Summary für Output
-          if [ -f "token-diff.json" ]; then
-            ADDED=$(cat token-diff.json | jq -r '.summary.counts.added // 0')
-            MODIFIED=$(cat token-diff.json | jq -r '.summary.counts.modified // 0')
-            DELETED=$(cat token-diff.json | jq -r '.summary.counts.deleted // 0')
-            IMPACT=$(cat token-diff.json | jq -r '.summary.impact.level // "unknown"')
+          if [ -f "dist-diff.json" ]; then
+            ADDED=$(cat dist-diff.json | jq -r '.summary.tokensAdded // 0')
+            MODIFIED=$(cat dist-diff.json | jq -r '.summary.tokensModified // 0')
+            DELETED=$(cat dist-diff.json | jq -r '.summary.tokensRemoved // 0')
+            IMPACT=$(cat dist-diff.json | jq -r '.summary.impactLevel // "unknown"')
+            FILES_CHANGED=$(cat dist-diff.json | jq -r '(.summary.filesAdded + .summary.filesModified + .summary.filesRemoved) // 0')
 
             echo "added=$ADDED" >> $GITHUB_OUTPUT
             echo "modified=$MODIFIED" >> $GITHUB_OUTPUT
             echo "deleted=$DELETED" >> $GITHUB_OUTPUT
             echo "impact=$IMPACT" >> $GITHUB_OUTPUT
+            echo "files_changed=$FILES_CHANGED" >> $GITHUB_OUTPUT
 
-            echo "📊 Diff Summary: +$ADDED | ~$MODIFIED | -$DELETED (Impact: $IMPACT)"
+            echo "📊 Diff Summary: +$ADDED | ~$MODIFIED | -$DELETED tokens (Impact: $IMPACT)"
+            echo "📁 Files changed: $FILES_CHANGED"
           fi
 
       # 7. Upload Build Artifacts
@@ -139,7 +142,7 @@ jobs:
           path: |
             dist/
             tokens/
-            token-diff.json
+            dist-diff.json
             build-output.log
           retention-days: 30
 
@@ -164,11 +167,12 @@ jobs:
       - name: Generate Release Notes
         id: release_notes
         run: |
-          echo "📝 Generating comprehensive release notes..."
+          echo "📝 Generating platform-specific release notes..."
 
-          # Generate release notes mit Diff-Datei
+          # Generate release notes mit Dist-Diff-Datei
           node scripts/generate-release-notes.js \
-            --diff-file "token-diff.json" \
+            --diff-file "dist-diff.json" \
+            --format "pr-comment" \
             --commit-sha "${{ github.sha }}" \
             --build-success true \
             --successful-builds "${{ steps.build.outputs.successful_builds }}" \
