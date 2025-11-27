@@ -6,7 +6,6 @@ pnpm-lock.yaml
 
 # Build outputs
 dist/
-!dist/icons/
 tokens/
 
 # Icon build comparison

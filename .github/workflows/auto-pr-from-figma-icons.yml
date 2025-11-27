@@ -153,8 +153,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Add generated files
-          git add dist/icons/
+          # Add generated files (force add since dist/ is in .gitignore)
+          git add -f dist/icons/
           git add src/icons/.codepoints.json
 
           # Check if there are changes to commit
