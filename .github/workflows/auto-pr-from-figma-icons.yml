@@ -22,7 +22,7 @@ on:
     paths:
       - 'src/icons/**'
 
-# Prevent concurrent runs - wait for latest
+# Prevent concurrent runs
 concurrency:
   group: figma-icons-pr
   cancel-in-progress: true
@@ -32,31 +32,8 @@ permissions:
   pull-requests: write
 
 jobs:
-  # Debounce: Wait for Figma to finish pushing all icons
-  debounce:
-    name: Wait for all icons
-    runs-on: ubuntu-latest
-    steps:
-      - name: Wait 30 seconds for more commits
-        run: sleep 30
-
-      - name: Check if still latest commit
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const { data: branch } = await github.rest.repos.getBranch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              branch: 'figma-icons'
-            });
-
-            if (branch.commit.sha !== context.sha) {
-              core.setFailed('Newer commit detected - skipping this run');
-            }
-
   build-and-pr:
     name: Build Icons & Create PR
-    needs: debounce
     runs-on: ubuntu-latest
 
     steps:
