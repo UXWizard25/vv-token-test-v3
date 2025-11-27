@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Generated at: 2025-11-27T18:48:11.013Z
+// Generated at: 2025-11-27T19:06:52.200Z
 //
 // This file contains icon definitions for the BILD Design System.
 // To regenerate, run: npm run build:icons:flutter
@@ -14,7 +14,7 @@ import 'package:flutter/widgets.dart';
 /// Icon(BildIcons.arrowLeft, size: 32)
 /// ```
 ///
-/// Total icons: 199
+/// Total icons: 200
 class BildIcons {
   BildIcons._();
 
@@ -164,6 +164,9 @@ class BildIcons {
 
   /// Icon: digital
   static const IconData digital = IconData(0xe032, fontFamily: _fontFamily, fontPackage: _fontPackage);
+
+  /// Icon: doicon
+  static const IconData doicon = IconData(0xe0c8, fontFamily: _fontFamily, fontPackage: _fontPackage);
 
   /// Icon: download
   static const IconData download = IconData(0xe033, fontFamily: _fontFamily, fontPackage: _fontPackage);
@@ -668,6 +671,7 @@ class BildIcons {
     'desktop-questionmark': desktopQuestionmark,
     'desktop': desktop,
     'digital': digital,
+    'doicon': doicon,
     'download': download,
     'edit': edit,
     'enter-fullscreen': enterFullscreen,

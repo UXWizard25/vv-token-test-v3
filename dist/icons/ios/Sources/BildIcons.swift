@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Generated at: 2025-11-27T18:48:11.418Z
+// Generated at: 2025-11-27T19:06:52.608Z
 //
 // BILD Design System Icons - Swift Extension
 // To regenerate, run: npm run build:icons:ios
@@ -66,6 +66,7 @@ public enum BildIcon: String, CaseIterable {
     case desktopQuestionmark = "desktopQuestionmark"
     case desktop = "desktop"
     case digital = "digital"
+    case doicon = "doicon"
     case download = "download"
     case edit = "edit"
     case enterFullscreen = "enterFullscreen"
@@ -274,6 +275,7 @@ public enum BildIcon: String, CaseIterable {
         case .desktopQuestionmark: return "desktop-questionmark"
         case .desktop: return "desktop"
         case .digital: return "digital"
+        case .doicon: return "doicon"
         case .download: return "download"
         case .edit: return "edit"
         case .enterFullscreen: return "enter-fullscreen"

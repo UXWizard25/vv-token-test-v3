@@ -1,9 +1,16 @@
 {
-  "generatedAt": "2025-11-27T18:48:10.617Z",
-  "totalIcons": 199,
-  "successful": 199,
+  "generatedAt": "2025-11-27T19:06:51.792Z",
+  "totalIcons": 200,
+  "successful": 200,
   "failed": 0,
   "icons": [
+    {
+      "name": "doicon",
+      "success": true,
+      "originalSize": 535,
+      "optimizedSize": 315,
+      "savings": "41%"
+    },
     {
       "name": "2-liga-logo",
       "success": true,

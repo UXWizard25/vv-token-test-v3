@@ -2,7 +2,7 @@
  * BILD Design System Icons - React Components
  *
  * Auto-generated from SVG icons. Do not edit manually.
- * Generated at: 2025-11-27T18:48:10.645Z
+ * Generated at: 2025-11-27T19:06:51.819Z
  */
 
 export { 2LigaLogo, type 2LigaLogoProps } from './2LigaLogo';
@@ -53,6 +53,7 @@ export { DesktopCheckmark, type DesktopCheckmarkProps } from './DesktopCheckmark
 export { DesktopQuestionmark, type DesktopQuestionmarkProps } from './DesktopQuestionmark';
 export { Desktop, type DesktopProps } from './Desktop';
 export { Digital, type DigitalProps } from './Digital';
+export { Doicon, type DoiconProps } from './Doicon';
 export { Download, type DownloadProps } from './Download';
 export { Edit, type EditProps } from './Edit';
 export { EnterFullscreen, type EnterFullscreenProps } from './EnterFullscreen';
@@ -257,6 +258,7 @@ export type IconName =
   | 'DesktopQuestionmark'
   | 'Desktop'
   | 'Digital'
+  | 'Doicon'
   | 'Download'
   | 'Edit'
   | 'EnterFullscreen'
@@ -410,6 +412,6 @@ export type IconName =
   | 'ZoomIn';
 
 /**
- * Total number of icons: 199
+ * Total number of icons: 200
  */
-export const ICON_COUNT = 199;
+export const ICON_COUNT = 200;
