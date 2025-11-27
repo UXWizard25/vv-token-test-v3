@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2025-11-27T13:49:47.706Z",
+  "lastModified": "2025-11-27T16:14:57.614Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -2162,7 +2162,7 @@
         "VariableID:19881:148841",
         "VariableID:20988:206",
         "VariableID:20991:207",
-        "VariableID:20991:208"
+        "VariableID:20993:836"
       ],
       "variables": [
         {
@@ -6624,8 +6624,11 @@
           "description": "this is a test for the token pipeline",
           "resolvedType": "COLOR",
           "valuesByMode": {
-            "588:0": "#3083D6",
-            "592:1": "#B0D1F3"
+            "588:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:7765:33969"
+            },
+            "592:1": "#10253A"
           },
           "scopes": [
             "ALL_SCOPES"
@@ -6634,8 +6637,8 @@
           "variableCollectionId": "VariableCollectionId:588:1979"
         },
         {
-          "id": "VariableID:20991:208",
-          "name": "Semantic/Core/newTestPipettoken5",
+          "id": "VariableID:20993:836",
+          "name": "Semantic/Core/newTestPipettoken6",
           "description": "this is a test for the token pipeline",
           "resolvedType": "COLOR",
           "valuesByMode": {
