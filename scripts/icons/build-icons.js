@@ -61,8 +61,14 @@ const buildSteps = [
     required: true,
   },
   {
-    name: 'React Components',
+    name: 'React Components (TSX)',
     script: './generate-react.js',
+    output: 'react-src',
+    required: false,
+  },
+  {
+    name: 'React Compilation (JS)',
+    script: './compile-react.js',
     output: 'react',
     required: false,
   },

@@ -3,20 +3,25 @@
   "version": "1.0.0",
   "description": "BILD Design System Icons - Multi-platform icon transformation pipeline",
   "main": "dist/icons/react/index.js",
-  "module": "dist/icons/react/index.mjs",
+  "module": "dist/icons/react/index.js",
   "types": "dist/icons/react/index.d.ts",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/icons/react/index.d.ts",
-      "import": "./dist/icons/react/index.mjs",
-      "require": "./dist/icons/react/index.js"
+      "import": "./dist/icons/react/index.js",
+      "default": "./dist/icons/react/index.js"
     },
     "./react": {
       "types": "./dist/icons/react/index.d.ts",
-      "import": "./dist/icons/react/index.mjs",
-      "require": "./dist/icons/react/index.js"
+      "import": "./dist/icons/react/index.js",
+      "default": "./dist/icons/react/index.js"
     },
-    "./react/*": "./dist/icons/react/*",
+    "./react/*": {
+      "types": "./dist/icons/react/*.d.ts",
+      "import": "./dist/icons/react/*.js",
+      "default": "./dist/icons/react/*.js"
+    },
     "./svg/*": "./dist/icons/svg/*",
     "./android/*": "./dist/icons/android/*",
     "./flutter/*": "./dist/icons/flutter/*",
@@ -68,7 +73,9 @@
     "@svgr/plugin-svgo": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "svg2vectordrawable": "^2.9.1",
-    "fantasticon": "^3.0.0"
+    "fantasticon": "^3.0.0",
+    "typescript": "^5.3.0",
+    "@types/react": "^18.2.0"
   },
   "peerDependencies": {
     "react": ">=16.8.0"

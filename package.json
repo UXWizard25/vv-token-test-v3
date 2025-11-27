@@ -57,8 +57,13 @@
     "access": "public"
   },
   "devDependencies": {
+    "@svgr/core": "^8.1.0",
+    "@types/react": "^18.3.27",
+    "fantasticon": "^3.0.0",
+    "nodemon": "^3.0.1",
     "style-dictionary": "^4.2.0",
-    "nodemon": "^3.0.1"
-  },
-  "dependencies": {}
+    "svg2vectordrawable": "^2.9.1",
+    "svgo": "^3.3.2",
+    "typescript": "^5.9.3"
+  }
 }
