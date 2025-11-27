@@ -224,33 +224,33 @@ jobs:
               --total-builds "${{ steps.build.outputs.total_builds }}" \
               --package-size "${{ steps.package.outputs.package_size }}" \
               --output release-notes.md
-
-            RELEASE_BODY=$(cat release-notes.md)
           else
             echo "📝 Generating fallback release notes..."
-            RELEASE_BODY="## 🎨 Design Tokens v${{ steps.version.outputs.new }}
-
-### 📦 Installation
-
-\`\`\`bash
-npm install @marioschmidt/design-system-tokens@${{ steps.version.outputs.new }}
-\`\`\`
-
-### 📋 Build Info
-
-- **Build Status:** ✅ ${{ steps.build.outputs.successful_builds }}/${{ steps.build.outputs.total_builds }} successful
-- **Package Size:** ${{ steps.package.outputs.package_size }}
-- **Formats:** CSS, SCSS, JavaScript, Swift, Android XML, Flutter Dart, JSON
-
-### 🔗 Links
-
-- [📖 Documentation](https://github.com/${{ github.repository }}#readme)
-- [📦 npm Package](https://www.npmjs.com/package/@marioschmidt/design-system-tokens)"
+            {
+              echo "## 🎨 Design Tokens v${{ steps.version.outputs.new }}"
+              echo ""
+              echo "### 📦 Installation"
+              echo ""
+              echo '```bash'
+              echo "npm install @marioschmidt/design-system-tokens@${{ steps.version.outputs.new }}"
+              echo '```'
+              echo ""
+              echo "### 📋 Build Info"
+              echo ""
+              echo "- **Build Status:** ✅ ${{ steps.build.outputs.successful_builds }}/${{ steps.build.outputs.total_builds }} successful"
+              echo "- **Package Size:** ${{ steps.package.outputs.package_size }}"
+              echo "- **Formats:** CSS, SCSS, JavaScript, Swift, Android XML, Flutter Dart, JSON"
+              echo ""
+              echo "### 🔗 Links"
+              echo ""
+              echo "- [📖 Documentation](https://github.com/${{ github.repository }}#readme)"
+              echo "- [📦 npm Package](https://www.npmjs.com/package/@marioschmidt/design-system-tokens)"
+            } > release-notes.md
           fi
 
           # Output für GitHub Release
           echo "body<<EOF" >> $GITHUB_OUTPUT
-          echo "$RELEASE_BODY" >> $GITHUB_OUTPUT
+          cat release-notes.md >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       # 15. GitHub Release erstellen
