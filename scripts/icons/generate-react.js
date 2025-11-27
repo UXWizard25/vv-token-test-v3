@@ -43,12 +43,20 @@ const log = {
  * Convert kebab-case to PascalCase
  * add -> Add
  * arrow-left -> ArrowLeft
+ * 2-liga-logo -> Icon2LigaLogo (prefix with Icon if starts with number)
  */
 function toPascalCase(str) {
-  return str
+  const pascalCase = str
     .split('-')
     .map(part => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
     .join('');
+
+  // If the name starts with a number, prefix with 'Icon' to make it a valid JS identifier
+  if (/^\d/.test(pascalCase)) {
+    return 'Icon' + pascalCase;
+  }
+
+  return pascalCase;
 }
 
 /**
