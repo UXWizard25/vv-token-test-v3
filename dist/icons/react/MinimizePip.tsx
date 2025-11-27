@@ -1,0 +1,61 @@
+import * as React from 'react';
+
+export interface MinimizePipProps extends React.SVGProps<SVGSVGElement> {
+  /**
+   * Icon size (width and height)
+   * @default 24
+   */
+  size?: number | string;
+  /**
+   * Accessible label for screen readers.
+   * If provided, aria-hidden will be set to false.
+   */
+  'aria-label'?: string;
+  /**
+   * Hide icon from screen readers (decorative icon)
+   * @default true
+   */
+  'aria-hidden'?: boolean;
+  /**
+   * Optional title element for tooltip/accessibility
+   */
+  title?: string;
+}
+
+const MinimizePip = React.forwardRef<SVGSVGElement, MinimizePipProps>(
+  (
+    {
+      size = 24,
+      'aria-label': ariaLabel,
+      'aria-hidden': ariaHidden = true,
+      title,
+      ...props
+    },
+    ref
+  ) => {
+    const isDecorative = !ariaLabel && ariaHidden;
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width={size}
+        height={size}
+        fill="currentColor"
+        role="img"
+        aria-hidden={isDecorative}
+        aria-label={ariaLabel}
+        {...props}
+      >
+        {title && <title>{title}</title>}
+        <path fill="currentColor" d="M2 2v17h2V4h16v15h2V2z"/><path fill="currentColor" d="M12 12H6v-2h2.59L5 6.41 6.41 5 10 8.59V6h2z"/><path fill="currentColor" fill-rule="evenodd" d="M6 16v6h12v-6zm10 4v-2H8v2z" clip-rule="evenodd"/>
+      </svg>
+    );
+  }
+);
+
+MinimizePip.displayName = 'MinimizePip';
+
+export { MinimizePip };
+export default MinimizePip;

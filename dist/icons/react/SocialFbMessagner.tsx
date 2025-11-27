@@ -1,0 +1,61 @@
+import * as React from 'react';
+
+export interface SocialFbMessagnerProps extends React.SVGProps<SVGSVGElement> {
+  /**
+   * Icon size (width and height)
+   * @default 24
+   */
+  size?: number | string;
+  /**
+   * Accessible label for screen readers.
+   * If provided, aria-hidden will be set to false.
+   */
+  'aria-label'?: string;
+  /**
+   * Hide icon from screen readers (decorative icon)
+   * @default true
+   */
+  'aria-hidden'?: boolean;
+  /**
+   * Optional title element for tooltip/accessibility
+   */
+  title?: string;
+}
+
+const SocialFbMessagner = React.forwardRef<SVGSVGElement, SocialFbMessagnerProps>(
+  (
+    {
+      size = 24,
+      'aria-label': ariaLabel,
+      'aria-hidden': ariaHidden = true,
+      title,
+      ...props
+    },
+    ref
+  ) => {
+    const isDecorative = !ariaLabel && ariaHidden;
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width={size}
+        height={size}
+        fill="currentColor"
+        role="img"
+        aria-hidden={isDecorative}
+        aria-label={ariaLabel}
+        {...props}
+      >
+        {title && <title>{title}</title>}
+        <path fill="currentColor" d="M19.11 4.92A10 10 0 0 0 12.08 2a9.91 9.91 0 0 0-8.66 14.86L2 22l5.29-1.35A9.98 9.98 0 0 0 22 11.89a9.8 9.8 0 0 0-2.89-6.97m-7.03 15.24a8 8 0 0 1-4.2-1.13l-.32-.17-3.16.82.82-3.08-.22-.33c-2.4-3.84-1.26-8.92 2.67-11.3s8.99-1.24 11.39 2.65 1.25 8.92-2.67 11.3a8 8 0 0 1-4.3 1.24"/><path fill="currentColor" d="M9.92 9.71 6.85 14.3c-.16.23.13.5.35.34l2.73-2.03a.3.3 0 0 1 .28-.01l3.68 2.28a.25.25 0 0 0 .34-.07l3.2-4.76c.16-.23-.11-.5-.34-.35l-3.35 2.22a.3.3 0 0 1-.29 0l-3.18-2.26a.25.25 0 0 0-.35.06"/>
+      </svg>
+    );
+  }
+);
+
+SocialFbMessagner.displayName = 'SocialFbMessagner';
+
+export { SocialFbMessagner };
+export default SocialFbMessagner;

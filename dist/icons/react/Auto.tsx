@@ -1,0 +1,61 @@
+import * as React from 'react';
+
+export interface AutoProps extends React.SVGProps<SVGSVGElement> {
+  /**
+   * Icon size (width and height)
+   * @default 24
+   */
+  size?: number | string;
+  /**
+   * Accessible label for screen readers.
+   * If provided, aria-hidden will be set to false.
+   */
+  'aria-label'?: string;
+  /**
+   * Hide icon from screen readers (decorative icon)
+   * @default true
+   */
+  'aria-hidden'?: boolean;
+  /**
+   * Optional title element for tooltip/accessibility
+   */
+  title?: string;
+}
+
+const Auto = React.forwardRef<SVGSVGElement, AutoProps>(
+  (
+    {
+      size = 24,
+      'aria-label': ariaLabel,
+      'aria-hidden': ariaHidden = true,
+      title,
+      ...props
+    },
+    ref
+  ) => {
+    const isDecorative = !ariaLabel && ariaHidden;
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width={size}
+        height={size}
+        fill="currentColor"
+        role="img"
+        aria-hidden={isDecorative}
+        aria-label={ariaLabel}
+        {...props}
+      >
+        {title && <title>{title}</title>}
+        <path fill="currentColor" d="M19.1 12.41v2.03h-3.03v-1.52zM5.03 14.44V12.4l3.04.5v1.53z"/><path fill="currentColor" fill-rule="evenodd" d="M6.38 4 4.87 7.96H2v1.28c0 .7.51 1.3 1.2 1.4l-1.1 1.23v5.98h1.3v1.64c0 .28.23.5.51.5h2.03a.5.5 0 0 0 .5-.5v-1.64H17.6v1.64c0 .28.22.5.5.5h2.03a.5.5 0 0 0 .5-.5v-1.64h1.33v-5.98l-1.16-1.23a1.4 1.4 0 0 0 1.2-1.4V7.96h-2.82L17.65 4zm.05 4.97 1.2-3.15h8.77l1.21 3.15zm-.79 1.82-1.73 1.8v3.44h16.22V12.6l-1.73-1.81z" clip-rule="evenodd"/>
+      </svg>
+    );
+  }
+);
+
+Auto.displayName = 'Auto';
+
+export { Auto };
+export default Auto;

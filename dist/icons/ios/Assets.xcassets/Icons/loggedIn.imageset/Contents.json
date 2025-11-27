@@ -1,0 +1,16 @@
+{
+  "images": [
+    {
+      "filename": "loggedIn.svg",
+      "idiom": "universal"
+    }
+  ],
+  "info": {
+    "author": "bild-design-system-icons",
+    "version": 1
+  },
+  "properties": {
+    "preserves-vector-representation": true,
+    "template-rendering-intent": "template"
+  }
+}

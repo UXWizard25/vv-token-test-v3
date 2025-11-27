@@ -1,0 +1,61 @@
+import * as React from 'react';
+
+export interface PodcastSpotifyProps extends React.SVGProps<SVGSVGElement> {
+  /**
+   * Icon size (width and height)
+   * @default 24
+   */
+  size?: number | string;
+  /**
+   * Accessible label for screen readers.
+   * If provided, aria-hidden will be set to false.
+   */
+  'aria-label'?: string;
+  /**
+   * Hide icon from screen readers (decorative icon)
+   * @default true
+   */
+  'aria-hidden'?: boolean;
+  /**
+   * Optional title element for tooltip/accessibility
+   */
+  title?: string;
+}
+
+const PodcastSpotify = React.forwardRef<SVGSVGElement, PodcastSpotifyProps>(
+  (
+    {
+      size = 24,
+      'aria-label': ariaLabel,
+      'aria-hidden': ariaHidden = true,
+      title,
+      ...props
+    },
+    ref
+  ) => {
+    const isDecorative = !ariaLabel && ariaHidden;
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width={size}
+        height={size}
+        fill="currentColor"
+        role="img"
+        aria-hidden={isDecorative}
+        aria-label={ariaLabel}
+        {...props}
+      >
+        {title && <title>{title}</title>}
+        <g clip-path="url(#a)"><path fill="currentColor" d="M12 .36a11.63 11.63 0 1 0 0 23.26A11.63 11.63 0 0 0 12 .36m4.72 17.1a1 1 0 0 1-.5-.16c-2.93-1.76-6.33-1.84-9.7-1.15-.17.05-.41.12-.55.12a.73.73 0 0 1-.74-.74c0-.48.29-.71.64-.79 3.84-.85 7.76-.77 11.1 1.23.3.18.46.35.46.77a.7.7 0 0 1-.71.73m1.26-3.08c-.24 0-.4-.1-.58-.2a15.2 15.2 0 0 0-11.18-1.37c-.23.06-.35.12-.56.12a.9.9 0 0 1-.9-.91q0-.75.72-.97c1.3-.37 2.63-.64 4.58-.64 3.05 0 5.98.76 8.3 2.13q.55.33.53.93a.9.9 0 0 1-.9.91m1.44-3.57c-.24 0-.39-.06-.6-.18-3.34-2-9.3-2.47-13.17-1.4-.17.05-.38.13-.6.13a1.1 1.1 0 0 1-1.1-1.11c0-.64.4-1 .82-1.12q2.49-.71 5.5-.71c3.43 0 7.02.71 9.64 2.24.36.2.6.5.6 1.06 0 .63-.51 1.09-1.09 1.09"/></g><defs><clipPath id="a"><rect width="24" height="24" fill="currentColor"/></clipPath></defs>
+      </svg>
+    );
+  }
+);
+
+PodcastSpotify.displayName = 'PodcastSpotify';
+
+export { PodcastSpotify };
+export default PodcastSpotify;

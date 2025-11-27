@@ -1,0 +1,8 @@
+{
+  "name": "@marioschmidt/design-system-icons-react",
+  "private": true,
+  "main": "./index.js",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
+  "sideEffects": false
+}

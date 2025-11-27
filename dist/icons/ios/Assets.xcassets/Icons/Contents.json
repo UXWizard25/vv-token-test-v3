@@ -1,0 +1,9 @@
+{
+  "info": {
+    "author": "bild-design-system-icons",
+    "version": 1
+  },
+  "properties": {
+    "provides-namespace": true
+  }
+}

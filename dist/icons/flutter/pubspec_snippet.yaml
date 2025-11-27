@@ -1,0 +1,7 @@
+# Add to your pubspec.yaml:
+#
+# flutter:
+#   fonts:
+#     - family: BildIcons
+#       fonts:
+#         - asset: packages/bild_design_system_icons/fonts/BildIcons.ttf
