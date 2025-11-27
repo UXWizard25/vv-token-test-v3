@@ -1,6 +1,10 @@
 # 🎨 BILD Design System - Token Pipeline v3
 
-A production-ready multi-platform design token transformation pipeline powered by **Style Dictionary v4** with **Figma-scoped semantic type detection**. Transforms design tokens from Figma Variables export into consumable formats across 7 platforms, 3 brands, and multiple modes.
+> **⚠️ IMPORTANT NOTICE**
+>
+> This pipeline is still under construction. The generated packages must **not be used in production environments** – only for testing purposes.
+
+A multi-platform design token transformation pipeline powered by **Style Dictionary v4** with **Figma-scoped semantic type detection**. Transforms design tokens from Figma Variables export into consumable formats across 7 platforms, 3 brands, and multiple modes.
 
 [![Build Status](https://github.com/UXWizard25/vv-token-test-v3/workflows/Build%20Design%20Tokens/badge.svg)](https://github.com/UXWizard25/vv-token-test-v3/actions)
 [![npm version](https://img.shields.io/npm/v/@marioschmidt/design-system-tokens.svg)](https://www.npmjs.com/package/@marioschmidt/design-system-tokens)
@@ -25,7 +29,7 @@ A production-ready multi-platform design token transformation pipeline powered b
 
 ## 🎯 Overview
 
-This pipeline processes the multi-layer, multi-brand BILD Design System architecture with **production-ready outputs** for:
+This pipeline processes the multi-layer, multi-brand BILD Design System architecture with outputs for:
 
 - **3 Brands**: BILD, SportBILD, Advertorial
 - **7 Platforms**: CSS, SCSS, JavaScript, JSON, iOS (Swift), Android (XML), Flutter (Dart)
@@ -78,7 +82,7 @@ This pipeline processes the multi-layer, multi-brand BILD Design System architec
 ┌─────────────────────────────────────────────┐
 │ Build Output (dist/)                       │
 │ • 969 successful builds                     │
-│ • Production-ready for all platforms        │
+│ • Outputs for all platforms (testing only)  │
 │ • NOT tracked in Git (CI artifacts)         │
 └─────────────────────────────────────────────┘
 ```
@@ -87,7 +91,7 @@ This pipeline processes the multi-layer, multi-brand BILD Design System architec
 
 ## ✨ Key Features
 
-### 🎯 Production-Ready Outputs
+### 🎯 Platform Outputs
 
 ✅ **Platform-Native Formats**
 - CSS: `var(--token-name)` with proper units
@@ -1170,7 +1174,7 @@ grep "layer-opacity05" dist/css/brands/bild/semantic/color/colormode-light.css
 
 ## 📝 Changelog
 
-### v3.0.0 (Current) - Production-Ready Transforms
+### v3.0.0 (Current) - Multi-Platform Transforms
 
 **✨ Major Features:**
 
@@ -1191,7 +1195,7 @@ grep "layer-opacity05" dist/css/brands/bild/semantic/color/colormode-light.css
 - Fixed all format functions to use `token.$value` (transformed) not `token.value`
 - Updated typography formats with px units for web platforms
 
-**📊 Production Readiness:**
+**📊 Platform Support:**
 
 | Token Type | Platforms Tested | Status |
 |------------|------------------|--------|
@@ -1256,4 +1260,4 @@ grep "layer-opacity05" dist/css/brands/bild/semantic/color/colormode-light.css
 
 **Built with ❤️ for the BILD Design System**
 
-Version 3.0.0 | Production-Ready | 969 Successful Builds | 7 Platforms | 3 Brands
+Version 3.0.0 | Testing Phase | 969 Successful Builds | 7 Platforms | 3 Brands
