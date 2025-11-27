@@ -363,35 +363,35 @@ npm run clean:icons        # Remove dist/icons/
 
 ## 🤝 Contributing
 
-> **⚠️ WICHTIG: Figma ist die Single Source of Truth**
+> **⚠️ IMPORTANT: Figma is the Single Source of Truth**
 >
-> Design-Assets (Tokens und Icons) dürfen **NICHT** direkt im Repository geändert werden.
-> Alle Änderungen müssen in Figma gemacht und über das **TokenSync Plugin** exportiert werden.
+> Design assets (tokens and icons) must **NOT** be edited directly in the repository.
+> All changes must be made in Figma and exported via the **TokenSync Plugin**.
 
-### Erlaubter Workflow
+### Allowed Workflow
 
 ```
-1. Änderungen in Figma machen
-2. Mit TokenSync Plugin exportieren
-3. Automatischer PR wird erstellt
-4. PR reviewen und mergen
+1. Make changes in Figma
+2. Export with TokenSync Plugin
+3. Automatic PR is created
+4. Review and merge PR
 ```
 
-### NICHT erlaubt
+### NOT Allowed
 
-- ❌ Direkte Änderungen an `src/design-tokens/*.json`
-- ❌ Direkte Änderungen an `src/icons/*.svg`
-- ❌ Manuelle Commits zu `figma-tokens` oder `figma-icons` Branch
-- ❌ Änderungen an generierten Dateien in `dist/`
+- ❌ Direct changes to `src/design-tokens/*.json`
+- ❌ Direct changes to `src/icons/*.svg`
+- ❌ Manual commits to `figma-tokens` or `figma-icons` branch
+- ❌ Changes to generated files in `dist/`
 
-### Erlaubt (Pipeline-Entwicklung)
+### Allowed (Pipeline Development)
 
-- ✅ Änderungen an Build-Scripts (`scripts/`)
-- ✅ Änderungen an Konfiguration (`build-config/`)
-- ✅ Workflow-Anpassungen (`.github/workflows/`)
-- ✅ Dokumentation
+- ✅ Changes to build scripts (`scripts/`)
+- ✅ Changes to configuration (`build-config/`)
+- ✅ Workflow adjustments (`.github/workflows/`)
+- ✅ Documentation
 
-Für Pipeline-Änderungen:
+For pipeline changes:
 ```bash
 npm run build && npm run build:icons
 ```

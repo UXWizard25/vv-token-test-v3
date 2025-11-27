@@ -531,19 +531,19 @@ import addSvg from '@marioschmidt/design-system-icons/svg/add.svg';
 
 ## 🤝 Contributing
 
-> **⚠️ IMPORTANT: Figma ist die Single Source of Truth**
+> **⚠️ IMPORTANT: Figma is the Single Source of Truth**
 >
-> Icons dürfen **NICHT** direkt im Repository geändert werden. Alle Icon-Änderungen müssen in Figma gemacht und über das TokenSync Plugin exportiert werden.
+> Icons must **NOT** be edited directly in the repository. All icon changes must be made in Figma and exported via the TokenSync Plugin.
 
 **Workflow:**
-1. Icons in Figma bearbeiten/erstellen
-2. Mit TokenSync Plugin exportieren
-3. PR reviewen und mergen
+1. Edit/create icons in Figma
+2. Export with TokenSync Plugin
+3. Review and merge PR
 
-**NICHT erlaubt:**
-- ❌ Direkte SVG-Änderungen in `src/icons/`
-- ❌ Manuelle Commits zum `figma-icons` Branch
-- ❌ Änderungen an generierten Dateien
+**NOT Allowed:**
+- ❌ Direct SVG changes in `src/icons/`
+- ❌ Manual commits to `figma-icons` branch
+- ❌ Changes to generated files
 
 ---
 

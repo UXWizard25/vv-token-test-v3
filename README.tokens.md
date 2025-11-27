@@ -318,20 +318,20 @@ grep "Space2x" dist/ios/shared/Spaceprimitive.swift
 
 ## 🤝 Contributing
 
-> **⚠️ WICHTIG: Figma ist die Single Source of Truth**
+> **⚠️ IMPORTANT: Figma is the Single Source of Truth**
 >
-> Design Tokens dürfen **NICHT** direkt im Repository geändert werden.
-> Alle Token-Änderungen müssen in Figma gemacht und über das **TokenSync Plugin** exportiert werden.
+> Design Tokens must **NOT** be edited directly in the repository.
+> All token changes must be made in Figma and exported via the **TokenSync Plugin**.
 
 **Workflow:**
-1. Token in Figma bearbeiten/erstellen
-2. Mit TokenSync Plugin exportieren
-3. PR reviewen und mergen
+1. Edit/create tokens in Figma
+2. Export with TokenSync Plugin
+3. Review and merge PR
 
-**NICHT erlaubt:**
-- ❌ Direkte Änderungen an `src/design-tokens/*.json`
-- ❌ Manuelle Commits zum `figma-tokens` Branch
-- ❌ Änderungen an generierten Dateien in `dist/`
+**NOT Allowed:**
+- ❌ Direct changes to `src/design-tokens/*.json`
+- ❌ Manual commits to `figma-tokens` branch
+- ❌ Changes to generated files in `dist/`
 
 ---
 
