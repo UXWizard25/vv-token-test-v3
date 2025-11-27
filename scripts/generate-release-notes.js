@@ -129,7 +129,7 @@ function tableRow(...cells) {
 // =============================================================================
 
 function generateExecutiveSummary(diff, options = {}) {
-  const { commitSha = '', buildSuccess = true, successfulBuilds = 0, totalBuilds = 0 } = options;
+  const { commitSha = '', buildSuccess = true, successfulBuilds = 0, totalBuilds = 0, noBaseline = false } = options;
 
   if (!diff || !diff.summary) {
     return `## ⚪ Token Update
@@ -168,6 +168,14 @@ ${commitSha ? `**Commit**: \`${commitSha}\`` : ''}
     md += stats.join(' | ') + '\n\n';
   } else {
     md += '⚪ **No token changes detected**\n\n';
+  }
+
+  // Warning if no baseline available
+  if (noBaseline) {
+    md += '> ⚠️ **Hinweis:** Keine Baseline in `main` gefunden. Alle Tokens werden als "Added" angezeigt.\n';
+    md += '> Dies kann passieren bei:\n';
+    md += '> - Erstem PR (noch keine Tokens in main)\n';
+    md += '> - Source-Datei wurde in main gelöscht\n\n';
   }
 
   // Build status
@@ -803,7 +811,8 @@ function parseArgs() {
     successfulBuilds: 0,
     totalBuilds: 0,
     runId: '',
-    packageSize: ''
+    packageSize: '',
+    noBaseline: false
   };
 
   for (let i = 0; i < args.length; i++) {
@@ -839,6 +848,9 @@ function parseArgs() {
       i++;
     } else if (arg === '--package-size' && nextArg) {
       options.packageSize = nextArg;
+      i++;
+    } else if (arg === '--no-baseline' && nextArg) {
+      options.noBaseline = nextArg === 'true';
       i++;
     }
   }

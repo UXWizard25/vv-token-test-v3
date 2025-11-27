@@ -111,6 +111,16 @@ jobs:
         run: |
           echo "🔍 Comparing full dist/ builds across all platforms..."
 
+          # Warnung wenn keine Baseline vorhanden
+          if [ "${{ steps.baseline.outputs.baseline_available }}" == "false" ]; then
+            echo "⚠️ WARNING: No baseline found in main branch!"
+            echo "   All tokens will be shown as 'Added' in the diff."
+            echo "   This can happen when:"
+            echo "   - This is the first PR (no previous tokens exist)"
+            echo "   - The source file was deleted in main"
+            echo ""
+          fi
+
           node scripts/compare-dist-builds.js \
             --old dist-old/ \
             --new dist/ \
@@ -177,7 +187,8 @@ jobs:
             --build-success true \
             --successful-builds "${{ steps.build.outputs.successful_builds }}" \
             --total-builds "${{ steps.build.outputs.total_builds }}" \
-            --run-id "${{ github.run_id }}" > release-notes.md
+            --run-id "${{ github.run_id }}" \
+            --no-baseline "${{ steps.baseline.outputs.baseline_available == 'false' }}" > release-notes.md
 
           echo "✅ Release notes generated successfully"
 
