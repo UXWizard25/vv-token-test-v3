@@ -23,6 +23,23 @@ const PATHS = {
   config: path.resolve(__dirname, '../../build-config/icons/svgo.config.js'),
 };
 
+// Dangerous SVG elements that should not be present
+const DANGEROUS_ELEMENTS = [
+  'script',
+  'foreignObject',
+  'iframe',
+  'embed',
+  'object',
+];
+
+// Dangerous attributes (event handlers, external references)
+const DANGEROUS_PATTERNS = [
+  /on\w+\s*=/i,           // Event handlers like onclick, onload
+  /javascript:/i,          // javascript: URLs
+  /data:/i,                // data: URLs (can contain scripts)
+  /xlink:href\s*=\s*["'][^#]/i,  // External xlink:href (not internal #refs)
+];
+
 // ============================================================================
 // LOGGING UTILITIES
 // ============================================================================
@@ -34,6 +51,62 @@ const log = {
   error: (msg) => console.error(`\u274C ${msg}`),
   step: (msg) => console.log(`\n\u27A1\uFE0F  ${msg}`),
 };
+
+// ============================================================================
+// VALIDATION
+// ============================================================================
+
+/**
+ * Validate SVG content structure and security
+ * @returns {Object} { valid: boolean, errors: string[], warnings: string[] }
+ */
+function validateSvgContent(content, filename) {
+  const errors = [];
+  const warnings = [];
+
+  // Check if content starts with SVG or XML declaration
+  const trimmed = content.trim();
+  if (!trimmed.startsWith('<svg') && !trimmed.startsWith('<?xml')) {
+    errors.push('File does not appear to be a valid SVG');
+    return { valid: false, errors, warnings };
+  }
+
+  // Check for <svg> element
+  if (!/<svg[\s>]/i.test(content)) {
+    errors.push('Missing <svg> root element');
+  }
+
+  // Check for viewBox attribute
+  if (!/viewBox\s*=\s*["'][^"']+["']/i.test(content)) {
+    warnings.push('Missing viewBox attribute (will use default 0 0 24 24)');
+  }
+
+  // Check for dangerous elements
+  for (const element of DANGEROUS_ELEMENTS) {
+    const regex = new RegExp(`<${element}[\\s>]`, 'i');
+    if (regex.test(content)) {
+      errors.push(`Contains dangerous element: <${element}>`);
+    }
+  }
+
+  // Check for dangerous patterns
+  for (const pattern of DANGEROUS_PATTERNS) {
+    if (pattern.test(content)) {
+      errors.push(`Contains potentially dangerous content: ${pattern.source}`);
+    }
+  }
+
+  // Check for closing </svg> tag
+  if (!/<\/svg\s*>/i.test(content)) {
+    errors.push('Missing closing </svg> tag');
+  }
+
+  return {
+    valid: errors.length === 0,
+    errors,
+    warnings,
+  };
+}
 
 // ============================================================================
 // SVG PROCESSING
@@ -83,6 +156,25 @@ async function optimizeSvg(optimize, svgoConfig, filename) {
   try {
     const svgContent = fs.readFileSync(inputPath, 'utf8');
 
+    // Validate SVG content before optimization
+    const validation = validateSvgContent(svgContent, filename);
+
+    if (!validation.valid) {
+      return {
+        name: iconName,
+        success: false,
+        error: `Validation failed:\n${validation.errors.join('\n')}`,
+        validationErrors: validation.errors,
+      };
+    }
+
+    // Log warnings but continue
+    if (validation.warnings.length > 0) {
+      for (const warning of validation.warnings) {
+        log.warn(`${iconName}: ${warning}`);
+      }
+    }
+
     const result = optimize(svgContent, {
       path: inputPath,
       ...svgoConfig,
@@ -104,6 +196,7 @@ async function optimizeSvg(optimize, svgoConfig, filename) {
       originalSize,
       optimizedSize,
       savings,
+      warnings: validation.warnings,
     };
   } catch (error) {
     return {
@@ -235,4 +328,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { main, PATHS, transformIconName };
+module.exports = { main, PATHS, transformIconName, validateSvgContent };

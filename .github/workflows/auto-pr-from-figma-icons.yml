@@ -56,7 +56,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm ci
-          npm install svgo@^3.2.0 @svgr/core@^8.1.0 svg2vectordrawable@^2.9.1 fantasticon@^3.0.0
+          npm install svgo@^3.2.0 @svgr/core@^8.1.0 svg2vectordrawable@^2.9.1 fantasticon@^3.0.0 typescript@^5.3.0 @types/react@^18.2.0
 
       # ========================================
       # Baseline (from main)
@@ -125,26 +125,20 @@ jobs:
       # Commit Generated Files
       # ========================================
 
-      - name: Commit generated files
+      - name: Commit codepoint registry
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Add generated files (force add since dist/ is in .gitignore)
-          git add -f dist/icons/
+          # Only commit the codepoint registry (for Flutter stability)
+          # dist/icons/ is NOT committed - builds happen during npm publish
           git add src/icons/.codepoints.json
 
           # Check if there are changes to commit
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "build(icons): generate icon assets
-
-          - SVG optimized icons
-          - React TSX components
-          - Android Vector Drawables
-          - Flutter Icon Font + Dart
-          - iOS Asset Catalog
+            git commit -m "chore(icons): update codepoint registry
 
           Added: ${{ steps.compare.outputs.added || 0 }}
           Removed: ${{ steps.compare.outputs.removed || 0 }}

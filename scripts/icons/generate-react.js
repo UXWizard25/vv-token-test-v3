@@ -19,7 +19,7 @@ const path = require('path');
 
 const PATHS = {
   input: path.resolve(__dirname, '../../dist/icons/svg'),
-  output: path.resolve(__dirname, '../../dist/icons/react'),
+  output: path.resolve(__dirname, '../../dist/icons/react-src'),
   config: path.resolve(__dirname, '../../build-config/icons/svgr.config.js'),
 };
 

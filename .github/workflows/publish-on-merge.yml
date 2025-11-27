@@ -53,9 +53,16 @@ jobs:
       - name: Bump Version (Patch)
         id: version
         run: |
-          # Hole letzten Git Tag (oder 1.0.0 als default)
-          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v1.0.0")
-          echo "Latest tag: $LATEST_TAG"
+          # Hole letzten Token-Tag (v*.*.*, NICHT icons-v*)
+          # Filtere explizit für Tags die mit 'v' beginnen und NICHT 'icons-v'
+          LATEST_TAG=$(git tag -l 'v[0-9]*.[0-9]*.[0-9]*' --sort=-version:refname | head -1)
+
+          if [ -z "$LATEST_TAG" ]; then
+            LATEST_TAG="v1.0.0"
+            echo "No token tags found, using default: $LATEST_TAG"
+          else
+            echo "Latest token tag: $LATEST_TAG"
+          fi
 
           # Entferne 'v' prefix
           CURRENT_VERSION=${LATEST_TAG#v}
