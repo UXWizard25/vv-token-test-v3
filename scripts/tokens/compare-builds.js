@@ -7,7 +7,7 @@
  * platform-specific diff data for release notes.
  *
  * Usage:
- *   node compare-dist-builds.js --old dist-old/ --new dist/ --output diff.json
+ *   node scripts/tokens/compare-builds.js --old dist-old/ --new dist/ --output diff.json
  */
 
 const fs = require('fs');
@@ -777,7 +777,7 @@ function main() {
 
   if (!options.oldDir || !options.newDir) {
     console.log(`
-Usage: node compare-dist-builds.js --old <old-dist> --new <new-dist> [--output <file.json>]
+Usage: node scripts/tokens/compare-builds.js --old <old-dist> --new <new-dist> [--output <file.json>]
 
 Options:
   --old     Path to old dist directory (baseline)
@@ -785,7 +785,7 @@ Options:
   --output  Path to output JSON file (optional, defaults to stdout)
 
 Example:
-  node compare-dist-builds.js --old dist-old/ --new dist/ --output diff.json
+  node scripts/tokens/compare-builds.js --old dist-old/ --new dist/ --output diff.json
 `);
     process.exit(1);
   }
