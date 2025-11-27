@@ -333,6 +333,12 @@ grep "Space2x" dist/ios/shared/Spaceprimitive.swift
 - ❌ Manual commits to `figma-tokens` branch
 - ❌ Changes to generated files in `dist/`
 
+**Allowed (Pipeline Development):**
+- ✅ Changes to build scripts (`scripts/`)
+- ✅ Changes to configuration (`build-config/`)
+- ✅ Workflow adjustments (`.github/workflows/`)
+- ✅ Documentation
+
 ---
 
 ## 📄 License

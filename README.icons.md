@@ -545,6 +545,12 @@ import addSvg from '@marioschmidt/design-system-icons/svg/add.svg';
 - ❌ Manual commits to `figma-icons` branch
 - ❌ Changes to generated files
 
+**Allowed (Pipeline Development):**
+- ✅ Changes to build scripts (`scripts/icons/`)
+- ✅ Changes to configuration (`build-config/`)
+- ✅ Workflow adjustments (`.github/workflows/`)
+- ✅ Documentation
+
 ---
 
 ## 📄 License
