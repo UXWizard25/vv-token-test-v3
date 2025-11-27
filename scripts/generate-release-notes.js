@@ -96,16 +96,20 @@ ${commitSha ? `**Commit**: \`${commitSha}\`` : ''}
 
   let md = `## ${impactEmoji} Token Update\n\n`;
 
-  // Quick stats
+  // Quick stats - use unique token counts for clear summary
   const stats = [];
-  if (summary.tokensRemoved > 0) {
-    stats.push(`🔴 **${summary.tokensRemoved} Removed**`);
+  const uniqueRemoved = summary.uniqueTokensRemoved ?? summary.tokensRemoved;
+  const uniqueModified = summary.uniqueTokensModified ?? summary.tokensModified;
+  const uniqueAdded = summary.uniqueTokensAdded ?? summary.tokensAdded;
+
+  if (uniqueRemoved > 0) {
+    stats.push(`🔴 **${uniqueRemoved} Removed**`);
   }
-  if (summary.tokensModified > 0) {
-    stats.push(`🟡 **${summary.tokensModified} Modified**`);
+  if (uniqueModified > 0) {
+    stats.push(`🟡 **${uniqueModified} Modified**`);
   }
-  if (summary.tokensAdded > 0) {
-    stats.push(`🟢 **${summary.tokensAdded} Added**`);
+  if (uniqueAdded > 0) {
+    stats.push(`🟢 **${uniqueAdded} Added**`);
   }
 
   if (stats.length > 0) {
@@ -352,18 +356,28 @@ function generateTechnicalDetails(diff, options = {}) {
   md += '<summary>📊 <b>Build Statistics</b></summary>\n\n';
 
   if (diff && diff.summary) {
+    const s = diff.summary;
+    const uniqueAdded = s.uniqueTokensAdded ?? s.tokensAdded;
+    const uniqueModified = s.uniqueTokensModified ?? s.tokensModified;
+    const uniqueRemoved = s.uniqueTokensRemoved ?? s.tokensRemoved;
+
     md += '```\n';
-    md += `Files Changed:  ${diff.summary.filesAdded + diff.summary.filesModified + diff.summary.filesRemoved}\n`;
-    md += `  - Added:      ${diff.summary.filesAdded}\n`;
-    md += `  - Modified:   ${diff.summary.filesModified}\n`;
-    md += `  - Removed:    ${diff.summary.filesRemoved}\n`;
+    md += `Files Changed:  ${s.filesAdded + s.filesModified + s.filesRemoved}\n`;
+    md += `  - Added:      ${s.filesAdded}\n`;
+    md += `  - Modified:   ${s.filesModified}\n`;
+    md += `  - Removed:    ${s.filesRemoved}\n`;
     md += `\n`;
-    md += `Tokens Changed: ${diff.summary.tokensAdded + diff.summary.tokensModified + diff.summary.tokensRemoved}\n`;
-    md += `  - Added:      ${diff.summary.tokensAdded}\n`;
-    md += `  - Modified:   ${diff.summary.tokensModified}\n`;
-    md += `  - Removed:    ${diff.summary.tokensRemoved}\n`;
+    md += `Unique Tokens Changed: ${uniqueAdded + uniqueModified + uniqueRemoved}\n`;
+    md += `  - Added:      ${uniqueAdded}\n`;
+    md += `  - Modified:   ${uniqueModified}\n`;
+    md += `  - Removed:    ${uniqueRemoved}\n`;
     md += `\n`;
-    md += `Impact Level:   ${diff.summary.impactLevel}\n`;
+    md += `Platform Occurrences: ${s.tokensAdded + s.tokensModified + s.tokensRemoved}\n`;
+    md += `  - Added:      ${s.tokensAdded}\n`;
+    md += `  - Modified:   ${s.tokensModified}\n`;
+    md += `  - Removed:    ${s.tokensRemoved}\n`;
+    md += `\n`;
+    md += `Impact Level:   ${s.impactLevel}\n`;
     md += '```\n\n';
   }
 
@@ -473,6 +487,9 @@ function generateConsoleOutput(diff) {
   }
 
   const { summary } = diff;
+  const uniqueAdded = summary.uniqueTokensAdded ?? summary.tokensAdded;
+  const uniqueModified = summary.uniqueTokensModified ?? summary.tokensModified;
+  const uniqueRemoved = summary.uniqueTokensRemoved ?? summary.tokensRemoved;
 
   let output = '\n';
   output += '═══════════════════════════════════════════════════════════\n';
@@ -483,11 +500,11 @@ function generateConsoleOutput(diff) {
   const impactEmoji = IMPACT_EMOJI[summary.impactLevel] || '⚪';
   output += `  Impact: ${impactEmoji} ${summary.impactLevel.toUpperCase()}\n\n`;
 
-  // Stats
-  output += '  Changes:\n';
-  output += `    🔴 Removed:  ${summary.tokensRemoved} tokens\n`;
-  output += `    🟡 Modified: ${summary.tokensModified} tokens\n`;
-  output += `    🟢 Added:    ${summary.tokensAdded} tokens\n\n`;
+  // Stats - show unique counts
+  output += '  Unique Token Changes:\n';
+  output += `    🔴 Removed:  ${uniqueRemoved} tokens\n`;
+  output += `    🟡 Modified: ${uniqueModified} tokens\n`;
+  output += `    🟢 Added:    ${uniqueAdded} tokens\n\n`;
 
   // Files
   output += '  Files:\n';

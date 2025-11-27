@@ -253,6 +253,27 @@ function flattenJsonTokens(obj, prefix, tokens) {
 }
 
 // =============================================================================
+// TOKEN NORMALIZATION (for deduplication across platforms)
+// =============================================================================
+
+/**
+ * Normalize a token name to a common format for cross-platform deduplication
+ *
+ * Examples:
+ *   CSS:   --button-tertiary-label-color  → buttontertiarylabelcolor
+ *   JS:    buttonTertiaryLabelColor       → buttontertiarylabelcolor
+ *   Swift: ButtonTertiaryLabelColor       → buttontertiarylabelcolor
+ *   XML:   button_tertiary_label_color    → buttontertiarylabelcolor
+ *   SCSS:  $button-tertiary-label-color   → buttontertiarylabelcolor
+ */
+function normalizeTokenName(name) {
+  return name
+    .toLowerCase()
+    .replace(/^[-$.]/, '')     // Remove leading prefixes (-, $, .)
+    .replace(/[^a-z0-9]/g, '') // Remove all non-alphanumeric
+}
+
+// =============================================================================
 // FILE DISCOVERY
 // =============================================================================
 
@@ -484,6 +505,11 @@ function compareDistBuilds(oldDir, newDir) {
   // Skip manifest.json (has timestamps)
   allFiles.delete('manifest.json');
 
+  // Sets to track unique tokens across all platforms (normalized names)
+  const uniqueTokensAdded = new Set();
+  const uniqueTokensModified = new Set();
+  const uniqueTokensRemoved = new Set();
+
   // Compare all files
   const results = {
     summary: {
@@ -491,9 +517,14 @@ function compareDistBuilds(oldDir, newDir) {
       filesAdded: 0,
       filesRemoved: 0,
       filesModified: 0,
+      // Per-platform counts (additive)
       tokensAdded: 0,
       tokensModified: 0,
-      tokensRemoved: 0
+      tokensRemoved: 0,
+      // Unique token counts (deduplicated across platforms)
+      uniqueTokensAdded: 0,
+      uniqueTokensModified: 0,
+      uniqueTokensRemoved: 0
     },
     platforms: {},
     byBrand: {},
@@ -534,11 +565,19 @@ function compareDistBuilds(oldDir, newDir) {
       platformData.filesAdded++;
       platformData.tokensAdded += diff.tokens.length;
       results.summary.tokensAdded += diff.tokens.length;
+      // Track unique tokens
+      for (const token of diff.tokens) {
+        uniqueTokensAdded.add(normalizeTokenName(token.name));
+      }
     } else if (diff.type === 'removed') {
       results.summary.filesRemoved++;
       platformData.filesRemoved++;
       platformData.tokensRemoved += diff.tokens.length;
       results.summary.tokensRemoved += diff.tokens.length;
+      // Track unique tokens
+      for (const token of diff.tokens) {
+        uniqueTokensRemoved.add(normalizeTokenName(token.name));
+      }
     } else if (diff.type === 'modified') {
       results.summary.filesModified++;
       platformData.filesModified++;
@@ -548,6 +587,16 @@ function compareDistBuilds(oldDir, newDir) {
       results.summary.tokensAdded += diff.changes.added.length;
       results.summary.tokensModified += diff.changes.modified.length;
       results.summary.tokensRemoved += diff.changes.removed.length;
+      // Track unique tokens
+      for (const token of diff.changes.added) {
+        uniqueTokensAdded.add(normalizeTokenName(token.name));
+      }
+      for (const token of diff.changes.modified) {
+        uniqueTokensModified.add(normalizeTokenName(token.name));
+      }
+      for (const token of diff.changes.removed) {
+        uniqueTokensRemoved.add(normalizeTokenName(token.name));
+      }
     }
 
     platformData.changes.push(diff);
@@ -570,12 +619,18 @@ function compareDistBuilds(oldDir, newDir) {
     }
   }
 
+  // Set unique token counts
+  results.summary.uniqueTokensAdded = uniqueTokensAdded.size;
+  results.summary.uniqueTokensModified = uniqueTokensModified.size;
+  results.summary.uniqueTokensRemoved = uniqueTokensRemoved.size;
+
   // Calculate impact level
   results.summary.impactLevel = calculateImpactLevel(results);
 
   console.log(`\n✅ Comparison complete!`);
   console.log(`   Files: +${results.summary.filesAdded} / ~${results.summary.filesModified} / -${results.summary.filesRemoved}`);
-  console.log(`   Tokens: +${results.summary.tokensAdded} / ~${results.summary.tokensModified} / -${results.summary.tokensRemoved}`);
+  console.log(`   Tokens (per platform): +${results.summary.tokensAdded} / ~${results.summary.tokensModified} / -${results.summary.tokensRemoved}`);
+  console.log(`   Unique Tokens: +${results.summary.uniqueTokensAdded} / ~${results.summary.uniqueTokensModified} / -${results.summary.uniqueTokensRemoved}`);
   console.log(`   Impact: ${results.summary.impactLevel}\n`);
 
   return results;
