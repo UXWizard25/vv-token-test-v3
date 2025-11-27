@@ -1,0 +1,61 @@
+import * as React from 'react';
+
+export interface SocialLinkedinProps extends React.SVGProps<SVGSVGElement> {
+  /**
+   * Icon size (width and height)
+   * @default 24
+   */
+  size?: number | string;
+  /**
+   * Accessible label for screen readers.
+   * If provided, aria-hidden will be set to false.
+   */
+  'aria-label'?: string;
+  /**
+   * Hide icon from screen readers (decorative icon)
+   * @default true
+   */
+  'aria-hidden'?: boolean;
+  /**
+   * Optional title element for tooltip/accessibility
+   */
+  title?: string;
+}
+
+const SocialLinkedin = React.forwardRef<SVGSVGElement, SocialLinkedinProps>(
+  (
+    {
+      size = 24,
+      'aria-label': ariaLabel,
+      'aria-hidden': ariaHidden = true,
+      title,
+      ...props
+    },
+    ref
+  ) => {
+    const isDecorative = !ariaLabel && ariaHidden;
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width={size}
+        height={size}
+        fill="currentColor"
+        role="img"
+        aria-hidden={isDecorative}
+        aria-label={ariaLabel}
+        {...props}
+      >
+        {title && <title>{title}</title>}
+        <path fill="currentColor" fill-rule="evenodd" d="M6.57 9.18H2.25V22h4.32zm.28-3.96C6.82 3.96 5.92 3 4.44 3S2 3.96 2 5.21c0 1.24.94 2.22 2.38 2.22h.03c1.5 0 2.44-.98 2.44-2.22m15.26 9.44c0-3.94-2.12-5.77-4.96-5.77a4.3 4.3 0 0 0-3.89 2.11v-1.8H8.95c.06 1.2 0 12.82 0 12.82h4.31v-7.16c0-.38.03-.76.14-1.04a2.4 2.4 0 0 1 2.22-1.56c1.56 0 2.18 1.18 2.18 2.9V22h4.31z" clip-rule="evenodd"/>
+      </svg>
+    );
+  }
+);
+
+SocialLinkedin.displayName = 'SocialLinkedin';
+
+export { SocialLinkedin };
+export default SocialLinkedin;

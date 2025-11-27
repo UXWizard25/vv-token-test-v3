@@ -1,0 +1,61 @@
+import * as React from 'react';
+
+export interface HeadphonesProps extends React.SVGProps<SVGSVGElement> {
+  /**
+   * Icon size (width and height)
+   * @default 24
+   */
+  size?: number | string;
+  /**
+   * Accessible label for screen readers.
+   * If provided, aria-hidden will be set to false.
+   */
+  'aria-label'?: string;
+  /**
+   * Hide icon from screen readers (decorative icon)
+   * @default true
+   */
+  'aria-hidden'?: boolean;
+  /**
+   * Optional title element for tooltip/accessibility
+   */
+  title?: string;
+}
+
+const Headphones = React.forwardRef<SVGSVGElement, HeadphonesProps>(
+  (
+    {
+      size = 24,
+      'aria-label': ariaLabel,
+      'aria-hidden': ariaHidden = true,
+      title,
+      ...props
+    },
+    ref
+  ) => {
+    const isDecorative = !ariaLabel && ariaHidden;
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width={size}
+        height={size}
+        fill="currentColor"
+        role="img"
+        aria-hidden={isDecorative}
+        aria-label={ariaLabel}
+        {...props}
+      >
+        {title && <title>{title}</title>}
+        <path fill="currentColor" fill-rule="evenodd" d="M12 5c-4.39 0-8 4-8 8h4v8H5a3 3 0 0 1-3-3v-5C2 7.96 6.45 3 12 3s10 4.96 10 10v4a4 4 0 0 1-4 4h-2v-8h4c0-4-3.61-8-8-8M6 15H4v3a1 1 0 0 0 1 1h1zm12 0h2v2a2 2 0 0 1-2 2z" clip-rule="evenodd"/>
+      </svg>
+    );
+  }
+);
+
+Headphones.displayName = 'Headphones';
+
+export { Headphones };
+export default Headphones;

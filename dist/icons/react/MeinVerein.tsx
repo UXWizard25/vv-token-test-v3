@@ -1,0 +1,61 @@
+import * as React from 'react';
+
+export interface MeinVereinProps extends React.SVGProps<SVGSVGElement> {
+  /**
+   * Icon size (width and height)
+   * @default 24
+   */
+  size?: number | string;
+  /**
+   * Accessible label for screen readers.
+   * If provided, aria-hidden will be set to false.
+   */
+  'aria-label'?: string;
+  /**
+   * Hide icon from screen readers (decorative icon)
+   * @default true
+   */
+  'aria-hidden'?: boolean;
+  /**
+   * Optional title element for tooltip/accessibility
+   */
+  title?: string;
+}
+
+const MeinVerein = React.forwardRef<SVGSVGElement, MeinVereinProps>(
+  (
+    {
+      size = 24,
+      'aria-label': ariaLabel,
+      'aria-hidden': ariaHidden = true,
+      title,
+      ...props
+    },
+    ref
+  ) => {
+    const isDecorative = !ariaLabel && ariaHidden;
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width={size}
+        height={size}
+        fill="currentColor"
+        role="img"
+        aria-hidden={isDecorative}
+        aria-label={ariaLabel}
+        {...props}
+      >
+        {title && <title>{title}</title>}
+        <path fill="currentColor" fill-rule="evenodd" d="M15.6 9.26c0 2-1.6 3.63-3.6 3.63s-3.6-1.63-3.6-3.63S10 5.63 12 5.63s3.6 1.62 3.6 3.63m-1.98 0c0 .9-.72 1.63-1.62 1.63a1.63 1.63 0 0 1-1.62-1.63c0-.9.72-1.64 1.62-1.64s1.62.74 1.62 1.64" clip-rule="evenodd"/><path fill="currentColor" fill-rule="evenodd" d="M21.18 3.16a37 37 0 0 0-18.36 0L2 3.38l.08.84.25 2.65.25 2.66c.18 1.87.37 3.66.52 4.33.35 1.6 1.64 3.36 3.17 4.78a14 14 0 0 0 5.46 3.28L12 22l.27-.08c1.93-.55 3.9-1.83 5.46-3.28 1.53-1.42 2.82-3.18 3.17-4.78.15-.67.34-2.46.52-4.33l.25-2.66.25-2.64.08-.85zM4.26 6.22 4.14 4.9a35 35 0 0 1 15.72 0l-.12 1.33-.03.26-.26 2.86a57 57 0 0 1-.49 4.09 7 7 0 0 1-1.5 2.63A8 8 0 0 0 12 13.94a8 8 0 0 0-5.45 2.12 7 7 0 0 1-1.51-2.63 57 57 0 0 1-.49-4.1L4.3 6.49zm3.69 11.25c1.25 1.1 2.7 2 4.05 2.45 1.35-.45 2.8-1.35 4.05-2.45A6 6 0 0 0 12 15.94a6 6 0 0 0-4.05 1.53" clip-rule="evenodd"/>
+      </svg>
+    );
+  }
+);
+
+MeinVerein.displayName = 'MeinVerein';
+
+export { MeinVerein };
+export default MeinVerein;

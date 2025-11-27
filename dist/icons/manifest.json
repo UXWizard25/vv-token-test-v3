@@ -1,0 +1,28 @@
+{
+  "generatedAt": "2025-11-27T18:48:11.419Z",
+  "buildDuration": "1.57s",
+  "inputDirectory": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/src/icons",
+  "outputDirectory": "/home/runner/work/vv-token-test-v3/vv-token-test-v3/dist/icons",
+  "platforms": {
+    "svg": {
+      "success": true,
+      "count": 199
+    },
+    "react": {
+      "success": true,
+      "count": 199
+    },
+    "android": {
+      "success": true,
+      "count": 199
+    },
+    "flutter": {
+      "success": true,
+      "count": 199
+    },
+    "ios": {
+      "success": true,
+      "count": 199
+    }
+  }
+}

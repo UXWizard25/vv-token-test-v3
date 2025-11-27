@@ -1,0 +1,61 @@
+import * as React from 'react';
+
+export interface MuteProps extends React.SVGProps<SVGSVGElement> {
+  /**
+   * Icon size (width and height)
+   * @default 24
+   */
+  size?: number | string;
+  /**
+   * Accessible label for screen readers.
+   * If provided, aria-hidden will be set to false.
+   */
+  'aria-label'?: string;
+  /**
+   * Hide icon from screen readers (decorative icon)
+   * @default true
+   */
+  'aria-hidden'?: boolean;
+  /**
+   * Optional title element for tooltip/accessibility
+   */
+  title?: string;
+}
+
+const Mute = React.forwardRef<SVGSVGElement, MuteProps>(
+  (
+    {
+      size = 24,
+      'aria-label': ariaLabel,
+      'aria-hidden': ariaHidden = true,
+      title,
+      ...props
+    },
+    ref
+  ) => {
+    const isDecorative = !ariaLabel && ariaHidden;
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width={size}
+        height={size}
+        fill="currentColor"
+        role="img"
+        aria-hidden={isDecorative}
+        aria-label={ariaLabel}
+        {...props}
+      >
+        {title && <title>{title}</title>}
+        <path fill="currentColor" d="M4.03 8.48h-.07v6.97l4.52-.04 2.56 2.4v-2.47L13 17.26V22l-5.3-4.6-5.7.04V6.48z"/><path fill="currentColor" fill-rule="evenodd" d="m13 11.53 2 1.98c.62 0 1.13-.5 1.13-1.12s-.5-1.23-1.13-1.23V8.92c1.87 0 3.39 1.5 3.39 3.36a3.4 3.4 0 0 1-1.7 2.92l1.07 1.07a5.2 5.2 0 0 0 1.76-3.99c0-2.88-2.12-5.04-4.52-5.04V5c3.84 0 6.78 3.37 6.78 7.29 0 2.2-.93 4.22-2.42 5.58L22 20.5l-1.44 1.41L2 3.41 3.44 2l4.38 4.37L13 2zM9.23 7.77l1.8 1.8V6.25z" clip-rule="evenodd"/>
+      </svg>
+    );
+  }
+);
+
+Mute.displayName = 'Mute';
+
+export { Mute };
+export default Mute;

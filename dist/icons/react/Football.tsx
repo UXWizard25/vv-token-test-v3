@@ -1,0 +1,61 @@
+import * as React from 'react';
+
+export interface FootballProps extends React.SVGProps<SVGSVGElement> {
+  /**
+   * Icon size (width and height)
+   * @default 24
+   */
+  size?: number | string;
+  /**
+   * Accessible label for screen readers.
+   * If provided, aria-hidden will be set to false.
+   */
+  'aria-label'?: string;
+  /**
+   * Hide icon from screen readers (decorative icon)
+   * @default true
+   */
+  'aria-hidden'?: boolean;
+  /**
+   * Optional title element for tooltip/accessibility
+   */
+  title?: string;
+}
+
+const Football = React.forwardRef<SVGSVGElement, FootballProps>(
+  (
+    {
+      size = 24,
+      'aria-label': ariaLabel,
+      'aria-hidden': ariaHidden = true,
+      title,
+      ...props
+    },
+    ref
+  ) => {
+    const isDecorative = !ariaLabel && ariaHidden;
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width={size}
+        height={size}
+        fill="currentColor"
+        role="img"
+        aria-hidden={isDecorative}
+        aria-label={ariaLabel}
+        {...props}
+      >
+        {title && <title>{title}</title>}
+        <path fill="currentColor" fill-rule="evenodd" d="M6.62 18.04c4.86 4.46 12.2 5.07 14.44 2.25 1.6-2.01 1.6-9.67-3.6-14.43C12.29 1.1 4.84 1.22 2.9 3.64c-1.6 2.01-1.47 9.64 3.71 14.4m12.85.97c-.44.55-1.87 1.18-4.37.85-2.33-.3-4.99-1.4-7.09-3.34a12.5 12.5 0 0 1-3.88-10.2q.08-.63.21-1.02l.12-.28.06-.1c.1-.13.46-.42 1.28-.64.77-.2 1.8-.3 2.98-.18q1.1.1 2.27.44c-.7.55-1.76 1.42-1.94 1.61l1.46 1.37a49 49 0 0 1 2.04-1.66q.32-.24.64-.45 1.04.52 2 1.26-.46.3-.85.6a41 41 0 0 0-2.3 1.88l1.47 1.37a49 49 0 0 1 2.04-1.66 9 9 0 0 1 1.2-.78q.72.81 1.27 1.7l-.68.49a40 40 0 0 0-2.3 1.88l1.47 1.37a49 49 0 0 1 2.04-1.66l.38-.28q.59 1.44.8 2.86c.2 1.2.2 2.29.1 3.15a3.5 3.5 0 0 1-.42 1.43" clip-rule="evenodd"/>
+      </svg>
+    );
+  }
+);
+
+Football.displayName = 'Football';
+
+export { Football };
+export default Football;

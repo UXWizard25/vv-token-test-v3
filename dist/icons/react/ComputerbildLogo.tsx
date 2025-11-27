@@ -1,0 +1,61 @@
+import * as React from 'react';
+
+export interface ComputerbildLogoProps extends React.SVGProps<SVGSVGElement> {
+  /**
+   * Icon size (width and height)
+   * @default 24
+   */
+  size?: number | string;
+  /**
+   * Accessible label for screen readers.
+   * If provided, aria-hidden will be set to false.
+   */
+  'aria-label'?: string;
+  /**
+   * Hide icon from screen readers (decorative icon)
+   * @default true
+   */
+  'aria-hidden'?: boolean;
+  /**
+   * Optional title element for tooltip/accessibility
+   */
+  title?: string;
+}
+
+const ComputerbildLogo = React.forwardRef<SVGSVGElement, ComputerbildLogoProps>(
+  (
+    {
+      size = 24,
+      'aria-label': ariaLabel,
+      'aria-hidden': ariaHidden = true,
+      title,
+      ...props
+    },
+    ref
+  ) => {
+    const isDecorative = !ariaLabel && ariaHidden;
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width={size}
+        height={size}
+        fill="currentColor"
+        role="img"
+        aria-hidden={isDecorative}
+        aria-label={ariaLabel}
+        {...props}
+      >
+        {title && <title>{title}</title>}
+        <path fill="currentColor" d="M19.49 17.88c.18 0 .24.18.24.33v3.53c0 .17-.06.35-.24.35-.16 0-.22-.18-.22-.35V18.2c0-.15.06-.33.22-.33m-6.9 1.64c.25 0 .35.07.35.38v1.75c0 .3-.1.37-.35.37h-.16v-2.5zm0-3.12c.25 0 .35.1.35.48v1.16c0 .37-.1.5-.35.5h-.16V16.4z"/><path fill="currentColor" fill-rule="evenodd" d="M22 24H10v-9.55h12zm-2.27-6.63h-.02a.9.9 0 0 0-.83-.64c-.78 0-.88.68-.88 1.4v3.67c0 .73.1 1.44.88 1.44.39 0 .7-.3.83-.75h.02v.66H21v-7.9h-1.27zM11 23.15h1.67c1.11 0 1.68-.42 1.68-1.77v-.69c0-1.26-.33-1.64-1.07-1.72v-.03c.9-.2 1.07-.73 1.07-1.48v-.6c0-1.22-.79-1.62-1.68-1.62H11zm3.67 0h1.29V16.8h-1.3zm1.67 0h1.3v-7.9h-1.3zm-1.67-6.69h1.29v-1.22h-1.3z" clip-rule="evenodd"/><path fill="currentColor" d="M3.78 3.04C6.67 3.04 7.3 4.3 7.3 6.1v.37H5.01V6.4q.02-.28 0-.58c0-.6-.09-1.51-1.27-1.51-.73 0-1.06.3-1.18.89-.1.53-.15 1.84-.17 3.02a29 29 0 0 0 .1 2.88c.05.6.25 1.2 1.27 1.2.58 0 .9-.27 1.04-.62.17-.35.19-.77.2-1.04l-.03-.76V9.8h2.26v1.25c0 1.74-1.02 2.56-3.53 2.56S.27 12.84.1 11.16a32 32 0 0 1 .1-6.02c.32-1.1.96-2.1 3.58-2.1"/><path fill="currentColor" fill-rule="evenodd" d="M10.58 5.67c2.1 0 2.97.83 2.97 2.3.02.83.04 1.6.02 2.4l-.02.94c0 1.47-.81 2.3-2.97 2.3-2.1 0-2.97-.83-2.98-2.3l-.04-.94c0-.8 0-1.57.04-2.42 0-1.45.84-2.28 2.98-2.28m0 1.14c-.56 0-.92.25-.92 1.14v3.36c0 .95.31 1.15.9 1.15s.91-.2.91-1.16V7.95c0-.89-.3-1.14-.9-1.14" clip-rule="evenodd"/><path fill="currentColor" d="M22.21 5.63c1.04 0 1.81.5 1.79 1.47v6.4h-2.12V7.87c0-.33-.04-.87-.77-.87-.68 0-.83.54-.83 1.32v5.18h-2.12V7.58c0-.3-.33-.6-.75-.6-.6 0-.85.47-.85 1.14v5.36h-2.14V5.74h2.04l.08.68c.25-.25.7-.77 2.04-.77.77 0 1.3.31 1.62.81.06-.06.68-.83 2.01-.83M22 4.94H10V0h12z"/>
+      </svg>
+    );
+  }
+);
+
+ComputerbildLogo.displayName = 'ComputerbildLogo';
+
+export { ComputerbildLogo };
+export default ComputerbildLogo;

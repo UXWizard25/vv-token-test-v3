@@ -1,0 +1,61 @@
+import * as React from 'react';
+
+export interface TrendingProps extends React.SVGProps<SVGSVGElement> {
+  /**
+   * Icon size (width and height)
+   * @default 24
+   */
+  size?: number | string;
+  /**
+   * Accessible label for screen readers.
+   * If provided, aria-hidden will be set to false.
+   */
+  'aria-label'?: string;
+  /**
+   * Hide icon from screen readers (decorative icon)
+   * @default true
+   */
+  'aria-hidden'?: boolean;
+  /**
+   * Optional title element for tooltip/accessibility
+   */
+  title?: string;
+}
+
+const Trending = React.forwardRef<SVGSVGElement, TrendingProps>(
+  (
+    {
+      size = 24,
+      'aria-label': ariaLabel,
+      'aria-hidden': ariaHidden = true,
+      title,
+      ...props
+    },
+    ref
+  ) => {
+    const isDecorative = !ariaLabel && ariaHidden;
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width={size}
+        height={size}
+        fill="currentColor"
+        role="img"
+        aria-hidden={isDecorative}
+        aria-label={ariaLabel}
+        {...props}
+      >
+        {title && <title>{title}</title>}
+        <path fill="currentColor" d="M10.67 2H9.66l.09 1.01c.07.8-.1 1.37-.39 1.85-.3.52-.76.98-1.35 1.57l-.03.03A11 11 0 0 0 6.03 8.8l-.55-1.56-1.03 1.5A8.3 8.3 0 0 0 3 13.42q0 .85.17 1.65l1.68-1.67q0-1.11.37-2.12l.17.24 1.15 1.5L7 11.2c.41-1.58 1.32-2.48 2.33-3.47a10 10 0 0 0 1.61-1.9 5 5 0 0 0 .61-1.76c.71.3 1.5.91 2.28 1.86 1.1 1.33 2 3.11 2.46 4.89l.53 2.03 1.14-1.76q.22-.34.4-.72.77 1.4.78 3.06c0 3.65-3.14 6.72-7.15 6.72A7.4 7.4 0 0 1 6 17.06l1.56-1.56 1.97 1.47 3.71-3.25V16h1.5v-4.75H10v1.5h2.08l-2.62 2.29-2.03-1.53-3.56 3.54.05.1A9.2 9.2 0 0 0 12 22c4.91 0 9-3.79 9-8.58 0-2.19-.86-4.18-2.25-5.68L17.5 6.39l-.28 1.52a15 15 0 0 0-1.96-3.18C14.03 3.23 12.4 2 10.66 2"/>
+      </svg>
+    );
+  }
+);
+
+Trending.displayName = 'Trending';
+
+export { Trending };
+export default Trending;

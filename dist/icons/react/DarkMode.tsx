@@ -1,0 +1,61 @@
+import * as React from 'react';
+
+export interface DarkModeProps extends React.SVGProps<SVGSVGElement> {
+  /**
+   * Icon size (width and height)
+   * @default 24
+   */
+  size?: number | string;
+  /**
+   * Accessible label for screen readers.
+   * If provided, aria-hidden will be set to false.
+   */
+  'aria-label'?: string;
+  /**
+   * Hide icon from screen readers (decorative icon)
+   * @default true
+   */
+  'aria-hidden'?: boolean;
+  /**
+   * Optional title element for tooltip/accessibility
+   */
+  title?: string;
+}
+
+const DarkMode = React.forwardRef<SVGSVGElement, DarkModeProps>(
+  (
+    {
+      size = 24,
+      'aria-label': ariaLabel,
+      'aria-hidden': ariaHidden = true,
+      title,
+      ...props
+    },
+    ref
+  ) => {
+    const isDecorative = !ariaLabel && ariaHidden;
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width={size}
+        height={size}
+        fill="currentColor"
+        role="img"
+        aria-hidden={isDecorative}
+        aria-label={ariaLabel}
+        {...props}
+      >
+        {title && <title>{title}</title>}
+        <path fill="currentColor" fill-rule="evenodd" d="M16.04 16.68A7 7 0 0 1 12.07 18 6.03 6.03 0 0 1 6 12c0-2.81 1.97-5.2 4.63-5.83a7.83 7.83 0 0 0 5.4 10.51m1.65-1.77a5.84 5.84 0 0 1-4.76-8.85 6 6 0 0 1 1.58-1.69A8 8 0 0 0 11.96 4 8.03 8.03 0 0 0 4 12c0 4.42 3.61 8 8.07 8 2.6 0 5.1-1.22 6.66-3.12A7 7 0 0 0 20 14.65c-.55.17-1.46.26-2.07.26z" clip-rule="evenodd"/>
+      </svg>
+    );
+  }
+);
+
+DarkMode.displayName = 'DarkMode';
+
+export { DarkMode };
+export default DarkMode;

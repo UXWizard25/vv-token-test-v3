@@ -1,0 +1,1401 @@
+{
+  "generatedAt": "2025-11-27T18:48:10.617Z",
+  "totalIcons": 199,
+  "successful": 199,
+  "failed": 0,
+  "icons": [
+    {
+      "name": "2-liga-logo",
+      "success": true,
+      "originalSize": 7524,
+      "optimizedSize": 2285,
+      "savings": "70%"
+    },
+    {
+      "name": "account",
+      "success": true,
+      "originalSize": 1144,
+      "optimizedSize": 508,
+      "savings": "56%"
+    },
+    {
+      "name": "add",
+      "success": true,
+      "originalSize": 172,
+      "optimizedSize": 143,
+      "savings": "17%"
+    },
+    {
+      "name": "adjust",
+      "success": true,
+      "originalSize": 384,
+      "optimizedSize": 231,
+      "savings": "40%"
+    },
+    {
+      "name": "android",
+      "success": true,
+      "originalSize": 1787,
+      "optimizedSize": 838,
+      "savings": "53%"
+    },
+    {
+      "name": "apple-ios",
+      "success": true,
+      "originalSize": 1221,
+      "optimizedSize": 594,
+      "savings": "51%"
+    },
+    {
+      "name": "arrow-down",
+      "success": true,
+      "originalSize": 248,
+      "optimizedSize": 184,
+      "savings": "26%"
+    },
+    {
+      "name": "arrow-left",
+      "success": true,
+      "originalSize": 257,
+      "optimizedSize": 186,
+      "savings": "28%"
+    },
+    {
+      "name": "arrow-right",
+      "success": true,
+      "originalSize": 248,
+      "optimizedSize": 186,
+      "savings": "25%"
+    },
+    {
+      "name": "arrow-up",
+      "success": true,
+      "originalSize": 257,
+      "optimizedSize": 186,
+      "savings": "28%"
+    },
+    {
+      "name": "arscan",
+      "success": true,
+      "originalSize": 348,
+      "optimizedSize": 190,
+      "savings": "45%"
+    },
+    {
+      "name": "auto",
+      "success": true,
+      "originalSize": 947,
+      "optimizedSize": 550,
+      "savings": "42%"
+    },
+    {
+      "name": "autobild-logo",
+      "success": true,
+      "originalSize": 1858,
+      "optimizedSize": 952,
+      "savings": "49%"
+    },
+    {
+      "name": "bams-logo",
+      "success": true,
+      "originalSize": 3415,
+      "optimizedSize": 1444,
+      "savings": "58%"
+    },
+    {
+      "name": "basketball",
+      "success": true,
+      "originalSize": 3125,
+      "optimizedSize": 1231,
+      "savings": "61%"
+    },
+    {
+      "name": "bild-club-logo",
+      "success": true,
+      "originalSize": 1845,
+      "optimizedSize": 1012,
+      "savings": "45%"
+    },
+    {
+      "name": "bild-logo",
+      "success": true,
+      "originalSize": 1463,
+      "optimizedSize": 552,
+      "savings": "62%"
+    },
+    {
+      "name": "bildplay-logo",
+      "success": true,
+      "originalSize": 1495,
+      "optimizedSize": 640,
+      "savings": "57%"
+    },
+    {
+      "name": "bildplus-logo-simple",
+      "success": true,
+      "originalSize": 396,
+      "optimizedSize": 255,
+      "savings": "36%"
+    },
+    {
+      "name": "bildplus-logo",
+      "success": true,
+      "originalSize": 1924,
+      "optimizedSize": 770,
+      "savings": "60%"
+    },
+    {
+      "name": "bin",
+      "success": true,
+      "originalSize": 675,
+      "optimizedSize": 360,
+      "savings": "47%"
+    },
+    {
+      "name": "bookmark",
+      "success": true,
+      "originalSize": 242,
+      "optimizedSize": 189,
+      "savings": "22%"
+    },
+    {
+      "name": "boxing",
+      "success": true,
+      "originalSize": 1012,
+      "optimizedSize": 572,
+      "savings": "43%"
+    },
+    {
+      "name": "bundesliga-logo",
+      "success": true,
+      "originalSize": 5300,
+      "optimizedSize": 1902,
+      "savings": "64%"
+    },
+    {
+      "name": "burgermenu",
+      "success": true,
+      "originalSize": 236,
+      "optimizedSize": 147,
+      "savings": "38%"
+    },
+    {
+      "name": "calendar",
+      "success": true,
+      "originalSize": 254,
+      "optimizedSize": 226,
+      "savings": "11%"
+    },
+    {
+      "name": "camera",
+      "success": true,
+      "originalSize": 457,
+      "optimizedSize": 311,
+      "savings": "32%"
+    },
+    {
+      "name": "cards",
+      "success": true,
+      "originalSize": 369,
+      "optimizedSize": 273,
+      "savings": "26%"
+    },
+    {
+      "name": "checklist",
+      "success": true,
+      "originalSize": 719,
+      "optimizedSize": 336,
+      "savings": "53%"
+    },
+    {
+      "name": "checkmark-circled",
+      "success": true,
+      "originalSize": 537,
+      "optimizedSize": 314,
+      "savings": "42%"
+    },
+    {
+      "name": "checkmark",
+      "success": true,
+      "originalSize": 284,
+      "optimizedSize": 212,
+      "savings": "25%"
+    },
+    {
+      "name": "chevron-down",
+      "success": true,
+      "originalSize": 281,
+      "optimizedSize": 205,
+      "savings": "27%"
+    },
+    {
+      "name": "chevron-left",
+      "success": true,
+      "originalSize": 282,
+      "optimizedSize": 207,
+      "savings": "27%"
+    },
+    {
+      "name": "chevron-right",
+      "success": true,
+      "originalSize": 279,
+      "optimizedSize": 206,
+      "savings": "26%"
+    },
+    {
+      "name": "chevron-up",
+      "success": true,
+      "originalSize": 284,
+      "optimizedSize": 207,
+      "savings": "27%"
+    },
+    {
+      "name": "clock",
+      "success": true,
+      "originalSize": 446,
+      "optimizedSize": 292,
+      "savings": "35%"
+    },
+    {
+      "name": "close",
+      "success": true,
+      "originalSize": 328,
+      "optimizedSize": 231,
+      "savings": "30%"
+    },
+    {
+      "name": "comment",
+      "success": true,
+      "originalSize": 365,
+      "optimizedSize": 284,
+      "savings": "22%"
+    },
+    {
+      "name": "computerbild-logo",
+      "success": true,
+      "originalSize": 3508,
+      "optimizedSize": 1744,
+      "savings": "50%"
+    },
+    {
+      "name": "controller",
+      "success": true,
+      "originalSize": 359,
+      "optimizedSize": 269,
+      "savings": "25%"
+    },
+    {
+      "name": "copy",
+      "success": true,
+      "originalSize": 393,
+      "optimizedSize": 289,
+      "savings": "26%"
+    },
+    {
+      "name": "credit-card",
+      "success": true,
+      "originalSize": 322,
+      "optimizedSize": 287,
+      "savings": "11%"
+    },
+    {
+      "name": "dark-mode",
+      "success": true,
+      "originalSize": 867,
+      "optimizedSize": 439,
+      "savings": "49%"
+    },
+    {
+      "name": "data-protection",
+      "success": true,
+      "originalSize": 1123,
+      "optimizedSize": 658,
+      "savings": "41%"
+    },
+    {
+      "name": "desktop-checkmark",
+      "success": true,
+      "originalSize": 599,
+      "optimizedSize": 397,
+      "savings": "34%"
+    },
+    {
+      "name": "desktop-questionmark",
+      "success": true,
+      "originalSize": 899,
+      "optimizedSize": 537,
+      "savings": "40%"
+    },
+    {
+      "name": "desktop",
+      "success": true,
+      "originalSize": 332,
+      "optimizedSize": 240,
+      "savings": "28%"
+    },
+    {
+      "name": "digital",
+      "success": true,
+      "originalSize": 332,
+      "optimizedSize": 240,
+      "savings": "28%"
+    },
+    {
+      "name": "download",
+      "success": true,
+      "originalSize": 334,
+      "optimizedSize": 260,
+      "savings": "22%"
+    },
+    {
+      "name": "edit",
+      "success": true,
+      "originalSize": 385,
+      "optimizedSize": 262,
+      "savings": "32%"
+    },
+    {
+      "name": "enter-fullscreen",
+      "success": true,
+      "originalSize": 305,
+      "optimizedSize": 180,
+      "savings": "41%"
+    },
+    {
+      "name": "erotik",
+      "success": true,
+      "originalSize": 2599,
+      "optimizedSize": 1008,
+      "savings": "61%"
+    },
+    {
+      "name": "exclamationmark-circle",
+      "success": true,
+      "originalSize": 551,
+      "optimizedSize": 318,
+      "savings": "42%"
+    },
+    {
+      "name": "exit-fullscreen",
+      "success": true,
+      "originalSize": 305,
+      "optimizedSize": 178,
+      "savings": "42%"
+    },
+    {
+      "name": "external-intext",
+      "success": true,
+      "originalSize": 215,
+      "optimizedSize": 160,
+      "savings": "26%"
+    },
+    {
+      "name": "external-link",
+      "success": true,
+      "originalSize": 301,
+      "optimizedSize": 222,
+      "savings": "26%"
+    },
+    {
+      "name": "fast-back-chevron",
+      "success": true,
+      "originalSize": 435,
+      "optimizedSize": 267,
+      "savings": "39%"
+    },
+    {
+      "name": "fast-back-filled",
+      "success": true,
+      "originalSize": 243,
+      "optimizedSize": 148,
+      "savings": "39%"
+    },
+    {
+      "name": "fast-back",
+      "success": true,
+      "originalSize": 395,
+      "optimizedSize": 261,
+      "savings": "34%"
+    },
+    {
+      "name": "fast-forward-chevron",
+      "success": true,
+      "originalSize": 435,
+      "optimizedSize": 268,
+      "savings": "38%"
+    },
+    {
+      "name": "fast-forward-filled",
+      "success": true,
+      "originalSize": 245,
+      "optimizedSize": 147,
+      "savings": "40%"
+    },
+    {
+      "name": "fast-forward",
+      "success": true,
+      "originalSize": 386,
+      "optimizedSize": 258,
+      "savings": "33%"
+    },
+    {
+      "name": "fast-upward",
+      "success": true,
+      "originalSize": 380,
+      "optimizedSize": 256,
+      "savings": "33%"
+    },
+    {
+      "name": "football",
+      "success": true,
+      "originalSize": 1768,
+      "optimizedSize": 773,
+      "savings": "56%"
+    },
+    {
+      "name": "fussball",
+      "success": true,
+      "originalSize": 5837,
+      "optimizedSize": 1369,
+      "savings": "77%"
+    },
+    {
+      "name": "geld",
+      "success": true,
+      "originalSize": 753,
+      "optimizedSize": 322,
+      "savings": "57%"
+    },
+    {
+      "name": "gesundheit",
+      "success": true,
+      "originalSize": 334,
+      "optimizedSize": 251,
+      "savings": "25%"
+    },
+    {
+      "name": "gewinnspiele",
+      "success": true,
+      "originalSize": 668,
+      "optimizedSize": 309,
+      "savings": "54%"
+    },
+    {
+      "name": "gtcs",
+      "success": true,
+      "originalSize": 1123,
+      "optimizedSize": 676,
+      "savings": "40%"
+    },
+    {
+      "name": "handball",
+      "success": true,
+      "originalSize": 1443,
+      "optimizedSize": 754,
+      "savings": "48%"
+    },
+    {
+      "name": "headphones",
+      "success": true,
+      "originalSize": 442,
+      "optimizedSize": 316,
+      "savings": "29%"
+    },
+    {
+      "name": "heart",
+      "success": true,
+      "originalSize": 1424,
+      "optimizedSize": 638,
+      "savings": "55%"
+    },
+    {
+      "name": "hey-logo",
+      "success": true,
+      "originalSize": 1266,
+      "optimizedSize": 668,
+      "savings": "47%"
+    },
+    {
+      "name": "hide",
+      "success": true,
+      "originalSize": 1083,
+      "optimizedSize": 595,
+      "savings": "45%"
+    },
+    {
+      "name": "history",
+      "success": true,
+      "originalSize": 567,
+      "optimizedSize": 301,
+      "savings": "47%"
+    },
+    {
+      "name": "hockey",
+      "success": true,
+      "originalSize": 531,
+      "optimizedSize": 301,
+      "savings": "43%"
+    },
+    {
+      "name": "home",
+      "success": true,
+      "originalSize": 405,
+      "optimizedSize": 290,
+      "savings": "28%"
+    },
+    {
+      "name": "horoskop",
+      "success": true,
+      "originalSize": 1231,
+      "optimizedSize": 537,
+      "savings": "56%"
+    },
+    {
+      "name": "image-gallery",
+      "success": true,
+      "originalSize": 748,
+      "optimizedSize": 424,
+      "savings": "43%"
+    },
+    {
+      "name": "image",
+      "success": true,
+      "originalSize": 568,
+      "optimizedSize": 350,
+      "savings": "38%"
+    },
+    {
+      "name": "imprint",
+      "success": true,
+      "originalSize": 394,
+      "optimizedSize": 255,
+      "savings": "35%"
+    },
+    {
+      "name": "information",
+      "success": true,
+      "originalSize": 450,
+      "optimizedSize": 285,
+      "savings": "37%"
+    },
+    {
+      "name": "input",
+      "success": true,
+      "originalSize": 351,
+      "optimizedSize": 252,
+      "savings": "28%"
+    },
+    {
+      "name": "kino",
+      "success": true,
+      "originalSize": 352,
+      "optimizedSize": 286,
+      "savings": "19%"
+    },
+    {
+      "name": "lifestyle",
+      "success": true,
+      "originalSize": 258,
+      "optimizedSize": 211,
+      "savings": "18%"
+    },
+    {
+      "name": "light-mode",
+      "success": true,
+      "originalSize": 1007,
+      "optimizedSize": 494,
+      "savings": "51%"
+    },
+    {
+      "name": "list-checked",
+      "success": true,
+      "originalSize": 452,
+      "optimizedSize": 274,
+      "savings": "39%"
+    },
+    {
+      "name": "live-badge",
+      "success": true,
+      "originalSize": 660,
+      "optimizedSize": 317,
+      "savings": "52%"
+    },
+    {
+      "name": "locked",
+      "success": true,
+      "originalSize": 369,
+      "optimizedSize": 266,
+      "savings": "28%"
+    },
+    {
+      "name": "log-out",
+      "success": true,
+      "originalSize": 406,
+      "optimizedSize": 288,
+      "savings": "29%"
+    },
+    {
+      "name": "logged-in",
+      "success": true,
+      "originalSize": 1415,
+      "optimizedSize": 681,
+      "savings": "52%"
+    },
+    {
+      "name": "login",
+      "success": true,
+      "originalSize": 1303,
+      "optimizedSize": 589,
+      "savings": "55%"
+    },
+    {
+      "name": "lotto",
+      "success": true,
+      "originalSize": 1390,
+      "optimizedSize": 594,
+      "savings": "57%"
+    },
+    {
+      "name": "mail",
+      "success": true,
+      "originalSize": 289,
+      "optimizedSize": 221,
+      "savings": "24%"
+    },
+    {
+      "name": "marktplatz-logo",
+      "success": true,
+      "originalSize": 1705,
+      "optimizedSize": 634,
+      "savings": "63%"
+    },
+    {
+      "name": "maximize-pip",
+      "success": true,
+      "originalSize": 371,
+      "optimizedSize": 305,
+      "savings": "18%"
+    },
+    {
+      "name": "maximize",
+      "success": true,
+      "originalSize": 306,
+      "optimizedSize": 201,
+      "savings": "34%"
+    },
+    {
+      "name": "mein-verein",
+      "success": true,
+      "originalSize": 2043,
+      "optimizedSize": 958,
+      "savings": "53%"
+    },
+    {
+      "name": "menu",
+      "success": true,
+      "originalSize": 227,
+      "optimizedSize": 199,
+      "savings": "12%"
+    },
+    {
+      "name": "minimize-pip",
+      "success": true,
+      "originalSize": 365,
+      "optimizedSize": 306,
+      "savings": "16%"
+    },
+    {
+      "name": "minimize",
+      "success": true,
+      "originalSize": 354,
+      "optimizedSize": 207,
+      "savings": "42%"
+    },
+    {
+      "name": "motorsport",
+      "success": true,
+      "originalSize": 1217,
+      "optimizedSize": 598,
+      "savings": "51%"
+    },
+    {
+      "name": "mute",
+      "success": true,
+      "originalSize": 929,
+      "optimizedSize": 561,
+      "savings": "40%"
+    },
+    {
+      "name": "mypass",
+      "success": true,
+      "originalSize": 402,
+      "optimizedSize": 213,
+      "savings": "47%"
+    },
+    {
+      "name": "netid",
+      "success": true,
+      "originalSize": 592,
+      "optimizedSize": 394,
+      "savings": "33%"
+    },
+    {
+      "name": "news-ticker",
+      "success": true,
+      "originalSize": 670,
+      "optimizedSize": 387,
+      "savings": "42%"
+    },
+    {
+      "name": "news",
+      "success": true,
+      "originalSize": 342,
+      "optimizedSize": 247,
+      "savings": "28%"
+    },
+    {
+      "name": "notifications-off",
+      "success": true,
+      "originalSize": 1360,
+      "optimizedSize": 729,
+      "savings": "46%"
+    },
+    {
+      "name": "notifications-on",
+      "success": true,
+      "originalSize": 1170,
+      "optimizedSize": 663,
+      "savings": "43%"
+    },
+    {
+      "name": "ost-sport",
+      "success": true,
+      "originalSize": 2762,
+      "optimizedSize": 1182,
+      "savings": "57%"
+    },
+    {
+      "name": "paper",
+      "success": true,
+      "originalSize": 336,
+      "optimizedSize": 244,
+      "savings": "27%"
+    },
+    {
+      "name": "participate",
+      "success": true,
+      "originalSize": 442,
+      "optimizedSize": 304,
+      "savings": "31%"
+    },
+    {
+      "name": "pause-filled",
+      "success": true,
+      "originalSize": 164,
+      "optimizedSize": 135,
+      "savings": "18%"
+    },
+    {
+      "name": "pause",
+      "success": true,
+      "originalSize": 197,
+      "optimizedSize": 162,
+      "savings": "18%"
+    },
+    {
+      "name": "payment-mastercard",
+      "success": true,
+      "originalSize": 8050,
+      "optimizedSize": 2724,
+      "savings": "66%"
+    },
+    {
+      "name": "pin",
+      "success": true,
+      "originalSize": 737,
+      "optimizedSize": 426,
+      "savings": "42%"
+    },
+    {
+      "name": "placeholder",
+      "success": true,
+      "originalSize": 279,
+      "optimizedSize": 184,
+      "savings": "34%"
+    },
+    {
+      "name": "play-filled",
+      "success": true,
+      "originalSize": 149,
+      "optimizedSize": 123,
+      "savings": "17%"
+    },
+    {
+      "name": "play",
+      "success": true,
+      "originalSize": 191,
+      "optimizedSize": 149,
+      "savings": "22%"
+    },
+    {
+      "name": "podcast-amazon",
+      "success": true,
+      "originalSize": 1318,
+      "optimizedSize": 700,
+      "savings": "47%"
+    },
+    {
+      "name": "podcast-applepodcast",
+      "success": true,
+      "originalSize": 4388,
+      "optimizedSize": 1533,
+      "savings": "65%"
+    },
+    {
+      "name": "podcast-deezer",
+      "success": true,
+      "originalSize": 594,
+      "optimizedSize": 347,
+      "savings": "42%"
+    },
+    {
+      "name": "podcast-googlepodcasts",
+      "success": true,
+      "originalSize": 2459,
+      "optimizedSize": 1017,
+      "savings": "59%"
+    },
+    {
+      "name": "podcast-spotify",
+      "success": true,
+      "originalSize": 1754,
+      "optimizedSize": 861,
+      "savings": "51%"
+    },
+    {
+      "name": "politik",
+      "success": true,
+      "originalSize": 312,
+      "optimizedSize": 234,
+      "savings": "25%"
+    },
+    {
+      "name": "push-notification",
+      "success": true,
+      "originalSize": 520,
+      "optimizedSize": 338,
+      "savings": "35%"
+    },
+    {
+      "name": "questionmark-circle",
+      "success": true,
+      "originalSize": 895,
+      "optimizedSize": 472,
+      "savings": "47%"
+    },
+    {
+      "name": "quote",
+      "success": true,
+      "originalSize": 355,
+      "optimizedSize": 238,
+      "savings": "33%"
+    },
+    {
+      "name": "raetsel",
+      "success": true,
+      "originalSize": 288,
+      "optimizedSize": 238,
+      "savings": "17%"
+    },
+    {
+      "name": "ratgeber",
+      "success": true,
+      "originalSize": 513,
+      "optimizedSize": 336,
+      "savings": "35%"
+    },
+    {
+      "name": "regio",
+      "success": true,
+      "originalSize": 971,
+      "optimizedSize": 543,
+      "savings": "44%"
+    },
+    {
+      "name": "reise",
+      "success": true,
+      "originalSize": 371,
+      "optimizedSize": 312,
+      "savings": "16%"
+    },
+    {
+      "name": "reload",
+      "success": true,
+      "originalSize": 602,
+      "optimizedSize": 330,
+      "savings": "45%"
+    },
+    {
+      "name": "replay",
+      "success": true,
+      "originalSize": 440,
+      "optimizedSize": 272,
+      "savings": "38%"
+    },
+    {
+      "name": "ressorts",
+      "success": true,
+      "originalSize": 384,
+      "optimizedSize": 186,
+      "savings": "52%"
+    },
+    {
+      "name": "revocation",
+      "success": true,
+      "originalSize": 1172,
+      "optimizedSize": 705,
+      "savings": "40%"
+    },
+    {
+      "name": "rewind-ten-sec",
+      "success": true,
+      "originalSize": 934,
+      "optimizedSize": 598,
+      "savings": "36%"
+    },
+    {
+      "name": "search",
+      "success": true,
+      "originalSize": 711,
+      "optimizedSize": 263,
+      "savings": "63%"
+    },
+    {
+      "name": "send",
+      "success": true,
+      "originalSize": 237,
+      "optimizedSize": 200,
+      "savings": "16%"
+    },
+    {
+      "name": "settings",
+      "success": true,
+      "originalSize": 684,
+      "optimizedSize": 449,
+      "savings": "34%"
+    },
+    {
+      "name": "sex-und-liebe",
+      "success": true,
+      "originalSize": 1416,
+      "optimizedSize": 796,
+      "savings": "44%"
+    },
+    {
+      "name": "share",
+      "success": true,
+      "originalSize": 384,
+      "optimizedSize": 289,
+      "savings": "25%"
+    },
+    {
+      "name": "sharecast",
+      "success": true,
+      "originalSize": 554,
+      "optimizedSize": 344,
+      "savings": "38%"
+    },
+    {
+      "name": "shopping-cart",
+      "success": true,
+      "originalSize": 408,
+      "optimizedSize": 282,
+      "savings": "31%"
+    },
+    {
+      "name": "show",
+      "success": true,
+      "originalSize": 785,
+      "optimizedSize": 493,
+      "savings": "37%"
+    },
+    {
+      "name": "sign-up",
+      "success": true,
+      "originalSize": 411,
+      "optimizedSize": 251,
+      "savings": "39%"
+    },
+    {
+      "name": "skip-next-chevron",
+      "success": true,
+      "originalSize": 319,
+      "optimizedSize": 184,
+      "savings": "42%"
+    },
+    {
+      "name": "skip-next-filled",
+      "success": true,
+      "originalSize": 196,
+      "optimizedSize": 136,
+      "savings": "31%"
+    },
+    {
+      "name": "skip-next",
+      "success": true,
+      "originalSize": 276,
+      "optimizedSize": 233,
+      "savings": "16%"
+    },
+    {
+      "name": "skip-previous-chevron",
+      "success": true,
+      "originalSize": 304,
+      "optimizedSize": 185,
+      "savings": "39%"
+    },
+    {
+      "name": "skip-previous-filled",
+      "success": true,
+      "originalSize": 206,
+      "optimizedSize": 138,
+      "savings": "33%"
+    },
+    {
+      "name": "skip-previous",
+      "success": true,
+      "originalSize": 283,
+      "optimizedSize": 233,
+      "savings": "18%"
+    },
+    {
+      "name": "skip-ten-sec",
+      "success": true,
+      "originalSize": 925,
+      "optimizedSize": 600,
+      "savings": "35%"
+    },
+    {
+      "name": "smartphone",
+      "success": true,
+      "originalSize": 307,
+      "optimizedSize": 231,
+      "savings": "25%"
+    },
+    {
+      "name": "social-facebook",
+      "success": true,
+      "originalSize": 601,
+      "optimizedSize": 464,
+      "savings": "23%"
+    },
+    {
+      "name": "social-fb-messagner",
+      "success": true,
+      "originalSize": 1163,
+      "optimizedSize": 608,
+      "savings": "48%"
+    },
+    {
+      "name": "social-google",
+      "success": true,
+      "originalSize": 890,
+      "optimizedSize": 489,
+      "savings": "45%"
+    },
+    {
+      "name": "social-instagram",
+      "success": true,
+      "originalSize": 3066,
+      "optimizedSize": 1272,
+      "savings": "59%"
+    },
+    {
+      "name": "social-linkedin",
+      "success": true,
+      "originalSize": 899,
+      "optimizedSize": 462,
+      "savings": "49%"
+    },
+    {
+      "name": "social-snapchat",
+      "success": true,
+      "originalSize": 3359,
+      "optimizedSize": 1407,
+      "savings": "58%"
+    },
+    {
+      "name": "social-whatsapp",
+      "success": true,
+      "originalSize": 6326,
+      "optimizedSize": 2688,
+      "savings": "58%"
+    },
+    {
+      "name": "social-x-twitter",
+      "success": true,
+      "originalSize": 379,
+      "optimizedSize": 271,
+      "savings": "28%"
+    },
+    {
+      "name": "social-xing",
+      "success": true,
+      "originalSize": 1168,
+      "optimizedSize": 398,
+      "savings": "66%"
+    },
+    {
+      "name": "social-youtube",
+      "success": true,
+      "originalSize": 103,
+      "optimizedSize": 73,
+      "savings": "29%"
+    },
+    {
+      "name": "speed",
+      "success": true,
+      "originalSize": 920,
+      "optimizedSize": 293,
+      "savings": "68%"
+    },
+    {
+      "name": "sport-bild-logo",
+      "success": true,
+      "originalSize": 3769,
+      "optimizedSize": 1736,
+      "savings": "54%"
+    },
+    {
+      "name": "sport-live",
+      "success": true,
+      "originalSize": 565,
+      "optimizedSize": 366,
+      "savings": "35%"
+    },
+    {
+      "name": "sport-ticker",
+      "success": true,
+      "originalSize": 771,
+      "optimizedSize": 468,
+      "savings": "39%"
+    },
+    {
+      "name": "sport",
+      "success": true,
+      "originalSize": 554,
+      "optimizedSize": 360,
+      "savings": "35%"
+    },
+    {
+      "name": "sportimtv",
+      "success": true,
+      "originalSize": 899,
+      "optimizedSize": 521,
+      "savings": "42%"
+    },
+    {
+      "name": "ssl",
+      "success": true,
+      "originalSize": 1840,
+      "optimizedSize": 892,
+      "savings": "52%"
+    },
+    {
+      "name": "star",
+      "success": true,
+      "originalSize": 993,
+      "optimizedSize": 516,
+      "savings": "48%"
+    },
+    {
+      "name": "substract",
+      "success": true,
+      "originalSize": 148,
+      "optimizedSize": 123,
+      "savings": "17%"
+    },
+    {
+      "name": "sz-ticker",
+      "success": true,
+      "originalSize": 851,
+      "optimizedSize": 492,
+      "savings": "42%"
+    },
+    {
+      "name": "telephone",
+      "success": true,
+      "originalSize": 885,
+      "optimizedSize": 524,
+      "savings": "41%"
+    },
+    {
+      "name": "tennis",
+      "success": true,
+      "originalSize": 1178,
+      "optimizedSize": 468,
+      "savings": "60%"
+    },
+    {
+      "name": "three-dot-horizontal",
+      "success": true,
+      "originalSize": 243,
+      "optimizedSize": 189,
+      "savings": "22%"
+    },
+    {
+      "name": "three-dot-vertical",
+      "success": true,
+      "originalSize": 243,
+      "optimizedSize": 189,
+      "savings": "22%"
+    },
+    {
+      "name": "thumbs-down",
+      "success": true,
+      "originalSize": 1307,
+      "optimizedSize": 636,
+      "savings": "51%"
+    },
+    {
+      "name": "thumbs-up",
+      "success": true,
+      "originalSize": 1278,
+      "optimizedSize": 662,
+      "savings": "48%"
+    },
+    {
+      "name": "trending",
+      "success": true,
+      "originalSize": 1382,
+      "optimizedSize": 751,
+      "savings": "46%"
+    },
+    {
+      "name": "tv",
+      "success": true,
+      "originalSize": 441,
+      "optimizedSize": 317,
+      "savings": "28%"
+    },
+    {
+      "name": "unlocked",
+      "success": true,
+      "originalSize": 377,
+      "optimizedSize": 284,
+      "savings": "25%"
+    },
+    {
+      "name": "unquote",
+      "success": true,
+      "originalSize": 372,
+      "optimizedSize": 236,
+      "savings": "37%"
+    },
+    {
+      "name": "unterhaltung",
+      "success": true,
+      "originalSize": 549,
+      "optimizedSize": 341,
+      "savings": "38%"
+    },
+    {
+      "name": "upload",
+      "success": true,
+      "originalSize": 295,
+      "optimizedSize": 185,
+      "savings": "37%"
+    },
+    {
+      "name": "us-sport",
+      "success": true,
+      "originalSize": 2641,
+      "optimizedSize": 1182,
+      "savings": "55%"
+    },
+    {
+      "name": "verimi",
+      "success": true,
+      "originalSize": 245,
+      "optimizedSize": 197,
+      "savings": "20%"
+    },
+    {
+      "name": "video-error",
+      "success": true,
+      "originalSize": 398,
+      "optimizedSize": 281,
+      "savings": "29%"
+    },
+    {
+      "name": "video-recommendations",
+      "success": true,
+      "originalSize": 457,
+      "optimizedSize": 343,
+      "savings": "25%"
+    },
+    {
+      "name": "video",
+      "success": true,
+      "originalSize": 260,
+      "optimizedSize": 229,
+      "savings": "12%"
+    },
+    {
+      "name": "volume-down",
+      "success": true,
+      "originalSize": 539,
+      "optimizedSize": 373,
+      "savings": "31%"
+    },
+    {
+      "name": "volume-up",
+      "success": true,
+      "originalSize": 829,
+      "optimizedSize": 535,
+      "savings": "35%"
+    },
+    {
+      "name": "vote",
+      "success": true,
+      "originalSize": 368,
+      "optimizedSize": 289,
+      "savings": "21%"
+    },
+    {
+      "name": "warning",
+      "success": true,
+      "originalSize": 435,
+      "optimizedSize": 297,
+      "savings": "32%"
+    },
+    {
+      "name": "web",
+      "success": true,
+      "originalSize": 935,
+      "optimizedSize": 516,
+      "savings": "45%"
+    },
+    {
+      "name": "wetter",
+      "success": true,
+      "originalSize": 1311,
+      "optimizedSize": 648,
+      "savings": "51%"
+    },
+    {
+      "name": "wrestling",
+      "success": true,
+      "originalSize": 1262,
+      "optimizedSize": 708,
+      "savings": "44%"
+    },
+    {
+      "name": "zoom-in",
+      "success": true,
+      "originalSize": 511,
+      "optimizedSize": 290,
+      "savings": "43%"
+    }
+  ]
+}

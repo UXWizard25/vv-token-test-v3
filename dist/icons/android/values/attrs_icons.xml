@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Icon theme attributes for dynamic coloring -->
+<resources>
+    <!-- Define icon tint attribute if not using Material theme -->
+    <!--
+    <attr name="iconTint" format="color" />
+    -->
+
+    <!--
+    Usage in your theme:
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorOnSurface">@color/your_icon_color</item>
+    </style>
+
+    Or override per-icon:
+    <ImageView
+        android:src="@drawable/ic_add"
+        app:tint="?attr/colorPrimary" />
+    -->
+</resources>

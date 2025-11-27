@@ -1,0 +1,61 @@
+import * as React from 'react';
+
+export interface BamsLogoProps extends React.SVGProps<SVGSVGElement> {
+  /**
+   * Icon size (width and height)
+   * @default 24
+   */
+  size?: number | string;
+  /**
+   * Accessible label for screen readers.
+   * If provided, aria-hidden will be set to false.
+   */
+  'aria-label'?: string;
+  /**
+   * Hide icon from screen readers (decorative icon)
+   * @default true
+   */
+  'aria-hidden'?: boolean;
+  /**
+   * Optional title element for tooltip/accessibility
+   */
+  title?: string;
+}
+
+const BamsLogo = React.forwardRef<SVGSVGElement, BamsLogoProps>(
+  (
+    {
+      size = 24,
+      'aria-label': ariaLabel,
+      'aria-hidden': ariaHidden = true,
+      title,
+      ...props
+    },
+    ref
+  ) => {
+    const isDecorative = !ariaLabel && ariaHidden;
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width={size}
+        height={size}
+        fill="currentColor"
+        role="img"
+        aria-hidden={isDecorative}
+        aria-label={ariaLabel}
+        {...props}
+      >
+        {title && <title>{title}</title>}
+        <path fill="currentColor" d="M10.7 20.6c.22 0 .35.18.35.38s-.13.39-.35.39-.36-.19-.36-.39.14-.38.36-.38m-6.15.6h-.31l.15-.41zm13.47 0h-.32l.16-.41zM6.48 11.24v5.73h-.85v-5.73zm0-7v4.88h-.85V4.24zm11.88 2.97v9.76h-.84V7.21z"/><path fill="currentColor" fill-rule="evenodd" d="M22.6 24H1.4V0h21.2zm-11.9-3.9a.9.9 0 0 0-.93.88c0 .5.4.9.92.9a.9.9 0 0 0 .94-.9.9.9 0 0 0-.93-.88m9.02 0c-.53 0-.93.38-.93.88 0 .54.42.9.95.9q.47-.02.75-.27v-.78h-.82v.36h.29v.17a.4.4 0 0 1-.2.04.4.4 0 0 1-.4-.4c0-.24.16-.41.38-.41q.21 0 .38.15l.32-.39a1 1 0 0 0-.72-.25m-10.85 0c-.47 0-.72.25-.72.57 0 .37.33.48.71.56.19.03.24.06.24.1v.01q0 .08-.15.08a1 1 0 0 1-.6-.2l-.3.36q.34.29.88.29c.45 0 .75-.22.75-.58 0-.35-.3-.48-.73-.56q-.25-.04-.23-.1v-.01q0-.06.13-.07.26 0 .5.17l.29-.39q-.29-.23-.77-.23m-4.75.02-.72 1.71H4l.1-.23h.59l.09.23h.62l-.72-1.71zm1.35.01v1.7h.55V21l.4.6.4-.6v.84h.56v-1.7H6.8l-.37.6-.36-.6zm6.31 0v1.7h.57v-.78l.63.78h.5v-1.7h-.56v.75l-.6-.75zm1.9 0v1.7h.56v-.78l.63.78h.51v-1.7h-.56v.75l-.61-.75zm1.83 0v.48h.5v1.22h.57v-1.22h.5v-.48zm2.07-.01-.71 1.71h.6l.1-.23h.59l.09.23h.61l-.71-1.71zm-14.07-18V19.1h4.25c.42 0 .85-.42.85-.85v-7.63c0-.43-.32-.71-.85-.71.48 0 .85-.57.85-.99V2.97a.9.9 0 0 0-.85-.85zM9.45 5.1v14h2.13v-14zm2.98-2.97V19.1h2.12V2.12zm5.94 0V5.1h-2.13a.9.9 0 0 0-.84.85v12.3c0 .43.42.85.84.85h4.25V2.12zm-8.91 0v2.12h2.12V2.12z" clip-rule="evenodd"/>
+      </svg>
+    );
+  }
+);
+
+BamsLogo.displayName = 'BamsLogo';
+
+export { BamsLogo };
+export default BamsLogo;
