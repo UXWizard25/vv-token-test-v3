@@ -145,39 +145,125 @@ ${commitSha ? `**Commit**: \`${commitSha}\`` : ''}
 }
 
 // =============================================================================
-// LAYER 2: PLATFORM OVERVIEW
+// LAYER 2: UNIFIED TOKEN CHANGES
 // =============================================================================
 
-function generatePlatformOverview(diff) {
-  if (!diff || !diff.platforms) return '';
+/**
+ * Generate unified token changes - each token shown once with all affected platforms
+ */
+function generateUnifiedTokenChanges(diff, options = {}) {
+  if (!diff || !diff.byUniqueToken) return '';
 
-  let md = '## 📊 Platform Overview\n\n';
+  const { maxTokensPerSection = 15 } = options;
+  const { added, modified, removed } = diff.byUniqueToken;
 
-  md += '| Platform | Added | Modified | Removed | Files |\n';
-  md += '|----------|------:|--------:|--------:|------:|\n';
-
-  let hasAnyChanges = false;
-
-  for (const platformKey of PLATFORM_ORDER) {
-    const platform = diff.platforms[platformKey];
-    if (!platform) continue;
-
-    const totalChanges = platform.tokensAdded + platform.tokensModified + platform.tokensRemoved;
-    const totalFiles = platform.filesAdded + platform.filesModified + platform.filesRemoved;
-
-    if (totalChanges === 0 && totalFiles === 0) {
-      continue;
-    }
-
-    hasAnyChanges = true;
-    md += `| ${platform.icon} ${platform.name} | +${platform.tokensAdded} | ~${platform.tokensModified} | -${platform.tokensRemoved} | ${totalFiles} |\n`;
-  }
-
-  if (!hasAnyChanges) {
+  // Check if there are any changes
+  if (added.length === 0 && modified.length === 0 && removed.length === 0) {
     return '';
   }
 
-  md += '\n---\n\n';
+  let md = '## 📝 Token Changes\n\n';
+
+  // Helper to format platform icons
+  const formatPlatforms = (platforms) => {
+    const uniquePlatforms = [...new Map(platforms.map(p => [p.key, p])).values()];
+    return uniquePlatforms.map(p => p.icon).join(' ');
+  };
+
+  // Breaking changes (removed)
+  if (removed.length > 0) {
+    md += `### 🔴 Removed (${removed.length})\n\n`;
+    md += '| Token | Value | Platforms |\n';
+    md += '|-------|-------|:---------:|\n';
+
+    const displayTokens = removed.slice(0, maxTokensPerSection);
+    for (const token of displayTokens) {
+      md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.value, 25)}\` | ${formatPlatforms(token.platforms)} |\n`;
+    }
+
+    if (removed.length > maxTokensPerSection) {
+      md += `| ... | *${removed.length - maxTokensPerSection} more* | |\n`;
+    }
+
+    // Platform-specific names (collapsible)
+    if (removed.some(t => t.platforms.length > 1)) {
+      md += '\n<details>\n<summary>Platform-specific names</summary>\n\n';
+      md += '| Token | Platform | Name |\n';
+      md += '|-------|----------|------|\n';
+      for (const token of displayTokens.filter(t => t.platforms.length > 1)) {
+        for (const p of token.platforms) {
+          md += `| \`${truncate(token.displayName, 20)}\` | ${p.icon} ${p.name} | \`${truncate(p.tokenName, 30)}\` |\n`;
+        }
+      }
+      md += '</details>\n';
+    }
+
+    md += '\n';
+  }
+
+  // Modified tokens
+  if (modified.length > 0) {
+    md += `### 🟡 Modified (${modified.length})\n\n`;
+    md += '| Token | Old | New | Platforms |\n';
+    md += '|-------|-----|-----|:---------:|\n';
+
+    const displayTokens = modified.slice(0, maxTokensPerSection);
+    for (const token of displayTokens) {
+      md += `| \`${truncate(token.displayName, 28)}\` | \`${truncate(token.oldValue, 16)}\` | \`${truncate(token.newValue, 16)}\` | ${formatPlatforms(token.platforms)} |\n`;
+    }
+
+    if (modified.length > maxTokensPerSection) {
+      md += `| ... | | *${modified.length - maxTokensPerSection} more* | |\n`;
+    }
+
+    // Platform-specific names (collapsible)
+    if (modified.some(t => t.platforms.length > 1)) {
+      md += '\n<details>\n<summary>Platform-specific names</summary>\n\n';
+      md += '| Token | Platform | Name |\n';
+      md += '|-------|----------|------|\n';
+      for (const token of displayTokens.filter(t => t.platforms.length > 1)) {
+        for (const p of token.platforms) {
+          md += `| \`${truncate(token.displayName, 20)}\` | ${p.icon} ${p.name} | \`${truncate(p.tokenName, 30)}\` |\n`;
+        }
+      }
+      md += '</details>\n';
+    }
+
+    md += '\n';
+  }
+
+  // Added tokens
+  if (added.length > 0) {
+    md += `### 🟢 Added (${added.length})\n\n`;
+    md += '| Token | Value | Platforms |\n';
+    md += '|-------|-------|:---------:|\n';
+
+    const displayTokens = added.slice(0, maxTokensPerSection);
+    for (const token of displayTokens) {
+      md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.value, 25)}\` | ${formatPlatforms(token.platforms)} |\n`;
+    }
+
+    if (added.length > maxTokensPerSection) {
+      md += `| ... | *${added.length - maxTokensPerSection} more* | |\n`;
+    }
+
+    // Platform-specific names (collapsible)
+    if (added.some(t => t.platforms.length > 1)) {
+      md += '\n<details>\n<summary>Platform-specific names</summary>\n\n';
+      md += '| Token | Platform | Name |\n';
+      md += '|-------|----------|------|\n';
+      for (const token of displayTokens.filter(t => t.platforms.length > 1)) {
+        for (const p of token.platforms) {
+          md += `| \`${truncate(token.displayName, 20)}\` | ${p.icon} ${p.name} | \`${truncate(p.tokenName, 30)}\` |\n`;
+        }
+      }
+      md += '</details>\n';
+    }
+
+    md += '\n';
+  }
+
+  md += '---\n\n';
 
   return md;
 }
@@ -447,8 +533,7 @@ function generatePRComment(diff, options = {}) {
   let md = '';
 
   md += generateExecutiveSummary(diff, options);
-  md += generatePlatformOverview(diff);
-  md += generatePlatformDetails(diff, { maxTokensPerSection: 10 });
+  md += generateUnifiedTokenChanges(diff, { maxTokensPerSection: 10 });
   md += generateReviewChecklist(diff);
   md += generateTechnicalDetails(diff, options);
   md += generatePostMergeInfo();
@@ -471,8 +556,7 @@ function generateChangelog(diff, options = {}) {
   let md = `# ${version} (${date})\n\n`;
 
   md += generateExecutiveSummary(diff, options);
-  md += generatePlatformOverview(diff);
-  md += generatePlatformDetails(diff, { maxTokensPerSection: 50 });
+  md += generateUnifiedTokenChanges(diff, { maxTokensPerSection: 50 });
   md += generateTechnicalDetails(diff, options);
 
   return md;

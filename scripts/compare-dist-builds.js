@@ -510,6 +510,11 @@ function compareDistBuilds(oldDir, newDir) {
   const uniqueTokensModified = new Set();
   const uniqueTokensRemoved = new Set();
 
+  // Maps to group token details by normalized name
+  const tokenDetailsAdded = new Map();    // normalizedName -> { platforms: [...], value, ... }
+  const tokenDetailsModified = new Map(); // normalizedName -> { platforms: [...], oldValue, newValue, ... }
+  const tokenDetailsRemoved = new Map();  // normalizedName -> { platforms: [...], value, ... }
+
   // Compare all files
   const results = {
     summary: {
@@ -529,6 +534,11 @@ function compareDistBuilds(oldDir, newDir) {
     platforms: {},
     byBrand: {},
     byComponent: {},
+    byUniqueToken: {
+      added: [],
+      modified: [],
+      removed: []
+    },
     allChanges: []
   };
 
@@ -560,23 +570,39 @@ function compareDistBuilds(oldDir, newDir) {
     const platform = diff.platform;
     const platformData = results.platforms[platform];
 
+    const platformInfo = { key: platform, name: platformData.name, icon: platformData.icon };
+
     if (diff.type === 'added') {
       results.summary.filesAdded++;
       platformData.filesAdded++;
       platformData.tokensAdded += diff.tokens.length;
       results.summary.tokensAdded += diff.tokens.length;
-      // Track unique tokens
+      // Track unique tokens with details
       for (const token of diff.tokens) {
-        uniqueTokensAdded.add(normalizeTokenName(token.name));
+        const normalized = normalizeTokenName(token.name);
+        uniqueTokensAdded.add(normalized);
+        if (!tokenDetailsAdded.has(normalized)) {
+          tokenDetailsAdded.set(normalized, { value: token.value, platforms: [] });
+        }
+        tokenDetailsAdded.get(normalized).platforms.push({
+          ...platformInfo, tokenName: token.name, file: diff.file
+        });
       }
     } else if (diff.type === 'removed') {
       results.summary.filesRemoved++;
       platformData.filesRemoved++;
       platformData.tokensRemoved += diff.tokens.length;
       results.summary.tokensRemoved += diff.tokens.length;
-      // Track unique tokens
+      // Track unique tokens with details
       for (const token of diff.tokens) {
-        uniqueTokensRemoved.add(normalizeTokenName(token.name));
+        const normalized = normalizeTokenName(token.name);
+        uniqueTokensRemoved.add(normalized);
+        if (!tokenDetailsRemoved.has(normalized)) {
+          tokenDetailsRemoved.set(normalized, { value: token.value, platforms: [] });
+        }
+        tokenDetailsRemoved.get(normalized).platforms.push({
+          ...platformInfo, tokenName: token.name, file: diff.file
+        });
       }
     } else if (diff.type === 'modified') {
       results.summary.filesModified++;
@@ -587,15 +613,36 @@ function compareDistBuilds(oldDir, newDir) {
       results.summary.tokensAdded += diff.changes.added.length;
       results.summary.tokensModified += diff.changes.modified.length;
       results.summary.tokensRemoved += diff.changes.removed.length;
-      // Track unique tokens
+      // Track unique tokens with details
       for (const token of diff.changes.added) {
-        uniqueTokensAdded.add(normalizeTokenName(token.name));
+        const normalized = normalizeTokenName(token.name);
+        uniqueTokensAdded.add(normalized);
+        if (!tokenDetailsAdded.has(normalized)) {
+          tokenDetailsAdded.set(normalized, { value: token.value, platforms: [] });
+        }
+        tokenDetailsAdded.get(normalized).platforms.push({
+          ...platformInfo, tokenName: token.name, file: diff.file
+        });
       }
       for (const token of diff.changes.modified) {
-        uniqueTokensModified.add(normalizeTokenName(token.name));
+        const normalized = normalizeTokenName(token.name);
+        uniqueTokensModified.add(normalized);
+        if (!tokenDetailsModified.has(normalized)) {
+          tokenDetailsModified.set(normalized, { oldValue: token.oldValue, newValue: token.newValue, platforms: [] });
+        }
+        tokenDetailsModified.get(normalized).platforms.push({
+          ...platformInfo, tokenName: token.name, file: diff.file
+        });
       }
       for (const token of diff.changes.removed) {
-        uniqueTokensRemoved.add(normalizeTokenName(token.name));
+        const normalized = normalizeTokenName(token.name);
+        uniqueTokensRemoved.add(normalized);
+        if (!tokenDetailsRemoved.has(normalized)) {
+          tokenDetailsRemoved.set(normalized, { value: token.value, platforms: [] });
+        }
+        tokenDetailsRemoved.get(normalized).platforms.push({
+          ...platformInfo, tokenName: token.name, file: diff.file
+        });
       }
     }
 
@@ -623,6 +670,33 @@ function compareDistBuilds(oldDir, newDir) {
   results.summary.uniqueTokensAdded = uniqueTokensAdded.size;
   results.summary.uniqueTokensModified = uniqueTokensModified.size;
   results.summary.uniqueTokensRemoved = uniqueTokensRemoved.size;
+
+  // Convert token details Maps to arrays for byUniqueToken
+  for (const [normalized, details] of tokenDetailsAdded) {
+    results.byUniqueToken.added.push({
+      normalizedName: normalized,
+      displayName: details.platforms[0]?.tokenName || normalized,
+      value: details.value,
+      platforms: details.platforms
+    });
+  }
+  for (const [normalized, details] of tokenDetailsModified) {
+    results.byUniqueToken.modified.push({
+      normalizedName: normalized,
+      displayName: details.platforms[0]?.tokenName || normalized,
+      oldValue: details.oldValue,
+      newValue: details.newValue,
+      platforms: details.platforms
+    });
+  }
+  for (const [normalized, details] of tokenDetailsRemoved) {
+    results.byUniqueToken.removed.push({
+      normalizedName: normalized,
+      displayName: details.platforms[0]?.tokenName || normalized,
+      value: details.value,
+      platforms: details.platforms
+    });
+  }
 
   // Calculate impact level
   results.summary.impactLevel = calculateImpactLevel(results);
