@@ -94,12 +94,16 @@ jobs:
             echo "baseline_available=false" >> $GITHUB_OUTPUT
           fi
 
+          # Lösche baseline dist/ (wird nicht benötigt, nur tokens-old/ für Vergleich)
+          rm -rf dist/
+
           # Stelle neue Source und Builds wieder her
           mv /tmp/new-source.json src/design-tokens/bild-design-system-raw-data.json
           mv tokens-new/ tokens/
           mv dist-new/ dist/
 
           echo "✅ Baseline comparison ready"
+          echo "📁 Final state: tokens/ and dist/ contain NEW version"
 
       # 6. Vergleiche Token Builds
       - name: Compare Token Builds
