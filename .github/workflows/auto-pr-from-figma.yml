@@ -200,13 +200,15 @@ jobs:
               EMOJI="🟢"
             fi
 
-            gh pr comment ${{ steps.check_pr.outputs.pr_number }} --body "## ${EMOJI} Token Update
+            echo "## ${EMOJI} Token Update" > /tmp/pr-comment.md
+            echo "" >> /tmp/pr-comment.md
+            echo "**Changes:** +${ADDED} | ~${MODIFIED} | -${DELETED}" >> /tmp/pr-comment.md
+            echo "**Build:** ✅ ${{ steps.build.outputs.successful_builds }}/${{ steps.build.outputs.total_builds }}" >> /tmp/pr-comment.md
+            echo "**Commit:** \`${{ github.sha }}\`" >> /tmp/pr-comment.md
+            echo "" >> /tmp/pr-comment.md
+            echo "PR description updated with full release notes." >> /tmp/pr-comment.md
 
-**Changes:** +${ADDED} | ~${MODIFIED} | -${DELETED}
-**Build:** ✅ ${{ steps.build.outputs.successful_builds }}/${{ steps.build.outputs.total_builds }}
-**Commit:** \`${{ github.sha }}\`
-
-PR description updated with full release notes."
+            gh pr comment ${{ steps.check_pr.outputs.pr_number }} --body-file /tmp/pr-comment.md
 
           else
             echo "📝 Creating new Pull Request..."
