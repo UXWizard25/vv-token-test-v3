@@ -55,6 +55,58 @@ function truncate(str, maxLength) {
   return str.substring(0, maxLength - 3) + '...';
 }
 
+/**
+ * Format value change for display - handles simple and combined tokens
+ */
+function formatValueChange(oldValue, newValue) {
+  // Simple values (colors, numbers, short strings)
+  if (oldValue.length <= 20 && newValue.length <= 20) {
+    return `\`${oldValue}\` → \`${newValue}\``;
+  }
+
+  // Combined tokens (typography, effects) - try to find what changed
+  const isCombined = oldValue.includes(';') || oldValue.includes('{') || oldValue.includes(',');
+
+  if (isCombined) {
+    // Extract key differences
+    const oldParts = extractKeyValues(oldValue);
+    const newParts = extractKeyValues(newValue);
+
+    const changes = [];
+    for (const [key, newVal] of Object.entries(newParts)) {
+      const oldVal = oldParts[key];
+      if (oldVal && oldVal !== newVal) {
+        // Show only the changed property
+        changes.push(`${key}: \`${oldVal}\` → \`${newVal}\``);
+      }
+    }
+
+    if (changes.length > 0 && changes.length <= 3) {
+      return changes.join(', ');
+    }
+  }
+
+  // Fallback: show truncated old → new
+  return `\`${truncate(oldValue, 25)}\` → \`${truncate(newValue, 25)}\``;
+}
+
+/**
+ * Extract key-value pairs from combined token values
+ */
+function extractKeyValues(value) {
+  const result = {};
+
+  // CSS-style: "font-size: 40px; line-height: 40px;"
+  const cssMatches = value.matchAll(/([\w-]+):\s*([^;,}]+)/g);
+  for (const match of cssMatches) {
+    const key = match[1].trim();
+    const val = match[2].trim().replace(/["']/g, '');
+    result[key] = val;
+  }
+
+  return result;
+}
+
 function loadDiffFile(filePath) {
   if (!filePath || !fs.existsSync(filePath)) {
     return null;
@@ -204,16 +256,17 @@ function generateUnifiedTokenChanges(diff, options = {}) {
   // Modified tokens
   if (modified.length > 0) {
     md += `### 🟡 Modified (${modified.length})\n\n`;
-    md += '| Token | Old | New | Platforms |\n';
-    md += '|-------|-----|-----|:---------:|\n';
+    md += '| Token | Change | Platforms |\n';
+    md += '|-------|--------|:---------:|\n';
 
     const displayTokens = modified.slice(0, maxTokensPerSection);
     for (const token of displayTokens) {
-      md += `| \`${truncate(token.displayName, 28)}\` | \`${truncate(token.oldValue, 16)}\` | \`${truncate(token.newValue, 16)}\` | ${formatPlatforms(token.platforms)} |\n`;
+      const changeDisplay = formatValueChange(token.oldValue, token.newValue);
+      md += `| \`${truncate(token.displayName, 30)}\` | ${changeDisplay} | ${formatPlatforms(token.platforms)} |\n`;
     }
 
     if (modified.length > maxTokensPerSection) {
-      md += `| ... | | *${modified.length - maxTokensPerSection} more* | |\n`;
+      md += `| ... | *${modified.length - maxTokensPerSection} more* | |\n`;
     }
 
     // Platform-specific names (collapsible)
