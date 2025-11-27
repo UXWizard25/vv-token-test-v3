@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2025-11-27T11:34:08.431Z",
+  "lastModified": "2025-11-27T13:49:47.706Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -2160,8 +2160,9 @@
         "VariableID:19709:71129",
         "VariableID:19709:71141",
         "VariableID:19881:148841",
-        "VariableID:20978:45",
-        "VariableID:20988:206"
+        "VariableID:20988:206",
+        "VariableID:20991:207",
+        "VariableID:20991:208"
       ],
       "variables": [
         {
@@ -6603,12 +6604,12 @@
           "variableCollectionId": "VariableCollectionId:588:1979"
         },
         {
-          "id": "VariableID:20978:45",
-          "name": "Semantic/Core/ksjhhklasdj",
+          "id": "VariableID:20988:206",
+          "name": "Semantic/Core/newTestPipev3",
           "description": "this is a test for the token pipeline",
           "resolvedType": "COLOR",
           "valuesByMode": {
-            "588:0": "#69ABEC",
+            "588:0": "#3083D6",
             "592:1": "#B0D1F3"
           },
           "scopes": [
@@ -6618,8 +6619,23 @@
           "variableCollectionId": "VariableCollectionId:588:1979"
         },
         {
-          "id": "VariableID:20988:206",
-          "name": "Semantic/Core/newTestPipev3",
+          "id": "VariableID:20991:207",
+          "name": "Semantic/Core/newTestPipettoken4",
+          "description": "this is a test for the token pipeline",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "588:0": "#3083D6",
+            "592:1": "#B0D1F3"
+          },
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "hiddenFromPublishing": false,
+          "variableCollectionId": "VariableCollectionId:588:1979"
+        },
+        {
+          "id": "VariableID:20991:208",
+          "name": "Semantic/Core/newTestPipettoken5",
           "description": "this is a test for the token pipeline",
           "resolvedType": "COLOR",
           "valuesByMode": {
