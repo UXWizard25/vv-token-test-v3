@@ -380,6 +380,108 @@ function determineTokenType(tokenName, collectionName, value, variable = null) {
 }
 
 /**
+ * Font-weight keyword to numeric value mapping
+ */
+const FONT_WEIGHT_MAP = {
+  'thin': 100,
+  'hairline': 100,
+  'extralight': 200,
+  'ultralight': 200,
+  'light': 300,
+  'book': 400,
+  'normal': 400,
+  'regular': 400,
+  'medium': 500,
+  'semibold': 600,
+  'demibold': 600,
+  'bold': 700,
+  'extrabold': 800,
+  'ultrabold': 800,
+  'black': 900,
+  'heavy': 900,
+  'extrablack': 950,
+  'ultrablack': 950,
+  'ultra': 1000
+};
+
+/**
+ * Normalizes typography style by fixing fontWeight/fontStyle misalignment
+ *
+ * Problem: In Figma, fontWeight STRING variables are sometimes bound to fontStyle
+ * instead of fontWeight, causing values like "700" or "Bold Italic" to appear
+ * as fontStyle in the output.
+ *
+ * This function corrects:
+ * 1. Numeric strings in fontStyle → move to fontWeight
+ * 2. Combined values like "Bold Italic" → extract fontWeight + set fontStyle
+ * 3. Keyword values like "Black" → convert to numeric fontWeight
+ *
+ * @param {Object} resolvedStyle - The typography style object to normalize
+ * @returns {Object} - The normalized style object
+ */
+function normalizeTypographyStyle(resolvedStyle) {
+  let { fontWeight, fontStyle } = resolvedStyle;
+
+  // Skip if fontStyle is null/undefined or already correct
+  if (fontStyle === null || fontStyle === undefined || fontStyle === 'normal' || fontStyle === 'italic') {
+    return resolvedStyle;
+  }
+
+  // Convert fontStyle to string for analysis
+  const fontStyleStr = String(fontStyle).trim();
+
+  // Check if fontStyle contains "Italic" (case insensitive)
+  const hasItalic = /italic/i.test(fontStyleStr);
+
+  // Remove "Italic" to get the weight part
+  const weightPart = fontStyleStr.replace(/\s*italic\s*/i, '').trim();
+
+  // Determine the numeric fontWeight
+  let numericWeight = null;
+
+  // Case 1: Direct numeric value (e.g., "700", "400")
+  if (/^\d+$/.test(weightPart)) {
+    numericWeight = parseInt(weightPart, 10);
+  }
+  // Case 2: Keyword value (e.g., "Bold", "Black", "Book")
+  else if (weightPart) {
+    const normalizedKeyword = weightPart.toLowerCase().replace(/\s+/g, '');
+    numericWeight = FONT_WEIGHT_MAP[normalizedKeyword];
+
+    // If not found, try partial matching
+    if (!numericWeight) {
+      for (const [keyword, value] of Object.entries(FONT_WEIGHT_MAP)) {
+        if (normalizedKeyword.includes(keyword) || keyword.includes(normalizedKeyword)) {
+          numericWeight = value;
+          break;
+        }
+      }
+    }
+  }
+  // Case 3: fontStyle is just "Italic" with no weight
+  else if (hasItalic && !weightPart) {
+    // Keep existing fontWeight, just fix fontStyle
+    resolvedStyle.fontStyle = 'italic';
+    return resolvedStyle;
+  }
+
+  // Apply corrections
+  if (numericWeight !== null) {
+    // Only update fontWeight if it's null/undefined or if fontStyle had a more specific value
+    if (fontWeight === null || fontWeight === undefined) {
+      resolvedStyle.fontWeight = numericWeight;
+    }
+    // Set fontStyle correctly
+    resolvedStyle.fontStyle = hasItalic ? 'italic' : null;
+  } else if (fontStyleStr && fontStyleStr !== 'normal' && fontStyleStr !== 'italic') {
+    // Unknown value - log warning but keep original
+    console.warn(`⚠️  Unknown fontStyle value: "${fontStyleStr}" - keeping as-is`);
+  }
+
+  return resolvedStyle;
+}
+
+/**
  * Converts token name to nested path
  */
 function convertTokenName(name) {
@@ -935,6 +1037,9 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
           resolvedStyle.fontFamily = textStyle.fontName.family;
         }
 
+        // Normalize fontWeight/fontStyle (fix Figma binding issues)
+        normalizeTypographyStyle(resolvedStyle);
+
         // Token structure: category/styleName
         const pathArray = [category.toLowerCase(), styleName.toLowerCase()];
 
@@ -1014,6 +1119,9 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
           if (!resolvedStyle.fontFamily && textStyle.fontName) {
             resolvedStyle.fontFamily = textStyle.fontName.family;
           }
+
+          // Normalize fontWeight/fontStyle (fix Figma binding issues)
+          normalizeTypographyStyle(resolvedStyle);
 
           // Initialize component structure
           if (!componentTypographyOutputs[brandKey][componentName]) {
