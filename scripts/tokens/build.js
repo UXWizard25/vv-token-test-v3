@@ -24,11 +24,24 @@ const BRANDS = ['bild', 'sportbild', 'advertorial'];
 const BREAKPOINTS = ['xs', 'sm', 'md', 'lg'];
 const COLOR_MODES = ['light', 'dark'];
 
+// Native platforms only use compact (sm) and regular (lg) size classes
+const NATIVE_BREAKPOINTS = ['sm', 'lg'];
+
 // Size class mapping for native platforms
 const SIZE_CLASS_MAPPING = {
   sm: 'compact',
   lg: 'regular'
 };
+
+// Helper to check if a breakpoint should be built for native platforms
+function isNativeBreakpoint(breakpoint) {
+  return NATIVE_BREAKPOINTS.includes(breakpoint);
+}
+
+// Helper to get sizeclass name from breakpoint
+function getSizeClassName(breakpoint) {
+  return SIZE_CLASS_MAPPING[breakpoint] || breakpoint;
+}
 
 /**
  * Creates platform configuration for standard tokens (Primitives, Brand-specific, etc.)
@@ -92,42 +105,136 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
         options: { outputReferences: false }
       }]
     },
-    ios: {
-      transformGroup: 'custom/ios-swift',
-      buildPath: `${DIST_DIR}/ios/${buildPath.replace(DIST_DIR + '/css/', '')}/`,
-      files: [{
-        destination: `${fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}.swift`,
-        format: 'ios-swift/class',
-        filter: tokenFilter,
-        options: {
-          outputReferences: false,
-          className: fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')
-        }
-      }]
-    },
-    android: {
-      transformGroup: 'custom/android',
-      buildPath: `${DIST_DIR}/android/res/values/${buildPath.replace(DIST_DIR + '/css/', '')}/`,
-      files: [{
-        destination: `${fileName}.xml`,
-        format: 'android/resources',
-        filter: tokenFilter,
-        options: { outputReferences: false }
-      }]
-    },
-    flutter: {
-      transformGroup: 'custom/flutter',
-      buildPath: `${DIST_DIR}/flutter/${buildPath.replace(DIST_DIR + '/css/', '')}/`,
-      files: [{
-        destination: `${fileName}.dart`,
-        format: 'flutter/class',
-        filter: tokenFilter,
-        options: {
-          outputReferences: false,
-          className: fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')
-        }
-      }]
-    }
+    // iOS: For breakpoint mode, use sizeclass folder and naming, skip non-native breakpoints
+    ...((cssOptions.modeType === 'breakpoint' && !isNativeBreakpoint(cssOptions.mode)) ? {} : {
+      ios: {
+        transformGroup: 'custom/ios-swift',
+        buildPath: (() => {
+          let iosPath = buildPath.replace(DIST_DIR + '/css/', '');
+          // For semantic breakpoint tokens, change folder from 'breakpoints' to 'sizeclass'
+          if (cssOptions.modeType === 'breakpoint' && iosPath.includes('/breakpoints')) {
+            iosPath = iosPath.replace('/breakpoints', '/sizeclass');
+          }
+          return `${DIST_DIR}/ios/${iosPath}/`;
+        })(),
+        files: [{
+          destination: (() => {
+            // For breakpoint tokens, use sizeclass naming
+            if (cssOptions.modeType === 'breakpoint' && cssOptions.mode) {
+              const sizeClass = getSizeClassName(cssOptions.mode);
+              const isComponent = buildPath.includes('/components/');
+              if (isComponent) {
+                // Extract component name from path (e.g., .../components/Button/ -> Button)
+                const componentMatch = buildPath.match(/\/components\/([^/]+)/);
+                const componentName = componentMatch ? componentMatch[1] : '';
+                return `${componentName}Sizeclass${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}.swift`;
+              }
+              return `Sizeclass${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}.swift`;
+            }
+            return `${fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}.swift`;
+          })(),
+          format: 'ios-swift/class',
+          filter: tokenFilter,
+          options: {
+            outputReferences: false,
+            className: (() => {
+              if (cssOptions.modeType === 'breakpoint' && cssOptions.mode) {
+                const sizeClass = getSizeClassName(cssOptions.mode);
+                const isComponent = buildPath.includes('/components/');
+                if (isComponent) {
+                  const componentMatch = buildPath.match(/\/components\/([^/]+)/);
+                  const componentName = componentMatch ? componentMatch[1] : '';
+                  return `${componentName}Sizeclass${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}`;
+                }
+                return `Sizeclass${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}`;
+              }
+              return fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('');
+            })()
+          }
+        }]
+      }
+    }),
+    // Android: For breakpoint mode, use sizeclass folder and naming, skip non-native breakpoints
+    ...((cssOptions.modeType === 'breakpoint' && !isNativeBreakpoint(cssOptions.mode)) ? {} : {
+      android: {
+        transformGroup: 'custom/android',
+        buildPath: (() => {
+          let androidPath = buildPath.replace(DIST_DIR + '/css/', '');
+          // For semantic breakpoint tokens, change folder from 'breakpoints' to 'sizeclass'
+          if (cssOptions.modeType === 'breakpoint' && androidPath.includes('/breakpoints')) {
+            androidPath = androidPath.replace('/breakpoints', '/sizeclass');
+          }
+          return `${DIST_DIR}/android/res/values/${androidPath}/`;
+        })(),
+        files: [{
+          destination: (() => {
+            // For breakpoint tokens, use sizeclass naming
+            if (cssOptions.modeType === 'breakpoint' && cssOptions.mode) {
+              const sizeClass = getSizeClassName(cssOptions.mode);
+              const isComponent = buildPath.includes('/components/');
+              if (isComponent) {
+                const componentMatch = buildPath.match(/\/components\/([^/]+)/);
+                const componentName = componentMatch ? componentMatch[1].toLowerCase() : '';
+                return `${componentName}-sizeclass-${sizeClass}.xml`;
+              }
+              return `sizeclass-${sizeClass}.xml`;
+            }
+            return `${fileName}.xml`;
+          })(),
+          format: 'android/resources',
+          filter: tokenFilter,
+          options: { outputReferences: false }
+        }]
+      }
+    }),
+    // Flutter: For breakpoint mode, use sizeclass folder and naming, skip non-native breakpoints
+    ...((cssOptions.modeType === 'breakpoint' && !isNativeBreakpoint(cssOptions.mode)) ? {} : {
+      flutter: {
+        transformGroup: 'custom/flutter',
+        buildPath: (() => {
+          let flutterPath = buildPath.replace(DIST_DIR + '/css/', '');
+          // For semantic breakpoint tokens, change folder from 'breakpoints' to 'sizeclass'
+          if (cssOptions.modeType === 'breakpoint' && flutterPath.includes('/breakpoints')) {
+            flutterPath = flutterPath.replace('/breakpoints', '/sizeclass');
+          }
+          return `${DIST_DIR}/flutter/${flutterPath}/`;
+        })(),
+        files: [{
+          destination: (() => {
+            // For breakpoint tokens, use sizeclass naming
+            if (cssOptions.modeType === 'breakpoint' && cssOptions.mode) {
+              const sizeClass = getSizeClassName(cssOptions.mode);
+              const isComponent = buildPath.includes('/components/');
+              if (isComponent) {
+                const componentMatch = buildPath.match(/\/components\/([^/]+)/);
+                const componentName = componentMatch ? componentMatch[1].toLowerCase() : '';
+                return `${componentName}_sizeclass_${sizeClass}.dart`;
+              }
+              return `sizeclass_${sizeClass}.dart`;
+            }
+            return `${fileName}.dart`;
+          })(),
+          format: 'flutter/class',
+          filter: tokenFilter,
+          options: {
+            outputReferences: false,
+            className: (() => {
+              if (cssOptions.modeType === 'breakpoint' && cssOptions.mode) {
+                const sizeClass = getSizeClassName(cssOptions.mode);
+                const isComponent = buildPath.includes('/components/');
+                if (isComponent) {
+                  const componentMatch = buildPath.match(/\/components\/([^/]+)/);
+                  const componentName = componentMatch ? componentMatch[1] : '';
+                  return `${componentName}Sizeclass${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}`;
+                }
+                return `Sizeclass${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}`;
+              }
+              return fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('');
+            })()
+          }
+        }]
+      }
+    })
   };
 }
 
@@ -233,20 +340,23 @@ function createTypographyConfig(brand, breakpoint) {
         files: [{ destination: `${fileName}.json`, format: 'json', options: { outputReferences: false } }]
       },
 
-      // Flutter: Custom Typography format
-      flutter: {
-        transforms: ['attribute/cti'],
-        buildPath: `${DIST_DIR}/flutter/brands/${brand}/semantic/typography/`,
-        files: [{
-          destination: `${fileName}.dart`,
-          format: 'flutter/typography',
-          options: {
-            brand: brandName,
-            breakpoint,
-            sizeClass: SIZE_CLASS_MAPPING[breakpoint] || breakpoint
-          }
-        }]
-      },
+      // Flutter: Custom Typography format - only compact (sm) and regular (lg)
+      // Output to semantic/typography/ with sizeclass in filename
+      ...(SIZE_CLASS_MAPPING[breakpoint] ? {
+        flutter: {
+          transforms: ['attribute/cti'],
+          buildPath: `${DIST_DIR}/flutter/brands/${brand}/semantic/typography/`,
+          files: [{
+            destination: `typography_sizeclass_${SIZE_CLASS_MAPPING[breakpoint]}.dart`,
+            format: 'flutter/typography',
+            options: {
+              brand: brandName,
+              breakpoint,
+              sizeClass: SIZE_CLASS_MAPPING[breakpoint]
+            }
+          }]
+        }
+      } : {}),
 
       // SCSS: Custom Typography format
       scss: {
@@ -263,12 +373,13 @@ function createTypographyConfig(brand, breakpoint) {
       },
 
       // iOS: Only compact (sm) and regular (lg) with custom format
+      // Output to semantic/typography/ with sizeclass in filename
       ...(SIZE_CLASS_MAPPING[breakpoint] ? {
         ios: {
           transforms: ['attribute/cti'],
-          buildPath: `${DIST_DIR}/ios/brands/${brand}/sizeclass-${SIZE_CLASS_MAPPING[breakpoint]}/`,
+          buildPath: `${DIST_DIR}/ios/brands/${brand}/semantic/typography/`,
           files: [{
-            destination: 'Typography.swift',
+            destination: `TypographySizeclass${SIZE_CLASS_MAPPING[breakpoint].charAt(0).toUpperCase() + SIZE_CLASS_MAPPING[breakpoint].slice(1)}.swift`,
             format: 'ios-swift/typography',
             options: {
               brand: brandName,
@@ -280,12 +391,13 @@ function createTypographyConfig(brand, breakpoint) {
       } : {}),
 
       // Android: Only compact (sm) and regular (lg) with custom format
+      // Output to semantic/typography/ with sizeclass in filename
       ...(SIZE_CLASS_MAPPING[breakpoint] ? {
         android: {
           transforms: ['attribute/cti'],
-          buildPath: `${DIST_DIR}/android/brands/${brand}/sizeclass-${SIZE_CLASS_MAPPING[breakpoint]}/`,
+          buildPath: `${DIST_DIR}/android/brands/${brand}/semantic/typography/`,
           files: [{
-            destination: 'typography_styles.xml',
+            destination: `typography-sizeclass-${SIZE_CLASS_MAPPING[breakpoint]}.xml`,
             format: 'android/typography-styles',
             options: {
               brand: brandName,
@@ -644,47 +756,56 @@ function createComponentTypographyConfig(sourceFile, brand, componentName, fileN
         buildPath: `${DIST_DIR}/json/brands/${brand}/components/${componentName}/`,
         files: [{ destination: `${fileName}.json`, format: 'json', options: { outputReferences: false } }]
       },
-      ios: {
-        transforms: ['attribute/cti'],
-        buildPath: `${DIST_DIR}/ios/brands/${brand}/components/${componentName}/`,
-        files: [{
-          destination: `${fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}.swift`,
-          format: 'ios-swift/typography',
-          options: {
-            brand: brandName,
-            breakpoint,
-            componentName,
-            sizeClass: SIZE_CLASS_MAPPING[breakpoint] || breakpoint
-          }
-        }]
-      },
-      flutter: {
-        transforms: ['attribute/cti'],
-        buildPath: `${DIST_DIR}/flutter/brands/${brand}/components/${componentName}/`,
-        files: [{
-          destination: `${fileName}.dart`,
-          format: 'flutter/typography',
-          options: {
-            brand: brandName,
-            breakpoint,
-            componentName,
-            sizeClass: SIZE_CLASS_MAPPING[breakpoint] || breakpoint
-          }
-        }]
-      },
-      android: {
-        transforms: ['attribute/cti'],
-        buildPath: `${DIST_DIR}/android/brands/${brand}/components/${componentName}/`,
-        files: [{
-          destination: `${fileName}.xml`,
-          format: 'android/typography-styles',
-          options: {
-            brand: brandName,
-            breakpoint,
-            componentName
-          }
-        }]
-      }
+      // iOS: Only compact (sm) and regular (lg) with sizeclass naming
+      ...(breakpoint && isNativeBreakpoint(breakpoint) ? {
+        ios: {
+          transforms: ['attribute/cti'],
+          buildPath: `${DIST_DIR}/ios/brands/${brand}/components/${componentName}/`,
+          files: [{
+            destination: `${componentName}Sizeclass${getSizeClassName(breakpoint).charAt(0).toUpperCase() + getSizeClassName(breakpoint).slice(1)}.swift`,
+            format: 'ios-swift/typography',
+            options: {
+              brand: brandName,
+              breakpoint,
+              componentName,
+              sizeClass: getSizeClassName(breakpoint)
+            }
+          }]
+        }
+      } : {}),
+      // Flutter: Only compact (sm) and regular (lg) with sizeclass naming
+      ...(breakpoint && isNativeBreakpoint(breakpoint) ? {
+        flutter: {
+          transforms: ['attribute/cti'],
+          buildPath: `${DIST_DIR}/flutter/brands/${brand}/components/${componentName}/`,
+          files: [{
+            destination: `${componentName.toLowerCase()}_sizeclass_${getSizeClassName(breakpoint)}.dart`,
+            format: 'flutter/typography',
+            options: {
+              brand: brandName,
+              breakpoint,
+              componentName,
+              sizeClass: getSizeClassName(breakpoint)
+            }
+          }]
+        }
+      } : {}),
+      // Android: Only compact (sm) and regular (lg) with sizeclass naming
+      ...(breakpoint && isNativeBreakpoint(breakpoint) ? {
+        android: {
+          transforms: ['attribute/cti'],
+          buildPath: `${DIST_DIR}/android/brands/${brand}/components/${componentName}/`,
+          files: [{
+            destination: `${componentName.toLowerCase()}-sizeclass-${getSizeClassName(breakpoint)}.xml`,
+            format: 'android/typography-styles',
+            options: {
+              brand: brandName,
+              breakpoint,
+              componentName
+            }
+          }]
+        }
+      } : {})
     }
   };
 }
