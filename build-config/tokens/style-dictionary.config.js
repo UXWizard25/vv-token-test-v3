@@ -1028,7 +1028,7 @@ const cssTypographyClassesFormat = ({ dictionary, options }) => {
           if (style.letterSpacing) output += `  letter-spacing: ${typeof style.letterSpacing === 'number' ? style.letterSpacing + 'px' : style.letterSpacing};\n`;
           if (style.fontStyle && style.fontStyle !== 'null') output += `  font-style: ${style.fontStyle.toLowerCase()};\n`;
           if (style.textCase && style.textCase !== 'ORIGINAL') {
-            output += `  text-transform: ${style.textCase.toLowerCase()};\n`;
+            output += `  text-transform: ${mapTextCase(style.textCase)};\n`;
           }
           if (style.textDecoration && style.textDecoration !== 'NONE') {
             output += `  text-decoration: ${style.textDecoration.toLowerCase()};\n`;
@@ -1355,6 +1355,10 @@ const androidXmlTypographyFormat = ({ dictionary, options }) => {
             const letterSpacing = parseFloat(style.letterSpacing);
             output += `        <item name="android:letterSpacing">${letterSpacing / 16}</item>\n`;
           }
+          // Android only supports textAllCaps (uppercase), not lowercase or capitalize
+          if (style.textCase === 'UPPER') {
+            output += `        <item name="android:textAllCaps">true</item>\n`;
+          }
           output += `    </style>\n`;
         }
       });
@@ -1658,7 +1662,7 @@ const javascriptTypographyFormat = ({ dictionary, options }) => {
           if (style.lineHeight) output += `  lineHeight: "${typeof style.lineHeight === 'number' ? style.lineHeight + 'px' : style.lineHeight}",\n`;
           if (style.letterSpacing) output += `  letterSpacing: "${typeof style.letterSpacing === 'number' ? style.letterSpacing + 'px' : style.letterSpacing}",\n`;
           if (style.fontStyle && style.fontStyle !== 'null') output += `  fontStyle: "${style.fontStyle.toLowerCase()}",\n`;
-          if (style.textCase && style.textCase !== 'ORIGINAL') output += `  textTransform: "${style.textCase.toLowerCase()}",\n`;
+          if (style.textCase && style.textCase !== 'ORIGINAL') output += `  textTransform: "${mapTextCase(style.textCase)}",\n`;
           if (style.textDecoration && style.textDecoration !== 'NONE') output += `  textDecoration: "${style.textDecoration.toLowerCase()}",\n`;
           output += `};\n`;
         }
@@ -1690,6 +1694,22 @@ function mapFontWeight(weight) {
   if (w >= 300) return 'FontWeight.w300';
   if (w >= 200) return 'FontWeight.w200';
   return 'FontWeight.w100';
+}
+
+/**
+ * Helper: Map Figma textCase to CSS text-transform value
+ * Figma exports: UPPER, LOWER, TITLE, ORIGINAL
+ * CSS expects: uppercase, lowercase, capitalize, none
+ */
+function mapTextCase(figmaTextCase) {
+  const mapping = {
+    'UPPER': 'uppercase',
+    'LOWER': 'lowercase',
+    'TITLE': 'capitalize',
+    'SMALL_CAPS': 'small-caps',
+    'SMALL_CAPS_FORCED': 'small-caps'
+  };
+  return mapping[figmaTextCase] || figmaTextCase.toLowerCase();
 }
 
 /**
@@ -1885,7 +1905,7 @@ const scssTypographyFormat = ({ dictionary, options }) => {
           if (style.lineHeight) output += `  line-height: ${typeof style.lineHeight === 'number' ? style.lineHeight + 'px' : style.lineHeight},\n`;
           if (style.letterSpacing) output += `  letter-spacing: ${typeof style.letterSpacing === 'number' ? style.letterSpacing + 'px' : style.letterSpacing},\n`;
           if (style.fontStyle && style.fontStyle !== 'null') output += `  font-style: ${style.fontStyle.toLowerCase()},\n`;
-          if (style.textCase && style.textCase !== 'ORIGINAL') output += `  text-transform: ${style.textCase.toLowerCase()},\n`;
+          if (style.textCase && style.textCase !== 'ORIGINAL') output += `  text-transform: ${mapTextCase(style.textCase)},\n`;
           if (style.textDecoration && style.textDecoration !== 'NONE') output += `  text-decoration: ${style.textDecoration.toLowerCase()},\n`;
           output += `);\n`;
         }
