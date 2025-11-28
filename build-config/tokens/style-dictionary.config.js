@@ -125,7 +125,7 @@ function groupTokensHierarchically(tokens) {
  * Name transformation functions for different platforms
  */
 const nameTransformers = {
-  // Kebab-case für CSS, SCSS, Android
+  // Kebab-case für CSS, SCSS
   kebab: (str) => {
     return str
       .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
@@ -135,7 +135,17 @@ const nameTransformers = {
       .replace(/^-|-$/g, '');
   },
 
-  // camelCase für JavaScript, Flutter
+  // snake_case für Android (hyphens sind in Android XML nicht erlaubt)
+  snake: (str) => {
+    return str
+      .replace(/([a-z0-9])([A-Z])/g, '$1_$2')
+      .toLowerCase()
+      .replace(/[^a-z0-9_]/g, '_')
+      .replace(/_+/g, '_')
+      .replace(/^_|_$/g, '');
+  },
+
+  // camelCase für JavaScript, Flutter, iOS Swift
   camel: (str) => {
     const kebab = nameTransformers.kebab(str);
     let camelCase = kebab.replace(/-([a-z0-9])/g, (_, letter) => letter.toUpperCase());
@@ -148,7 +158,7 @@ const nameTransformers = {
     return camelCase;
   },
 
-  // PascalCase für iOS Swift
+  // PascalCase (kept for potential future use)
   pascal: (str) => {
     const camel = nameTransformers.camel(str);
     if (camel.length === 0) return camel;
@@ -421,7 +431,22 @@ const nameIosSwiftTransform = {
   type: 'name',
   transform: (token) => {
     const lastSegment = token.path[token.path.length - 1];
-    return nameTransformers.pascal(lastSegment);
+    // Changed from PascalCase to camelCase - more consistent with Swift property naming
+    return nameTransformers.camel(lastSegment);
+  }
+};
+
+/**
+ * Transform: Name für Android XML (snake_case)
+ * Hyphens sind in Android Resource Namen nicht erlaubt!
+ * Verwendet nur das letzte Pfad-Segment für den Token-Namen
+ */
+const nameAndroidTransform = {
+  name: 'name/custom/android',
+  type: 'name',
+  transform: (token) => {
+    const lastSegment = token.path[token.path.length - 1];
+    return nameTransformers.snake(lastSegment);
   }
 };
 
@@ -754,7 +779,7 @@ const jsonNestedFormat = ({ dictionary }) => {
 const iosSwiftClassFormat = ({ dictionary, options, file }) => {
   const className = options.className || file.className || 'StyleDictionary';
   const context = getContextString(options);
-  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'pascal');
+  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'camel');
 
   let output = generateFileHeader({
     fileName: file.destination,
@@ -1178,7 +1203,7 @@ const iosSwiftTypographyFormat = ({ dictionary, options }) => {
  */
 const androidResourcesFormat = ({ dictionary, options, file }) => {
   const context = getContextString(options);
-  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'kebab');
+  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'snake');
 
   let output = `<?xml version="1.0" encoding="UTF-8"?>\n\n`;
   output += generateFileHeader({
@@ -1317,7 +1342,7 @@ const androidXmlTypographyFormat = ({ dictionary, options }) => {
 const iosSwiftEffectsFormat = ({ dictionary, options }) => {
   const { brand, colorMode } = options;
   const className = `Effects${brand}${colorMode.charAt(0).toUpperCase() + colorMode.slice(1)}`;
-  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'pascal');
+  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'camel');
 
   let output = generateFileHeader({
     fileName: `effects-${colorMode}.swift`,
@@ -1812,7 +1837,7 @@ const scssTypographyFormat = ({ dictionary, options }) => {
  */
 const androidXmlEffectsFormat = ({ dictionary, options }) => {
   const { brand, colorMode } = options;
-  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'kebab');
+  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'snake');
 
   let output = `<?xml version="1.0" encoding="utf-8"?>\n`;
 
@@ -1907,7 +1932,7 @@ const customTransformGroups = {
   'custom/scss': ['name/custom/kebab', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/js': ['name/custom/js', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/ios-swift': ['name/custom/ios-swift', 'custom/color/UIColor', 'custom/size/ios-points', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
-  'custom/android': ['name/custom/kebab', 'color/hex', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/android': ['name/custom/android', 'color/hex', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/flutter': ['name/custom/flutter-dart', 'color/hex', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round']
 };
 
@@ -2038,6 +2063,7 @@ module.exports = {
     'name/custom/kebab': nameKebabTransform,
     'name/custom/js': nameJsTransform,
     'name/custom/ios-swift': nameIosSwiftTransform,
+    'name/custom/android': nameAndroidTransform,
     'name/custom/flutter-dart': nameFlutterDartTransform,
     'value/round': valueRoundTransform
   },
