@@ -380,6 +380,108 @@ function determineTokenType(tokenName, collectionName, value, variable = null) {
 }
 
 /**
+ * Font-weight keyword to numeric value mapping
+ */
+const FONT_WEIGHT_MAP = {
+  'thin': 100,
+  'hairline': 100,
+  'extralight': 200,
+  'ultralight': 200,
+  'light': 300,
+  'book': 400,
+  'normal': 400,
+  'regular': 400,
+  'medium': 500,
+  'semibold': 600,
+  'demibold': 600,
+  'bold': 700,
+  'extrabold': 800,
+  'ultrabold': 800,
+  'black': 900,
+  'heavy': 900,
+  'extrablack': 950,
+  'ultrablack': 950,
+  'ultra': 1000
+};
+
+/**
+ * Normalizes typography style by fixing fontWeight/fontStyle misalignment
+ *
+ * Problem: In Figma, fontWeight STRING variables are sometimes bound to fontStyle
+ * instead of fontWeight, causing values like "700" or "Bold Italic" to appear
+ * as fontStyle in the output.
+ *
+ * This function corrects:
+ * 1. Numeric strings in fontStyle → move to fontWeight
+ * 2. Combined values like "Bold Italic" → extract fontWeight + set fontStyle
+ * 3. Keyword values like "Black" → convert to numeric fontWeight
+ *
+ * @param {Object} resolvedStyle - The typography style object to normalize
+ * @returns {Object} - The normalized style object
+ */
+function normalizeTypographyStyle(resolvedStyle) {
+  let { fontWeight, fontStyle } = resolvedStyle;
+
+  // Skip if fontStyle is null/undefined or already correct
+  if (fontStyle === null || fontStyle === undefined || fontStyle === 'normal' || fontStyle === 'italic') {
+    return resolvedStyle;
+  }
+
+  // Convert fontStyle to string for analysis
+  const fontStyleStr = String(fontStyle).trim();
+
+  // Check if fontStyle contains "Italic" (case insensitive)
+  const hasItalic = /italic/i.test(fontStyleStr);
+
+  // Remove "Italic" to get the weight part
+  const weightPart = fontStyleStr.replace(/\s*italic\s*/i, '').trim();
+
+  // Determine the numeric fontWeight
+  let numericWeight = null;
+
+  // Case 1: Direct numeric value (e.g., "700", "400")
+  if (/^\d+$/.test(weightPart)) {
+    numericWeight = parseInt(weightPart, 10);
+  }
+  // Case 2: Keyword value (e.g., "Bold", "Black", "Book")
+  else if (weightPart) {
+    const normalizedKeyword = weightPart.toLowerCase().replace(/\s+/g, '');
+    numericWeight = FONT_WEIGHT_MAP[normalizedKeyword];
+
+    // If not found, try partial matching
+    if (!numericWeight) {
+      for (const [keyword, value] of Object.entries(FONT_WEIGHT_MAP)) {
+        if (normalizedKeyword.includes(keyword) || keyword.includes(normalizedKeyword)) {
+          numericWeight = value;
+          break;
+        }
+      }
+    }
+  }
+  // Case 3: fontStyle is just "Italic" with no weight
+  else if (hasItalic && !weightPart) {
+    // Keep existing fontWeight, just fix fontStyle
+    resolvedStyle.fontStyle = 'italic';
+    return resolvedStyle;
+  }
+
+  // Apply corrections
+  if (numericWeight !== null) {
+    // Only update fontWeight if it's null/undefined or if fontStyle had a more specific value
+    if (fontWeight === null || fontWeight === undefined) {
+      resolvedStyle.fontWeight = numericWeight;
+    }
+    // Set fontStyle correctly
+    resolvedStyle.fontStyle = hasItalic ? 'italic' : null;
+  } else if (fontStyleStr && fontStyleStr !== 'normal' && fontStyleStr !== 'italic') {
+    // Unknown value - log warning but keep original
+    console.warn(`⚠️  Unknown fontStyle value: "${fontStyleStr}" - keeping as-is`);
+  }
+
+  return resolvedStyle;
+}
+
+/**
  * Converts token name to nested path
  */
 function convertTokenName(name) {
@@ -767,94 +869,13 @@ function processComponentTokens(collections, aliasLookup) {
         return;
       }
 
-      // For brand-override collections, find the brand-specific mode
+      // SKIP brand-override collections (BrandTokenMapping, BrandColorMapping) for component tokens!
+      // These are mapping layers, not consumption layers.
+      // - BrandColorMapping tokens are already resolved through ColorMode aliases
+      // - BrandTokenMapping tokens are already exported in overrides/brandtokenmapping.json
+      // Component tokens should only come from: ColorMode, Density, Breakpoint
       if (collectionType === 'brand-override') {
-        const mode = collection.modes.find(m => m.name === brandName);
-        if (!mode) return; // Brand doesn't exist in this collection
-
-        // Process variables for this brand mode
-        collection.variables.forEach(variable => {
-          if (!isComponentToken(variable.name)) return;
-
-          const componentName = getComponentName(variable.name);
-          if (!componentName) return;
-
-          const modeValue = variable.valuesByMode[mode.modeId];
-          if (modeValue === undefined || modeValue === null) return;
-
-          // Initialize component structure
-          if (!componentOutputs[brandKey][componentName]) {
-            componentOutputs[brandKey][componentName] = {};
-          }
-
-          // Determine target key based on the source collection
-          let targetKey;
-          if (collection.id === COLLECTION_IDS.BRAND_COLOR_MAPPING) {
-            // These override color tokens
-            COLOR_MODES.light && (targetKey = 'color-light');
-            COLOR_MODES.dark && (targetKey = 'color-dark');
-            // We'll merge these into both light and dark
-            ['color-light', 'color-dark'].forEach(key => {
-              if (!componentOutputs[brandKey][componentName][key]) {
-                componentOutputs[brandKey][componentName][key] = {};
-              }
-            });
-          } else {
-            // BRAND_TOKEN_MAPPING - can override any type
-            // For now, we'll add these to a general override structure
-            targetKey = 'overrides';
-            if (!componentOutputs[brandKey][componentName][targetKey]) {
-              componentOutputs[brandKey][componentName][targetKey] = {};
-            }
-          }
-
-          // Process the token value
-          let processedValue;
-          if (modeValue.type === 'VARIABLE_ALIAS') {
-            const context = { brandName, brandModeId };
-            processedValue = resolveAliasWithContext(modeValue.id, aliasLookup, context, new Set(), collections);
-          } else {
-            processedValue = processDirectValue(modeValue, variable.resolvedType, variable.name);
-          }
-
-          if (processedValue !== null) {
-            const pathArray = variable.name.split('/').filter(part => part);
-            const tokenObject = {
-              $value: processedValue,
-              value: processedValue,
-              type: variable.resolvedType.toLowerCase(),
-              $extensions: {
-                'com.figma': {
-                  collectionId: collection.id,
-                  collectionName: collection.name,
-                  variableId: variable.id
-                }
-              }
-            };
-
-            if (variable.resolvedType === 'COLOR') {
-              tokenObject.$type = 'color';
-            } else {
-              const typeInfo = determineTokenType(variable.name, collection.name, processedValue, variable);
-              if (typeInfo.$type) {
-                tokenObject.$type = typeInfo.$type;
-              }
-            }
-
-            if (variable.description) {
-              tokenObject.comment = variable.description;
-            }
-
-            if (collection.id === COLLECTION_IDS.BRAND_COLOR_MAPPING) {
-              // Add to both light and dark
-              ['color-light', 'color-dark'].forEach(key => {
-                setNestedPath(componentOutputs[brandKey][componentName][key], pathArray, tokenObject);
-              });
-            } else {
-              setNestedPath(componentOutputs[brandKey][componentName][targetKey], pathArray, tokenObject);
-            }
-          }
-        });
+        return; // Skip - mapping layers are exported separately in overrides/ folder
       } else {
         // For mode-based collections (ColorMode, Density, Breakpoint)
         collection.modes.forEach(mode => {
@@ -1011,10 +1032,30 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
           });
         }
 
-        // Fallback to direct values
-        if (!resolvedStyle.fontFamily && textStyle.fontName) {
-          resolvedStyle.fontFamily = textStyle.fontName.family;
+        // Fallback to direct values from fontName
+        if (textStyle.fontName) {
+          if (!resolvedStyle.fontFamily) {
+            resolvedStyle.fontFamily = textStyle.fontName.family;
+          }
+          // Extract fontWeight/fontStyle from fontName.style if not bound
+          // e.g., "Book Italic" → fontWeight: 400, fontStyle: "italic"
+          if ((resolvedStyle.fontWeight === null || resolvedStyle.fontStyle === null) && textStyle.fontName.style) {
+            const styleStr = textStyle.fontName.style;
+            const hasItalic = /italic/i.test(styleStr);
+            const weightPart = styleStr.replace(/\s*italic\s*/i, '').trim();
+
+            if (resolvedStyle.fontWeight === null && weightPart) {
+              const normalizedKeyword = weightPart.toLowerCase().replace(/\s+/g, '');
+              resolvedStyle.fontWeight = FONT_WEIGHT_MAP[normalizedKeyword] || 400;
+            }
+            if (resolvedStyle.fontStyle === null && hasItalic) {
+              resolvedStyle.fontStyle = 'italic';
+            }
+          }
         }
+
+        // Normalize fontWeight/fontStyle (fix Figma binding issues)
+        normalizeTypographyStyle(resolvedStyle);
 
         // Token structure: category/styleName
         // Keep styleName case for proper platform-specific transformations (camelCase, kebab-case, etc.)
@@ -1092,10 +1133,30 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
             });
           }
 
-          // Fallback to direct values
-          if (!resolvedStyle.fontFamily && textStyle.fontName) {
-            resolvedStyle.fontFamily = textStyle.fontName.family;
+          // Fallback to direct values from fontName
+          if (textStyle.fontName) {
+            if (!resolvedStyle.fontFamily) {
+              resolvedStyle.fontFamily = textStyle.fontName.family;
+            }
+            // Extract fontWeight/fontStyle from fontName.style if not bound
+            // e.g., "Book Italic" → fontWeight: 400, fontStyle: "italic"
+            if ((resolvedStyle.fontWeight === null || resolvedStyle.fontStyle === null) && textStyle.fontName.style) {
+              const styleStr = textStyle.fontName.style;
+              const hasItalic = /italic/i.test(styleStr);
+              const weightPart = styleStr.replace(/\s*italic\s*/i, '').trim();
+
+              if (resolvedStyle.fontWeight === null && weightPart) {
+                const normalizedKeyword = weightPart.toLowerCase().replace(/\s+/g, '');
+                resolvedStyle.fontWeight = FONT_WEIGHT_MAP[normalizedKeyword] || 400;
+              }
+              if (resolvedStyle.fontStyle === null && hasItalic) {
+                resolvedStyle.fontStyle = 'italic';
+              }
+            }
           }
+
+          // Normalize fontWeight/fontStyle (fix Figma binding issues)
+          normalizeTypographyStyle(resolvedStyle);
 
           // Initialize component structure
           if (!componentTypographyOutputs[brandKey][componentName]) {
