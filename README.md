@@ -108,13 +108,13 @@ Both pipelines use the **TokenSync Figma Plugin** for automated exports.
 │                             │    │                             │
 │  dist/                      │    │  dist/icons/                │
 │  ├── css/     (CSS Vars)    │    │  ├── svg/      (Optimized)  │
-│  ├── scss/    (SCSS Vars)   │    │  ├── react/    (ESM + d.ts) │
-│  ├── js/      (ES Modules)  │    │  ├── android/  (XML)        │
-│  ├── json/    (Raw Data)    │    │  ├── flutter/  (TTF + Dart) │
-│  ├── ios/     (Swift)       │    │  └── ios/      (xcassets)   │
+│  │   └── bundles/ (Quick)   │    │  ├── react/    (ESM + d.ts) │
+│  ├── scss/    (SCSS Vars)   │    │  ├── android/  (XML)        │
+│  ├── js/      (ES Modules)  │    │  ├── flutter/  (TTF + Dart) │
+│  ├── json/    (Raw Data)    │    │  └── ios/      (xcassets)   │
+│  ├── ios/     (Swift)       │    │                             │
 │  ├── android/ (XML)         │    │                             │
-│  ├── flutter/ (Dart)        │    │                             │
-│  └── bundles/ (Quick Start) │    │                             │
+│  └── flutter/ (Dart)        │    │                             │
 └──────────────┬──────────────┘    └──────────────┬──────────────┘
                │                                  │
                │  npm publish                     │  npm publish
@@ -159,8 +159,8 @@ import { textColorPrimary, space2x } from '@marioschmidt/design-system-tokens/js
 
 ```swift
 // iOS Swift
-view.backgroundColor = StyleDictionary.TextColorPrimary
-let padding: CGFloat = StyleDictionary.Space2x
+view.backgroundColor = StyleDictionary.textColorPrimary
+let padding: CGFloat = StyleDictionary.space2x
 ```
 
 ### Icon Usage
