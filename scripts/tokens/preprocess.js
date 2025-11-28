@@ -1032,9 +1032,26 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
           });
         }
 
-        // Fallback to direct values
-        if (!resolvedStyle.fontFamily && textStyle.fontName) {
-          resolvedStyle.fontFamily = textStyle.fontName.family;
+        // Fallback to direct values from fontName
+        if (textStyle.fontName) {
+          if (!resolvedStyle.fontFamily) {
+            resolvedStyle.fontFamily = textStyle.fontName.family;
+          }
+          // Extract fontWeight/fontStyle from fontName.style if not bound
+          // e.g., "Book Italic" → fontWeight: 400, fontStyle: "italic"
+          if ((resolvedStyle.fontWeight === null || resolvedStyle.fontStyle === null) && textStyle.fontName.style) {
+            const styleStr = textStyle.fontName.style;
+            const hasItalic = /italic/i.test(styleStr);
+            const weightPart = styleStr.replace(/\s*italic\s*/i, '').trim();
+
+            if (resolvedStyle.fontWeight === null && weightPart) {
+              const normalizedKeyword = weightPart.toLowerCase().replace(/\s+/g, '');
+              resolvedStyle.fontWeight = FONT_WEIGHT_MAP[normalizedKeyword] || 400;
+            }
+            if (resolvedStyle.fontStyle === null && hasItalic) {
+              resolvedStyle.fontStyle = 'italic';
+            }
+          }
         }
 
         // Normalize fontWeight/fontStyle (fix Figma binding issues)
@@ -1115,9 +1132,26 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
             });
           }
 
-          // Fallback to direct values
-          if (!resolvedStyle.fontFamily && textStyle.fontName) {
-            resolvedStyle.fontFamily = textStyle.fontName.family;
+          // Fallback to direct values from fontName
+          if (textStyle.fontName) {
+            if (!resolvedStyle.fontFamily) {
+              resolvedStyle.fontFamily = textStyle.fontName.family;
+            }
+            // Extract fontWeight/fontStyle from fontName.style if not bound
+            // e.g., "Book Italic" → fontWeight: 400, fontStyle: "italic"
+            if ((resolvedStyle.fontWeight === null || resolvedStyle.fontStyle === null) && textStyle.fontName.style) {
+              const styleStr = textStyle.fontName.style;
+              const hasItalic = /italic/i.test(styleStr);
+              const weightPart = styleStr.replace(/\s*italic\s*/i, '').trim();
+
+              if (resolvedStyle.fontWeight === null && weightPart) {
+                const normalizedKeyword = weightPart.toLowerCase().replace(/\s+/g, '');
+                resolvedStyle.fontWeight = FONT_WEIGHT_MAP[normalizedKeyword] || 400;
+              }
+              if (resolvedStyle.fontStyle === null && hasItalic) {
+                resolvedStyle.fontStyle = 'italic';
+              }
+            }
           }
 
           // Normalize fontWeight/fontStyle (fix Figma binding issues)
