@@ -130,10 +130,10 @@ const Button = styled.button`
 import UIKit
 
 // Colors (UIColor objects)
-view.backgroundColor = StyleDictionary.TextColorPrimary
+view.backgroundColor = StyleDictionary.textColorPrimary
 
 // Dimensions (CGFloat Points)
-let padding: CGFloat = StyleDictionary.Space2x  // 16
+let padding: CGFloat = StyleDictionary.space2x  // 16
 
 // Typography
 label.font = UIFont.TypographyBildregular.display1
@@ -153,9 +153,9 @@ Container(
 
 ```xml
 <TextView
-    android:textColor="@color/text-color-primary"
-    android:padding="@dimen/space2x"
-    style="@style/Display1" />
+    android:textColor="@color/text_color_primary"
+    android:padding="@dimen/space_2x"
+    style="@style/TextAppearance.Bild.Display1" />
 ```
 
 ### SCSS
@@ -178,8 +178,8 @@ Container(
 | CSS | `kebab-case` with `--` | `--text-color-primary` |
 | SCSS | `kebab-case` with `$` | `$text-color-primary` |
 | JavaScript | `camelCase` | `textColorPrimary` |
-| iOS Swift | `PascalCase` | `TextColorPrimary` |
-| Android | `kebab-case` | `text-color-primary` |
+| iOS Swift | `camelCase` | `textColorPrimary` |
+| Android | `snake_case` | `text_color_primary` |
 | Flutter | `camelCase` | `textColorPrimary` |
 
 ### Token Types
@@ -218,6 +218,7 @@ Container(
 dist/
 ├── css/
 │   ├── shared/                      # Primitives
+│   ├── bundles/                     # Convenience bundles (Quick Start)
 │   └── brands/
 │       └── bild/
 │           ├── density/
@@ -232,8 +233,7 @@ dist/
 ├── json/                            # Same structure
 ├── ios/                             # Swift Classes
 ├── android/                         # XML Resources
-├── flutter/                         # Dart Classes
-└── bundles/                         # Convenience bundles
+└── flutter/                         # Dart Classes
 ```
 
 ## 🔗 Figma Integration & Dependencies
