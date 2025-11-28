@@ -1164,8 +1164,9 @@ const iosSwiftTypographyFormat = ({ dictionary, options }) => {
       tokens.forEach(token => {
         if (token.$type === 'typography' && token.$value) {
           const style = token.$value;
-          // Use only the last path segment as property name
-          const propName = token.path[token.path.length - 1];
+          // Use only the last path segment as property name, transformed to camelCase
+          const rawName = token.path[token.path.length - 1];
+          const propName = nameTransformers.camel(rawName);
 
           if (token.comment) {
             output += `        /** ${token.comment} */\n`;
@@ -1264,7 +1265,36 @@ const androidResourcesFormat = ({ dictionary, options, file }) => {
 };
 
 /**
+ * Helper: Convert token name to Android TextAppearance style name
+ * Transforms: "ateaser-ateaserkicker" → "ATeaser.Kicker"
+ *             "buttonlabel" → "ButtonLabel"
+ */
+const toAndroidTypographyStyleName = (tokenName, brand) => {
+  // Remove common prefixes and clean up the name
+  let cleanName = tokenName;
+
+  // Split by hyphens and process each part
+  const parts = cleanName.split('-').map(part => {
+    // Convert camelCase or lowercase to PascalCase
+    return part
+      .replace(/([a-z])([A-Z])/g, '$1.$2')  // Split camelCase with dots
+      .split('.')
+      .map(segment => segment.charAt(0).toUpperCase() + segment.slice(1).toLowerCase())
+      .join('');
+  });
+
+  // Join with dots for Android style hierarchy
+  const stylePart = parts.join('.');
+
+  // Format brand name (capitalize first letter)
+  const brandName = brand.charAt(0).toUpperCase() + brand.slice(1);
+
+  return `TextAppearance.${brandName}.${stylePart}`;
+};
+
+/**
  * Format: Android XML Typography Styles
+ * Uses Material Design naming convention: TextAppearance.Brand.Component.Style
  */
 const androidXmlTypographyFormat = ({ dictionary, options }) => {
   const { brand, breakpoint } = options;
@@ -1304,8 +1334,9 @@ const androidXmlTypographyFormat = ({ dictionary, options }) => {
       tokens.forEach(token => {
         if (token.$type === 'typography' && token.$value) {
           const style = token.$value;
-          // Use only the last path segment as style name
-          const styleName = token.path[token.path.length - 1];
+          // Convert to Android TextAppearance naming convention
+          const rawName = token.path[token.path.length - 1];
+          const styleName = toAndroidTypographyStyleName(rawName, brand);
 
           output += `    <style name="${styleName}">\n`;
           if (style.fontFamily) output += `        <item name="android:fontFamily">${style.fontFamily}</item>\n`;
