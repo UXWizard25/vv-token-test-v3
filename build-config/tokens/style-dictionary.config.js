@@ -2247,7 +2247,7 @@ const cssVariablesWithAliasFormat = ({ dictionary, options, file }) => {
       tokens.forEach(token => {
         const uniqueName = uniqueNames.get(token.path.join('.'));
         const comment = token.comment || token.description;
-        if (comment) {
+        if (comment && options.showDescriptions !== false) {
           output += `  /**\n   * ${comment}\n   */\n`;
         }
 
@@ -2355,7 +2355,7 @@ const cssThemedVariablesWithAliasFormat = ({ dictionary, options, file }) => {
       tokens.forEach(token => {
         const uniqueName = uniqueNames.get(token.path.join('.'));
         const comment = token.comment || token.description;
-        if (comment) {
+        if (comment && options.showDescriptions !== false) {
           output += `  /**\n   * ${comment}\n   */\n`;
         }
 

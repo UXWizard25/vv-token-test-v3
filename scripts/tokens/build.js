@@ -72,6 +72,7 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
         filter: tokenFilter,
         options: {
           outputReferences: true,  // Enable var() references to primitives
+          showDescriptions: false, // Disable token descriptions for cleaner CSS output
           ...cssOptions  // brand, mode, modeType for data-attributes
         }
       }]
