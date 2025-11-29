@@ -2181,6 +2181,207 @@ const cssThemedVariablesFormat = ({ dictionary, options, file }) => {
 };
 
 // ============================================================================
+// CSS FORMAT WITH ALIAS REFERENCES (var() pattern)
+// ============================================================================
+
+/**
+ * Converts alias token name to CSS variable name
+ * Uses kebab-case transformation
+ * @param {string} tokenName - Token name from alias
+ * @returns {string} - CSS variable name (without --)
+ */
+function aliasToVarName(tokenName) {
+  if (!tokenName) return null;
+  return nameTransformers.kebab(tokenName);
+}
+
+/**
+ * Format: CSS Variables with Alias References
+ * Generates CSS with var(--reference, fallback) pattern for tokens with $alias
+ * Other platforms ignore $alias and use resolved values
+ *
+ * For simple tokens: Uses $alias field
+ * For combined tokens (typography/effects): Uses $aliases object/array
+ */
+const cssVariablesWithAliasFormat = ({ dictionary, options, file }) => {
+  const selector = options.selector || ':root';
+  const context = getContextString(options);
+  const { outputReferences = true } = options;
+
+  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'kebab');
+
+  let output = generateFileHeader({
+    fileName: file.destination,
+    commentStyle: 'block',
+    brand: options.brand,
+    context: context
+  });
+
+  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
+
+  output += `${selector} {\n`;
+
+  let isFirstTopLevel = true;
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
+
+    // Add top-level header
+    if (!isFirstTopLevel) {
+      output += `\n`;
+    }
+    output += `  /* ============================================\n`;
+    output += `     ${topLevel.toUpperCase()}\n`;
+    output += `     ============================================ */\n\n`;
+    isFirstTopLevel = false;
+
+    // Sort sub-level keys
+    Object.keys(subGroups).forEach(subLevel => {
+      const tokens = subGroups[subLevel];
+
+      // Add sub-level header if exists
+      if (subLevel) {
+        output += `  /* ${topLevel} - ${subLevel} */\n`;
+      }
+
+      // Add tokens
+      tokens.forEach(token => {
+        const uniqueName = uniqueNames.get(token.path.join('.'));
+        const comment = token.comment || token.description;
+        if (comment) {
+          output += `  /**\n   * ${comment}\n   */\n`;
+        }
+
+        // Use $value (transformed) or fallback to value (original)
+        const finalValue = token.$value !== undefined ? token.$value : token.value;
+
+        // Check for $alias (simple tokens) and generate var() reference
+        if (outputReferences && token.$alias && token.$alias.token) {
+          const refName = aliasToVarName(token.$alias.token);
+          if (refName) {
+            output += `  --${uniqueName}: var(--${refName}, ${finalValue});\n`;
+            return;
+          }
+        }
+
+        // No alias or outputReferences disabled → direct value
+        output += `  --${uniqueName}: ${finalValue};\n`;
+      });
+
+      output += `\n`;
+    });
+  });
+
+  output += `}\n`;
+  return output;
+};
+
+/**
+ * Format: CSS Themed Variables with Alias References
+ * Combines themed data-attribute selectors with var() references
+ */
+const cssThemedVariablesWithAliasFormat = ({ dictionary, options, file }) => {
+  const { brand, mode, modeType = 'theme', includeRoot = false, outputReferences = true } = options;
+  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'kebab');
+
+  let output = generateFileHeader({
+    fileName: file.destination,
+    commentStyle: 'block',
+    brand: brand ? brand.charAt(0).toUpperCase() + brand.slice(1) : 'All Brands',
+    context: modeType && mode ? `${modeType}: ${mode}` : 'All Modes'
+  });
+
+  // Build selector based on brand and mode
+  let selector;
+  if (brand && mode) {
+    const dataMode = modeType === 'theme' ? 'data-theme' :
+                     modeType === 'breakpoint' ? 'data-breakpoint' :
+                     modeType === 'density' ? 'data-density' : 'data-mode';
+    selector = `[data-brand="${brand}"][${dataMode}="${mode}"]`;
+  } else if (brand) {
+    selector = `[data-brand="${brand}"]`;
+  } else if (mode) {
+    const dataMode = modeType === 'theme' ? 'data-theme' :
+                     modeType === 'breakpoint' ? 'data-breakpoint' :
+                     modeType === 'density' ? 'data-density' : 'data-mode';
+    selector = `[${dataMode}="${mode}"]`;
+  } else {
+    selector = ':root';
+  }
+
+  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
+
+  // Optional: Include :root fallback for default values
+  if (includeRoot) {
+    output += `:root {\n`;
+    output += `  /* Default values (will be overridden by data-attributes) */\n`;
+
+    Object.keys(hierarchicalGroups).forEach(topLevel => {
+      const subGroups = hierarchicalGroups[topLevel];
+      Object.keys(subGroups).forEach(subLevel => {
+        const tokens = subGroups[subLevel];
+        tokens.forEach(token => {
+          const uniqueName = uniqueNames.get(token.path.join('.'));
+          const finalValue = token.$value !== undefined ? token.$value : token.value;
+          output += `  --${uniqueName}: ${finalValue};\n`;
+        });
+      });
+    });
+
+    output += `}\n\n`;
+  }
+
+  // Main themed selector
+  output += `${selector} {\n`;
+
+  let isFirstTopLevel = true;
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
+
+    if (!isFirstTopLevel) {
+      output += `\n`;
+    }
+    output += `  /* ============================================\n`;
+    output += `     ${topLevel.toUpperCase()}\n`;
+    output += `     ============================================ */\n\n`;
+    isFirstTopLevel = false;
+
+    Object.keys(subGroups).forEach(subLevel => {
+      const tokens = subGroups[subLevel];
+
+      if (subLevel) {
+        output += `  /* ${topLevel} - ${subLevel} */\n`;
+      }
+
+      tokens.forEach(token => {
+        const uniqueName = uniqueNames.get(token.path.join('.'));
+        const comment = token.comment || token.description;
+        if (comment) {
+          output += `  /**\n   * ${comment}\n   */\n`;
+        }
+
+        const finalValue = token.$value !== undefined ? token.$value : token.value;
+
+        // Check for $alias and generate var() reference
+        if (outputReferences && token.$alias && token.$alias.token) {
+          const refName = aliasToVarName(token.$alias.token);
+          if (refName) {
+            output += `  --${uniqueName}: var(--${refName}, ${finalValue});\n`;
+            return;
+          }
+        }
+
+        output += `  --${uniqueName}: ${finalValue};\n`;
+      });
+
+      output += `\n`;
+    });
+  });
+
+  output += `}\n`;
+  return output;
+};
+
+// ============================================================================
 // EXPORTS
 // ============================================================================
 
@@ -2214,6 +2415,10 @@ module.exports = {
 
     // Themed CSS Format - Data-attribute based theme switching
     'custom/css/themed-variables': cssThemedVariablesFormat,
+
+    // CSS Formats with Alias References (var() pattern)
+    'custom/css/variables-with-alias': cssVariablesWithAliasFormat,
+    'custom/css/themed-variables-with-alias': cssThemedVariablesWithAliasFormat,
 
     // Composite Token Formats
     'css/typography-classes': cssTypographyClassesFormat,
