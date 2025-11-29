@@ -1088,10 +1088,19 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
           textDecoration: textStyle.textDecoration || 'NONE'
         };
 
+        // Track aliases for each bound property (for CSS var() references)
+        const aliases = {};
+
         // Resolve boundVariables
         if (textStyle.boundVariables) {
           Object.entries(textStyle.boundVariables).forEach(([property, alias]) => {
             if (alias.type === 'VARIABLE_ALIAS') {
+              // Extract alias info for CSS var() references
+              const aliasInfo = getAliasInfo(alias.id, aliasLookup, collections);
+              if (aliasInfo) {
+                aliases[property] = aliasInfo;
+              }
+
               const resolved = resolveAliasWithContext(alias.id, aliasLookup, context, new Set(), collections);
               resolvedStyle[property] = resolved;
             }
@@ -1127,7 +1136,7 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
         // Keep styleName case for proper platform-specific transformations (camelCase, kebab-case, etc.)
         const pathArray = [category.toLowerCase(), styleName];
 
-        setNestedPath(tokens, pathArray, {
+        const tokenObject = {
           $value: resolvedStyle,
           value: resolvedStyle,
           type: 'typography',
@@ -1139,7 +1148,14 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
               styleName: textStyle.name
             }
           }
-        });
+        };
+
+        // Add aliases info for CSS var() references (only if aliases exist)
+        if (Object.keys(aliases).length > 0) {
+          tokenObject.$aliases = aliases;
+        }
+
+        setNestedPath(tokens, pathArray, tokenObject);
       });
 
       const key = `${brandName.toLowerCase()}-${breakpointName}`;
@@ -1189,10 +1205,19 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
             textDecoration: textStyle.textDecoration || 'NONE'
           };
 
+          // Track aliases for each bound property (for CSS var() references)
+          const aliases = {};
+
           // Resolve boundVariables
           if (textStyle.boundVariables) {
             Object.entries(textStyle.boundVariables).forEach(([property, alias]) => {
               if (alias.type === 'VARIABLE_ALIAS') {
+                // Extract alias info for CSS var() references
+                const aliasInfo = getAliasInfo(alias.id, aliasLookup, collections);
+                if (aliasInfo) {
+                  aliases[property] = aliasInfo;
+                }
+
                 const resolved = resolveAliasWithContext(alias.id, aliasLookup, context, new Set(), collections);
                 resolvedStyle[property] = resolved;
               }
@@ -1232,9 +1257,8 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
             componentTypographyOutputs[brandKey][componentName][`typography-${breakpointName}`] = {};
           }
 
-          // Add to component typography output
-          // Keep styleName case for proper platform-specific transformations
-          componentTypographyOutputs[brandKey][componentName][`typography-${breakpointName}`][styleName.replace(/\//g, '-')] = {
+          // Build token object
+          const tokenObject = {
             $value: resolvedStyle,
             value: resolvedStyle,
             type: 'typography',
@@ -1247,6 +1271,15 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
               }
             }
           };
+
+          // Add aliases info for CSS var() references (only if aliases exist)
+          if (Object.keys(aliases).length > 0) {
+            tokenObject.$aliases = aliases;
+          }
+
+          // Add to component typography output
+          // Keep styleName case for proper platform-specific transformations
+          componentTypographyOutputs[brandKey][componentName][`typography-${breakpointName}`][styleName.replace(/\//g, '-')] = tokenObject;
         });
       });
 
@@ -1298,9 +1331,11 @@ function processEffectTokens(effectStyles, aliasLookup, collections) {
         const category = effectStyle.name.split('/').slice(-2, -1)[0];
 
         const resolvedEffects = [];
+        // Track aliases for each effect layer (for CSS var() references)
+        const aliases = [];
 
         if (effectStyle.effects && Array.isArray(effectStyle.effects)) {
-          effectStyle.effects.forEach(effect => {
+          effectStyle.effects.forEach((effect, index) => {
             if (effect.type === 'DROP_SHADOW' && effect.visible) {
               const shadowEffect = {
                 type: 'dropShadow',
@@ -1312,9 +1347,18 @@ function processEffectTokens(effectStyles, aliasLookup, collections) {
                 blendMode: effect.blendMode || 'NORMAL'
               };
 
+              // Track alias info for this effect layer
+              let layerAliases = null;
+
               // Resolve boundVariables if present
               if (effect.boundVariables && effect.boundVariables.color) {
                 if (effect.boundVariables.color.type === 'VARIABLE_ALIAS') {
+                  // Extract alias info for CSS var() references
+                  const aliasInfo = getAliasInfo(effect.boundVariables.color.id, aliasLookup, collections);
+                  if (aliasInfo) {
+                    layerAliases = { color: aliasInfo };
+                  }
+
                   const resolved = resolveAliasWithContext(
                     effect.boundVariables.color.id,
                     aliasLookup,
@@ -1327,6 +1371,9 @@ function processEffectTokens(effectStyles, aliasLookup, collections) {
               }
 
               resolvedEffects.push(shadowEffect);
+              if (layerAliases) {
+                aliases.push({ index, ...layerAliases });
+              }
             }
           });
         }
@@ -1334,7 +1381,7 @@ function processEffectTokens(effectStyles, aliasLookup, collections) {
         // Keep styleName case for proper platform-specific transformations
         const pathArray = [category.toLowerCase(), styleName];
 
-        setNestedPath(tokens, pathArray, {
+        const tokenObject = {
           $value: resolvedEffects,
           value: resolvedEffects,
           type: 'shadow',
@@ -1346,7 +1393,14 @@ function processEffectTokens(effectStyles, aliasLookup, collections) {
               styleName: effectStyle.name
             }
           }
-        });
+        };
+
+        // Add aliases info for CSS var() references (only if aliases exist)
+        if (aliases.length > 0) {
+          tokenObject.$aliases = aliases;
+        }
+
+        setNestedPath(tokens, pathArray, tokenObject);
       });
 
       const key = `${brandName.toLowerCase()}-${modeName}`;
@@ -1386,9 +1440,11 @@ function processEffectTokens(effectStyles, aliasLookup, collections) {
           const styleName = pathParts.slice(2).join('/');
 
           const resolvedEffects = [];
+          // Track aliases for each effect layer (for CSS var() references)
+          const aliases = [];
 
           if (effectStyle.effects && Array.isArray(effectStyle.effects)) {
-            effectStyle.effects.forEach(effect => {
+            effectStyle.effects.forEach((effect, index) => {
               if (effect.type === 'DROP_SHADOW' && effect.visible) {
                 const shadowEffect = {
                   type: 'dropShadow',
@@ -1400,9 +1456,18 @@ function processEffectTokens(effectStyles, aliasLookup, collections) {
                   blendMode: effect.blendMode || 'NORMAL'
                 };
 
+                // Track alias info for this effect layer
+                let layerAliases = null;
+
                 // Resolve boundVariables if present
                 if (effect.boundVariables && effect.boundVariables.color) {
                   if (effect.boundVariables.color.type === 'VARIABLE_ALIAS') {
+                    // Extract alias info for CSS var() references
+                    const aliasInfo = getAliasInfo(effect.boundVariables.color.id, aliasLookup, collections);
+                    if (aliasInfo) {
+                      layerAliases = { color: aliasInfo };
+                    }
+
                     const resolved = resolveAliasWithContext(
                       effect.boundVariables.color.id,
                       aliasLookup,
@@ -1415,6 +1480,9 @@ function processEffectTokens(effectStyles, aliasLookup, collections) {
                 }
 
                 resolvedEffects.push(shadowEffect);
+                if (layerAliases) {
+                  aliases.push({ index, ...layerAliases });
+                }
               }
             });
           }
@@ -1427,9 +1495,8 @@ function processEffectTokens(effectStyles, aliasLookup, collections) {
             componentEffectOutputs[brandKey][componentName][`effects-${modeName}`] = {};
           }
 
-          // Add to component effects output
-          // Keep styleName case for proper platform-specific transformations
-          componentEffectOutputs[brandKey][componentName][`effects-${modeName}`][styleName.replace(/\//g, '-')] = {
+          // Build token object
+          const tokenObject = {
             $value: resolvedEffects,
             value: resolvedEffects,
             type: 'shadow',
@@ -1442,6 +1509,15 @@ function processEffectTokens(effectStyles, aliasLookup, collections) {
               }
             }
           };
+
+          // Add aliases info for CSS var() references (only if aliases exist)
+          if (aliases.length > 0) {
+            tokenObject.$aliases = aliases;
+          }
+
+          // Add to component effects output
+          // Keep styleName case for proper platform-specific transformations
+          componentEffectOutputs[brandKey][componentName][`effects-${modeName}`][styleName.replace(/\//g, '-')] = tokenObject;
         });
       });
 
