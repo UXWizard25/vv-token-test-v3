@@ -67,10 +67,11 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
       buildPath: `${buildPath}/`,
       files: [{
         destination: `${fileName}.css`,
-        format: cssOptions.brand || cssOptions.mode ? 'custom/css/themed-variables' : 'custom/css/variables',
+        // Use alias-aware formats for CSS (var() references)
+        format: cssOptions.brand || cssOptions.mode ? 'custom/css/themed-variables-with-alias' : 'custom/css/variables-with-alias',
         filter: tokenFilter,
         options: {
-          outputReferences: false,
+          outputReferences: true,  // Enable var() references for CSS
           ...cssOptions  // brand, mode, modeType for data-attributes
         }
       }]
