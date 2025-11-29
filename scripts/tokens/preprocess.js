@@ -270,6 +270,54 @@ function resolveAliasWithContext(variableId, aliasLookup, context = {}, visited 
 }
 
 /**
+ * Extracts alias information for CSS var() references
+ * Returns the immediate alias target (not recursively resolved)
+ *
+ * @param {string} variableId - The Figma Variable ID of the alias target
+ * @param {Map} aliasLookup - Lookup Map for all variables
+ * @param {Array} collections - Array of all collections
+ * @returns {Object|null} - { token, collection, collectionType } or null
+ */
+function getAliasInfo(variableId, aliasLookup, collections) {
+  const variable = aliasLookup.get(variableId);
+  if (!variable) return null;
+
+  // Find the collection for this variable
+  const collection = collections.find(c => c.id === variable.collectionId);
+  if (!collection) return null;
+
+  const collectionName = collection.name.toLowerCase();
+
+  // Determine collection type for CSS output organization
+  let collectionType = 'unknown';
+  if (variable.collectionId === COLLECTION_IDS.FONT_PRIMITIVE ||
+      variable.collectionId === COLLECTION_IDS.COLOR_PRIMITIVE ||
+      variable.collectionId === COLLECTION_IDS.SIZE_PRIMITIVE ||
+      variable.collectionId === COLLECTION_IDS.SPACE_PRIMITIVE) {
+    collectionType = 'primitive';
+  } else if (variable.collectionId === COLLECTION_IDS.COLOR_MODE) {
+    collectionType = 'colormode';
+  } else if (variable.collectionId === COLLECTION_IDS.DENSITY) {
+    collectionType = 'density';
+  } else if (variable.collectionId === COLLECTION_IDS.BREAKPOINT_MODE) {
+    collectionType = 'breakpoint';
+  } else if (variable.collectionId === COLLECTION_IDS.BRAND_TOKEN_MAPPING ||
+             variable.collectionId === COLLECTION_IDS.BRAND_COLOR_MAPPING) {
+    collectionType = 'brand';
+  }
+
+  // Extract token name (last segment of path)
+  const tokenName = variable.name.split('/').pop();
+
+  return {
+    token: tokenName,
+    collection: collectionName,
+    collectionType: collectionType,
+    variableId: variableId
+  };
+}
+
+/**
  * Determines the token type for Style Dictionary based on Figma scopes and fallback heuristics
  * @param {string} tokenName - Token name
  * @param {string} collectionName - Collection name
@@ -657,8 +705,12 @@ function processBrandSpecificTokens(collections, aliasLookup) {
 
           if (modeValue !== undefined && modeValue !== null) {
             let processedValue;
+            let aliasInfo = null;
 
             if (modeValue.type === 'VARIABLE_ALIAS') {
+              // Extract alias info for CSS var() references
+              aliasInfo = getAliasInfo(modeValue.id, aliasLookup, collections);
+
               // Context with Brand + Mode
               const context = {
                 brandName,
@@ -689,6 +741,11 @@ function processBrandSpecificTokens(collections, aliasLookup) {
                   }
                 }
               };
+
+              // Add alias info for CSS var() references (only if alias exists)
+              if (aliasInfo) {
+                tokenObject.$alias = aliasInfo;
+              }
 
               if (variable.resolvedType === 'COLOR') {
                 tokenObject.$type = 'color';
@@ -892,8 +949,12 @@ function processComponentTokens(collections, aliasLookup) {
 
             if (modeValue !== undefined && modeValue !== null) {
               let processedValue;
+              let aliasInfo = null;
 
               if (modeValue.type === 'VARIABLE_ALIAS') {
+                // Extract alias info for CSS var() references
+                aliasInfo = getAliasInfo(modeValue.id, aliasLookup, collections);
+
                 const context = {
                   brandName,
                   brandModeId,
@@ -923,6 +984,11 @@ function processComponentTokens(collections, aliasLookup) {
                     }
                   }
                 };
+
+                // Add alias info for CSS var() references (only if alias exists)
+                if (aliasInfo) {
+                  tokenObject.$alias = aliasInfo;
+                }
 
                 if (variable.resolvedType === 'COLOR') {
                   tokenObject.$type = 'color';
