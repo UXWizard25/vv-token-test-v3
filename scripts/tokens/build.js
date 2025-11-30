@@ -1165,6 +1165,17 @@ async function convertToResponsiveCSS() {
           fs.writeFileSync(outputPath, responsiveContent, 'utf-8');
           successfulConversions++;
           console.log(`     ✅ semantic/breakpoint-responsive.css`);
+
+          // Cleanup: Remove individual data-attribute breakpoint files (replaced by responsive file)
+          const allBpFiles = fs.readdirSync(semanticBreakpointsDir)
+            .filter(f => f.endsWith('.css') && f !== 'breakpoint-responsive.css');
+          for (const bpFile of allBpFiles) {
+            const filePath = path.join(semanticBreakpointsDir, bpFile);
+            if (fs.existsSync(filePath)) {
+              fs.unlinkSync(filePath);
+            }
+          }
+
           break; // Only generate once per brand
         } catch (error) {
           console.error(`     ❌ Error: semantic/breakpoints - ${error.message}`);
@@ -1351,35 +1362,42 @@ async function generateResponsiveBreakpointFile(dir, brand, breakpointConfig) {
   const headerMatch = firstFile.match(/^\/\*\*[\s\S]*?\*\//);
   let header = headerMatch ? headerMatch[0] : '';
   header = header.replace(/Breakpoint: \w+/, 'Responsive (Media Queries)');
+  header = header.replace(/Context: breakpoint: \w+/i, 'Context: Responsive (Media Queries)');
 
   let output = header + '\n\n';
 
-  // Extract CSS variables from each breakpoint
-  const breakpointVars = {};
+  // Extract CSS variables from each breakpoint as key-value maps
+  const breakpointVarMaps = {};
   for (const [bp, content] of Object.entries(breakpointFiles)) {
-    breakpointVars[bp] = extractRootVariables(content);
+    breakpointVarMaps[bp] = parseVariablesToMap(extractRootVariables(content));
   }
 
-  // Generate responsive CSS with media queries
-  // Base styles (XS)
-  output += `:root {\n`;
-  if (breakpointVars.xs && breakpointVars.xs.length > 0) {
-    for (const varDecl of breakpointVars.xs) {
-      output += `  ${varDecl}\n`;
+  // Get base values (XS)
+  const baseVars = breakpointVarMaps.xs || breakpointVarMaps.sm || breakpointVarMaps.md || breakpointVarMaps.lg;
+
+  // Generate responsive CSS with media queries using [data-brand] selector
+  output += `[data-brand="${brand}"] {\n`;
+  if (baseVars && Object.keys(baseVars).length > 0) {
+    for (const [varName, value] of Object.entries(baseVars)) {
+      output += `  ${varName}: ${value};\n`;
     }
   }
   output += `}\n\n`;
 
-  // Media queries for SM, MD, LG
+  // Media queries for SM, MD, LG - only output CHANGED values
   for (const bp of ['sm', 'md', 'lg']) {
-    if (breakpointVars[bp] && breakpointVars[bp].length > 0 && breakpointConfig[bp]) {
-      output += `@media (min-width: ${breakpointConfig[bp]}) {\n`;
-      output += `  :root {\n`;
-      for (const varDecl of breakpointVars[bp]) {
-        output += `    ${varDecl}\n`;
+    if (breakpointVarMaps[bp] && breakpointConfig[bp]) {
+      const changedVars = getChangedVariables(baseVars, breakpointVarMaps[bp]);
+
+      if (Object.keys(changedVars).length > 0) {
+        output += `@media (min-width: ${breakpointConfig[bp]}) {\n`;
+        output += `  [data-brand="${brand}"] {\n`;
+        for (const [varName, value] of Object.entries(changedVars)) {
+          output += `    ${varName}: ${value};\n`;
+        }
+        output += `  }\n`;
+        output += `}\n\n`;
       }
-      output += `  }\n`;
-      output += `}\n\n`;
     }
   }
 
@@ -1389,6 +1407,7 @@ async function generateResponsiveBreakpointFile(dir, brand, breakpointConfig) {
 /**
  * Generates a responsive CSS file with media queries for component breakpoint tokens
  * Converts [data-brand][data-breakpoint] selectors to @media queries with [data-brand] only
+ * Only outputs values that change between breakpoints to minimize redundancy
  */
 async function generateComponentBreakpointResponsive(dir, componentName, brand, breakpointConfig) {
   const breakpointFiles = {};
@@ -1432,32 +1451,39 @@ async function generateComponentBreakpointResponsive(dir, componentName, brand, 
 
   let output = header + '\n\n';
 
-  // Extract CSS variables from each breakpoint
-  const breakpointVars = {};
+  // Extract CSS variables from each breakpoint as key-value maps
+  const breakpointVarMaps = {};
   for (const [bp, content] of Object.entries(breakpointFiles)) {
-    breakpointVars[bp] = extractRootVariables(content);
+    breakpointVarMaps[bp] = parseVariablesToMap(extractRootVariables(content));
   }
 
+  // Get base values (XS)
+  const baseVars = breakpointVarMaps.xs || breakpointVarMaps.sm || breakpointVarMaps.md || breakpointVarMaps.lg;
+
   // Generate responsive CSS with media queries
-  // Base styles (XS) - use [data-brand] selector instead of :root for component tokens
+  // Base styles (XS) - use [data-brand] selector
   output += `[data-brand="${brand}"] {\n`;
-  if (breakpointVars.xs && breakpointVars.xs.length > 0) {
-    for (const varDecl of breakpointVars.xs) {
-      output += `  ${varDecl}\n`;
+  if (baseVars && Object.keys(baseVars).length > 0) {
+    for (const [varName, value] of Object.entries(baseVars)) {
+      output += `  ${varName}: ${value};\n`;
     }
   }
   output += `}\n\n`;
 
-  // Media queries for SM, MD, LG
+  // Media queries for SM, MD, LG - only output CHANGED values
   for (const bp of ['sm', 'md', 'lg']) {
-    if (breakpointVars[bp] && breakpointVars[bp].length > 0 && breakpointConfig[bp]) {
-      output += `@media (min-width: ${breakpointConfig[bp]}) {\n`;
-      output += `  [data-brand="${brand}"] {\n`;
-      for (const varDecl of breakpointVars[bp]) {
-        output += `    ${varDecl}\n`;
+    if (breakpointVarMaps[bp] && breakpointConfig[bp]) {
+      const changedVars = getChangedVariables(baseVars, breakpointVarMaps[bp]);
+
+      if (Object.keys(changedVars).length > 0) {
+        output += `@media (min-width: ${breakpointConfig[bp]}) {\n`;
+        output += `  [data-brand="${brand}"] {\n`;
+        for (const [varName, value] of Object.entries(changedVars)) {
+          output += `    ${varName}: ${value};\n`;
+        }
+        output += `  }\n`;
+        output += `}\n\n`;
       }
-      output += `  }\n`;
-      output += `}\n\n`;
     }
   }
 
@@ -1492,6 +1518,46 @@ function extractRootVariables(content) {
   }
 
   return variables;
+}
+
+/**
+ * Parses an array of CSS variable declarations into a name-value map
+ * @param {string[]} variables - Array of declarations like "--var-name: value;"
+ * @returns {Object} - Map of variable names to values
+ */
+function parseVariablesToMap(variables) {
+  const map = {};
+  for (const decl of variables) {
+    // Parse "--var-name: value;" into name and value
+    const colonIndex = decl.indexOf(':');
+    if (colonIndex > 0) {
+      const name = decl.substring(0, colonIndex).trim();
+      // Remove trailing semicolon from value
+      let value = decl.substring(colonIndex + 1).trim();
+      if (value.endsWith(';')) {
+        value = value.slice(0, -1).trim();
+      }
+      map[name] = value;
+    }
+  }
+  return map;
+}
+
+/**
+ * Compares two variable maps and returns only the variables that have different values
+ * @param {Object} baseVars - Base (XS) variables map
+ * @param {Object} compareVars - Variables to compare against base
+ * @returns {Object} - Map of variables that have changed
+ */
+function getChangedVariables(baseVars, compareVars) {
+  const changed = {};
+  for (const [name, value] of Object.entries(compareVars)) {
+    // Include if value is different from base, or if it's a new variable
+    if (baseVars[name] !== value) {
+      changed[name] = value;
+    }
+  }
+  return changed;
 }
 
 /**
