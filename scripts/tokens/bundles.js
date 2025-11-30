@@ -364,7 +364,11 @@ async function buildBrandComponents(brand) {
     const colorLightFiles = files.filter(f => f.includes('color-light')).sort();
     const colorDarkFiles = files.filter(f => f.includes('color-dark')).sort();
     const densityFiles = files.filter(f => f.includes('density')).sort();
-    const typographyFiles = files.filter(f => f.includes('typography')).sort();
+    // For typography: prefer responsive file over individual breakpoint files
+    const typographyResponsiveFile = files.find(f => f.includes('typography') && f.includes('-responsive'));
+    const typographyFiles = typographyResponsiveFile
+      ? [typographyResponsiveFile]
+      : files.filter(f => f.includes('typography')).sort();
     const breakpointFiles = files.filter(f => f.includes('breakpoint')).sort();
     const otherFiles = files.filter(f =>
       !f.includes('color-') &&
