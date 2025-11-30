@@ -2279,9 +2279,10 @@ const cssVariablesWithAliasFormat = ({ dictionary, options, file }) => {
         const finalValue = token.$value !== undefined ? token.$value : token.value;
 
         // Check for $alias (simple tokens) and generate var() reference
+        // Skip self-references (when token name equals alias name, e.g., breakpoint → density with same name)
         if (outputReferences && token.$alias && token.$alias.token) {
           const refName = aliasToVarName(token.$alias.token);
-          if (refName) {
+          if (refName && refName !== uniqueName) {
             output += `  --${uniqueName}: var(--${refName}, ${finalValue});\n`;
             return;
           }
@@ -2386,9 +2387,10 @@ const cssThemedVariablesWithAliasFormat = ({ dictionary, options, file }) => {
         const finalValue = token.$value !== undefined ? token.$value : token.value;
 
         // Check for $alias and generate var() reference
+        // Skip self-references (when token name equals alias name, e.g., breakpoint → density with same name)
         if (outputReferences && token.$alias && token.$alias.token) {
           const refName = aliasToVarName(token.$alias.token);
-          if (refName) {
+          if (refName && refName !== uniqueName) {
             output += `  --${uniqueName}: var(--${refName}, ${finalValue});\n`;
             return;
           }
