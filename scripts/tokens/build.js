@@ -1117,11 +1117,14 @@ async function convertToResponsiveCSS() {
         totalConversions++;
 
         try {
+          // Typography uses var() references that respond to breakpoints automatically,
+          // so skip media queries to avoid redundant class definitions
           const responsiveContent = await generateResponsiveFile(
             semanticTypographyDir,
             baseName,
             brand,
-            breakpointConfig
+            breakpointConfig,
+            { skipMediaQueries: true }
           );
 
           const outputPath = path.join(semanticTypographyDir, `${baseName}-responsive.css`);
@@ -1178,11 +1181,14 @@ async function convertToResponsiveCSS() {
           totalConversions++;
 
           try {
+            // Typography uses var() references that respond to breakpoints automatically,
+            // so skip media queries to avoid redundant class definitions
             const responsiveContent = await generateResponsiveFile(
               componentDir,
               baseName,
               brand,
-              breakpointConfig
+              breakpointConfig,
+              { skipMediaQueries: true }
             );
 
             const outputPath = path.join(componentDir, `${baseName}-responsive.css`);
@@ -1202,8 +1208,10 @@ async function convertToResponsiveCSS() {
 
 /**
  * Generates a responsive CSS file with media queries from breakpoint files
+ * For Typography: Only output base styles (XS) since var() references handle responsiveness
  */
-async function generateResponsiveFile(dir, baseName, brand, breakpointConfig) {
+async function generateResponsiveFile(dir, baseName, brand, breakpointConfig, options = {}) {
+  const { skipMediaQueries = false } = options;
   const breakpointFiles = {};
 
   // Read all breakpoint files
@@ -1246,18 +1254,20 @@ async function generateResponsiveFile(dir, baseName, brand, breakpointConfig) {
     }
   }
 
-  // Media queries for SM, MD, LG
-  for (const bp of ['sm', 'md', 'lg']) {
-    if (breakpointClasses[bp] && breakpointClasses[bp].length > 0 && breakpointConfig[bp]) {
-      output += `  @media (min-width: ${breakpointConfig[bp]}) {\n`;
-      for (const cls of breakpointClasses[bp]) {
-        output += `    .${cls.name} {\n`;
-        for (const prop of cls.properties) {
-          output += `      ${prop}\n`;
+  // Media queries for SM, MD, LG - skip if using var() references (Typography)
+  if (!skipMediaQueries) {
+    for (const bp of ['sm', 'md', 'lg']) {
+      if (breakpointClasses[bp] && breakpointClasses[bp].length > 0 && breakpointConfig[bp]) {
+        output += `  @media (min-width: ${breakpointConfig[bp]}) {\n`;
+        for (const cls of breakpointClasses[bp]) {
+          output += `    .${cls.name} {\n`;
+          for (const prop of cls.properties) {
+            output += `      ${prop}\n`;
+          }
+          output += `    }\n\n`;
         }
-        output += `    }\n\n`;
+        output += `  }\n\n`;
       }
-      output += `  }\n\n`;
     }
   }
 
