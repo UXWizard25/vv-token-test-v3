@@ -320,7 +320,9 @@ function getDeepAliasInfo(variableId, aliasLookup, collections, context = {}, op
     if (!variable) return null;
 
     const tokenPath = variable.name || '';
-    const isSemanticToken = tokenPath.startsWith('Semantic/');
+    // Component tokens are identified by path prefix - they should NOT be treated as semantic endpoints
+    // Everything else in ColorMode/BreakpointMode collections IS the semantic level
+    const isComponentToken = tokenPath.startsWith('Component/');
 
     // Check if we've reached a primitive - ALWAYS endpoint
     if (isPrimitiveCollection(variable.collectionId)) {
@@ -335,8 +337,8 @@ function getDeepAliasInfo(variableId, aliasLookup, collections, context = {}, op
       };
     }
 
-    // BreakpointMode Semantic tokens - endpoint if flag set
-    if (acceptSemanticEndpoint && variable.collectionId === COLLECTION_IDS.BREAKPOINT_MODE && isSemanticToken) {
+    // BreakpointMode collection = Semantic level (except Component/ tokens)
+    if (acceptSemanticEndpoint && variable.collectionId === COLLECTION_IDS.BREAKPOINT_MODE && !isComponentToken) {
       const collection = collections.find(c => c.id === variable.collectionId);
       const tokenName = variable.name.split('/').pop();
 
@@ -348,8 +350,8 @@ function getDeepAliasInfo(variableId, aliasLookup, collections, context = {}, op
       };
     }
 
-    // ColorMode Semantic tokens - endpoint if flag set
-    if (acceptColorModeEndpoint && variable.collectionId === COLLECTION_IDS.COLOR_MODE && isSemanticToken) {
+    // ColorMode collection = Semantic level (except Component/ tokens)
+    if (acceptColorModeEndpoint && variable.collectionId === COLLECTION_IDS.COLOR_MODE && !isComponentToken) {
       const collection = collections.find(c => c.id === variable.collectionId);
       const tokenName = variable.name.split('/').pop();
 
