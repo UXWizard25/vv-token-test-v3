@@ -1998,6 +1998,7 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   const hasColor = allTokens.some(t => t.value.includes('Color('));
   const hasDp = allTokens.some(t => t.value.includes('.dp'));
   const hasSp = allTokens.some(t => t.value.includes('.sp'));
+  const hasFontStyle = allTokens.some(t => t.value.includes('FontStyle.'));
   const hasDensityTokens = tokenGroups.density.dense.length > 0 ||
       tokenGroups.density.default.length > 0 ||
       tokenGroups.density.spacious.length > 0;
@@ -2009,6 +2010,7 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
     imports.push('import com.bild.designsystem.shared.Density');
   }
   if (hasColor) imports.push('import androidx.compose.ui.graphics.Color');
+  if (hasFontStyle) imports.push('import androidx.compose.ui.text.font.FontStyle');
   if (hasDp || hasSp) imports.push('import androidx.compose.ui.unit.Dp');
   if (hasDp) imports.push('import androidx.compose.ui.unit.dp');
   if (hasSp) imports.push('import androidx.compose.ui.unit.sp');
@@ -2316,6 +2318,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 ${colorImports}
+import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingScheme
 import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingCompact
 import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingRegular
 import com.bild.designsystem.shared.Density
@@ -2726,7 +2729,8 @@ async function aggregateComposeSemantics() {
           const content = fs.readFileSync(path.join(colorDir, fileName), 'utf8');
           const mode = fileName.toLowerCase().includes('dark') ? 'dark' : 'light';
 
-          const valRegex = /^\s*val\s+(\w+)\s*=\s*(.+)$/gm;
+          // Match both 'val' and 'override val' declarations
+          const valRegex = /^\s*(?:override\s+)?val\s+(\w+)\s*=\s*(.+)$/gm;
           let match;
           while ((match = valRegex.exec(content)) !== null) {
             semanticData.colors[mode].push({ name: match[1], value: match[2].trim() });
@@ -2742,7 +2746,8 @@ async function aggregateComposeSemantics() {
           const content = fs.readFileSync(path.join(sizingDir, fileName), 'utf8');
           const mode = fileName.toLowerCase().includes('regular') ? 'regular' : 'compact';
 
-          const valRegex = /^\s*val\s+(\w+)\s*=\s*(.+)$/gm;
+          // Match both 'val' and 'override val' declarations
+          const valRegex = /^\s*(?:override\s+)?val\s+(\w+)\s*=\s*(.+)$/gm;
           let match;
           while ((match = valRegex.exec(content)) !== null) {
             semanticData.sizing[mode].push({ name: match[1], value: match[2].trim() });

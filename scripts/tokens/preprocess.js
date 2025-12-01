@@ -435,6 +435,26 @@ function getAliasInfo(variableId, aliasLookup, collections, context = {}) {
 
 /**
  * Determines the token type for Style Dictionary based on Figma scopes and fallback heuristics
+ *
+ * Token Types:
+ * - fontSize, lineHeight, letterSpacing → .sp in Compose, px in CSS
+ * - fontWeight → Int (unitless)
+ * - fontFamily → String
+ * - opacity → Float (unitless, 0-1)
+ * - number → Int (unitless)
+ * - dimension → .dp in Compose, px in CSS
+ * - color → Color() in Compose, hex/rgba in CSS
+ * - string → String
+ * - boolean → Boolean
+ *
+ * Priority:
+ * 1. Color by value format (hex, rgba)
+ * 2. Boolean by resolvedType
+ * 3. Figma Scopes (semantic info from Figma)
+ * 4. Name-based fallback (for scopes: [])
+ * 5. Collection-based fallback
+ * 6. Default with warning
+ *
  * @param {string} tokenName - Token name
  * @param {string} collectionName - Collection name
  * @param {any} value - Processed value
@@ -443,101 +463,186 @@ function getAliasInfo(variableId, aliasLookup, collections, context = {}) {
 function determineTokenType(tokenName, collectionName, value, variable = null) {
   const tokenPath = tokenName.toLowerCase();
   const collection = collectionName.toLowerCase();
+  const scopes = variable?.scopes || [];
 
-  // Color (by value format)
+  // ══════════════════════════════════════════════════════════════
+  // PRIORITY 0: COLOR (by value format - höchste Priorität)
+  // ══════════════════════════════════════════════════════════════
   if (typeof value === 'string' && (value.startsWith('#') || value.startsWith('rgb'))) {
     return { $type: 'color' };
   }
 
-  // String values: no $type
-  if (typeof value === 'string' && !value.endsWith('px')) {
-    return { $type: null };
+  // ══════════════════════════════════════════════════════════════
+  // PRIORITY 0.5: BOOLEAN (by resolvedType)
+  // ══════════════════════════════════════════════════════════════
+  if (variable?.resolvedType === 'BOOLEAN') {
+    return { $type: 'boolean' };
   }
 
-  // PRIORITY 1: Scope-based type determination (Figma semantic info)
-  if (variable && variable.scopes && variable.scopes.length > 0) {
-    const scopes = variable.scopes;
-
-    // Dimensions → px
-    if (scopes.includes('WIDTH_HEIGHT') ||
-        scopes.includes('GAP') ||
-        scopes.includes('STROKE_FLOAT') ||
-        scopes.includes('CORNER_RADIUS') ||
-        scopes.includes('LINE_HEIGHT') ||
-        scopes.includes('LETTER_SPACING')) {
-      return { $type: 'dimension' };
-    }
-
-    // Font Size → px
+  // ══════════════════════════════════════════════════════════════
+  // PRIORITY 1: Figma Scope-based (semantische Info aus Figma)
+  // Reihenfolge ist KRITISCH für kombinierte Scopes!
+  // ══════════════════════════════════════════════════════════════
+  if (scopes.length > 0) {
+    // --- Text-Typography (sp in Compose) ---
+    // FONT_SIZE muss VOR LINE_HEIGHT geprüft werden wegen kombinierter Scopes
     if (scopes.includes('FONT_SIZE')) {
       return { $type: 'fontSize' };
     }
+    if (scopes.includes('LINE_HEIGHT')) {
+      return { $type: 'lineHeight' };
+    }
+    if (scopes.includes('LETTER_SPACING')) {
+      return { $type: 'letterSpacing' };
+    }
 
-    // Font Weight → unitless
+    // --- Font Properties ---
     if (scopes.includes('FONT_WEIGHT')) {
       return { $type: 'fontWeight' };
     }
+    if (scopes.includes('FONT_FAMILY')) {
+      return { $type: 'fontFamily' };
+    }
+    if (scopes.includes('FONT_STYLE')) {
+      // Font style strings like "Bold Italic" - used for Figma binding
+      return { $type: 'string' };
+    }
 
-    // Opacity → unitless (will be /100 in processDirectValue)
+    // --- Opacity (unitless) ---
     if (scopes.includes('OPACITY')) {
       return { $type: 'opacity' };
     }
+
+    // --- Dimensions (dp in Compose) ---
+    if (scopes.includes('CORNER_RADIUS') ||
+        scopes.includes('STROKE_FLOAT') ||
+        scopes.includes('WIDTH_HEIGHT') ||
+        scopes.includes('GAP') ||
+        scopes.includes('PARAGRAPH_SPACING') ||
+        scopes.includes('PARAGRAPH_INDENT')) {
+      return { $type: 'dimension' };
+    }
+
+    // --- Colors (various fill/stroke scopes) ---
+    if (scopes.includes('ALL_SCOPES') ||
+        scopes.includes('ALL_FILLS') ||
+        scopes.includes('FRAME_FILL') ||
+        scopes.includes('SHAPE_FILL') ||
+        scopes.includes('TEXT_FILL') ||
+        scopes.includes('STROKE_COLOR') ||
+        scopes.includes('EFFECT_COLOR')) {
+      // Check if it's actually a color by resolvedType
+      if (variable?.resolvedType === 'COLOR') {
+        return { $type: 'color' };
+      }
+      // ALL_SCOPES with BOOLEAN is handled above
+    }
+
+    // --- Text Content (string) ---
+    if (scopes.includes('TEXT_CONTENT')) {
+      // Could be dimension if combined with WIDTH_HEIGHT/GAP
+      if (scopes.includes('WIDTH_HEIGHT') || scopes.includes('GAP')) {
+        return { $type: 'dimension' };
+      }
+      return { $type: 'string' };
+    }
+
+    // --- Font Variations (usually combined with other scopes) ---
+    if (scopes.includes('FONT_VARIATIONS')) {
+      // If combined with dimension scopes, treat as dimension
+      if (scopes.includes('WIDTH_HEIGHT') || scopes.includes('GAP')) {
+        return { $type: 'dimension' };
+      }
+    }
   }
 
-  // PRIORITY 2: Fallback for scopes: [] - Token name-based heuristics
+  // ══════════════════════════════════════════════════════════════
+  // PRIORITY 2: Name-based Fallback (für scopes: [])
+  // ══════════════════════════════════════════════════════════════
 
-  // 1. Opacity (must be before "size" check)
+  // --- String values (check type-specific patterns first) ---
+  if (typeof value === 'string' && !value.endsWith('px') && !value.endsWith('rem')) {
+    // Font Family
+    if (tokenPath.includes('fontfamily') || tokenPath.includes('font-family')) {
+      return { $type: 'fontFamily' };
+    }
+    // Font Weight as numeric string ("700") → treat as fontWeight
+    if ((tokenPath.includes('fontweight') || tokenPath.includes('font-weight') ||
+         tokenPath.includes('stfontweight')) && /^\d+$/.test(value)) {
+      return { $type: 'fontWeight' };
+    }
+    // Text Case
+    if (tokenPath.includes('textcase') || tokenPath.includes('text-case')) {
+      return { $type: 'string' };
+    }
+    // Font style strings like "Bold Italic"
+    if (tokenPath.includes('fontweight') || tokenPath.includes('font-weight') ||
+        tokenPath.includes('stfontweight')) {
+      return { $type: 'string' };
+    }
+    // Other strings without specific type
+    return { $type: 'string' };
+  }
+
+  // --- Text-Typography (sp in Compose) ---
+  if (tokenPath.includes('fontsize') || tokenPath.includes('font-size')) {
+    return { $type: 'fontSize' };
+  }
+  if (tokenPath.includes('lineheight') || tokenPath.includes('line-height')) {
+    return { $type: 'lineHeight' };
+  }
+  if (tokenPath.includes('letterspacing') || tokenPath.includes('letter-spacing') ||
+      tokenPath.includes('letterspace')) {
+    return { $type: 'letterSpacing' };
+  }
+
+  // --- Font Properties ---
+  if (tokenPath.includes('fontweight') || tokenPath.includes('font-weight') ||
+      (tokenPath.includes('weight') && !tokenPath.includes('size'))) {
+    return { $type: 'fontWeight' };
+  }
+
+  // --- Opacity ---
   if (tokenPath.includes('opacity') || tokenPath.includes('alpha')) {
     return { $type: 'opacity' };
   }
 
-  // 2. Font Weight
-  if (tokenPath.includes('fontweight') ||
-      tokenPath.includes('font-weight') ||
-      (tokenPath.includes('weight') && !tokenPath.includes('fontsize'))) {
-    return { $type: 'fontWeight' };
-  }
-
-  // 3. Font Size
-  if (tokenPath.includes('fontsize') || tokenPath.includes('font-size')) {
-    return { $type: 'fontSize' };
-  }
-
-  // 4. Unitless numbers (Counts, Columns, Z-Index, etc.)
-  const unitlessKeywords = ['columns', 'colums', 'rows', 'count', 'index', 'order',
-                            'z-index', 'zindex', 'layer', 'elevation',
-                            'aspect', 'ratio', 'scale', 'factor'];
-  if (unitlessKeywords.some(keyword => tokenPath.includes(keyword))) {
+  // --- Unitless Numbers ---
+  const unitlessKeywords = [
+    'columns', 'colums', 'rows', 'count', 'index', 'order',
+    'zindex', 'z-index', 'layer', 'elevation',
+    'aspect', 'ratio', 'scale', 'factor'
+  ];
+  if (unitlessKeywords.some(k => tokenPath.includes(k))) {
     return { $type: 'number' };
   }
 
-  // 5. Dimensions (px) - comprehensive list
+  // --- Dimensions (dp in Compose) ---
   const dimensionKeywords = [
     'size', 'sizes', 'width', 'height',
     'space', 'spacing', 'gap', 'margin', 'padding', 'inset',
-    'lineheight', 'line-height',
-    'letterspacing', 'letter-spacing',
     'border', 'stroke', 'radius', 'cornerradius',
     'offset', 'top', 'bottom', 'left', 'right',
-    'blur', 'spread', 'shadow'
+    'blur', 'spread', 'shadow', 'thickness'
   ];
-  if (dimensionKeywords.some(keyword => tokenPath.includes(keyword))) {
+  if (dimensionKeywords.some(k => tokenPath.includes(k))) {
     return { $type: 'dimension' };
   }
 
-  // 6. Collection-based fallback
+  // ══════════════════════════════════════════════════════════════
+  // PRIORITY 3: Collection-based Fallback
+  // ══════════════════════════════════════════════════════════════
   if (collection.includes('size') || collection.includes('space') ||
       collection.includes('breakpoint') || collection.includes('density')) {
     return { $type: 'dimension' };
   }
 
-  // 7. Safe default for FLOAT without clear assignment
-  if (variable && variable.resolvedType === 'FLOAT') {
-    // Log warning for debugging
-    if (typeof value === 'number') {
-      console.warn(`⚠️  FLOAT token without clear type: ${tokenName} - defaulting to dimension`);
-      return { $type: 'dimension' };
-    }
+  // ══════════════════════════════════════════════════════════════
+  // PRIORITY 4: Default für FLOAT ohne klare Zuordnung
+  // ══════════════════════════════════════════════════════════════
+  if (variable?.resolvedType === 'FLOAT' && typeof value === 'number') {
+    console.warn(`⚠️  Untyped FLOAT: ${tokenName} → defaulting to dimension`);
+    return { $type: 'dimension' };
   }
 
   return { $type: null };
@@ -646,6 +751,65 @@ function normalizeTypographyStyle(resolvedStyle) {
 }
 
 /**
+ * Converts fontWeight string primitives to numeric values
+ *
+ * Problem: Figma stores some fontWeights as STRING (e.g., "Bold Italic")
+ * because font styles (italic) can't be set via variables.
+ *
+ * Solution: Extract the weight keyword and convert to numeric value.
+ * The italic part is handled separately by fontStyle in typography tokens.
+ *
+ * @param {string} tokenName - Token name (e.g., "stFontWeight/BoldItalic")
+ * @param {any} value - Token value
+ * @returns {any} - Numeric value if fontWeight string, original value otherwise
+ */
+function convertFontWeightStringToNumber(tokenName, value) {
+  // Only process string values for fontWeight tokens
+  if (typeof value !== 'string') {
+    return value;
+  }
+
+  const lowerName = tokenName.toLowerCase();
+  if (!lowerName.includes('fontweight') && !lowerName.includes('font-weight')) {
+    return value;
+  }
+
+  // Already numeric string? Convert directly
+  if (/^\d+$/.test(value)) {
+    return parseInt(value, 10);
+  }
+
+  // Extract weight part (remove "Italic" if present)
+  const weightPart = value.replace(/\s*italic\s*/i, '').trim();
+
+  if (!weightPart) {
+    return value; // Just "Italic" with no weight - keep as string
+  }
+
+  // Try to map keyword to numeric value
+  const normalizedKeyword = weightPart.toLowerCase().replace(/\s+/g, '');
+  let numericWeight = FONT_WEIGHT_MAP[normalizedKeyword];
+
+  // Try partial matching if exact match not found
+  if (!numericWeight) {
+    for (const [keyword, weightValue] of Object.entries(FONT_WEIGHT_MAP)) {
+      if (normalizedKeyword.includes(keyword) || keyword.includes(normalizedKeyword)) {
+        numericWeight = weightValue;
+        break;
+      }
+    }
+  }
+
+  if (numericWeight) {
+    return numericWeight;
+  }
+
+  // Could not convert - keep original string
+  console.warn(`⚠️  Could not convert fontWeight "${value}" to number - keeping as string`);
+  return value;
+}
+
+/**
  * Converts token name to nested path
  */
 function convertTokenName(name) {
@@ -714,6 +878,9 @@ function processSharedPrimitives(collections, aliasLookup) {
         } else {
           processedValue = processDirectValue(modeValue, variable.resolvedType, variable.name);
         }
+
+        // Convert string fontWeights to numeric values (e.g., "Bold Italic" → 700)
+        processedValue = convertFontWeightStringToNumber(variable.name, processedValue);
 
         if (processedValue !== null) {
           const tokenObject = {

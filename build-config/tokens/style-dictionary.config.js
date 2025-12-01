@@ -2665,11 +2665,29 @@ object ${className} {
       const type = token.$type || token.type;
       let value = token.value;
 
-      // Apply Compose-specific formatting
+      // Apply Compose-specific formatting based on $type (set by preprocessor)
       if (type === 'color') {
         value = toComposeColor(value);
-      } else if (type === 'dimension' || type === 'float' || type === 'sizing' || type === 'spacing') {
+      } else if (type === 'fontSize' || type === 'lineHeight' || type === 'letterSpacing') {
+        // Text-related types use sp units
+        value = toComposeSp(value);
+      } else if (type === 'fontWeight' || type === 'number') {
+        // Unitless integers - parse string if needed
+        if (typeof value === 'string' && /^\d+$/.test(value)) {
+          value = parseInt(value, 10);
+        }
+      } else if (type === 'opacity') {
+        // Opacity stays as float
+        if (typeof value === 'string') {
+          value = parseFloat(value);
+        }
+      } else if (type === 'fontFamily' || type === 'string') {
+        // Quote string values (font family names, etc.)
+        value = `"${value}"`;
+      } else if (type === 'dimension') {
         value = toComposeDp(value);
+      } else if (type === 'boolean') {
+        value = value ? 'true' : 'false';
       }
 
       output += `    internal val ${name} = ${value}\n`;
@@ -2799,11 +2817,11 @@ const composeSpacingFormat = ({ dictionary, options, file }) => {
     className = `${brandPascal}Spacing`;
   }
 
-  // Check if any tokens need sp import (font sizes, line heights)
+  // Check if any tokens need sp import (font sizes, line heights, letter spacing)
+  // Uses $type from preprocessor instead of name-based heuristics
   const needsSpImport = dictionary.allTokens.some(token => {
-    const lowerName = token.name.toLowerCase();
-    return lowerName.includes('fontsize') || lowerName.includes('font-size') ||
-           lowerName.includes('lineheight') || lowerName.includes('line-height');
+    const type = token.$type || token.type;
+    return type === 'fontSize' || type === 'lineHeight' || type === 'letterSpacing';
   });
 
   const imports = ['import androidx.compose.runtime.Stable', 'import androidx.compose.ui.unit.Dp', 'import androidx.compose.ui.unit.dp'];
@@ -2828,6 +2846,19 @@ ${imports.join('\n')}
 
 `;
 
+  // Helper function to determine if a token should be filtered out
+  // Filter out generic string tokens that aren't useful for Compose (e.g., breakpointName, changeOnLg)
+  const shouldFilterStringToken = (token) => {
+    const type = token.$type || token.type;
+    // Keep fontFamily strings, filter out generic strings
+    if (type === 'fontFamily') return false;
+    if (type === 'string') return true;  // Filter out generic strings
+    return false;
+  };
+
+  // Filter tokens to exclude generic string tokens
+  const filteredTokens = dictionary.allTokens.filter(token => !shouldFilterStringToken(token));
+
   // Generate interface for sizeclass (only for Compact mode)
   if (generateInterface && modeType === 'sizeclass') {
     output += `/**
@@ -2837,24 +2868,23 @@ ${imports.join('\n')}
 @Stable
 interface ${interfaceName} {
 `;
-    dictionary.allTokens.forEach(token => {
-      const lowerName = token.name.toLowerCase();
-      const isFontSize = lowerName.includes('fontsize') || lowerName.includes('font-size');
-      const isLineHeight = lowerName.includes('lineheight') || lowerName.includes('line-height');
-      const isFontFamily = lowerName.includes('fontfamily') || lowerName.includes('font-family');
-      const isFontWeight = lowerName.includes('fontweight') || lowerName.includes('font-weight');
-      const isTextCase = lowerName.includes('textcase') || lowerName.includes('text-case');
-      const isLetterSpacing = lowerName.includes('letterspacing') || lowerName.includes('letter-spacing');
-      const isColumns = lowerName.includes('colums') || lowerName.includes('columns');
+    filteredTokens.forEach(token => {
+      const type = token.$type || token.type;
 
-      let propType = 'Dp';
-      if (isFontSize || isLineHeight || isLetterSpacing) {
+      // Determine Kotlin type based on $type
+      let propType = 'Dp';  // Default
+      if (type === 'fontSize' || type === 'lineHeight' || type === 'letterSpacing') {
         propType = 'TextUnit';
-      } else if (isFontFamily || isTextCase) {
+      } else if (type === 'fontFamily') {
         propType = 'String';
-      } else if (isFontWeight || isColumns) {
+      } else if (type === 'fontWeight' || type === 'number' || type === 'opacity') {
         propType = 'Int';
+      } else if (type === 'color') {
+        propType = 'Color';
+      } else if (type === 'boolean') {
+        propType = 'Boolean';
       }
+      // type === 'dimension' → stays 'Dp'
 
       output += `    val ${token.name}: ${propType}\n`;
     });
@@ -2873,33 +2903,39 @@ interface ${interfaceName} {
 object ${className}${implementsClause} {
 `;
 
-  dictionary.allTokens.forEach(token => {
+  filteredTokens.forEach(token => {
     const name = token.name;
     const type = token.$type || token.type;
     let value = token.value;
 
-    // Apply Compose-specific formatting based on token name and type
-    const lowerName = name.toLowerCase();
-    const isFontSize = lowerName.includes('fontsize') || lowerName.includes('font-size');
-    const isLineHeight = lowerName.includes('lineheight') || lowerName.includes('line-height');
-    const isFontFamily = lowerName.includes('fontfamily') || lowerName.includes('font-family');
-    const isFontWeight = lowerName.includes('fontweight') || lowerName.includes('font-weight');
-
-    if (isFontSize || isLineHeight) {
+    // Apply Compose-specific formatting based on $type (set by preprocessor)
+    if (type === 'fontSize' || type === 'lineHeight' || type === 'letterSpacing') {
+      // Text-related types use sp units
       value = toComposeSp(value);
-    } else if (isFontWeight) {
+    } else if (type === 'fontWeight') {
       // FontWeight should always be an integer (e.g., 700, not "700")
       if (typeof value === 'string' && /^\d+$/.test(value)) {
         value = parseInt(value, 10);
       }
-    } else if (type === 'dimension' || type === 'float' || type === 'sizing' || type === 'spacing') {
-      value = toComposeDp(value);
-    } else if (type === 'fontFamily' || type === 'string' || isFontFamily) {
+    } else if (type === 'number') {
+      // Unitless integers
+      if (typeof value === 'string' && /^\d+$/.test(value)) {
+        value = parseInt(value, 10);
+      }
+    } else if (type === 'opacity') {
+      // Opacity as float
+      if (typeof value === 'string') {
+        value = parseFloat(value);
+      }
+    } else if (type === 'fontFamily') {
       // Quote string values
       value = `"${value}"`;
-    } else if (typeof value === 'string' && !value.match(/^[\d.-]+\.?(dp|sp)?$/) && value !== 'null') {
-      // Quote other string values that aren't numeric or already formatted
-      value = `"${value}"`;
+    } else if (type === 'dimension') {
+      value = toComposeDp(value);
+    } else if (type === 'color') {
+      value = toComposeColor(value);
+    } else if (type === 'boolean') {
+      value = value ? 'true' : 'false';
     }
 
     output += `    ${overrideKeyword}val ${name} = ${value}\n`;
@@ -2930,11 +2966,11 @@ const composeComponentTokensFormat = ({ dictionary, options, file }) => {
     }
   }
 
-  // Check if any tokens need sp import (font sizes, line heights)
+  // Check if any tokens need sp import (font sizes, line heights, letter spacing)
+  // Uses $type from preprocessor instead of name-based heuristics
   const needsSpImport = dictionary.allTokens.some(token => {
-    const lowerName = token.name.toLowerCase();
-    return lowerName.includes('fontsize') || lowerName.includes('font-size') ||
-           lowerName.includes('lineheight') || lowerName.includes('line-height');
+    const type = token.$type || token.type;
+    return type === 'fontSize' || type === 'lineHeight' || type === 'letterSpacing';
   });
 
   // Determine output class name
@@ -2990,30 +3026,34 @@ object ${className} {
     const type = token.$type || token.type;
     let value = token.value;
 
-    // Apply Compose-specific formatting based on token name and type
-    const lowerName = name.toLowerCase();
-    const isFontSize = lowerName.includes('fontsize') || lowerName.includes('font-size');
-    const isLineHeight = lowerName.includes('lineheight') || lowerName.includes('line-height');
-    const isFontFamily = lowerName.includes('fontfamily') || lowerName.includes('font-family');
-    const isFontWeight = lowerName.includes('fontweight') || lowerName.includes('font-weight');
-
+    // Apply Compose-specific formatting based on $type (set by preprocessor)
     if (type === 'color') {
       value = toComposeColor(value);
-    } else if (isFontSize || isLineHeight) {
+    } else if (type === 'fontSize' || type === 'lineHeight' || type === 'letterSpacing') {
+      // Text-related types use sp units
       value = toComposeSp(value);
-    } else if (isFontWeight) {
+    } else if (type === 'fontWeight') {
       // FontWeight should always be an integer (e.g., 700, not "700")
       if (typeof value === 'string' && /^\d+$/.test(value)) {
         value = parseInt(value, 10);
       }
-    } else if (type === 'dimension' || type === 'float' || type === 'sizing' || type === 'spacing') {
-      value = toComposeDp(value);
-    } else if (type === 'fontFamily' || type === 'string' || isFontFamily) {
+    } else if (type === 'number') {
+      // Unitless integers
+      if (typeof value === 'string' && /^\d+$/.test(value)) {
+        value = parseInt(value, 10);
+      }
+    } else if (type === 'opacity') {
+      // Opacity as float
+      if (typeof value === 'string') {
+        value = parseFloat(value);
+      }
+    } else if (type === 'fontFamily' || type === 'string') {
       // Quote string values
       value = `"${value}"`;
-    } else if (typeof value === 'string' && !value.match(/^[\d.-]+\.?(dp|sp)?$/) && value !== 'null') {
-      // Quote other string values that aren't numeric or already formatted
-      value = `"${value}"`;
+    } else if (type === 'dimension') {
+      value = toComposeDp(value);
+    } else if (type === 'boolean') {
+      value = value ? 'true' : 'false';
     }
 
     output += `    val ${name} = ${value}\n`;
@@ -3048,6 +3088,7 @@ const composeTypographyFormat = ({ dictionary, options, file }) => {
 
 package ${packageName}
 
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.sp
 
 /**
@@ -3073,6 +3114,10 @@ object ${className} {
       if (value.lineHeight) output += `    val ${token.name}LineHeight = ${value.lineHeight}.sp\n`;
       if (value.letterSpacing !== null && value.letterSpacing !== undefined) {
         output += `    val ${token.name}LetterSpacing = ${value.letterSpacing}f.sp\n`;
+      }
+      // Handle fontStyle for italic support - output Compose FontStyle enum value
+      if (value.fontStyle && value.fontStyle !== 'null' && value.fontStyle.toLowerCase() === 'italic') {
+        output += `    val ${token.name}FontStyle = FontStyle.Italic\n`;
       }
       if (value.textCase) output += `    val ${token.name}TextCase = "${value.textCase}"\n`;
       output += `\n`;

@@ -205,23 +205,51 @@ Container(
 
 ```kotlin
 import com.bild.designsystem.bild.theme.BildTheme
+import com.bild.designsystem.bild.theme.WindowSizeClass
 import com.bild.designsystem.bild.semantic.BildSemanticTokens
 import com.bild.designsystem.bild.components.ButtonTokens
 import com.bild.designsystem.DesignTokenPrimitives
+import com.bild.designsystem.shared.Density
 
-// Theme Provider (with automatic Light/Dark, WindowSizeClass support)
+// Theme Provider (with automatic Light/Dark, WindowSizeClass, Density support)
 BildTheme(
     darkTheme = isSystemInDarkTheme(),
-    sizeClass = WindowSizeClass.Compact
+    sizeClass = WindowSizeClass.Compact,
+    density = Density.Default
 ) {
-    // Access via BildTheme object
+    // Access via BildTheme object (type-safe via interfaces)
     Text(color = BildTheme.colors.textColorPrimary)
+
+    // Sizing adapts to WindowSizeClass
+    val fontSize = BildTheme.sizing.headline1FontSize
+
+    // Density-aware component tokens
+    val gap = ButtonTokens.Density.current().denseButtonContentGapSpace
 }
 
 // Direct token access (camelCase naming)
 val primaryColor = BildSemanticTokens.Colors.Light.textColorPrimary
 val buttonBg = ButtonTokens.Colors.Light.buttonPrimaryBrandBgColorIdle
 val red = DesignTokenPrimitives.Colors.bildred
+```
+
+#### Compose Type-Safe Interfaces
+
+The Compose output uses interfaces for type-safe theming:
+
+| Interface | Purpose | Implementations |
+|-----------|---------|-----------------|
+| `BildColorScheme` | Color tokens contract | `BildLightColors`, `BildDarkColors` |
+| `BildSizingScheme` | Sizing tokens contract | `BildSizingCompact`, `BildSizingRegular` |
+| `Density` (enum) | UI density settings | `Dense`, `Default`, `Spacious` |
+
+```kotlin
+// Density is brand-independent (shared across all brands)
+import com.bild.designsystem.shared.Density
+
+// Color/Sizing schemes are brand-specific
+import com.bild.designsystem.bild.semantic.BildColorScheme
+import com.bild.designsystem.bild.semantic.BildSizingScheme
 ```
 
 ### Android XML (Disabled)
@@ -316,6 +344,21 @@ lg (1024px) ────┘
 | Android XML | `snake_case` | `text_color_primary` |
 | Flutter | `camelCase` | `textColorPrimary` |
 
+### Name Transformations
+
+The pipeline applies these transformations to token names:
+
+| Input | CSS/SCSS | JS/Swift/Compose | Notes |
+|-------|----------|------------------|-------|
+| `TextColorPrimary` | `text-color-primary` | `textColorPrimary` | CamelCase → kebab/camel |
+| `bildred` | `bildred` | `bildred` | Lowercase preserved |
+| `bild085` | `bild085` | `bild085` | Numbers allowed |
+| `alpha-black-20` | `alpha-black-20` | `alphaBlack20` | Numbers at end OK |
+| `space2x` | `space2x` | `space2x` | Dimension pattern |
+| `700-black` | `700-black` | `n700Black` | Number prefix → `n` prefix |
+
+**Important:** Tokens with numeric prefixes (e.g., `700-black-font-weight`) get an `n` prefix in camelCase platforms to ensure valid identifiers.
+
 ### Token Types
 
 #### Colors
@@ -334,9 +377,22 @@ lg (1024px) ────┘
 |----------|--------|---------|
 | CSS | `Xpx` | `16px` |
 | iOS Swift | `CGFloat` number | `16` |
-| Android Compose | `X.dp` / `X.sp` | `16.dp`, `15.sp` |
+| Android Compose | `X.dp` | `16.dp` |
 | Android XML | `Xpx` dimen | `16px` |
 | Flutter | `"Xpx"` string | `"16px"` |
+
+#### Typography (Compose)
+
+Typography tokens in Compose use `.sp` for accessibility scaling:
+
+| Property | Format | Example |
+|----------|--------|---------|
+| `fontSize` | `X.sp` | `16.sp` |
+| `lineHeight` | `X.sp` | `24.sp` |
+| `letterSpacing` | `Xf.sp` | `0.5f.sp` |
+| `fontWeight` | `Int` | `700` |
+| `fontStyle` | `FontStyle` | `FontStyle.Italic` |
+| `fontFamily` | `String` | `"Gotham XNarrow"` |
 
 #### Opacity
 
@@ -396,12 +452,19 @@ dist/
 ├── android/
 │   └── compose/                     # Jetpack Compose (Kotlin)
 │       ├── shared/
-│       │   └── DesignTokenPrimitives.kt   # All primitives consolidated
+│       │   ├── DesignTokenPrimitives.kt   # All primitives consolidated
+│       │   └── Density.kt                  # Brand-independent density enum
 │       └── brands/{brand}/
 │           ├── components/{Component}/
 │           │   └── {Component}Tokens.kt   # Aggregated Colors/Sizing/Density/Typography
 │           ├── semantic/
-│           │   └── {Brand}SemanticTokens.kt   # Aggregated Light/Dark + Compact/Regular
+│           │   ├── {Brand}SemanticTokens.kt   # Aggregated Light/Dark + Compact/Regular
+│           │   ├── color/
+│           │   │   ├── ColorsLight.kt     # BildColorScheme interface + BildLightColors
+│           │   │   └── ColorsDark.kt      # BildDarkColors object
+│           │   └── sizeclass/
+│           │       ├── SizingCompact.kt   # BildSizingScheme interface + BildSizingCompact
+│           │       └── SizingRegular.kt   # BildSizingRegular object
 │           └── theme/
 │               └── {Brand}Theme.kt        # CompositionLocal Theme Provider
 └── flutter/                         # Dart Classes (disabled by default)
@@ -413,8 +476,11 @@ Compose output is optimized for Android development:
 
 | File | Content | Access Pattern |
 |------|---------|----------------|
-| `DesignTokenPrimitives.kt` | All primitives (Colors, Space, Size, Font) | `DesignTokenPrimitives.Colors.bildred` |
+| `shared/DesignTokenPrimitives.kt` | All primitives (Colors, Space, Size, Font) | `DesignTokenPrimitives.Colors.bildred` |
+| `shared/Density.kt` | Brand-independent Density enum | `Density.Default`, `Density.Dense`, `Density.Spacious` |
 | `{Brand}SemanticTokens.kt` | Colors (Light/Dark), Sizing (Compact/Regular) | `BildSemanticTokens.Colors.Light.textColorPrimary` |
+| `ColorsLight.kt` | ColorScheme interface + Light implementation | `BildLightColors.textColorPrimary` |
+| `SizingCompact.kt` | SizingScheme interface + Compact implementation | `BildSizingCompact.headline1FontSize` |
 | `{Component}Tokens.kt` | All component modes aggregated | `ButtonTokens.Colors.Light.buttonPrimaryBrandBgColorIdle` |
 | `{Brand}Theme.kt` | CompositionLocal-based Theme Provider | `BildTheme { /* content */ }` |
 
@@ -424,11 +490,39 @@ Compose output is optimized for Android development:
 
 | Scope | Assigned Type | Output Format |
 |-------|---------------|---------------|
+| `FONT_SIZE` | `fontSize` | px (CSS), `.sp` (Compose) |
+| `LINE_HEIGHT` | `lineHeight` | px (CSS), `.sp` (Compose) |
+| `LETTER_SPACING` | `letterSpacing` | px (CSS), `.sp` (Compose) |
+| `FONT_WEIGHT` | `fontWeight` | Unitless integer (100-900) |
+| `FONT_FAMILY` | `fontFamily` | String |
+| `FONT_STYLE` | `fontStyle` | String, `FontStyle.Italic` (Compose) |
 | `OPACITY` | `opacity` | 0-1 decimal (÷100) |
-| `WIDTH_HEIGHT` | `dimension` | px (CSS), CGFloat (iOS) |
-| `GAP` | `dimension` | Same as above |
-| `FONT_SIZE` | `fontSize` | px with transform |
-| `FONT_WEIGHT` | `fontWeight` | Unitless integer |
+| `WIDTH_HEIGHT` | `dimension` | px (CSS), `.dp` (Compose) |
+| `GAP` | `dimension` | px (CSS), `.dp` (Compose) |
+| `CORNER_RADIUS` | `dimension` | px (CSS), `.dp` (Compose) |
+| `STROKE_FLOAT` | `dimension` | px (CSS), `.dp` (Compose) |
+| `PARAGRAPH_SPACING` | `dimension` | px (CSS), `.dp` (Compose) |
+| `PARAGRAPH_INDENT` | `dimension` | px (CSS), `.dp` (Compose) |
+| `ALL_FILLS`, `FRAME_FILL`, `SHAPE_FILL`, `TEXT_FILL` | `color` | #HEX, `Color(0xFF...)` |
+| `STROKE_COLOR`, `EFFECT_COLOR` | `color` | #HEX, `Color(0xFF...)` |
+
+### Compose Unit Mapping
+
+Android Compose uses type-safe units. The pipeline automatically maps token types:
+
+| Token Type | Compose Unit | Example Output |
+|------------|--------------|----------------|
+| `fontSize` | `.sp` | `16.sp` |
+| `lineHeight` | `.sp` | `24.sp` |
+| `letterSpacing` | `.sp` | `0.5f.sp` |
+| `dimension` | `.dp` | `16.dp` |
+| `fontWeight` | `Int` | `700` |
+| `fontStyle` | `FontStyle` | `FontStyle.Italic` |
+| `fontFamily` | `String` | `"Gotham XNarrow"` |
+| `color` | `Color` | `Color(0xFFDD0000)` |
+| `opacity` | `Int` | `50` (percentage) |
+
+**Note:** `.sp` (scale-independent pixels) is used for text-related measurements to support accessibility scaling. `.dp` (density-independent pixels) is used for layout dimensions.
 
 ### Stable Changes
 
