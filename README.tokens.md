@@ -344,6 +344,21 @@ lg (1024px) ────┘
 | Android XML | `snake_case` | `text_color_primary` |
 | Flutter | `camelCase` | `textColorPrimary` |
 
+### Name Transformations
+
+The pipeline applies these transformations to token names:
+
+| Input | CSS/SCSS | JS/Swift/Compose | Notes |
+|-------|----------|------------------|-------|
+| `TextColorPrimary` | `text-color-primary` | `textColorPrimary` | CamelCase → kebab/camel |
+| `bildred` | `bildred` | `bildred` | Lowercase preserved |
+| `bild085` | `bild085` | `bild085` | Numbers allowed |
+| `alpha-black-20` | `alpha-black-20` | `alphaBlack20` | Numbers at end OK |
+| `space2x` | `space2x` | `space2x` | Dimension pattern |
+| `700-black` | `700-black` | `n700Black` | Number prefix → `n` prefix |
+
+**Important:** Tokens with numeric prefixes (e.g., `700-black-font-weight`) get an `n` prefix in camelCase platforms to ensure valid identifiers.
+
 ### Token Types
 
 #### Colors
@@ -362,9 +377,22 @@ lg (1024px) ────┘
 |----------|--------|---------|
 | CSS | `Xpx` | `16px` |
 | iOS Swift | `CGFloat` number | `16` |
-| Android Compose | `X.dp` / `X.sp` | `16.dp`, `15.sp` |
+| Android Compose | `X.dp` | `16.dp` |
 | Android XML | `Xpx` dimen | `16px` |
 | Flutter | `"Xpx"` string | `"16px"` |
+
+#### Typography (Compose)
+
+Typography tokens in Compose use `.sp` for accessibility scaling:
+
+| Property | Format | Example |
+|----------|--------|---------|
+| `fontSize` | `X.sp` | `16.sp` |
+| `lineHeight` | `X.sp` | `24.sp` |
+| `letterSpacing` | `Xf.sp` | `0.5f.sp` |
+| `fontWeight` | `Int` | `700` |
+| `fontStyle` | `FontStyle` | `FontStyle.Italic` |
+| `fontFamily` | `String` | `"Gotham XNarrow"` |
 
 #### Opacity
 
@@ -462,11 +490,39 @@ Compose output is optimized for Android development:
 
 | Scope | Assigned Type | Output Format |
 |-------|---------------|---------------|
+| `FONT_SIZE` | `fontSize` | px (CSS), `.sp` (Compose) |
+| `LINE_HEIGHT` | `lineHeight` | px (CSS), `.sp` (Compose) |
+| `LETTER_SPACING` | `letterSpacing` | px (CSS), `.sp` (Compose) |
+| `FONT_WEIGHT` | `fontWeight` | Unitless integer (100-900) |
+| `FONT_FAMILY` | `fontFamily` | String |
+| `FONT_STYLE` | `fontStyle` | String, `FontStyle.Italic` (Compose) |
 | `OPACITY` | `opacity` | 0-1 decimal (÷100) |
-| `WIDTH_HEIGHT` | `dimension` | px (CSS), CGFloat (iOS) |
-| `GAP` | `dimension` | Same as above |
-| `FONT_SIZE` | `fontSize` | px with transform |
-| `FONT_WEIGHT` | `fontWeight` | Unitless integer |
+| `WIDTH_HEIGHT` | `dimension` | px (CSS), `.dp` (Compose) |
+| `GAP` | `dimension` | px (CSS), `.dp` (Compose) |
+| `CORNER_RADIUS` | `dimension` | px (CSS), `.dp` (Compose) |
+| `STROKE_FLOAT` | `dimension` | px (CSS), `.dp` (Compose) |
+| `PARAGRAPH_SPACING` | `dimension` | px (CSS), `.dp` (Compose) |
+| `PARAGRAPH_INDENT` | `dimension` | px (CSS), `.dp` (Compose) |
+| `ALL_FILLS`, `FRAME_FILL`, `SHAPE_FILL`, `TEXT_FILL` | `color` | #HEX, `Color(0xFF...)` |
+| `STROKE_COLOR`, `EFFECT_COLOR` | `color` | #HEX, `Color(0xFF...)` |
+
+### Compose Unit Mapping
+
+Android Compose uses type-safe units. The pipeline automatically maps token types:
+
+| Token Type | Compose Unit | Example Output |
+|------------|--------------|----------------|
+| `fontSize` | `.sp` | `16.sp` |
+| `lineHeight` | `.sp` | `24.sp` |
+| `letterSpacing` | `.sp` | `0.5f.sp` |
+| `dimension` | `.dp` | `16.dp` |
+| `fontWeight` | `Int` | `700` |
+| `fontStyle` | `FontStyle` | `FontStyle.Italic` |
+| `fontFamily` | `String` | `"Gotham XNarrow"` |
+| `color` | `Color` | `Color(0xFFDD0000)` |
+| `opacity` | `Int` | `50` (percentage) |
+
+**Note:** `.sp` (scale-independent pixels) is used for text-related measurements to support accessibility scaling. `.dp` (density-independent pixels) is used for layout dimensions.
 
 ### Stable Changes
 
