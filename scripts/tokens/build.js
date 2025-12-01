@@ -1998,6 +1998,7 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   const hasColor = allTokens.some(t => t.value.includes('Color('));
   const hasDp = allTokens.some(t => t.value.includes('.dp'));
   const hasSp = allTokens.some(t => t.value.includes('.sp'));
+  const hasFontStyle = allTokens.some(t => t.value.includes('FontStyle.'));
   const hasDensityTokens = tokenGroups.density.dense.length > 0 ||
       tokenGroups.density.default.length > 0 ||
       tokenGroups.density.spacious.length > 0;
@@ -2009,6 +2010,7 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
     imports.push('import com.bild.designsystem.shared.Density');
   }
   if (hasColor) imports.push('import androidx.compose.ui.graphics.Color');
+  if (hasFontStyle) imports.push('import androidx.compose.ui.text.font.FontStyle');
   if (hasDp || hasSp) imports.push('import androidx.compose.ui.unit.Dp');
   if (hasDp) imports.push('import androidx.compose.ui.unit.dp');
   if (hasSp) imports.push('import androidx.compose.ui.unit.sp');

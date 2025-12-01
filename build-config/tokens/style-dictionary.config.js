@@ -3088,6 +3088,7 @@ const composeTypographyFormat = ({ dictionary, options, file }) => {
 
 package ${packageName}
 
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.sp
 
 /**
@@ -3113,6 +3114,10 @@ object ${className} {
       if (value.lineHeight) output += `    val ${token.name}LineHeight = ${value.lineHeight}.sp\n`;
       if (value.letterSpacing !== null && value.letterSpacing !== undefined) {
         output += `    val ${token.name}LetterSpacing = ${value.letterSpacing}f.sp\n`;
+      }
+      // Handle fontStyle for italic support - output Compose FontStyle enum value
+      if (value.fontStyle && value.fontStyle !== 'null' && value.fontStyle.toLowerCase() === 'italic') {
+        output += `    val ${token.name}FontStyle = FontStyle.Italic\n`;
       }
       if (value.textCase) output += `    val ${token.name}TextCase = "${value.textCase}"\n`;
       output += `\n`;
