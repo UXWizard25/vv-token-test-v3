@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2025-12-01T12:42:55.884Z",
+  "lastModified": "2025-12-01T12:59:46.762Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -7952,7 +7952,7 @@
       "variables": [
         {
           "id": "VariableID:5695:5842",
-          "name": "Component/Button/buttonContentGapSpace",
+          "name": "Component/Button/denseButtonContentGapSpace",
           "description": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes.",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7975,7 +7975,7 @@
         },
         {
           "id": "VariableID:5696:5853",
-          "name": "Component/Button/buttonStackSpace",
+          "name": "Component/Button/denseButtonStackSpace",
           "description": "This variable is in the SpaceScaling collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes.",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7998,7 +7998,7 @@
         },
         {
           "id": "VariableID:13264:8396",
-          "name": "Component/Button/buttonLabelFontSize",
+          "name": "Component/Button/denseButtonLabelFontSize",
           "description": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling size could work across different content scaling / size / contrast themes. Font size across devices: 15 - 17 - 19",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -8012,7 +8012,7 @@
         },
         {
           "id": "VariableID:13264:8569",
-          "name": "Component/Button/buttonInlineSpace",
+          "name": "Component/Button/denseButtonInlineSpace",
           "description": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes.",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -8035,7 +8035,7 @@
         },
         {
           "id": "VariableID:18682:535",
-          "name": "Component/Inputfield/inputFieldInlineSpace",
+          "name": "Component/Inputfield/denseInputFieldInlineSpace",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -8058,7 +8058,7 @@
         },
         {
           "id": "VariableID:18682:536",
-          "name": "Component/Inputfield/inputFieldStackSpace",
+          "name": "Component/Inputfield/denseInputFieldStackSpace",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -8081,7 +8081,7 @@
         },
         {
           "id": "VariableID:18682:4564",
-          "name": "Component/Inputfield/inputFieldHeightSize",
+          "name": "Component/Inputfield/denseInputFieldHeightSize",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -8104,7 +8104,7 @@
         },
         {
           "id": "VariableID:18693:666",
-          "name": "Component/Inputfield/inputFieldLabelFontSize",
+          "name": "Component/Inputfield/denseInputFieldLabelFontSize",
           "description": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling size could work across different content scaling / size / contrast themes. Font size across scaling options: compact 15 - default 17 - spacious 19",
           "resolvedType": "FLOAT",
           "valuesByMode": {
