@@ -2004,9 +2004,12 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
       tokenGroups.density.spacious.length > 0;
   const hasColorTokens = tokenGroups.colors.light.length > 0 || tokenGroups.colors.dark.length > 0;
   const hasSizingTokens = tokenGroups.sizing.compact.length > 0 || tokenGroups.sizing.regular.length > 0;
+  const hasTypographyTokens = tokenGroups.typography.compact.length > 0 || tokenGroups.typography.regular.length > 0;
 
   // Need @Composable and Theme imports for current() accessors
-  const needsComposable = hasDensityTokens || hasColorTokens || hasSizingTokens;
+  const needsComposable = hasDensityTokens || hasColorTokens || hasSizingTokens || hasTypographyTokens;
+  // WindowSizeClass needed for both Sizing and Typography (both use Compact/Regular)
+  const needsWindowSizeClass = hasSizingTokens || hasTypographyTokens;
 
   const imports = ['import androidx.compose.runtime.Immutable'];
   if (needsComposable) {
@@ -2016,7 +2019,7 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   if (hasDensityTokens) {
     imports.push('import com.bild.designsystem.shared.Density');
   }
-  if (hasSizingTokens) {
+  if (needsWindowSizeClass) {
     imports.push('import com.bild.designsystem.shared.WindowSizeClass');
   }
   if (hasColor) imports.push('import androidx.compose.ui.graphics.Color');
@@ -2250,25 +2253,64 @@ object ${componentName}Tokens {
     output += `    }\n`;
   }
 
-  // Typography section
+  // Typography section with interface and current() accessor
   if (tokenGroups.typography.compact.length > 0 || tokenGroups.typography.regular.length > 0) {
+    // Collect all unique token names for interface
+    const typographyTokenNames = new Map();
+    [...tokenGroups.typography.compact, ...tokenGroups.typography.regular].forEach(t => {
+      if (!typographyTokenNames.has(t.name)) {
+        typographyTokenNames.set(t.name, t.value);
+      }
+    });
+
     output += `
     // ══════════════════════════════════════════════════════════════
     // TYPOGRAPHY
     // ══════════════════════════════════════════════════════════════
     object Typography {
+        /**
+         * Returns typography tokens for the current window size class.
+         * Automatically resolves to Compact or Regular based on ${brandPascal}Theme.sizeClass
+         *
+         * Usage:
+         *   val fontFamily = ${componentName}Tokens.Typography.current().labelFontFamily
+         */
+        @Composable
+        fun current(): TypographyTokens = when (${brandPascal}Theme.sizeClass) {
+            WindowSizeClass.Compact -> Compact
+            WindowSizeClass.Regular -> Regular
+        }
+
+        /**
+         * Interface for typography tokens
+         */
+        interface TypographyTokens {
+`;
+    // Generate interface properties
+    typographyTokenNames.forEach((value, name) => {
+      // Determine type based on value
+      let propType = 'String';
+      if (value.includes('.sp')) propType = 'TextUnit';
+      else if (value.includes('.dp')) propType = 'Dp';
+      else if (value.includes('FontStyle.')) propType = 'FontStyle';
+      else if (/^\d+$/.test(value.trim())) propType = 'Int';
+      else if (value.startsWith('"') || value.startsWith("'")) propType = 'String';
+      output += `            val ${name}: ${propType}\n`;
+    });
+    output += `        }
+
 `;
     if (tokenGroups.typography.compact.length > 0) {
-      output += `        object Compact {\n`;
+      output += `        object Compact : TypographyTokens {\n`;
       tokenGroups.typography.compact.forEach(t => {
-        output += `            val ${t.name} = ${t.value}\n`;
+        output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
     }
     if (tokenGroups.typography.regular.length > 0) {
-      output += `        object Regular {\n`;
+      output += `        object Regular : TypographyTokens {\n`;
       tokenGroups.typography.regular.forEach(t => {
-        output += `            val ${t.name} = ${t.value}\n`;
+        output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
     }
