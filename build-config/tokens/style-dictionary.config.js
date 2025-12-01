@@ -2660,7 +2660,8 @@ object ${className} {
   Object.keys(grouped).sort().forEach(category => {
     output += `    // ${category}\n`;
     grouped[category].forEach(token => {
-      const name = token.name.charAt(0).toUpperCase() + token.name.slice(1);
+      // Use token.name directly - already camelCase from name/custom/compose transform
+      const name = token.name;
       const type = token.$type || token.type;
       let value = token.value;
 

@@ -2477,10 +2477,10 @@ import androidx.compose.ui.unit.sp
  * Design Token Primitives
  *
  * Usage:
- *   DesignTokenPrimitives.Colors.Bildred
- *   DesignTokenPrimitives.Space.Space2x
- *   DesignTokenPrimitives.Size.Size4x
- *   DesignTokenPrimitives.Font.FontWeightBold
+ *   DesignTokenPrimitives.Colors.bildred
+ *   DesignTokenPrimitives.Space.space2x
+ *   DesignTokenPrimitives.Size.size4x
+ *   DesignTokenPrimitives.Font.fontWeightBold
  */
 object DesignTokenPrimitives {
 
