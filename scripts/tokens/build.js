@@ -1998,12 +1998,21 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   const hasColor = allTokens.some(t => t.value.includes('Color('));
   const hasDp = allTokens.some(t => t.value.includes('.dp'));
   const hasSp = allTokens.some(t => t.value.includes('.sp'));
+  const hasDensityTokens = tokenGroups.density.dense.length > 0 ||
+      tokenGroups.density.default.length > 0 ||
+      tokenGroups.density.spacious.length > 0;
 
   const imports = ['import androidx.compose.runtime.Immutable'];
+  if (hasDensityTokens) {
+    imports.push('import androidx.compose.runtime.Composable');
+    imports.push(`import com.bild.designsystem.${brand}.theme.${brandPascal}Theme`);
+    imports.push(`import com.bild.designsystem.${brand}.theme.${brandPascal}Density`);
+  }
   if (hasColor) imports.push('import androidx.compose.ui.graphics.Color');
   if (hasDp || hasSp) imports.push('import androidx.compose.ui.unit.Dp');
   if (hasDp) imports.push('import androidx.compose.ui.unit.dp');
   if (hasSp) imports.push('import androidx.compose.ui.unit.sp');
+  if (hasSp && hasDensityTokens) imports.push('import androidx.compose.ui.unit.TextUnit');
 
   let output = `/**
  * Do not edit directly, this file was auto-generated.
@@ -2082,34 +2091,77 @@ object ${componentName}Tokens {
     output += `    }\n`;
   }
 
-  // Density section
-  if (tokenGroups.density.dense.length > 0 ||
+  // Density section with interface and current() helper
+  const hasDensity = tokenGroups.density.dense.length > 0 ||
       tokenGroups.density.default.length > 0 ||
-      tokenGroups.density.spacious.length > 0) {
+      tokenGroups.density.spacious.length > 0;
+
+  if (hasDensity) {
+    // Collect all unique token names across density modes for interface
+    const densityTokenNames = new Map();
+    [...tokenGroups.density.dense, ...tokenGroups.density.default, ...tokenGroups.density.spacious].forEach(t => {
+      if (!densityTokenNames.has(t.name)) {
+        densityTokenNames.set(t.name, t.value);
+      }
+    });
+
     output += `
     // ══════════════════════════════════════════════════════════════
     // DENSITY
     // ══════════════════════════════════════════════════════════════
     object Density {
+        /**
+         * Returns density tokens for the current theme density.
+         * Automatically resolves to Dense, Default, or Spacious based on ${brandPascal}Theme.density
+         *
+         * Usage:
+         *   val gap = ${componentName}Tokens.Density.current().contentGap
+         */
+        @Composable
+        fun current(): DensityTokens = when (${brandPascal}Theme.density) {
+            ${brandPascal}Density.Dense -> Dense
+            ${brandPascal}Density.Default -> Default
+            ${brandPascal}Density.Spacious -> Spacious
+        }
+
+        /**
+         * Interface for density-dependent tokens
+         */
+        interface DensityTokens {
+`;
+    // Generate interface properties
+    densityTokenNames.forEach((value, name) => {
+      // Determine type based on value
+      let propType = 'Dp';
+      if (value.includes('.sp')) propType = 'TextUnit';
+      else if (value.includes('Color(')) propType = 'Color';
+      else if (!value.includes('.dp') && !value.includes('.sp') && /^\d+$/.test(value.replace(/[^\d]/g, ''))) {
+        // Check if it's a pure number (Int)
+        if (!value.includes('.')) propType = 'Int';
+      }
+      output += `            val ${name}: ${propType}\n`;
+    });
+    output += `        }
+
 `;
     if (tokenGroups.density.dense.length > 0) {
-      output += `        object Dense {\n`;
+      output += `        object Dense : DensityTokens {\n`;
       tokenGroups.density.dense.forEach(t => {
-        output += `            val ${t.name} = ${t.value}\n`;
+        output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
     }
     if (tokenGroups.density.default.length > 0) {
-      output += `        object Default {\n`;
+      output += `        object Default : DensityTokens {\n`;
       tokenGroups.density.default.forEach(t => {
-        output += `            val ${t.name} = ${t.value}\n`;
+        output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
     }
     if (tokenGroups.density.spacious.length > 0) {
-      output += `        object Spacious {\n`;
+      output += `        object Spacious : DensityTokens {\n`;
       tokenGroups.density.spacious.forEach(t => {
-        output += `            val ${t.name} = ${t.value}\n`;
+        output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
     }
@@ -2183,12 +2235,16 @@ async function generateComposeThemeProviders() {
         fs.mkdirSync(themeDir, { recursive: true });
       }
 
+      // Check if brand has color tokens
+      const colorDir = path.join(brandDir, 'semantic', 'color');
+      const hasColors = fs.existsSync(colorDir) && fs.readdirSync(colorDir).some(f => f.endsWith('.kt'));
+
       // Generate Theme Provider
-      const themeContent = generateThemeProviderFile(brand);
+      const themeContent = generateThemeProviderFile(brand, hasColors);
       const themeFile = path.join(themeDir, `${brand.charAt(0).toUpperCase() + brand.slice(1)}Theme.kt`);
       fs.writeFileSync(themeFile, themeContent, 'utf8');
 
-      console.log(`     ✅ ${brand}/theme/${brand.charAt(0).toUpperCase() + brand.slice(1)}Theme.kt`);
+      console.log(`     ✅ ${brand}/theme/${brand.charAt(0).toUpperCase() + brand.slice(1)}Theme.kt ${hasColors ? '' : '(no colors, uses external)'}`);
       successfulThemes++;
 
     } catch (error) {
@@ -2202,11 +2258,34 @@ async function generateComposeThemeProviders() {
 
 /**
  * Generates the Theme Provider Kotlin file content
+ * @param brand - Brand name (e.g., 'bild', 'sportbild', 'advertorial')
+ * @param hasColors - Whether the brand has its own color tokens
  */
-function generateThemeProviderFile(brand) {
+function generateThemeProviderFile(brand, hasColors = true) {
   const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
   const packageJson = require('../../package.json');
   const version = packageJson.version;
+
+  // For brands without colors, we need to use a shared color scheme (BildColorScheme)
+  const colorImports = hasColors
+    ? `import com.bild.designsystem.${brand}.semantic.${brandPascal}ColorScheme
+import com.bild.designsystem.${brand}.semantic.${brandPascal}LightColors
+import com.bild.designsystem.${brand}.semantic.${brandPascal}DarkColors`
+    : `// ${brandPascal} uses shared color schemes from other brands (e.g., Bild, Sportbild)
+// Import the color scheme you want to use:
+import com.bild.designsystem.bild.semantic.BildColorScheme
+import com.bild.designsystem.bild.semantic.BildLightColors
+import com.bild.designsystem.bild.semantic.BildDarkColors`;
+
+  const colorSchemeType = hasColors ? `${brandPascal}ColorScheme` : 'BildColorScheme';
+  const defaultLightColors = hasColors ? `${brandPascal}LightColors` : 'BildLightColors';
+  const defaultDarkColors = hasColors ? `${brandPascal}DarkColors` : 'BildDarkColors';
+
+  const colorInjectionNote = hasColors ? '' : `
+ * Note: ${brandPascal} does not have its own color tokens.
+ * Colors can be injected from other brands (Bild or Sportbild).
+ * Default: Uses BildLightColors/BildDarkColors
+ *`;
 
   return `/**
  * Do not edit directly, this file was auto-generated.
@@ -2227,8 +2306,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
-import com.bild.designsystem.${brand}.semantic.${brandPascal}LightColors
-import com.bild.designsystem.${brand}.semantic.${brandPascal}DarkColors
+${colorImports}
 import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingCompact
 import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingRegular
 
@@ -2263,9 +2341,9 @@ enum class ${brandPascal}Density {
 
 /**
  * CompositionLocal for current color scheme (Light/Dark)
- * Use staticCompositionLocalOf for values that rarely change
+ * Uses ${colorSchemeType} interface for type-safe access
  */
-internal val Local${brandPascal}Colors = staticCompositionLocalOf { ${brandPascal}LightColors }
+internal val Local${brandPascal}Colors = staticCompositionLocalOf<${colorSchemeType}> { ${defaultLightColors} }
 
 /**
  * CompositionLocal for current size class (Compact/Regular)
@@ -2291,8 +2369,10 @@ internal val LocalIsDarkTheme = staticCompositionLocalOf { false }
  *
  * Wraps content with CompositionLocals for theming.
  * All child composables can access theme values via [${brandPascal}Theme].
- *
+ *${colorInjectionNote}
  * @param darkTheme Whether to use dark color scheme
+ * @param lightColors Light color scheme to use (allows color scheme injection)
+ * @param darkColors Dark color scheme to use (allows color scheme injection)
  * @param sizeClass Current window size class for responsive sizing
  * @param density UI density for spacing adjustments
  * @param content Composable content to wrap
@@ -2315,11 +2395,13 @@ internal val LocalIsDarkTheme = staticCompositionLocalOf { false }
 @Composable
 fun ${brandPascal}Theme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    lightColors: ${colorSchemeType} = ${defaultLightColors},
+    darkColors: ${colorSchemeType} = ${defaultDarkColors},
     sizeClass: WindowSizeClass = WindowSizeClass.Compact,
     density: ${brandPascal}Density = ${brandPascal}Density.Default,
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) ${brandPascal}DarkColors else ${brandPascal}LightColors
+    val colors = if (darkTheme) darkColors else lightColors
 
     CompositionLocalProvider(
         Local${brandPascal}Colors provides colors,
@@ -2351,7 +2433,7 @@ fun ${brandPascal}Theme(
  *     ) {
  *         Text(
  *             text = "Click me",
- *             fontSize = ${brandPascal}Theme.sizing.buttonLabelFontSize
+ *             fontSize = ${brandPascal}Theme.sizing.headline1FontSize
  *         )
  *     }
  * }
@@ -2361,8 +2443,9 @@ object ${brandPascal}Theme {
 
     /**
      * Current color scheme (Light or Dark based on theme)
+     * Type-safe access via ${colorSchemeType} interface
      */
-    val colors: Any
+    val colors: ${colorSchemeType}
         @Composable
         @ReadOnlyComposable
         get() = Local${brandPascal}Colors.current
@@ -2370,7 +2453,7 @@ object ${brandPascal}Theme {
     /**
      * Current sizing values based on WindowSizeClass
      */
-    val sizing: Any
+    val sizing: ${brandPascal}SizingScheme
         @Composable
         @ReadOnlyComposable
         get() = when (Local${brandPascal}SizeClass.current) {

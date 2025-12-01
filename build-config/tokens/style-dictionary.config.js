@@ -2722,20 +2722,40 @@ const composeSemanticColorsFormat = ({ dictionary, options, file }) => {
 package ${packageName}
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
 
-/**
- * ${brandPascal} Color Scheme - ${modePascal} Mode
- */
 `;
 
-  // Generate instance with values
-  output += `object ${brandPascal}${modePascal}Colors {\n`;
+  // Generate interface (only for Light mode to avoid duplication)
+  if (mode.toLowerCase() === 'light') {
+    output += `/**
+ * Color scheme interface for ${brandPascal}
+ * Allows type-safe access to colors and enables color scheme sharing across brands
+ */
+@Stable
+interface ${brandPascal}ColorScheme {
+`;
+    tokens.forEach(token => {
+      output += `    val ${token.name}: Color\n`;
+    });
+    output += `}
+
+`;
+  }
+
+  // Generate object implementing the interface
+  output += `/**
+ * ${brandPascal} Color Scheme - ${modePascal} Mode
+ */
+@Immutable
+object ${brandPascal}${modePascal}Colors : ${brandPascal}ColorScheme {
+`;
 
   tokens.forEach(token => {
     const name = token.name;
     const value = toComposeColor(token.value);
-    output += `    val ${name} = ${value}\n`;
+    output += `    override val ${name} = ${value}\n`;
   });
 
   output += `}\n`;
@@ -2744,7 +2764,7 @@ import androidx.compose.ui.graphics.Color
 
 /**
  * Format: Jetpack Compose Spacing/Sizing Object
- * Generates object with Dp values
+ * Generates object with Dp values and interfaces for type safety
  */
 const composeSpacingFormat = ({ dictionary, options, file }) => {
   const { packageName, brand, mode, modeType } = options;
@@ -2763,10 +2783,16 @@ const composeSpacingFormat = ({ dictionary, options, file }) => {
     }
   }
 
-  // Determine class name based on mode type
+  // Determine class name and interface based on mode type
   let className;
+  let interfaceName;
+  let generateInterface = false;
+
   if (modeType === 'sizeclass') {
     className = `${brandPascal}Sizing${modePascal}`;
+    interfaceName = `${brandPascal}SizingScheme`;
+    // Generate interface only for Compact mode to avoid duplication
+    generateInterface = modePascal === 'Compact';
   } else if (modeType === 'density') {
     className = `${brandPascal}Density${modePascal}`;
   } else {
@@ -2780,9 +2806,10 @@ const composeSpacingFormat = ({ dictionary, options, file }) => {
            lowerName.includes('lineheight') || lowerName.includes('line-height');
   });
 
-  const imports = ['import androidx.compose.ui.unit.Dp', 'import androidx.compose.ui.unit.dp'];
+  const imports = ['import androidx.compose.runtime.Stable', 'import androidx.compose.ui.unit.Dp', 'import androidx.compose.ui.unit.dp'];
   if (needsSpImport) {
     imports.push('import androidx.compose.ui.unit.sp');
+    imports.push('import androidx.compose.ui.unit.TextUnit');
   }
 
   let output = `/**
@@ -2799,10 +2826,51 @@ package ${packageName}
 
 ${imports.join('\n')}
 
-/**
+`;
+
+  // Generate interface for sizeclass (only for Compact mode)
+  if (generateInterface && modeType === 'sizeclass') {
+    output += `/**
+ * Sizing scheme interface for ${brandPascal}
+ * Provides type-safe access to sizing tokens across WindowSizeClass variants
+ */
+@Stable
+interface ${interfaceName} {
+`;
+    dictionary.allTokens.forEach(token => {
+      const lowerName = token.name.toLowerCase();
+      const isFontSize = lowerName.includes('fontsize') || lowerName.includes('font-size');
+      const isLineHeight = lowerName.includes('lineheight') || lowerName.includes('line-height');
+      const isFontFamily = lowerName.includes('fontfamily') || lowerName.includes('font-family');
+      const isFontWeight = lowerName.includes('fontweight') || lowerName.includes('font-weight');
+      const isTextCase = lowerName.includes('textcase') || lowerName.includes('text-case');
+      const isLetterSpacing = lowerName.includes('letterspacing') || lowerName.includes('letter-spacing');
+      const isColumns = lowerName.includes('colums') || lowerName.includes('columns');
+
+      let propType = 'Dp';
+      if (isFontSize || isLineHeight || isLetterSpacing) {
+        propType = 'TextUnit';
+      } else if (isFontFamily || isTextCase) {
+        propType = 'String';
+      } else if (isFontWeight || isColumns) {
+        propType = 'Int';
+      }
+
+      output += `    val ${token.name}: ${propType}\n`;
+    });
+    output += `}
+
+`;
+  }
+
+  // Generate object (implementing interface for sizeclass)
+  const implementsClause = modeType === 'sizeclass' ? ` : ${interfaceName}` : '';
+  const overrideKeyword = modeType === 'sizeclass' ? 'override ' : '';
+
+  output += `/**
  * ${className} - Spacing and sizing tokens
  */
-object ${className} {
+object ${className}${implementsClause} {
 `;
 
   dictionary.allTokens.forEach(token => {
@@ -2834,7 +2902,7 @@ object ${className} {
       value = `"${value}"`;
     }
 
-    output += `    val ${name} = ${value}\n`;
+    output += `    ${overrideKeyword}val ${name} = ${value}\n`;
   });
 
   output += `}\n`;
