@@ -166,9 +166,15 @@ let padding: CGFloat = StyleDictionary.space2x
 ```kotlin
 // Android Jetpack Compose
 import com.bild.designsystem.bild.theme.BildTheme
+import com.bild.designsystem.bild.theme.WindowSizeClass
 import com.bild.designsystem.bild.components.ButtonTokens
+import com.bild.designsystem.shared.Density
 
-BildTheme {
+BildTheme(
+    darkTheme = isSystemInDarkTheme(),
+    sizeClass = WindowSizeClass.Compact,
+    density = Density.Default
+) {
     Button(
         colors = ButtonDefaults.buttonColors(
             containerColor = ButtonTokens.Colors.Light.buttonPrimaryBrandBgColorIdle

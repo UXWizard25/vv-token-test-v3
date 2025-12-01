@@ -205,23 +205,51 @@ Container(
 
 ```kotlin
 import com.bild.designsystem.bild.theme.BildTheme
+import com.bild.designsystem.bild.theme.WindowSizeClass
 import com.bild.designsystem.bild.semantic.BildSemanticTokens
 import com.bild.designsystem.bild.components.ButtonTokens
 import com.bild.designsystem.DesignTokenPrimitives
+import com.bild.designsystem.shared.Density
 
-// Theme Provider (with automatic Light/Dark, WindowSizeClass support)
+// Theme Provider (with automatic Light/Dark, WindowSizeClass, Density support)
 BildTheme(
     darkTheme = isSystemInDarkTheme(),
-    sizeClass = WindowSizeClass.Compact
+    sizeClass = WindowSizeClass.Compact,
+    density = Density.Default
 ) {
-    // Access via BildTheme object
+    // Access via BildTheme object (type-safe via interfaces)
     Text(color = BildTheme.colors.textColorPrimary)
+
+    // Sizing adapts to WindowSizeClass
+    val fontSize = BildTheme.sizing.headline1FontSize
+
+    // Density-aware component tokens
+    val gap = ButtonTokens.Density.current().denseButtonContentGapSpace
 }
 
 // Direct token access (camelCase naming)
 val primaryColor = BildSemanticTokens.Colors.Light.textColorPrimary
 val buttonBg = ButtonTokens.Colors.Light.buttonPrimaryBrandBgColorIdle
 val red = DesignTokenPrimitives.Colors.bildred
+```
+
+#### Compose Type-Safe Interfaces
+
+The Compose output uses interfaces for type-safe theming:
+
+| Interface | Purpose | Implementations |
+|-----------|---------|-----------------|
+| `BildColorScheme` | Color tokens contract | `BildLightColors`, `BildDarkColors` |
+| `BildSizingScheme` | Sizing tokens contract | `BildSizingCompact`, `BildSizingRegular` |
+| `Density` (enum) | UI density settings | `Dense`, `Default`, `Spacious` |
+
+```kotlin
+// Density is brand-independent (shared across all brands)
+import com.bild.designsystem.shared.Density
+
+// Color/Sizing schemes are brand-specific
+import com.bild.designsystem.bild.semantic.BildColorScheme
+import com.bild.designsystem.bild.semantic.BildSizingScheme
 ```
 
 ### Android XML (Disabled)
@@ -396,12 +424,19 @@ dist/
 ├── android/
 │   └── compose/                     # Jetpack Compose (Kotlin)
 │       ├── shared/
-│       │   └── DesignTokenPrimitives.kt   # All primitives consolidated
+│       │   ├── DesignTokenPrimitives.kt   # All primitives consolidated
+│       │   └── Density.kt                  # Brand-independent density enum
 │       └── brands/{brand}/
 │           ├── components/{Component}/
 │           │   └── {Component}Tokens.kt   # Aggregated Colors/Sizing/Density/Typography
 │           ├── semantic/
-│           │   └── {Brand}SemanticTokens.kt   # Aggregated Light/Dark + Compact/Regular
+│           │   ├── {Brand}SemanticTokens.kt   # Aggregated Light/Dark + Compact/Regular
+│           │   ├── color/
+│           │   │   ├── ColorsLight.kt     # BildColorScheme interface + BildLightColors
+│           │   │   └── ColorsDark.kt      # BildDarkColors object
+│           │   └── sizeclass/
+│           │       ├── SizingCompact.kt   # BildSizingScheme interface + BildSizingCompact
+│           │       └── SizingRegular.kt   # BildSizingRegular object
 │           └── theme/
 │               └── {Brand}Theme.kt        # CompositionLocal Theme Provider
 └── flutter/                         # Dart Classes (disabled by default)
@@ -413,8 +448,11 @@ Compose output is optimized for Android development:
 
 | File | Content | Access Pattern |
 |------|---------|----------------|
-| `DesignTokenPrimitives.kt` | All primitives (Colors, Space, Size, Font) | `DesignTokenPrimitives.Colors.bildred` |
+| `shared/DesignTokenPrimitives.kt` | All primitives (Colors, Space, Size, Font) | `DesignTokenPrimitives.Colors.bildred` |
+| `shared/Density.kt` | Brand-independent Density enum | `Density.Default`, `Density.Dense`, `Density.Spacious` |
 | `{Brand}SemanticTokens.kt` | Colors (Light/Dark), Sizing (Compact/Regular) | `BildSemanticTokens.Colors.Light.textColorPrimary` |
+| `ColorsLight.kt` | ColorScheme interface + Light implementation | `BildLightColors.textColorPrimary` |
+| `SizingCompact.kt` | SizingScheme interface + Compact implementation | `BildSizingCompact.headline1FontSize` |
 | `{Component}Tokens.kt` | All component modes aggregated | `ButtonTokens.Colors.Light.buttonPrimaryBrandBgColorIdle` |
 | `{Brand}Theme.kt` | CompositionLocal-based Theme Provider | `BildTheme { /* content */ }` |
 
