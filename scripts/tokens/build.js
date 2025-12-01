@@ -23,12 +23,14 @@ const DIST_DIR = path.join(__dirname, '../../dist');
 const BRANDS = ['bild', 'sportbild', 'advertorial'];
 const BREAKPOINTS = ['xs', 'sm', 'md', 'lg'];
 const COLOR_MODES = ['light', 'dark'];
+const DENSITY_MODES = ['compact', 'default', 'spacious'];
 
 // Native platforms only use compact (sm) and regular (lg) size classes
 const NATIVE_BREAKPOINTS = ['sm', 'lg'];
 
 // Platform output toggles - set to false to disable output generation
 const FLUTTER_ENABLED = false;
+const COMPOSE_ENABLED = true;
 
 // Token type toggles - set to false to exclude from all platform outputs
 const BOOLEAN_TOKENS_ENABLED = false;
@@ -242,6 +244,120 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
                 return `Sizeclass${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}`;
               }
               return fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('');
+            })()
+          }
+        }]
+      }
+    }),
+    // Compose: For breakpoint mode, use sizeclass folder and naming, skip non-native breakpoints
+    // For density mode, output all three density variants
+    ...((cssOptions.modeType === 'breakpoint' && !isNativeBreakpoint(cssOptions.mode)) || !COMPOSE_ENABLED ? {} : {
+      compose: {
+        transformGroup: 'custom/compose',
+        buildPath: (() => {
+          let composePath = buildPath.replace(DIST_DIR + '/css/', '');
+          // For semantic breakpoint tokens, change folder from 'breakpoints' to 'sizeclass'
+          if (cssOptions.modeType === 'breakpoint' && composePath.includes('/breakpoints')) {
+            composePath = composePath.replace('/breakpoints', '/sizeclass');
+          }
+          return `${DIST_DIR}/compose/${composePath}/`;
+        })(),
+        files: [{
+          destination: (() => {
+            // For breakpoint tokens, use sizeclass naming
+            if (cssOptions.modeType === 'breakpoint' && cssOptions.mode) {
+              const sizeClass = getSizeClassName(cssOptions.mode);
+              const isComponent = buildPath.includes('/components/');
+              if (isComponent) {
+                const componentMatch = buildPath.match(/\/components\/([^/]+)/);
+                const componentName = componentMatch ? componentMatch[1] : '';
+                return `${componentName}Sizing${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}.kt`;
+              }
+              return `Sizing${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}.kt`;
+            }
+            // For color mode tokens
+            if (cssOptions.modeType === 'theme' && cssOptions.mode) {
+              const modeName = cssOptions.mode.charAt(0).toUpperCase() + cssOptions.mode.slice(1);
+              const isComponent = buildPath.includes('/components/');
+              if (isComponent) {
+                const componentMatch = buildPath.match(/\/components\/([^/]+)/);
+                const componentName = componentMatch ? componentMatch[1] : '';
+                return `${componentName}Colors${modeName}.kt`;
+              }
+              return `Colors${modeName}.kt`;
+            }
+            // For density tokens
+            if (cssOptions.modeType === 'density' && cssOptions.mode) {
+              const modeName = cssOptions.mode.charAt(0).toUpperCase() + cssOptions.mode.slice(1);
+              const isComponent = buildPath.includes('/components/');
+              if (isComponent) {
+                const componentMatch = buildPath.match(/\/components\/([^/]+)/);
+                const componentName = componentMatch ? componentMatch[1] : '';
+                return `${componentName}Density${modeName}.kt`;
+              }
+              return `Density${modeName}.kt`;
+            }
+            // Default: PascalCase filename
+            return `${fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}.kt`;
+          })(),
+          format: (() => {
+            // Choose format based on token type
+            if (buildPath.includes('/shared/')) {
+              return 'compose/primitives';
+            }
+            // For components, use component-tokens format for all mode types
+            if (buildPath.includes('/components/')) {
+              return 'compose/component-tokens';
+            }
+            if (cssOptions.modeType === 'theme') {
+              return 'compose/semantic-colors';
+            }
+            if (cssOptions.modeType === 'breakpoint' || cssOptions.modeType === 'density') {
+              return 'compose/spacing';
+            }
+            return 'compose/primitives';
+          })(),
+          filter: tokenFilter,
+          options: {
+            outputReferences: false,
+            packageName: (() => {
+              const basePkg = 'com.bild.designsystem';
+              if (buildPath.includes('/shared/')) {
+                return `${basePkg}.shared`;
+              }
+              if (cssOptions.brand) {
+                if (buildPath.includes('/components/')) {
+                  return `${basePkg}.${cssOptions.brand}.components`;
+                }
+                return `${basePkg}.${cssOptions.brand}.semantic`;
+              }
+              return basePkg;
+            })(),
+            className: (() => {
+              if (cssOptions.modeType === 'breakpoint' && cssOptions.mode) {
+                const sizeClass = getSizeClassName(cssOptions.mode);
+                return `Sizing${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}`;
+              }
+              return fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('');
+            })(),
+            brand: cssOptions.brand || '',
+            mode: cssOptions.mode || '',
+            modeType: (() => {
+              if (cssOptions.modeType === 'breakpoint') return 'sizeclass';
+              return cssOptions.modeType || '';
+            })(),
+            componentName: (() => {
+              if (buildPath.includes('/components/')) {
+                const componentMatch = buildPath.match(/\/components\/([^/]+)/);
+                return componentMatch ? componentMatch[1] : '';
+              }
+              return '';
+            })(),
+            tokenType: (() => {
+              if (cssOptions.modeType === 'theme') return 'color';
+              if (cssOptions.modeType === 'breakpoint') return 'sizing';
+              if (cssOptions.modeType === 'density') return 'density';
+              return '';
             })()
           }
         }]
@@ -815,6 +931,23 @@ function createComponentTypographyConfig(sourceFile, brand, componentName, fileN
             options: {
               brand: brandName,
               breakpoint,
+              componentName
+            }
+          }]
+        }
+      } : {}),
+      // Compose: Only compact (sm) and regular (lg) with sizeclass naming
+      ...(COMPOSE_ENABLED && breakpoint && isNativeBreakpoint(breakpoint) ? {
+        compose: {
+          transforms: ['attribute/cti'],
+          buildPath: `${DIST_DIR}/compose/brands/${brand}/components/${componentName}/`,
+          files: [{
+            destination: `${componentName}Typography${getSizeClassName(breakpoint).charAt(0).toUpperCase() + getSizeClassName(breakpoint).slice(1)}.kt`,
+            format: 'compose/typography',
+            options: {
+              packageName: `com.bild.designsystem.${brand}.components`,
+              brand: brand,
+              mode: getSizeClassName(breakpoint),
               componentName
             }
           }]

@@ -464,6 +464,97 @@ const nameFlutterDartTransform = {
 };
 
 /**
+ * Transform: Name für Jetpack Compose (camelCase für Properties)
+ * Verwendet nur das letzte Pfad-Segment für den Token-Namen
+ */
+const nameComposeTransform = {
+  name: 'name/custom/compose',
+  type: 'name',
+  transform: (token) => {
+    const lastSegment = token.path[token.path.length - 1];
+    return nameTransformers.camel(lastSegment);
+  }
+};
+
+/**
+ * Transform: Color für Jetpack Compose - Color(0xFFRRGGBB) Format
+ */
+const colorComposeTransform = {
+  name: 'color/custom/compose',
+  type: 'value',
+  filter: (token) => {
+    const type = token.$type || token.type;
+    return type === 'color';
+  },
+  transform: (token) => {
+    const value = token.$value || token.value;
+
+    // Handle hex colors: #RRGGBB or #AARRGGBB
+    if (typeof value === 'string' && value.startsWith('#')) {
+      let hex = value.replace('#', '').toUpperCase();
+      // If 6 chars, add FF alpha prefix
+      if (hex.length === 6) {
+        hex = 'FF' + hex;
+      }
+      // If 8 chars (AARRGGBB), use as-is
+      return `Color(0x${hex})`;
+    }
+
+    // Handle rgba: rgba(r, g, b, a)
+    if (typeof value === 'string' && value.startsWith('rgba')) {
+      const match = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+),?\s*([\d.]*)\)/);
+      if (match) {
+        const r = parseInt(match[1]).toString(16).padStart(2, '0').toUpperCase();
+        const g = parseInt(match[2]).toString(16).padStart(2, '0').toUpperCase();
+        const b = parseInt(match[3]).toString(16).padStart(2, '0').toUpperCase();
+        const a = match[4] ? Math.round(parseFloat(match[4]) * 255).toString(16).padStart(2, '0').toUpperCase() : 'FF';
+        return `Color(0x${a}${r}${g}${b})`;
+      }
+    }
+
+    // Handle rgb: rgb(r, g, b)
+    if (typeof value === 'string' && value.startsWith('rgb(')) {
+      const match = value.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+      if (match) {
+        const r = parseInt(match[1]).toString(16).padStart(2, '0').toUpperCase();
+        const g = parseInt(match[2]).toString(16).padStart(2, '0').toUpperCase();
+        const b = parseInt(match[3]).toString(16).padStart(2, '0').toUpperCase();
+        return `Color(0xFF${r}${g}${b})`;
+      }
+    }
+
+    // Fallback
+    return value;
+  }
+};
+
+/**
+ * Transform: Size/Dimension für Jetpack Compose - X.dp Format
+ */
+const sizeComposeTransform = {
+  name: 'size/custom/compose',
+  type: 'value',
+  filter: (token) => {
+    const type = token.$type || token.type;
+    return type === 'dimension' || type === 'float' || type === 'sizing' || type === 'spacing';
+  },
+  transform: (token) => {
+    let value = token.$value || token.value;
+
+    // Remove 'px' if present and convert to number
+    if (typeof value === 'string') {
+      value = parseFloat(value.replace('px', ''));
+    }
+
+    // Return as Dp value
+    if (Number.isInteger(value)) {
+      return `${value}.dp`;
+    }
+    return `${value}.dp`;
+  }
+};
+
+/**
  * Transform: Opacity - Convert Figma % (5, 10, 70) to CSS decimal (0.05, 0.1, 0.7)
  */
 const opacityTransform = {
@@ -2091,7 +2182,8 @@ const customTransformGroups = {
   'custom/js': ['name/custom/js', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/ios-swift': ['name/custom/ios-swift', 'custom/color/UIColor', 'custom/size/ios-points', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/android': ['name/custom/android', 'color/hex', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
-  'custom/flutter': ['name/custom/flutter-dart', 'color/hex', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round']
+  'custom/flutter': ['name/custom/flutter-dart', 'color/hex', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/compose': ['name/custom/compose', 'color/custom/compose', 'size/custom/compose', 'custom/opacity', 'custom/fontWeight', 'custom/number']
 };
 
 // ============================================================================
@@ -2408,6 +2500,507 @@ const cssThemedVariablesWithAliasFormat = ({ dictionary, options, file }) => {
 };
 
 // ============================================================================
+// JETPACK COMPOSE FORMATS
+// ============================================================================
+
+/**
+ * Helper: Convert brand name to PascalCase for Kotlin class names
+ */
+function brandToPascalCase(brand) {
+  if (brand === 'sportbild') return 'Sportbild';
+  if (brand === 'advertorial') return 'Advertorial';
+  return brand.charAt(0).toUpperCase() + brand.slice(1);
+}
+
+/**
+ * Format: Jetpack Compose Primitives Object
+ * Generates a Kotlin object with internal val declarations for primitive tokens
+ *
+ * Output example:
+ * object ColorPrimitives {
+ *     internal val BildRed = Color(0xFFDD0000)
+ *     internal val Bild015 = Color(0xFF232629)
+ * }
+ */
+/**
+ * Helper: Transform a color value to Compose Color format
+ */
+function toComposeColor(value) {
+  if (!value) return value;
+
+  // Already in Compose format
+  if (typeof value === 'string' && value.startsWith('Color(')) {
+    return value;
+  }
+
+  // Handle hex colors: #RRGGBB or #AARRGGBB
+  if (typeof value === 'string' && value.startsWith('#')) {
+    let hex = value.replace('#', '').toUpperCase();
+    if (hex.length === 6) {
+      hex = 'FF' + hex;
+    }
+    return `Color(0x${hex})`;
+  }
+
+  // Handle rgba: rgba(r, g, b, a)
+  if (typeof value === 'string' && value.startsWith('rgba')) {
+    const match = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+),?\s*([\d.]*)\)/);
+    if (match) {
+      const r = parseInt(match[1]).toString(16).padStart(2, '0').toUpperCase();
+      const g = parseInt(match[2]).toString(16).padStart(2, '0').toUpperCase();
+      const b = parseInt(match[3]).toString(16).padStart(2, '0').toUpperCase();
+      const a = match[4] ? Math.round(parseFloat(match[4]) * 255).toString(16).padStart(2, '0').toUpperCase() : 'FF';
+      return `Color(0x${a}${r}${g}${b})`;
+    }
+  }
+
+  // Handle rgb: rgb(r, g, b)
+  if (typeof value === 'string' && value.startsWith('rgb(')) {
+    const match = value.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+    if (match) {
+      const r = parseInt(match[1]).toString(16).padStart(2, '0').toUpperCase();
+      const g = parseInt(match[2]).toString(16).padStart(2, '0').toUpperCase();
+      const b = parseInt(match[3]).toString(16).padStart(2, '0').toUpperCase();
+      return `Color(0xFF${r}${g}${b})`;
+    }
+  }
+
+  return value;
+}
+
+/**
+ * Helper: Transform a size value to Compose Dp format
+ */
+function toComposeDp(value) {
+  // Handle null/undefined
+  if (value === null || value === undefined) return value;
+
+  // Already in Compose format
+  if (typeof value === 'string' && (value.endsWith('.dp') || value.endsWith('.sp'))) {
+    return value;
+  }
+
+  // Handle number (including 0)
+  if (typeof value === 'number') {
+    return `${value}.dp`;
+  }
+
+  // Handle string with px
+  if (typeof value === 'string') {
+    const num = parseFloat(value.replace('px', ''));
+    if (!isNaN(num)) {
+      return `${num}.dp`;
+    }
+  }
+
+  return value;
+}
+
+/**
+ * Helper: Transform a font size value to Compose Sp format
+ */
+function toComposeSp(value) {
+  // Handle null/undefined
+  if (value === null || value === undefined) return value;
+
+  // Already in Compose format
+  if (typeof value === 'string' && value.endsWith('.sp')) {
+    return value;
+  }
+
+  // Handle number (including 0)
+  if (typeof value === 'number') {
+    return `${value}.sp`;
+  }
+
+  // Handle string with px
+  if (typeof value === 'string') {
+    const num = parseFloat(value.replace('px', ''));
+    if (!isNaN(num)) {
+      return `${num}.sp`;
+    }
+  }
+
+  return value;
+}
+
+const composePrimitivesFormat = ({ dictionary, options, file }) => {
+  const { packageName, className } = options;
+  const version = packageJson.version;
+
+  let output = `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v${version}
+ * Generated by Style Dictionary
+ *
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ */
+
+package ${packageName}
+
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+
+/**
+ * ${className} - Primitive design tokens
+ * These are the raw values that semantic and component tokens reference.
+ */
+object ${className} {
+`;
+
+  // Group tokens by their first path segment for organization
+  const grouped = {};
+  dictionary.allTokens.forEach(token => {
+    const category = token.path[0] || 'Other';
+    if (!grouped[category]) grouped[category] = [];
+    grouped[category].push(token);
+  });
+
+  Object.keys(grouped).sort().forEach(category => {
+    output += `    // ${category}\n`;
+    grouped[category].forEach(token => {
+      const name = token.name.charAt(0).toUpperCase() + token.name.slice(1);
+      const type = token.$type || token.type;
+      let value = token.value;
+
+      // Apply Compose-specific formatting
+      if (type === 'color') {
+        value = toComposeColor(value);
+      } else if (type === 'dimension' || type === 'float' || type === 'sizing' || type === 'spacing') {
+        value = toComposeDp(value);
+      }
+
+      output += `    internal val ${name} = ${value}\n`;
+    });
+    output += `\n`;
+  });
+
+  output += `}\n`;
+  return output;
+};
+
+/**
+ * Format: Jetpack Compose Semantic Colors Data Class
+ * Generates @Immutable data class with color properties
+ *
+ * Output example:
+ * @Immutable
+ * data class BildColorScheme(
+ *     val textColorPrimary: Color,
+ *     val surfaceColorPrimary: Color,
+ * )
+ *
+ * val BildLightColorScheme = BildColorScheme(
+ *     textColorPrimary = Color(0xFF232629),
+ *     surfaceColorPrimary = Color(0xFFFFFFFF),
+ * )
+ */
+const composeSemanticColorsFormat = ({ dictionary, options, file }) => {
+  const { packageName, brand, mode } = options;
+  const brandPascal = brandToPascalCase(brand);
+  const modePascal = mode.charAt(0).toUpperCase() + mode.slice(1);
+  const version = packageJson.version;
+
+  // Collect all tokens and their properties
+  const tokens = dictionary.allTokens.filter(t => {
+    const type = t.$type || t.type;
+    return type === 'color';
+  });
+
+  let output = `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v${version}
+ * Generated by Style Dictionary
+ *
+ * Brand: ${brandPascal} | Mode: ${modePascal}
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ */
+
+package ${packageName}
+
+import androidx.compose.runtime.Immutable
+import androidx.compose.ui.graphics.Color
+
+/**
+ * ${brandPascal} Color Scheme - ${modePascal} Mode
+ */
+`;
+
+  // Generate instance with values
+  output += `object ${brandPascal}${modePascal}Colors {\n`;
+
+  tokens.forEach(token => {
+    const name = token.name;
+    const value = toComposeColor(token.value);
+    output += `    val ${name} = ${value}\n`;
+  });
+
+  output += `}\n`;
+  return output;
+};
+
+/**
+ * Format: Jetpack Compose Spacing/Sizing Object
+ * Generates object with Dp values
+ */
+const composeSpacingFormat = ({ dictionary, options, file }) => {
+  const { packageName, brand, mode, modeType } = options;
+  const brandPascal = brandToPascalCase(brand);
+  const version = packageJson.version;
+
+  // Map mode to correct name (sm -> Compact, lg -> Regular)
+  let modePascal = '';
+  if (mode) {
+    if (mode === 'sm' || mode === 'compact') {
+      modePascal = 'Compact';
+    } else if (mode === 'lg' || mode === 'regular') {
+      modePascal = 'Regular';
+    } else {
+      modePascal = mode.charAt(0).toUpperCase() + mode.slice(1);
+    }
+  }
+
+  // Determine class name based on mode type
+  let className;
+  if (modeType === 'sizeclass') {
+    className = `${brandPascal}Sizing${modePascal}`;
+  } else if (modeType === 'density') {
+    className = `${brandPascal}Density${modePascal}`;
+  } else {
+    className = `${brandPascal}Spacing`;
+  }
+
+  // Check if any tokens need sp import (font sizes, line heights)
+  const needsSpImport = dictionary.allTokens.some(token => {
+    const lowerName = token.name.toLowerCase();
+    return lowerName.includes('fontsize') || lowerName.includes('font-size') ||
+           lowerName.includes('lineheight') || lowerName.includes('line-height');
+  });
+
+  const imports = ['import androidx.compose.ui.unit.Dp', 'import androidx.compose.ui.unit.dp'];
+  if (needsSpImport) {
+    imports.push('import androidx.compose.ui.unit.sp');
+  }
+
+  let output = `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v${version}
+ * Generated by Style Dictionary
+ *
+ * Brand: ${brandPascal}${mode ? ` | ${modeType}: ${modePascal}` : ''}
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ */
+
+package ${packageName}
+
+${imports.join('\n')}
+
+/**
+ * ${className} - Spacing and sizing tokens
+ */
+object ${className} {
+`;
+
+  dictionary.allTokens.forEach(token => {
+    const name = token.name;
+    const type = token.$type || token.type;
+    let value = token.value;
+
+    // Apply Compose-specific formatting based on token name and type
+    const lowerName = name.toLowerCase();
+    const isFontSize = lowerName.includes('fontsize') || lowerName.includes('font-size');
+    const isLineHeight = lowerName.includes('lineheight') || lowerName.includes('line-height');
+    const isFontFamily = lowerName.includes('fontfamily') || lowerName.includes('font-family');
+
+    if (isFontSize || isLineHeight) {
+      value = toComposeSp(value);
+    } else if (type === 'dimension' || type === 'float' || type === 'sizing' || type === 'spacing') {
+      value = toComposeDp(value);
+    } else if (type === 'fontFamily' || type === 'string' || isFontFamily) {
+      // Quote string values
+      value = `"${value}"`;
+    } else if (typeof value === 'string' && !value.match(/^[\d.-]+\.?(dp|sp)?$/) && value !== 'null') {
+      // Quote other string values that aren't numeric or already formatted
+      value = `"${value}"`;
+    }
+
+    output += `    val ${name} = ${value}\n`;
+  });
+
+  output += `}\n`;
+  return output;
+};
+
+/**
+ * Format: Jetpack Compose Component Tokens (Aggregated)
+ * Generates a single file with Colors, Sizing, Density data classes for a component
+ */
+const composeComponentTokensFormat = ({ dictionary, options, file }) => {
+  const { packageName, componentName, brand, tokenType, mode } = options;
+  const brandPascal = brandToPascalCase(brand);
+  const version = packageJson.version;
+
+  // Map mode to correct name (sm -> Compact, lg -> Regular)
+  let modePascal = '';
+  if (mode) {
+    if (mode === 'sm' || mode === 'compact') {
+      modePascal = 'Compact';
+    } else if (mode === 'lg' || mode === 'regular') {
+      modePascal = 'Regular';
+    } else {
+      modePascal = mode.charAt(0).toUpperCase() + mode.slice(1);
+    }
+  }
+
+  // Check if any tokens need sp import (font sizes, line heights)
+  const needsSpImport = dictionary.allTokens.some(token => {
+    const lowerName = token.name.toLowerCase();
+    return lowerName.includes('fontsize') || lowerName.includes('font-size') ||
+           lowerName.includes('lineheight') || lowerName.includes('line-height');
+  });
+
+  // Determine output class name
+  let className;
+  let imports = [];
+
+  if (tokenType === 'color') {
+    className = `${componentName}Colors${modePascal}`;
+    imports.push('import androidx.compose.ui.graphics.Color');
+  } else if (tokenType === 'sizing' || tokenType === 'breakpoint') {
+    className = `${componentName}Sizing${modePascal}`;
+    imports.push('import androidx.compose.ui.unit.Dp');
+    imports.push('import androidx.compose.ui.unit.dp');
+    if (needsSpImport) imports.push('import androidx.compose.ui.unit.sp');
+  } else if (tokenType === 'density') {
+    className = `${componentName}Density${modePascal}`;
+    imports.push('import androidx.compose.ui.unit.Dp');
+    imports.push('import androidx.compose.ui.unit.dp');
+    if (needsSpImport) imports.push('import androidx.compose.ui.unit.sp');
+  } else if (tokenType === 'typography') {
+    className = `${componentName}Typography${modePascal}`;
+    imports.push('import androidx.compose.ui.unit.sp');
+  } else {
+    className = `${componentName}Tokens${modePascal}`;
+    imports.push('import androidx.compose.ui.graphics.Color');
+    imports.push('import androidx.compose.ui.unit.Dp');
+    imports.push('import androidx.compose.ui.unit.dp');
+    if (needsSpImport) imports.push('import androidx.compose.ui.unit.sp');
+  }
+
+  let output = `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v${version}
+ * Generated by Style Dictionary
+ *
+ * Component: ${componentName} | Brand: ${brandPascal}${mode ? ` | ${tokenType}: ${modePascal}` : ''}
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ */
+
+package ${packageName}
+
+${imports.join('\n')}
+
+/**
+ * ${className}
+ */
+object ${className} {
+`;
+
+  dictionary.allTokens.forEach(token => {
+    const name = token.name;
+    const type = token.$type || token.type;
+    let value = token.value;
+
+    // Apply Compose-specific formatting based on token name and type
+    const lowerName = name.toLowerCase();
+    const isFontSize = lowerName.includes('fontsize') || lowerName.includes('font-size');
+    const isLineHeight = lowerName.includes('lineheight') || lowerName.includes('line-height');
+    const isFontFamily = lowerName.includes('fontfamily') || lowerName.includes('font-family');
+
+    if (type === 'color') {
+      value = toComposeColor(value);
+    } else if (isFontSize || isLineHeight) {
+      value = toComposeSp(value);
+    } else if (type === 'dimension' || type === 'float' || type === 'sizing' || type === 'spacing') {
+      value = toComposeDp(value);
+    } else if (type === 'fontFamily' || type === 'string' || isFontFamily) {
+      // Quote string values
+      value = `"${value}"`;
+    } else if (typeof value === 'string' && !value.match(/^[\d.-]+\.?(dp|sp)?$/) && value !== 'null') {
+      // Quote other string values that aren't numeric or already formatted
+      value = `"${value}"`;
+    }
+
+    output += `    val ${name} = ${value}\n`;
+  });
+
+  output += `}\n`;
+  return output;
+};
+
+/**
+ * Format: Jetpack Compose Typography Tokens
+ * Generates typography values (not full TextStyle, as FontFamily needs runtime injection)
+ */
+const composeTypographyFormat = ({ dictionary, options, file }) => {
+  const { packageName, brand, mode, componentName } = options;
+  const brandPascal = brandToPascalCase(brand);
+  const modePascal = mode ? mode.charAt(0).toUpperCase() + mode.slice(1) : '';
+  const version = packageJson.version;
+
+  const prefix = componentName ? componentName : brandPascal;
+  const className = `${prefix}Typography${modePascal}Values`;
+
+  let output = `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v${version}
+ * Generated by Style Dictionary
+ *
+ * Brand: ${brandPascal}${mode ? ` | SizeClass: ${modePascal}` : ''}${componentName ? ` | Component: ${componentName}` : ''}
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ */
+
+package ${packageName}
+
+import androidx.compose.ui.unit.sp
+
+/**
+ * ${className}
+ * Note: FontFamily should be provided at runtime via CompositionLocal
+ */
+object ${className} {
+`;
+
+  dictionary.allTokens.forEach(token => {
+    const value = token.$value || token.value;
+
+    // Handle composite typography tokens
+    if (typeof value === 'object' && value !== null) {
+      output += `    // ${token.name}\n`;
+      if (value.fontFamily) output += `    val ${token.name}FontFamily = "${value.fontFamily}"\n`;
+      if (value.fontWeight) output += `    val ${token.name}FontWeight = ${value.fontWeight}\n`;
+      if (value.fontSize) output += `    val ${token.name}FontSize = ${value.fontSize}.sp\n`;
+      if (value.lineHeight) output += `    val ${token.name}LineHeight = ${value.lineHeight}.sp\n`;
+      if (value.letterSpacing !== null && value.letterSpacing !== undefined) {
+        output += `    val ${token.name}LetterSpacing = ${value.letterSpacing}f.sp\n`;
+      }
+      if (value.textCase) output += `    val ${token.name}TextCase = "${value.textCase}"\n`;
+      output += `\n`;
+    } else {
+      output += `    val ${token.name} = ${token.value}\n`;
+    }
+  });
+
+  output += `}\n`;
+  return output;
+};
+
+// ============================================================================
 // EXPORTS
 // ============================================================================
 
@@ -2426,6 +3019,9 @@ module.exports = {
     'name/custom/ios-swift': nameIosSwiftTransform,
     'name/custom/android': nameAndroidTransform,
     'name/custom/flutter-dart': nameFlutterDartTransform,
+    'name/custom/compose': nameComposeTransform,
+    'color/custom/compose': colorComposeTransform,
+    'size/custom/compose': sizeComposeTransform,
     'value/round': valueRoundTransform
   },
   transformGroups: customTransformGroups,
@@ -2458,6 +3054,13 @@ module.exports = {
     'scss/effects': scssEffectsFormat,
     'scss/typography': scssTypographyFormat,
     'android/effects': androidXmlEffectsFormat,
-    'android/typography-styles': androidXmlTypographyFormat
+    'android/typography-styles': androidXmlTypographyFormat,
+
+    // Jetpack Compose Formats
+    'compose/primitives': composePrimitivesFormat,
+    'compose/semantic-colors': composeSemanticColorsFormat,
+    'compose/spacing': composeSpacingFormat,
+    'compose/component-tokens': composeComponentTokensFormat,
+    'compose/typography': composeTypographyFormat
   }
 };
