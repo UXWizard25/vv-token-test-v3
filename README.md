@@ -36,7 +36,7 @@ The BILD Design Ops Pipeline transforms design assets from Figma into production
 
 | Pipeline | Input | Output | Platforms |
 |----------|-------|--------|-----------|
-| **🎨 Token Pipeline** | Figma Variables | Design Tokens | 7 platforms |
+| **🎨 Token Pipeline** | Figma Variables | Design Tokens | 6 platforms (Flutter disabled) |
 | **🖼️ Icon Pipeline** | Figma Icons (SVG) | Multi-format Icons | 5 platforms |
 
 Both pipelines use the **TokenSync Figma Plugin** for automated exports.
@@ -113,8 +113,8 @@ Both pipelines use the **TokenSync Figma Plugin** for automated exports.
 │  ├── js/      (ES Modules)  │    │  ├── flutter/  (TTF + Dart) │
 │  ├── json/    (Raw Data)    │    │  └── ios/      (xcassets)   │
 │  ├── ios/     (Swift)       │    │                             │
-│  ├── android/ (XML)         │    │                             │
-│  └── flutter/ (Dart)        │    │                             │
+│  └── android/ (XML)         │    │                             │
+│  (flutter/ disabled)        │    │                             │
 └──────────────┬──────────────┘    └──────────────┬──────────────┘
                │                                  │
                │  npm publish                     │  npm publish
@@ -328,7 +328,7 @@ npm run clean:icons        # Remove dist/icons/
 | JSON | Raw Data | `dist/json/**/*.json` | ✅ Production |
 | iOS Swift | UIColor, CGFloat | `dist/ios/**/*.swift` | ✅ Production |
 | Android | XML Resources | `dist/android/**/*.xml` | ✅ Production |
-| Flutter | Dart Classes | `dist/flutter/**/*.dart` | ✅ Production |
+| Flutter | Dart Classes | `dist/flutter/**/*.dart` | ⏸️ Disabled |
 
 ### 🖼️ Icon Platforms
 
@@ -422,5 +422,5 @@ MIT License - See [LICENSE](./LICENSE) file.
 | Tokens | Icons |
 |--------|-------|
 | ~970 files | 5 platforms |
-| 7 platforms | TypeScript support |
+| 6 platforms | TypeScript support |
 | 3 brands | Accessibility ready |

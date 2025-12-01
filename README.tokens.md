@@ -32,9 +32,57 @@ Multi-platform design token transformation pipeline powered by **Style Dictionar
 This pipeline processes the multi-layer, multi-brand BILD Design System architecture:
 
 - **3 Brands**: BILD, SportBILD, Advertorial
-- **7 Platforms**: CSS, SCSS, JavaScript, JSON, iOS (Swift), Android (XML), Flutter (Dart)
+- **6 Platforms**: CSS, SCSS, JavaScript, JSON, iOS (Swift), Android (XML) *(Flutter disabled)*
 - **Multiple Modes**: Density (3), Breakpoints (4), Color Modes (2)
 - **Token Types**: Primitives, Semantic Tokens, Component Tokens (~970 files)
+
+### Token Architecture (4 Layers)
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  LAYER 4: Component Tokens                                                   │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│  Button, Card, Teaser, Alert, InputField, etc.                              │
+│  Modes: color (light/dark), density, breakpoint, typography                 │
+│  References → Semantic Tokens                                               │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  LAYER 3: Semantic Tokens                                                    │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│  text-color-primary, surface-color-secondary, border-color-*, etc.          │
+│  Modes: color (light/dark), breakpoint                                      │
+│  References → Brand Mapping                                                 │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  LAYER 2: Brand Mapping + Density                                            │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│  BrandColorMapping: Color Primitives → Brands                               │
+│  BrandTokenMapping: Other Primitives → Brands                               │
+│  Density: compact, default, spacious                                        │
+│  Modes: BILD, SportBILD, Advertorial                                        │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  LAYER 1: Primitives (Global)                                                │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│  colorprimitive, spaceprimitive, sizeprimitive, fontprimitive               │
+│  Absolute values: --bildred: #DD0000, --space2x: 16px                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### CSS var() Alias Chain
+
+Tokens use `var()` references to maintain the alias chain from Figma:
+
+```css
+/* Component → Semantic → Primitive */
+--button-primary-bg-color: var(--core-color-primary, #DD0000);
+                                ↓
+--core-color-primary: var(--bildred, #DD0000);
+                           ↓
+--bildred: #DD0000;
+```
+
+This enables:
+- **Theme switching** without recompiling (change primitives = change all)
+- **Brand switching** via data attributes
+- **Fallback values** for robustness
 
 ### Pipeline Flow
 
@@ -139,9 +187,13 @@ let padding: CGFloat = StyleDictionary.space2x  // 16
 label.font = UIFont.TypographyBildregular.display1
 ```
 
-### Flutter
+### Flutter (Currently Disabled)
+
+> **Note:** Flutter output is currently disabled via `FLUTTER_ENABLED = false` in build.js.
+> The code remains in place and can be re-enabled when needed.
 
 ```dart
+// When enabled:
 import 'package:design_tokens/brands/bild/semantic/color/colormode_light.dart';
 
 Container(
@@ -168,6 +220,61 @@ Container(
   padding: $space2x;
 }
 ```
+
+## Responsive CSS Architecture
+
+### Breakpoint Implementation
+
+Breakpoints use native `@media` queries instead of `data-breakpoint` attributes:
+
+```css
+/* Base values (xs breakpoint) */
+[data-brand="bild"] {
+  --headline1-font-size: 32px;
+}
+
+/* Responsive overrides */
+@media (min-width: 390px) {  /* sm */
+  [data-brand="bild"] { --headline1-font-size: 40px; }
+}
+@media (min-width: 600px) {  /* md */
+  [data-brand="bild"] { --headline1-font-size: 48px; }
+}
+@media (min-width: 1024px) { /* lg */
+  [data-brand="bild"] { --headline1-font-size: 64px; }
+}
+```
+
+**Breakpoint Values:**
+| Breakpoint | Min-Width | Use Case |
+|------------|-----------|----------|
+| `xs` | 320px | Mobile (default) |
+| `sm` | 390px | Large mobile |
+| `md` | 600px | Tablet |
+| `lg` | 1024px | Desktop |
+
+### Native Sizeclass Mapping (iOS/Android)
+
+For native platforms, 4 web breakpoints map to 2 size classes:
+
+```
+Web Breakpoints         Native Size Classes
+─────────────────       ───────────────────
+xs (320px) ─────┐
+                ├────→  compact (small screens)
+sm (390px) ─────┘
+
+md (600px) ─────┐
+                ├────→  regular (large screens)
+lg (1024px) ────┘
+```
+
+| Platform | Compact | Regular |
+|----------|---------|---------|
+| iOS | `UITraitCollection.horizontalSizeClass == .compact` | `.regular` |
+| Android | `sw320dp` | `sw600dp` |
+
+---
 
 ## Token Transform Reference
 
@@ -212,6 +319,27 @@ Container(
 
 **Note:** Figma exports opacity as percentage (5, 10, 70). Transform converts to decimal: `5` → `0.05`
 
+## Output Toggles
+
+The build pipeline supports toggles to enable/disable specific outputs:
+
+```javascript
+// In scripts/tokens/build.js
+
+// Platform output toggles
+const FLUTTER_ENABLED = false;        // Disables dist/flutter/ output
+
+// Token type toggles
+const BOOLEAN_TOKENS_ENABLED = false; // Excludes visibility tokens
+```
+
+| Toggle | Default | Description |
+|--------|---------|-------------|
+| `FLUTTER_ENABLED` | `false` | Flutter Dart output in `dist/flutter/` |
+| `BOOLEAN_TOKENS_ENABLED` | `false` | Boolean/visibility tokens (13 tokens like `hideOnMobile`) |
+
+---
+
 ## 📁 Output Structure
 
 ```
@@ -233,7 +361,7 @@ dist/
 ├── json/                            # Same structure
 ├── ios/                             # Swift Classes
 ├── android/                         # XML Resources
-└── flutter/                         # Dart Classes
+└── flutter/                         # Dart Classes (disabled by default)
 ```
 
 ## 🔗 Figma Integration & Dependencies
@@ -351,7 +479,9 @@ MIT License - See [LICENSE](./LICENSE) file.
 
 | Feature | Status |
 |---------|--------|
-| 7 Platforms | ✅ |
+| 6 Platforms | ✅ (Flutter disabled) |
 | 3 Brands | ✅ |
 | ~970 Files | ✅ |
 | Figma Scopes | ✅ |
+| var() Aliases | ✅ |
+| Responsive CSS | ✅ |
