@@ -30,6 +30,9 @@ const NATIVE_BREAKPOINTS = ['sm', 'lg'];
 // Platform output toggles - set to false to disable output generation
 const FLUTTER_ENABLED = false;
 
+// Token type toggles - set to false to exclude from all platform outputs
+const BOOLEAN_TOKENS_ENABLED = false;
+
 // Size class mapping for native platforms
 const SIZE_CLASS_MAPPING = {
   sm: 'compact',
@@ -55,10 +58,14 @@ function getSizeClassName(breakpoint) {
  * @param {object} cssOptions - CSS-specific options { brand, mode, modeType }
  */
 function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
-  // Filter to exclude documentation-only tokens that cause collisions
+  // Filter to exclude documentation-only tokens and disabled token types
   const tokenFilter = (token) => {
     // Exclude TextLabels tokens - these are documentation-only and cause name collisions
     if (token.path && token.path.includes('TextLabels')) {
+      return false;
+    }
+    // Exclude boolean tokens when disabled (visibility tokens like hideOnMobile, etc.)
+    if (!BOOLEAN_TOKENS_ENABLED && token.type === 'boolean') {
       return false;
     }
     return true;

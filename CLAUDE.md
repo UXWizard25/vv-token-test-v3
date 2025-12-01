@@ -316,6 +316,21 @@ const BREAKPOINT_VALUES = {
 };
 ```
 
+### Output Toggles (build.js)
+
+```javascript
+// Platform output toggles - set to false to disable output generation
+const FLUTTER_ENABLED = false;      // Disables dist/flutter/ output
+
+// Token type toggles - set to false to exclude from all platform outputs
+const BOOLEAN_TOKENS_ENABLED = false;  // Excludes visibility tokens (hideOnMobile, etc.)
+```
+
+| Toggle | Default | Beschreibung |
+|--------|---------|--------------|
+| `FLUTTER_ENABLED` | `false` | Flutter Dart output in `dist/flutter/` |
+| `BOOLEAN_TOKENS_ENABLED` | `false` | Boolean/Visibility tokens (13 Tokens) |
+
 ---
 
 ## Naming Conventions
