@@ -2006,7 +2006,7 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   if (hasDensityTokens) {
     imports.push('import androidx.compose.runtime.Composable');
     imports.push(`import com.bild.designsystem.${brand}.theme.${brandPascal}Theme`);
-    imports.push(`import com.bild.designsystem.${brand}.theme.${brandPascal}Density`);
+    imports.push('import com.bild.designsystem.shared.Density');
   }
   if (hasColor) imports.push('import androidx.compose.ui.graphics.Color');
   if (hasDp || hasSp) imports.push('import androidx.compose.ui.unit.Dp');
@@ -2119,9 +2119,9 @@ object ${componentName}Tokens {
          */
         @Composable
         fun current(): DensityTokens = when (${brandPascal}Theme.density) {
-            ${brandPascal}Density.Dense -> Dense
-            ${brandPascal}Density.Default -> Default
-            ${brandPascal}Density.Spacious -> Spacious
+            com.bild.designsystem.shared.Density.Dense -> Dense
+            com.bild.designsystem.shared.Density.Default -> Default
+            com.bild.designsystem.shared.Density.Spacious -> Spacious
         }
 
         /**
@@ -2214,10 +2214,19 @@ async function generateComposeThemeProviders() {
   let successfulThemes = 0;
 
   const composeDir = path.join(DIST_DIR, 'android', 'compose', 'brands');
+  const sharedDir = path.join(DIST_DIR, 'android', 'compose', 'shared');
 
   if (!fs.existsSync(composeDir)) {
     console.log('  ⚠️  No Compose output found, skipping theme generation');
     return { totalThemes: 0, successfulThemes: 0 };
+  }
+
+  // Generate shared Density.kt file
+  if (fs.existsSync(sharedDir)) {
+    const densityContent = generateSharedDensityFile();
+    const densityFile = path.join(sharedDir, 'Density.kt');
+    fs.writeFileSync(densityFile, densityContent, 'utf8');
+    console.log('     ✅ shared/Density.kt (brand-independent)');
   }
 
   for (const brand of BRANDS) {
@@ -2309,6 +2318,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 ${colorImports}
 import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingCompact
 import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingRegular
+import com.bild.designsystem.shared.Density
 
 // ══════════════════════════════════════════════════════════════════════════════
 // SIZE CLASS
@@ -2320,19 +2330,6 @@ import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingRegular
 enum class WindowSizeClass {
     Compact,  // Phones in portrait
     Regular   // Tablets, phones in landscape
-}
-
-// ══════════════════════════════════════════════════════════════════════════════
-// DENSITY
-// ══════════════════════════════════════════════════════════════════════════════
-
-/**
- * UI density for spacing adjustments
- */
-enum class ${brandPascal}Density {
-    Dense,     // Dense UI (less padding)
-    Default,   // Standard spacing
-    Spacious   // More breathing room
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -2353,7 +2350,7 @@ internal val Local${brandPascal}SizeClass = staticCompositionLocalOf { WindowSiz
 /**
  * CompositionLocal for current density (Dense/Default/Spacious)
  */
-internal val Local${brandPascal}Density = staticCompositionLocalOf { ${brandPascal}Density.Default }
+internal val Local${brandPascal}Density = staticCompositionLocalOf { Density.Default }
 
 /**
  * CompositionLocal for dark theme state
@@ -2382,7 +2379,7 @@ internal val LocalIsDarkTheme = staticCompositionLocalOf { false }
  * ${brandPascal}Theme(
  *     darkTheme = isSystemInDarkTheme(),
  *     sizeClass = calculateWindowSizeClass(),
- *     density = ${brandPascal}Density.Default
+ *     density = Density.Default
  * ) {
  *     // Your app content
  *     Text(
@@ -2398,7 +2395,7 @@ fun ${brandPascal}Theme(
     lightColors: ${colorSchemeType} = ${defaultLightColors},
     darkColors: ${colorSchemeType} = ${defaultDarkColors},
     sizeClass: WindowSizeClass = WindowSizeClass.Compact,
-    density: ${brandPascal}Density = ${brandPascal}Density.Default,
+    density: Density = Density.Default,
     content: @Composable () -> Unit
 ) {
     val colors = if (darkTheme) darkColors else lightColors
@@ -2472,7 +2469,7 @@ object ${brandPascal}Theme {
     /**
      * Current UI density
      */
-    val density: ${brandPascal}Density
+    val density: Density
         @Composable
         @ReadOnlyComposable
         get() = Local${brandPascal}Density.current
@@ -2484,6 +2481,54 @@ object ${brandPascal}Theme {
         @Composable
         @ReadOnlyComposable
         get() = LocalIsDarkTheme.current
+}
+`;
+}
+
+/**
+ * Generates the shared Density enum file
+ * Creates: dist/android/compose/shared/Density.kt
+ */
+function generateSharedDensityFile() {
+  const packageJson = require('../../package.json');
+  const version = packageJson.version;
+
+  return `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v${version}
+ * Generated by Style Dictionary
+ *
+ * Shared Density Enum
+ * Brand-independent density settings for UI spacing adjustments
+ *
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ */
+
+package com.bild.designsystem.shared
+
+/**
+ * UI density for spacing adjustments
+ *
+ * Density is brand-independent and can be used across all brands.
+ * Controls spacing, padding, and other density-related design tokens.
+ *
+ * Usage:
+ * \`\`\`kotlin
+ * BildTheme(
+ *     density = Density.Default
+ * ) {
+ *     // Content with default density
+ * }
+ * \`\`\`
+ */
+enum class Density {
+    /** Dense UI with reduced padding and spacing */
+    Dense,
+    /** Standard/default spacing */
+    Default,
+    /** Spacious UI with increased padding and spacing */
+    Spacious
 }
 `;
 }
