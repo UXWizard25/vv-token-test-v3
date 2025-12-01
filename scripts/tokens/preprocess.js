@@ -751,6 +751,65 @@ function normalizeTypographyStyle(resolvedStyle) {
 }
 
 /**
+ * Converts fontWeight string primitives to numeric values
+ *
+ * Problem: Figma stores some fontWeights as STRING (e.g., "Bold Italic")
+ * because font styles (italic) can't be set via variables.
+ *
+ * Solution: Extract the weight keyword and convert to numeric value.
+ * The italic part is handled separately by fontStyle in typography tokens.
+ *
+ * @param {string} tokenName - Token name (e.g., "stFontWeight/BoldItalic")
+ * @param {any} value - Token value
+ * @returns {any} - Numeric value if fontWeight string, original value otherwise
+ */
+function convertFontWeightStringToNumber(tokenName, value) {
+  // Only process string values for fontWeight tokens
+  if (typeof value !== 'string') {
+    return value;
+  }
+
+  const lowerName = tokenName.toLowerCase();
+  if (!lowerName.includes('fontweight') && !lowerName.includes('font-weight')) {
+    return value;
+  }
+
+  // Already numeric string? Convert directly
+  if (/^\d+$/.test(value)) {
+    return parseInt(value, 10);
+  }
+
+  // Extract weight part (remove "Italic" if present)
+  const weightPart = value.replace(/\s*italic\s*/i, '').trim();
+
+  if (!weightPart) {
+    return value; // Just "Italic" with no weight - keep as string
+  }
+
+  // Try to map keyword to numeric value
+  const normalizedKeyword = weightPart.toLowerCase().replace(/\s+/g, '');
+  let numericWeight = FONT_WEIGHT_MAP[normalizedKeyword];
+
+  // Try partial matching if exact match not found
+  if (!numericWeight) {
+    for (const [keyword, weightValue] of Object.entries(FONT_WEIGHT_MAP)) {
+      if (normalizedKeyword.includes(keyword) || keyword.includes(normalizedKeyword)) {
+        numericWeight = weightValue;
+        break;
+      }
+    }
+  }
+
+  if (numericWeight) {
+    return numericWeight;
+  }
+
+  // Could not convert - keep original string
+  console.warn(`⚠️  Could not convert fontWeight "${value}" to number - keeping as string`);
+  return value;
+}
+
+/**
  * Converts token name to nested path
  */
 function convertTokenName(name) {
@@ -819,6 +878,9 @@ function processSharedPrimitives(collections, aliasLookup) {
         } else {
           processedValue = processDirectValue(modeValue, variable.resolvedType, variable.name);
         }
+
+        // Convert string fontWeights to numeric values (e.g., "Bold Italic" → 700)
+        processedValue = convertFontWeightStringToNumber(variable.name, processedValue);
 
         if (processedValue !== null) {
           const tokenObject = {
