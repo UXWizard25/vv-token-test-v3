@@ -147,7 +147,7 @@ jobs:
       # 8. Comment PR with Artifacts (if this is a PR)
       - name: Comment PR with Build Artifacts
         if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const fs = require('fs');
