@@ -54,7 +54,7 @@ Design Token Pipeline für das BILD Design System. Transformiert Figma Variables
 │  ─────────────────────────────────────────────────────────────  │
 │  BrandColorMapping: Farb-Primitives → Brands                    │
 │  BrandTokenMapping: Andere Primitives → Brands                  │
-│  Density: compact, default, spacious                            │
+│  Density: default, dense, spacious                              │
 │  Modes: BILD, SportBILD, Advertorial                            │
 ├─────────────────────────────────────────────────────────────────┤
 │  LAYER 1: Primitives (Global)                                   │
@@ -93,7 +93,7 @@ Design Token Pipeline für das BILD Design System. Transformiert Figma Variables
 |-----------|-------|---------------|
 | **Color** | `light`, `dark` | `[data-theme="light/dark"]` |
 | **Breakpoint** | `xs` (320px), `sm` (390px), `md` (600px), `lg` (1024px) | `@media (min-width: ...)` |
-| **Density** | `compact`, `default`, `spacious` | `[data-density="..."]` |
+| **Density** | `default`, `dense`, `spacious` | `[data-density="..."]` |
 | **Typography** | `xs`, `sm`, `md`, `lg` | `var()` Referenzen auf Breakpoint-Tokens |
 
 ### CSS Data-Attribute Pattern
@@ -126,7 +126,7 @@ Design Token Pipeline für das BILD Design System. Transformiert Figma Variables
 }
 
 /* Density: Brand + Density scoped */
-[data-brand="bild"][data-density="compact"] {
+[data-brand="bild"][data-density="dense"] {
   --button-inline-space: 16px;
 }
 
@@ -230,7 +230,7 @@ tokens/
     ├── color/
     │   └── colormode-{light|dark}.json
     ├── density/
-    │   └── density-{compact|default|spacious}.json
+    │   └── density-{default|dense|spacious}.json
     ├── overrides/                        # Brand Mapping (used during preprocessing,
     │   ├── brandcolormapping.json       # NOT output to dist/ - values already
     │   └── brandtokenmapping.json       # resolved in semantic/component tokens)
@@ -382,7 +382,7 @@ const BOOLEAN_TOKENS_ENABLED = false;  // Excludes visibility tokens (hideOnMobi
 Beispiele:
 button-color-light.css
 button-color-dark.css
-button-density-compact.css
+button-density-dense.css
 button-breakpoint-responsive.css
 button-typography-responsive.css
 ```

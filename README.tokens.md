@@ -56,7 +56,7 @@ This pipeline processes the multi-layer, multi-brand BILD Design System architec
 │  ─────────────────────────────────────────────────────────────────────────  │
 │  BrandColorMapping: Color Primitives → Brands                               │
 │  BrandTokenMapping: Other Primitives → Brands                               │
-│  Density: compact, default, spacious                                        │
+│  Density: default, dense, spacious                                          │
 │  Modes: BILD, SportBILD, Advertorial                                        │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  LAYER 1: Primitives (Global)                                                │

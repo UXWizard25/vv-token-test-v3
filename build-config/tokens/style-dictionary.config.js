@@ -2197,7 +2197,7 @@ const customTransformGroups = {
  *
  * Options:
  * - brand: Brand name (e.g., 'bild', 'sportbild')
- * - mode: Color mode, breakpoint, or density (e.g., 'light', 'dark', 'xs', 'compact')
+ * - mode: Color mode, breakpoint, or density (e.g., 'light', 'dark', 'xs', 'dense')
  * - modeType: Type of mode ('theme', 'breakpoint', 'density')
  * - includeRoot: Whether to include default :root fallback (default: false)
  */

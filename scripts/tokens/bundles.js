@@ -278,10 +278,10 @@ async function buildBrandTokens(brand) {
 
     if (densityFiles.length > 0) {
       // Group by density mode
-      const densityByMode = { compact: [], default: [], spacious: [] };
+      const densityByMode = { default: [], dense: [], spacious: [] };
 
       for (const file of densityFiles) {
-        const modeMatch = path.basename(file).match(/density-(compact|default|spacious)/);
+        const modeMatch = path.basename(file).match(/density-(default|dense|spacious)/);
         if (modeMatch && densityByMode[modeMatch[1]]) {
           densityByMode[modeMatch[1]].push(file);
         }
@@ -289,7 +289,7 @@ async function buildBrandTokens(brand) {
 
       content += '/* === DENSITY TOKENS === */\n\n';
 
-      for (const mode of ['compact', 'default', 'spacious']) {
+      for (const mode of ['default', 'dense', 'spacious']) {
         if (densityByMode[mode].length > 0) {
           content += `/* Density: ${mode} */\n`;
           for (const file of densityByMode[mode].sort()) {

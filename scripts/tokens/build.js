@@ -23,7 +23,7 @@ const DIST_DIR = path.join(__dirname, '../../dist');
 const BRANDS = ['bild', 'sportbild', 'advertorial'];
 const BREAKPOINTS = ['xs', 'sm', 'md', 'lg'];
 const COLOR_MODES = ['light', 'dark'];
-const DENSITY_MODES = ['compact', 'default', 'spacious'];
+const DENSITY_MODES = ['default', 'dense', 'spacious'];
 
 // Native platforms only use compact (sm) and regular (lg) size classes
 const NATIVE_BREAKPOINTS = ['sm', 'lg'];
@@ -715,7 +715,7 @@ async function buildBrandSpecificTokens() {
       const files = fs.readdirSync(densityDir).filter(f => f.endsWith('.json'));
       for (const file of files) {
         const fileName = path.basename(file, '.json');
-        // Extract density mode from filename (e.g., "density-compact" -> "compact")
+        // Extract density mode from filename (e.g., "density-dense" -> "dense")
         const densityMatch = fileName.match(/density-(\w+)/);
         const densityMode = densityMatch ? densityMatch[1] : null;
 
@@ -1130,7 +1130,7 @@ async function buildComponentTokens() {
             cssOptions.modeType = 'theme';
           }
 
-          // Check for density mode (e.g., "button-density-compact" -> mode: "compact", modeType: "density")
+          // Check for density mode (e.g., "button-density-dense" -> mode: "dense", modeType: "density")
           const densityMatch = fileName.match(/density-(\w+)/);
           if (densityMatch) {
             cssOptions.mode = densityMatch[1];
@@ -1901,7 +1901,7 @@ async function aggregateComposeComponents() {
         const tokenGroups = {
           colors: { light: [], dark: [] },
           sizing: { compact: [], regular: [] },
-          density: { compact: [], default: [], spacious: [] },
+          density: { default: [], dense: [], spacious: [] },
           typography: { compact: [], regular: [] }
         };
 
@@ -1919,8 +1919,8 @@ async function aggregateComposeComponents() {
             tokenGroups.sizing.compact = tokens;
           } else if (lowerFile.includes('sizingregular')) {
             tokenGroups.sizing.regular = tokens;
-          } else if (lowerFile.includes('densitycompact')) {
-            tokenGroups.density.compact = tokens;
+          } else if (lowerFile.includes('densitydense')) {
+            tokenGroups.density.dense = tokens;
           } else if (lowerFile.includes('densitydefault')) {
             tokenGroups.density.default = tokens;
           } else if (lowerFile.includes('densityspacious')) {
@@ -1988,7 +1988,7 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
     ...tokenGroups.colors.dark,
     ...tokenGroups.sizing.compact,
     ...tokenGroups.sizing.regular,
-    ...tokenGroups.density.compact,
+    ...tokenGroups.density.dense,
     ...tokenGroups.density.default,
     ...tokenGroups.density.spacious,
     ...tokenGroups.typography.compact,
@@ -2083,7 +2083,7 @@ object ${componentName}Tokens {
   }
 
   // Density section
-  if (tokenGroups.density.compact.length > 0 ||
+  if (tokenGroups.density.dense.length > 0 ||
       tokenGroups.density.default.length > 0 ||
       tokenGroups.density.spacious.length > 0) {
     output += `
@@ -2092,9 +2092,9 @@ object ${componentName}Tokens {
     // ══════════════════════════════════════════════════════════════
     object Density {
 `;
-    if (tokenGroups.density.compact.length > 0) {
-      output += `        object Compact {\n`;
-      tokenGroups.density.compact.forEach(t => {
+    if (tokenGroups.density.dense.length > 0) {
+      output += `        object Dense {\n`;
+      tokenGroups.density.dense.forEach(t => {
         output += `            val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
@@ -2252,7 +2252,7 @@ enum class WindowSizeClass {
  * UI density for spacing adjustments
  */
 enum class ${brandPascal}Density {
-    Compact,   // Dense UI (less padding)
+    Dense,     // Dense UI (less padding)
     Default,   // Standard spacing
     Spacious   // More breathing room
 }
@@ -2273,7 +2273,7 @@ internal val Local${brandPascal}Colors = staticCompositionLocalOf { ${brandPasca
 internal val Local${brandPascal}SizeClass = staticCompositionLocalOf { WindowSizeClass.Compact }
 
 /**
- * CompositionLocal for current density (Compact/Default/Spacious)
+ * CompositionLocal for current density (Dense/Default/Spacious)
  */
 internal val Local${brandPascal}Density = staticCompositionLocalOf { ${brandPascal}Density.Default }
 
