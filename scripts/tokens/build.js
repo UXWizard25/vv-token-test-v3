@@ -2318,6 +2318,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 ${colorImports}
+import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingScheme
 import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingCompact
 import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingRegular
 import com.bild.designsystem.shared.Density

@@ -125,9 +125,25 @@ function groupTokensHierarchically(tokens) {
  * Name transformation functions for different platforms
  */
 const nameTransformers = {
+  /**
+   * Helper: Preserve decimal/fraction indicators in numeric contexts
+   * Converts underscores between digits to 'p' (point) to prevent collisions
+   * Examples: "size12_5x" → "size12p5x", "size1_25x" → "size1p25x"
+   * Also handles decimal points: "12.5x" → "12p5x"
+   * This prevents naming collisions like "size12_5x" and "size1_25x" both becoming "size125x"
+   */
+  _preserveNumericSeparators: (str) => {
+    return str
+      // Replace underscores between digits with 'p' (point)
+      // Pattern: digit + underscore + digit → digit + 'p' + digit
+      .replace(/(\d)_(\d)/g, '$1p$2')
+      // Also replace decimal points between digits with 'p' (point)
+      .replace(/(\d)\.(\d)/g, '$1p$2');
+  },
+
   // Kebab-case für CSS, SCSS
   kebab: (str) => {
-    return str
+    return nameTransformers._preserveNumericSeparators(str)
       .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
       .toLowerCase()
       .replace(/[^a-z0-9-]/g, '-')
@@ -137,7 +153,7 @@ const nameTransformers = {
 
   // snake_case für Android (hyphens sind in Android XML nicht erlaubt)
   snake: (str) => {
-    return str
+    return nameTransformers._preserveNumericSeparators(str)
       .replace(/([a-z0-9])([A-Z])/g, '$1_$2')
       .toLowerCase()
       .replace(/[^a-z0-9_]/g, '_')
