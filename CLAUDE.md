@@ -266,10 +266,14 @@ dist/
 ├── android/
 │   └── compose/                # Jetpack Compose (Kotlin) - enabled
 │       ├── shared/
-│       │   └── DesignTokenPrimitives.kt   # Consolidated primitives
+│       │   ├── DesignTokenPrimitives.kt   # Consolidated primitives
+│       │   ├── Density.kt                 # Dense/Default/Spacious enum
+│       │   ├── WindowSizeClass.kt         # Compact/Regular enum
+│       │   ├── Brand.kt                   # Bild/Sportbild/Advertorial enum
+│       │   └── DesignSystemTheme.kt       # Multi-brand theme provider
 │       └── brands/{brand}/
 │           ├── components/{Component}/
-│           │   └── {Component}Tokens.kt   # Aggregated tokens
+│           │   └── {Component}Tokens.kt   # Aggregated with current() accessors
 │           ├── semantic/
 │           │   └── {Brand}SemanticTokens.kt
 │           └── theme/

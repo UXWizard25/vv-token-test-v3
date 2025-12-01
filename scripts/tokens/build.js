@@ -2002,19 +2002,32 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   const hasDensityTokens = tokenGroups.density.dense.length > 0 ||
       tokenGroups.density.default.length > 0 ||
       tokenGroups.density.spacious.length > 0;
+  const hasColorTokens = tokenGroups.colors.light.length > 0 || tokenGroups.colors.dark.length > 0;
+  const hasSizingTokens = tokenGroups.sizing.compact.length > 0 || tokenGroups.sizing.regular.length > 0;
+  const hasTypographyTokens = tokenGroups.typography.compact.length > 0 || tokenGroups.typography.regular.length > 0;
+
+  // Need @Composable and Theme imports for current() accessors
+  const needsComposable = hasDensityTokens || hasColorTokens || hasSizingTokens || hasTypographyTokens;
+  // WindowSizeClass needed for both Sizing and Typography (both use Compact/Regular)
+  const needsWindowSizeClass = hasSizingTokens || hasTypographyTokens;
 
   const imports = ['import androidx.compose.runtime.Immutable'];
-  if (hasDensityTokens) {
+  if (needsComposable) {
     imports.push('import androidx.compose.runtime.Composable');
     imports.push(`import com.bild.designsystem.${brand}.theme.${brandPascal}Theme`);
+  }
+  if (hasDensityTokens) {
     imports.push('import com.bild.designsystem.shared.Density');
+  }
+  if (needsWindowSizeClass) {
+    imports.push('import com.bild.designsystem.shared.WindowSizeClass');
   }
   if (hasColor) imports.push('import androidx.compose.ui.graphics.Color');
   if (hasFontStyle) imports.push('import androidx.compose.ui.text.font.FontStyle');
   if (hasDp || hasSp) imports.push('import androidx.compose.ui.unit.Dp');
   if (hasDp) imports.push('import androidx.compose.ui.unit.dp');
   if (hasSp) imports.push('import androidx.compose.ui.unit.sp');
-  if (hasSp && hasDensityTokens) imports.push('import androidx.compose.ui.unit.TextUnit');
+  if (hasSp && needsComposable) imports.push('import androidx.compose.ui.unit.TextUnit');
 
   let output = `/**
  * Do not edit directly, this file was auto-generated.
@@ -2043,50 +2056,120 @@ ${imports.join('\n')}
 object ${componentName}Tokens {
 `;
 
-  // Colors section
+  // Colors section with interface and current() accessor
   if (tokenGroups.colors.light.length > 0 || tokenGroups.colors.dark.length > 0) {
+    // Collect all unique token names for interface
+    const colorTokenNames = new Map();
+    [...tokenGroups.colors.light, ...tokenGroups.colors.dark].forEach(t => {
+      if (!colorTokenNames.has(t.name)) {
+        colorTokenNames.set(t.name, t.value);
+      }
+    });
+
     output += `
     // ══════════════════════════════════════════════════════════════
     // COLORS
     // ══════════════════════════════════════════════════════════════
     object Colors {
+        /**
+         * Returns color tokens for the current theme.
+         * Automatically resolves to Light or Dark based on ${brandPascal}Theme.isDarkTheme
+         *
+         * Usage:
+         *   val bgColor = ${componentName}Tokens.Colors.current().primaryBgIdle
+         */
+        @Composable
+        fun current(): ColorTokens = if (${brandPascal}Theme.isDarkTheme) Dark else Light
+
+        /**
+         * Interface for color tokens
+         */
+        interface ColorTokens {
+`;
+    // Generate interface properties
+    colorTokenNames.forEach((value, name) => {
+      output += `            val ${name}: Color\n`;
+    });
+    output += `        }
+
 `;
     if (tokenGroups.colors.light.length > 0) {
-      output += `        object Light {\n`;
+      output += `        object Light : ColorTokens {\n`;
       tokenGroups.colors.light.forEach(t => {
-        output += `            val ${t.name} = ${t.value}\n`;
+        output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
     }
     if (tokenGroups.colors.dark.length > 0) {
-      output += `        object Dark {\n`;
+      output += `        object Dark : ColorTokens {\n`;
       tokenGroups.colors.dark.forEach(t => {
-        output += `            val ${t.name} = ${t.value}\n`;
+        output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
     }
     output += `    }\n`;
   }
 
-  // Sizing section
+  // Sizing section with interface and current() accessor
   if (tokenGroups.sizing.compact.length > 0 || tokenGroups.sizing.regular.length > 0) {
+    // Collect all unique token names for interface
+    const sizingTokenNames = new Map();
+    [...tokenGroups.sizing.compact, ...tokenGroups.sizing.regular].forEach(t => {
+      if (!sizingTokenNames.has(t.name)) {
+        sizingTokenNames.set(t.name, t.value);
+      }
+    });
+
     output += `
     // ══════════════════════════════════════════════════════════════
     // SIZING (WindowSizeClass)
     // ══════════════════════════════════════════════════════════════
     object Sizing {
+        /**
+         * Returns sizing tokens for the current window size class.
+         * Automatically resolves to Compact or Regular based on ${brandPascal}Theme.sizeClass
+         *
+         * Usage:
+         *   val fontSize = ${componentName}Tokens.Sizing.current().labelFontSize
+         */
+        @Composable
+        fun current(): SizingTokens = when (${brandPascal}Theme.sizeClass) {
+            WindowSizeClass.Compact -> Compact
+            WindowSizeClass.Regular -> Regular
+        }
+
+        /**
+         * Interface for sizing tokens
+         */
+        interface SizingTokens {
+`;
+    // Generate interface properties
+    sizingTokenNames.forEach((value, name) => {
+      // Determine type based on value
+      let propType = 'Dp';
+      if (value.includes('.sp')) propType = 'TextUnit';
+      else if (value.includes('Color(')) propType = 'Color';
+      else if (!value.includes('.dp') && !value.includes('.sp')) {
+        // Check if it's a pure number (Int)
+        const numMatch = value.match(/^(\d+)$/);
+        if (numMatch) propType = 'Int';
+      }
+      output += `            val ${name}: ${propType}\n`;
+    });
+    output += `        }
+
 `;
     if (tokenGroups.sizing.compact.length > 0) {
-      output += `        object Compact {\n`;
+      output += `        object Compact : SizingTokens {\n`;
       tokenGroups.sizing.compact.forEach(t => {
-        output += `            val ${t.name} = ${t.value}\n`;
+        output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
     }
     if (tokenGroups.sizing.regular.length > 0) {
-      output += `        object Regular {\n`;
+      output += `        object Regular : SizingTokens {\n`;
       tokenGroups.sizing.regular.forEach(t => {
-        output += `            val ${t.name} = ${t.value}\n`;
+        output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
     }
@@ -2170,25 +2253,64 @@ object ${componentName}Tokens {
     output += `    }\n`;
   }
 
-  // Typography section
+  // Typography section with interface and current() accessor
   if (tokenGroups.typography.compact.length > 0 || tokenGroups.typography.regular.length > 0) {
+    // Collect all unique token names for interface
+    const typographyTokenNames = new Map();
+    [...tokenGroups.typography.compact, ...tokenGroups.typography.regular].forEach(t => {
+      if (!typographyTokenNames.has(t.name)) {
+        typographyTokenNames.set(t.name, t.value);
+      }
+    });
+
     output += `
     // ══════════════════════════════════════════════════════════════
     // TYPOGRAPHY
     // ══════════════════════════════════════════════════════════════
     object Typography {
+        /**
+         * Returns typography tokens for the current window size class.
+         * Automatically resolves to Compact or Regular based on ${brandPascal}Theme.sizeClass
+         *
+         * Usage:
+         *   val fontFamily = ${componentName}Tokens.Typography.current().labelFontFamily
+         */
+        @Composable
+        fun current(): TypographyTokens = when (${brandPascal}Theme.sizeClass) {
+            WindowSizeClass.Compact -> Compact
+            WindowSizeClass.Regular -> Regular
+        }
+
+        /**
+         * Interface for typography tokens
+         */
+        interface TypographyTokens {
+`;
+    // Generate interface properties
+    typographyTokenNames.forEach((value, name) => {
+      // Determine type based on value
+      let propType = 'String';
+      if (value.includes('.sp')) propType = 'TextUnit';
+      else if (value.includes('.dp')) propType = 'Dp';
+      else if (value.includes('FontStyle.')) propType = 'FontStyle';
+      else if (/^\d+$/.test(value.trim())) propType = 'Int';
+      else if (value.startsWith('"') || value.startsWith("'")) propType = 'String';
+      output += `            val ${name}: ${propType}\n`;
+    });
+    output += `        }
+
 `;
     if (tokenGroups.typography.compact.length > 0) {
-      output += `        object Compact {\n`;
+      output += `        object Compact : TypographyTokens {\n`;
       tokenGroups.typography.compact.forEach(t => {
-        output += `            val ${t.name} = ${t.value}\n`;
+        output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
     }
     if (tokenGroups.typography.regular.length > 0) {
-      output += `        object Regular {\n`;
+      output += `        object Regular : TypographyTokens {\n`;
       tokenGroups.typography.regular.forEach(t => {
-        output += `            val ${t.name} = ${t.value}\n`;
+        output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
     }
@@ -2223,12 +2345,31 @@ async function generateComposeThemeProviders() {
     return { totalThemes: 0, successfulThemes: 0 };
   }
 
-  // Generate shared Density.kt file
+  // Generate shared files (brand-independent)
   if (fs.existsSync(sharedDir)) {
+    // Density.kt
     const densityContent = generateSharedDensityFile();
     const densityFile = path.join(sharedDir, 'Density.kt');
     fs.writeFileSync(densityFile, densityContent, 'utf8');
     console.log('     ✅ shared/Density.kt (brand-independent)');
+
+    // WindowSizeClass.kt
+    const windowSizeClassContent = generateSharedWindowSizeClassFile();
+    const windowSizeClassFile = path.join(sharedDir, 'WindowSizeClass.kt');
+    fs.writeFileSync(windowSizeClassFile, windowSizeClassContent, 'utf8');
+    console.log('     ✅ shared/WindowSizeClass.kt (brand-independent)');
+
+    // Brand.kt
+    const brandEnumContent = generateSharedBrandEnumFile();
+    const brandEnumFile = path.join(sharedDir, 'Brand.kt');
+    fs.writeFileSync(brandEnumFile, brandEnumContent, 'utf8');
+    console.log('     ✅ shared/Brand.kt (all brands enum)');
+
+    // DesignSystemTheme.kt
+    const designSystemThemeContent = generateDesignSystemThemeFile();
+    const designSystemThemeFile = path.join(sharedDir, 'DesignSystemTheme.kt');
+    fs.writeFileSync(designSystemThemeFile, designSystemThemeContent, 'utf8');
+    console.log('     ✅ shared/DesignSystemTheme.kt (multi-brand theme)');
   }
 
   for (const brand of BRANDS) {
@@ -2322,18 +2463,7 @@ import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingScheme
 import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingCompact
 import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingRegular
 import com.bild.designsystem.shared.Density
-
-// ══════════════════════════════════════════════════════════════════════════════
-// SIZE CLASS
-// ══════════════════════════════════════════════════════════════════════════════
-
-/**
- * Window size class for responsive layouts
- */
-enum class WindowSizeClass {
-    Compact,  // Phones in portrait
-    Regular   // Tablets, phones in landscape
-}
+import com.bild.designsystem.shared.WindowSizeClass
 
 // ══════════════════════════════════════════════════════════════════════════════
 // COMPOSITION LOCALS
@@ -2532,6 +2662,208 @@ enum class Density {
     Default,
     /** Spacious UI with increased padding and spacing */
     Spacious
+}
+`;
+}
+
+/**
+ * Generates the shared WindowSizeClass enum file
+ * Creates: dist/android/compose/shared/WindowSizeClass.kt
+ */
+function generateSharedWindowSizeClassFile() {
+  const packageJson = require('../../package.json');
+  const version = packageJson.version;
+
+  return `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v${version}
+ * Generated by Style Dictionary
+ *
+ * Shared WindowSizeClass Enum
+ * Brand-independent window size classification for responsive layouts
+ *
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ */
+
+package com.bild.designsystem.shared
+
+/**
+ * Window size class for responsive layouts
+ *
+ * WindowSizeClass is brand-independent and can be used across all brands.
+ * Maps to design token breakpoints:
+ * - Compact: xs (320px), sm (390px) - Phones in portrait
+ * - Regular: md (600px), lg (1024px) - Tablets, phones in landscape, desktops
+ *
+ * Usage:
+ * \`\`\`kotlin
+ * BildTheme(
+ *     sizeClass = WindowSizeClass.Compact
+ * ) {
+ *     // Content with compact sizing tokens
+ * }
+ * \`\`\`
+ *
+ * Integration with AndroidX WindowSizeClass:
+ * \`\`\`kotlin
+ * val windowSizeClass = calculateWindowSizeClass(activity)
+ * val sizeClass = when (windowSizeClass.widthSizeClass) {
+ *     WindowWidthSizeClass.Compact -> WindowSizeClass.Compact
+ *     else -> WindowSizeClass.Regular
+ * }
+ * \`\`\`
+ */
+enum class WindowSizeClass {
+    /** Phones in portrait mode (xs: 320px, sm: 390px breakpoints) */
+    Compact,
+    /** Tablets, phones in landscape, desktops (md: 600px, lg: 1024px breakpoints) */
+    Regular
+}
+`;
+}
+
+/**
+ * Generates the shared Brand enum file
+ * Creates: dist/android/compose/shared/Brand.kt
+ */
+function generateSharedBrandEnumFile() {
+  const packageJson = require('../../package.json');
+  const version = packageJson.version;
+
+  const brandEntries = BRANDS.map(brand => {
+    const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
+    return `    /** ${brandPascal} brand */
+    ${brandPascal}`;
+  }).join(',\n');
+
+  return `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v${version}
+ * Generated by Style Dictionary
+ *
+ * Shared Brand Enum
+ * All available brands in the BILD Design System
+ *
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ */
+
+package com.bild.designsystem.shared
+
+/**
+ * Available brands in the BILD Design System
+ *
+ * Use this enum to switch between brands at runtime in multi-brand apps.
+ *
+ * Usage:
+ * \`\`\`kotlin
+ * DesignSystemTheme(
+ *     brand = Brand.Bild,
+ *     darkTheme = isSystemInDarkTheme()
+ * ) {
+ *     // Content with Bild branding
+ * }
+ * \`\`\`
+ */
+enum class Brand {
+${brandEntries}
+}
+`;
+}
+
+/**
+ * Generates the central DesignSystemTheme file
+ * Creates: dist/android/compose/shared/DesignSystemTheme.kt
+ */
+function generateDesignSystemThemeFile() {
+  const packageJson = require('../../package.json');
+  const version = packageJson.version;
+
+  const brandImports = BRANDS.map(brand => {
+    const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
+    return `import com.bild.designsystem.${brand}.theme.${brandPascal}Theme`;
+  }).join('\n');
+
+  const brandCases = BRANDS.map(brand => {
+    const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
+    return `        Brand.${brandPascal} -> ${brandPascal}Theme(
+            darkTheme = darkTheme,
+            sizeClass = sizeClass,
+            density = density,
+            content = content
+        )`;
+  }).join('\n');
+
+  return `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v${version}
+ * Generated by Style Dictionary
+ *
+ * Central Design System Theme Provider
+ * Unified entry point for all brands in multi-brand applications
+ *
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ */
+
+package com.bild.designsystem.shared
+
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.Composable
+${brandImports}
+
+/**
+ * Central Design System Theme Provider
+ *
+ * Provides a unified entry point for all brands. Use this in multi-brand apps
+ * where the brand can be switched at runtime via configuration.
+ *
+ * For single-brand apps, you can use the brand-specific themes directly
+ * (e.g., BildTheme, SportbildTheme, AdvertorialTheme).
+ *
+ * @param brand The brand to use for theming
+ * @param darkTheme Whether to use dark color scheme
+ * @param sizeClass Current window size class for responsive sizing
+ * @param density UI density for spacing adjustments
+ * @param content Composable content to wrap
+ *
+ * Usage:
+ * \`\`\`kotlin
+ * // Multi-brand app with runtime brand switching
+ * val currentBrand = remember { mutableStateOf(Brand.Bild) }
+ *
+ * DesignSystemTheme(
+ *     brand = currentBrand.value,
+ *     darkTheme = isSystemInDarkTheme(),
+ *     sizeClass = WindowSizeClass.Compact,
+ *     density = Density.Default
+ * ) {
+ *     // Your app content - uses the selected brand's tokens
+ * }
+ * \`\`\`
+ *
+ * White-label app example:
+ * \`\`\`kotlin
+ * // Brand from build config or remote config
+ * val brand = Brand.valueOf(BuildConfig.BRAND_NAME)
+ *
+ * DesignSystemTheme(brand = brand) {
+ *     MyApp()
+ * }
+ * \`\`\`
+ */
+@Composable
+fun DesignSystemTheme(
+    brand: Brand,
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    sizeClass: WindowSizeClass = WindowSizeClass.Compact,
+    density: Density = Density.Default,
+    content: @Composable () -> Unit
+) {
+    when (brand) {
+${brandCases}
+    }
 }
 `;
 }

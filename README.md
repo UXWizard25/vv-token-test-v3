@@ -166,23 +166,38 @@ let padding: CGFloat = StyleDictionary.space2x
 ```kotlin
 // Android Jetpack Compose
 import com.bild.designsystem.bild.theme.BildTheme
-import com.bild.designsystem.bild.theme.WindowSizeClass
 import com.bild.designsystem.bild.components.ButtonTokens
 import com.bild.designsystem.shared.Density
+import com.bild.designsystem.shared.WindowSizeClass
 
-BildTheme(
-    darkTheme = isSystemInDarkTheme(),
-    sizeClass = WindowSizeClass.Compact,
-    density = Density.Default
-) {
-    Button(
-        colors = ButtonDefaults.buttonColors(
-            containerColor = ButtonTokens.Colors.Light.buttonPrimaryBrandBgColorIdle
-        )
+@Composable
+fun MyApp() {
+    BildTheme(
+        darkTheme = isSystemInDarkTheme(),
+        sizeClass = WindowSizeClass.Compact,
+        density = Density.Default
     ) {
-        Text(color = BildTheme.colors.textColorPrimary)
+        Button(
+            colors = ButtonDefaults.buttonColors(
+                // Theme-aware: auto-selects Light/Dark
+                containerColor = ButtonTokens.Colors.current().buttonPrimaryBgColorIdle
+            )
+        ) {
+            Text(
+                // Semantic tokens via Theme
+                color = BildTheme.colors.textColorPrimary,
+                // Component typography: auto-selects Compact/Regular
+                fontSize = ButtonTokens.Typography.current().buttonLabelFontSize
+            )
+        }
     }
 }
+
+// Multi-brand apps: Use DesignSystemTheme
+import com.bild.designsystem.shared.Brand
+import com.bild.designsystem.shared.DesignSystemTheme
+
+DesignSystemTheme(brand = Brand.Bild) { /* ... */ }
 ```
 
 ### Icon Usage
