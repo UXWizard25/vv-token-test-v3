@@ -805,8 +805,15 @@ async function buildBrandSpecificTokens() {
       console.log(`     ✅ color (${files.length} modes)`);
     }
 
-    // Overrides (Brand Mapping Layer)
-    // Note: skipCompose=true because these intermediate tokens are already resolved in semantic/component tokens
+    // Overrides (Brand Mapping Layer) - DISABLED
+    // These intermediate tokens are NOT needed in the output because:
+    // 1. Semantic/Component tokens already contain resolved brand-specific values
+    // 2. CSS references primitives directly (var(--bildred)), not brand mapping (--core-color-primary)
+    // 3. No other tokens reference the brand mapping layer for alias resolution
+    // 4. The values are redundant copies of what's already in primitives + semantic tokens
+    //
+    // If you need to re-enable for debugging/documentation purposes, uncomment below:
+    /*
     const overridesDir = path.join(brandDir, 'overrides');
     if (fs.existsSync(overridesDir)) {
       const files = fs.readdirSync(overridesDir).filter(f => f.endsWith('.json'));
@@ -814,7 +821,7 @@ async function buildBrandSpecificTokens() {
         const fileName = path.basename(file, '.json');
         const config = {
           source: [path.join(overridesDir, file)],
-          platforms: createStandardPlatformConfig(`${DIST_DIR}/css/brands/${brand}/overrides`, fileName, { skipCompose: true })
+          platforms: createStandardPlatformConfig(`${DIST_DIR}/css/brands/${brand}/overrides`, fileName)
         };
 
         try {
@@ -827,6 +834,7 @@ async function buildBrandSpecificTokens() {
       }
       console.log(`     ✅ overrides (${files.length} collections)`);
     }
+    */
   }
 
   return { totalBuilds, successfulBuilds };
@@ -2868,7 +2876,6 @@ async function main() {
   console.log(`   - shared/              (primitives)`);
   console.log(`   - brands/{brand}/`);
   console.log(`       ├── density/       (3 modes)`);
-  console.log(`       ├── overrides/     (brand mappings)`);
   console.log(`       ├── components/    (component-specific tokens)`);
   console.log(`       │   └── {Component}/  (color, density, breakpoint modes)`);
   console.log(`       └── semantic/`);
