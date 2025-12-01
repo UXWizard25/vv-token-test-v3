@@ -2002,19 +2002,29 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   const hasDensityTokens = tokenGroups.density.dense.length > 0 ||
       tokenGroups.density.default.length > 0 ||
       tokenGroups.density.spacious.length > 0;
+  const hasColorTokens = tokenGroups.colors.light.length > 0 || tokenGroups.colors.dark.length > 0;
+  const hasSizingTokens = tokenGroups.sizing.compact.length > 0 || tokenGroups.sizing.regular.length > 0;
+
+  // Need @Composable and Theme imports for current() accessors
+  const needsComposable = hasDensityTokens || hasColorTokens || hasSizingTokens;
 
   const imports = ['import androidx.compose.runtime.Immutable'];
-  if (hasDensityTokens) {
+  if (needsComposable) {
     imports.push('import androidx.compose.runtime.Composable');
     imports.push(`import com.bild.designsystem.${brand}.theme.${brandPascal}Theme`);
+  }
+  if (hasDensityTokens) {
     imports.push('import com.bild.designsystem.shared.Density');
+  }
+  if (hasSizingTokens) {
+    imports.push('import com.bild.designsystem.shared.WindowSizeClass');
   }
   if (hasColor) imports.push('import androidx.compose.ui.graphics.Color');
   if (hasFontStyle) imports.push('import androidx.compose.ui.text.font.FontStyle');
   if (hasDp || hasSp) imports.push('import androidx.compose.ui.unit.Dp');
   if (hasDp) imports.push('import androidx.compose.ui.unit.dp');
   if (hasSp) imports.push('import androidx.compose.ui.unit.sp');
-  if (hasSp && hasDensityTokens) imports.push('import androidx.compose.ui.unit.TextUnit');
+  if (hasSp && needsComposable) imports.push('import androidx.compose.ui.unit.TextUnit');
 
   let output = `/**
  * Do not edit directly, this file was auto-generated.
@@ -2043,50 +2053,120 @@ ${imports.join('\n')}
 object ${componentName}Tokens {
 `;
 
-  // Colors section
+  // Colors section with interface and current() accessor
   if (tokenGroups.colors.light.length > 0 || tokenGroups.colors.dark.length > 0) {
+    // Collect all unique token names for interface
+    const colorTokenNames = new Map();
+    [...tokenGroups.colors.light, ...tokenGroups.colors.dark].forEach(t => {
+      if (!colorTokenNames.has(t.name)) {
+        colorTokenNames.set(t.name, t.value);
+      }
+    });
+
     output += `
     // ══════════════════════════════════════════════════════════════
     // COLORS
     // ══════════════════════════════════════════════════════════════
     object Colors {
+        /**
+         * Returns color tokens for the current theme.
+         * Automatically resolves to Light or Dark based on ${brandPascal}Theme.isDarkTheme
+         *
+         * Usage:
+         *   val bgColor = ${componentName}Tokens.Colors.current().primaryBgIdle
+         */
+        @Composable
+        fun current(): ColorTokens = if (${brandPascal}Theme.isDarkTheme) Dark else Light
+
+        /**
+         * Interface for color tokens
+         */
+        interface ColorTokens {
+`;
+    // Generate interface properties
+    colorTokenNames.forEach((value, name) => {
+      output += `            val ${name}: Color\n`;
+    });
+    output += `        }
+
 `;
     if (tokenGroups.colors.light.length > 0) {
-      output += `        object Light {\n`;
+      output += `        object Light : ColorTokens {\n`;
       tokenGroups.colors.light.forEach(t => {
-        output += `            val ${t.name} = ${t.value}\n`;
+        output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
     }
     if (tokenGroups.colors.dark.length > 0) {
-      output += `        object Dark {\n`;
+      output += `        object Dark : ColorTokens {\n`;
       tokenGroups.colors.dark.forEach(t => {
-        output += `            val ${t.name} = ${t.value}\n`;
+        output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
     }
     output += `    }\n`;
   }
 
-  // Sizing section
+  // Sizing section with interface and current() accessor
   if (tokenGroups.sizing.compact.length > 0 || tokenGroups.sizing.regular.length > 0) {
+    // Collect all unique token names for interface
+    const sizingTokenNames = new Map();
+    [...tokenGroups.sizing.compact, ...tokenGroups.sizing.regular].forEach(t => {
+      if (!sizingTokenNames.has(t.name)) {
+        sizingTokenNames.set(t.name, t.value);
+      }
+    });
+
     output += `
     // ══════════════════════════════════════════════════════════════
     // SIZING (WindowSizeClass)
     // ══════════════════════════════════════════════════════════════
     object Sizing {
+        /**
+         * Returns sizing tokens for the current window size class.
+         * Automatically resolves to Compact or Regular based on ${brandPascal}Theme.sizeClass
+         *
+         * Usage:
+         *   val fontSize = ${componentName}Tokens.Sizing.current().labelFontSize
+         */
+        @Composable
+        fun current(): SizingTokens = when (${brandPascal}Theme.sizeClass) {
+            WindowSizeClass.Compact -> Compact
+            WindowSizeClass.Regular -> Regular
+        }
+
+        /**
+         * Interface for sizing tokens
+         */
+        interface SizingTokens {
+`;
+    // Generate interface properties
+    sizingTokenNames.forEach((value, name) => {
+      // Determine type based on value
+      let propType = 'Dp';
+      if (value.includes('.sp')) propType = 'TextUnit';
+      else if (value.includes('Color(')) propType = 'Color';
+      else if (!value.includes('.dp') && !value.includes('.sp')) {
+        // Check if it's a pure number (Int)
+        const numMatch = value.match(/^(\d+)$/);
+        if (numMatch) propType = 'Int';
+      }
+      output += `            val ${name}: ${propType}\n`;
+    });
+    output += `        }
+
 `;
     if (tokenGroups.sizing.compact.length > 0) {
-      output += `        object Compact {\n`;
+      output += `        object Compact : SizingTokens {\n`;
       tokenGroups.sizing.compact.forEach(t => {
-        output += `            val ${t.name} = ${t.value}\n`;
+        output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
     }
     if (tokenGroups.sizing.regular.length > 0) {
-      output += `        object Regular {\n`;
+      output += `        object Regular : SizingTokens {\n`;
       tokenGroups.sizing.regular.forEach(t => {
-        output += `            val ${t.name} = ${t.value}\n`;
+        output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
     }
