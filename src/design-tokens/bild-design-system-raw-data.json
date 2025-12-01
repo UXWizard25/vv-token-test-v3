@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2025-11-28T15:14:17.947Z",
+  "lastModified": "2025-12-01T10:12:29.831Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -46,8 +46,6 @@
         "VariableID:18038:10602",
         "VariableID:18038:10603",
         "VariableID:18056:4790",
-        "VariableID:18164:13480",
-        "VariableID:18164:13485",
         "VariableID:18275:5779",
         "VariableID:18275:5780",
         "VariableID:18275:5781",
@@ -100,7 +98,7 @@
         },
         {
           "id": "VariableID:588:1987",
-          "name": "FontWeight/700BlackFontWeight",
+          "name": "FontWeight/FontWeightBold",
           "description": "700 is considered black weight because Gotham Condensed is the primary font family (most used in headlines). In other font families 700 is not black weight but bold.",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -114,7 +112,7 @@
         },
         {
           "id": "VariableID:588:1988",
-          "name": "FontWeight/900ExtraBlackFontWeight",
+          "name": "FontWeight/FontWeightExtraBlack",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -128,7 +126,7 @@
         },
         {
           "id": "VariableID:634:877",
-          "name": "FontWeight/400BookFontWeight",
+          "name": "FontWeight/FontWeightBook",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -142,7 +140,7 @@
         },
         {
           "id": "VariableID:982:2356",
-          "name": "FontWeight/1000UltraFontWeight",
+          "name": "FontWeight/FontWeightUltra",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -156,7 +154,7 @@
         },
         {
           "id": "VariableID:1045:2748",
-          "name": "FontWeight/800BlackFontWeight",
+          "name": "FontWeight/FontWeightBlack",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -170,7 +168,7 @@
         },
         {
           "id": "VariableID:1259:9",
-          "name": "FontWeight/350BookFontWeight",
+          "name": "FontWeight/FontWeightBook350",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -184,7 +182,7 @@
         },
         {
           "id": "VariableID:4197:5113",
-          "name": "FontWeight/600BoldFontWeight",
+          "name": "FontWeight/FontWeightSemiBold",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -198,7 +196,7 @@
         },
         {
           "id": "VariableID:4914:3023",
-          "name": "FontWeight/100ThinFontWeight",
+          "name": "FontWeight/FontWeightThin",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -212,7 +210,7 @@
         },
         {
           "id": "VariableID:4914:3024",
-          "name": "FontWeight/300LightFontWeight",
+          "name": "FontWeight/FontWeightLight",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -226,7 +224,7 @@
         },
         {
           "id": "VariableID:4914:3025",
-          "name": "FontWeight/200ExtraLightFontWeight",
+          "name": "FontWeight/FontWeightExtraLight",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -240,7 +238,7 @@
         },
         {
           "id": "VariableID:4914:3026",
-          "name": "FontWeight/500MediumFontWeight",
+          "name": "FontWeight/FontWeightMedium",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -451,34 +449,6 @@
             "470:0": "Inter"
           },
           "scopes": [],
-          "hiddenFromPublishing": true,
-          "variableCollectionId": "VariableCollectionId:470:1450"
-        },
-        {
-          "id": "VariableID:18164:13480",
-          "name": "FontWeight/BoldItalicFontWeightST",
-          "description": "",
-          "resolvedType": "STRING",
-          "valuesByMode": {
-            "470:0": "Bold Italic"
-          },
-          "scopes": [
-            "FONT_STYLE"
-          ],
-          "hiddenFromPublishing": true,
-          "variableCollectionId": "VariableCollectionId:470:1450"
-        },
-        {
-          "id": "VariableID:18164:13485",
-          "name": "FontWeight/BlackFontWeightST",
-          "description": "",
-          "resolvedType": "STRING",
-          "valuesByMode": {
-            "470:0": "Black"
-          },
-          "scopes": [
-            "FONT_STYLE"
-          ],
           "hiddenFromPublishing": true,
           "variableCollectionId": "VariableCollectionId:470:1450"
         },
@@ -2162,9 +2132,9 @@
         "VariableID:19881:148841",
         "VariableID:20988:206",
         "VariableID:21003:45",
-        "VariableID:21003:260",
         "VariableID:21005:195",
-        "VariableID:21017:13683"
+        "VariableID:21017:13683",
+        "VariableID:21054:260"
       ],
       "variables": [
         {
@@ -6611,7 +6581,7 @@
           "description": "this is a test for the token pipeline",
           "resolvedType": "COLOR",
           "valuesByMode": {
-            "588:0": "#3083D6",
+            "588:0": "#007CF9",
             "592:1": "#B0D1F3"
           },
           "scopes": [
@@ -6622,27 +6592,12 @@
         },
         {
           "id": "VariableID:21003:45",
-          "name": "Semantic/Core/testtest",
+          "name": "Semantic/Core/testtestakskss",
           "description": "this is a test for the token pipeline",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": "#F45B02",
             "592:1": "#B0D1F3"
-          },
-          "scopes": [
-            "ALL_SCOPES"
-          ],
-          "hiddenFromPublishing": false,
-          "variableCollectionId": "VariableCollectionId:588:1979"
-        },
-        {
-          "id": "VariableID:21003:260",
-          "name": "Semantic/Core/folcoTest",
-          "description": "this is a test for the token pipeline",
-          "resolvedType": "COLOR",
-          "valuesByMode": {
-            "588:0": "#1B00E6",
-            "592:1": "#FFEB12"
           },
           "scopes": [
             "ALL_SCOPES"
@@ -6673,6 +6628,21 @@
           "valuesByMode": {
             "588:0": "#00FF73",
             "592:1": "#00FF59"
+          },
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "hiddenFromPublishing": false,
+          "variableCollectionId": "VariableCollectionId:588:1979"
+        },
+        {
+          "id": "VariableID:21054:260",
+          "name": "Semantic/Core/pipelineTestToken",
+          "description": "",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "588:0": "#125631",
+            "592:1": "#00491A"
           },
           "scopes": [
             "ALL_SCOPES"
