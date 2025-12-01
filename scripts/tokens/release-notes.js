@@ -810,7 +810,8 @@ function generateGitHubRelease(diff, options = {}) {
   if (packageSize) {
     md += `- **Package Size:** ${packageSize}\n`;
   }
-  md += '- **Formats:** CSS, SCSS, JavaScript, Swift, Android XML, Flutter Dart, JSON\n';
+  // Note: Flutter Dart output is currently disabled in build.js (FLUTTER_ENABLED = false)
+  md += '- **Formats:** CSS, SCSS, JavaScript, Swift, Android XML, JSON\n';
   md += '- **Brands:** BILD, SportBILD, Advertorial\n';
   md += '- **Modes:** Light/Dark, Responsive Breakpoints\n';
   md += '\n';

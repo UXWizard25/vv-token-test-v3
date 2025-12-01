@@ -27,6 +27,9 @@ const COLOR_MODES = ['light', 'dark'];
 // Native platforms only use compact (sm) and regular (lg) size classes
 const NATIVE_BREAKPOINTS = ['sm', 'lg'];
 
+// Platform output toggles - set to false to disable output generation
+const FLUTTER_ENABLED = false;
+
 // Size class mapping for native platforms
 const SIZE_CLASS_MAPPING = {
   sm: 'compact',
@@ -190,7 +193,7 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
       }
     }),
     // Flutter: For breakpoint mode, use sizeclass folder and naming, skip non-native breakpoints
-    ...((cssOptions.modeType === 'breakpoint' && !isNativeBreakpoint(cssOptions.mode)) ? {} : {
+    ...((cssOptions.modeType === 'breakpoint' && !isNativeBreakpoint(cssOptions.mode)) || !FLUTTER_ENABLED ? {} : {
       flutter: {
         transformGroup: 'custom/flutter',
         buildPath: (() => {
@@ -344,7 +347,7 @@ function createTypographyConfig(brand, breakpoint) {
 
       // Flutter: Custom Typography format - only compact (sm) and regular (lg)
       // Output to semantic/typography/ with sizeclass in filename
-      ...(SIZE_CLASS_MAPPING[breakpoint] ? {
+      ...(FLUTTER_ENABLED && SIZE_CLASS_MAPPING[breakpoint] ? {
         flutter: {
           transforms: ['attribute/cti'],
           buildPath: `${DIST_DIR}/flutter/brands/${brand}/semantic/typography/`,
@@ -478,18 +481,20 @@ function createEffectConfig(brand, colorMode) {
       },
 
       // Flutter: Custom Effects format
-      flutter: {
-        transforms: ['attribute/cti'],
-        buildPath: `${DIST_DIR}/flutter/brands/${brand}/semantic/effects/`,
-        files: [{
-          destination: `${fileName}.dart`,
-          format: 'flutter/effects',
-          options: {
-            brand: brandName,
-            colorMode
-          }
-        }]
-      },
+      ...(FLUTTER_ENABLED ? {
+        flutter: {
+          transforms: ['attribute/cti'],
+          buildPath: `${DIST_DIR}/flutter/brands/${brand}/semantic/effects/`,
+          files: [{
+            destination: `${fileName}.dart`,
+            format: 'flutter/effects',
+            options: {
+              brand: brandName,
+              colorMode
+            }
+          }]
+        }
+      } : {}),
 
       // SCSS: Custom Effects format
       scss: {
@@ -776,7 +781,7 @@ function createComponentTypographyConfig(sourceFile, brand, componentName, fileN
         }
       } : {}),
       // Flutter: Only compact (sm) and regular (lg) with sizeclass naming
-      ...(breakpoint && isNativeBreakpoint(breakpoint) ? {
+      ...(FLUTTER_ENABLED && breakpoint && isNativeBreakpoint(breakpoint) ? {
         flutter: {
           transforms: ['attribute/cti'],
           buildPath: `${DIST_DIR}/flutter/brands/${brand}/components/${componentName}/`,
@@ -881,19 +886,21 @@ function createComponentEffectsConfig(sourceFile, brand, componentName, fileName
           }
         }]
       },
-      flutter: {
-        transforms: ['attribute/cti'],
-        buildPath: `${DIST_DIR}/flutter/brands/${brand}/components/${componentName}/`,
-        files: [{
-          destination: `${fileName}.dart`,
-          format: 'flutter/effects',
-          options: {
-            brand: brandName,
-            colorMode,
-            componentName
-          }
-        }]
-      },
+      ...(FLUTTER_ENABLED ? {
+        flutter: {
+          transforms: ['attribute/cti'],
+          buildPath: `${DIST_DIR}/flutter/brands/${brand}/components/${componentName}/`,
+          files: [{
+            destination: `${fileName}.dart`,
+            format: 'flutter/effects',
+            options: {
+              brand: brandName,
+              colorMode,
+              componentName
+            }
+          }]
+        }
+      } : {}),
       android: {
         transforms: ['attribute/cti'],
         buildPath: `${DIST_DIR}/android/brands/${brand}/components/${componentName}/`,
@@ -1660,10 +1667,12 @@ function createManifest(stats) {
           brands: 'android/res/values/brands/{brand}/',
           sizeClasses: 'android/brands/{brand}/sizeclass-{compact|regular}/'
         },
-        flutter: {
-          shared: 'flutter/shared/',
-          brands: 'flutter/brands/{brand}/'
-        }
+        ...(FLUTTER_ENABLED ? {
+          flutter: {
+            shared: 'flutter/shared/',
+            brands: 'flutter/brands/{brand}/'
+          }
+        } : {})
       }
     }
   };
@@ -1751,8 +1760,8 @@ async function main() {
   console.log(`   ├── js/         (JavaScript ES6)`);
   console.log(`   ├── json/       (JSON)`);
   console.log(`   ├── ios/        (Swift)`);
-  console.log(`   ├── android/    (Android XML resources)`);
-  console.log(`   └── flutter/    (Dart classes)`);
+  console.log(`   ${FLUTTER_ENABLED ? '├' : '└'}── android/    (Android XML resources)`);
+  if (FLUTTER_ENABLED) console.log(`   └── flutter/    (Dart classes)`);
   console.log(``);
   console.log(`   Each platform contains:`);
   console.log(`   - shared/              (primitives)`);

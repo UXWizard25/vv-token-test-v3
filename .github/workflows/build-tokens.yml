@@ -178,7 +178,7 @@ jobs:
             - \`dist/json/\` - JSON Data
             - \`dist/ios/\` - Swift Classes
             - \`dist/android/\` - Android XML
-            - \`dist/flutter/\` - Flutter Dart
+            <!-- Flutter Dart output currently disabled (FLUTTER_ENABLED = false in build.js) -->
 
             <details>
             <summary>📊 Datei-Statistiken</summary>
@@ -270,6 +270,6 @@ jobs:
             - JSON (structured)
             - iOS Swift Classes
             - Android XML Resources
-            - Flutter Dart Classes
+            <!-- Flutter Dart Classes (currently disabled) -->
 
             See [README.md](README.md) for usage instructions.

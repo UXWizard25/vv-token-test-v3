@@ -243,7 +243,8 @@ jobs:
               echo ""
               echo "- **Build Status:** ✅ ${{ steps.build.outputs.successful_builds }}/${{ steps.build.outputs.total_builds }} successful"
               echo "- **Package Size:** ${{ steps.package.outputs.package_size }}"
-              echo "- **Formats:** CSS, SCSS, JavaScript, Swift, Android XML, Flutter Dart, JSON"
+              # Note: Flutter Dart output currently disabled (FLUTTER_ENABLED = false in build.js)
+              echo "- **Formats:** CSS, SCSS, JavaScript, Swift, Android XML, JSON"
               echo ""
               echo "### 🔗 Links"
               echo ""
