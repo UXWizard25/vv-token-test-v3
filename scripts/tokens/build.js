@@ -1827,6 +1827,298 @@ function createManifest(stats) {
 }
 
 /**
+ * Aggregates individual Compose component files into single files per component
+ * Creates: dist/compose/brands/{brand}/components/{Component}/{Component}Tokens.kt
+ */
+async function aggregateComposeComponents() {
+  if (!COMPOSE_ENABLED) {
+    return { totalComponents: 0, successfulComponents: 0 };
+  }
+
+  console.log('📦 Aggregating Compose component files...');
+
+  let totalComponents = 0;
+  let successfulComponents = 0;
+
+  const composeDir = path.join(DIST_DIR, 'compose', 'brands');
+
+  if (!fs.existsSync(composeDir)) {
+    console.log('  ⚠️  No Compose output found, skipping aggregation');
+    return { totalComponents: 0, successfulComponents: 0 };
+  }
+
+  for (const brand of BRANDS) {
+    const brandComponentsDir = path.join(composeDir, brand, 'components');
+
+    if (!fs.existsSync(brandComponentsDir)) {
+      continue;
+    }
+
+    const componentDirs = fs.readdirSync(brandComponentsDir, { withFileTypes: true })
+      .filter(dirent => dirent.isDirectory())
+      .map(dirent => dirent.name);
+
+    for (const componentName of componentDirs) {
+      totalComponents++;
+      const componentDir = path.join(brandComponentsDir, componentName);
+      const ktFiles = fs.readdirSync(componentDir)
+        .filter(f => f.endsWith('.kt'))
+        .sort();
+
+      if (ktFiles.length === 0) continue;
+
+      try {
+        // Parse all individual files and collect tokens
+        const tokenGroups = {
+          colors: { light: [], dark: [] },
+          sizing: { compact: [], regular: [] },
+          density: { compact: [], default: [], spacious: [] },
+          typography: { compact: [], regular: [] }
+        };
+
+        for (const ktFile of ktFiles) {
+          const content = fs.readFileSync(path.join(componentDir, ktFile), 'utf8');
+          const tokens = parseKotlinTokens(content);
+
+          // Categorize based on filename
+          const lowerFile = ktFile.toLowerCase();
+          if (lowerFile.includes('colorslight')) {
+            tokenGroups.colors.light = tokens;
+          } else if (lowerFile.includes('colorsdark')) {
+            tokenGroups.colors.dark = tokens;
+          } else if (lowerFile.includes('sizingcompact')) {
+            tokenGroups.sizing.compact = tokens;
+          } else if (lowerFile.includes('sizingregular')) {
+            tokenGroups.sizing.regular = tokens;
+          } else if (lowerFile.includes('densitycompact')) {
+            tokenGroups.density.compact = tokens;
+          } else if (lowerFile.includes('densitydefault')) {
+            tokenGroups.density.default = tokens;
+          } else if (lowerFile.includes('densityspacious')) {
+            tokenGroups.density.spacious = tokens;
+          } else if (lowerFile.includes('typographycompact')) {
+            tokenGroups.typography.compact = tokens;
+          } else if (lowerFile.includes('typographyregular')) {
+            tokenGroups.typography.regular = tokens;
+          }
+        }
+
+        // Generate aggregated file
+        const aggregatedContent = generateAggregatedComponentFile(
+          brand,
+          componentName,
+          tokenGroups
+        );
+
+        // Write aggregated file
+        const outputPath = path.join(componentDir, `${componentName}Tokens.kt`);
+        fs.writeFileSync(outputPath, aggregatedContent, 'utf8');
+
+        console.log(`     ✅ ${brand}/${componentName}Tokens.kt`);
+        successfulComponents++;
+
+      } catch (error) {
+        console.error(`     ❌ ${brand}/${componentName}: ${error.message}`);
+      }
+    }
+  }
+
+  console.log(`  📊 Aggregated: ${successfulComponents}/${totalComponents} components\n`);
+  return { totalComponents, successfulComponents };
+}
+
+/**
+ * Parses Kotlin token file and extracts val declarations
+ */
+function parseKotlinTokens(content) {
+  const tokens = [];
+  const valRegex = /val\s+(\w+)\s*=\s*(.+)/g;
+  let match;
+
+  while ((match = valRegex.exec(content)) !== null) {
+    tokens.push({
+      name: match[1],
+      value: match[2].trim()
+    });
+  }
+
+  return tokens;
+}
+
+/**
+ * Generates aggregated Kotlin file with nested objects
+ */
+function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
+  const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
+  const packageJson = require('../../package.json');
+  const version = packageJson.version;
+
+  // Determine required imports based on token values
+  const allTokens = [
+    ...tokenGroups.colors.light,
+    ...tokenGroups.colors.dark,
+    ...tokenGroups.sizing.compact,
+    ...tokenGroups.sizing.regular,
+    ...tokenGroups.density.compact,
+    ...tokenGroups.density.default,
+    ...tokenGroups.density.spacious,
+    ...tokenGroups.typography.compact,
+    ...tokenGroups.typography.regular
+  ];
+
+  const hasColor = allTokens.some(t => t.value.includes('Color('));
+  const hasDp = allTokens.some(t => t.value.includes('.dp'));
+  const hasSp = allTokens.some(t => t.value.includes('.sp'));
+
+  const imports = ['import androidx.compose.runtime.Immutable'];
+  if (hasColor) imports.push('import androidx.compose.ui.graphics.Color');
+  if (hasDp || hasSp) imports.push('import androidx.compose.ui.unit.Dp');
+  if (hasDp) imports.push('import androidx.compose.ui.unit.dp');
+  if (hasSp) imports.push('import androidx.compose.ui.unit.sp');
+
+  let output = `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v${version}
+ * Generated by Style Dictionary
+ *
+ * Component: ${componentName} | Brand: ${brandPascal}
+ * Aggregated component tokens with all modes
+ *
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ */
+
+package com.bild.designsystem.${brand}.components
+
+${imports.join('\n')}
+
+/**
+ * ${componentName} Design Tokens
+ *
+ * Usage:
+ *   ${componentName}Tokens.Colors.Light.primaryBgIdle
+ *   ${componentName}Tokens.Sizing.Compact.height
+ *   ${componentName}Tokens.Density.Default.contentGap
+ */
+object ${componentName}Tokens {
+`;
+
+  // Colors section
+  if (tokenGroups.colors.light.length > 0 || tokenGroups.colors.dark.length > 0) {
+    output += `
+    // ══════════════════════════════════════════════════════════════
+    // COLORS
+    // ══════════════════════════════════════════════════════════════
+    object Colors {
+`;
+    if (tokenGroups.colors.light.length > 0) {
+      output += `        object Light {\n`;
+      tokenGroups.colors.light.forEach(t => {
+        output += `            val ${t.name} = ${t.value}\n`;
+      });
+      output += `        }\n`;
+    }
+    if (tokenGroups.colors.dark.length > 0) {
+      output += `        object Dark {\n`;
+      tokenGroups.colors.dark.forEach(t => {
+        output += `            val ${t.name} = ${t.value}\n`;
+      });
+      output += `        }\n`;
+    }
+    output += `    }\n`;
+  }
+
+  // Sizing section
+  if (tokenGroups.sizing.compact.length > 0 || tokenGroups.sizing.regular.length > 0) {
+    output += `
+    // ══════════════════════════════════════════════════════════════
+    // SIZING (WindowSizeClass)
+    // ══════════════════════════════════════════════════════════════
+    object Sizing {
+`;
+    if (tokenGroups.sizing.compact.length > 0) {
+      output += `        object Compact {\n`;
+      tokenGroups.sizing.compact.forEach(t => {
+        output += `            val ${t.name} = ${t.value}\n`;
+      });
+      output += `        }\n`;
+    }
+    if (tokenGroups.sizing.regular.length > 0) {
+      output += `        object Regular {\n`;
+      tokenGroups.sizing.regular.forEach(t => {
+        output += `            val ${t.name} = ${t.value}\n`;
+      });
+      output += `        }\n`;
+    }
+    output += `    }\n`;
+  }
+
+  // Density section
+  if (tokenGroups.density.compact.length > 0 ||
+      tokenGroups.density.default.length > 0 ||
+      tokenGroups.density.spacious.length > 0) {
+    output += `
+    // ══════════════════════════════════════════════════════════════
+    // DENSITY
+    // ══════════════════════════════════════════════════════════════
+    object Density {
+`;
+    if (tokenGroups.density.compact.length > 0) {
+      output += `        object Compact {\n`;
+      tokenGroups.density.compact.forEach(t => {
+        output += `            val ${t.name} = ${t.value}\n`;
+      });
+      output += `        }\n`;
+    }
+    if (tokenGroups.density.default.length > 0) {
+      output += `        object Default {\n`;
+      tokenGroups.density.default.forEach(t => {
+        output += `            val ${t.name} = ${t.value}\n`;
+      });
+      output += `        }\n`;
+    }
+    if (tokenGroups.density.spacious.length > 0) {
+      output += `        object Spacious {\n`;
+      tokenGroups.density.spacious.forEach(t => {
+        output += `            val ${t.name} = ${t.value}\n`;
+      });
+      output += `        }\n`;
+    }
+    output += `    }\n`;
+  }
+
+  // Typography section
+  if (tokenGroups.typography.compact.length > 0 || tokenGroups.typography.regular.length > 0) {
+    output += `
+    // ══════════════════════════════════════════════════════════════
+    // TYPOGRAPHY
+    // ══════════════════════════════════════════════════════════════
+    object Typography {
+`;
+    if (tokenGroups.typography.compact.length > 0) {
+      output += `        object Compact {\n`;
+      tokenGroups.typography.compact.forEach(t => {
+        output += `            val ${t.name} = ${t.value}\n`;
+      });
+      output += `        }\n`;
+    }
+    if (tokenGroups.typography.regular.length > 0) {
+      output += `        object Regular {\n`;
+      tokenGroups.typography.regular.forEach(t => {
+        output += `            val ${t.name} = ${t.value}\n`;
+      });
+      output += `        }\n`;
+    }
+    output += `    }\n`;
+  }
+
+  output += `}
+`;
+
+  return output;
+}
+
+/**
  * Main function
  */
 async function main() {
@@ -1867,6 +2159,9 @@ async function main() {
   // Convert to responsive CSS
   stats.responsiveCSS = await convertToResponsiveCSS();
 
+  // Aggregate Compose component files
+  stats.composeAggregated = await aggregateComposeComponents();
+
   // Create manifest
   createManifest(stats);
 
@@ -1890,6 +2185,9 @@ async function main() {
   console.log(`   - Typography Builds: ${stats.typographyTokens.successfulBuilds}/${stats.typographyTokens.totalBuilds}`);
   console.log(`   - Effect Builds: ${stats.effectTokens.successfulBuilds}/${stats.effectTokens.totalBuilds}`);
   console.log(`   - Responsive CSS Files: ${stats.responsiveCSS.successfulConversions}/${stats.responsiveCSS.totalConversions}`);
+  if (COMPOSE_ENABLED && stats.composeAggregated) {
+    console.log(`   - Compose Aggregated: ${stats.composeAggregated.successfulComponents}/${stats.composeAggregated.totalComponents}`);
+  }
   console.log(`   - Builds erfolgreich: ${successfulBuilds}/${totalBuilds}`);
   console.log(`   - Output-Verzeichnis: dist/\n`);
 
