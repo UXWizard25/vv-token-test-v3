@@ -205,51 +205,94 @@ Container(
 
 ```kotlin
 import com.bild.designsystem.bild.theme.BildTheme
-import com.bild.designsystem.bild.theme.WindowSizeClass
-import com.bild.designsystem.bild.semantic.BildSemanticTokens
 import com.bild.designsystem.bild.components.ButtonTokens
-import com.bild.designsystem.DesignTokenPrimitives
+import com.bild.designsystem.shared.Density
+import com.bild.designsystem.shared.WindowSizeClass
+
+@Composable
+fun MyScreen() {
+    // Theme Provider (automatic Light/Dark, WindowSizeClass, Density support)
+    BildTheme(
+        darkTheme = isSystemInDarkTheme(),
+        sizeClass = WindowSizeClass.Compact,
+        density = Density.Default
+    ) {
+        // ══════════════════════════════════════════════════════════════
+        // SEMANTIC TOKENS - via BildTheme (type-safe interfaces)
+        // ══════════════════════════════════════════════════════════════
+        Text(color = BildTheme.colors.textColorPrimary)  // auto Light/Dark
+        val fontSize = BildTheme.sizing.headline1FontSize  // auto Compact/Regular
+
+        // ══════════════════════════════════════════════════════════════
+        // COMPONENT TOKENS - via current() accessors (theme-aware)
+        // ══════════════════════════════════════════════════════════════
+        val bgColor = ButtonTokens.Colors.current().buttonPrimaryBgColorIdle  // auto Light/Dark
+        val labelSize = ButtonTokens.Sizing.current().buttonLabelFontSize  // auto Compact/Regular
+        val fontFamily = ButtonTokens.Typography.current().buttonLabelFontFamily  // auto Compact/Regular
+        val gap = ButtonTokens.Density.current().denseButtonContentGapSpace  // auto Dense/Default/Spacious
+    }
+}
+
+// Direct access (static, when you need specific mode)
+val lightColor = ButtonTokens.Colors.Light.buttonPrimaryBgColorIdle
+val darkColor = ButtonTokens.Colors.Dark.buttonPrimaryBgColorIdle
+```
+
+#### Multi-Brand Apps
+
+```kotlin
+import com.bild.designsystem.shared.Brand
+import com.bild.designsystem.shared.DesignSystemTheme
+import com.bild.designsystem.shared.WindowSizeClass
 import com.bild.designsystem.shared.Density
 
-// Theme Provider (with automatic Light/Dark, WindowSizeClass, Density support)
-BildTheme(
+// Central Theme Provider for all brands
+DesignSystemTheme(
+    brand = Brand.Bild,  // or Brand.Sportbild, Brand.Advertorial
     darkTheme = isSystemInDarkTheme(),
     sizeClass = WindowSizeClass.Compact,
     density = Density.Default
 ) {
-    // Access via BildTheme object (type-safe via interfaces)
-    Text(color = BildTheme.colors.textColorPrimary)
-
-    // Sizing adapts to WindowSizeClass
-    val fontSize = BildTheme.sizing.headline1FontSize
-
-    // Density-aware component tokens
-    val gap = ButtonTokens.Density.current().denseButtonContentGapSpace
+    // Brand-specific tokens automatically applied
 }
 
-// Direct token access (camelCase naming)
-val primaryColor = BildSemanticTokens.Colors.Light.textColorPrimary
-val buttonBg = ButtonTokens.Colors.Light.buttonPrimaryBrandBgColorIdle
-val red = DesignTokenPrimitives.Colors.bildred
+// White-label app example
+val brand = Brand.valueOf(BuildConfig.BRAND_NAME)
+DesignSystemTheme(brand = brand) { MyApp() }
 ```
 
 #### Compose Type-Safe Interfaces
-
-The Compose output uses interfaces for type-safe theming:
 
 | Interface | Purpose | Implementations |
 |-----------|---------|-----------------|
 | `BildColorScheme` | Color tokens contract | `BildLightColors`, `BildDarkColors` |
 | `BildSizingScheme` | Sizing tokens contract | `BildSizingCompact`, `BildSizingRegular` |
-| `Density` (enum) | UI density settings | `Dense`, `Default`, `Spacious` |
+
+**Shared Enums (brand-independent):**
+
+| Enum | Values | Package |
+|------|--------|---------|
+| `Density` | `Dense`, `Default`, `Spacious` | `com.bild.designsystem.shared` |
+| `WindowSizeClass` | `Compact`, `Regular` | `com.bild.designsystem.shared` |
+| `Brand` | `Bild`, `Sportbild`, `Advertorial` | `com.bild.designsystem.shared` |
+
+#### Component Token Accessors
+
+All Component Tokens provide theme-aware `current()` accessors:
+
+| Accessor | Selects based on | Values |
+|----------|-----------------|--------|
+| `Colors.current()` | `BildTheme.isDarkTheme` | Light / Dark |
+| `Sizing.current()` | `BildTheme.sizeClass` | Compact / Regular |
+| `Typography.current()` | `BildTheme.sizeClass` | Compact / Regular |
+| `Density.current()` | `BildTheme.density` | Dense / Default / Spacious |
 
 ```kotlin
-// Density is brand-independent (shared across all brands)
-import com.bild.designsystem.shared.Density
-
-// Color/Sizing schemes are brand-specific
-import com.bild.designsystem.bild.semantic.BildColorScheme
-import com.bild.designsystem.bild.semantic.BildSizingScheme
+// All accessors return interface types for type-safety
+ButtonTokens.Colors.current()       // ColorTokens interface
+ButtonTokens.Sizing.current()       // SizingTokens interface
+ButtonTokens.Typography.current()   // TypographyTokens interface
+ButtonTokens.Density.current()      // DensityTokens interface
 ```
 
 ### Android XML (Disabled)
@@ -453,10 +496,13 @@ dist/
 │   └── compose/                     # Jetpack Compose (Kotlin)
 │       ├── shared/
 │       │   ├── DesignTokenPrimitives.kt   # All primitives consolidated
-│       │   └── Density.kt                  # Brand-independent density enum
+│       │   ├── Density.kt                 # Dense/Default/Spacious enum
+│       │   ├── WindowSizeClass.kt         # Compact/Regular enum
+│       │   ├── Brand.kt                   # Bild/Sportbild/Advertorial enum
+│       │   └── DesignSystemTheme.kt       # Multi-brand theme provider
 │       └── brands/{brand}/
 │           ├── components/{Component}/
-│           │   └── {Component}Tokens.kt   # Aggregated Colors/Sizing/Density/Typography
+│           │   └── {Component}Tokens.kt   # Aggregated with current() accessors
 │           ├── semantic/
 │           │   ├── {Brand}SemanticTokens.kt   # Aggregated Light/Dark + Compact/Regular
 │           │   ├── color/
@@ -474,15 +520,25 @@ dist/
 
 Compose output is optimized for Android development:
 
+**Shared Files (brand-independent):**
+
 | File | Content | Access Pattern |
 |------|---------|----------------|
 | `shared/DesignTokenPrimitives.kt` | All primitives (Colors, Space, Size, Font) | `DesignTokenPrimitives.Colors.bildred` |
-| `shared/Density.kt` | Brand-independent Density enum | `Density.Default`, `Density.Dense`, `Density.Spacious` |
-| `{Brand}SemanticTokens.kt` | Colors (Light/Dark), Sizing (Compact/Regular) | `BildSemanticTokens.Colors.Light.textColorPrimary` |
-| `ColorsLight.kt` | ColorScheme interface + Light implementation | `BildLightColors.textColorPrimary` |
-| `SizingCompact.kt` | SizingScheme interface + Compact implementation | `BildSizingCompact.headline1FontSize` |
-| `{Component}Tokens.kt` | All component modes aggregated | `ButtonTokens.Colors.Light.buttonPrimaryBrandBgColorIdle` |
-| `{Brand}Theme.kt` | CompositionLocal-based Theme Provider | `BildTheme { /* content */ }` |
+| `shared/Density.kt` | UI density enum | `Density.Dense`, `Density.Default`, `Density.Spacious` |
+| `shared/WindowSizeClass.kt` | Responsive layout enum | `WindowSizeClass.Compact`, `WindowSizeClass.Regular` |
+| `shared/Brand.kt` | Available brands enum | `Brand.Bild`, `Brand.Sportbild`, `Brand.Advertorial` |
+| `shared/DesignSystemTheme.kt` | Multi-brand theme provider | `DesignSystemTheme(brand = Brand.Bild) { }` |
+
+**Brand Files:**
+
+| File | Content | Access Pattern |
+|------|---------|----------------|
+| `{Brand}Theme.kt` | CompositionLocal Theme Provider | `BildTheme { }`, `BildTheme.colors.x`, `BildTheme.sizing.x` |
+| `{Brand}SemanticTokens.kt` | Colors + Sizing aggregated | `BildSemanticTokens.Colors.Light.textColorPrimary` |
+| `ColorsLight.kt` / `ColorsDark.kt` | ColorScheme interface + impl | Used by BildTheme internally |
+| `SizingCompact.kt` / `SizingRegular.kt` | SizingScheme interface + impl | Used by BildTheme internally |
+| `{Component}Tokens.kt` | Component tokens with `current()` | `ButtonTokens.Colors.current().buttonPrimaryBgColorIdle` |
 
 ## 🔗 Figma Integration & Dependencies
 
