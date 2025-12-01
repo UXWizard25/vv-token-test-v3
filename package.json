@@ -58,7 +58,7 @@
   },
   "devDependencies": {
     "@svgr/core": "^8.1.0",
-    "@types/react": "^18.3.27",
+    "@types/react": "^19.2.7",
     "fantasticon": "^3.0.0",
     "nodemon": "^3.0.1",
     "style-dictionary": "^4.2.0",
