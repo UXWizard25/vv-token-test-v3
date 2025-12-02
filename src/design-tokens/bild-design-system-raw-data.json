@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2025-12-01T16:42:58.583Z",
+  "lastModified": "2025-12-02T14:55:22.357Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -1908,15 +1908,15 @@
       "id": "VariableCollectionId:588:1979",
       "name": "ColorMode",
       "hiddenFromPublishing": false,
-      "defaultModeId": "588:0",
+      "defaultModeId": "592:1",
       "modes": [
-        {
-          "name": "Light",
-          "modeId": "588:0"
-        },
         {
           "name": "Dark",
           "modeId": "592:1"
+        },
+        {
+          "name": "Light",
+          "modeId": "588:0"
         }
       ],
       "remote": false,
@@ -3723,7 +3723,7 @@
         },
         {
           "id": "VariableID:8750:42",
-          "name": "Component/Chips/chipsBgColorHover",
+          "name": "Component/Chip/chipBgColorHover",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -3744,7 +3744,7 @@
         },
         {
           "id": "VariableID:8750:1377",
-          "name": "Component/Chips/chipsLabelColorHover",
+          "name": "Component/Chip/chipLabelColorHover",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -3765,17 +3765,14 @@
         },
         {
           "id": "VariableID:8750:1692",
-          "name": "Component/Chips/chipsBgColorActive",
+          "name": "Component/Chip/chipBgColorActive",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
-            "588:0": {
-              "type": "VARIABLE_ALIAS",
-              "id": "VariableID:20360:22977"
-            },
+            "588:0": "#DD0000",
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:588:1978"
+              "id": "VariableID:21076:41637"
             }
           },
           "scopes": [
@@ -3786,7 +3783,7 @@
         },
         {
           "id": "VariableID:8750:1693",
-          "name": "Component/Chips/chipsBgColorIdle",
+          "name": "Component/Chip/chipBgColorIdle",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -3807,7 +3804,7 @@
         },
         {
           "id": "VariableID:8750:1694",
-          "name": "Component/Chips/chipsLabelColorIdle",
+          "name": "Component/Chip/chipLabelColorIdle",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -6709,7 +6706,7 @@
         },
         {
           "id": "VariableID:2726:12079",
-          "name": "space0_5x",
+          "name": "space0p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -6724,7 +6721,7 @@
         },
         {
           "id": "VariableID:2726:12080",
-          "name": "space0_25x",
+          "name": "space0p25x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -6754,7 +6751,7 @@
         },
         {
           "id": "VariableID:2726:12082",
-          "name": "space1_5x",
+          "name": "space1p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -6904,7 +6901,7 @@
         },
         {
           "id": "VariableID:3114:1737",
-          "name": "space2_5x",
+          "name": "space2p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -6919,7 +6916,7 @@
         },
         {
           "id": "VariableID:3249:2456",
-          "name": "spaceNeg0_25x",
+          "name": "spaceNeg0p25x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -6934,7 +6931,7 @@
         },
         {
           "id": "VariableID:3344:1618",
-          "name": "space0_75x",
+          "name": "space0p75x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -6949,7 +6946,7 @@
         },
         {
           "id": "VariableID:4440:2072",
-          "name": "space1_25x",
+          "name": "space1p25x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -6964,7 +6961,7 @@
         },
         {
           "id": "VariableID:4549:2174",
-          "name": "space2_75x",
+          "name": "space2p75x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -6979,7 +6976,7 @@
         },
         {
           "id": "VariableID:4805:2298",
-          "name": "space4_5x",
+          "name": "space4p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -6994,7 +6991,7 @@
         },
         {
           "id": "VariableID:4870:2803",
-          "name": "space7_5x",
+          "name": "space7p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7024,7 +7021,7 @@
         },
         {
           "id": "VariableID:6758:54915",
-          "name": "space1_75x",
+          "name": "space1p75x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7039,7 +7036,7 @@
         },
         {
           "id": "VariableID:6797:55031",
-          "name": "space8_5x",
+          "name": "space8p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7054,7 +7051,7 @@
         },
         {
           "id": "VariableID:11009:3182",
-          "name": "space3_5x",
+          "name": "space3p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7183,7 +7180,7 @@
         },
         {
           "id": "VariableID:4075:54",
-          "name": "size0_25x",
+          "name": "size0p25x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7231,7 +7228,7 @@
         },
         {
           "id": "VariableID:4075:1873",
-          "name": "size4_5x",
+          "name": "size4p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7263,7 +7260,7 @@
         },
         {
           "id": "VariableID:4125:2853",
-          "name": "size3_5x",
+          "name": "size3p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7279,7 +7276,7 @@
         },
         {
           "id": "VariableID:4125:2874",
-          "name": "size2_5x",
+          "name": "size2p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7295,7 +7292,7 @@
         },
         {
           "id": "VariableID:4125:2994",
-          "name": "size12_5x",
+          "name": "size12p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7311,7 +7308,7 @@
         },
         {
           "id": "VariableID:4172:4794",
-          "name": "size2_75x",
+          "name": "size2p75x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7327,7 +7324,7 @@
         },
         {
           "id": "VariableID:4172:4798",
-          "name": "size3_25x",
+          "name": "size3p25x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7359,7 +7356,7 @@
         },
         {
           "id": "VariableID:4172:4887",
-          "name": "size3_75x",
+          "name": "size3p75x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7375,7 +7372,7 @@
         },
         {
           "id": "VariableID:4197:5112",
-          "name": "size2_25x",
+          "name": "size2p25x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7407,7 +7404,7 @@
         },
         {
           "id": "VariableID:4478:6965",
-          "name": "size1_5x",
+          "name": "size1p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7423,7 +7420,7 @@
         },
         {
           "id": "VariableID:4539:2230",
-          "name": "size0_75x",
+          "name": "size0p75x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7439,7 +7436,7 @@
         },
         {
           "id": "VariableID:4539:2237",
-          "name": "size22_5x",
+          "name": "size22p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7487,7 +7484,7 @@
         },
         {
           "id": "VariableID:4549:2163",
-          "name": "size11_5x",
+          "name": "size11p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7503,7 +7500,7 @@
         },
         {
           "id": "VariableID:4629:2206",
-          "name": "size1_75x",
+          "name": "size1p75x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7519,7 +7516,7 @@
         },
         {
           "id": "VariableID:4629:2207",
-          "name": "size5_25x",
+          "name": "size5p25x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7535,7 +7532,7 @@
         },
         {
           "id": "VariableID:4639:2221",
-          "name": "size1_25x",
+          "name": "size1p25x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7567,7 +7564,7 @@
         },
         {
           "id": "VariableID:4679:2445",
-          "name": "size17_5x",
+          "name": "size17p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7679,7 +7676,7 @@
         },
         {
           "id": "VariableID:5391:10",
-          "name": "size16_25",
+          "name": "size16p25",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7695,7 +7692,7 @@
         },
         {
           "id": "VariableID:5510:16626",
-          "name": "size87_5x",
+          "name": "size87p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7807,7 +7804,7 @@
         },
         {
           "id": "VariableID:9539:19723",
-          "name": "size27_5x",
+          "name": "size27p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7839,7 +7836,7 @@
         },
         {
           "id": "VariableID:10547:4282",
-          "name": "size116_25x",
+          "name": "size116p25x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7855,7 +7852,7 @@
         },
         {
           "id": "VariableID:10776:1520",
-          "name": "size18_5x",
+          "name": "size18p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7903,7 +7900,7 @@
         },
         {
           "id": "VariableID:18269:27",
-          "name": "size0_125x",
+          "name": "size0p125x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7952,7 +7949,7 @@
       "variables": [
         {
           "id": "VariableID:5695:5842",
-          "name": "Component/Button/denseButtonContentGapSpace",
+          "name": "Component/Button/densityButtonContentGapSpace",
           "description": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes.",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7975,7 +7972,7 @@
         },
         {
           "id": "VariableID:5696:5853",
-          "name": "Component/Button/denseButtonStackSpace",
+          "name": "Component/Button/densityButtonStackSpace",
           "description": "This variable is in the SpaceScaling collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes.",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -7998,7 +7995,7 @@
         },
         {
           "id": "VariableID:13264:8396",
-          "name": "Component/Button/denseButtonLabelFontSize",
+          "name": "Component/Button/densityButtonLabelFontSize",
           "description": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling size could work across different content scaling / size / contrast themes. Font size across devices: 15 - 17 - 19",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -8012,7 +8009,7 @@
         },
         {
           "id": "VariableID:13264:8569",
-          "name": "Component/Button/denseButtonInlineSpace",
+          "name": "Component/Button/densityButtonInlineSpace",
           "description": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling space could work across different content scaling / size / contrast themes.",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -8035,7 +8032,7 @@
         },
         {
           "id": "VariableID:18682:535",
-          "name": "Component/Inputfield/denseInputFieldInlineSpace",
+          "name": "Component/Inputfield/densityInputFieldInlineSpace",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -8058,7 +8055,7 @@
         },
         {
           "id": "VariableID:18682:536",
-          "name": "Component/Inputfield/denseInputFieldStackSpace",
+          "name": "Component/Inputfield/densityInputFieldStackSpace",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -8081,7 +8078,7 @@
         },
         {
           "id": "VariableID:18682:4564",
-          "name": "Component/Inputfield/denseInputFieldHeightSize",
+          "name": "Component/Inputfield/densityInputFieldHeightSize",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -8104,7 +8101,7 @@
         },
         {
           "id": "VariableID:18693:666",
-          "name": "Component/Inputfield/denseInputFieldLabelFontSize",
+          "name": "Component/Inputfield/densityInputFieldLabelFontSize",
           "description": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling size could work across different content scaling / size / contrast themes. Font size across scaling options: compact 15 - default 17 - spacious 19",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -25816,7 +25813,7 @@
         },
         {
           "id": "VariableID:19144:63646",
-          "name": "Global/Typography/FontWeight/Kicker/kickerFontWeightST",
+          "name": "Global/Typography/FontWeight/Kicker/kickerFontWeightSt",
           "description": "",
           "resolvedType": "STRING",
           "valuesByMode": {
@@ -25873,7 +25870,7 @@
         },
         {
           "id": "VariableID:20321:208850",
-          "name": "Component/Menu/menuItemFontWeight",
+          "name": "Component/Menu/menuItemFontWeightSt",
           "description": "",
           "resolvedType": "STRING",
           "valuesByMode": {
@@ -26082,7 +26079,8 @@
         "VariableID:19221:66795",
         "VariableID:19221:66799",
         "VariableID:19221:66800",
-        "VariableID:20360:22977"
+        "VariableID:20360:22977",
+        "VariableID:21076:41637"
       ],
       "variables": [
         {
@@ -26657,7 +26655,7 @@
         },
         {
           "id": "VariableID:18345:42065",
-          "name": "Component/BreakingNews/breakingNewsTextContentColor",
+          "name": "Component/BreakingNews/breakingNewsTextContentColorLight",
           "description": "This variable is used on the text for headlines in the horizontally animated breaking news strip. Bild: 100 ; SpoBi: 015",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26676,7 +26674,7 @@
         },
         {
           "id": "VariableID:18345:42066",
-          "name": "Component/BreakingNews/breakingNewsSurfaceColor",
+          "name": "Component/BreakingNews/breakingNewsSurfaceColorLight",
           "description": "This variable is used on the breaking news strip that has horizontally animated headlines. Bild: 015 ; SpoBi: 081",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26866,7 +26864,7 @@
         },
         {
           "id": "VariableID:18454:32957",
-          "name": "Component/Button/PrimaryBrand/buttonPrimaryBrandBgColorIdle",
+          "name": "Component/Button/PrimaryBrand/buttonPrimaryBrandBgColorIdleLight",
           "description": "Bild: 046 ; SpoBi: 029",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26904,7 +26902,7 @@
         },
         {
           "id": "VariableID:18454:32959",
-          "name": "Component/Button/PrimaryBrand/buttonPrimaryBrandBgColorHover",
+          "name": "Component/Button/PrimaryBrand/buttonPrimaryBrandBgColorHoverLight",
           "description": "Bild: 035 ; SpoBi: 016",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26942,7 +26940,7 @@
         },
         {
           "id": "VariableID:18631:74156",
-          "name": "Component/Menu/menuLinkLaneSurfaceColor",
+          "name": "Component/Menu/menuLinkLaneSurfaceColorLight",
           "description": "This variable is used for making possible the default color difference between the Bild and SportBild link lanes inside the menu component.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -27018,7 +27016,7 @@
         },
         {
           "id": "VariableID:18644:81007",
-          "name": "Component/Menu/menuLinkColorBorderActive",
+          "name": "Component/Menu/menuLinkColorBorderActiveLight",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -27075,7 +27073,7 @@
         },
         {
           "id": "VariableID:18710:4112",
-          "name": "Component/Menu/appTopBarSurfaceColor",
+          "name": "Component/Menu/appTopBarBgColorLight",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -27113,7 +27111,7 @@
         },
         {
           "id": "VariableID:18961:4492",
-          "name": "Component/Menu/appBottomTabBarBgColor",
+          "name": "Component/Menu/appBottomTabBarBgColorLight",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -27132,7 +27130,7 @@
         },
         {
           "id": "VariableID:18961:4493",
-          "name": "Component/Menu/appBottomTabBarBgDark",
+          "name": "Component/Menu/appBottomTabBarBgColorDark",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -27151,7 +27149,7 @@
         },
         {
           "id": "VariableID:18961:17140",
-          "name": "Component/Menu/appTopBarIconColor",
+          "name": "Component/Menu/appTopBarIconColorLight",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -27189,7 +27187,7 @@
         },
         {
           "id": "VariableID:18961:17143",
-          "name": "Component/Menu/appTopBarTextColor",
+          "name": "Component/Menu/appTopBarTextColorLight",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -27284,7 +27282,7 @@
         },
         {
           "id": "VariableID:19220:66794",
-          "name": "Component/Menu/appTobBarTabNavBottomBorder",
+          "name": "Component/Menu/appTobBarTabNavBottomBorderLight",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -27322,7 +27320,7 @@
         },
         {
           "id": "VariableID:19221:66799",
-          "name": "Component/Menu/appTobBarTabNavBottomBorderActive",
+          "name": "Component/Menu/appTobBarTabNavBottomBorderActiveLight",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -27360,7 +27358,7 @@
         },
         {
           "id": "VariableID:20360:22977",
-          "name": "Component/chipColorActive",
+          "name": "Component/Chip/chipColorActiveLight",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -27371,6 +27369,27 @@
             "18212:1": {
               "type": "VARIABLE_ALIAS",
               "id": "VariableID:16107:27"
+            }
+          },
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "hiddenFromPublishing": false,
+          "variableCollectionId": "VariableCollectionId:18212:14495"
+        },
+        {
+          "id": "VariableID:21076:41637",
+          "name": "Component/Chip/chipColorActiveDark",
+          "description": "",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "18212:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:588:1978"
+            },
+            "18212:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:18489:25069"
             }
           },
           "scopes": [
