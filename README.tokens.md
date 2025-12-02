@@ -154,15 +154,15 @@ Figma token types (`$type`) are automatically mapped to platform-specific types:
 | `fontSize` | `var(--token)` (px) | `CGFloat` | `TextUnit` (.sp) |
 | `lineHeight` | `var(--token)` (px) | `CGFloat` | `TextUnit` (.sp) |
 | `letterSpacing` | `var(--token)` (px) | `CGFloat` | `TextUnit` (.sp) |
-| `fontWeight` | `var(--token)` | `CGFloat` | `Int` |
+| `fontWeight` | `var(--token)` | `FontWeight` | `FontWeight` |
 | `number` | `var(--token)` | `CGFloat` | `Float` |
 | `fontFamily` | `var(--token)` | `String` | `String` |
 | `string` | `var(--token)` | `String` | `String` |
 | `boolean` | `var(--token)` | `Bool` | `Boolean` |
 | `opacity` | `var(--token)` (0-100) | `Int` | `Int` |
 | `color` | `var(--token)` (hex/rgba) | `Color` | `Color` |
-| `shadow` | `box-shadow` | `ShadowStyle` | `Shadow` |
-| `typography` | CSS classes | `TextStyle` | `TextStyle` |
+| `shadow` | `box-shadow` | `ShadowStyle` | `ShadowStyle` |
+| `typography` | CSS classes | `TextStyle` | `DesignTextStyle` |
 
 ### Token Type Distribution
 
@@ -290,6 +290,8 @@ Separates color selection from content selection:
 |-----------|---------|----------------|
 | `DesignColorScheme` | All color tokens | 80+ colors |
 | `DesignSizingScheme` | All sizing tokens | 180+ sizing values |
+| `DesignTypographyScheme` | All text styles (DesignTextStyle composites) | 30+ styles |
+| `DesignEffectsScheme` | All shadow tokens (brand-independent) | 8 shadows |
 
 #### Component Token Accessors
 
@@ -301,6 +303,7 @@ All Component Tokens provide theme-aware `current()` accessors:
 | `Sizing.current()` | `DesignSystemTheme.sizeClass` | Compact / Regular |
 | `Typography.current()` | `DesignSystemTheme.sizeClass` | Compact / Regular |
 | `Density.current()` | `DesignSystemTheme.density` | Dense / Default / Spacious |
+| `Effects.current()` | `DesignSystemTheme.isDarkTheme` | Light / Dark (component shadows) |
 
 ### iOS SwiftUI (Dual-Axis Architecture)
 
@@ -349,7 +352,8 @@ struct MyView: View {
 |----------|---------|
 | `DesignColorScheme` | All color tokens |
 | `DesignSizingScheme` | All sizing tokens |
-| `DesignEffectsScheme` | Shadow/effect tokens |
+| `DesignTypographyScheme` | All text styles (TextStyle composites) |
+| `DesignEffectsScheme` | Shadow tokens (ShadowStyle composites, brand-independent) |
 
 ### Android XML (Disabled)
 
@@ -583,8 +587,15 @@ Compose output is optimized for Android development:
 | `shared/DesignTokenPrimitives.kt` | All primitives (Colors, Space, Size, Font) | `DesignTokenPrimitives.Colors.bildred` |
 | `shared/Density.kt` | UI density enum | `Density.Dense`, `Density.Default`, `Density.Spacious` |
 | `shared/WindowSizeClass.kt` | Responsive layout enum | `WindowSizeClass.Compact`, `WindowSizeClass.Regular` |
-| `shared/Brand.kt` | Available brands enum | `Brand.Bild`, `Brand.Sportbild`, `Brand.Advertorial` |
-| `shared/DesignSystemTheme.kt` | Multi-brand theme provider | `DesignSystemTheme(brand = Brand.Bild) { }` |
+| `shared/ColorBrand.kt`, `ContentBrand.kt` | Dual-axis brand enums | `ColorBrand.Bild`, `ContentBrand.Advertorial` |
+| `shared/DesignColorScheme.kt` | Unified color interface | `DesignSystemTheme.colors.textColorPrimary` |
+| `shared/DesignSizingScheme.kt` | Unified sizing interface | `DesignSystemTheme.sizing.gridSpaceRespBase` |
+| `shared/DesignTypographyScheme.kt` | Unified typography interface | `DesignSystemTheme.typography.headline1` |
+| `shared/DesignTextStyle.kt` | Typography composite type | `.toComposeTextStyle()` |
+| `shared/DesignEffectsScheme.kt` | Unified effects interface | `DesignSystemTheme.effects.shadowSoftMd` |
+| `shared/DropShadow.kt`, `ShadowStyle.kt` | Shadow composite types | `.toModifier()` |
+| `shared/EffectsLight.kt`, `EffectsDark.kt` | Light/Dark shadows | Brand-independent, only theme-dependent |
+| `shared/DesignSystemTheme.kt` | Multi-brand theme provider | `DesignSystemTheme(colorBrand, contentBrand) { }` |
 
 **Brand Files:**
 

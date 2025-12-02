@@ -118,18 +118,22 @@ All brands implement common interfaces for polymorphic access:
 
 | Interface | Purpose | Implementations |
 |-----------|---------|-----------------|
-| `DesignColorScheme` | All color tokens | `BildColorScheme`, `SportbildColorScheme` |
-| `DesignSizingScheme` | All sizing tokens | `BildSizingScheme`, `SportbildSizingScheme`, `AdvertorialSizingScheme` |
+| `DesignColorScheme` | All color tokens | `BildLightColors`, `BildDarkColors`, `SportbildLightColors`, `SportbildDarkColors` |
+| `DesignSizingScheme` | All sizing tokens | `BildSizingCompact`, `BildSizingRegular`, `SportbildSizing*`, `AdvertorialSizing*` |
+| `DesignTypographyScheme` | All text styles | `BildTypographyCompact`, `BildTypographyRegular`, `SportbildTypography*`, `AdvertorialTypography*` |
+| `DesignEffectsScheme` | All shadow tokens | `EffectsLight`, `EffectsDark` (brand-independent, shared) |
 
 ```kotlin
 // Polymorphic access - works with any brand
 val colors: DesignColorScheme = DesignSystemTheme.colors
 val sizing: DesignSizingScheme = DesignSystemTheme.sizing
+val typography: DesignTypographyScheme = DesignSystemTheme.typography
+val effects: DesignEffectsScheme = DesignSystemTheme.effects  // Brand-independent
 
 // Access tokens without knowing the specific brand
 Text(
     color = colors.textColorPrimary,  // Works for Bild, Sportbild
-    fontSize = sizing.headline1FontSize  // Works for all brands
+    style = typography.headline1.toComposeTextStyle()  // Works for all brands
 )
 ```
 
@@ -208,6 +212,17 @@ fun SemanticExample() {
     val headlineSize = DesignSystemTheme.sizing.headline1FontSize
     val bodySize = DesignSystemTheme.sizing.bodyFontSize
 
+    // Typography - composite DesignTextStyle objects
+    val headlineStyle = DesignSystemTheme.typography.headline1
+    Text(
+        text = "Hello",
+        style = headlineStyle.toComposeTextStyle()
+    )
+
+    // Effects/Shadows - brand-independent, only Light/Dark
+    val cardShadow = DesignSystemTheme.effects.shadowSoftMd
+    Box(modifier = Modifier.then(cardShadow.toModifier())) { ... }
+
     // Query theme state
     val isDark = DesignSystemTheme.isDarkTheme
     val sizeClass = DesignSystemTheme.sizeClass
@@ -224,7 +239,7 @@ For component-specific tokens with automatic theme selection:
 ```kotlin
 import com.bild.designsystem.bild.components.ButtonTokens
 import com.bild.designsystem.bild.components.CardTokens
-import com.bild.designsystem.bild.components.TeaserTokens
+import com.bild.designsystem.bild.components.MenuTokens
 
 @Composable
 fun ComponentExample() {
@@ -236,10 +251,16 @@ fun ComponentExample() {
     val buttonHeight = ButtonTokens.Sizing.current().buttonContentMinHeightSize
     val cardRadius = CardTokens.Sizing.current().cardBorderRadius
 
-    // Typography - automatically Compact/Regular
-    val fontFamily = ButtonTokens.Typography.current().buttonLabelFontFamily
-    val fontSize = ButtonTokens.Typography.current().buttonLabelFontSize
-    val fontWeight = ButtonTokens.Typography.current().buttonLabelFontWeight
+    // Typography - composite DesignTextStyle objects (Compact/Regular)
+    val buttonLabel: DesignTextStyle = ButtonTokens.Typography.current().buttonLabel
+    Text(
+        text = "Click me",
+        style = buttonLabel.toComposeTextStyle()
+    )
+
+    // Effects - automatically Light/Dark (for components with shadows)
+    val menuShadow = MenuTokens.Effects.current().menuShadow
+    Box(modifier = Modifier.then(menuShadow.toModifier())) { ... }
 
     // Density - automatically Dense/Default/Spacious
     val gap = ButtonTokens.Density.current().denseButtonContentGapSpace
@@ -374,21 +395,31 @@ com/bild/designsystem/
 │   ├── ContentBrand.kt                  # Bild/Sportbild/Advertorial (all)
 │   ├── DesignColorScheme.kt             # Unified color interface
 │   ├── DesignSizingScheme.kt            # Unified sizing interface
+│   ├── DesignTypographyScheme.kt        # Unified typography interface
+│   ├── DesignTextStyle.kt               # Typography composite type
+│   ├── DesignEffectsScheme.kt           # Unified effects interface
+│   ├── DropShadow.kt                    # Shadow layer data class
+│   ├── ShadowStyle.kt                   # Shadow composite with toModifier()
+│   ├── EffectsLight.kt                  # Light mode shadows (brand-independent)
+│   ├── EffectsDark.kt                   # Dark mode shadows (brand-independent)
 │   └── DesignSystemTheme.kt             # Central Dual-Axis Theme Provider
 │
 ├── bild/                                # Brand: BILD
 │   ├── semantic/
 │   │   ├── color/
-│   │   │   ├── ColorsLight.kt           # BildColorScheme : DesignColorScheme
+│   │   │   ├── ColorsLight.kt           # BildLightColors : DesignColorScheme
 │   │   │   └── ColorsDark.kt            # BildDarkColors
-│   │   └── sizeclass/
-│   │       ├── SizingCompact.kt         # BildSizingScheme : DesignSizingScheme
-│   │       └── SizingRegular.kt         # BildSizingRegular
+│   │   ├── sizeclass/
+│   │   │   ├── SizingCompact.kt         # BildSizingCompact : DesignSizingScheme
+│   │   │   └── SizingRegular.kt         # BildSizingRegular
+│   │   └── typography/
+│   │       ├── TypographyCompact.kt     # BildTypographyCompact : DesignTypographyScheme
+│   │       └── TypographyRegular.kt     # BildTypographyRegular
 │   └── components/
 │       ├── Button/
 │       │   └── ButtonTokens.kt          # Colors/Sizing/Typography/Density
-│       ├── Card/
-│       │   └── CardTokens.kt
+│       ├── Menu/
+│       │   └── MenuTokens.kt            # Colors/Sizing/Typography/Density/Effects
 │       └── ... (50+ Components)
 │
 ├── sportbild/                           # Brand: SportBILD
@@ -396,9 +427,12 @@ com/bild/designsystem/
 │
 └── advertorial/                         # Brand: Advertorial
     └── semantic/                        # No colors (uses ColorBrand)
-        └── sizeclass/                   # Own sizing only
-            ├── SizingCompact.kt
-            └── SizingRegular.kt
+        ├── sizeclass/                   # Own sizing
+        │   ├── SizingCompact.kt
+        │   └── SizingRegular.kt
+        └── typography/                  # Own typography
+            ├── TypographyCompact.kt
+            └── TypographyRegular.kt
 ```
 
 ---
@@ -413,15 +447,15 @@ Figma token types (`$type`) are automatically mapped to Kotlin types during buil
 | `fontSize` | `TextUnit` | `16.sp` |
 | `lineHeight` | `TextUnit` | `24.sp` |
 | `letterSpacing` | `TextUnit` | `(-0.5).sp` |
-| `fontWeight` | `Int` | `700` |
+| `fontWeight` | `FontWeight` | `FontWeight.Bold` |
 | `number` | `Float` | `4.5f` |
 | `fontFamily` | `String` | `"Gotham XNarrow"` |
 | `string` | `String` | `"xs/sm/md"` |
 | `boolean` | `Boolean` | `true` / `false` |
 | `opacity` | `Int` | `50` (0-100 %) |
 | `color` | `Color` | `Color(0xFFDD0000)` |
-| `shadow` | `Shadow` | (composite type) |
-| `typography` | `TextStyle` | (composite type) |
+| `shadow` | `ShadowStyle` | (composite type with multiple `DropShadow` layers) |
+| `typography` | `DesignTextStyle` | (composite type with font properties) |
 
 ### Example Generated Code
 
@@ -498,25 +532,83 @@ interface DesignSizingScheme {
     val headline1FontSize: TextUnit
     // ... 180+ sizing properties
 }
+
+// Polymorphic typography access (composite DesignTextStyle objects)
+@Stable
+interface DesignTypographyScheme {
+    val headline1: DesignTextStyle
+    val headline2: DesignTextStyle
+    val body: DesignTextStyle
+    // ... 30+ text style properties
+}
+
+// Polymorphic effects access (brand-independent shadows)
+@Stable
+interface DesignEffectsScheme {
+    val shadowSoftSm: ShadowStyle
+    val shadowSoftMd: ShadowStyle
+    val shadowSoftLg: ShadowStyle
+    val shadowSoftXl: ShadowStyle
+    val shadowHardSm: ShadowStyle
+    val shadowHardMd: ShadowStyle
+    val shadowHardLg: ShadowStyle
+    val shadowHardXl: ShadowStyle
+}
+```
+
+### Composite Types
+
+```kotlin
+// Typography composite - use .toComposeTextStyle() for Text composable
+@Immutable
+data class DesignTextStyle(
+    val fontFamily: String,
+    val fontWeight: FontWeight,
+    val fontSize: TextUnit,
+    val lineHeight: TextUnit,
+    val letterSpacing: TextUnit,
+    val textCase: DesignTextCase,
+    val textDecoration: TextDecoration
+) {
+    fun toComposeTextStyle(): TextStyle
+}
+
+// Shadow composite - use .toModifier() to apply shadows
+@Immutable
+data class ShadowStyle(val layers: List<DropShadow>) {
+    fun toModifier(): Modifier
+}
+
+@Immutable
+data class DropShadow(
+    val color: Color,
+    val offsetX: Float,
+    val offsetY: Float,
+    val blur: Float,
+    val spread: Float
+)
 ```
 
 ### Theme Object
 
 ```kotlin
 object DesignSystemTheme {
-    val colors: DesignColorScheme      // Current colors (polymorphic)
-    val sizing: DesignSizingScheme     // Current sizing (polymorphic)
-    val density: Density               // Current density
-    val sizeClass: WindowSizeClass     // Current size class
-    val isDarkTheme: Boolean           // Is dark mode active?
-    val colorBrand: ColorBrand         // Current color brand
-    val contentBrand: ContentBrand     // Current content brand
+    val colors: DesignColorScheme          // Current colors (polymorphic)
+    val sizing: DesignSizingScheme         // Current sizing (polymorphic)
+    val typography: DesignTypographyScheme // Current typography (polymorphic)
+    val effects: DesignEffectsScheme       // Current effects (brand-independent)
+    val density: Density                   // Current density
+    val sizeClass: WindowSizeClass         // Current size class
+    val isDarkTheme: Boolean               // Is dark mode active?
+    val colorBrand: ColorBrand             // Current color brand
+    val contentBrand: ContentBrand         // Current content brand
 }
 ```
 
 ### Component Token Accessors
 
 ```kotlin
+// Standard component (most components have Colors, Sizing, Typography, Density)
 object ButtonTokens {
     object Colors {
         fun current(): ColorTokens    // Theme-aware (Light/Dark)
@@ -538,6 +630,23 @@ object ButtonTokens {
         object Dense : DensityTokens
         object Default : DensityTokens
         object Spacious : DensityTokens
+    }
+}
+
+// Components with Effects (Menu, Alert, Teaser, etc.)
+object MenuTokens {
+    object Colors { ... }
+    object Sizing { ... }
+    object Typography { ... }
+    object Effects {
+        fun current(): EffectsTokens  // Theme-aware (Light/Dark)
+        object Light : EffectsTokens
+        object Dark : EffectsTokens
+
+        interface EffectsTokens {
+            val menuShadow: ShadowStyle
+            val heyInputShadow: ShadowStyle
+        }
     }
 }
 ```

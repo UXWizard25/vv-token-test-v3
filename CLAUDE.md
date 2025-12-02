@@ -391,11 +391,15 @@ DesignSystemTheme(
     density = Density.Default
 ) {
     // Polymorphic access via interfaces
-    DesignSystemTheme.colors.textColorPrimary  // DesignColorScheme
-    DesignSystemTheme.sizing.gridSpaceRespBase // DesignSizingScheme
+    DesignSystemTheme.colors.textColorPrimary   // DesignColorScheme
+    DesignSystemTheme.sizing.gridSpaceRespBase  // DesignSizingScheme
+    DesignSystemTheme.typography.headline1      // DesignTypographyScheme
+    DesignSystemTheme.effects.shadowSoftMd      // DesignEffectsScheme (brand-independent)
 
     // Component tokens via current()
     ButtonTokens.Colors.current().buttonPrimaryBgColorIdle
+    ButtonTokens.Typography.current().buttonLabel
+    MenuTokens.Effects.current().menuShadow  // Component-level effects
 }
 ```
 
@@ -409,7 +413,10 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 |--------------------|------------|-----------------|
 | `DesignColorScheme` | 80+ color tokens | `BildLightColors`, `BildDarkColors`, `SportbildLightColors`, `SportbildDarkColors` |
 | `DesignSizingScheme` | 180+ sizing tokens | `BildSizingCompact`, `BildSizingRegular`, `SportbildSizing*`, `AdvertorialSizing*` |
-| `DesignEffectsScheme` | Shadow tokens (iOS) | `BildEffectsLight`, `BildEffectsDark`, `SportbildEffects*` |
+| `DesignTypographyScheme` | 30+ text styles | `BildTypographyCompact`, `BildTypographyRegular`, `SportbildTypography*`, `AdvertorialTypography*` |
+| `DesignEffectsScheme` | 8 shadow tokens | `EffectsLight`, `EffectsDark` (brand-independent, shared across brands) |
+
+**Note on Effects:** Effects/shadows are **brand-independent** and only depend on light/dark mode. Both iOS and Android share the same `EffectsLight`/`EffectsDark` implementations across all brands.
 
 **Benefit:** Code can work with `any DesignColorScheme` without knowing the specific brand.
 
