@@ -1,33 +1,33 @@
 # Android Jetpack Compose - Design System Tokens
 
-> **Kotlin-basierte Design Tokens für Jetpack Compose**
+> **Kotlin-based Design Tokens for Jetpack Compose**
 >
 > Type-safe, theme-aware, multi-brand ready.
 
 ---
 
-## Inhaltsverzeichnis
+## Table of Contents
 
 - [Quick Start](#quick-start)
-- [Architektur](#architektur)
+- [Architecture](#architecture)
 - [Theme Provider](#theme-provider)
-- [Token-Zugriff](#token-zugriff)
+- [Token Access](#token-access)
 - [Multi-Brand Apps](#multi-brand-apps)
-- [Dateistruktur](#dateistruktur)
-- [API-Referenz](#api-referenz)
+- [File Structure](#file-structure)
+- [API Reference](#api-reference)
 
 ---
 
 ## Quick Start
 
-### 1. Dateien kopieren
+### 1. Copy Files
 
 ```bash
-# Compose-Output in dein Android-Projekt kopieren
+# Copy Compose output to your Android project
 cp -r dist/android/compose/* app/src/main/java/com/bild/designsystem/
 ```
 
-### 2. Theme einbinden
+### 2. Set Up Theme
 
 ```kotlin
 import com.bild.designsystem.bild.theme.BildTheme
@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
 }
 ```
 
-### 3. Tokens verwenden
+### 3. Use Tokens
 
 ```kotlin
 @Composable
@@ -75,22 +75,22 @@ fun MyScreen() {
 
 ---
 
-## Architektur
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  SHARED (brand-unabhängig)                                      │
+│  SHARED (brand-independent)                                     │
 │  ─────────────────────────────────────────────────────────────  │
 │  Density          │ Dense, Default, Spacious                    │
 │  WindowSizeClass  │ Compact, Regular                            │
 │  Brand            │ Bild, Sportbild, Advertorial                │
 │  DesignSystemTheme│ Multi-Brand Theme Provider                  │
-│  DesignTokenPrimitives │ Farben, Spacing, Sizes, Fonts          │
+│  DesignTokenPrimitives │ Colors, Spacing, Sizes, Fonts          │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│  BRAND-SPEZIFISCH (z.B. Bild)                                   │
+│  BRAND-SPECIFIC (e.g., Bild)                                    │
 │  ─────────────────────────────────────────────────────────────  │
 │  BildTheme        │ CompositionLocal Theme Provider             │
 │    .colors        │ → BildColorScheme (Light/Dark)              │
@@ -124,25 +124,25 @@ import com.bild.designsystem.shared.Density
 fun MyApp() {
     BildTheme(
         darkTheme = isSystemInDarkTheme(),
-        sizeClass = WindowSizeClass.Compact,  // oder .Regular
-        density = Density.Default              // oder .Dense, .Spacious
+        sizeClass = WindowSizeClass.Compact,  // or .Regular
+        density = Density.Default              // or .Dense, .Spacious
     ) {
-        // Dein App-Content
+        // Your app content
     }
 }
 ```
 
-### Parameter
+### Parameters
 
-| Parameter | Typ | Default | Beschreibung |
-|-----------|-----|---------|--------------|
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
 | `darkTheme` | `Boolean` | `isSystemInDarkTheme()` | Light/Dark Mode |
 | `sizeClass` | `WindowSizeClass` | `Compact` | Responsive Layout |
-| `density` | `Density` | `Default` | UI-Dichte |
+| `density` | `Density` | `Default` | UI Density |
 | `lightColors` | `BildColorScheme` | `BildLightColors` | Custom Light Colors |
 | `darkColors` | `BildColorScheme` | `BildDarkColors` | Custom Dark Colors |
 
-### WindowSizeClass berechnen
+### Calculating WindowSizeClass
 
 ```kotlin
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
@@ -160,25 +160,25 @@ fun rememberDesignSystemSizeClass(activity: Activity): WindowSizeClass {
 
 ---
 
-## Token-Zugriff
+## Token Access
 
 ### Semantic Tokens (via BildTheme)
 
-Für globale Design-Entscheidungen:
+For global design decisions:
 
 ```kotlin
 @Composable
 fun SemanticExample() {
-    // Farben - automatisch Light/Dark
+    // Colors - automatically Light/Dark
     val textColor = BildTheme.colors.textColorPrimary
     val bgColor = BildTheme.colors.surfaceColorPrimary
     val accentColor = BildTheme.colors.textColorAccent
 
-    // Sizing - automatisch Compact/Regular
+    // Sizing - automatically Compact/Regular
     val headlineSize = BildTheme.sizing.headline1FontSize
     val bodySize = BildTheme.sizing.body1FontSize
 
-    // Theme-State abfragen
+    // Query theme state
     val isDark = BildTheme.isDarkTheme
     val sizeClass = BildTheme.sizeClass
     val density = BildTheme.density
@@ -187,7 +187,7 @@ fun SemanticExample() {
 
 ### Component Tokens (via current())
 
-Für component-spezifische Tokens mit automatischer Theme-Auswahl:
+For component-specific tokens with automatic theme selection:
 
 ```kotlin
 import com.bild.designsystem.bild.components.ButtonTokens
@@ -196,48 +196,48 @@ import com.bild.designsystem.bild.components.TeaserTokens
 
 @Composable
 fun ComponentExample() {
-    // Colors - automatisch Light/Dark
+    // Colors - automatically Light/Dark
     val buttonBg = ButtonTokens.Colors.current().buttonPrimaryBgColorIdle
     val buttonHover = ButtonTokens.Colors.current().buttonPrimaryBgColorHover
 
-    // Sizing - automatisch Compact/Regular
+    // Sizing - automatically Compact/Regular
     val buttonHeight = ButtonTokens.Sizing.current().buttonContentMinHeightSize
     val cardRadius = CardTokens.Sizing.current().cardBorderRadius
 
-    // Typography - automatisch Compact/Regular
+    // Typography - automatically Compact/Regular
     val fontFamily = ButtonTokens.Typography.current().buttonLabelFontFamily
     val fontSize = ButtonTokens.Typography.current().buttonLabelFontSize
     val fontWeight = ButtonTokens.Typography.current().buttonLabelFontWeight
 
-    // Density - automatisch Dense/Default/Spacious
+    // Density - automatically Dense/Default/Spacious
     val gap = ButtonTokens.Density.current().denseButtonContentGapSpace
 }
 ```
 
-### Statischer Zugriff (ohne Theme)
+### Static Access (without Theme)
 
-Wenn du explizit einen Mode brauchst:
+When you need a specific mode explicitly:
 
 ```kotlin
-// Direkt Light/Dark
+// Direct Light/Dark access
 val lightColor = ButtonTokens.Colors.Light.buttonPrimaryBgColorIdle
 val darkColor = ButtonTokens.Colors.Dark.buttonPrimaryBgColorIdle
 
-// Direkt Compact/Regular
+// Direct Compact/Regular access
 val compactSize = ButtonTokens.Sizing.Compact.buttonLabelFontSize
 val regularSize = ButtonTokens.Sizing.Regular.buttonLabelFontSize
 
-// Direkt Dense/Default/Spacious
+// Direct Dense/Default/Spacious access
 val denseGap = ButtonTokens.Density.Dense.denseButtonContentGapSpace
 val defaultGap = ButtonTokens.Density.Default.denseButtonContentGapSpace
 ```
 
-### Primitives (Basis-Werte)
+### Primitives (Base Values)
 
 ```kotlin
 import com.bild.designsystem.shared.DesignTokenPrimitives
 
-// Farben
+// Colors
 val red = DesignTokenPrimitives.Colors.bildred
 val gray = DesignTokenPrimitives.Colors.bild050
 
@@ -253,9 +253,9 @@ val size4x = DesignTokenPrimitives.Size.size4x
 
 ## Multi-Brand Apps
 
-### DesignSystemTheme (Zentraler Entry Point)
+### DesignSystemTheme (Central Entry Point)
 
-Für Apps die mehrere Brands unterstützen:
+For apps that support multiple brands:
 
 ```kotlin
 import com.bild.designsystem.shared.Brand
@@ -264,14 +264,14 @@ import com.bild.designsystem.shared.WindowSizeClass
 import com.bild.designsystem.shared.Density
 
 @Composable
-fun MultiB­randApp(brand: Brand) {
+fun MultiBrandApp(brand: Brand) {
     DesignSystemTheme(
         brand = brand,
         darkTheme = isSystemInDarkTheme(),
         sizeClass = WindowSizeClass.Compact,
         density = Density.Default
     ) {
-        // Content verwendet automatisch die richtigen Brand-Tokens
+        // Content uses the correct brand tokens automatically
         MyAppContent()
     }
 }
@@ -280,7 +280,7 @@ fun MultiB­randApp(brand: Brand) {
 ### White-Label App
 
 ```kotlin
-// Brand aus Build-Config oder Remote-Config
+// Brand from build config or remote config
 val brand = Brand.valueOf(BuildConfig.BRAND_NAME)  // "Bild", "Sportbild", "Advertorial"
 
 DesignSystemTheme(brand = brand) {
@@ -288,7 +288,7 @@ DesignSystemTheme(brand = brand) {
 }
 ```
 
-### Runtime Brand-Switching
+### Runtime Brand Switching
 
 ```kotlin
 @Composable
@@ -296,7 +296,7 @@ fun BrandSwitcherDemo() {
     var currentBrand by remember { mutableStateOf(Brand.Bild) }
 
     Column {
-        // Brand-Auswahl
+        // Brand selection
         Row {
             Brand.values().forEach { brand ->
                 Button(onClick = { currentBrand = brand }) {
@@ -305,7 +305,7 @@ fun BrandSwitcherDemo() {
             }
         }
 
-        // Content mit gewählter Brand
+        // Content with selected brand
         DesignSystemTheme(brand = currentBrand) {
             BrandedContent()
         }
@@ -315,12 +315,12 @@ fun BrandSwitcherDemo() {
 
 ---
 
-## Dateistruktur
+## File Structure
 
 ```
 com/bild/designsystem/
-├── shared/                              # Brand-unabhängig
-│   ├── DesignTokenPrimitives.kt         # Alle Primitives
+├── shared/                              # Brand-independent
+│   ├── DesignTokenPrimitives.kt         # All Primitives
 │   ├── Density.kt                       # Dense/Default/Spacious
 │   ├── WindowSizeClass.kt               # Compact/Regular
 │   ├── Brand.kt                         # Bild/Sportbild/Advertorial
@@ -330,7 +330,7 @@ com/bild/designsystem/
 │   ├── theme/
 │   │   └── BildTheme.kt                 # Theme Provider
 │   ├── semantic/
-│   │   ├── BildSemanticTokens.kt        # Aggregierte Semantic Tokens
+│   │   ├── BildSemanticTokens.kt        # Aggregated Semantic Tokens
 │   │   ├── color/
 │   │   │   ├── ColorsLight.kt           # BildColorScheme + BildLightColors
 │   │   │   └── ColorsDark.kt            # BildDarkColors
@@ -347,15 +347,15 @@ com/bild/designsystem/
 │       └── ... (50+ Components)
 │
 ├── sportbild/                           # Brand: SportBILD
-│   └── ... (gleiche Struktur)
+│   └── ... (same structure)
 │
 └── advertorial/                         # Brand: Advertorial
-    └── ... (gleiche Struktur)
+    └── ... (same structure)
 ```
 
 ---
 
-## API-Referenz
+## API Reference
 
 ### Shared Enums
 
@@ -363,9 +363,9 @@ com/bild/designsystem/
 package com.bild.designsystem.shared
 
 enum class Density {
-    Dense,      // Kompakte UI
+    Dense,      // Compact UI
     Default,    // Standard
-    Spacious    // Großzügige UI
+    Spacious    // Generous UI
 }
 
 enum class WindowSizeClass {
@@ -384,11 +384,11 @@ enum class Brand {
 
 ```kotlin
 object BildTheme {
-    val colors: BildColorScheme      // Aktuelle Farben (Light/Dark)
-    val sizing: BildSizingScheme     // Aktuelle Sizes (Compact/Regular)
-    val density: Density             // Aktuelle Density
-    val sizeClass: WindowSizeClass   // Aktuelle SizeClass
-    val isDarkTheme: Boolean         // Dark Mode aktiv?
+    val colors: BildColorScheme      // Current colors (Light/Dark)
+    val sizing: BildSizingScheme     // Current sizes (Compact/Regular)
+    val density: Density             // Current density
+    val sizeClass: WindowSizeClass   // Current size class
+    val isDarkTheme: Boolean         // Is dark mode active?
 }
 ```
 
@@ -427,24 +427,24 @@ object ButtonTokens {
 ### 1. Semantic vs Component Tokens
 
 ```kotlin
-// ✅ Semantic Tokens für globale UI-Elemente
+// ✅ Semantic Tokens for global UI elements
 Text(color = BildTheme.colors.textColorPrimary)
 
-// ✅ Component Tokens für spezifische Components
+// ✅ Component Tokens for specific components
 Button(containerColor = ButtonTokens.Colors.current().buttonPrimaryBgColorIdle)
 ```
 
-### 2. current() für automatische Auswahl
+### 2. Use current() for Automatic Selection
 
 ```kotlin
-// ✅ Theme-aware - passt sich automatisch an
+// ✅ Theme-aware - adapts automatically
 val color = ButtonTokens.Colors.current().buttonPrimaryBgColorIdle
 
-// ⚠️ Statisch - nur wenn explizit ein Mode gebraucht wird
+// ⚠️ Static - only when you explicitly need a specific mode
 val lightColor = ButtonTokens.Colors.Light.buttonPrimaryBgColorIdle
 ```
 
-### 3. WindowSizeClass für Responsive Layouts
+### 3. WindowSizeClass for Responsive Layouts
 
 ```kotlin
 @Composable
@@ -456,18 +456,18 @@ fun ResponsiveLayout() {
 }
 ```
 
-### 4. Density für Accessibility
+### 4. Density for Accessibility
 
 ```kotlin
-// Density wird im Theme gesetzt und automatisch angewendet
+// Density is set in the theme and applied automatically
 BildTheme(density = Density.Spacious) {
-    // Alle Density-Tokens haben größere Werte
+    // All density tokens have larger values
 }
 ```
 
 ---
 
-## Abhängigkeiten
+## Dependencies
 
 ```kotlin
 // build.gradle.kts
@@ -476,20 +476,20 @@ dependencies {
     implementation("androidx.compose.runtime:runtime")
     implementation("androidx.compose.ui:ui")
 
-    // Optional für WindowSizeClass-Berechnung
+    // Optional for WindowSizeClass calculation
     implementation("androidx.compose.material3:material3-window-size-class")
 }
 ```
 
 ---
 
-## Verwandte Dokumentation
+## Related Documentation
 
-| Dokument | Beschreibung |
-|----------|--------------|
-| [README.md](./README.md) | Projekt-Übersicht |
-| [README.tokens.md](./README.tokens.md) | Alle Plattformen |
-| [CLAUDE.md](./CLAUDE.md) | Build-Pipeline Details |
+| Document | Description |
+|----------|-------------|
+| [README.md](./README.md) | Project Overview |
+| [README.tokens.md](./README.tokens.md) | All Platforms |
+| [CLAUDE.md](./CLAUDE.md) | Build Pipeline Details |
 
 ---
 
