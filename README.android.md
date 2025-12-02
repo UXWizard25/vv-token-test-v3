@@ -2,14 +2,14 @@
 
 > **Kotlin-based Design Tokens for Jetpack Compose**
 >
-> Type-safe, theme-aware, multi-brand ready.
+> Type-safe, theme-aware, multi-brand ready with **Dual-Axis Architecture**.
 
 ---
 
 ## Table of Contents
 
 - [Quick Start](#quick-start)
-- [Architecture](#architecture)
+- [Dual-Axis Architecture](#dual-axis-architecture)
 - [Theme Provider](#theme-provider)
 - [Token Access](#token-access)
 - [Multi-Brand Apps](#multi-brand-apps)
@@ -27,10 +27,12 @@
 cp -r dist/android/compose/* app/src/main/java/com/bild/designsystem/
 ```
 
-### 2. Set Up Theme
+### 2. Set Up Theme (Dual-Axis)
 
 ```kotlin
-import com.bild.designsystem.bild.theme.BildTheme
+import com.bild.designsystem.shared.DesignSystemTheme
+import com.bild.designsystem.shared.ColorBrand
+import com.bild.designsystem.shared.ContentBrand
 import com.bild.designsystem.shared.WindowSizeClass
 import com.bild.designsystem.shared.Density
 
@@ -38,7 +40,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BildTheme(
+            DesignSystemTheme(
+                colorBrand = ColorBrand.Bild,        // Color palette
+                contentBrand = ContentBrand.Bild,   // Sizing/Typography
                 darkTheme = isSystemInDarkTheme(),
                 sizeClass = WindowSizeClass.Compact,
                 density = Density.Default
@@ -55,11 +59,11 @@ class MainActivity : ComponentActivity() {
 ```kotlin
 @Composable
 fun MyScreen() {
-    // Semantic Tokens (via Theme)
+    // Semantic Tokens (via Theme) - polymorphic access
     Text(
         text = "Headline",
-        color = BildTheme.colors.textColorPrimary,
-        fontSize = BildTheme.sizing.headline1FontSize
+        color = DesignSystemTheme.colors.textColorPrimary,
+        fontSize = DesignSystemTheme.sizing.headline1FontSize
     )
 
     // Component Tokens (via current() Accessors)
@@ -75,57 +79,83 @@ fun MyScreen() {
 
 ---
 
-## Architecture
+## Dual-Axis Architecture
+
+The design system uses a **Dual-Axis Architecture** that separates color selection from content selection:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  SHARED (brand-independent)                                     │
+│  DUAL-AXIS THEME ARCHITECTURE                                   │
 │  ─────────────────────────────────────────────────────────────  │
-│  Density          │ Dense, Default, Spacious                    │
-│  WindowSizeClass  │ Compact, Regular                            │
-│  Brand            │ Bild, Sportbild, Advertorial                │
-│  DesignSystemTheme│ Multi-Brand Theme Provider                  │
-│  DesignTokenPrimitives │ Colors, Spacing, Sizes, Fonts          │
+│                                                                 │
+│  Axis 1: ColorBrand (Color Palette)                             │
+│  ┌──────────────┬──────────────┐                                │
+│  │    Bild      │  Sportbild   │   ← Only brands with colors    │
+│  └──────────────┴──────────────┘                                │
+│                                                                 │
+│  Axis 2: ContentBrand (Sizing/Typography)                       │
+│  ┌──────────────┬──────────────┬──────────────┐                 │
+│  │    Bild      │  Sportbild   │  Advertorial │  ← All brands   │
+│  └──────────────┴──────────────┴──────────────┘                 │
+│                                                                 │
+│  Combined Usage:                                                │
+│  DesignSystemTheme(                                             │
+│      colorBrand = ColorBrand.Sportbild,    // SportBILD colors  │
+│      contentBrand = ContentBrand.Advertorial // Advert. sizing  │
+│  )                                                              │
 └─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  BRAND-SPECIFIC (e.g., Bild)                                    │
-│  ─────────────────────────────────────────────────────────────  │
-│  BildTheme        │ CompositionLocal Theme Provider             │
-│    .colors        │ → BildColorScheme (Light/Dark)              │
-│    .sizing        │ → BildSizingScheme (Compact/Regular)        │
-│    .density       │ → Density Enum                              │
-│    .sizeClass     │ → WindowSizeClass Enum                      │
-│    .isDarkTheme   │ → Boolean                                   │
-├─────────────────────────────────────────────────────────────────┤
-│  COMPONENT TOKENS                                               │
-│  ─────────────────────────────────────────────────────────────  │
-│  ButtonTokens, CardTokens, TeaserTokens, ...                    │
-│    .Colors.current()      │ → ColorTokens (Light/Dark)          │
-│    .Sizing.current()      │ → SizingTokens (Compact/Regular)    │
-│    .Typography.current()  │ → TypographyTokens (Compact/Regular)│
-│    .Density.current()     │ → DensityTokens (Dense/Default/...) │
-└─────────────────────────────────────────────────────────────────┘
+```
+
+### Why Dual-Axis?
+
+- **Advertorial** has its own sizing/typography but uses BILD or SportBILD colors
+- Enables flexible combinations: "Advertorial content styled with SportBILD colors"
+- Type-safe polymorphic access via unified interfaces
+
+### Unified Interfaces
+
+All brands implement common interfaces for polymorphic access:
+
+| Interface | Purpose | Implementations |
+|-----------|---------|-----------------|
+| `DesignColorScheme` | All color tokens | `BildColorScheme`, `SportbildColorScheme` |
+| `DesignSizingScheme` | All sizing tokens | `BildSizingScheme`, `SportbildSizingScheme`, `AdvertorialSizingScheme` |
+
+```kotlin
+// Polymorphic access - works with any brand
+val colors: DesignColorScheme = DesignSystemTheme.colors
+val sizing: DesignSizingScheme = DesignSystemTheme.sizing
+
+// Access tokens without knowing the specific brand
+Text(
+    color = colors.textColorPrimary,  // Works for Bild, Sportbild
+    fontSize = sizing.headline1FontSize  // Works for all brands
+)
 ```
 
 ---
 
 ## Theme Provider
 
-### BildTheme (Single-Brand)
+### DesignSystemTheme (Central Entry Point)
+
+The single, unified theme provider for all brand combinations:
 
 ```kotlin
-import com.bild.designsystem.bild.theme.BildTheme
+import com.bild.designsystem.shared.DesignSystemTheme
+import com.bild.designsystem.shared.ColorBrand
+import com.bild.designsystem.shared.ContentBrand
 import com.bild.designsystem.shared.WindowSizeClass
 import com.bild.designsystem.shared.Density
 
 @Composable
 fun MyApp() {
-    BildTheme(
+    DesignSystemTheme(
+        colorBrand = ColorBrand.Bild,           // or .Sportbild
+        contentBrand = ContentBrand.Bild,       // or .Sportbild, .Advertorial
         darkTheme = isSystemInDarkTheme(),
-        sizeClass = WindowSizeClass.Compact,  // or .Regular
-        density = Density.Default              // or .Dense, .Spacious
+        sizeClass = WindowSizeClass.Compact,    // or .Regular
+        density = Density.Default               // or .Dense, .Spacious
     ) {
         // Your app content
     }
@@ -136,11 +166,11 @@ fun MyApp() {
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
+| `colorBrand` | `ColorBrand` | `Bild` | Color palette (Bild, Sportbild) |
+| `contentBrand` | `ContentBrand` | `Bild` | Sizing/Typography (Bild, Sportbild, Advertorial) |
 | `darkTheme` | `Boolean` | `isSystemInDarkTheme()` | Light/Dark Mode |
 | `sizeClass` | `WindowSizeClass` | `Compact` | Responsive Layout |
 | `density` | `Density` | `Default` | UI Density |
-| `lightColors` | `BildColorScheme` | `BildLightColors` | Custom Light Colors |
-| `darkColors` | `BildColorScheme` | `BildDarkColors` | Custom Dark Colors |
 
 ### Calculating WindowSizeClass
 
@@ -162,26 +192,28 @@ fun rememberDesignSystemSizeClass(activity: Activity): WindowSizeClass {
 
 ## Token Access
 
-### Semantic Tokens (via BildTheme)
+### Semantic Tokens (via DesignSystemTheme)
 
-For global design decisions:
+For global design decisions with polymorphic access:
 
 ```kotlin
 @Composable
 fun SemanticExample() {
-    // Colors - automatically Light/Dark
-    val textColor = BildTheme.colors.textColorPrimary
-    val bgColor = BildTheme.colors.surfaceColorPrimary
-    val accentColor = BildTheme.colors.textColorAccent
+    // Colors - automatically Light/Dark, polymorphic type
+    val textColor = DesignSystemTheme.colors.textColorPrimary
+    val bgColor = DesignSystemTheme.colors.surfaceColorPrimary
+    val accentColor = DesignSystemTheme.colors.textColorAccent
 
-    // Sizing - automatically Compact/Regular
-    val headlineSize = BildTheme.sizing.headline1FontSize
-    val bodySize = BildTheme.sizing.body1FontSize
+    // Sizing - automatically Compact/Regular, polymorphic type
+    val headlineSize = DesignSystemTheme.sizing.headline1FontSize
+    val bodySize = DesignSystemTheme.sizing.bodyFontSize
 
     // Query theme state
-    val isDark = BildTheme.isDarkTheme
-    val sizeClass = BildTheme.sizeClass
-    val density = BildTheme.density
+    val isDark = DesignSystemTheme.isDarkTheme
+    val sizeClass = DesignSystemTheme.sizeClass
+    val density = DesignSystemTheme.density
+    val colorBrand = DesignSystemTheme.colorBrand
+    val contentBrand = DesignSystemTheme.contentBrand
 }
 ```
 
@@ -253,38 +285,25 @@ val size4x = DesignTokenPrimitives.Size.size4x
 
 ## Multi-Brand Apps
 
-### DesignSystemTheme (Central Entry Point)
+### Advertorial with Brand Colors
 
-For apps that support multiple brands:
+The key use case for Dual-Axis: Advertorial content using another brand's colors:
 
 ```kotlin
-import com.bild.designsystem.shared.Brand
-import com.bild.designsystem.shared.DesignSystemTheme
-import com.bild.designsystem.shared.WindowSizeClass
-import com.bild.designsystem.shared.Density
-
-@Composable
-fun MultiBrandApp(brand: Brand) {
-    DesignSystemTheme(
-        brand = brand,
-        darkTheme = isSystemInDarkTheme(),
-        sizeClass = WindowSizeClass.Compact,
-        density = Density.Default
-    ) {
-        // Content uses the correct brand tokens automatically
-        MyAppContent()
-    }
+// Advertorial content with BILD colors
+DesignSystemTheme(
+    colorBrand = ColorBrand.Bild,
+    contentBrand = ContentBrand.Advertorial
+) {
+    AdvertorialContent()
 }
-```
 
-### White-Label App
-
-```kotlin
-// Brand from build config or remote config
-val brand = Brand.valueOf(BuildConfig.BRAND_NAME)  // "Bild", "Sportbild", "Advertorial"
-
-DesignSystemTheme(brand = brand) {
-    MyWhiteLabelApp()
+// Advertorial content with SportBILD colors
+DesignSystemTheme(
+    colorBrand = ColorBrand.Sportbild,
+    contentBrand = ContentBrand.Advertorial
+) {
+    AdvertorialContent()
 }
 ```
 
@@ -293,23 +312,51 @@ DesignSystemTheme(brand = brand) {
 ```kotlin
 @Composable
 fun BrandSwitcherDemo() {
-    var currentBrand by remember { mutableStateOf(Brand.Bild) }
+    var colorBrand by remember { mutableStateOf(ColorBrand.Bild) }
+    var contentBrand by remember { mutableStateOf(ContentBrand.Bild) }
 
     Column {
-        // Brand selection
+        // Color brand selection
         Row {
-            Brand.values().forEach { brand ->
-                Button(onClick = { currentBrand = brand }) {
-                    Text(brand.name)
+            ColorBrand.entries.forEach { brand ->
+                Button(onClick = { colorBrand = brand }) {
+                    Text("Colors: ${brand.name}")
                 }
             }
         }
 
-        // Content with selected brand
-        DesignSystemTheme(brand = currentBrand) {
+        // Content brand selection
+        Row {
+            ContentBrand.entries.forEach { brand ->
+                Button(onClick = { contentBrand = brand }) {
+                    Text("Content: ${brand.name}")
+                }
+            }
+        }
+
+        // Content with selected brands
+        DesignSystemTheme(
+            colorBrand = colorBrand,
+            contentBrand = contentBrand
+        ) {
             BrandedContent()
         }
     }
+}
+```
+
+### White-Label App
+
+```kotlin
+// Brands from build config or remote config
+val colorBrand = ColorBrand.valueOf(BuildConfig.COLOR_BRAND)
+val contentBrand = ContentBrand.valueOf(BuildConfig.CONTENT_BRAND)
+
+DesignSystemTheme(
+    colorBrand = colorBrand,
+    contentBrand = contentBrand
+) {
+    MyWhiteLabelApp()
 }
 ```
 
@@ -323,34 +370,35 @@ com/bild/designsystem/
 │   ├── DesignTokenPrimitives.kt         # All Primitives
 │   ├── Density.kt                       # Dense/Default/Spacious
 │   ├── WindowSizeClass.kt               # Compact/Regular
-│   ├── Brand.kt                         # Bild/Sportbild/Advertorial
-│   └── DesignSystemTheme.kt             # Multi-Brand Theme
+│   ├── ColorBrand.kt                    # Bild/Sportbild (colors only)
+│   ├── ContentBrand.kt                  # Bild/Sportbild/Advertorial (all)
+│   ├── DesignColorScheme.kt             # Unified color interface
+│   ├── DesignSizingScheme.kt            # Unified sizing interface
+│   └── DesignSystemTheme.kt             # Central Dual-Axis Theme Provider
 │
 ├── bild/                                # Brand: BILD
-│   ├── theme/
-│   │   └── BildTheme.kt                 # Theme Provider
 │   ├── semantic/
-│   │   ├── BildSemanticTokens.kt        # Aggregated Semantic Tokens
 │   │   ├── color/
-│   │   │   ├── ColorsLight.kt           # BildColorScheme + BildLightColors
+│   │   │   ├── ColorsLight.kt           # BildColorScheme : DesignColorScheme
 │   │   │   └── ColorsDark.kt            # BildDarkColors
 │   │   └── sizeclass/
-│   │       ├── SizingCompact.kt         # BildSizingScheme + BildSizingCompact
+│   │       ├── SizingCompact.kt         # BildSizingScheme : DesignSizingScheme
 │   │       └── SizingRegular.kt         # BildSizingRegular
 │   └── components/
 │       ├── Button/
 │       │   └── ButtonTokens.kt          # Colors/Sizing/Typography/Density
 │       ├── Card/
 │       │   └── CardTokens.kt
-│       ├── Teaser/
-│       │   └── TeaserTokens.kt
 │       └── ... (50+ Components)
 │
 ├── sportbild/                           # Brand: SportBILD
 │   └── ... (same structure)
 │
 └── advertorial/                         # Brand: Advertorial
-    └── ... (same structure)
+    └── semantic/                        # No colors (uses ColorBrand)
+        └── sizeclass/                   # Own sizing only
+            ├── SizingCompact.kt
+            └── SizingRegular.kt
 ```
 
 ---
@@ -362,6 +410,19 @@ com/bild/designsystem/
 ```kotlin
 package com.bild.designsystem.shared
 
+// Dual-Axis Brand Enums
+enum class ColorBrand {
+    Bild,       // BILD color palette
+    Sportbild   // SportBILD color palette
+}
+
+enum class ContentBrand {
+    Bild,        // BILD sizing/typography
+    Sportbild,   // SportBILD sizing/typography
+    Advertorial  // Advertorial sizing/typography (uses ColorBrand for colors)
+}
+
+// Other Enums
 enum class Density {
     Dense,      // Compact UI
     Default,    // Standard
@@ -372,23 +433,42 @@ enum class WindowSizeClass {
     Compact,    // Phones (Portrait)
     Regular     // Tablets, Phones (Landscape)
 }
+```
 
-enum class Brand {
-    Bild,
-    Sportbild,
-    Advertorial
+### Unified Interfaces
+
+```kotlin
+package com.bild.designsystem.shared
+
+// Polymorphic color access
+@Stable
+interface DesignColorScheme {
+    val textColorPrimary: Color
+    val textColorSecondary: Color
+    val surfaceColorPrimary: Color
+    // ... 80+ color properties
+}
+
+// Polymorphic sizing access
+@Stable
+interface DesignSizingScheme {
+    val gridSpaceRespBase: Dp
+    val headline1FontSize: TextUnit
+    // ... 180+ sizing properties
 }
 ```
 
 ### Theme Object
 
 ```kotlin
-object BildTheme {
-    val colors: BildColorScheme      // Current colors (Light/Dark)
-    val sizing: BildSizingScheme     // Current sizes (Compact/Regular)
-    val density: Density             // Current density
-    val sizeClass: WindowSizeClass   // Current size class
-    val isDarkTheme: Boolean         // Is dark mode active?
+object DesignSystemTheme {
+    val colors: DesignColorScheme      // Current colors (polymorphic)
+    val sizing: DesignSizingScheme     // Current sizing (polymorphic)
+    val density: Density               // Current density
+    val sizeClass: WindowSizeClass     // Current size class
+    val isDarkTheme: Boolean           // Is dark mode active?
+    val colorBrand: ColorBrand         // Current color brand
+    val contentBrand: ContentBrand     // Current content brand
 }
 ```
 
@@ -424,17 +504,29 @@ object ButtonTokens {
 
 ## Best Practices
 
-### 1. Semantic vs Component Tokens
+### 1. Use Dual-Axis for Advertorial
 
 ```kotlin
-// ✅ Semantic Tokens for global UI elements
-Text(color = BildTheme.colors.textColorPrimary)
+// ✅ Correct: Advertorial with explicit color brand
+DesignSystemTheme(
+    colorBrand = ColorBrand.Bild,
+    contentBrand = ContentBrand.Advertorial
+) { ... }
 
-// ✅ Component Tokens for specific components
-Button(containerColor = ButtonTokens.Colors.current().buttonPrimaryBgColorIdle)
+// ❌ Avoid: Assuming Advertorial has its own colors
 ```
 
-### 2. Use current() for Automatic Selection
+### 2. Prefer Polymorphic Access
+
+```kotlin
+// ✅ Polymorphic - works with any brand combination
+val color = DesignSystemTheme.colors.textColorPrimary
+
+// ⚠️ Brand-specific - only when you explicitly need brand-specific behavior
+val bildColor = BildLightColors.textColorPrimary
+```
+
+### 3. Use current() for Automatic Selection
 
 ```kotlin
 // ✅ Theme-aware - adapts automatically
@@ -444,24 +536,15 @@ val color = ButtonTokens.Colors.current().buttonPrimaryBgColorIdle
 val lightColor = ButtonTokens.Colors.Light.buttonPrimaryBgColorIdle
 ```
 
-### 3. WindowSizeClass for Responsive Layouts
+### 4. WindowSizeClass for Responsive Layouts
 
 ```kotlin
 @Composable
 fun ResponsiveLayout() {
-    when (BildTheme.sizeClass) {
+    when (DesignSystemTheme.sizeClass) {
         WindowSizeClass.Compact -> PhoneLayout()
         WindowSizeClass.Regular -> TabletLayout()
     }
-}
-```
-
-### 4. Density for Accessibility
-
-```kotlin
-// Density is set in the theme and applied automatically
-BildTheme(density = Density.Spacious) {
-    // All density tokens have larger values
 }
 ```
 
@@ -489,6 +572,7 @@ dependencies {
 |----------|-------------|
 | [README.md](./README.md) | Project Overview |
 | [README.tokens.md](./README.tokens.md) | All Platforms |
+| [README.ios.md](./README.ios.md) | iOS SwiftUI Integration |
 | [CLAUDE.md](./CLAUDE.md) | Build Pipeline Details |
 
 ---

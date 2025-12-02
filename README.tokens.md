@@ -201,80 +201,57 @@ Container(
 )
 ```
 
-### Android Jetpack Compose
+### Android Jetpack Compose (Dual-Axis Architecture)
+
+> **See [README.android.md](./README.android.md) for complete documentation**
 
 ```kotlin
-import com.bild.designsystem.bild.theme.BildTheme
+import com.bild.designsystem.shared.DesignSystemTheme
+import com.bild.designsystem.shared.ColorBrand
+import com.bild.designsystem.shared.ContentBrand
 import com.bild.designsystem.bild.components.ButtonTokens
-import com.bild.designsystem.shared.Density
-import com.bild.designsystem.shared.WindowSizeClass
 
 @Composable
 fun MyScreen() {
-    // Theme Provider (automatic Light/Dark, WindowSizeClass, Density support)
-    BildTheme(
+    // Dual-Axis Theme Provider
+    DesignSystemTheme(
+        colorBrand = ColorBrand.Bild,        // Color palette (Bild or Sportbild)
+        contentBrand = ContentBrand.Bild,    // Sizing/Typography (Bild, Sportbild, Advertorial)
         darkTheme = isSystemInDarkTheme(),
         sizeClass = WindowSizeClass.Compact,
         density = Density.Default
     ) {
-        // ══════════════════════════════════════════════════════════════
-        // SEMANTIC TOKENS - via BildTheme (type-safe interfaces)
-        // ══════════════════════════════════════════════════════════════
-        Text(color = BildTheme.colors.textColorPrimary)  // auto Light/Dark
-        val fontSize = BildTheme.sizing.headline1FontSize  // auto Compact/Regular
+        // Polymorphic access via unified interfaces
+        Text(color = DesignSystemTheme.colors.textColorPrimary)
+        val fontSize = DesignSystemTheme.sizing.headline1FontSize
 
-        // ══════════════════════════════════════════════════════════════
-        // COMPONENT TOKENS - via current() accessors (theme-aware)
-        // ══════════════════════════════════════════════════════════════
-        val bgColor = ButtonTokens.Colors.current().buttonPrimaryBgColorIdle  // auto Light/Dark
-        val labelSize = ButtonTokens.Sizing.current().buttonLabelFontSize  // auto Compact/Regular
-        val fontFamily = ButtonTokens.Typography.current().buttonLabelFontFamily  // auto Compact/Regular
-        val gap = ButtonTokens.Density.current().denseButtonContentGapSpace  // auto Dense/Default/Spacious
+        // Component tokens via current() accessors
+        val bgColor = ButtonTokens.Colors.current().buttonPrimaryBgColorIdle
     }
 }
 
-// Direct access (static, when you need specific mode)
-val lightColor = ButtonTokens.Colors.Light.buttonPrimaryBgColorIdle
-val darkColor = ButtonTokens.Colors.Dark.buttonPrimaryBgColorIdle
-```
-
-#### Multi-Brand Apps
-
-```kotlin
-import com.bild.designsystem.shared.Brand
-import com.bild.designsystem.shared.DesignSystemTheme
-import com.bild.designsystem.shared.WindowSizeClass
-import com.bild.designsystem.shared.Density
-
-// Central Theme Provider for all brands
+// Advertorial with SportBILD colors (key use case)
 DesignSystemTheme(
-    brand = Brand.Bild,  // or Brand.Sportbild, Brand.Advertorial
-    darkTheme = isSystemInDarkTheme(),
-    sizeClass = WindowSizeClass.Compact,
-    density = Density.Default
-) {
-    // Brand-specific tokens automatically applied
-}
-
-// White-label app example
-val brand = Brand.valueOf(BuildConfig.BRAND_NAME)
-DesignSystemTheme(brand = brand) { MyApp() }
+    colorBrand = ColorBrand.Sportbild,
+    contentBrand = ContentBrand.Advertorial
+) { AdvertorialContent() }
 ```
 
-#### Compose Type-Safe Interfaces
+#### Dual-Axis Architecture
 
-| Interface | Purpose | Implementations |
-|-----------|---------|-----------------|
-| `BildColorScheme` | Color tokens contract | `BildLightColors`, `BildDarkColors` |
-| `BildSizingScheme` | Sizing tokens contract | `BildSizingCompact`, `BildSizingRegular` |
+Separates color selection from content selection:
 
-**Shared Enums (brand-independent):**
+| Axis | Enum | Values | Purpose |
+|------|------|--------|---------|
+| **Color** | `ColorBrand` | `Bild`, `Sportbild` | Color palette & effects |
+| **Content** | `ContentBrand` | `Bild`, `Sportbild`, `Advertorial` | Sizing, typography, layout |
 
-| Enum | Values | Package |
-|------|--------|---------|
-| `Density` | `Dense`, `Default`, `Spacious` | `com.bild.designsystem.shared` |
-| `WindowSizeClass` | `Compact`, `Regular` | `com.bild.designsystem.shared` |
-| `Brand` | `Bild`, `Sportbild`, `Advertorial` | `com.bild.designsystem.shared` |
+#### Unified Interfaces (Polymorphic Access)
+
+| Interface | Purpose | Property Count |
+|-----------|---------|----------------|
+| `DesignColorScheme` | All color tokens | 80+ colors |
+| `DesignSizingScheme` | All sizing tokens | 180+ sizing values |
 
 #### Component Token Accessors
 
@@ -282,18 +259,59 @@ All Component Tokens provide theme-aware `current()` accessors:
 
 | Accessor | Selects based on | Values |
 |----------|-----------------|--------|
-| `Colors.current()` | `BildTheme.isDarkTheme` | Light / Dark |
-| `Sizing.current()` | `BildTheme.sizeClass` | Compact / Regular |
-| `Typography.current()` | `BildTheme.sizeClass` | Compact / Regular |
-| `Density.current()` | `BildTheme.density` | Dense / Default / Spacious |
+| `Colors.current()` | `DesignSystemTheme.isDarkTheme` | Light / Dark |
+| `Sizing.current()` | `DesignSystemTheme.sizeClass` | Compact / Regular |
+| `Typography.current()` | `DesignSystemTheme.sizeClass` | Compact / Regular |
+| `Density.current()` | `DesignSystemTheme.density` | Dense / Default / Spacious |
 
-```kotlin
-// All accessors return interface types for type-safety
-ButtonTokens.Colors.current()       // ColorTokens interface
-ButtonTokens.Sizing.current()       // SizingTokens interface
-ButtonTokens.Typography.current()   // TypographyTokens interface
-ButtonTokens.Density.current()      // DensityTokens interface
+### iOS SwiftUI (Dual-Axis Architecture)
+
+> **See [README.ios.md](./README.ios.md) for complete documentation**
+
+```swift
+import SwiftUI
+
+struct MyApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .designSystemTheme(
+                    colorBrand: .bild,        // Color palette
+                    contentBrand: .bild,      // Sizing/Typography
+                    darkTheme: false,
+                    sizeClass: .compact
+                )
+        }
+    }
+}
+
+struct MyView: View {
+    @Environment(\.designSystemTheme) var theme
+
+    var body: some View {
+        Text("Hello")
+            .foregroundColor(theme.colors.textColorPrimary)
+
+        // Component tokens
+        Button("Click") { }
+            .background(ButtonTokens.Colors.light.buttonPrimaryBrandBgColorIdle)
+    }
+}
+
+// Advertorial with SportBILD colors
+.designSystemTheme(
+    colorBrand: .sportbild,
+    contentBrand: .advertorial
+)
 ```
+
+#### iOS Unified Protocols
+
+| Protocol | Purpose |
+|----------|---------|
+| `DesignColorScheme` | All color tokens |
+| `DesignSizingScheme` | All sizing tokens |
+| `DesignEffectsScheme` | Shadow/effect tokens |
 
 ### Android XML (Disabled)
 

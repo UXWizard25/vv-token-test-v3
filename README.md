@@ -49,7 +49,8 @@ Both pipelines use the **TokenSync Figma Plugin** for automated exports.
 |---------|-------------|---------|---------------|
 | **@marioschmidt/design-system-tokens** | Multi-platform design tokens | [![npm](https://img.shields.io/npm/v/@marioschmidt/design-system-tokens.svg)](https://www.npmjs.com/package/@marioschmidt/design-system-tokens) | [📖 README.tokens.md](./README.tokens.md) |
 | **@marioschmidt/design-system-icons** | Multi-platform icon assets | [![npm](https://img.shields.io/npm/v/@marioschmidt/design-system-icons.svg)](https://www.npmjs.com/package/@marioschmidt/design-system-icons) | [📖 README.icons.md](./README.icons.md) |
-| **Android Compose** | Jetpack Compose integration | - | [📖 README.android.md](./README.android.md) |
+| **Android Compose** | Jetpack Compose (Dual-Axis) | - | [📖 README.android.md](./README.android.md) |
+| **iOS SwiftUI** | SwiftUI (Dual-Axis) | - | [📖 README.ios.md](./README.ios.md) |
 
 ---
 
@@ -387,7 +388,8 @@ npm run clean:icons        # Remove dist/icons/
 |----------|-------------|
 | [📖 README.tokens.md](./README.tokens.md) | Complete token pipeline documentation |
 | [📖 README.icons.md](./README.icons.md) | Complete icon pipeline documentation |
-| [📖 README.android.md](./README.android.md) | Android Jetpack Compose integration |
+| [📖 README.android.md](./README.android.md) | Android Jetpack Compose (Dual-Axis) |
+| [📖 README.ios.md](./README.ios.md) | iOS SwiftUI (Dual-Axis) |
 
 ### Quick Links
 
