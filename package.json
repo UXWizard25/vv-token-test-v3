@@ -21,6 +21,8 @@
   "files": [
     "dist/",
     "README.md",
+    "README.tokens.md",
+    "README.android.md",
     "LICENSE"
   ],
   "scripts": {
