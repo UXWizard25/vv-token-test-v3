@@ -2742,6 +2742,83 @@ function toSwiftUIFontWeight(value) {
 }
 
 /**
+ * Helper: Get Swift type and formatted value from token's $type
+ * Uses the source $type to determine the correct Swift type (per-token type detection)
+ *
+ * @param {Object} token - The token object with $type, $value, etc.
+ * @returns {{ swiftType: string, formattedValue: string }}
+ */
+function getSwiftTypeAndValue(token) {
+  const tokenType = token.$type || token.type;
+  const value = token.$value !== undefined ? token.$value : token.value;
+
+  switch (tokenType) {
+    case 'color':
+      return {
+        swiftType: 'Color',
+        formattedValue: toSwiftUIColor(value)
+      };
+
+    case 'dimension':
+    case 'fontSize':
+    case 'lineHeight':
+    case 'letterSpacing':
+    case 'number':
+      return {
+        swiftType: 'CGFloat',
+        formattedValue: toSwiftUICGFloat(value)
+      };
+
+    case 'fontWeight':
+      return {
+        swiftType: 'Font.Weight',
+        formattedValue: toSwiftUIFontWeight(value)
+      };
+
+    case 'fontFamily':
+    case 'string':
+      return {
+        swiftType: 'String',
+        formattedValue: `"${value}"`
+      };
+
+    case 'opacity':
+      // Opacity as CGFloat (0.0 - 1.0)
+      const opacityValue = typeof value === 'number' && value > 1 ? value / 100 : value;
+      return {
+        swiftType: 'CGFloat',
+        formattedValue: opacityValue
+      };
+
+    case 'boolean':
+      return {
+        swiftType: 'Bool',
+        formattedValue: value === true || value === 'true' ? 'true' : 'false'
+      };
+
+    default:
+      // Default to CGFloat for unknown numeric types
+      if (typeof value === 'number') {
+        return {
+          swiftType: 'CGFloat',
+          formattedValue: toSwiftUICGFloat(value)
+        };
+      }
+      // Default to String for unknown string types
+      if (typeof value === 'string' && isNaN(parseFloat(value))) {
+        return {
+          swiftType: 'String',
+          formattedValue: `"${value}"`
+        };
+      }
+      return {
+        swiftType: 'CGFloat',
+        formattedValue: toSwiftUICGFloat(value)
+      };
+  }
+}
+
+/**
  * Complete Token Type Mapping for iOS (Swift/SwiftUI)
  *
  * Token $type values from Figma → Swift types:
@@ -3705,6 +3782,9 @@ public extension View {
 
 /**
  * Format: SwiftUI Component Tokens (aggregated with current() accessors)
+ *
+ * Uses per-token type detection from $type to determine Swift types.
+ * This ensures that color tokens in sizing files get Color type, not CGFloat.
  */
 const swiftuiComponentTokensFormat = ({ dictionary, options, file }) => {
   const version = packageJson.version;
@@ -3716,6 +3796,18 @@ const swiftuiComponentTokensFormat = ({ dictionary, options, file }) => {
   const mode = options.mode; // light/dark for colors, compact/regular for sizing
 
   const uniqueNames = generateUniqueNames(dictionary.allTokens, 'camel');
+
+  // Pre-calculate types for all tokens using source $type
+  const tokenTypeMap = new Map();
+  dictionary.allTokens.forEach(token => {
+    const name = uniqueNames.get(token.path.join('.')) || token.name;
+    const { swiftType, formattedValue } = getSwiftTypeAndValue(token);
+    tokenTypeMap.set(name, { swiftType, formattedValue });
+  });
+
+  // Check if we have mixed types (e.g., Color in a sizing file)
+  const uniqueTypes = new Set([...tokenTypeMap.values()].map(t => t.swiftType));
+  const hasMixedTypes = uniqueTypes.size > 1;
 
   let output = `//
 // Do not edit directly, this file was auto-generated.
@@ -3730,73 +3822,58 @@ import SwiftUI
 
 `;
 
-  // Determine protocol and struct names based on token type
-  let protocolName, structName, swiftType, valueTransform;
+  // Determine protocol and struct names based on category
+  let protocolName, structName;
 
   switch (tokenType) {
     case 'color':
       protocolName = `${componentPascal}ColorTokens`;
       structName = mode === 'light' ? `${componentPascal}ColorsLight` : `${componentPascal}ColorsDark`;
-      swiftType = 'Color';
-      valueTransform = toSwiftUIColor;
       break;
     case 'sizing':
     case 'breakpoint':
       protocolName = `${componentPascal}SizingTokens`;
       structName = mode === 'compact' ? `${componentPascal}SizingCompact` : `${componentPascal}SizingRegular`;
-      swiftType = 'CGFloat';
-      valueTransform = toSwiftUICGFloat;
       break;
     case 'density':
       const densityMode = mode || 'default';
       const densityPascal = toPascalCase(densityMode.replace('`', ''));
       protocolName = `${componentPascal}DensityTokens`;
       structName = `${componentPascal}Density${densityPascal}`;
-      swiftType = 'CGFloat';
-      valueTransform = toSwiftUICGFloat;
       break;
     default:
       protocolName = `${componentPascal}${toPascalCase(tokenType)}Tokens`;
       structName = `${componentPascal}${toPascalCase(tokenType)}${toPascalCase(mode || 'Default')}`;
-      swiftType = 'Any';
-      valueTransform = (v) => v;
   }
 
-  // Generate protocol (only for first mode)
+  // Generate protocol (only for first mode) - with per-token types
   const isFirstMode = mode === 'light' || mode === 'compact' || mode === 'dense';
   if (isFirstMode) {
-    output += `/// Protocol for ${component} ${tokenType} tokens
-public protocol ${protocolName}: Sendable {
-`;
+    output += `/// Protocol for ${component} ${tokenType} tokens\n`;
+    output += `public protocol ${protocolName}: Sendable {\n`;
 
     dictionary.allTokens.forEach(token => {
       const name = uniqueNames.get(token.path.join('.')) || token.name;
+      const { swiftType } = tokenTypeMap.get(name);
       output += `    var ${name}: ${swiftType} { get }\n`;
     });
 
-    output += `}
-
-`;
+    output += `}\n\n`;
   }
 
-  // Generate implementation
-  output += `/// ${structName} implementation
-public struct ${structName}: ${protocolName} {
-    public static let shared = ${structName}()
-    private init() {}
-
-`;
+  // Generate implementation - with per-token types and values
+  output += `/// ${structName} implementation\n`;
+  output += `public struct ${structName}: ${protocolName} {\n`;
+  output += `    public static let shared = ${structName}()\n`;
+  output += `    private init() {}\n\n`;
 
   dictionary.allTokens.forEach(token => {
     const name = uniqueNames.get(token.path.join('.')) || token.name;
-    const value = token.$value !== undefined ? token.$value : token.value;
-    const transformedValue = valueTransform(value);
-
-    output += `    public let ${name}: ${swiftType} = ${transformedValue}\n`;
+    const { swiftType, formattedValue } = tokenTypeMap.get(name);
+    output += `    public let ${name}: ${swiftType} = ${formattedValue}\n`;
   });
 
-  output += `}
-`;
+  output += `}\n`;
 
   return output;
 };
