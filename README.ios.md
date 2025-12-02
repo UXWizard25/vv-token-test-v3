@@ -447,6 +447,46 @@ DesignSystem/
 
 ---
 
+## Token Type Mapping
+
+Figma token types (`$type`) are automatically mapped to Swift types during build:
+
+| Figma `$type` | Swift Type | Example Output |
+|---------------|------------|----------------|
+| `dimension` | `CGFloat` | `24` |
+| `fontSize` | `CGFloat` | `16` |
+| `lineHeight` | `CGFloat` | `24` |
+| `letterSpacing` | `CGFloat` | `-0.5` |
+| `fontWeight` | `CGFloat` | `700` |
+| `number` | `CGFloat` | `4.5` |
+| `fontFamily` | `String` | `"Gotham XNarrow"` |
+| `string` | `String` | `"xs/sm/md"` |
+| `boolean` | `Bool` | `true` / `false` |
+| `opacity` | `Int` | `50` (0-100 %) |
+| `color` | `Color` | `Color(hex: 0xDD0000)` |
+| `shadow` | `ShadowStyle` | (composite type) |
+| `typography` | `TextStyle` | (composite type) |
+
+### Example Generated Code
+
+```swift
+// Protocol declaration (automatically typed from $type)
+public protocol BildSizingScheme: Sendable {
+    var headline1FontSize: CGFloat { get }   // $type: fontSize
+    var bodyFontFamily: String { get }       // $type: fontFamily
+    var breakpointName: String { get }       // $type: string
+}
+
+// Implementation with correctly typed values
+public struct BildSizingCompact: BildSizingScheme {
+    public let headline1FontSize: CGFloat = 48
+    public let bodyFontFamily: String = "Gotham XNarrow"
+    public let breakpointName: String = "sm"
+}
+```
+
+---
+
 ## API Reference
 
 ### Enums

@@ -144,6 +144,44 @@ npm run build:tokens   # Style Dictionary → 7 platforms
 npm run build:bundles  # Generate CSS bundle files
 ```
 
+## Token Type Mapping
+
+Figma token types (`$type`) are automatically mapped to platform-specific types:
+
+| Figma `$type` | CSS | Swift (iOS) | Kotlin (Android) |
+|---------------|-----|-------------|------------------|
+| `dimension` | `var(--token)` (px) | `CGFloat` | `Dp` (.dp) |
+| `fontSize` | `var(--token)` (px) | `CGFloat` | `TextUnit` (.sp) |
+| `lineHeight` | `var(--token)` (px) | `CGFloat` | `TextUnit` (.sp) |
+| `letterSpacing` | `var(--token)` (px) | `CGFloat` | `TextUnit` (.sp) |
+| `fontWeight` | `var(--token)` | `CGFloat` | `Int` |
+| `number` | `var(--token)` | `CGFloat` | `Float` |
+| `fontFamily` | `var(--token)` | `String` | `String` |
+| `string` | `var(--token)` | `String` | `String` |
+| `boolean` | `var(--token)` | `Bool` | `Boolean` |
+| `opacity` | `var(--token)` (0-100) | `Int` | `Int` |
+| `color` | `var(--token)` (hex/rgba) | `Color` | `Color` |
+| `shadow` | `box-shadow` | `ShadowStyle` | `Shadow` |
+| `typography` | CSS classes | `TextStyle` | `TextStyle` |
+
+### Token Type Distribution
+
+| $type | Count | Description |
+|-------|-------|-------------|
+| `dimension` | 3557 | Spacing, sizing, layout values |
+| `typography` | 1356 | Composite font definitions |
+| `fontSize` | 1086 | Font size values |
+| `color` | 1012 | Color values (hex, rgba) |
+| `lineHeight` | 840 | Line height values |
+| `fontWeight` | 318 | Font weight values (100-1000) |
+| `fontFamily` | 307 | Font family names |
+| `letterSpacing` | 155 | Letter spacing values |
+| `string` | 133 | String values (e.g., breakpoint names) |
+| `boolean` | 102 | Boolean flags |
+| `shadow` | 78 | Drop shadow definitions |
+| `opacity` | 72 | Opacity percentages (0-100) |
+| `number` | 24 | Generic numeric values |
+
 ## Platform Usage
 
 ### CSS

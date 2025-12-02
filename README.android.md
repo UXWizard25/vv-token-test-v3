@@ -403,6 +403,48 @@ com/bild/designsystem/
 
 ---
 
+## Token Type Mapping
+
+Figma token types (`$type`) are automatically mapped to Kotlin types during build:
+
+| Figma `$type` | Kotlin Type | Example Output |
+|---------------|-------------|----------------|
+| `dimension` | `Dp` | `24.dp` |
+| `fontSize` | `TextUnit` | `16.sp` |
+| `lineHeight` | `TextUnit` | `24.sp` |
+| `letterSpacing` | `TextUnit` | `(-0.5).sp` |
+| `fontWeight` | `Int` | `700` |
+| `number` | `Float` | `4.5f` |
+| `fontFamily` | `String` | `"Gotham XNarrow"` |
+| `string` | `String` | `"xs/sm/md"` |
+| `boolean` | `Boolean` | `true` / `false` |
+| `opacity` | `Int` | `50` (0-100 %) |
+| `color` | `Color` | `Color(0xFFDD0000)` |
+| `shadow` | `Shadow` | (composite type) |
+| `typography` | `TextStyle` | (composite type) |
+
+### Example Generated Code
+
+```kotlin
+// Interface declaration (automatically typed from $type)
+interface BildSizingScheme {
+    val headline1FontSize: TextUnit     // $type: fontSize
+    val bodyFontFamily: String          // $type: fontFamily
+    val breakpointName: String          // $type: string
+    val gridSpaceRespLg: Dp             // $type: dimension
+}
+
+// Implementation with correctly typed values
+object BildSizingCompact : BildSizingScheme {
+    override val headline1FontSize = 48.sp
+    override val bodyFontFamily = "Gotham XNarrow"
+    override val breakpointName = "sm"
+    override val gridSpaceRespLg = 24.dp
+}
+```
+
+---
+
 ## API Reference
 
 ### Shared Enums
