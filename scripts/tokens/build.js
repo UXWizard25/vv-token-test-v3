@@ -124,7 +124,8 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
       }]
     },
     // iOS: SwiftUI format - For breakpoint mode, use sizeclass folder and naming, skip non-native breakpoints
-    ...((cssOptions.modeType === 'breakpoint' && !isNativeBreakpoint(cssOptions.mode)) ? {} : {
+    // Skip ios platform when SWIFTUI_ENABLED since swiftui platform generates the same output correctly
+    ...((cssOptions.modeType === 'breakpoint' && !isNativeBreakpoint(cssOptions.mode)) || SWIFTUI_ENABLED ? {} : {
       ios: {
         transformGroup: 'custom/ios-swift',
         buildPath: (() => {
@@ -2240,7 +2241,7 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   const imports = ['import androidx.compose.runtime.Immutable'];
   if (needsComposable) {
     imports.push('import androidx.compose.runtime.Composable');
-    imports.push(`import com.bild.designsystem.${brand}.theme.${brandPascal}Theme`);
+    imports.push('import com.bild.designsystem.shared.DesignSystemTheme');
   }
   if (hasDensityTokens) {
     imports.push('import com.bild.designsystem.shared.Density');
@@ -2299,13 +2300,13 @@ object ${componentName}Tokens {
     object Colors {
         /**
          * Returns color tokens for the current theme.
-         * Automatically resolves to Light or Dark based on ${brandPascal}Theme.isDarkTheme
+         * Automatically resolves to Light or Dark based on DesignSystemTheme.isDarkTheme
          *
          * Usage:
          *   val bgColor = ${componentName}Tokens.Colors.current().primaryBgIdle
          */
         @Composable
-        fun current(): ColorTokens = if (${brandPascal}Theme.isDarkTheme) Dark else Light
+        fun current(): ColorTokens = if (DesignSystemTheme.isDarkTheme) Dark else Light
 
         /**
          * Interface for color tokens
@@ -2353,13 +2354,13 @@ object ${componentName}Tokens {
     object Sizing {
         /**
          * Returns sizing tokens for the current window size class.
-         * Automatically resolves to Compact or Regular based on ${brandPascal}Theme.sizeClass
+         * Automatically resolves to Compact or Regular based on DesignSystemTheme.sizeClass
          *
          * Usage:
          *   val fontSize = ${componentName}Tokens.Sizing.current().labelFontSize
          */
         @Composable
-        fun current(): SizingTokens = when (${brandPascal}Theme.sizeClass) {
+        fun current(): SizingTokens = when (DesignSystemTheme.sizeClass) {
             WindowSizeClass.Compact -> Compact
             WindowSizeClass.Regular -> Regular
         }
@@ -2423,13 +2424,13 @@ object ${componentName}Tokens {
     object Density {
         /**
          * Returns density tokens for the current theme density.
-         * Automatically resolves to Dense, Default, or Spacious based on ${brandPascal}Theme.density
+         * Automatically resolves to Dense, Default, or Spacious based on DesignSystemTheme.density
          *
          * Usage:
          *   val gap = ${componentName}Tokens.Density.current().contentGap
          */
         @Composable
-        fun current(): DensityTokens = when (${brandPascal}Theme.density) {
+        fun current(): DensityTokens = when (DesignSystemTheme.density) {
             com.bild.designsystem.shared.Density.Dense -> Dense
             com.bild.designsystem.shared.Density.Default -> Default
             com.bild.designsystem.shared.Density.Spacious -> Spacious
@@ -2496,13 +2497,13 @@ object ${componentName}Tokens {
     object Typography {
         /**
          * Returns typography tokens for the current window size class.
-         * Automatically resolves to Compact or Regular based on ${brandPascal}Theme.sizeClass
+         * Automatically resolves to Compact or Regular based on DesignSystemTheme.sizeClass
          *
          * Usage:
          *   val fontFamily = ${componentName}Tokens.Typography.current().labelFontFamily
          */
         @Composable
-        fun current(): TypographyTokens = when (${brandPascal}Theme.sizeClass) {
+        fun current(): TypographyTokens = when (DesignSystemTheme.sizeClass) {
             WindowSizeClass.Compact -> Compact
             WindowSizeClass.Regular -> Regular
         }
