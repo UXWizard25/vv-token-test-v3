@@ -2809,7 +2809,8 @@ async function aggregateSwiftUIComponents() {
           colors: { light: [], dark: [] },
           sizing: { compact: [], regular: [] },
           density: { default: [], dense: [], spacious: [] },
-          typography: { compact: [], regular: [] }
+          typography: { compact: [], regular: [] },
+          effects: { light: [], dark: [] }
         };
 
         for (const swiftFile of swiftFiles) {
@@ -2840,6 +2841,10 @@ async function aggregateSwiftUIComponents() {
             tokenGroups.density.default = tokens;
           } else if (lowerFile.includes('densityspacious')) {
             tokenGroups.density.spacious = tokens;
+          } else if (lowerFile.includes('effectslight') || lowerFile.includes('effectlight')) {
+            tokenGroups.effects.light = tokens;
+          } else if (lowerFile.includes('effectsdark') || lowerFile.includes('effectdark')) {
+            tokenGroups.effects.dark = tokens;
           }
         }
 
@@ -2897,6 +2902,17 @@ function parseSwiftTokens(content) {
     });
   }
 
+  // Match: public let tokenName = ShadowStyle(shadows: [...]) (implicit type - for effects)
+  // This regex captures multi-line ShadowStyle declarations with nested DropShadow arrays
+  const shadowStyleRegex = /public\s+let\s+(\w+)\s*=\s*(ShadowStyle\s*\(shadows:\s*\[[\s\S]*?\]\s*\))/g;
+  while ((match = shadowStyleRegex.exec(content)) !== null) {
+    tokens.push({
+      name: match[1],
+      type: 'ShadowStyle',
+      value: match[2].replace(/\s+/g, ' ').trim()
+    });
+  }
+
   return tokens;
 }
 
@@ -2915,6 +2931,7 @@ function generateAggregatedSwiftComponentFile(brand, componentName, tokenGroups)
       tokenGroups.density.default.length > 0 ||
       tokenGroups.density.spacious.length > 0;
   const hasTypographyTokens = tokenGroups.typography.compact.length > 0 || tokenGroups.typography.regular.length > 0;
+  const hasEffectsTokens = tokenGroups.effects && (tokenGroups.effects.light.length > 0 || tokenGroups.effects.dark.length > 0);
 
   let output = `//
 // Do not edit directly, this file was auto-generated.
@@ -3177,6 +3194,63 @@ public enum ${componentName}Tokens {
             private init() {}
 `;
       tokenGroups.typography.regular.forEach(t => {
+        output += `            public let ${t.name}: ${t.type} = ${t.value}\n`;
+      });
+      output += `        }\n`;
+    }
+    output += `    }\n`;
+  }
+
+  // Effects section
+  if (hasEffectsTokens) {
+    const effectsTokenNames = new Map();
+    [...tokenGroups.effects.light, ...tokenGroups.effects.dark].forEach(t => {
+      if (!effectsTokenNames.has(t.name)) {
+        effectsTokenNames.set(t.name, { type: t.type, value: t.value });
+      }
+    });
+
+    output += `
+    // MARK: - Effects
+
+    /// Effects tokens protocol
+    public protocol ${componentName}EffectsTokens: Sendable {
+`;
+    effectsTokenNames.forEach((info, name) => {
+      output += `        var ${name}: ${info.type} { get }\n`;
+    });
+    output += `    }
+
+    /// Effects accessor
+    public enum Effects {
+        /// Returns effects tokens for the specified theme mode
+        public static func current(isDark: Bool) -> any ${componentName}EffectsTokens {
+            isDark ? Dark.shared : Light.shared
+        }
+
+        public static var light: Light { Light.shared }
+        public static var dark: Dark { Dark.shared }
+`;
+
+    if (tokenGroups.effects.light.length > 0) {
+      output += `
+        public struct Light: ${componentName}EffectsTokens {
+            public static let shared = Light()
+            private init() {}
+`;
+      tokenGroups.effects.light.forEach(t => {
+        output += `            public let ${t.name}: ${t.type} = ${t.value}\n`;
+      });
+      output += `        }\n`;
+    }
+
+    if (tokenGroups.effects.dark.length > 0) {
+      output += `
+        public struct Dark: ${componentName}EffectsTokens {
+            public static let shared = Dark()
+            private init() {}
+`;
+      tokenGroups.effects.dark.forEach(t => {
         output += `            public let ${t.name}: ${t.type} = ${t.value}\n`;
       });
       output += `        }\n`;
