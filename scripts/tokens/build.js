@@ -687,6 +687,25 @@ function createTypographyConfig(brand, breakpoint) {
         }
       } : {}),
 
+      // Jetpack Compose: Only compact (sm) and regular (lg) with TextStyle objects
+      // Output to semantic/typography/ with sizeclass in filename
+      ...(COMPOSE_ENABLED && SIZE_CLASS_MAPPING[breakpoint] ? {
+        compose: {
+          transforms: ['attribute/cti', 'name/custom/compose'],
+          buildPath: `${DIST_DIR}/android/compose/brands/${brand}/semantic/typography/`,
+          files: [{
+            destination: `Typography${SIZE_CLASS_MAPPING[breakpoint].charAt(0).toUpperCase() + SIZE_CLASS_MAPPING[breakpoint].slice(1)}.kt`,
+            format: 'compose/typography-scheme',
+            options: {
+              packageName: `com.bild.designsystem.${brand}.semantic`,
+              brand: brandName,
+              breakpoint,
+              sizeClass: SIZE_CLASS_MAPPING[breakpoint]
+            }
+          }]
+        }
+      } : {}),
+
       // Android XML: Only compact (sm) and regular (lg) with custom format
       // Output to semantic/typography/ with sizeclass in filename
       // Disabled by default - Compose is the preferred Android format
@@ -802,6 +821,22 @@ function createEffectConfig(brand, colorMode) {
           }
         }]
       },
+
+      // Compose: Effects format (brand-independent, output to shared/)
+      // Shadows only depend on light/dark mode, not on brand
+      ...(COMPOSE_ENABLED ? {
+        compose: {
+          transforms: ['attribute/cti'],
+          buildPath: `${DIST_DIR}/android/compose/shared/`,
+          files: [{
+            destination: `Effects${colorMode === 'light' ? 'Light' : 'Dark'}.kt`,
+            format: 'compose/effects',
+            options: {
+              colorMode
+            }
+          }]
+        }
+      } : {}),
 
       // Android XML: Custom Effects format
       // Disabled by default - Compose is the preferred Android format
@@ -1277,6 +1312,22 @@ function createComponentEffectsConfig(sourceFile, brand, componentName, fileName
           files: [{
             destination: `${fileName}.dart`,
             format: 'flutter/effects',
+            options: {
+              brand: brandName,
+              colorMode,
+              componentName
+            }
+          }]
+        }
+      } : {}),
+      // Compose: Component Effects format
+      ...(COMPOSE_ENABLED ? {
+        compose: {
+          transforms: ['attribute/cti'],
+          buildPath: `${DIST_DIR}/android/compose/brands/${brand}/components/${componentName}/`,
+          files: [{
+            destination: `${componentName}Effects${colorMode ? colorMode.charAt(0).toUpperCase() + colorMode.slice(1) : ''}.kt`,
+            format: 'compose/component-effects',
             options: {
               brand: brandName,
               colorMode,
@@ -2129,7 +2180,8 @@ async function aggregateComposeComponents() {
           colors: { light: [], dark: [] },
           sizing: { compact: [], regular: [] },
           density: { default: [], dense: [], spacious: [] },
-          typography: { compact: [], regular: [] }
+          typography: { compact: [], regular: [] },
+          effects: { light: [], dark: [] }
         };
 
         for (const ktFile of ktFiles) {
@@ -2156,6 +2208,10 @@ async function aggregateComposeComponents() {
             tokenGroups.typography.compact = tokens;
           } else if (lowerFile.includes('typographyregular')) {
             tokenGroups.typography.regular = tokens;
+          } else if (lowerFile.includes('effectslight')) {
+            tokenGroups.effects.light = tokens;
+          } else if (lowerFile.includes('effectsdark')) {
+            tokenGroups.effects.dark = tokens;
           }
         }
 
@@ -2185,17 +2241,66 @@ async function aggregateComposeComponents() {
 
 /**
  * Parses Kotlin token file and extracts val declarations
+ * Handles both single-line values and multi-line composite objects (DesignTextStyle, ShadowStyle)
  */
 function parseKotlinTokens(content) {
   const tokens = [];
-  const valRegex = /val\s+(\w+)\s*=\s*(.+)/g;
-  let match;
+  const processedNames = new Set();
 
+  // Helper function to extract multi-line patterns with balanced parentheses
+  // initialDepth: how many opening parens the pattern ends with (default 1)
+  const extractMultiLinePattern = (pattern, prefix, initialDepth = 1) => {
+    let match;
+    while ((match = pattern.exec(content)) !== null) {
+      const name = match[1];
+      const startIndex = match.index + match[0].length;
+
+      // Count parentheses to find the matching closing )
+      // initialDepth accounts for patterns that end with multiple opening parens
+      let depth = initialDepth;
+      let endIndex = startIndex;
+      while (depth > 0 && endIndex < content.length) {
+        if (content[endIndex] === '(') depth++;
+        if (content[endIndex] === ')') depth--;
+        endIndex++;
+      }
+
+      // Extract the inner content and normalize whitespace
+      // Also remove spaces before closing parens for clean formatting
+      const innerContent = content.substring(startIndex, endIndex - 1)
+          .replace(/\s+/g, ' ')
+          .replace(/\s+\)/g, ')')
+          .trim();
+      tokens.push({
+        name: name,
+        // innerContent already includes intermediate closing parens
+        // We just need to wrap with prefix( ... )
+        value: `${prefix}(${innerContent})`
+      });
+      processedNames.add(name);
+    }
+  };
+
+  // Handle multi-line DesignTextStyle objects
+  extractMultiLinePattern(/val\s+(\w+)\s*=\s*DesignTextStyle\(/g, 'DesignTextStyle');
+
+  // Handle multi-line ShadowStyle objects (with listOf)
+  // initialDepth = 2 because pattern ends with two opening parens: ShadowStyle(listOf(
+  extractMultiLinePattern(/val\s+(\w+)\s*=\s*ShadowStyle\(listOf\(/g, 'ShadowStyle(listOf', 2);
+
+  // Then handle single-line val declarations (excluding already processed patterns)
+  const valRegex = /val\s+(\w+)\s*=\s*([^\n]+)/g;
+  let match;
   while ((match = valRegex.exec(content)) !== null) {
-    tokens.push({
-      name: match[1],
-      value: match[2].trim()
-    });
+    const name = match[1];
+    if (!processedNames.has(name) &&
+        !match[2].includes('DesignTextStyle(') &&
+        !match[2].includes('ShadowStyle(')) {
+      tokens.push({
+        name: name,
+        value: match[2].trim()
+      });
+    }
   }
 
   return tokens;
@@ -2219,7 +2324,9 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
     ...tokenGroups.density.default,
     ...tokenGroups.density.spacious,
     ...tokenGroups.typography.compact,
-    ...tokenGroups.typography.regular
+    ...tokenGroups.typography.regular,
+    ...(tokenGroups.effects?.light || []),
+    ...(tokenGroups.effects?.dark || [])
   ];
 
   const hasColor = allTokens.some(t => t.value.includes('Color('));
@@ -2232,9 +2339,10 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   const hasColorTokens = tokenGroups.colors.light.length > 0 || tokenGroups.colors.dark.length > 0;
   const hasSizingTokens = tokenGroups.sizing.compact.length > 0 || tokenGroups.sizing.regular.length > 0;
   const hasTypographyTokens = tokenGroups.typography.compact.length > 0 || tokenGroups.typography.regular.length > 0;
+  const hasEffectsTokens = (tokenGroups.effects?.light?.length > 0) || (tokenGroups.effects?.dark?.length > 0);
 
   // Need @Composable and Theme imports for current() accessors
-  const needsComposable = hasDensityTokens || hasColorTokens || hasSizingTokens || hasTypographyTokens;
+  const needsComposable = hasDensityTokens || hasColorTokens || hasSizingTokens || hasTypographyTokens || hasEffectsTokens;
   // WindowSizeClass needed for both Sizing and Typography (both use Compact/Regular)
   const needsWindowSizeClass = hasSizingTokens || hasTypographyTokens;
 
@@ -2255,6 +2363,21 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   if (hasDp) imports.push('import androidx.compose.ui.unit.dp');
   if (hasSp) imports.push('import androidx.compose.ui.unit.sp');
   if (hasSp && needsComposable) imports.push('import androidx.compose.ui.unit.TextUnit');
+
+  // Check if typography uses DesignTextStyle
+  const hasDesignTextStyle = allTokens.some(t => t.value.includes('DesignTextStyle('));
+  if (hasDesignTextStyle || hasTypographyTokens) {
+    imports.push('import androidx.compose.ui.text.font.FontWeight');
+    imports.push('import androidx.compose.ui.text.style.TextDecoration');
+    imports.push('import com.bild.designsystem.shared.DesignTextStyle');
+    imports.push('import com.bild.designsystem.shared.DesignTextCase');
+  }
+
+  // Check if effects use ShadowStyle
+  if (hasEffectsTokens) {
+    imports.push('import com.bild.designsystem.shared.ShadowStyle');
+    imports.push('import com.bild.designsystem.shared.DropShadow');
+  }
 
   let output = `/**
  * Do not edit directly, this file was auto-generated.
@@ -2313,24 +2436,45 @@ object ${componentName}Tokens {
          */
         interface ColorTokens {
 `;
+    // Helper to determine if a value is an opacity (0-1 float or 0-100 percentage)
+    const isOpacityValue = (value) => {
+      const numStr = String(value).trim();
+      const num = parseFloat(numStr);
+      // Check if it's a simple number (not Color(...) or similar)
+      return !isNaN(num) && !numStr.includes('Color') && !numStr.includes('0x');
+    };
+
     // Generate interface properties
     colorTokenNames.forEach((value, name) => {
-      output += `            val ${name}: Color\n`;
+      const propType = isOpacityValue(value) ? 'Float' : 'Color';
+      output += `            val ${name}: ${propType}\n`;
     });
     output += `        }
 
 `;
+
+    // Helper to format opacity value correctly
+    const formatColorValue = (value) => {
+      if (isOpacityValue(value)) {
+        const num = parseFloat(value);
+        // Convert percentage (e.g., 80) to decimal (0.8) if > 1
+        const normalizedValue = num > 1 ? num / 100 : num;
+        return `${normalizedValue}f`;
+      }
+      return value;
+    };
+
     if (tokenGroups.colors.light.length > 0) {
       output += `        object Light : ColorTokens {\n`;
       tokenGroups.colors.light.forEach(t => {
-        output += `            override val ${t.name} = ${t.value}\n`;
+        output += `            override val ${t.name} = ${formatColorValue(t.value)}\n`;
       });
       output += `        }\n`;
     }
     if (tokenGroups.colors.dark.length > 0) {
       output += `        object Dark : ColorTokens {\n`;
       tokenGroups.colors.dark.forEach(t => {
-        output += `            override val ${t.name} = ${t.value}\n`;
+        output += `            override val ${t.name} = ${formatColorValue(t.value)}\n`;
       });
       output += `        }\n`;
     }
@@ -2509,19 +2653,29 @@ object ${componentName}Tokens {
         }
 
         /**
-         * Interface for typography tokens
+         * Interface for typography tokens (DesignTextStyle composite objects)
          */
         interface TypographyTokens {
 `;
-    // Generate interface properties
+    // Generate interface properties - check if using DesignTextStyle or individual properties
     typographyTokenNames.forEach((value, name) => {
-      // Determine type based on value
-      let propType = 'String';
-      if (value.includes('.sp')) propType = 'TextUnit';
-      else if (value.includes('.dp')) propType = 'Dp';
-      else if (value.includes('FontStyle.')) propType = 'FontStyle';
-      else if (/^\d+$/.test(value.trim())) propType = 'Int';
-      else if (value.startsWith('"') || value.startsWith("'")) propType = 'String';
+      // Check if this is a DesignTextStyle composite token
+      let propType;
+      if (value.includes('DesignTextStyle(')) {
+        propType = 'DesignTextStyle';
+      } else if (value.includes('.sp')) {
+        propType = 'TextUnit';
+      } else if (value.includes('.dp')) {
+        propType = 'Dp';
+      } else if (value.includes('FontStyle.')) {
+        propType = 'FontStyle';
+      } else if (/^\d+$/.test(value.trim())) {
+        propType = 'Int';
+      } else if (value.startsWith('"') || value.startsWith("'")) {
+        propType = 'String';
+      } else {
+        propType = 'String';
+      }
       output += `            val ${name}: ${propType}\n`;
     });
     output += `        }
@@ -2537,6 +2691,60 @@ object ${componentName}Tokens {
     if (tokenGroups.typography.regular.length > 0) {
       output += `        object Regular : TypographyTokens {\n`;
       tokenGroups.typography.regular.forEach(t => {
+        output += `            override val ${t.name} = ${t.value}\n`;
+      });
+      output += `        }\n`;
+    }
+    output += `    }\n`;
+  }
+
+  // Effects section with interface and current() accessor
+  if (hasEffectsTokens) {
+    // Collect all unique token names for interface
+    const effectsTokenNames = new Map();
+    [...(tokenGroups.effects?.light || []), ...(tokenGroups.effects?.dark || [])].forEach(t => {
+      if (!effectsTokenNames.has(t.name)) {
+        effectsTokenNames.set(t.name, t.value);
+      }
+    });
+
+    output += `
+    // ══════════════════════════════════════════════════════════════
+    // EFFECTS (Shadows)
+    // ══════════════════════════════════════════════════════════════
+    object Effects {
+        /**
+         * Returns effects tokens for the current theme.
+         * Automatically resolves to Light or Dark based on DesignSystemTheme.isDarkTheme
+         *
+         * Usage:
+         *   val shadow = ${componentName}Tokens.Effects.current().menuShadow
+         */
+        @Composable
+        fun current(): EffectsTokens = if (DesignSystemTheme.isDarkTheme) Dark else Light
+
+        /**
+         * Interface for effects tokens (ShadowStyle composites)
+         */
+        interface EffectsTokens {
+`;
+    // Generate interface properties
+    effectsTokenNames.forEach((value, name) => {
+      output += `            val ${name}: ShadowStyle\n`;
+    });
+    output += `        }
+
+`;
+    if (tokenGroups.effects?.light?.length > 0) {
+      output += `        object Light : EffectsTokens {\n`;
+      tokenGroups.effects.light.forEach(t => {
+        output += `            override val ${t.name} = ${t.value}\n`;
+      });
+      output += `        }\n`;
+    }
+    if (tokenGroups.effects?.dark?.length > 0) {
+      output += `        object Dark : EffectsTokens {\n`;
+      tokenGroups.effects.dark.forEach(t => {
         output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
@@ -3090,6 +3298,36 @@ async function generateComposeThemeProviders() {
     const designSizingSchemeFile = path.join(sharedDir, 'DesignSizingScheme.kt');
     fs.writeFileSync(designSizingSchemeFile, designSizingSchemeContent, 'utf8');
     console.log('     ✅ shared/DesignSizingScheme.kt (unified interface)');
+
+    // DesignTextStyle.kt (typography composite token)
+    const designTextStyleContent = generateSharedDesignTextStyleFile();
+    const designTextStyleFile = path.join(sharedDir, 'DesignTextStyle.kt');
+    fs.writeFileSync(designTextStyleFile, designTextStyleContent, 'utf8');
+    console.log('     ✅ shared/DesignTextStyle.kt (typography composite)');
+
+    // DesignTypographyScheme.kt (unified interface)
+    const designTypographySchemeContent = generateSharedDesignTypographySchemeFile();
+    const designTypographySchemeFile = path.join(sharedDir, 'DesignTypographyScheme.kt');
+    fs.writeFileSync(designTypographySchemeFile, designTypographySchemeContent, 'utf8');
+    console.log('     ✅ shared/DesignTypographyScheme.kt (unified interface)');
+
+    // DropShadow.kt (shadow layer data class)
+    const dropShadowContent = generateSharedDropShadowFile();
+    const dropShadowFile = path.join(sharedDir, 'DropShadow.kt');
+    fs.writeFileSync(dropShadowFile, dropShadowContent, 'utf8');
+    console.log('     ✅ shared/DropShadow.kt (shadow layer)');
+
+    // ShadowStyle.kt (composite shadow with toModifier)
+    const shadowStyleContent = generateSharedShadowStyleFile();
+    const shadowStyleFile = path.join(sharedDir, 'ShadowStyle.kt');
+    fs.writeFileSync(shadowStyleFile, shadowStyleContent, 'utf8');
+    console.log('     ✅ shared/ShadowStyle.kt (composite shadow)');
+
+    // DesignEffectsScheme.kt (unified effects interface)
+    const designEffectsSchemeContent = generateSharedDesignEffectsSchemeFile();
+    const designEffectsSchemeFile = path.join(sharedDir, 'DesignEffectsScheme.kt');
+    fs.writeFileSync(designEffectsSchemeFile, designEffectsSchemeContent, 'utf8');
+    console.log('     ✅ shared/DesignEffectsScheme.kt (unified interface)');
 
     // DesignSystemTheme.kt (central theme provider with Dual-Axis)
     const designSystemThemeContent = generateDesignSystemThemeFile();
@@ -3705,6 +3943,372 @@ ${propertyDeclarations}
 }
 
 /**
+ * Generates the shared DesignTextStyle data class
+ * Creates: dist/android/compose/shared/DesignTextStyle.kt
+ */
+function generateSharedDesignTextStyleFile() {
+  const packageJson = require('../../package.json');
+  const version = packageJson.version;
+
+  return `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v${version}
+ * Generated by Style Dictionary
+ *
+ * DesignTextStyle - Typography composite token
+ * Represents a complete text style with all typography properties
+ *
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ */
+
+package com.bild.designsystem.shared
+
+import androidx.compose.runtime.Immutable
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
+
+/**
+ * Text case transformation options
+ */
+enum class DesignTextCase {
+    Original,
+    Uppercase,
+    Lowercase,
+    Capitalize
+}
+
+/**
+ * Design System TextStyle composite token
+ *
+ * Contains all typography properties for a complete text style.
+ * Use [toComposeTextStyle] to convert to Compose's TextStyle with font resolution.
+ *
+ * Usage:
+ * \`\`\`kotlin
+ * val style = DesignSystemTheme.typography.headline1
+ * Text(
+ *     text = "Hello",
+ *     style = style.toComposeTextStyle(fontResolver)
+ * )
+ * \`\`\`
+ */
+@Immutable
+data class DesignTextStyle(
+    val fontFamily: String,
+    val fontWeight: FontWeight,
+    val fontSize: TextUnit,
+    val lineHeight: TextUnit,
+    val letterSpacing: TextUnit = 0.sp,
+    val textCase: DesignTextCase = DesignTextCase.Original,
+    val textDecoration: TextDecoration = TextDecoration.None
+) {
+    /**
+     * Converts this DesignTextStyle to Compose's TextStyle
+     *
+     * @param fontResolver A function that resolves font family name to FontFamily
+     *                     Example: { name -> FontFamily(Font(R.font.gotham_xnarrow)) }
+     * @return A Compose TextStyle ready for use with Text composable
+     */
+    fun toComposeTextStyle(fontResolver: (String) -> FontFamily = { FontFamily.Default }): TextStyle {
+        return TextStyle(
+            fontFamily = fontResolver(fontFamily),
+            fontWeight = fontWeight,
+            fontSize = fontSize,
+            lineHeight = lineHeight,
+            letterSpacing = letterSpacing,
+            textDecoration = textDecoration
+        )
+    }
+
+    /**
+     * Converts this DesignTextStyle to Compose's TextStyle using default system fonts
+     */
+    fun toComposeTextStyle(): TextStyle = toComposeTextStyle { FontFamily.Default }
+}
+`;
+}
+
+/**
+ * Generates the shared DesignTypographyScheme interface
+ * Creates: dist/android/compose/shared/DesignTypographyScheme.kt
+ */
+function generateSharedDesignTypographySchemeFile() {
+  const packageJson = require('../../package.json');
+  const version = packageJson.version;
+
+  // Read typography properties from existing BildTypographyScheme
+  const bildTypographyPath = path.join(DIST_DIR, 'android', 'compose', 'brands', 'bild', 'semantic', 'typography', 'TypographyCompact.kt');
+  let typographyProperties = [];
+
+  if (fs.existsSync(bildTypographyPath)) {
+    const content = fs.readFileSync(bildTypographyPath, 'utf8');
+    // Extract interface properties
+    const interfaceMatch = content.match(/interface \w+TypographyScheme[^{]*\{([^}]+)\}/s);
+    if (interfaceMatch) {
+      const propsMatch = interfaceMatch[1].matchAll(/(?:\/\*\*[^*]*\*\/\s*)?(?:override\s+)?val\s+(\w+):\s*DesignTextStyle/g);
+      for (const match of propsMatch) {
+        typographyProperties.push(match[1]);
+      }
+    }
+  }
+
+  // Fallback to essential properties
+  if (typographyProperties.length === 0) {
+    typographyProperties = [
+      'display1', 'display2', 'display3',
+      'headline1', 'headline2', 'headline3', 'headline4',
+      'body', 'bodyBold',
+      'label1', 'label2', 'label3'
+    ];
+  }
+
+  const propertyDeclarations = typographyProperties.map(prop => `    val ${prop}: DesignTextStyle`).join('\n');
+
+  return `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v${version}
+ * Generated by Style Dictionary
+ *
+ * Unified DesignTypographyScheme Interface (Dual-Axis Architecture)
+ * All content brands implement this interface for polymorphic typography access
+ *
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ */
+
+package com.bild.designsystem.shared
+
+import androidx.compose.runtime.Stable
+
+/**
+ * Unified typography scheme interface for the BILD Design System
+ *
+ * All content brands (BILD, SportBILD, Advertorial) implement this interface,
+ * enabling polymorphic typography access across brands.
+ *
+ * Usage:
+ * \`\`\`kotlin
+ * @Composable
+ * fun MyComponent() {
+ *     val typography: DesignTypographyScheme = DesignSystemTheme.typography
+ *     Text(
+ *         text = "Hello",
+ *         style = typography.headline1.toComposeTextStyle()
+ *     )
+ * }
+ * \`\`\`
+ */
+@Stable
+interface DesignTypographyScheme {
+${propertyDeclarations}
+}
+`;
+}
+
+/**
+ * Generates the shared DropShadow data class
+ * Creates: dist/android/compose/shared/DropShadow.kt
+ */
+function generateSharedDropShadowFile() {
+  const packageJson = require('../../package.json');
+  const version = packageJson.version;
+
+  return `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v${version}
+ * Generated by Style Dictionary
+ *
+ * DropShadow - Single shadow layer definition
+ *
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ */
+
+package com.bild.designsystem.shared
+
+import androidx.compose.runtime.Immutable
+import androidx.compose.ui.graphics.Color
+
+/**
+ * Single drop shadow definition
+ *
+ * Represents one layer of a shadow effect with all properties needed
+ * for rendering in Jetpack Compose.
+ *
+ * @property color Shadow color (including alpha)
+ * @property offsetX Horizontal offset in pixels
+ * @property offsetY Vertical offset in pixels
+ * @property blur Blur radius in pixels
+ * @property spread Spread radius in pixels (expansion/contraction)
+ */
+@Immutable
+data class DropShadow(
+    val color: Color,
+    val offsetX: Float,
+    val offsetY: Float,
+    val blur: Float,
+    val spread: Float = 0f
+)
+`;
+}
+
+/**
+ * Generates the shared ShadowStyle composite class
+ * Creates: dist/android/compose/shared/ShadowStyle.kt
+ */
+function generateSharedShadowStyleFile() {
+  const packageJson = require('../../package.json');
+  const version = packageJson.version;
+
+  return `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v${version}
+ * Generated by Style Dictionary
+ *
+ * ShadowStyle - Composite shadow token (multiple layers)
+ *
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ */
+
+package com.bild.designsystem.shared
+
+import androidx.compose.runtime.Immutable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.unit.dp
+
+/**
+ * Composite shadow style containing multiple shadow layers
+ *
+ * Usage:
+ * \`\`\`kotlin
+ * Box(
+ *     modifier = Modifier
+ *         .then(DesignSystemTheme.effects.shadowSoftMd.toModifier())
+ *         .background(Color.White)
+ * )
+ * \`\`\`
+ */
+@Immutable
+data class ShadowStyle(
+    val layers: List<DropShadow>
+) {
+    constructor(vararg shadows: DropShadow) : this(shadows.toList())
+
+    /**
+     * Converts this ShadowStyle to a Compose Modifier
+     *
+     * Applies all shadow layers using drawBehind with native shadow rendering.
+     * Note: For best results, apply this modifier before background modifiers.
+     *
+     * @return A Modifier that renders all shadow layers
+     */
+    fun toModifier(): Modifier = Modifier.drawBehind {
+        layers.forEach { shadow ->
+            drawIntoCanvas { canvas ->
+                val paint = Paint().apply {
+                    color = shadow.color
+                    asFrameworkPaint().apply {
+                        setShadowLayer(
+                            shadow.blur,
+                            shadow.offsetX,
+                            shadow.offsetY,
+                            shadow.color.toArgb()
+                        )
+                    }
+                }
+                // Draw a rect slightly larger than the content to show the shadow
+                canvas.drawRect(
+                    left = -shadow.spread,
+                    top = -shadow.spread,
+                    right = size.width + shadow.spread,
+                    bottom = size.height + shadow.spread,
+                    paint = paint
+                )
+            }
+        }
+    }
+}
+`;
+}
+
+/**
+ * Generates the shared DesignEffectsScheme interface
+ * Creates: dist/android/compose/shared/DesignEffectsScheme.kt
+ */
+function generateSharedDesignEffectsSchemeFile() {
+  const packageJson = require('../../package.json');
+  const version = packageJson.version;
+
+  return `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v${version}
+ * Generated by Style Dictionary
+ *
+ * Unified DesignEffectsScheme Interface
+ * Brand-independent: shadows only depend on light/dark mode
+ *
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ */
+
+package com.bild.designsystem.shared
+
+import androidx.compose.runtime.Stable
+
+/**
+ * Unified effects scheme interface for the BILD Design System
+ *
+ * Effects (shadows) are brand-independent and only vary by color mode (light/dark).
+ * This interface is implemented by EffectsLight and EffectsDark.
+ *
+ * Usage:
+ * \`\`\`kotlin
+ * @Composable
+ * fun MyCard() {
+ *     val effects = DesignSystemTheme.effects
+ *     Box(
+ *         modifier = Modifier
+ *             .then(effects.shadowSoftMd.toModifier())
+ *             .background(Color.White)
+ *     )
+ * }
+ * \`\`\`
+ */
+@Stable
+interface DesignEffectsScheme {
+    /** Soft shadow - Small: Subtle surface separation */
+    val shadowSoftSm: ShadowStyle
+    /** Soft shadow - Medium: Cards, sheets */
+    val shadowSoftMd: ShadowStyle
+    /** Soft shadow - Large: Elevated cards */
+    val shadowSoftLg: ShadowStyle
+    /** Soft shadow - Extra Large: Prominent elevation */
+    val shadowSoftXl: ShadowStyle
+    /** Hard shadow - Small: Subtle focus */
+    val shadowHardSm: ShadowStyle
+    /** Hard shadow - Medium: Dropdowns, menus */
+    val shadowHardMd: ShadowStyle
+    /** Hard shadow - Large: Dialogs, modals */
+    val shadowHardLg: ShadowStyle
+    /** Hard shadow - Extra Large: Overlays */
+    val shadowHardXl: ShadowStyle
+}
+`;
+}
+
+/**
  * Generates the central DesignSystemTheme file with Dual-Axis Architecture
  * Creates: dist/android/compose/shared/DesignSystemTheme.kt
  */
@@ -3726,6 +4330,13 @@ import com.bild.designsystem.${brand}.semantic.${brandPascal}DarkColors`;
 import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingRegular`;
   }).join('\n');
 
+  // Generate typography imports for all content brands
+  const typographyImports = CONTENT_BRANDS.map(brand => {
+    const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
+    return `import com.bild.designsystem.${brand}.semantic.${brandPascal}TypographyCompact
+import com.bild.designsystem.${brand}.semantic.${brandPascal}TypographyRegular`;
+  }).join('\n');
+
   // Generate color selection cases
   const colorCases = COLOR_BRANDS.map(brand => {
     const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
@@ -3738,6 +4349,15 @@ import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingRegular`;
     return `        ContentBrand.${brandPascal} -> when (sizeClass) {
             WindowSizeClass.Compact -> ${brandPascal}SizingCompact
             WindowSizeClass.Regular -> ${brandPascal}SizingRegular
+        }`;
+  }).join('\n');
+
+  // Generate typography selection cases
+  const typographyCases = CONTENT_BRANDS.map(brand => {
+    const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
+    return `        ContentBrand.${brandPascal} -> when (sizeClass) {
+            WindowSizeClass.Compact -> ${brandPascal}TypographyCompact
+            WindowSizeClass.Regular -> ${brandPascal}TypographyRegular
         }`;
   }).join('\n');
 
@@ -3767,6 +4387,9 @@ ${colorImports}
 // Sizing imports (ContentBrand axis)
 ${sizingImports}
 
+// Typography imports (ContentBrand axis)
+${typographyImports}
+
 // ══════════════════════════════════════════════════════════════════════════════
 // COMPOSITION LOCALS
 // ══════════════════════════════════════════════════════════════════════════════
@@ -3782,6 +4405,19 @@ internal val LocalDesignColors = staticCompositionLocalOf<DesignColorScheme> { B
  * Type: DesignSizingScheme (unified interface)
  */
 internal val LocalDesignSizing = staticCompositionLocalOf<DesignSizingScheme> { BildSizingCompact }
+
+/**
+ * CompositionLocal for current typography scheme
+ * Type: DesignTypographyScheme (unified interface)
+ */
+internal val LocalDesignTypography = staticCompositionLocalOf<DesignTypographyScheme> { BildTypographyCompact }
+
+/**
+ * CompositionLocal for current effects scheme
+ * Type: DesignEffectsScheme (unified interface)
+ * Note: Effects are brand-independent, only depend on light/dark mode
+ */
+internal val LocalDesignEffects = staticCompositionLocalOf<DesignEffectsScheme> { EffectsLight }
 
 /**
  * CompositionLocal for current window size class
@@ -3864,9 +4500,18 @@ ${colorCases}
 ${sizingCases}
     }
 
+    val typography: DesignTypographyScheme = when (contentBrand) {
+${typographyCases}
+    }
+
+    // Effects are brand-independent, only depend on light/dark mode
+    val effects: DesignEffectsScheme = if (darkTheme) EffectsDark else EffectsLight
+
     CompositionLocalProvider(
         LocalDesignColors provides colors,
         LocalDesignSizing provides sizing,
+        LocalDesignTypography provides typography,
+        LocalDesignEffects provides effects,
         LocalWindowSizeClass provides sizeClass,
         LocalDensity provides density,
         LocalIsDarkTheme provides darkTheme,
@@ -3919,6 +4564,24 @@ object DesignSystemTheme {
         @Composable
         @ReadOnlyComposable
         get() = LocalDesignSizing.current
+
+    /**
+     * Current typography scheme (based on ContentBrand and WindowSizeClass)
+     * Use .toComposeTextStyle() on individual styles for Text composable
+     */
+    val typography: DesignTypographyScheme
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalDesignTypography.current
+
+    /**
+     * Current effects scheme (shadows, brand-independent)
+     * Use .toModifier() on shadow styles to apply them
+     */
+    val effects: DesignEffectsScheme
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalDesignEffects.current
 
     /**
      * Current window size class

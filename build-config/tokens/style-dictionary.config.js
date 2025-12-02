@@ -4258,7 +4258,11 @@ const composeComponentTokensFormat = ({ dictionary, options, file }) => {
     if (needsSpImport) imports.push('import androidx.compose.ui.unit.sp');
   } else if (tokenType === 'typography') {
     className = `${componentName}Typography${modePascal}`;
+    imports.push('import androidx.compose.ui.text.font.FontWeight');
+    imports.push('import androidx.compose.ui.text.style.TextDecoration');
     imports.push('import androidx.compose.ui.unit.sp');
+    imports.push('import com.bild.designsystem.shared.DesignTextStyle');
+    imports.push('import com.bild.designsystem.shared.DesignTextCase');
   } else {
     className = `${componentName}Tokens${modePascal}`;
     imports.push('import androidx.compose.ui.graphics.Color');
@@ -4287,42 +4291,96 @@ ${imports.join('\n')}
 object ${className} {
 `;
 
+  // Helper functions for typography conversion (same as in composeTypographySchemeFormat)
+  const toComposeFontWeightComponent = (weight) => {
+    if (!weight) return 'FontWeight.Normal';
+    const w = parseInt(weight, 10);
+    if (w >= 900) return 'FontWeight.Black';
+    if (w >= 800) return 'FontWeight.ExtraBold';
+    if (w >= 700) return 'FontWeight.Bold';
+    if (w >= 600) return 'FontWeight.SemiBold';
+    if (w >= 500) return 'FontWeight.Medium';
+    if (w >= 400) return 'FontWeight.Normal';
+    if (w >= 300) return 'FontWeight.Light';
+    if (w >= 200) return 'FontWeight.ExtraLight';
+    return 'FontWeight.Thin';
+  };
+
+  const toComposeTextCaseComponent = (textCase) => {
+    if (!textCase) return 'DesignTextCase.Original';
+    switch (textCase.toUpperCase()) {
+      case 'UPPER': return 'DesignTextCase.Uppercase';
+      case 'LOWER': return 'DesignTextCase.Lowercase';
+      case 'TITLE': return 'DesignTextCase.Capitalize';
+      default: return 'DesignTextCase.Original';
+    }
+  };
+
+  const toComposeTextDecorationComponent = (textDecoration) => {
+    if (!textDecoration || textDecoration === 'NONE') return 'TextDecoration.None';
+    if (textDecoration.toUpperCase() === 'UNDERLINE') return 'TextDecoration.Underline';
+    if (textDecoration.toUpperCase() === 'LINE_THROUGH' || textDecoration.toUpperCase() === 'STRIKETHROUGH') return 'TextDecoration.LineThrough';
+    return 'TextDecoration.None';
+  };
+
   dictionary.allTokens.forEach(token => {
     const name = token.name;
     const type = token.$type || token.type;
-    let value = token.value;
+    let value = token.$value || token.value;
 
-    // Apply Compose-specific formatting based on $type (set by preprocessor)
-    if (type === 'color') {
-      value = toComposeColor(value);
-    } else if (type === 'fontSize' || type === 'lineHeight' || type === 'letterSpacing') {
-      // Text-related types use sp units
-      value = toComposeSp(value);
-    } else if (type === 'fontWeight') {
-      // FontWeight should always be an integer (e.g., 700, not "700")
-      if (typeof value === 'string' && /^\d+$/.test(value)) {
-        value = parseInt(value, 10);
+    // Special handling for typography composite tokens
+    if (type === 'typography' && typeof value === 'object' && value !== null) {
+      const fontFamily = value.fontFamily ? `"${value.fontFamily}"` : '"System"';
+      const fontWeight = toComposeFontWeightComponent(value.fontWeight);
+      const fontSize = value.fontSize ? `${value.fontSize}.sp` : '16.sp';
+      const lineHeight = value.lineHeight ? `${value.lineHeight}.sp` : fontSize;
+      const letterSpacing = value.letterSpacing !== null && value.letterSpacing !== undefined ? `(${value.letterSpacing}).sp` : '0.sp';
+      const textCase = toComposeTextCaseComponent(value.textCase);
+      const textDecoration = toComposeTextDecorationComponent(value.textDecoration);
+
+      output += `    val ${name} = DesignTextStyle(
+        fontFamily = ${fontFamily},
+        fontWeight = ${fontWeight},
+        fontSize = ${fontSize},
+        lineHeight = ${lineHeight},
+        letterSpacing = ${letterSpacing},
+        textCase = ${textCase},
+        textDecoration = ${textDecoration}
+    )
+`;
+    } else {
+      // Apply Compose-specific formatting based on $type (set by preprocessor)
+      if (type === 'color') {
+        value = toComposeColor(value);
+      } else if (type === 'fontSize' || type === 'lineHeight' || type === 'letterSpacing') {
+        // Text-related types use sp units
+        value = toComposeSp(value);
+      } else if (type === 'fontWeight') {
+        // FontWeight should always be an integer (e.g., 700, not "700")
+        if (typeof value === 'string' && /^\d+$/.test(value)) {
+          value = parseInt(value, 10);
+        }
+      } else if (type === 'number') {
+        // Unitless integers
+        if (typeof value === 'string' && /^\d+$/.test(value)) {
+          value = parseInt(value, 10);
+        }
+      } else if (type === 'opacity') {
+        // Opacity as float
+        if (typeof value === 'string') {
+          value = parseFloat(value);
+        }
+      } else if (type === 'fontFamily' || type === 'string') {
+        // Quote string values
+        value = `"${value}"`;
+      } else if (type === 'dimension') {
+        value = toComposeDp(value);
+      } else if (type === 'boolean') {
+        value = value ? 'true' : 'false';
       }
-    } else if (type === 'number') {
-      // Unitless integers
-      if (typeof value === 'string' && /^\d+$/.test(value)) {
-        value = parseInt(value, 10);
-      }
-    } else if (type === 'opacity') {
-      // Opacity as float
-      if (typeof value === 'string') {
-        value = parseFloat(value);
-      }
-    } else if (type === 'fontFamily' || type === 'string') {
-      // Quote string values
-      value = `"${value}"`;
-    } else if (type === 'dimension') {
-      value = toComposeDp(value);
-    } else if (type === 'boolean') {
-      value = value ? 'true' : 'false';
+
+      output += `    val ${name} = ${value}\n`;
     }
-
-    output += `    val ${name} = ${value}\n`;
   });
 
   output += `}\n`;
@@ -4330,7 +4388,137 @@ object ${className} {
 };
 
 /**
- * Format: Jetpack Compose Typography Tokens
+ * Format: Jetpack Compose Typography Scheme with TextStyle objects
+ * Generates a DesignTypographyScheme interface and brand-specific implementations
+ * with complete TextStyle objects (parallel to iOS implementation)
+ */
+const composeTypographySchemeFormat = ({ dictionary, options, file }) => {
+  const { packageName, brand, sizeClass } = options;
+  const brandPascal = brandToPascalCase(brand);
+  const sizeClassPascal = sizeClass ? sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1) : '';
+  const version = packageJson.version;
+  const isCompact = sizeClass === 'compact';
+
+  // Filter typography tokens
+  const tokens = dictionary.allTokens.filter(t => {
+    const type = t.$type || t.type;
+    return type === 'typography';
+  });
+
+  // Helper to convert fontWeight number to Compose FontWeight
+  const toComposeFontWeight = (weight) => {
+    if (!weight) return 'FontWeight.Normal';
+    const w = parseInt(weight, 10);
+    if (w >= 900) return 'FontWeight.Black';
+    if (w >= 800) return 'FontWeight.ExtraBold';
+    if (w >= 700) return 'FontWeight.Bold';
+    if (w >= 600) return 'FontWeight.SemiBold';
+    if (w >= 500) return 'FontWeight.Medium';
+    if (w >= 400) return 'FontWeight.Normal';
+    if (w >= 300) return 'FontWeight.Light';
+    if (w >= 200) return 'FontWeight.ExtraLight';
+    return 'FontWeight.Thin';
+  };
+
+  // Helper to convert textCase to Compose enum
+  const toComposeTextCase = (textCase) => {
+    if (!textCase) return 'DesignTextCase.Original';
+    switch (textCase.toUpperCase()) {
+      case 'UPPER': return 'DesignTextCase.Uppercase';
+      case 'LOWER': return 'DesignTextCase.Lowercase';
+      case 'TITLE': return 'DesignTextCase.Capitalize';
+      default: return 'DesignTextCase.Original';
+    }
+  };
+
+  // Helper to convert textDecoration
+  const toComposeTextDecoration = (textDecoration) => {
+    if (!textDecoration || textDecoration === 'NONE') return 'TextDecoration.None';
+    if (textDecoration.toUpperCase() === 'UNDERLINE') return 'TextDecoration.Underline';
+    if (textDecoration.toUpperCase() === 'LINE_THROUGH' || textDecoration.toUpperCase() === 'STRIKETHROUGH') return 'TextDecoration.LineThrough';
+    return 'TextDecoration.None';
+  };
+
+  let output = `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v${version}
+ * Generated by Style Dictionary
+ *
+ * Brand: ${brandPascal} | SizeClass: ${sizeClassPascal}
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ */
+
+package ${packageName}
+
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.sp
+import com.bild.designsystem.shared.DesignTypographyScheme
+import com.bild.designsystem.shared.DesignTextStyle
+import com.bild.designsystem.shared.DesignTextCase
+
+`;
+
+  // Generate interface only for Compact mode to avoid duplication
+  if (isCompact) {
+    output += `/**
+ * Typography scheme interface for ${brandPascal}
+ * Extends DesignTypographyScheme for Dual-Axis theming compatibility
+ */
+@Stable
+interface ${brandPascal}TypographyScheme : DesignTypographyScheme {
+`;
+    tokens.forEach(token => {
+      const comment = token.comment ? `    /** ${token.comment.split('\n')[0]} */\n` : '';
+      output += `${comment}    override val ${token.name}: DesignTextStyle\n`;
+    });
+    output += `}
+
+`;
+  }
+
+  // Generate object implementing the interface
+  output += `/**
+ * ${brandPascal} Typography - ${sizeClassPascal} Size Class
+ */
+@Immutable
+object ${brandPascal}Typography${sizeClassPascal} : ${brandPascal}TypographyScheme {
+`;
+
+  tokens.forEach(token => {
+    const value = token.$value || token.value;
+    if (typeof value === 'object' && value !== null) {
+      const fontFamily = value.fontFamily ? `"${value.fontFamily}"` : '"System"';
+      const fontWeight = toComposeFontWeight(value.fontWeight);
+      const fontSize = value.fontSize ? `${value.fontSize}.sp` : '16.sp';
+      const lineHeight = value.lineHeight ? `${value.lineHeight}.sp` : fontSize;
+      const letterSpacing = value.letterSpacing !== null && value.letterSpacing !== undefined ? `(${value.letterSpacing}).sp` : '0.sp';
+      const textCase = toComposeTextCase(value.textCase);
+      const textDecoration = toComposeTextDecoration(value.textDecoration);
+
+      output += `    override val ${token.name} = DesignTextStyle(
+        fontFamily = ${fontFamily},
+        fontWeight = ${fontWeight},
+        fontSize = ${fontSize},
+        lineHeight = ${lineHeight},
+        letterSpacing = ${letterSpacing},
+        textCase = ${textCase},
+        textDecoration = ${textDecoration}
+    )
+`;
+    }
+  });
+
+  output += `}
+`;
+  return output;
+};
+
+/**
+ * Format: Jetpack Compose Typography Tokens (Legacy - exploded properties)
  * Generates typography values (not full TextStyle, as FontFamily needs runtime injection)
  */
 const composeTypographyFormat = ({ dictionary, options, file }) => {
@@ -4340,7 +4528,39 @@ const composeTypographyFormat = ({ dictionary, options, file }) => {
   const version = packageJson.version;
 
   const prefix = componentName ? componentName : brandPascal;
-  const className = `${prefix}Typography${modePascal}Values`;
+  const className = `${prefix}Typography${modePascal}`;
+
+  // Helper functions for typography conversion
+  const toComposeFontWeight = (weight) => {
+    if (!weight) return 'FontWeight.Normal';
+    const w = parseInt(weight, 10);
+    if (w >= 900) return 'FontWeight.Black';
+    if (w >= 800) return 'FontWeight.ExtraBold';
+    if (w >= 700) return 'FontWeight.Bold';
+    if (w >= 600) return 'FontWeight.SemiBold';
+    if (w >= 500) return 'FontWeight.Medium';
+    if (w >= 400) return 'FontWeight.Normal';
+    if (w >= 300) return 'FontWeight.Light';
+    if (w >= 200) return 'FontWeight.ExtraLight';
+    return 'FontWeight.Thin';
+  };
+
+  const toComposeTextCase = (textCase) => {
+    if (!textCase) return 'DesignTextCase.Original';
+    switch (textCase.toUpperCase()) {
+      case 'UPPER': return 'DesignTextCase.Uppercase';
+      case 'LOWER': return 'DesignTextCase.Lowercase';
+      case 'TITLE': return 'DesignTextCase.Capitalize';
+      default: return 'DesignTextCase.Original';
+    }
+  };
+
+  const toComposeTextDecoration = (textDecoration) => {
+    if (!textDecoration || textDecoration === 'NONE') return 'TextDecoration.None';
+    if (textDecoration.toUpperCase() === 'UNDERLINE') return 'TextDecoration.Underline';
+    if (textDecoration.toUpperCase() === 'LINE_THROUGH' || textDecoration.toUpperCase() === 'STRIKETHROUGH') return 'TextDecoration.LineThrough';
+    return 'TextDecoration.None';
+  };
 
   let output = `/**
  * Do not edit directly, this file was auto-generated.
@@ -4354,12 +4574,15 @@ const composeTypographyFormat = ({ dictionary, options, file }) => {
 
 package ${packageName}
 
-import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
+import com.bild.designsystem.shared.DesignTextStyle
+import com.bild.designsystem.shared.DesignTextCase
 
 /**
  * ${className}
- * Note: FontFamily should be provided at runtime via CompositionLocal
+ * Typography composite tokens as DesignTextStyle objects
  */
 object ${className} {
 `;
@@ -4367,32 +4590,210 @@ object ${className} {
   dictionary.allTokens.forEach(token => {
     const value = token.$value || token.value;
 
-    // Handle composite typography tokens
+    // Handle composite typography tokens - output as DesignTextStyle
     if (typeof value === 'object' && value !== null) {
-      output += `    // ${token.name}\n`;
-      if (value.fontFamily) output += `    val ${token.name}FontFamily = "${value.fontFamily}"\n`;
-      if (value.fontWeight) {
-        // Ensure fontWeight is an integer, not a string
-        const fontWeight = typeof value.fontWeight === 'string' ? parseInt(value.fontWeight, 10) : value.fontWeight;
-        output += `    val ${token.name}FontWeight = ${fontWeight}\n`;
-      }
-      if (value.fontSize) output += `    val ${token.name}FontSize = ${value.fontSize}.sp\n`;
-      if (value.lineHeight) output += `    val ${token.name}LineHeight = ${value.lineHeight}.sp\n`;
-      if (value.letterSpacing !== null && value.letterSpacing !== undefined) {
-        output += `    val ${token.name}LetterSpacing = ${value.letterSpacing}f.sp\n`;
-      }
-      // Handle fontStyle for italic support - output Compose FontStyle enum value
-      if (value.fontStyle && value.fontStyle !== 'null' && value.fontStyle.toLowerCase() === 'italic') {
-        output += `    val ${token.name}FontStyle = FontStyle.Italic\n`;
-      }
-      if (value.textCase) output += `    val ${token.name}TextCase = "${value.textCase}"\n`;
-      output += `\n`;
+      const fontFamily = value.fontFamily ? `"${value.fontFamily}"` : '"System"';
+      const fontWeight = toComposeFontWeight(value.fontWeight);
+      const fontSize = value.fontSize ? `${value.fontSize}.sp` : '16.sp';
+      const lineHeight = value.lineHeight ? `${value.lineHeight}.sp` : fontSize;
+      const letterSpacing = value.letterSpacing !== null && value.letterSpacing !== undefined ? `(${value.letterSpacing}).sp` : '0.sp';
+      const textCase = toComposeTextCase(value.textCase);
+      const textDecoration = toComposeTextDecoration(value.textDecoration);
+
+      output += `    val ${token.name} = DesignTextStyle(
+        fontFamily = ${fontFamily},
+        fontWeight = ${fontWeight},
+        fontSize = ${fontSize},
+        lineHeight = ${lineHeight},
+        letterSpacing = ${letterSpacing},
+        textCase = ${textCase},
+        textDecoration = ${textDecoration}
+    )
+`;
     } else {
       output += `    val ${token.name} = ${token.value}\n`;
     }
   });
 
   output += `}\n`;
+  return output;
+};
+
+/**
+ * Format: Jetpack Compose Effects (Shadows)
+ * Generates EffectsLight/EffectsDark objects implementing DesignEffectsScheme
+ * Brand-independent: shadows only depend on light/dark mode
+ */
+const composeEffectsFormat = ({ dictionary, options, file }) => {
+  const { colorMode } = options;
+  const version = packageJson.version;
+  const isLight = colorMode === 'light';
+  const className = isLight ? 'EffectsLight' : 'EffectsDark';
+
+  // Helper to convert token names to proper camelCase (shadowSoftSM → shadowSoftSm)
+  const toCamelCase = (name) => {
+    // Convert trailing uppercase sequence to have only first char uppercase
+    // e.g., shadowSoftSM → shadowSoftSm, shadowHardXL → shadowHardXl
+    return name.replace(/([A-Z]+)$/, (match) => {
+      return match.charAt(0) + match.slice(1).toLowerCase();
+    });
+  };
+
+  // Helper to convert rgba to Compose Color
+  const toComposeColorFromRgba = (rgbaString) => {
+    if (!rgbaString) return 'Color.Black';
+    const match = rgbaString.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+    if (match) {
+      const r = parseInt(match[1], 10);
+      const g = parseInt(match[2], 10);
+      const b = parseInt(match[3], 10);
+      const a = match[4] !== undefined ? parseFloat(match[4]) : 1.0;
+      // Use copy(alpha) for cleaner output
+      if (r === 0 && g === 0 && b === 0) {
+        return `Color.Black.copy(alpha = ${a.toFixed(2)}f)`;
+      }
+      if (r === 255 && g === 255 && b === 255) {
+        return `Color.White.copy(alpha = ${a.toFixed(2)}f)`;
+      }
+      // Generic ARGB
+      const alpha = Math.round(a * 255);
+      const hex = ((alpha << 24) | (r << 16) | (g << 8) | b) >>> 0;
+      return `Color(0x${hex.toString(16).toUpperCase().padStart(8, '0')})`;
+    }
+    return 'Color.Black';
+  };
+
+  let output = `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v${version}
+ * Generated by Style Dictionary
+ *
+ * ${isLight ? 'Light' : 'Dark'} Mode Effects (Shadows)
+ * Brand-independent: shadows only depend on light/dark mode
+ *
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ */
+
+package com.bild.designsystem.shared
+
+import androidx.compose.ui.graphics.Color
+
+/**
+ * ${isLight ? 'Light' : 'Dark'} mode effects implementation
+ *
+ * Usage:
+ *   DesignSystemTheme.effects.shadowSoftMd.toModifier()
+ */
+object ${className} : DesignEffectsScheme {
+`;
+
+  dictionary.allTokens.forEach(token => {
+    const name = toCamelCase(token.name);
+    const value = token.$value !== undefined ? token.$value : token.value;
+    const comment = token.comment || token.description;
+
+    if (comment) {
+      output += `    /** ${comment} */\n`;
+    }
+
+    if (Array.isArray(value)) {
+      output += `    override val ${name} = ShadowStyle(listOf(\n`;
+      value.forEach((shadow, index) => {
+        const colorValue = toComposeColorFromRgba(shadow.color);
+        const isLast = index === value.length - 1;
+        output += `        DropShadow(color = ${colorValue}, offsetX = ${shadow.offsetX || 0}f, offsetY = ${shadow.offsetY || 0}f, blur = ${shadow.radius || 0}f, spread = ${shadow.spread || 0}f)${isLast ? '' : ','}\n`;
+      });
+      output += `    ))\n`;
+    }
+  });
+
+  output += `}
+`;
+
+  return output;
+};
+
+/**
+ * Format: Jetpack Compose Component Effects
+ * Generates individual component effect files (e.g., MenuEffectsLight.kt)
+ * These files are later aggregated into {Component}Tokens.kt
+ */
+const composeComponentEffectsFormat = ({ dictionary, options, file }) => {
+  const { colorMode, componentName, brand } = options;
+  const version = packageJson.version;
+  const isLight = colorMode === 'light';
+  const className = `${componentName}Effects${isLight ? 'Light' : 'Dark'}`;
+
+  // Helper to convert rgba to Compose Color
+  const toComposeColorFromRgba = (rgbaString) => {
+    if (!rgbaString) return 'Color.Black';
+    const match = rgbaString.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+    if (match) {
+      const r = parseInt(match[1], 10);
+      const g = parseInt(match[2], 10);
+      const b = parseInt(match[3], 10);
+      const a = match[4] !== undefined ? parseFloat(match[4]) : 1.0;
+      if (r === 0 && g === 0 && b === 0) {
+        return `Color.Black.copy(alpha = ${a.toFixed(2)}f)`;
+      }
+      if (r === 255 && g === 255 && b === 255) {
+        return `Color.White.copy(alpha = ${a.toFixed(2)}f)`;
+      }
+      const alpha = Math.round(a * 255);
+      const hex = ((alpha << 24) | (r << 16) | (g << 8) | b) >>> 0;
+      return `Color(0x${hex.toString(16).toUpperCase().padStart(8, '0')})`;
+    }
+    return 'Color.Black';
+  };
+
+  let output = `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v${version}
+ * Generated by Style Dictionary
+ *
+ * Component: ${componentName} | Brand: ${brand}
+ * ${isLight ? 'Light' : 'Dark'} Mode Effects (Shadows)
+ *
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ */
+
+package com.bild.designsystem.${brand.toLowerCase()}.components
+
+import androidx.compose.ui.graphics.Color
+import com.bild.designsystem.shared.DropShadow
+import com.bild.designsystem.shared.ShadowStyle
+
+/**
+ * ${componentName} ${isLight ? 'Light' : 'Dark'} mode effects
+ */
+object ${className} {
+`;
+
+  dictionary.allTokens.forEach(token => {
+    const name = token.name;
+    const value = token.$value !== undefined ? token.$value : token.value;
+    const comment = token.comment || token.description;
+
+    if (comment) {
+      output += `    /** ${comment} */\n`;
+    }
+
+    if (Array.isArray(value)) {
+      output += `    val ${name} = ShadowStyle(listOf(\n`;
+      value.forEach((shadow, index) => {
+        const colorValue = toComposeColorFromRgba(shadow.color);
+        const isLast = index === value.length - 1;
+        output += `        DropShadow(color = ${colorValue}, offsetX = ${shadow.offsetX || 0}f, offsetY = ${shadow.offsetY || 0}f, blur = ${shadow.radius || 0}f, spread = ${shadow.spread || 0}f)${isLast ? '' : ','}\n`;
+      });
+      output += `    ))\n`;
+    }
+  });
+
+  output += `}
+`;
+
   return output;
 };
 
@@ -4458,6 +4859,9 @@ module.exports = {
     'compose/spacing': composeSpacingFormat,
     'compose/component-tokens': composeComponentTokensFormat,
     'compose/typography': composeTypographyFormat,
+    'compose/typography-scheme': composeTypographySchemeFormat,
+    'compose/effects': composeEffectsFormat,
+    'compose/component-effects': composeComponentEffectsFormat,
 
     // SwiftUI Formats
     'swiftui/enums': swiftuiEnumsFormat,
