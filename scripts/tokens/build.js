@@ -5458,6 +5458,22 @@ public extension View {
   }
   const effectsPropertyDeclarations = effectsProperties.map(prop => `    var ${prop}: ShadowStyle { get }`).join('\n');
 
+  // Dynamically read typography properties from generated iOS files
+  const bildTypographyPath = path.join(DIST_DIR, 'ios', 'brands', 'bild', 'semantic', 'typography', 'TypographySizeclassCompact.swift');
+  let typographyProperties = [];
+  if (fs.existsSync(bildTypographyPath)) {
+    const content = fs.readFileSync(bildTypographyPath, 'utf8');
+    // Extract all var declarations with TextStyle type from protocol
+    const propsMatch = content.matchAll(/^\s*var\s+(\w+):\s*TextStyle\s*\{\s*get\s*\}/gm);
+    for (const match of propsMatch) {
+      typographyProperties.push(match[1]);
+    }
+  }
+  if (typographyProperties.length === 0) {
+    typographyProperties = ['display1', 'headline1', 'body', 'label1'];
+  }
+  const typographyPropertyDeclarations = typographyProperties.map(prop => `    var ${prop}: TextStyle { get }`).join('\n');
+
   const designSystemThemeContent = `//
 // Do not edit directly, this file was auto-generated.
 //
@@ -5485,6 +5501,11 @@ ${sizingPropertyDeclarations}
 /// Unified effects scheme protocol for all color brands
 public protocol DesignEffectsScheme: Sendable {
 ${effectsPropertyDeclarations}
+}
+
+/// Unified typography scheme protocol for all content brands
+public protocol DesignTypographyScheme: Sendable {
+${typographyPropertyDeclarations}
 }
 
 // MARK: - Dual-Axis Theme Provider
@@ -5575,6 +5596,20 @@ public final class DesignSystemTheme: @unchecked Sendable {
             return sizeClass == .compact ? SportbildSizingCompact.shared : SportbildSizingRegular.shared
         case .advertorial:
             return sizeClass == .compact ? AdvertorialSizingCompact.shared : AdvertorialSizingRegular.shared
+        }
+    }
+
+    // MARK: - Typography Access (based on contentBrand)
+
+    /// Current typography scheme based on contentBrand and sizeClass
+    public var typography: any DesignTypographyScheme {
+        switch contentBrand {
+        case .bild:
+            return sizeClass == .compact ? BildTypographyCompact.shared : BildTypographyRegular.shared
+        case .sportbild:
+            return sizeClass == .compact ? SportbildTypographyCompact.shared : SportbildTypographyRegular.shared
+        case .advertorial:
+            return sizeClass == .compact ? AdvertorialTypographyCompact.shared : AdvertorialTypographyRegular.shared
         }
     }
 }

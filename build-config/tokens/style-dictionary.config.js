@@ -3564,7 +3564,8 @@ import SwiftUI
   // Only generate protocol in compact file
   if (isCompact) {
     output += `/// Protocol for type-safe typography access
-public protocol ${brandPascal}TypographyScheme: Sendable {
+/// Extends DesignTypographyScheme for unified polymorphic access
+public protocol ${brandPascal}TypographyScheme: DesignTypographyScheme {
 `;
 
     dictionary.allTokens.forEach(token => {
@@ -3584,7 +3585,7 @@ public protocol ${brandPascal}TypographyScheme: Sendable {
   // Generate implementation struct
   const structName = `${brandPascal}Typography${isCompact ? 'Compact' : 'Regular'}`;
   output += `/// ${isCompact ? 'Compact' : 'Regular'} typography implementation
-public struct ${structName}: ${brandPascal}TypographyScheme {
+public struct ${structName}: ${brandPascal}TypographyScheme, DesignTypographyScheme {
     public static let shared = ${structName}()
     private init() {}
 

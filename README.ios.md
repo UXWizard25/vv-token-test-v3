@@ -61,6 +61,11 @@ struct MyView: View {
             // Semantic Tokens (via Theme) - polymorphic access
             Text("Headline")
                 .foregroundColor(theme.colors.textColorPrimary)
+                .textStyle(theme.typography.headline1)  // Typography
+
+            // Typography with TextStyle composite
+            Text("Body text")
+                .textStyle(theme.typography.body)
 
             // Component Tokens (via current accessors)
             Button("Click me") { }
@@ -109,21 +114,24 @@ The design system uses a **Dual-Axis Architecture** that separates color selecti
 
 All brands conform to common protocols for polymorphic access:
 
-| Protocol | Purpose | Conforming Types |
-|----------|---------|------------------|
-| `DesignColorScheme` | All color tokens | `BildLightColors`, `BildDarkColors`, `SportbildLightColors`, `SportbildDarkColors` |
-| `DesignSizingScheme` | All sizing tokens | `BildSizingCompact`, `BildSizingRegular`, `SportbildSizing*`, `AdvertorialSizing*` |
-| `DesignEffectsScheme` | Shadow/Effect tokens | `BildEffectsLight`, `BildEffectsDark`, `SportbildEffects*` |
+| Protocol | Purpose | Property Count | Conforming Types |
+|----------|---------|----------------|------------------|
+| `DesignColorScheme` | All color tokens | 80+ colors | `BildLightColors`, `BildDarkColors`, `SportbildLightColors`, `SportbildDarkColors` |
+| `DesignSizingScheme` | All sizing tokens | 180+ values | `BildSizingCompact`, `BildSizingRegular`, `SportbildSizing*`, `AdvertorialSizing*` |
+| `DesignTypographyScheme` | All text styles (TextStyle composites) | 37 styles | `BildTypographyCompact`, `BildTypographyRegular`, `SportbildTypography*`, `AdvertorialTypography*` |
+| `DesignEffectsScheme` | Shadow/Effect tokens | 8 shadows | `EffectsLight`, `EffectsDark` (brand-independent) |
 
 ```swift
 // Polymorphic access - works with any brand
 let colors: any DesignColorScheme = theme.colors
 let sizing: any DesignSizingScheme = theme.sizing
+let typography: any DesignTypographyScheme = theme.typography
 let effects: any DesignEffectsScheme = theme.effects
 
 // Access tokens without knowing the specific brand
 Text("Hello")
     .foregroundColor(colors.textColorPrimary)  // Works for Bild, Sportbild
+    .textStyle(typography.headline1)           // TextStyle composite
 ```
 
 ---
@@ -238,6 +246,19 @@ struct SemanticExample: View {
 
             Rectangle()
                 .fill(theme.colors.surfaceColorPrimary)
+
+            // Typography - polymorphic access via unified protocol
+            Text("Headline")
+                .textStyle(theme.typography.headline1)
+
+            Text("Body text with full typography styling")
+                .textStyle(theme.typography.body)
+
+            // Individual TextStyle properties
+            let style = theme.typography.headline1
+            Text("Custom")
+                .font(style.font())
+                .tracking(style.letterSpacing)
 
             // Effects - automatically Light/Dark
             RoundedRectangle(cornerRadius: 8)
@@ -543,6 +564,15 @@ public protocol DesignSizingScheme: Sendable {
     // ... sizing properties
 }
 
+/// Unified typography scheme protocol
+public protocol DesignTypographyScheme: Sendable {
+    var display1: TextStyle { get }
+    var headline1: TextStyle { get }
+    var body: TextStyle { get }
+    var label1: TextStyle { get }
+    // ... 37 text style properties
+}
+
 /// Unified effects scheme protocol
 public protocol DesignEffectsScheme: Sendable {
     var shadowSoftSm: ShadowStyle { get }
@@ -568,9 +598,10 @@ public final class DesignSystemTheme: @unchecked Sendable {
     public var density: Density
 
     // Computed Accessors (polymorphic)
-    public var colors: any DesignColorScheme
-    public var sizing: any DesignSizingScheme
-    public var effects: any DesignEffectsScheme
+    public var colors: any DesignColorScheme      // Based on colorBrand + isDarkTheme
+    public var sizing: any DesignSizingScheme     // Based on contentBrand + sizeClass
+    public var typography: any DesignTypographyScheme  // Based on contentBrand + sizeClass
+    public var effects: any DesignEffectsScheme   // Based on isDarkTheme (brand-independent)
 }
 ```
 

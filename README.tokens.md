@@ -286,12 +286,16 @@ Separates color selection from content selection:
 
 #### Unified Interfaces (Polymorphic Access)
 
-| Interface | Purpose | Property Count |
-|-----------|---------|----------------|
-| `DesignColorScheme` | All color tokens | 80+ colors |
-| `DesignSizingScheme` | All sizing tokens | 180+ sizing values |
-| `DesignTypographyScheme` | All text styles (DesignTextStyle composites) | 30+ styles |
-| `DesignEffectsScheme` | All shadow tokens (brand-independent) | 8 shadows |
+Both iOS and Android implement identical unified protocols/interfaces for polymorphic theme access:
+
+| Interface | Purpose | Property Count | iOS Type | Android Type |
+|-----------|---------|----------------|----------|--------------|
+| `DesignColorScheme` | All color tokens | 80+ colors | `Color` | `Color` |
+| `DesignSizingScheme` | All sizing tokens | 180+ values | `CGFloat` | `Dp` |
+| `DesignTypographyScheme` | All text styles | 37 styles | `TextStyle` | `DesignTextStyle` |
+| `DesignEffectsScheme` | Shadow tokens (brand-independent) | 8 shadows | `ShadowStyle` | `ShadowStyle` |
+
+> **Note:** Full iOS/Android architecture parity. Both platforms provide `theme.colors`, `theme.sizing`, `theme.typography`, and `theme.effects` accessors with polymorphic brand switching at runtime.
 
 #### Component Token Accessors
 
@@ -330,8 +334,13 @@ struct MyView: View {
     @Environment(\.designSystemTheme) var theme
 
     var body: some View {
+        // Polymorphic access via unified protocols
         Text("Hello")
             .foregroundColor(theme.colors.textColorPrimary)
+            .textStyle(theme.typography.headline1)  // Typography
+
+        // Sizing tokens
+        let padding = theme.sizing.gridSpaceRespBase
 
         // Component tokens
         Button("Click") { }
