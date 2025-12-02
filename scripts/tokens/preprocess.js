@@ -61,47 +61,13 @@ function isComponentToken(tokenPath) {
 }
 
 /**
- * Known component name suffixes that should be PascalCase
- * Used to normalize inconsistent casing from Figma source
- * e.g., "Inputfield" → "InputField", "Mediaplayer" → "MediaPlayer"
- */
-const KNOWN_COMPONENT_SUFFIXES = ['Field', 'Player', 'Button', 'Bar', 'News', 'Ticker', 'Link', 'Card', 'Table', 'List', 'Box', 'Item', 'View'];
-
-/**
- * Normalizes component name to consistent PascalCase
- * Fixes inconsistent casing from Figma source (e.g., "Inputfield" → "InputField")
- */
-function normalizeComponentName(name) {
-  if (!name) return name;
-
-  // Ensure first character is uppercase
-  let normalized = name.charAt(0).toUpperCase() + name.slice(1);
-
-  // Check for known suffixes that should be capitalized
-  for (const suffix of KNOWN_COMPONENT_SUFFIXES) {
-    const lowerSuffix = suffix.toLowerCase();
-    const lowerName = normalized.toLowerCase();
-
-    // If name ends with the suffix (case-insensitive) but not correctly capitalized
-    if (lowerName.endsWith(lowerSuffix) && !normalized.endsWith(suffix)) {
-      const prefix = normalized.slice(0, normalized.length - suffix.length);
-      normalized = prefix + suffix;
-      break; // Only fix one suffix
-    }
-  }
-
-  return normalized;
-}
-
-/**
  * Extracts component name from token path
  * Example: "Component/Button/Primary/buttonPrimaryBgColor" → "Button"
- * Normalizes inconsistent casing: "Component/Inputfield/..." → "InputField"
  */
 function getComponentName(tokenPath) {
   const parts = tokenPath.split('/');
   if (parts[0] === 'Component' && parts.length >= 2) {
-    return normalizeComponentName(parts[1]);
+    return parts[1];
   }
   return null;
 }
@@ -1264,11 +1230,6 @@ function processComponentTokens(collections, aliasLookup) {
             if (!componentName) return;
 
             const pathArray = variable.name.split('/').filter(part => part);
-            // Normalize component name in pathArray to match getComponentName()
-            // This ensures consistent folder names (e.g., "Inputfield" → "InputField")
-            if (pathArray[0] === 'Component' && pathArray.length >= 2) {
-              pathArray[1] = componentName; // Use normalized name
-            }
             const modeValue = variable.valuesByMode[mode.modeId];
 
             if (modeValue !== undefined && modeValue !== null) {
