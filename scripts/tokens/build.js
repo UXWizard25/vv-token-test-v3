@@ -2972,7 +2972,7 @@ public enum ${componentName}Tokens {
     public protocol ${componentName}ColorTokens: Sendable {
 `;
     colorTokenNames.forEach((info, name) => {
-      output += `        var ${name}: Color { get }\n`;
+      output += `        var ${name}: ${info.type} { get }\n`;
     });
     output += `    }
 
