@@ -159,7 +159,7 @@ Figma token types (`$type`) are automatically mapped to platform-specific types:
 | `fontFamily` | `var(--token)` | `String` | `String` |
 | `string` | `var(--token)` | `String` | `String` |
 | `boolean` | `var(--token)` | `Bool` | `Boolean` |
-| `opacity` | `var(--token)` (0-100) | `Int` | `Int` |
+| `opacity` | `var(--token)` (0-1) | `CGFloat` | `Float` |
 | `color` | `var(--token)` (hex/rgba) | `Color` | `Color` |
 | `shadow` | `box-shadow` | `ShadowStyle` | `ShadowStyle` |
 | `typography` | CSS classes | `TextStyle` | `DesignTextStyle` |
@@ -503,9 +503,10 @@ Typography tokens in Compose use `.sp` for accessibility scaling:
 |----------|--------|---------|
 | CSS | `0-1` number | `0.5` |
 | iOS Swift | `CGFloat` | `0.5` |
+| Android Compose | `Float` | `0.5f` |
 | Flutter | `double` | `0.5` |
 
-**Note:** Figma exports opacity as percentage (5, 10, 70). Transform converts to decimal: `5` → `0.05`
+**Note:** Figma exports opacity as percentage (5, 10, 70). Transform converts to decimal: `5` → `0.05`. iOS/Swift uses per-token type detection to correctly map opacity tokens to `CGFloat` in component protocols.
 
 ## Output Toggles
 
