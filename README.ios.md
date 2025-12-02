@@ -462,10 +462,12 @@ Figma token types (`$type`) are automatically mapped to Swift types during build
 | `fontFamily` | `String` | `"Gotham XNarrow"` |
 | `string` | `String` | `"xs/sm/md"` |
 | `boolean` | `Bool` | `true` / `false` |
-| `opacity` | `Int` | `50` (0-100 %) |
+| `opacity` | `CGFloat` | `0.8` (0-1 decimal) |
 | `color` | `Color` | `Color(hex: 0xDD0000)` |
 | `shadow` | `ShadowStyle` | (composite type) |
 | `typography` | `TextStyle` | (composite type) |
+
+> **Note:** Opacity tokens use `CGFloat` (0-1 decimal) in Swift protocols. The per-token type detection ensures correct type mapping for all tokens, including opacity tokens in component color sections.
 
 ### Example Generated Code
 
