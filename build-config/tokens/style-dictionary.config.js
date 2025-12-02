@@ -2624,6 +2624,1094 @@ function toComposeSp(value) {
   return value;
 }
 
+// ============================================================================
+// SWIFTUI HELPER FUNCTIONS
+// ============================================================================
+
+/**
+ * Helper: Transform a color value to SwiftUI Color format
+ * Output: Color(hex: 0xRRGGBB) or Color(hex: 0xRRGGBB, alpha: 0.5)
+ */
+function toSwiftUIColor(value) {
+  if (!value) return value;
+
+  // Already in SwiftUI format
+  if (typeof value === 'string' && value.startsWith('Color(')) {
+    return value;
+  }
+
+  // Handle hex colors: #RRGGBB or #AARRGGBB
+  if (typeof value === 'string' && value.startsWith('#')) {
+    let hex = value.replace('#', '').toUpperCase();
+    if (hex.length === 6) {
+      return `Color(hex: 0x${hex})`;
+    } else if (hex.length === 8) {
+      // #AARRGGBB format
+      const alpha = parseInt(hex.substring(0, 2), 16) / 255;
+      const rgb = hex.substring(2);
+      return `Color(hex: 0x${rgb}, alpha: ${alpha.toFixed(2)})`;
+    }
+  }
+
+  // Handle rgba: rgba(r, g, b, a)
+  if (typeof value === 'string' && value.startsWith('rgba')) {
+    const match = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+),?\s*([\d.]*)\)/);
+    if (match) {
+      const r = parseInt(match[1]).toString(16).padStart(2, '0').toUpperCase();
+      const g = parseInt(match[2]).toString(16).padStart(2, '0').toUpperCase();
+      const b = parseInt(match[3]).toString(16).padStart(2, '0').toUpperCase();
+      const a = match[4] ? parseFloat(match[4]) : 1.0;
+      if (a === 1.0) {
+        return `Color(hex: 0x${r}${g}${b})`;
+      }
+      return `Color(hex: 0x${r}${g}${b}, alpha: ${a.toFixed(2)})`;
+    }
+  }
+
+  // Handle rgb: rgb(r, g, b)
+  if (typeof value === 'string' && value.startsWith('rgb(')) {
+    const match = value.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+    if (match) {
+      const r = parseInt(match[1]).toString(16).padStart(2, '0').toUpperCase();
+      const g = parseInt(match[2]).toString(16).padStart(2, '0').toUpperCase();
+      const b = parseInt(match[3]).toString(16).padStart(2, '0').toUpperCase();
+      return `Color(hex: 0x${r}${g}${b})`;
+    }
+  }
+
+  // Handle UIColor format: UIColor(red: 0.867, green: 0, blue: 0, alpha: 1)
+  if (typeof value === 'string' && value.startsWith('UIColor(')) {
+    const match = value.match(/UIColor\(red:\s*([\d.]+),\s*green:\s*([\d.]+),\s*blue:\s*([\d.]+),\s*alpha:\s*([\d.]+)\)/);
+    if (match) {
+      const r = Math.round(parseFloat(match[1]) * 255).toString(16).padStart(2, '0').toUpperCase();
+      const g = Math.round(parseFloat(match[2]) * 255).toString(16).padStart(2, '0').toUpperCase();
+      const b = Math.round(parseFloat(match[3]) * 255).toString(16).padStart(2, '0').toUpperCase();
+      const a = parseFloat(match[4]);
+      if (a === 1.0 || a === 1) {
+        return `Color(hex: 0x${r}${g}${b})`;
+      }
+      return `Color(hex: 0x${r}${g}${b}, alpha: ${a.toFixed(2)})`;
+    }
+  }
+
+  return value;
+}
+
+/**
+ * Helper: Transform a size value to SwiftUI CGFloat (number only, no unit)
+ */
+function toSwiftUICGFloat(value) {
+  if (value === null || value === undefined) return value;
+
+  // Handle number
+  if (typeof value === 'number') {
+    return value;
+  }
+
+  // Handle string with px
+  if (typeof value === 'string') {
+    const num = parseFloat(value.replace('px', ''));
+    if (!isNaN(num)) {
+      return num;
+    }
+  }
+
+  return value;
+}
+
+/**
+ * Helper: Transform font weight to SwiftUI Font.Weight
+ */
+function toSwiftUIFontWeight(value) {
+  const weightMap = {
+    100: '.ultraLight',
+    200: '.thin',
+    300: '.light',
+    350: '.light',
+    400: '.regular',
+    500: '.medium',
+    600: '.semibold',
+    700: '.bold',
+    800: '.heavy',
+    900: '.black',
+    1000: '.black'
+  };
+
+  const numValue = typeof value === 'string' ? parseInt(value) : value;
+  return weightMap[numValue] || '.regular';
+}
+
+/**
+ * Helper: Convert camelCase to PascalCase
+ */
+function toPascalCase(str) {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/**
+ * Helper: Convert name to valid Swift identifier
+ */
+function toSwiftIdentifier(name) {
+  // Handle names starting with numbers
+  if (/^\d/.test(name)) {
+    return `n${name}`;
+  }
+  // Handle Swift reserved keywords
+  const reserved = ['default', 'class', 'struct', 'enum', 'protocol', 'extension', 'import', 'let', 'var', 'func', 'return', 'if', 'else', 'switch', 'case', 'break', 'continue', 'for', 'while', 'repeat', 'in', 'where', 'guard', 'defer', 'do', 'catch', 'throw', 'throws', 'try', 'as', 'is', 'nil', 'true', 'false', 'self', 'Self', 'super', 'init', 'deinit', 'subscript', 'typealias', 'associatedtype', 'static', 'public', 'private', 'fileprivate', 'internal', 'open', 'final', 'override', 'mutating', 'nonmutating', 'lazy', 'weak', 'unowned', 'inout', 'some', 'any', 'Type', 'Protocol'];
+  if (reserved.includes(name)) {
+    return `\`${name}\``;
+  }
+  return name;
+}
+
+// ============================================================================
+// SWIFTUI FORMAT FUNCTIONS
+// ============================================================================
+
+/**
+ * Format: SwiftUI Shared Enums (Density, SizeClass, Brand)
+ */
+const swiftuiEnumsFormat = ({ dictionary, options, file }) => {
+  const version = packageJson.version;
+
+  let output = `//
+// Do not edit directly, this file was auto-generated.
+//
+// BILD Design System Tokens v${version}
+// Generated by Style Dictionary
+//
+// Copyright (c) 2024 Axel Springer Deutschland GmbH
+//
+
+import Foundation
+
+/// UI density modes for the BILD Design System
+public enum Density: String, CaseIterable, Sendable {
+    case dense
+    case \`default\`
+    case spacious
+}
+
+/// Size class for responsive layouts
+/// Maps to iOS UITraitCollection.horizontalSizeClass
+public enum SizeClass: String, CaseIterable, Sendable {
+    case compact   // Phones (Portrait), small screens - maps to xs/sm breakpoints
+    case regular   // Tablets, Phones (Landscape) - maps to md/lg breakpoints
+}
+
+/// Available brands in the BILD Design System
+public enum Brand: String, CaseIterable, Sendable {
+    case bild
+    case sportbild
+    case advertorial
+}
+`;
+
+  return output;
+};
+
+/**
+ * Format: SwiftUI TextStyle struct
+ */
+const swiftuiTextStyleFormat = ({ dictionary, options, file }) => {
+  const version = packageJson.version;
+
+  return `//
+// Do not edit directly, this file was auto-generated.
+//
+// BILD Design System Tokens v${version}
+// Generated by Style Dictionary
+//
+// Copyright (c) 2024 Axel Springer Deutschland GmbH
+//
+
+import SwiftUI
+
+/// Composite typography token representing a complete text style
+public struct TextStyle: Equatable, Sendable {
+    public let fontFamily: String
+    public let fontWeight: Font.Weight
+    public let fontSize: CGFloat
+    public let lineHeight: CGFloat
+    public let letterSpacing: CGFloat
+    public let textCase: TextCase
+    public let textDecoration: TextDecoration
+
+    public init(
+        fontFamily: String,
+        fontWeight: Font.Weight,
+        fontSize: CGFloat,
+        lineHeight: CGFloat,
+        letterSpacing: CGFloat,
+        textCase: TextCase = .original,
+        textDecoration: TextDecoration = .none
+    ) {
+        self.fontFamily = fontFamily
+        self.fontWeight = fontWeight
+        self.fontSize = fontSize
+        self.lineHeight = lineHeight
+        self.letterSpacing = letterSpacing
+        self.textCase = textCase
+        self.textDecoration = textDecoration
+    }
+
+    public enum TextCase: String, Sendable {
+        case original = "ORIGINAL"
+        case upper = "UPPER"
+        case lower = "LOWER"
+        case capitalize = "CAPITALIZE"
+
+        var swiftUICase: Text.Case? {
+            switch self {
+            case .original: return nil
+            case .upper: return .uppercase
+            case .lower: return .lowercase
+            case .capitalize: return nil
+            }
+        }
+    }
+
+    public enum TextDecoration: String, Sendable {
+        case none = "NONE"
+        case underline = "UNDERLINE"
+        case strikethrough = "STRIKETHROUGH"
+    }
+
+    /// Create a SwiftUI Font from this text style with Dynamic Type support
+    public func font(relativeTo textStyle: Font.TextStyle = .body) -> Font {
+        Font.custom(fontFamily, size: fontSize, relativeTo: textStyle)
+            .weight(fontWeight)
+    }
+
+    /// Line spacing value for SwiftUI (lineHeight - fontSize)
+    public var lineSpacing: CGFloat {
+        max(0, lineHeight - fontSize)
+    }
+}
+
+/// View modifier for applying TextStyle
+public struct TextStyleModifier: ViewModifier {
+    let style: TextStyle
+    let relativeTo: Font.TextStyle
+
+    public init(_ style: TextStyle, relativeTo: Font.TextStyle = .body) {
+        self.style = style
+        self.relativeTo = relativeTo
+    }
+
+    public func body(content: Content) -> some View {
+        content
+            .font(style.font(relativeTo: relativeTo))
+            .tracking(style.letterSpacing)
+            .lineSpacing(style.lineSpacing)
+            .textCase(style.textCase.swiftUICase)
+    }
+}
+
+public extension View {
+    func textStyle(_ style: TextStyle, relativeTo: Font.TextStyle = .body) -> some View {
+        modifier(TextStyleModifier(style, relativeTo: relativeTo))
+    }
+}
+`;
+};
+
+/**
+ * Format: SwiftUI Shadow structs
+ */
+const swiftuiShadowFormat = ({ dictionary, options, file }) => {
+  const version = packageJson.version;
+
+  return `//
+// Do not edit directly, this file was auto-generated.
+//
+// BILD Design System Tokens v${version}
+// Generated by Style Dictionary
+//
+// Copyright (c) 2024 Axel Springer Deutschland GmbH
+//
+
+import SwiftUI
+
+/// Single drop shadow definition
+public struct DropShadow: Equatable, Sendable {
+    public let color: Color
+    public let offsetX: CGFloat
+    public let offsetY: CGFloat
+    public let radius: CGFloat
+    public let spread: CGFloat
+
+    public init(
+        color: Color,
+        offsetX: CGFloat,
+        offsetY: CGFloat,
+        radius: CGFloat,
+        spread: CGFloat = 0
+    ) {
+        self.color = color
+        self.offsetX = offsetX
+        self.offsetY = offsetY
+        self.radius = radius
+        self.spread = spread
+    }
+}
+
+/// Composite shadow token (can contain multiple layers)
+public struct ShadowStyle: Equatable, Sendable {
+    public let shadows: [DropShadow]
+
+    public init(shadows: [DropShadow]) {
+        self.shadows = shadows
+    }
+
+    public init(_ shadow: DropShadow) {
+        self.shadows = [shadow]
+    }
+}
+
+/// View modifier for applying ShadowStyle (applies all shadow layers)
+public struct ShadowStyleModifier: ViewModifier {
+    let style: ShadowStyle
+
+    public init(_ style: ShadowStyle) {
+        self.style = style
+    }
+
+    public func body(content: Content) -> some View {
+        style.shadows.reduce(AnyView(content)) { view, shadow in
+            AnyView(view.shadow(
+                color: shadow.color,
+                radius: shadow.radius,
+                x: shadow.offsetX,
+                y: shadow.offsetY
+            ))
+        }
+    }
+}
+
+public extension View {
+    func shadowStyle(_ style: ShadowStyle) -> some View {
+        modifier(ShadowStyleModifier(style))
+    }
+}
+`;
+};
+
+/**
+ * Format: SwiftUI Color Extension (hex initializer)
+ */
+const swiftuiColorExtensionFormat = ({ dictionary, options, file }) => {
+  const version = packageJson.version;
+
+  return `//
+// Do not edit directly, this file was auto-generated.
+//
+// BILD Design System Tokens v${version}
+// Generated by Style Dictionary
+//
+// Copyright (c) 2024 Axel Springer Deutschland GmbH
+//
+
+import SwiftUI
+
+public extension Color {
+    /// Initialize Color from hex value
+    /// - Parameters:
+    ///   - hex: Hex color value (e.g., 0xDD0000)
+    ///   - alpha: Optional alpha value (0.0 - 1.0)
+    init(hex: UInt, alpha: Double = 1.0) {
+        self.init(
+            .sRGB,
+            red: Double((hex >> 16) & 0xFF) / 255,
+            green: Double((hex >> 8) & 0xFF) / 255,
+            blue: Double(hex & 0xFF) / 255,
+            opacity: alpha
+        )
+    }
+}
+`;
+};
+
+/**
+ * Format: SwiftUI Primitives (consolidated)
+ */
+const swiftuiPrimitivesFormat = ({ dictionary, options, file }) => {
+  const version = packageJson.version;
+
+  let output = `//
+// Do not edit directly, this file was auto-generated.
+//
+// BILD Design System Tokens v${version}
+// Generated by Style Dictionary
+//
+// Copyright (c) 2024 Axel Springer Deutschland GmbH
+//
+
+import SwiftUI
+
+/// Primitive design tokens - raw values without semantic meaning
+public enum DesignTokenPrimitives {
+`;
+
+  // Group tokens by their collection/category
+  const grouped = {};
+  dictionary.allTokens.forEach(token => {
+    const collectionName = token.$extensions?.['com.figma']?.collectionName || 'Other';
+    const category = collectionName.replace('_', '').replace('Primitive', '');
+    if (!grouped[category]) grouped[category] = [];
+    grouped[category].push(token);
+  });
+
+  // Process each category
+  Object.keys(grouped).sort().forEach(category => {
+    const tokens = grouped[category];
+    const enumName = toPascalCase(category);
+
+    output += `\n    // MARK: - ${enumName}\n`;
+    output += `    public enum ${enumName} {\n`;
+
+    tokens.forEach(token => {
+      const name = toSwiftIdentifier(token.name);
+      const type = token.$type || token.type;
+      const value = token.$value !== undefined ? token.$value : token.value;
+      const comment = token.comment || token.description;
+
+      if (comment) {
+        output += `        /// ${comment}\n`;
+      }
+
+      let valueOutput;
+      if (type === 'color') {
+        valueOutput = toSwiftUIColor(value);
+      } else if (type === 'fontFamily') {
+        valueOutput = `"${value}"`;
+      } else if (type === 'fontWeight') {
+        valueOutput = toSwiftUIFontWeight(value);
+      } else if (typeof value === 'number') {
+        valueOutput = `CGFloat(${value})`;
+      } else if (typeof value === 'string' && !isNaN(parseFloat(value))) {
+        valueOutput = `CGFloat(${parseFloat(value)})`;
+      } else {
+        valueOutput = `"${value}"`;
+      }
+
+      // Determine Swift type annotation
+      let typeAnnotation = '';
+      if (type === 'color') {
+        typeAnnotation = ': Color';
+      } else if (type === 'fontFamily') {
+        typeAnnotation = ': String';
+      } else if (type === 'fontWeight') {
+        typeAnnotation = ': Font.Weight';
+      } else if (typeof value === 'number' || (typeof value === 'string' && !isNaN(parseFloat(value)))) {
+        typeAnnotation = ': CGFloat';
+      }
+
+      output += `        public static let ${name}${typeAnnotation} = ${valueOutput}\n`;
+    });
+
+    output += `    }\n`;
+  });
+
+  output += `}\n`;
+  return output;
+};
+
+/**
+ * Format: SwiftUI Color Scheme (Protocol + Light/Dark implementations)
+ */
+const swiftuiColorSchemeFormat = ({ dictionary, options, file }) => {
+  const version = packageJson.version;
+  const brand = options.brand || 'Bild';
+  const brandPascal = toPascalCase(brand);
+  const mode = options.mode || 'light';
+  const isLight = mode === 'light';
+
+  // Generate unique names for tokens
+  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'camel');
+
+  let output = `//
+// Do not edit directly, this file was auto-generated.
+//
+// BILD Design System Tokens v${version}
+// Generated by Style Dictionary
+//
+// Copyright (c) 2024 Axel Springer Deutschland GmbH
+//
+
+import SwiftUI
+
+`;
+
+  // Helper to detect opacity tokens
+  const isOpacityToken = (token) => {
+    const tokenType = token.$type || token.type;
+    const name = token.name || '';
+    return tokenType === 'opacity' || name.toLowerCase().includes('opacity');
+  };
+
+  // Filter color tokens and opacity tokens
+  const colorTokens = dictionary.allTokens.filter(t => !isOpacityToken(t));
+  const opacityTokens = dictionary.allTokens.filter(t => isOpacityToken(t));
+
+  // Only generate protocol in light mode file
+  if (isLight) {
+    output += `/// Protocol for type-safe color access across Light/Dark modes
+public protocol ${brandPascal}ColorScheme: Sendable {
+`;
+
+    colorTokens.forEach(token => {
+      const name = uniqueNames.get(token.path.join('.')) || token.name;
+      const comment = token.comment || token.description;
+      if (comment) {
+        output += `    /// ${comment}\n`;
+      }
+      output += `    var ${name}: Color { get }\n`;
+    });
+
+    // Add opacity tokens to protocol
+    opacityTokens.forEach(token => {
+      const name = uniqueNames.get(token.path.join('.')) || token.name;
+      const comment = token.comment || token.description;
+      if (comment) {
+        output += `    /// ${comment}\n`;
+      }
+      output += `    var ${name}: Double { get }\n`;
+    });
+
+    output += `}
+
+`;
+  }
+
+  // Generate implementation struct
+  const structName = `${brandPascal}${isLight ? 'Light' : 'Dark'}Colors`;
+  output += `/// ${isLight ? 'Light' : 'Dark'} mode color implementation
+public struct ${structName}: ${brandPascal}ColorScheme {
+    public static let shared = ${structName}()
+    private init() {}
+
+`;
+
+  // Output color tokens
+  colorTokens.forEach(token => {
+    const name = uniqueNames.get(token.path.join('.')) || token.name;
+    const value = token.$value !== undefined ? token.$value : token.value;
+    const colorValue = toSwiftUIColor(value);
+
+    output += `    public let ${name}: Color = ${colorValue}\n`;
+  });
+
+  // Output opacity tokens as Double
+  opacityTokens.forEach(token => {
+    const name = uniqueNames.get(token.path.join('.')) || token.name;
+    const value = token.$value !== undefined ? token.$value : token.value;
+    // Extract numeric value from various formats
+    let opacityValue = value;
+    if (typeof value === 'string') {
+      const num = parseFloat(value);
+      if (!isNaN(num)) opacityValue = num;
+    }
+    output += `    public let ${name}: Double = ${opacityValue}\n`;
+  });
+
+  output += `}
+`;
+
+  return output;
+};
+
+/**
+ * Format: SwiftUI Sizing Scheme (Protocol + Compact/Regular implementations)
+ */
+const swiftuiSizingSchemeFormat = ({ dictionary, options, file }) => {
+  const version = packageJson.version;
+  const brand = options.brand || 'Bild';
+  const brandPascal = toPascalCase(brand);
+  const sizeClass = options.sizeClass || 'compact';
+  const isCompact = sizeClass === 'compact';
+
+  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'camel');
+
+  let output = `//
+// Do not edit directly, this file was auto-generated.
+//
+// BILD Design System Tokens v${version}
+// Generated by Style Dictionary
+//
+// Copyright (c) 2024 Axel Springer Deutschland GmbH
+//
+
+import SwiftUI
+
+`;
+
+  // Only generate protocol in compact file
+  if (isCompact) {
+    output += `/// Protocol for type-safe sizing access across Compact/Regular size classes
+public protocol ${brandPascal}SizingScheme: Sendable {
+`;
+
+    dictionary.allTokens.forEach(token => {
+      const name = uniqueNames.get(token.path.join('.')) || token.name;
+      const comment = token.comment || token.description;
+      if (comment) {
+        output += `    /// ${comment}\n`;
+      }
+      output += `    var ${name}: CGFloat { get }\n`;
+    });
+
+    output += `}
+
+`;
+  }
+
+  // Generate implementation struct
+  const structName = `${brandPascal}Sizing${isCompact ? 'Compact' : 'Regular'}`;
+  output += `/// ${isCompact ? 'Compact' : 'Regular'} size class implementation
+public struct ${structName}: ${brandPascal}SizingScheme {
+    public static let shared = ${structName}()
+    private init() {}
+
+`;
+
+  dictionary.allTokens.forEach(token => {
+    const name = uniqueNames.get(token.path.join('.')) || token.name;
+    const value = token.$value !== undefined ? token.$value : token.value;
+    const numValue = toSwiftUICGFloat(value);
+
+    output += `    public let ${name}: CGFloat = ${numValue}\n`;
+  });
+
+  output += `}
+`;
+
+  return output;
+};
+
+/**
+ * Format: SwiftUI Typography (TextStyle composites per SizeClass)
+ */
+const swiftuiTypographyFormat = ({ dictionary, options, file }) => {
+  const version = packageJson.version;
+  const brand = options.brand || 'Bild';
+  const brandPascal = toPascalCase(brand);
+  const sizeClass = options.sizeClass || 'compact';
+  const isCompact = sizeClass === 'compact';
+
+  let output = `//
+// Do not edit directly, this file was auto-generated.
+//
+// BILD Design System Tokens v${version}
+// Generated by Style Dictionary
+//
+// Copyright (c) 2024 Axel Springer Deutschland GmbH
+//
+
+import SwiftUI
+
+`;
+
+  // Only generate protocol in compact file
+  if (isCompact) {
+    output += `/// Protocol for type-safe typography access
+public protocol ${brandPascal}TypographyScheme: Sendable {
+`;
+
+    dictionary.allTokens.forEach(token => {
+      const name = token.name;
+      const comment = token.comment || token.description;
+      if (comment) {
+        output += `    /// ${comment}\n`;
+      }
+      output += `    var ${name}: TextStyle { get }\n`;
+    });
+
+    output += `}
+
+`;
+  }
+
+  // Generate implementation struct
+  const structName = `${brandPascal}Typography${isCompact ? 'Compact' : 'Regular'}`;
+  output += `/// ${isCompact ? 'Compact' : 'Regular'} typography implementation
+public struct ${structName}: ${brandPascal}TypographyScheme {
+    public static let shared = ${structName}()
+    private init() {}
+
+`;
+
+  dictionary.allTokens.forEach(token => {
+    const name = token.name;
+    const value = token.$value !== undefined ? token.$value : token.value;
+
+    if (typeof value === 'object' && value.fontFamily) {
+      const fontWeight = toSwiftUIFontWeight(value.fontWeight || 400);
+      const textCase = value.textCase || 'ORIGINAL';
+      const textDecoration = value.textDecoration || 'NONE';
+
+      output += `    public let ${name} = TextStyle(
+        fontFamily: "${value.fontFamily}",
+        fontWeight: ${fontWeight},
+        fontSize: ${value.fontSize || 16},
+        lineHeight: ${value.lineHeight || value.fontSize || 16},
+        letterSpacing: ${value.letterSpacing || 0},
+        textCase: .${textCase.toLowerCase()},
+        textDecoration: .${textDecoration.toLowerCase()}
+    )
+`;
+    }
+  });
+
+  output += `}
+`;
+
+  return output;
+};
+
+/**
+ * Format: SwiftUI Effects (ShadowStyle composites per ColorMode)
+ */
+const swiftuiEffectsFormat = ({ dictionary, options, file }) => {
+  const version = packageJson.version;
+  const brand = options.brand || 'Bild';
+  const brandPascal = toPascalCase(brand);
+  const mode = options.mode || 'light';
+  const isLight = mode === 'light';
+
+  let output = `//
+// Do not edit directly, this file was auto-generated.
+//
+// BILD Design System Tokens v${version}
+// Generated by Style Dictionary
+//
+// Copyright (c) 2024 Axel Springer Deutschland GmbH
+//
+
+import SwiftUI
+
+`;
+
+  // Only generate protocol in light file
+  if (isLight) {
+    output += `/// Protocol for type-safe effects access
+public protocol ${brandPascal}EffectsScheme: Sendable {
+`;
+
+    dictionary.allTokens.forEach(token => {
+      const name = token.name;
+      const comment = token.comment || token.description;
+      if (comment) {
+        output += `    /// ${comment}\n`;
+      }
+      output += `    var ${name}: ShadowStyle { get }\n`;
+    });
+
+    output += `}
+
+`;
+  }
+
+  // Generate implementation struct
+  const structName = `${brandPascal}Effects${isLight ? 'Light' : 'Dark'}`;
+  output += `/// ${isLight ? 'Light' : 'Dark'} mode effects implementation
+public struct ${structName}: ${brandPascal}EffectsScheme {
+    public static let shared = ${structName}()
+    private init() {}
+
+`;
+
+  dictionary.allTokens.forEach(token => {
+    const name = token.name;
+    const value = token.$value !== undefined ? token.$value : token.value;
+
+    if (Array.isArray(value)) {
+      output += `    public let ${name} = ShadowStyle(shadows: [\n`;
+      value.forEach((shadow, index) => {
+        const colorValue = toSwiftUIColor(shadow.color);
+        output += `        DropShadow(color: ${colorValue}, offsetX: ${shadow.offsetX || 0}, offsetY: ${shadow.offsetY || 0}, radius: ${shadow.radius || 0}, spread: ${shadow.spread || 0})${index < value.length - 1 ? ',' : ''}\n`;
+      });
+      output += `    ])\n`;
+    }
+  });
+
+  output += `}
+`;
+
+  return output;
+};
+
+/**
+ * Format: SwiftUI Theme Provider
+ */
+const swiftuiThemeProviderFormat = ({ dictionary, options, file }) => {
+  const version = packageJson.version;
+  const brand = options.brand || 'Bild';
+  const brandPascal = toPascalCase(brand);
+  const brandLower = brand.toLowerCase();
+
+  return `//
+// Do not edit directly, this file was auto-generated.
+//
+// BILD Design System Tokens v${version}
+// Generated by Style Dictionary
+//
+// Copyright (c) 2024 Axel Springer Deutschland GmbH
+//
+
+import SwiftUI
+
+/// Central theme provider for ${brandPascal} brand
+/// Provides reactive access to all design tokens based on current context
+@Observable
+public final class ${brandPascal}Theme: @unchecked Sendable {
+
+    // MARK: - Shared Instance
+    public static let shared = ${brandPascal}Theme()
+
+    // MARK: - Theme State
+    public var isDarkTheme: Bool = false
+    public var sizeClass: SizeClass = .compact
+    public var density: Density = .default
+
+    // MARK: - Token Access
+
+    /// Current color scheme (Light/Dark)
+    public var colors: any ${brandPascal}ColorScheme {
+        isDarkTheme ? ${brandPascal}DarkColors.shared : ${brandPascal}LightColors.shared
+    }
+
+    /// Current sizing scheme (Compact/Regular)
+    public var sizing: any ${brandPascal}SizingScheme {
+        sizeClass == .compact ? ${brandPascal}SizingCompact.shared : ${brandPascal}SizingRegular.shared
+    }
+
+    /// Current typography (Compact/Regular)
+    public var typography: any ${brandPascal}TypographyScheme {
+        sizeClass == .compact ? ${brandPascal}TypographyCompact.shared : ${brandPascal}TypographyRegular.shared
+    }
+
+    /// Current effects (Light/Dark)
+    public var effects: any ${brandPascal}EffectsScheme {
+        isDarkTheme ? ${brandPascal}EffectsDark.shared : ${brandPascal}EffectsLight.shared
+    }
+
+    private init() {}
+}
+
+// MARK: - Environment Integration
+
+private struct ${brandPascal}ThemeKey: EnvironmentKey {
+    static let defaultValue = ${brandPascal}Theme.shared
+}
+
+public extension EnvironmentValues {
+    var ${brandLower}Theme: ${brandPascal}Theme {
+        get { self[${brandPascal}ThemeKey.self] }
+        set { self[${brandPascal}ThemeKey.self] = newValue }
+    }
+}
+
+// MARK: - View Modifier
+
+public extension View {
+    /// Apply ${brandPascal} theme to view hierarchy
+    func ${brandLower}Theme(
+        darkTheme: Bool? = nil,
+        sizeClass: SizeClass? = nil,
+        density: Density? = nil
+    ) -> some View {
+        let theme = ${brandPascal}Theme.shared
+        if let darkTheme { theme.isDarkTheme = darkTheme }
+        if let sizeClass { theme.sizeClass = sizeClass }
+        if let density { theme.density = density }
+        return self.environment(\\.${brandLower}Theme, theme)
+    }
+}
+`;
+};
+
+/**
+ * Format: SwiftUI Component Tokens (aggregated with current() accessors)
+ */
+const swiftuiComponentTokensFormat = ({ dictionary, options, file }) => {
+  const version = packageJson.version;
+  const brand = options.brand || 'Bild';
+  const brandPascal = toPascalCase(brand);
+  const component = options.component || 'Component';
+  const componentPascal = toPascalCase(component);
+  const tokenType = options.tokenType || 'color'; // color, sizing, density, typography, effects
+  const mode = options.mode; // light/dark for colors, compact/regular for sizing
+
+  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'camel');
+
+  let output = `//
+// Do not edit directly, this file was auto-generated.
+//
+// BILD Design System Tokens v${version}
+// Generated by Style Dictionary
+//
+// Copyright (c) 2024 Axel Springer Deutschland GmbH
+//
+
+import SwiftUI
+
+`;
+
+  // Determine protocol and struct names based on token type
+  let protocolName, structName, swiftType, valueTransform;
+
+  switch (tokenType) {
+    case 'color':
+      protocolName = `${componentPascal}ColorTokens`;
+      structName = mode === 'light' ? `${componentPascal}ColorsLight` : `${componentPascal}ColorsDark`;
+      swiftType = 'Color';
+      valueTransform = toSwiftUIColor;
+      break;
+    case 'sizing':
+    case 'breakpoint':
+      protocolName = `${componentPascal}SizingTokens`;
+      structName = mode === 'compact' ? `${componentPascal}SizingCompact` : `${componentPascal}SizingRegular`;
+      swiftType = 'CGFloat';
+      valueTransform = toSwiftUICGFloat;
+      break;
+    case 'density':
+      const densityMode = mode || 'default';
+      const densityPascal = toPascalCase(densityMode.replace('`', ''));
+      protocolName = `${componentPascal}DensityTokens`;
+      structName = `${componentPascal}Density${densityPascal}`;
+      swiftType = 'CGFloat';
+      valueTransform = toSwiftUICGFloat;
+      break;
+    default:
+      protocolName = `${componentPascal}${toPascalCase(tokenType)}Tokens`;
+      structName = `${componentPascal}${toPascalCase(tokenType)}${toPascalCase(mode || 'Default')}`;
+      swiftType = 'Any';
+      valueTransform = (v) => v;
+  }
+
+  // Generate protocol (only for first mode)
+  const isFirstMode = mode === 'light' || mode === 'compact' || mode === 'dense';
+  if (isFirstMode) {
+    output += `/// Protocol for ${component} ${tokenType} tokens
+public protocol ${protocolName}: Sendable {
+`;
+
+    dictionary.allTokens.forEach(token => {
+      const name = uniqueNames.get(token.path.join('.')) || token.name;
+      output += `    var ${name}: ${swiftType} { get }\n`;
+    });
+
+    output += `}
+
+`;
+  }
+
+  // Generate implementation
+  output += `/// ${structName} implementation
+public struct ${structName}: ${protocolName} {
+    public static let shared = ${structName}()
+    private init() {}
+
+`;
+
+  dictionary.allTokens.forEach(token => {
+    const name = uniqueNames.get(token.path.join('.')) || token.name;
+    const value = token.$value !== undefined ? token.$value : token.value;
+    const transformedValue = valueTransform(value);
+
+    output += `    public let ${name}: ${swiftType} = ${transformedValue}\n`;
+  });
+
+  output += `}
+`;
+
+  return output;
+};
+
+/**
+ * Format: SwiftUI DesignSystemTheme (Multi-brand theme provider)
+ */
+const swiftuiDesignSystemThemeFormat = ({ dictionary, options, file }) => {
+  const version = packageJson.version;
+
+  return `//
+// Do not edit directly, this file was auto-generated.
+//
+// BILD Design System Tokens v${version}
+// Generated by Style Dictionary
+//
+// Copyright (c) 2024 Axel Springer Deutschland GmbH
+//
+
+import SwiftUI
+
+/// Multi-brand theme provider for white-label apps
+@Observable
+public final class DesignSystemTheme: @unchecked Sendable {
+
+    // MARK: - Shared Instance
+    public static let shared = DesignSystemTheme()
+
+    // MARK: - Theme State
+    public var brand: Brand = .bild
+    public var isDarkTheme: Bool = false
+    public var sizeClass: SizeClass = .compact
+    public var density: Density = .default
+
+    private init() {}
+
+    // MARK: - Factory
+
+    public init(
+        brand: Brand = .bild,
+        isDarkTheme: Bool = false,
+        sizeClass: SizeClass = .compact,
+        density: Density = .default
+    ) {
+        self.brand = brand
+        self.isDarkTheme = isDarkTheme
+        self.sizeClass = sizeClass
+        self.density = density
+    }
+}
+
+// MARK: - Environment Integration
+
+private struct DesignSystemThemeKey: EnvironmentKey {
+    static let defaultValue = DesignSystemTheme.shared
+}
+
+public extension EnvironmentValues {
+    var designSystemTheme: DesignSystemTheme {
+        get { self[DesignSystemThemeKey.self] }
+        set { self[DesignSystemThemeKey.self] = newValue }
+    }
+}
+
+// MARK: - View Modifier
+
+public extension View {
+    /// Apply design system theme to view hierarchy
+    func designSystemTheme(
+        brand: Brand,
+        darkTheme: Bool = false,
+        sizeClass: SizeClass = .compact,
+        density: Density = .default
+    ) -> some View {
+        let theme = DesignSystemTheme(
+            brand: brand,
+            isDarkTheme: darkTheme,
+            sizeClass: sizeClass,
+            density: density
+        )
+        return self.environment(\\.designSystemTheme, theme)
+    }
+}
+`;
+};
+
 const composePrimitivesFormat = ({ dictionary, options, file }) => {
   const { packageName, className } = options;
   const version = packageJson.version;
@@ -3191,6 +4279,20 @@ module.exports = {
     'compose/semantic-colors': composeSemanticColorsFormat,
     'compose/spacing': composeSpacingFormat,
     'compose/component-tokens': composeComponentTokensFormat,
-    'compose/typography': composeTypographyFormat
+    'compose/typography': composeTypographyFormat,
+
+    // SwiftUI Formats
+    'swiftui/enums': swiftuiEnumsFormat,
+    'swiftui/text-style': swiftuiTextStyleFormat,
+    'swiftui/shadow': swiftuiShadowFormat,
+    'swiftui/color-extension': swiftuiColorExtensionFormat,
+    'swiftui/primitives': swiftuiPrimitivesFormat,
+    'swiftui/color-scheme': swiftuiColorSchemeFormat,
+    'swiftui/sizing-scheme': swiftuiSizingSchemeFormat,
+    'swiftui/typography': swiftuiTypographyFormat,
+    'swiftui/effects': swiftuiEffectsFormat,
+    'swiftui/theme-provider': swiftuiThemeProviderFormat,
+    'swiftui/component-tokens': swiftuiComponentTokensFormat,
+    'swiftui/design-system-theme': swiftuiDesignSystemThemeFormat
   }
 };

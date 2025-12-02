@@ -31,6 +31,7 @@ const NATIVE_BREAKPOINTS = ['sm', 'lg'];
 // Platform output toggles - set to false to disable output generation
 const FLUTTER_ENABLED = false;
 const COMPOSE_ENABLED = true;
+const SWIFTUI_ENABLED = true;       // SwiftUI output in dist/ios/
 const ANDROID_XML_ENABLED = false;  // Disabled - Compose is the preferred Android format
 
 // Token type toggles - set to false to exclude from all platform outputs
@@ -120,7 +121,7 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
         options: { outputReferences: false }
       }]
     },
-    // iOS: For breakpoint mode, use sizeclass folder and naming, skip non-native breakpoints
+    // iOS: SwiftUI format - For breakpoint mode, use sizeclass folder and naming, skip non-native breakpoints
     ...((cssOptions.modeType === 'breakpoint' && !isNativeBreakpoint(cssOptions.mode)) ? {} : {
       ios: {
         transformGroup: 'custom/ios-swift',
@@ -142,29 +143,60 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
                 // Extract component name from path (e.g., .../components/Button/ -> Button)
                 const componentMatch = buildPath.match(/\/components\/([^/]+)/);
                 const componentName = componentMatch ? componentMatch[1] : '';
-                return `${componentName}Sizeclass${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}.swift`;
+                return `${componentName}Sizing${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}.swift`;
               }
-              return `Sizeclass${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}.swift`;
+              return `Sizing${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}.swift`;
+            }
+            // For color tokens
+            if (cssOptions.modeType === 'color' && cssOptions.mode) {
+              const mode = cssOptions.mode === 'light' ? 'Light' : 'Dark';
+              const isComponent = buildPath.includes('/components/');
+              if (isComponent) {
+                const componentMatch = buildPath.match(/\/components\/([^/]+)/);
+                const componentName = componentMatch ? componentMatch[1] : '';
+                return `${componentName}Colors${mode}.swift`;
+              }
+              return `Colors${mode}.swift`;
             }
             return `${fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}.swift`;
           })(),
-          format: 'ios-swift/class',
+          format: (() => {
+            // Use SwiftUI component tokens format based on token type
+            const isComponent = buildPath.includes('/components/');
+            if (isComponent) {
+              return 'swiftui/component-tokens';
+            }
+            // Semantic tokens
+            if (cssOptions.modeType === 'color') {
+              return 'swiftui/color-scheme';
+            }
+            if (cssOptions.modeType === 'breakpoint') {
+              return 'swiftui/sizing-scheme';
+            }
+            return 'swiftui/component-tokens';
+          })(),
           filter: tokenFilter,
           options: {
             outputReferences: false,
-            className: (() => {
-              if (cssOptions.modeType === 'breakpoint' && cssOptions.mode) {
-                const sizeClass = getSizeClassName(cssOptions.mode);
-                const isComponent = buildPath.includes('/components/');
-                if (isComponent) {
-                  const componentMatch = buildPath.match(/\/components\/([^/]+)/);
-                  const componentName = componentMatch ? componentMatch[1] : '';
-                  return `${componentName}Sizeclass${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}`;
-                }
-                return `Sizeclass${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}`;
+            brand: (() => {
+              const brandMatch = buildPath.match(/\/brands\/([^/]+)/);
+              return brandMatch ? brandMatch[1] : 'bild';
+            })(),
+            component: (() => {
+              const componentMatch = buildPath.match(/\/components\/([^/]+)/);
+              return componentMatch ? componentMatch[1] : '';
+            })(),
+            tokenType: cssOptions.modeType === 'color' ? 'color' : 'sizing',
+            mode: (() => {
+              if (cssOptions.modeType === 'color') {
+                return cssOptions.mode; // light or dark
               }
-              return fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('');
-            })()
+              if (cssOptions.modeType === 'breakpoint') {
+                return getSizeClassName(cssOptions.mode); // compact or regular
+              }
+              return cssOptions.mode;
+            })(),
+            sizeClass: getSizeClassName(cssOptions.mode)
           }
         }]
       }
@@ -365,6 +397,121 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
           }
         }]
       }
+    }),
+    // SwiftUI: For breakpoint mode, use sizeclass folder and naming, skip non-native breakpoints
+    // Skip swiftui for overrides (brand mapping layer) - these are intermediate tokens not needed in final output
+    ...((cssOptions.modeType === 'breakpoint' && !isNativeBreakpoint(cssOptions.mode)) || !SWIFTUI_ENABLED || cssOptions.skipCompose ? {} : {
+      swiftui: {
+        transformGroup: 'custom/ios-swift',
+        buildPath: (() => {
+          let swiftuiPath = buildPath.replace(DIST_DIR + '/css/', '');
+          // For semantic breakpoint tokens, change folder from 'breakpoints' to 'sizeclass'
+          if (cssOptions.modeType === 'breakpoint' && swiftuiPath.includes('/breakpoints')) {
+            swiftuiPath = swiftuiPath.replace('/breakpoints', '/sizeclass');
+          }
+          return `${DIST_DIR}/ios/${swiftuiPath}/`;
+        })(),
+        files: [{
+          destination: (() => {
+            // For breakpoint tokens, use sizeclass naming
+            if (cssOptions.modeType === 'breakpoint' && cssOptions.mode) {
+              const sizeClass = getSizeClassName(cssOptions.mode);
+              const isComponent = buildPath.includes('/components/');
+              if (isComponent) {
+                const componentMatch = buildPath.match(/\/components\/([^/]+)/);
+                const componentName = componentMatch ? componentMatch[1] : '';
+                return `${componentName}Sizing${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}.swift`;
+              }
+              return `Sizing${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}.swift`;
+            }
+            // For color mode tokens
+            if (cssOptions.modeType === 'theme' && cssOptions.mode) {
+              const modeName = cssOptions.mode.charAt(0).toUpperCase() + cssOptions.mode.slice(1);
+              const isComponent = buildPath.includes('/components/');
+              if (isComponent) {
+                const componentMatch = buildPath.match(/\/components\/([^/]+)/);
+                const componentName = componentMatch ? componentMatch[1] : '';
+                return `${componentName}Colors${modeName}.swift`;
+              }
+              return `Colors${modeName}.swift`;
+            }
+            // For density tokens
+            if (cssOptions.modeType === 'density' && cssOptions.mode) {
+              const modeName = cssOptions.mode.charAt(0).toUpperCase() + cssOptions.mode.slice(1);
+              const isComponent = buildPath.includes('/components/');
+              if (isComponent) {
+                const componentMatch = buildPath.match(/\/components\/([^/]+)/);
+                const componentName = componentMatch ? componentMatch[1] : '';
+                return `${componentName}Density${modeName}.swift`;
+              }
+              return `Density${modeName}.swift`;
+            }
+            // Default: PascalCase filename
+            return `${fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}.swift`;
+          })(),
+          format: (() => {
+            // Choose format based on token type
+            if (buildPath.includes('/shared/')) {
+              return 'swiftui/primitives';
+            }
+            // For components, use component-tokens format for all mode types
+            if (buildPath.includes('/components/')) {
+              return 'swiftui/component-tokens';
+            }
+            if (cssOptions.modeType === 'theme') {
+              return 'swiftui/color-scheme';
+            }
+            if (cssOptions.modeType === 'breakpoint') {
+              return 'swiftui/sizing-scheme';
+            }
+            if (cssOptions.modeType === 'density') {
+              return 'swiftui/sizing-scheme';  // density uses same sizing scheme format
+            }
+            return 'swiftui/primitives';
+          })(),
+          filter: tokenFilter,
+          options: {
+            outputReferences: false,
+            brand: cssOptions.brand || '',
+            mode: (() => {
+              if (cssOptions.modeType === 'breakpoint') {
+                return getSizeClassName(cssOptions.mode);
+              }
+              return cssOptions.mode || '';
+            })(),
+            sizeClass: (() => {
+              if (cssOptions.modeType === 'breakpoint') {
+                return getSizeClassName(cssOptions.mode);
+              }
+              return '';
+            })(),
+            modeType: (() => {
+              if (cssOptions.modeType === 'breakpoint') return 'sizeclass';
+              return cssOptions.modeType || '';
+            })(),
+            componentName: (() => {
+              if (buildPath.includes('/components/')) {
+                const componentMatch = buildPath.match(/\/components\/([^/]+)/);
+                return componentMatch ? componentMatch[1] : '';
+              }
+              return '';
+            })(),
+            component: (() => {
+              if (buildPath.includes('/components/')) {
+                const componentMatch = buildPath.match(/\/components\/([^/]+)/);
+                return componentMatch ? componentMatch[1] : '';
+              }
+              return '';
+            })(),
+            tokenType: (() => {
+              if (cssOptions.modeType === 'theme') return 'color';
+              if (cssOptions.modeType === 'breakpoint') return 'sizing';
+              if (cssOptions.modeType === 'density') return 'density';
+              return '';
+            })()
+          }
+        }]
+      }
     })
   };
 }
@@ -503,15 +650,15 @@ function createTypographyConfig(brand, breakpoint) {
         }]
       },
 
-      // iOS: Only compact (sm) and regular (lg) with custom format
+      // iOS: Only compact (sm) and regular (lg) with SwiftUI format
       // Output to semantic/typography/ with sizeclass in filename
       ...(SIZE_CLASS_MAPPING[breakpoint] ? {
         ios: {
-          transforms: ['attribute/cti'],
+          transformGroup: 'custom/ios-swift',
           buildPath: `${DIST_DIR}/ios/brands/${brand}/semantic/typography/`,
           files: [{
             destination: `TypographySizeclass${SIZE_CLASS_MAPPING[breakpoint].charAt(0).toUpperCase() + SIZE_CLASS_MAPPING[breakpoint].slice(1)}.swift`,
-            format: 'ios-swift/typography',
+            format: 'swiftui/typography',
             options: {
               brand: brandName,
               breakpoint,
@@ -593,13 +740,13 @@ function createEffectConfig(brand, colorMode) {
         files: [{ destination: `${fileName}.json`, format: 'json', options: { outputReferences: false } }]
       },
 
-      // iOS: Custom Swift Effects format
+      // iOS: SwiftUI Effects format
       ios: {
-        transforms: ['attribute/cti'],
+        transformGroup: 'custom/ios-swift',
         buildPath: `${DIST_DIR}/ios/brands/${brand}/semantic/effects/`,
         files: [{
           destination: `${fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}.swift`,
-          format: 'ios-swift/effects',
+          format: 'swiftui/effects',
           options: {
             brand: brandName,
             colorMode
@@ -902,14 +1049,14 @@ function createComponentTypographyConfig(sourceFile, brand, componentName, fileN
         buildPath: `${DIST_DIR}/json/brands/${brand}/components/${componentName}/`,
         files: [{ destination: `${fileName}.json`, format: 'json', options: { outputReferences: false } }]
       },
-      // iOS: Only compact (sm) and regular (lg) with sizeclass naming
+      // iOS: Only compact (sm) and regular (lg) with SwiftUI typography format
       ...(breakpoint && isNativeBreakpoint(breakpoint) ? {
         ios: {
-          transforms: ['attribute/cti'],
+          transformGroup: 'custom/ios-swift',
           buildPath: `${DIST_DIR}/ios/brands/${brand}/components/${componentName}/`,
           files: [{
-            destination: `${componentName}Sizeclass${getSizeClassName(breakpoint).charAt(0).toUpperCase() + getSizeClassName(breakpoint).slice(1)}.swift`,
-            format: 'ios-swift/typography',
+            destination: `${componentName}TypographySizing${getSizeClassName(breakpoint).charAt(0).toUpperCase() + getSizeClassName(breakpoint).slice(1)}.swift`,
+            format: 'swiftui/typography',
             options: {
               brand: brandName,
               breakpoint,
@@ -1031,15 +1178,16 @@ function createComponentEffectsConfig(sourceFile, brand, componentName, fileName
         files: [{ destination: `${fileName}.json`, format: 'json', options: { outputReferences: false } }]
       },
       ios: {
-        transforms: ['attribute/cti'],
+        transformGroup: 'custom/ios-swift',
         buildPath: `${DIST_DIR}/ios/brands/${brand}/components/${componentName}/`,
         files: [{
-          destination: `${fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}.swift`,
-          format: 'ios-swift/effects',
+          destination: `${componentName}Effects${colorMode ? colorMode.charAt(0).toUpperCase() + colorMode.slice(1) : ''}.swift`,
+          format: 'swiftui/effects',
           options: {
             brand: brandName,
             colorMode,
-            componentName
+            componentName,
+            mode: colorMode
           }
         }]
       },
@@ -3249,6 +3397,494 @@ async function cleanupComposeIndividualFiles() {
   return { removed: removedCount };
 }
 
+// ============================================================================
+// SWIFTUI POST-PROCESSING FUNCTIONS
+// ============================================================================
+
+/**
+ * Generates SwiftUI Shared Infrastructure files
+ * Creates: dist/ios/shared/*.swift (Enums, TextStyle, Shadow, ColorExtension)
+ */
+async function generateSwiftUISharedFiles() {
+  if (!SWIFTUI_ENABLED) {
+    return { total: 0, successful: 0 };
+  }
+
+  console.log('🍎 Generating SwiftUI Shared Infrastructure...');
+
+  const sharedDir = path.join(DIST_DIR, 'ios', 'shared');
+  if (!fs.existsSync(sharedDir)) {
+    fs.mkdirSync(sharedDir, { recursive: true });
+  }
+
+  const packageJson = require('../../package.json');
+  const version = packageJson.version;
+  let successful = 0;
+
+  // Generate Enums.swift (Density, SizeClass, Brand)
+  const enumsContent = `//
+// Do not edit directly, this file was auto-generated.
+//
+// BILD Design System Tokens v${version}
+// Generated by Style Dictionary
+//
+// Copyright (c) 2024 Axel Springer Deutschland GmbH
+//
+
+import Foundation
+
+/// UI density modes for the BILD Design System
+public enum Density: String, CaseIterable, Sendable {
+    case dense
+    case \`default\`
+    case spacious
+}
+
+/// Size class for responsive layouts
+/// Maps to iOS UITraitCollection.horizontalSizeClass
+public enum SizeClass: String, CaseIterable, Sendable {
+    case compact   // Phones (Portrait), small screens - maps to xs/sm breakpoints
+    case regular   // Tablets, Phones (Landscape) - maps to md/lg breakpoints
+}
+
+/// Available brands in the BILD Design System
+public enum Brand: String, CaseIterable, Sendable {
+    case bild
+    case sportbild
+    case advertorial
+}
+`;
+  fs.writeFileSync(path.join(sharedDir, 'Enums.swift'), enumsContent, 'utf8');
+  console.log('     ✅ shared/Enums.swift');
+  successful++;
+
+  // Generate Color+Hex.swift
+  const colorExtContent = `//
+// Do not edit directly, this file was auto-generated.
+//
+// BILD Design System Tokens v${version}
+// Generated by Style Dictionary
+//
+// Copyright (c) 2024 Axel Springer Deutschland GmbH
+//
+
+import SwiftUI
+
+public extension Color {
+    /// Initialize Color from hex value
+    /// - Parameters:
+    ///   - hex: Hex color value (e.g., 0xDD0000)
+    ///   - alpha: Optional alpha value (0.0 - 1.0)
+    init(hex: UInt, alpha: Double = 1.0) {
+        self.init(
+            .sRGB,
+            red: Double((hex >> 16) & 0xFF) / 255,
+            green: Double((hex >> 8) & 0xFF) / 255,
+            blue: Double(hex & 0xFF) / 255,
+            opacity: alpha
+        )
+    }
+}
+`;
+  fs.writeFileSync(path.join(sharedDir, 'Color+Hex.swift'), colorExtContent, 'utf8');
+  console.log('     ✅ shared/Color+Hex.swift');
+  successful++;
+
+  // Generate TextStyle.swift
+  const textStyleContent = `//
+// Do not edit directly, this file was auto-generated.
+//
+// BILD Design System Tokens v${version}
+// Generated by Style Dictionary
+//
+// Copyright (c) 2024 Axel Springer Deutschland GmbH
+//
+
+import SwiftUI
+
+/// Composite typography token representing a complete text style
+public struct TextStyle: Equatable, Sendable {
+    public let fontFamily: String
+    public let fontWeight: Font.Weight
+    public let fontSize: CGFloat
+    public let lineHeight: CGFloat
+    public let letterSpacing: CGFloat
+    public let textCase: TextCase
+    public let textDecoration: TextDecoration
+
+    public init(
+        fontFamily: String,
+        fontWeight: Font.Weight,
+        fontSize: CGFloat,
+        lineHeight: CGFloat,
+        letterSpacing: CGFloat,
+        textCase: TextCase = .original,
+        textDecoration: TextDecoration = .none
+    ) {
+        self.fontFamily = fontFamily
+        self.fontWeight = fontWeight
+        self.fontSize = fontSize
+        self.lineHeight = lineHeight
+        self.letterSpacing = letterSpacing
+        self.textCase = textCase
+        self.textDecoration = textDecoration
+    }
+
+    public enum TextCase: String, Sendable {
+        case original = "ORIGINAL"
+        case upper = "UPPER"
+        case lower = "LOWER"
+        case capitalize = "CAPITALIZE"
+
+        var swiftUICase: Text.Case? {
+            switch self {
+            case .original: return nil
+            case .upper: return .uppercase
+            case .lower: return .lowercase
+            case .capitalize: return nil
+            }
+        }
+    }
+
+    public enum TextDecoration: String, Sendable {
+        case none = "NONE"
+        case underline = "UNDERLINE"
+        case strikethrough = "STRIKETHROUGH"
+    }
+
+    /// Create a SwiftUI Font from this text style with Dynamic Type support
+    public func font(relativeTo textStyle: Font.TextStyle = .body) -> Font {
+        Font.custom(fontFamily, size: fontSize, relativeTo: textStyle)
+            .weight(fontWeight)
+    }
+
+    /// Line spacing value for SwiftUI (lineHeight - fontSize)
+    public var lineSpacing: CGFloat {
+        max(0, lineHeight - fontSize)
+    }
+}
+
+/// View modifier for applying TextStyle
+public struct TextStyleModifier: ViewModifier {
+    let style: TextStyle
+    let relativeTo: Font.TextStyle
+
+    public init(_ style: TextStyle, relativeTo: Font.TextStyle = .body) {
+        self.style = style
+        self.relativeTo = relativeTo
+    }
+
+    public func body(content: Content) -> some View {
+        content
+            .font(style.font(relativeTo: relativeTo))
+            .tracking(style.letterSpacing)
+            .lineSpacing(style.lineSpacing)
+            .textCase(style.textCase.swiftUICase)
+    }
+}
+
+public extension View {
+    func textStyle(_ style: TextStyle, relativeTo: Font.TextStyle = .body) -> some View {
+        modifier(TextStyleModifier(style, relativeTo: relativeTo))
+    }
+}
+`;
+  fs.writeFileSync(path.join(sharedDir, 'TextStyle.swift'), textStyleContent, 'utf8');
+  console.log('     ✅ shared/TextStyle.swift');
+  successful++;
+
+  // Generate ShadowStyle.swift
+  const shadowContent = `//
+// Do not edit directly, this file was auto-generated.
+//
+// BILD Design System Tokens v${version}
+// Generated by Style Dictionary
+//
+// Copyright (c) 2024 Axel Springer Deutschland GmbH
+//
+
+import SwiftUI
+
+/// Single drop shadow definition
+public struct DropShadow: Equatable, Sendable {
+    public let color: Color
+    public let offsetX: CGFloat
+    public let offsetY: CGFloat
+    public let radius: CGFloat
+    public let spread: CGFloat
+
+    public init(
+        color: Color,
+        offsetX: CGFloat,
+        offsetY: CGFloat,
+        radius: CGFloat,
+        spread: CGFloat = 0
+    ) {
+        self.color = color
+        self.offsetX = offsetX
+        self.offsetY = offsetY
+        self.radius = radius
+        self.spread = spread
+    }
+}
+
+/// Composite shadow token (can contain multiple layers)
+public struct ShadowStyle: Equatable, Sendable {
+    public let shadows: [DropShadow]
+
+    public init(shadows: [DropShadow]) {
+        self.shadows = shadows
+    }
+
+    public init(_ shadow: DropShadow) {
+        self.shadows = [shadow]
+    }
+}
+
+/// View modifier for applying ShadowStyle (applies all shadow layers)
+public struct ShadowStyleModifier: ViewModifier {
+    let style: ShadowStyle
+
+    public init(_ style: ShadowStyle) {
+        self.style = style
+    }
+
+    public func body(content: Content) -> some View {
+        style.shadows.reduce(AnyView(content)) { view, shadow in
+            AnyView(view.shadow(
+                color: shadow.color,
+                radius: shadow.radius,
+                x: shadow.offsetX,
+                y: shadow.offsetY
+            ))
+        }
+    }
+}
+
+public extension View {
+    func shadowStyle(_ style: ShadowStyle) -> some View {
+        modifier(ShadowStyleModifier(style))
+    }
+}
+`;
+  fs.writeFileSync(path.join(sharedDir, 'ShadowStyle.swift'), shadowContent, 'utf8');
+  console.log('     ✅ shared/ShadowStyle.swift');
+  successful++;
+
+  // Generate DesignSystemTheme.swift
+  const designSystemThemeContent = `//
+// Do not edit directly, this file was auto-generated.
+//
+// BILD Design System Tokens v${version}
+// Generated by Style Dictionary
+//
+// Copyright (c) 2024 Axel Springer Deutschland GmbH
+//
+
+import SwiftUI
+
+/// Multi-brand theme provider for white-label apps
+@Observable
+public final class DesignSystemTheme: @unchecked Sendable {
+
+    // MARK: - Shared Instance
+    public static let shared = DesignSystemTheme()
+
+    // MARK: - Theme State
+    public var brand: Brand = .bild
+    public var isDarkTheme: Bool = false
+    public var sizeClass: SizeClass = .compact
+    public var density: Density = .default
+
+    private init() {}
+
+    // MARK: - Factory
+
+    public init(
+        brand: Brand = .bild,
+        isDarkTheme: Bool = false,
+        sizeClass: SizeClass = .compact,
+        density: Density = .default
+    ) {
+        self.brand = brand
+        self.isDarkTheme = isDarkTheme
+        self.sizeClass = sizeClass
+        self.density = density
+    }
+}
+
+// MARK: - Environment Integration
+
+private struct DesignSystemThemeKey: EnvironmentKey {
+    static let defaultValue = DesignSystemTheme.shared
+}
+
+public extension EnvironmentValues {
+    var designSystemTheme: DesignSystemTheme {
+        get { self[DesignSystemThemeKey.self] }
+        set { self[DesignSystemThemeKey.self] = newValue }
+    }
+}
+
+// MARK: - View Modifier
+
+public extension View {
+    /// Apply design system theme to view hierarchy
+    func designSystemTheme(
+        brand: Brand,
+        darkTheme: Bool = false,
+        sizeClass: SizeClass = .compact,
+        density: Density = .default
+    ) -> some View {
+        let theme = DesignSystemTheme(
+            brand: brand,
+            isDarkTheme: darkTheme,
+            sizeClass: sizeClass,
+            density: density
+        )
+        return self.environment(\\.designSystemTheme, theme)
+    }
+}
+`;
+  fs.writeFileSync(path.join(sharedDir, 'DesignSystemTheme.swift'), designSystemThemeContent, 'utf8');
+  console.log('     ✅ shared/DesignSystemTheme.swift');
+  successful++;
+
+  console.log(`  📊 Generated ${successful} shared SwiftUI files\n`);
+  return { total: 5, successful };
+}
+
+/**
+ * Generates SwiftUI Theme Provider for each brand
+ * Creates: dist/ios/brands/{brand}/theme/{Brand}Theme.swift
+ */
+async function generateSwiftUIThemeProviders() {
+  if (!SWIFTUI_ENABLED) {
+    return { totalThemes: 0, successfulThemes: 0 };
+  }
+
+  console.log('🎨 Generating SwiftUI Theme Providers...');
+
+  let totalThemes = 0;
+  let successfulThemes = 0;
+
+  const iosDir = path.join(DIST_DIR, 'ios', 'brands');
+
+  if (!fs.existsSync(iosDir)) {
+    console.log('  ⚠️  No iOS output found, skipping theme generation');
+    return { totalThemes: 0, successfulThemes: 0 };
+  }
+
+  const packageJson = require('../../package.json');
+  const version = packageJson.version;
+
+  for (const brand of BRANDS) {
+    totalThemes++;
+    const brandDir = path.join(iosDir, brand);
+
+    if (!fs.existsSync(brandDir)) {
+      continue;
+    }
+
+    try {
+      // Create theme directory
+      const themeDir = path.join(brandDir, 'theme');
+      if (!fs.existsSync(themeDir)) {
+        fs.mkdirSync(themeDir, { recursive: true });
+      }
+
+      const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
+      const brandLower = brand.toLowerCase();
+
+      // Check if brand has color tokens
+      const colorDir = path.join(brandDir, 'semantic', 'color');
+      const hasColors = fs.existsSync(colorDir) && fs.readdirSync(colorDir).some(f => f.endsWith('.swift'));
+
+      const themeContent = `//
+// Do not edit directly, this file was auto-generated.
+//
+// BILD Design System Tokens v${version}
+// Generated by Style Dictionary
+//
+// Copyright (c) 2024 Axel Springer Deutschland GmbH
+//
+
+import SwiftUI
+
+/// Central theme provider for ${brandPascal} brand
+/// Provides reactive access to all design tokens based on current context
+@Observable
+public final class ${brandPascal}Theme: @unchecked Sendable {
+
+    // MARK: - Shared Instance
+    public static let shared = ${brandPascal}Theme()
+
+    // MARK: - Theme State
+    public var isDarkTheme: Bool = false
+    public var sizeClass: SizeClass = .compact
+    public var density: Density = .default
+
+    // MARK: - Token Access
+
+    /// Current color scheme (Light/Dark)
+    public var colors: any ${brandPascal}ColorScheme {
+        isDarkTheme ? ${brandPascal}DarkColors.shared : ${brandPascal}LightColors.shared
+    }
+
+    /// Current sizing scheme (Compact/Regular)
+    public var sizing: any ${brandPascal}SizingScheme {
+        sizeClass == .compact ? ${brandPascal}SizingCompact.shared : ${brandPascal}SizingRegular.shared
+    }
+
+    private init() {}
+}
+
+// MARK: - Environment Integration
+
+private struct ${brandPascal}ThemeKey: EnvironmentKey {
+    static let defaultValue = ${brandPascal}Theme.shared
+}
+
+public extension EnvironmentValues {
+    var ${brandLower}Theme: ${brandPascal}Theme {
+        get { self[${brandPascal}ThemeKey.self] }
+        set { self[${brandPascal}ThemeKey.self] = newValue }
+    }
+}
+
+// MARK: - View Modifier
+
+public extension View {
+    /// Apply ${brandPascal} theme to view hierarchy
+    func ${brandLower}Theme(
+        darkTheme: Bool? = nil,
+        sizeClass: SizeClass? = nil,
+        density: Density? = nil
+    ) -> some View {
+        let theme = ${brandPascal}Theme.shared
+        if let darkTheme { theme.isDarkTheme = darkTheme }
+        if let sizeClass { theme.sizeClass = sizeClass }
+        if let density { theme.density = density }
+        return self.environment(\\.${brandLower}Theme, theme)
+    }
+}
+`;
+
+      const themeFile = path.join(themeDir, `${brandPascal}Theme.swift`);
+      fs.writeFileSync(themeFile, themeContent, 'utf8');
+
+      console.log(`     ✅ ${brand}/theme/${brandPascal}Theme.swift`);
+      successfulThemes++;
+
+    } catch (error) {
+      console.error(`     ❌ ${brand}: ${error.message}`);
+    }
+  }
+
+  console.log(`  📊 Generated: ${successfulThemes}/${totalThemes} theme providers\n`);
+  return { totalThemes, successfulThemes };
+}
+
 /**
  * Main function
  */
@@ -3305,6 +3941,12 @@ async function main() {
   // Cleanup individual Compose files
   stats.composeCleanup = await cleanupComposeIndividualFiles();
 
+  // Generate SwiftUI Shared Infrastructure
+  stats.swiftuiShared = await generateSwiftUISharedFiles();
+
+  // Generate SwiftUI Theme Providers
+  stats.swiftuiThemes = await generateSwiftUIThemeProviders();
+
   // Create manifest
   createManifest(stats);
 
@@ -3343,6 +3985,12 @@ async function main() {
   if (COMPOSE_ENABLED && stats.composeCleanup) {
     console.log(`   - Compose Files Cleaned: ${stats.composeCleanup.removed} individual files removed`);
   }
+  if (SWIFTUI_ENABLED && stats.swiftuiShared) {
+    console.log(`   - SwiftUI Shared Files: ${stats.swiftuiShared.successful}/${stats.swiftuiShared.total}`);
+  }
+  if (SWIFTUI_ENABLED && stats.swiftuiThemes) {
+    console.log(`   - SwiftUI Themes: ${stats.swiftuiThemes.successfulThemes}/${stats.swiftuiThemes.totalThemes}`);
+  }
   console.log(`   - Builds erfolgreich: ${successfulBuilds}/${totalBuilds}`);
   console.log(`   - Output-Verzeichnis: dist/\n`);
 
@@ -3352,7 +4000,7 @@ async function main() {
   console.log(`   ├── scss/       (SCSS variables)`);
   console.log(`   ├── js/         (JavaScript ES6)`);
   console.log(`   ├── json/       (JSON)`);
-  console.log(`   ├── ios/        (Swift)`);
+  if (SWIFTUI_ENABLED) console.log(`   ├── ios/        (SwiftUI)`);
   if (COMPOSE_ENABLED) console.log(`   ${FLUTTER_ENABLED ? '├' : '└'}── android/    (Jetpack Compose - Kotlin)`);
   if (ANDROID_XML_ENABLED) console.log(`   ${FLUTTER_ENABLED ? '├' : '└'}── android/    (Android XML resources)`);
   if (FLUTTER_ENABLED) console.log(`   └── flutter/    (Dart classes)`);
