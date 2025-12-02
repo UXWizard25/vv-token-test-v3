@@ -21,97 +21,90 @@ npm run clean           # Delete dist/ and tokens/
 
 ## Design System Architecture Overview
 
-### The 4-Layer Token Hierarchy
+### The 4-Layer Token Hierarchy (Layer 0-3)
 
-The BILD Design System uses a **4-layer token architecture** where each layer references the layer below it. This creates a clear chain of abstraction from raw values to component-specific tokens.
+The BILD Design System uses a **4-layer token architecture** (numbered 0-3) where each layer references the layer below it. This creates a clear chain of abstraction from raw values to component-specific tokens.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
+│  LAYER 0: PRIMITIVES (Source Layer - No Modes)                              │
+├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
-│  LAYER 4: COMPONENT TOKENS                                                  │
-│  ═══════════════════════════════════════════════════════════════════════   │
+│  Purpose: Raw, absolute design values - the foundation                      │
+│                                                                             │
+│  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌───────────────┐    │
+│  │ ColorPrimitive│ │ SpacePrimitive│ │ SizePrimitive │ │ FontPrimitive │    │
+│  │               │ │               │ │               │ │               │    │
+│  │ bild015       │ │ space1x (8px) │ │ size-sm       │ │ gotham-xnarrow│    │
+│  │ bildred056    │ │ space2x (16px)│ │ size-md       │ │ gotham-cond   │    │
+│  │ alpha-*       │ │ space3x (24px)│ │ size-lg       │ │ font-weight-* │    │
+│  └───────┬───────┘ └───────┬───────┘ └───────┬───────┘ └───────┬───────┘    │
+│          │                 │                 │                 │            │
+│          └─────────────────┴────────┬────────┴─────────────────┘            │
+│                                     │                                       │
+│  NO MODES - Absolute values         ▼                                       │
+│                                                                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  LAYER 1: MAPPING (Brand + Density Layer)                                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  Purpose: Map primitives to brand-specific values                           │
+│                                                                             │
+│  ┌─────────────────────┐  ┌─────────────────────┐  ┌─────────────────────┐  │
+│  │  BrandColorMapping  │  │  BrandTokenMapping  │  │      Density        │  │
+│  │  ─────────────────  │  │  ─────────────────  │  │  ─────────────────  │  │
+│  │  Modes:             │  │  Modes:             │  │  Modes:             │  │
+│  │  • BILD             │  │  • BILD             │  │  • default          │  │
+│  │  • SportBILD        │  │  • SportBILD        │  │  • dense            │  │
+│  │  (NO Advertorial!)  │  │  • Advertorial      │  │  • spacious         │  │
+│  │                     │  │                     │  │                     │  │
+│  │  Output:            │  │  Output:            │  │  Output:            │  │
+│  │  → Brand Colors     │  │  → Spacing          │  │  → Spacing          │  │
+│  │                     │  │  → Sizing           │  │  → Sizing           │  │
+│  │                     │  │  → Typography       │  │  → Typography       │  │
+│  └──────────┬──────────┘  └──────────┬──────────┘  └──────────┬──────────┘  │
+│             │                        │                        │             │
+│             │                        └────────────┬───────────┘             │
+│             ▼                                     ▼                         │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  LAYER 2: SEMANTIC (Consumption Layer - Multi-Mode)                         │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  Purpose: Meaningful design intent tokens (context-independent)             │
+│                                                                             │
+│  ┌───────────────────────────────┐    ┌───────────────────────────────┐     │
+│  │         ColorMode             │    │       BreakpointMode          │     │
+│  │  ───────────────────────────  │    │  ───────────────────────────  │     │
+│  │  Modes: light | dark          │    │  Modes: xs | sm | md | lg     │     │
+│  │                               │    │                               │     │
+│  │  Input: BrandColorMapping     │    │  Input: BrandTokenMapping     │     │
+│  │                               │    │         + Density             │     │
+│  │  Output:                      │    │  Output:                      │     │
+│  │  → text-color-primary         │    │  → grid-space-resp-base       │     │
+│  │  → accent-color-primary       │    │  → content-gap                │     │
+│  │  → surface-color-*            │    │  → font-sizes                 │     │
+│  │  → Effects (shadows)          │    │  → Typography                 │     │
+│  └───────────────┬───────────────┘    └───────────────┬───────────────┘     │
+│                  │                                    │                     │
+│                  └──────────────┬─────────────────────┘                     │
+│                                 ▼                                           │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  LAYER 3: COMPONENTS (Brand + Theme + Density + Breakpoint)                 │
+├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
 │  Purpose: Component-specific design decisions                               │
 │  Examples: Button, Card, Teaser, Alert, InputField, Navigation, etc.        │
 │                                                                             │
-│  Collections (per component):                                               │
-│  ┌─────────────────┬─────────────────┬─────────────────┬─────────────────┐  │
-│  │ {Component}     │ {Component}     │ {Component}     │ {Component}     │  │
-│  │ ColorMode       │ Density         │ Breakpoint      │ Typography      │  │
-│  │ (light/dark)    │ (3 modes)       │ (4 modes)       │ (4 modes)       │  │
-│  └────────┬────────┴────────┬────────┴────────┬────────┴────────┬────────┘  │
-│           │                 │                 │                 │           │
-│           └─────────────────┴────────┬────────┴─────────────────┘           │
-│                                      │                                      │
-│                          References LAYER 3                                 │
-│                                      ▼                                      │
-├─────────────────────────────────────────────────────────────────────────────┤
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐              │
+│  │     Button      │  │      Card       │  │   Typography    │  ... (~55)  │
+│  │  ─────────────  │  │  ─────────────  │  │  ─────────────  │              │
+│  │  --button-      │  │  --card-bg      │  │  --heading-size │              │
+│  │    primary-bg   │  │  --card-padding │  │  --body-line-   │              │
+│  │  --button-      │  │                 │  │    height       │              │
+│  │    label-color  │  │                 │  │                 │              │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘              │
 │                                                                             │
-│  LAYER 3: SEMANTIC TOKENS                                                   │
-│  ═══════════════════════════════════════════════════════════════════════   │
-│                                                                             │
-│  Purpose: Meaningful design intent tokens (context-independent)             │
-│  Examples: text-color-primary, surface-color-secondary, border-color-*      │
-│                                                                             │
-│  Collections:                                                               │
-│  ┌─────────────────────────────┬─────────────────────────────┐              │
-│  │ SemanticColorMode           │ SemanticBreakpoint          │              │
-│  │ Modes: light, dark          │ Modes: xs, sm, md, lg       │              │
-│  │                             │                             │              │
-│  │ + Effects (shadows)         │ + Typography (font sizes)   │              │
-│  └─────────────┬───────────────┴─────────────┬───────────────┘              │
-│                │                             │                              │
-│                └──────────────┬──────────────┘                              │
-│                               │                                             │
-│                   References LAYER 2                                        │
-│                               ▼                                             │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  LAYER 2: BRAND MAPPING + DENSITY                                           │
-│  ═══════════════════════════════════════════════════════════════════════   │
-│                                                                             │
-│  Purpose: Map primitives to brand-specific values                           │
-│                                                                             │
-│  Collections:                                                               │
-│  ┌─────────────────────────────┬─────────────────────────────┐              │
-│  │ BrandColorMapping           │ Density                     │              │
-│  │ Modes: BILD, SportBILD      │ Modes: default, dense,      │              │
-│  │        (NOT Advertorial!)   │        spacious             │              │
-│  │                             │                             │              │
-│  │ Maps color primitives to    │ UI spacing/sizing variants  │              │
-│  │ brand-specific palette      │                             │              │
-│  ├─────────────────────────────┤                             │              │
-│  │ BrandTokenMapping           │                             │              │
-│  │ Modes: BILD, SportBILD,     │                             │              │
-│  │        Advertorial          │                             │              │
-│  │                             │                             │              │
-│  │ Maps non-color primitives   │                             │              │
-│  │ (spacing, sizing, fonts)    │                             │              │
-│  └─────────────┬───────────────┴─────────────┬───────────────┘              │
-│                │                             │                              │
-│                └──────────────┬──────────────┘                              │
-│                               │                                             │
-│                   References LAYER 1                                        │
-│                               ▼                                             │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  LAYER 1: PRIMITIVES (Global, Brand-Independent)                            │
-│  ═══════════════════════════════════════════════════════════════════════   │
-│                                                                             │
-│  Purpose: Raw, absolute design values - the foundation                      │
-│                                                                             │
-│  Collections:                                                               │
-│  ┌───────────────┬───────────────┬───────────────┬───────────────┐          │
-│  │ ColorPrimitive│ SpacePrimitive│ SizePrimitive │ FontPrimitive │          │
-│  │               │               │               │               │          │
-│  │ bildred       │ space1x (8px) │ size1x (8px)  │ font-family-  │          │
-│  │ bild015       │ space2x (16px)│ size2x (16px) │   gotham      │          │
-│  │ bild050       │ space3x (24px)│ size4x (32px) │ font-weight-  │          │
-│  │ alpha-*       │ space4x (32px)│ ...           │   bold        │          │
-│  │ ...           │ ...           │               │ ...           │          │
-│  └───────────────┴───────────────┴───────────────┴───────────────┘          │
-│                                                                             │
-│  NO MODES - These are absolute values shared across all brands              │
+│  Collections per component: ColorMode, Density, Breakpoint, Typography      │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -122,46 +115,56 @@ The BILD Design System uses a **4-layer token architecture** where each layer re
 
 ### Collection Overview
 
-| Collection | Layer | Modes | Purpose |
-|------------|-------|-------|---------|
-| **ColorPrimitive** | 1 | None | Raw color values (#DD0000, #232629, etc.) |
-| **SpacePrimitive** | 1 | None | Spacing scale (8px, 16px, 24px, etc.) |
-| **SizePrimitive** | 1 | None | Size scale for dimensions |
-| **FontPrimitive** | 1 | None | Font families, weights, styles |
-| **BrandColorMapping** | 2 | BILD, SportBILD | Maps colors to brand palette |
-| **BrandTokenMapping** | 2 | BILD, SportBILD, Advertorial | Maps non-color tokens to brands |
-| **Density** | 2 | default, dense, spacious | UI density variants |
-| **ColorMode** | 3 | light, dark | Light/dark theme colors |
-| **BreakpointMode** | 3 | xs, sm, md, lg | Responsive sizing |
-| **{Component}*** | 4 | varies | Component-specific tokens |
+| Collection | Layer | Modes | Input From | Output |
+|------------|-------|-------|------------|--------|
+| **ColorPrimitive** | 0 | – | – | Raw colors (#DD0000, etc.) |
+| **SpacePrimitive** | 0 | – | – | Spacing scale (8px, 16px, etc.) |
+| **SizePrimitive** | 0 | – | – | Size scale (size-sm, size-md, etc.) |
+| **FontPrimitive** | 0 | – | – | Font families, weights |
+| **BrandColorMapping** | 1 | BILD, SportBILD | ColorPrimitive | Brand color palette |
+| **BrandTokenMapping** | 1 | BILD, SportBILD, Advertorial | Space/Size/FontPrimitive | Spacing, Sizing, Typography |
+| **Density** | 1 | default, dense, spacious | Space/SizePrimitive | Spacing, Sizing variants |
+| **ColorMode** | 2 | light, dark | BrandColorMapping | Semantic colors, Effects |
+| **BreakpointMode** | 2 | xs, sm, md, lg | BrandTokenMapping + Density | Responsive sizing, Typography |
+| **{Component}** | 3 | varies | ColorMode, BreakpointMode | Component-specific tokens |
 
-### Mode Dependencies
+### Token Flow Diagram
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                          MODE DEPENDENCY MATRIX                             │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  Token Type        Depends On          Output Scope                         │
-│  ──────────────────────────────────────────────────────────────────────────│
-│  Primitives        (none)              Global (:root)                       │
-│                                                                             │
-│  Semantic Colors   Brand + ColorMode   [data-brand][data-theme]             │
-│                                                                             │
-│  Semantic Sizing   Brand + Breakpoint  [data-brand] + @media                │
-│                                                                             │
-│  Density           Brand + Density     [data-brand][data-density]           │
-│                                                                             │
-│  Component Colors  Brand + ColorMode   [data-brand][data-theme]             │
-│                                                                             │
-│  Component Sizing  Brand + Breakpoint  [data-brand] + @media                │
-│                                                                             │
-│  Typography        Brand + Breakpoint  [data-brand] .className              │
-│                                                                             │
-│  Effects           Brand + ColorMode   [data-brand][data-theme] .className  │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+Token Flow (Layer 0 → Layer 3):
+═══════════════════════════════════════════════════════════════════════════════
+
+LAYER 0                    LAYER 1                    LAYER 2              LAYER 3
+─────────────────────────────────────────────────────────────────────────────────
+
+ColorPrimitive ──────────→ BrandColorMapping ───────→ ColorMode ─────────┐
+                           (BILD | SportBILD)         (light | dark)     │
+                                                                         │
+                                                      ┌─ text-color-*    │
+                                                      ├─ surface-color-* ├──→ Components
+                                                      └─ Effects         │     (Button,
+                                                                         │      Card,
+SpacePrimitive ─┐                                                        │      Teaser,
+                │                                                        │      etc.)
+SizePrimitive  ─┼────────→ BrandTokenMapping ──┬────→ BreakpointMode ───┘
+                │          (BILD | SportBILD   │      (xs|sm|md|lg)
+FontPrimitive ──┘           | Advertorial)     │
+                                               │      ┌─ grid-space-*
+                           Density ────────────┘      ├─ font-sizes
+                           (default|dense|spacious)   └─ Typography
 ```
+
+### Mode Dependencies (CSS Output)
+
+| Token Type | Depends On | CSS Output Scope |
+|------------|------------|------------------|
+| Primitives | – | `:root { }` |
+| Semantic Colors | BrandColorMapping + ColorMode | `[data-brand][data-theme] { }` |
+| Semantic Sizing | BrandTokenMapping + Breakpoint | `[data-brand] { } @media (...) { }` |
+| Density | Density mode | `[data-brand][data-density] { }` |
+| Effects | BrandColorMapping + ColorMode | `[data-brand][data-theme] .className { }` |
+| Typography | BrandTokenMapping + Breakpoint | `[data-brand] .className { }` |
+| Component Tokens | All above | Inherits from semantic layer |
 
 ---
 
@@ -295,21 +298,21 @@ Tokens reference each other through aliases. Here's how a button color token res
 │                         ALIAS RESOLUTION CHAIN                              │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
-│  LAYER 4: Component Token                                                   │
+│  LAYER 3: Component Token                                                   │
 │  ┌─────────────────────────────────────────────────────────────────────┐    │
 │  │  button-primary-bg-color                                            │    │
 │  │  └──→ references: core-color-primary                                │    │
 │  └────────────────────────────────────────────────────────────────┬────┘    │
 │                                                                   │         │
 │                                                                   ▼         │
-│  LAYER 3: Semantic Token                                                    │
+│  LAYER 2: Semantic Token (ColorMode)                                        │
 │  ┌─────────────────────────────────────────────────────────────────────┐    │
 │  │  core-color-primary                                                 │    │
 │  │  └──→ references: {BrandColorMapping.primary}                       │    │
 │  └────────────────────────────────────────────────────────────────┬────┘    │
 │                                                                   │         │
 │                                                                   ▼         │
-│  LAYER 2: Brand Mapping (resolves per brand mode)                           │
+│  LAYER 1: Brand Mapping (resolves per brand mode)                           │
 │  ┌─────────────────────────────────────────────────────────────────────┐    │
 │  │  BrandColorMapping.primary                                          │    │
 │  │  ├── Mode BILD:      → bildred                                      │    │
@@ -317,7 +320,7 @@ Tokens reference each other through aliases. Here's how a button color token res
 │  └────────────────────────────────────────────────────────────────┬────┘    │
 │                                                                   │         │
 │                                                                   ▼         │
-│  LAYER 1: Primitive (final value)                                           │
+│  LAYER 0: Primitive (final value)                                           │
 │  ┌─────────────────────────────────────────────────────────────────────┐    │
 │  │  bildred = #DD0000                                                  │    │
 │  │  sportred = #E30613                                                 │    │
@@ -468,13 +471,14 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 
 | Decision | Rationale |
 |----------|-----------|
+| **Layer 0-3 numbering** | Matches Figma structure: Primitives (0) → Mapping (1) → Semantic (2) → Components (3) |
 | **@media over data-breakpoint** | Native browser support, no JS required, SSR-compatible |
 | **var() with fallbacks** | Robustness if variables missing, easier debugging |
 | **Separate mode files** | Lazy loading, better caching, easier debugging |
 | **Dual-Axis architecture** | Enables Advertorial + brand colors combination |
 | **Unified interfaces** | Polymorphic access, type-safety, runtime brand switching |
 | **Typography as classes** | Groups related properties (font-size, weight, line-height) |
-| **4→2 breakpoint mapping** | Native apps typically need only 2 layouts |
+| **4→2 breakpoint mapping** | Web (xs/sm/md/lg) → Native (compact/regular) |
 
 ---
 
