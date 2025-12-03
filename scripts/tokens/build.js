@@ -33,10 +33,6 @@ const COMPOSE_ENABLED = true;
 const SWIFTUI_ENABLED = true;       // SwiftUI output in dist/ios/
 const ANDROID_XML_ENABLED = false;  // Disabled - Compose is the preferred Android format
 
-// JS output mode: false = skip legacy 918-file generation, use optimized buildOptimizedJSOutput() instead
-// When false, JSON is still generated as the source for optimized JS output
-const JS_LEGACY_ENABLED = false;
-
 // Token type toggles - set to false to exclude from all platform outputs
 const BOOLEAN_TOKENS_ENABLED = false;
 
@@ -121,19 +117,6 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
         options: { outputReferences: false }
       }]
     },
-    // Legacy JS: Skip when JS_LEGACY_ENABLED=false (optimized output generated separately)
-    ...(JS_LEGACY_ENABLED ? {
-      js: {
-        transformGroup: 'custom/js',
-        buildPath: `${DIST_DIR}/js/${buildPath.replace(DIST_DIR + '/css/', '')}/`,
-        files: [{
-          destination: `${fileName}.js`,
-          format: 'custom/javascript/es6',
-          filter: tokenFilter,
-          options: { outputReferences: false }
-        }]
-      }
-    } : {}),
     json: {
       transformGroup: 'custom/js',
       buildPath: `${DIST_DIR}/json/${buildPath.replace(DIST_DIR + '/css/', '')}/`,
@@ -640,20 +623,6 @@ function createTypographyConfig(brand, breakpoint) {
         }]
       },
 
-      // JS: Custom Typography format
-      js: {
-        transforms: ['attribute/cti'],
-        buildPath: `${DIST_DIR}/js/brands/${brand}/semantic/typography/`,
-        files: [{
-          destination: `${fileName}.js`,
-          format: 'javascript/typography',
-          options: {
-            brand: brandName,
-            breakpoint
-          }
-        }]
-      },
-
       // JSON: Standard JSON
       json: {
         transformGroup: 'js',
@@ -776,20 +745,6 @@ function createEffectConfig(brand, colorMode) {
         files: [{
           destination: `${fileName}.css`,
           format: 'css/effect-classes',
-          options: {
-            brand: brandName,
-            colorMode
-          }
-        }]
-      },
-
-      // JS: Custom Effects format
-      js: {
-        transforms: ['attribute/cti'],
-        buildPath: `${DIST_DIR}/js/brands/${brand}/semantic/effects/`,
-        files: [{
-          destination: `${fileName}.js`,
-          format: 'javascript/effects',
           options: {
             brand: brandName,
             colorMode
@@ -1171,19 +1126,6 @@ function createComponentTypographyConfig(sourceFile, brand, componentName, fileN
           }
         }]
       },
-      js: {
-        transforms: ['attribute/cti'],
-        buildPath: `${DIST_DIR}/js/brands/${brand}/components/${componentName}/`,
-        files: [{
-          destination: `${fileName}.js`,
-          format: 'javascript/typography',
-          options: {
-            brand: brandName,
-            breakpoint: breakpoint || 'default',
-            componentName
-          }
-        }]
-      },
       json: {
         transformGroup: 'js',
         buildPath: `${DIST_DIR}/json/brands/${brand}/components/${componentName}/`,
@@ -1293,19 +1235,6 @@ function createComponentEffectsConfig(sourceFile, brand, componentName, fileName
         files: [{
           destination: `${fileName}.scss`,
           format: 'scss/effects',
-          options: {
-            brand: brandName,
-            colorMode: colorMode || 'default',
-            componentName
-          }
-        }]
-      },
-      js: {
-        transforms: ['attribute/cti'],
-        buildPath: `${DIST_DIR}/js/brands/${brand}/components/${componentName}/`,
-        files: [{
-          destination: `${fileName}.js`,
-          format: 'javascript/effects',
           options: {
             brand: brandName,
             colorMode: colorMode || 'default',
