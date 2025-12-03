@@ -5992,6 +5992,39 @@ async function main() {
   console.log(`   - Builds erfolgreich: ${successfulBuilds}/${totalBuilds}`);
   console.log(`   - Output-Verzeichnis: dist/\n`);
 
+  // Copy platform-specific README files to dist directories
+  console.log(`📄 Kopiere Platform-READMEs:\n`);
+  try {
+    const readmeSrcDir = path.join(__dirname, '../..');
+
+    // Copy README.android.md to dist/android/compose/README.md
+    if (COMPOSE_ENABLED) {
+      const androidReadmeSrc = path.join(readmeSrcDir, 'README.android.md');
+      const androidReadmeDest = path.join(DIST_DIR, 'android/compose/README.md');
+      if (fs.existsSync(androidReadmeSrc)) {
+        fs.copyFileSync(androidReadmeSrc, androidReadmeDest);
+        console.log(`   ✅ README.android.md → dist/android/compose/README.md`);
+      } else {
+        console.log(`   ⚠️  README.android.md nicht gefunden`);
+      }
+    }
+
+    // Copy README.ios.md to dist/ios/README.md
+    if (SWIFTUI_ENABLED) {
+      const iosReadmeSrc = path.join(readmeSrcDir, 'README.ios.md');
+      const iosReadmeDest = path.join(DIST_DIR, 'ios/README.md');
+      if (fs.existsSync(iosReadmeSrc)) {
+        fs.copyFileSync(iosReadmeSrc, iosReadmeDest);
+        console.log(`   ✅ README.ios.md → dist/ios/README.md`);
+      } else {
+        console.log(`   ⚠️  README.ios.md nicht gefunden`);
+      }
+    }
+    console.log('');
+  } catch (err) {
+    console.log(`   ⚠️  Fehler beim Kopieren der READMEs: ${err.message}\n`);
+  }
+
   console.log(`📁 Struktur:`);
   console.log(`   dist/`);
   console.log(`   ├── css/        (CSS with data-attributes for theme switching)`);
