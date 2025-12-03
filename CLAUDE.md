@@ -259,25 +259,28 @@ FontPrimitive ──┘           | Advertorial)     │
 
 ### Breakpoint Modes
 
-| Mode | Min-Width | Device Class | Native Mapping |
-|------|-----------|--------------|----------------|
-| `xs` | 320px | Mobile (default) | `compact` |
-| `sm` | 390px | Large mobile | `compact` |
-| `md` | 600px | Tablet | `regular` |
-| `lg` | 1024px | Desktop | `regular` |
+| Mode | Min-Width | Device Class | iOS Mapping | Android Mapping |
+|------|-----------|--------------|-------------|-----------------|
+| `xs` | 320px | Mobile (default) | – | – |
+| `sm` | 390px | Large mobile | `compact` | `Compact` |
+| `md` | 600px | Tablet | – | `Medium` |
+| `lg` | 1024px | Desktop | `regular` | `Expanded` |
 
 ```
-Web Breakpoints              Native SizeClass
-═══════════════              ════════════════
+Web Breakpoints              iOS SizeClass        Android WindowSizeClass
+═══════════════              ═════════════        ══════════════════════
 
     xs (320px) ─────┐
-                    ├──────────────→  compact
-    sm (390px) ─────┘
-
+                    ├────→  compact              ┐
+    sm (390px) ─────┘                            ├──→  Compact (< 600dp)
+                                                 ┘
     md (600px) ─────┐
-                    ├──────────────→  regular
+                    ├────→  regular              ────→  Medium (600-839dp)
     lg (1024px) ────┘
+                                                 ────→  Expanded (≥ 840dp)
 ```
+
+> **Platform Difference:** iOS uses 2 size classes (compact/regular), Android uses Material 3 WindowSizeClass with 3 values (Compact/Medium/Expanded).
 
 ### Density Modes
 
@@ -409,12 +412,16 @@ DesignSystemTheme(
 
 For polymorphic brand access, all brand-specific implementations conform to unified interfaces:
 
-| Interface/Protocol | Properties | Implementations |
-|--------------------|------------|-----------------|
-| `DesignColorScheme` | 80+ color tokens | `BildLightColors`, `BildDarkColors`, `SportbildLightColors`, `SportbildDarkColors` |
-| `DesignSizingScheme` | 180+ sizing tokens | `BildSizingCompact`, `BildSizingRegular`, `SportbildSizing*`, `AdvertorialSizing*` |
-| `DesignTypographyScheme` | 30+ text styles | `BildTypographyCompact`, `BildTypographyRegular`, `SportbildTypography*`, `AdvertorialTypography*` |
-| `DesignEffectsScheme` | 8 shadow tokens | `EffectsLight`, `EffectsDark` (brand-independent, shared across brands) |
+| Interface/Protocol | Properties | iOS Implementations | Android Implementations |
+|--------------------|------------|---------------------|-------------------------|
+| `DesignColorScheme` | 80+ color tokens | `BildLightColors`, `BildDarkColors`, etc. | Same |
+| `DesignSizingScheme` | 180+ sizing tokens | `BildSizingCompact`, `BildSizingRegular` | `BildSizingCompact`, `BildSizingMedium`, `BildSizingExpanded` |
+| `DesignTypographyScheme` | 30+ text styles | `BildTypographyCompact`, `BildTypographyRegular` | `BildTypographyCompact`, `BildTypographyMedium`, `BildTypographyExpanded` |
+| `DesignEffectsScheme` | 8 shadow tokens | `EffectsLight`, `EffectsDark` | Same (brand-independent) |
+
+**Note on Size Classes:**
+- **iOS:** Uses Apple's 2-class system (compact/regular)
+- **Android:** Uses Material 3 WindowSizeClass with 3 values (Compact/Medium/Expanded)
 
 **Note on Effects:** Effects/shadows are **brand-independent** and only depend on light/dark mode. Both iOS and Android share the same `EffectsLight`/`EffectsDark` implementations across all brands.
 
@@ -485,7 +492,7 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 | **Dual-Axis architecture** | Enables Advertorial + brand colors combination |
 | **Unified interfaces** | Polymorphic access, type-safety, runtime brand switching |
 | **Typography as classes** | Groups related properties (font-size, weight, line-height) |
-| **4→2 breakpoint mapping** | Web (xs/sm/md/lg) → Native (compact/regular) |
+| **Platform-specific breakpoint mapping** | iOS: 4→2 (compact/regular), Android: 4→3 (Compact/Medium/Expanded per Material 3) |
 
 ---
 

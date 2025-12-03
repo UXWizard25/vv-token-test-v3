@@ -301,13 +301,15 @@ Both iOS and Android implement identical unified protocols/interfaces for polymo
 
 All Component Tokens provide theme-aware `current()` accessors:
 
-| Accessor | Selects based on | Values |
-|----------|-----------------|--------|
-| `Colors.current()` | `DesignSystemTheme.isDarkTheme` | Light / Dark |
-| `Sizing.current()` | `DesignSystemTheme.sizeClass` | Compact / Regular |
-| `Typography.current()` | `DesignSystemTheme.sizeClass` | Compact / Regular |
-| `Density.current()` | `DesignSystemTheme.density` | Dense / Default / Spacious |
-| `Effects.current()` | `DesignSystemTheme.isDarkTheme` | Light / Dark (component shadows) |
+| Accessor | Selects based on | iOS Values | Android Values |
+|----------|-----------------|------------|----------------|
+| `Colors.current()` | `isDarkTheme` | Light / Dark | Light / Dark |
+| `Sizing.current()` | `sizeClass` | Compact / Regular | Compact / Medium / Expanded |
+| `Typography.current()` | `sizeClass` | Compact / Regular | Compact / Medium / Expanded |
+| `Density.current()` | `density` | Dense / Default / Spacious | Dense / Default / Spacious |
+| `Effects.current()` | `isDarkTheme` | Light / Dark | Light / Dark |
+
+> **Note:** Android uses Material 3 WindowSizeClass with 3 values (Compact/Medium/Expanded), while iOS uses Apple's 2-value system (compact/regular).
 
 ### iOS SwiftUI (Dual-Axis Architecture)
 
@@ -421,24 +423,46 @@ Breakpoints use native `@media` queries instead of `data-breakpoint` attributes:
 
 ### Native Sizeclass Mapping (iOS/Android)
 
-For native platforms, 4 web breakpoints map to 2 size classes:
+Native platforms use different size class systems:
+
+#### iOS (2 Size Classes - Apple HIG)
 
 ```
-Web Breakpoints         Native Size Classes
-─────────────────       ───────────────────
+Web Breakpoints         iOS Size Classes
+─────────────────       ────────────────
 xs (320px) ─────┐
-                ├────→  compact (small screens)
+                ├────→  compact (Phones)
 sm (390px) ─────┘
 
 md (600px) ─────┐
-                ├────→  regular (large screens)
+                ├────→  regular (Tablets)
 lg (1024px) ────┘
 ```
 
-| Platform | Compact | Regular |
-|----------|---------|---------|
-| iOS | `UITraitCollection.horizontalSizeClass == .compact` | `.regular` |
-| Android | `sw320dp` | `sw600dp` |
+| Size Class | iOS Trait | Web Breakpoint |
+|------------|-----------|----------------|
+| `compact` | `.compact` | sm (390px) |
+| `regular` | `.regular` | lg (1024px) |
+
+#### Android (3 Size Classes - Material 3 WindowSizeClass)
+
+```
+Web Breakpoints         Android WindowSizeClass
+─────────────────       ───────────────────────
+xs (320px) ─────┐
+                ├────→  Compact (< 600dp)
+sm (390px) ─────┘
+
+md (600px) ──────────→  Medium (600-839dp)
+
+lg (1024px) ─────────→  Expanded (≥ 840dp)
+```
+
+| Size Class | Material 3 Range | Web Breakpoint |
+|------------|------------------|----------------|
+| `Compact` | width < 600dp | sm (390px) |
+| `Medium` | 600dp ≤ width < 840dp | md (600px) |
+| `Expanded` | width ≥ 840dp | lg (1024px) |
 
 ---
 
@@ -567,20 +591,21 @@ dist/
 │       ├── shared/
 │       │   ├── DesignTokenPrimitives.kt   # All primitives consolidated
 │       │   ├── Density.kt                 # Dense/Default/Spacious enum
-│       │   ├── WindowSizeClass.kt         # Compact/Regular enum
+│       │   ├── WindowSizeClass.kt         # Material 3: Compact/Medium/Expanded enum
 │       │   ├── Brand.kt                   # Bild/Sportbild/Advertorial enum
 │       │   └── DesignSystemTheme.kt       # Multi-brand theme provider
 │       └── brands/{brand}/
 │           ├── components/{Component}/
 │           │   └── {Component}Tokens.kt   # Aggregated with current() accessors
 │           ├── semantic/
-│           │   ├── {Brand}SemanticTokens.kt   # Aggregated Light/Dark + Compact/Regular
+│           │   ├── {Brand}SemanticTokens.kt   # Aggregated Light/Dark + Compact/Medium/Expanded
 │           │   ├── color/
 │           │   │   ├── ColorsLight.kt     # BildColorScheme interface + BildLightColors
 │           │   │   └── ColorsDark.kt      # BildDarkColors object
 │           │   └── sizeclass/
 │           │       ├── SizingCompact.kt   # BildSizingScheme interface + BildSizingCompact
-│           │       └── SizingRegular.kt   # BildSizingRegular object
+│           │       ├── SizingMedium.kt    # BildSizingMedium object (Material 3)
+│           │       └── SizingExpanded.kt  # BildSizingExpanded object
 │           └── theme/
 │               └── {Brand}Theme.kt        # CompositionLocal Theme Provider
 └── flutter/                         # Dart Classes (disabled by default)
@@ -596,7 +621,7 @@ Compose output is optimized for Android development:
 |------|---------|----------------|
 | `shared/DesignTokenPrimitives.kt` | All primitives (Colors, Space, Size, Font) | `DesignTokenPrimitives.Colors.bildred` |
 | `shared/Density.kt` | UI density enum | `Density.Dense`, `Density.Default`, `Density.Spacious` |
-| `shared/WindowSizeClass.kt` | Responsive layout enum | `WindowSizeClass.Compact`, `WindowSizeClass.Regular` |
+| `shared/WindowSizeClass.kt` | Material 3 responsive layout enum | `WindowSizeClass.Compact`, `WindowSizeClass.Medium`, `WindowSizeClass.Expanded` |
 | `shared/ColorBrand.kt`, `ContentBrand.kt` | Dual-axis brand enums | `ColorBrand.Bild`, `ContentBrand.Advertorial` |
 | `shared/DesignColorScheme.kt` | Unified color interface | `DesignSystemTheme.colors.textColorPrimary` |
 | `shared/DesignSizingScheme.kt` | Unified sizing interface | `DesignSystemTheme.sizing.gridSpaceRespBase` |
