@@ -15,6 +15,7 @@
 - [Multi-Brand Apps](#multi-brand-apps)
 - [File Structure](#file-structure)
 - [API Reference](#api-reference)
+- [Token Type Mapping](#token-type-mapping)
 
 ---
 
@@ -66,8 +67,8 @@ function MyComponent() {
 
   return (
     <div style={{
-      color: theme.color.textColorPrimary,
-      padding: theme.sizing.gridSpaceRespBase
+      color: theme.colors.textColorPrimary,
+      padding: theme.spacing.gridSpaceRespBase  // "12px"
     }}>
       Hello from {colorBrand} ({colorMode} mode)
     </div>
@@ -90,9 +91,9 @@ const theme = createTheme({
 });
 
 // Access tokens
-console.log(theme.color.textColorPrimary);      // "#1a1a1a"
-console.log(theme.sizing.gridSpaceRespBase);    // "16px"
-console.log(theme.typography.headline1);        // { fontFamily, fontSize, ... }
+console.log(theme.colors.textColorPrimary);     // "#232629"
+console.log(theme.spacing.gridSpaceRespBase);   // "12px"
+console.log(theme.typography.headline1);        // { fontFamily, fontSize: "72px", ... }
 ```
 
 ---
@@ -219,9 +220,9 @@ function MyComponent() {
 
   return (
     <div style={{
-      color: theme.color.textColorPrimary,
-      backgroundColor: theme.color.surfaceColorPrimary,
-      padding: theme.sizing.gridSpaceRespBase
+      color: theme.colors.textColorPrimary,
+      backgroundColor: theme.colors.surfaceColorPrimary,
+      padding: theme.spacing.gridSpaceRespBase  // "12px"
     }}>
       Content
     </div>
@@ -290,8 +291,8 @@ import {
 } from '@bild/design-tokens/js/themes';
 
 // Access tokens directly
-const primaryColor = bildLight.color.textColorPrimary;
-const spacing = bildLight.sizing.gridSpaceRespBase;
+const primaryColor = bildLight.colors.textColorPrimary;  // "#232629"
+const spacing = bildLight.spacing.gridSpaceRespBase;     // "12px"
 ```
 
 ### Dynamic Theme Creation
@@ -502,18 +503,27 @@ function createTheme(options: {
 
 ```typescript
 interface Theme {
-  color: {
-    textColorPrimary: string;
+  __meta: {
+    brand: string;
+    colorBrand: string;
+    colorMode: string;
+    breakpoint: string;
+    density: string;
+  };
+  colors: {
+    textColorPrimary: string;      // "#232629"
     textColorSecondary: string;
     surfaceColorPrimary: string;
     accentColorPrimary: string;
+    layerOpacity50: number;        // 50 (opacity stays as number)
     // ... 80+ color tokens
   };
-  sizing: {
-    gridSpaceRespBase: string;
-    gridSpaceRespSm: string;
-    pageInlineSpace: string;
-    // ... 180+ sizing tokens
+  spacing: {
+    gridSpaceRespBase: string;     // "12px"
+    gridSpaceRespLG: string;       // "32px"
+    pageInlineSpace: string;       // "0px"
+    layoutGuideGridColums: number; // 8 (number type stays as number)
+    // ... 180+ spacing tokens
   };
   typography: {
     headline1: TypographyStyle;
@@ -522,25 +532,28 @@ interface Theme {
     // ... 30+ text styles
   };
   effects: {
-    shadowSoftSm: ShadowStyle;
-    shadowSoftMd: ShadowStyle;
-    shadowSoftLg: ShadowStyle;
+    shadowSoftSm: ShadowLayer[];
+    shadowSoftMd: ShadowLayer[];
+    shadowSoftLg: ShadowLayer[];
     // ... 8 shadow tokens
   };
+  density: Record<string, string>; // Density-specific tokens
 }
 
 interface TypographyStyle {
-  fontFamily: string;
-  fontSize: string;
-  fontWeight: number;
-  lineHeight: string;
-  letterSpacing: string;
-  textTransform?: string;
-  textDecoration?: string;
+  fontFamily: string;       // "Gotham Condensed"
+  fontSize: string;         // "48px"
+  fontWeight: number;       // 900
+  lineHeight: string;       // "48px"
+  letterSpacing?: string;   // "0px"
 }
 
-interface ShadowStyle {
-  boxShadow: string;  // CSS box-shadow value
+interface ShadowLayer {
+  offsetX: number;
+  offsetY: number;
+  radius: number;
+  spread: number;
+  color: string;
 }
 ```
 
@@ -681,11 +694,10 @@ function ThemeWrapper({ children }) {
   return <SCThemeProvider theme={theme}>{children}</SCThemeProvider>;
 }
 
-// Use in styled components
+// Use in styled components - values are CSS-ready strings
 const Card = styled.div`
-  background: ${props => props.theme.color.surfaceColorPrimary};
-  padding: ${props => props.theme.sizing.gridSpaceRespBase};
-  box-shadow: ${props => props.theme.effects.shadowSoftMd.boxShadow};
+  background: ${props => props.theme.colors.surfaceColorPrimary};
+  padding: ${props => props.theme.spacing.gridSpaceRespBase};  /* "12px" */
 `;
 ```
 
@@ -706,17 +718,26 @@ function ThemeWrapper({ children }) {
 ```javascript
 import { bildLight } from '@bild/design-tokens/js/themes';
 
-// Generate CSS custom properties
+// Generate CSS custom properties - values are already CSS-ready
 function generateCSSVariables(theme) {
   const vars = [];
-  for (const [key, value] of Object.entries(theme.color)) {
-    vars.push(`--color-${key}: ${value};`);
+  for (const [key, value] of Object.entries(theme.colors)) {
+    if (typeof value === 'string') {
+      vars.push(`--color-${key}: ${value};`);
+    }
   }
-  for (const [key, value] of Object.entries(theme.sizing)) {
-    vars.push(`--sizing-${key}: ${value};`);
+  for (const [key, value] of Object.entries(theme.spacing)) {
+    vars.push(`--spacing-${key}: ${value};`);  // Already includes "px"
   }
   return `:root { ${vars.join(' ')} }`;
 }
+
+// Output example:
+// :root {
+//   --color-textColorPrimary: #232629;
+//   --spacing-gridSpaceRespBase: 12px;
+//   --spacing-gridSpaceRespLG: 32px;
+// }
 ```
 
 ---
@@ -766,6 +787,65 @@ import { createTheme } from '@bild/design-tokens/js/themes';
 >
   <App />
 </ThemeProvider>
+```
+
+---
+
+## Token Type Mapping
+
+Token values are automatically formatted based on their `$type` from the Figma source, following the [W3C Design Tokens Community Group (DTCG)](https://www.designtokens.org/) specification:
+
+| Source `$type` | JS Output | Example |
+|----------------|-----------|---------|
+| `dimension` | `string` with `px` | `"24px"` |
+| `fontSize` | `string` with `px` | `"48px"` |
+| `lineHeight` | `string` with `px` | `"56px"` |
+| `letterSpacing` | `string` with `px` | `"-0.5px"` |
+| `color` | `string` (hex/rgba) | `"#DD0000"` |
+| `fontWeight` | `number` | `700` |
+| `fontFamily` | `string` | `"Gotham Condensed"` |
+| `opacity` | `number` (0-100) | `50` |
+| `number` | `number` | `8` |
+| `boolean` | `boolean` | `true` |
+| `string` | `string` | `"value"` |
+
+### Why Strings with Units?
+
+Following industry best practices (Chakra UI, MUI, Tailwind CSS), dimension values include CSS units:
+
+```javascript
+// Directly usable in CSS/CSS-in-JS - no transformation needed
+<div style={{
+  padding: theme.spacing.gridSpaceRespBase,     // "12px" ✓
+  fontSize: theme.typography.headline1.fontSize  // "48px" ✓
+}}>
+
+// Numbers stay as numbers where appropriate
+<div style={{
+  fontWeight: theme.typography.headline1.fontWeight,  // 700 ✓
+  opacity: theme.colors.layerOpacity50 / 100          // 0.5 ✓
+}}>
+```
+
+### Composite Types
+
+Typography and shadow tokens are composite objects:
+
+```javascript
+// Typography - all dimension properties have px suffix
+theme.typography.headline1 = {
+  fontFamily: "Gotham Condensed",  // string
+  fontWeight: 900,                  // number
+  fontSize: "48px",                 // string with px
+  lineHeight: "48px",               // string with px
+  letterSpacing: "0px"              // string with px
+}
+
+// Shadow - array of layers
+theme.effects.shadowSoftMd = [
+  { offsetX: 0, offsetY: 2, radius: 16, spread: 0, color: "rgba(0,0,0,0.03)" },
+  { offsetX: 0, offsetY: 4, radius: 12, spread: 0, color: "rgba(0,0,0,0.07)" }
+]
 ```
 
 ---
