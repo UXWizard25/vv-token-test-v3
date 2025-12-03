@@ -1,0 +1,351 @@
+{
+  "timestamp": "2025-12-03T18:09:38.304Z",
+  "summary": {
+    "passed": 27,
+    "failed": 9,
+    "warnings": 1,
+    "successRate": 75
+  },
+  "details": [
+    {
+      "category": "Tokens",
+      "test": "Test group in colorprimitive",
+      "passed": false,
+      "message": "Missing Test group",
+      "details": null
+    },
+    {
+      "category": "Tokens",
+      "test": "Semantic testSemanticAccent structure",
+      "passed": true,
+      "message": "Found in correct path",
+      "details": null
+    },
+    {
+      "category": "Tokens",
+      "test": "Semantic testSemanticAccent has $alias",
+      "passed": true,
+      "message": "Has alias info",
+      "details": null
+    },
+    {
+      "category": "Tokens",
+      "test": "TestButton component folder",
+      "passed": true,
+      "message": "Found",
+      "details": null
+    },
+    {
+      "category": "Tokens",
+      "test": "testButtonBgColor token",
+      "passed": true,
+      "message": "Found",
+      "details": null
+    },
+    {
+      "category": "Tokens",
+      "test": "Typography testHeadline",
+      "passed": {
+        "$value": {
+          "fontFamily": "Gotham",
+          "fontWeight": 700,
+          "fontSize": 40,
+          "lineHeight": null,
+          "letterSpacing": null,
+          "fontStyle": null,
+          "textCase": "ORIGINAL",
+          "textDecoration": "NONE"
+        },
+        "value": {
+          "fontFamily": "Gotham",
+          "fontWeight": 700,
+          "fontSize": 40,
+          "lineHeight": null,
+          "letterSpacing": null,
+          "fontStyle": null,
+          "textCase": "ORIGINAL",
+          "textDecoration": "NONE"
+        },
+        "type": "typography",
+        "$type": "typography",
+        "comment": "E2E Test: Custom headline style",
+        "$extensions": {
+          "com.figma": {
+            "styleId": "S:e2e-test-typography-1",
+            "styleName": "Global/Test/testHeadline"
+          }
+        },
+        "$aliases": {
+          "fontSize": {
+            "token": "testResponsiveSize",
+            "collection": "breakpointmode",
+            "collectionType": "semantic",
+            "variableId": "VariableID:99901:2"
+          }
+        }
+      },
+      "message": "Found",
+      "details": null
+    },
+    {
+      "category": "Tokens",
+      "test": "Effects testShadowCustom",
+      "passed": {
+        "$value": [
+          {
+            "type": "dropShadow",
+            "color": "#9B59B6",
+            "offsetX": 0,
+            "offsetY": 8,
+            "radius": 24,
+            "spread": -4,
+            "blendMode": "NORMAL"
+          }
+        ],
+        "value": [
+          {
+            "type": "dropShadow",
+            "color": "#9B59B6",
+            "offsetX": 0,
+            "offsetY": 8,
+            "radius": 24,
+            "spread": -4,
+            "blendMode": "NORMAL"
+          }
+        ],
+        "type": "shadow",
+        "$type": "shadow",
+        "comment": "E2E Test: Custom shadow effect",
+        "$extensions": {
+          "com.figma": {
+            "styleId": "S:e2e-test-shadow-1",
+            "styleName": "Global/Test/testShadowCustom"
+          }
+        },
+        "$aliases": [
+          {
+            "index": 0,
+            "color": {
+              "token": "testColorPurple",
+              "collection": "_colorprimitive",
+              "collectionType": "primitive",
+              "variableId": "VariableID:99900:1"
+            }
+          }
+        ]
+      },
+      "message": "Found",
+      "details": null
+    },
+    {
+      "category": "CSS",
+      "test": "Primitive testColorPurple",
+      "passed": false,
+      "message": "Missing or wrong value",
+      "details": null
+    },
+    {
+      "category": "CSS",
+      "test": "Primitive testColorCyan",
+      "passed": false,
+      "message": "Missing or wrong value",
+      "details": null
+    },
+    {
+      "category": "CSS",
+      "test": "Modified BILDRed",
+      "passed": false,
+      "message": "Original value still present",
+      "details": null
+    },
+    {
+      "category": "CSS",
+      "test": "Primitive testSpace5x",
+      "passed": true,
+      "message": "Found",
+      "details": null
+    },
+    {
+      "category": "CSS",
+      "test": "Semantic testSemanticAccent (light)",
+      "passed": true,
+      "message": "Found",
+      "details": null
+    },
+    {
+      "category": "CSS",
+      "test": "Semantic alias resolution (light)",
+      "passed": true,
+      "message": "Alias resolved correctly",
+      "details": null
+    },
+    {
+      "category": "CSS",
+      "test": "Semantic testSemanticAccent (dark)",
+      "passed": true,
+      "message": "Found",
+      "details": null
+    },
+    {
+      "category": "CSS",
+      "test": "Component testButtonBgColor",
+      "passed": true,
+      "message": "Found",
+      "details": null
+    },
+    {
+      "category": "CSS",
+      "test": "Density CSS",
+      "passed": null,
+      "message": "File may be empty (no semantic density tokens)",
+      "warning": true
+    },
+    {
+      "category": "JS",
+      "test": "Semantic testSemanticAccent",
+      "passed": true,
+      "message": "Found in JS",
+      "details": null
+    },
+    {
+      "category": "JS",
+      "test": "Resolved value in JS",
+      "passed": true,
+      "message": "Has resolved hex value",
+      "details": null
+    },
+    {
+      "category": "JS",
+      "test": "Spacing testResponsiveSize",
+      "passed": true,
+      "message": "Found",
+      "details": null
+    },
+    {
+      "category": "JS",
+      "test": "Primitive testColorPurple",
+      "passed": false,
+      "message": "Missing",
+      "details": null
+    },
+    {
+      "category": "JS",
+      "test": "TypeScript definitions",
+      "passed": true,
+      "message": "colors.d.ts exists",
+      "details": null
+    },
+    {
+      "category": "iOS",
+      "test": "Semantic testSemanticAccent",
+      "passed": true,
+      "message": "Found in Swift",
+      "details": null
+    },
+    {
+      "category": "iOS",
+      "test": "Swift Color format",
+      "passed": true,
+      "message": "Uses Color() or hex",
+      "details": null
+    },
+    {
+      "category": "iOS",
+      "test": "Sizing testResponsiveSize (Compact)",
+      "passed": true,
+      "message": "Found",
+      "details": null
+    },
+    {
+      "category": "iOS",
+      "test": "TestButton component folder",
+      "passed": true,
+      "message": "Found",
+      "details": null
+    },
+    {
+      "category": "Android",
+      "test": "Semantic testSemanticAccent",
+      "passed": true,
+      "message": "Found in Kotlin",
+      "details": null
+    },
+    {
+      "category": "Android",
+      "test": "Kotlin Color format",
+      "passed": true,
+      "message": "Uses Color()",
+      "details": null
+    },
+    {
+      "category": "Android",
+      "test": "Sizing testResponsiveSize (Compact)",
+      "passed": true,
+      "message": "Found",
+      "details": null
+    },
+    {
+      "category": "Android",
+      "test": "TestButton component folder",
+      "passed": true,
+      "message": "Found",
+      "details": null
+    },
+    {
+      "category": "Alias",
+      "test": "Button → Semantic reference",
+      "passed": true,
+      "message": "References: testSemanticAccent",
+      "details": null
+    },
+    {
+      "category": "Alias",
+      "test": "Semantic → Primitive reference",
+      "passed": true,
+      "message": "References: testColorPurple",
+      "details": null
+    },
+    {
+      "category": "Alias",
+      "test": "Chain resolution",
+      "passed": true,
+      "message": "Final value #9B59B6 matches primitive",
+      "details": null
+    },
+    {
+      "category": "Cascade",
+      "test": "Modified primitive in semantic",
+      "passed": false,
+      "message": "Fallback values not updated",
+      "details": null
+    },
+    {
+      "category": "Cascade",
+      "test": "Modified primitive in components",
+      "passed": true,
+      "message": "Reference updated",
+      "details": null
+    },
+    {
+      "category": "Multi-Brand",
+      "test": "bild breakpoint file",
+      "passed": false,
+      "message": "File not found",
+      "details": null
+    },
+    {
+      "category": "Multi-Brand",
+      "test": "sportbild breakpoint file",
+      "passed": false,
+      "message": "File not found",
+      "details": null
+    },
+    {
+      "category": "Multi-Brand",
+      "test": "advertorial breakpoint file",
+      "passed": false,
+      "message": "File not found",
+      "details": null
+    }
+  ]
+}
