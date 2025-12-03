@@ -15,7 +15,7 @@ npm run clean           # Delete dist/ and tokens/
 
 **Source of Truth:** `src/design-tokens/bild-design-system-raw-data.json` (Figma Export via TokenSync Plugin)
 
-**Platform Documentation:** `README.tokens.md`, `README.android.md`, `README.ios.md`
+**Platform Documentation:** `README.tokens.md`, `README.js.md`, `README.android.md`, `README.ios.md`
 
 ---
 
@@ -406,6 +406,41 @@ DesignSystemTheme(
 }
 ```
 
+### JavaScript/React (ES Modules)
+
+```javascript
+// React with ThemeProvider (Dual-Axis)
+import { ThemeProvider, useTheme } from '@bild/design-tokens/react';
+
+<ThemeProvider colorBrand="bild" colorMode="light">
+  <App />
+</ThemeProvider>
+
+// Access via hook
+const { theme } = useTheme();
+theme.colors.textColorPrimary      // "#232629"
+theme.spacing.gridSpaceRespBase    // "12px" (CSS-ready string!)
+
+// Without React
+import { createTheme } from '@bild/design-tokens/themes';
+const theme = createTheme({ colorBrand: 'bild', colorMode: 'light' });
+```
+
+**JS Token Type Mapping (`flattenTokens()` in build.js):**
+
+| Token `$type` | JS Output | Example |
+|---------------|-----------|---------|
+| `dimension` | String with `px` | `"24px"` |
+| `fontSize` | String with `px` | `"48px"` |
+| `lineHeight` | String with `px` | `"56px"` |
+| `letterSpacing` | String with `px` | `"-0.5px"` |
+| `color` | String (hex/rgba) | `"#DD0000"` |
+| `fontWeight` | Number | `700` |
+| `opacity` | Number (0-100) | `50` |
+| `number` | Number | `8` |
+
+> **Note:** Follows W3C DTCG specification. Dimension types output CSS-ready strings, while numeric types (fontWeight, opacity, number) stay as numbers.
+
 ---
 
 ## Unified Interfaces (Native Platforms)
@@ -475,9 +510,19 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 | File | Purpose |
 |------|---------|
 | `scripts/tokens/preprocess.js` | Figma JSON → Style Dictionary format |
-| `scripts/tokens/build.js` | Orchestrates Style Dictionary builds |
+| `scripts/tokens/build.js` | Orchestrates Style Dictionary builds + JS output generation |
 | `build-config/tokens/style-dictionary.config.js` | Custom transforms & formats |
 | `scripts/tokens/bundles.js` | CSS bundle generation |
+
+### JS Output Functions (in build.js)
+
+| Function | Purpose |
+|----------|---------|
+| `buildOptimizedJSOutput()` | Main JS build orchestrator |
+| `flattenTokens(obj)` | Converts nested tokens to flat camelCase, applies type mapping |
+| `generateCreateTheme()` | Generates `createTheme()` factory function |
+| `generateReactBindings()` | Generates ThemeProvider, useTheme, useBreakpoint |
+| `generateTypeDefinitions()` | Generates TypeScript `.d.ts` files |
 
 ---
 
@@ -493,6 +538,8 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 | **Unified interfaces** | Polymorphic access, type-safety, runtime brand switching |
 | **Typography as classes** | Groups related properties (font-size, weight, line-height) |
 | **Platform-specific breakpoint mapping** | iOS: 4→2 (compact/regular), Android: 4→3 (Compact/Medium/Expanded per Material 3) |
+| **JS dimension strings with px** | W3C DTCG spec, industry standard (Chakra UI, MUI), CSS-ready values |
+| **JS React ThemeProvider** | Consistent pattern across platforms, Dual-Axis support |
 
 ---
 
@@ -507,6 +554,9 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 | Add new breakpoint | `preprocess.js`, `build.js` |
 | Enable/disable platform | `build.js` (toggle flags) |
 | Modify component token pattern | `style-dictionary.config.js` |
+| Change JS type mapping | `build.js` → `flattenTokens()` function |
+| Modify React bindings | `build.js` → `generateReactBindings()` function |
+| Change JS output structure | `build.js` → `buildOptimizedJSOutput()` function |
 
 ---
 

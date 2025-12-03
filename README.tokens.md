@@ -198,17 +198,56 @@ Figma token types (`$type`) are automatically mapped to platform-specific types:
 
 ### JavaScript / React
 
-```javascript
-import {
-  textColorPrimary,
-  space2x
-} from '@marioschmidt/design-system-tokens/js/brands/bild/semantic/color/colormode-light';
+> **See [README.js.md](./README.js.md) for complete documentation**
 
-const Button = styled.button`
-  background-color: ${textColorPrimary};
-  padding: ${space2x};
-`;
+```javascript
+// With React ThemeProvider (Dual-Axis Architecture)
+import { ThemeProvider, useTheme } from '@marioschmidt/design-system-tokens/react';
+
+function App() {
+  return (
+    <ThemeProvider colorBrand="bild" colorMode="light">
+      <MyComponent />
+    </ThemeProvider>
+  );
+}
+
+function MyComponent() {
+  const { theme } = useTheme();
+  return (
+    <div style={{
+      color: theme.colors.textColorPrimary,      // "#232629"
+      padding: theme.spacing.gridSpaceRespBase   // "12px" - CSS-ready!
+    }}>
+      Content
+    </div>
+  );
+}
+
+// Without React - Direct theme creation
+import { createTheme } from '@marioschmidt/design-system-tokens/themes';
+
+const theme = createTheme({
+  colorBrand: 'bild',
+  colorMode: 'light',
+  breakpoint: 'md'
+});
+console.log(theme.colors.textColorPrimary);   // "#232629"
+console.log(theme.spacing.gridSpaceRespBase); // "12px"
 ```
+
+#### JS Token Type Mapping
+
+Token values are automatically formatted based on their `$type` from Figma:
+
+| Token `$type` | JS Output | Example |
+|---------------|-----------|---------|
+| `dimension`, `fontSize`, `lineHeight`, `letterSpacing` | String with `px` | `"24px"` |
+| `color` | String (hex/rgba) | `"#DD0000"` |
+| `fontWeight`, `opacity`, `number` | Number | `700`, `50` |
+| `fontFamily`, `string` | String | `"Gotham Condensed"` |
+
+This follows the W3C DTCG spec and industry best practices (Chakra UI, MUI).
 
 ### iOS Swift
 
@@ -583,7 +622,13 @@ dist/
 │               ├── typography/
 │               └── effects/
 ├── scss/                            # Same structure
-├── js/                              # Same structure
+├── js/                              # Optimized ESM output
+│   ├── index.js                     # Main entry point
+│   ├── types.d.ts                   # TypeScript definitions
+│   ├── primitives/                  # Shared primitives
+│   ├── brands/{brand}/              # Brand tokens (colors, spacing, typography)
+│   ├── themes/                      # Pre-built themes + createTheme()
+│   └── react/                       # ThemeProvider, useTheme, useBreakpoint
 ├── json/                            # Same structure
 ├── ios/                             # Swift Classes
 ├── android/
@@ -745,6 +790,9 @@ grep "Space2x" dist/ios/shared/Spaceprimitive.swift
 | Document | Description |
 |----------|-------------|
 | [📖 README.md](./README.md) | Main project overview |
+| [📖 README.js.md](./README.js.md) | JavaScript/React integration (Dual-Axis) |
+| [📖 README.android.md](./README.android.md) | Android Jetpack Compose (Dual-Axis) |
+| [📖 README.ios.md](./README.ios.md) | iOS SwiftUI (Dual-Axis) |
 | [📖 README.icons.md](./README.icons.md) | Icon pipeline documentation |
 | [Style Dictionary](https://styledictionary.com/) | Build tool documentation |
 

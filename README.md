@@ -49,6 +49,7 @@ Both pipelines use the **TokenSync Figma Plugin** for automated exports.
 |---------|-------------|---------|---------------|
 | **@marioschmidt/design-system-tokens** | Multi-platform design tokens | [![npm](https://img.shields.io/npm/v/@marioschmidt/design-system-tokens.svg)](https://www.npmjs.com/package/@marioschmidt/design-system-tokens) | [📖 README.tokens.md](./README.tokens.md) |
 | **@marioschmidt/design-system-icons** | Multi-platform icon assets | [![npm](https://img.shields.io/npm/v/@marioschmidt/design-system-icons.svg)](https://www.npmjs.com/package/@marioschmidt/design-system-icons) | [📖 README.icons.md](./README.icons.md) |
+| **JavaScript/React** | ESM + ThemeProvider (Dual-Axis) | - | [📖 README.js.md](./README.js.md) |
 | **Android Compose** | Jetpack Compose (Dual-Axis) | - | [📖 README.android.md](./README.android.md) |
 | **iOS SwiftUI** | SwiftUI (Dual-Axis) | - | [📖 README.ios.md](./README.ios.md) |
 
@@ -112,7 +113,7 @@ Both pipelines use the **TokenSync Figma Plugin** for automated exports.
 │  ├── css/     (CSS Vars)    │    │  ├── svg/      (Optimized)  │
 │  │   └── bundles/ (Quick)   │    │  ├── react/    (ESM + d.ts) │
 │  ├── scss/    (SCSS Vars)   │    │  ├── android/  (XML)        │
-│  ├── js/      (ES Modules)  │    │  ├── flutter/  (TTF + Dart) │
+│  ├── js/      (ESM + React) │    │  ├── flutter/  (TTF + Dart) │
 │  ├── json/    (Raw Data)    │    │  └── ios/      (xcassets)   │
 │  ├── ios/     (Swift)       │    │                             │
 │  └── android/ (Compose/Kt)  │    │                             │
@@ -155,8 +156,13 @@ npm install @marioschmidt/design-system-icons
 ```
 
 ```javascript
-// JavaScript
-import { textColorPrimary, space2x } from '@marioschmidt/design-system-tokens/js/brands/bild/semantic/color/colormode-light';
+// JavaScript (ES Modules) - Values are CSS-ready strings
+import { createTheme } from '@marioschmidt/design-system-tokens/themes';
+import { ThemeProvider, useTheme } from '@marioschmidt/design-system-tokens/react';
+
+const theme = createTheme({ colorBrand: 'bild', colorMode: 'light' });
+console.log(theme.colors.textColorPrimary);   // "#232629"
+console.log(theme.spacing.gridSpaceRespBase); // "12px" - CSS-ready!
 ```
 
 ```swift
@@ -363,7 +369,7 @@ npm run clean:icons        # Remove dist/icons/
 |----------|--------|-------|--------|
 | CSS | Custom Properties | `dist/css/**/*.css` | ✅ Production |
 | SCSS | Variables | `dist/scss/**/*.scss` | ✅ Production |
-| JavaScript | ES6 Modules | `dist/js/**/*.js` | ✅ Production |
+| JavaScript | ES Modules + React | `dist/js/**/*.js` | ✅ Production |
 | JSON | Raw Data | `dist/json/**/*.json` | ✅ Production |
 | iOS Swift | UIColor, CGFloat | `dist/ios/**/*.swift` | ✅ Production |
 | Android | Jetpack Compose (Kotlin) | `dist/android/compose/**/*.kt` | ✅ Production |
@@ -387,6 +393,7 @@ npm run clean:icons        # Remove dist/icons/
 | Document | Description |
 |----------|-------------|
 | [📖 README.tokens.md](./README.tokens.md) | Complete token pipeline documentation |
+| [📖 README.js.md](./README.js.md) | JavaScript/React integration (Dual-Axis) |
 | [📖 README.icons.md](./README.icons.md) | Complete icon pipeline documentation |
 | [📖 README.android.md](./README.android.md) | Android Jetpack Compose (Dual-Axis) |
 | [📖 README.ios.md](./README.ios.md) | iOS SwiftUI (Dual-Axis) |
@@ -398,6 +405,12 @@ npm run clean:icons        # Remove dist/icons/
 - [Transform Reference](./README.tokens.md#-token-transform-reference)
 - [Figma Integration](./README.tokens.md#-figma-integration--dependencies)
 - [Troubleshooting](./README.tokens.md#-troubleshooting)
+
+**JavaScript/React:**
+- [Quick Start](./README.js.md#quick-start)
+- [React ThemeProvider](./README.js.md#react-themeprovider)
+- [Token Type Mapping](./README.js.md#token-type-mapping)
+- [Multi-Brand Apps](./README.js.md#multi-brand-apps)
 
 **Icons:**
 - [Platform Usage Examples](./README.icons.md#usage)
