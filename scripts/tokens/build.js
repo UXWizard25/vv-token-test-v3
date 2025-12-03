@@ -5884,6 +5884,8 @@ function toCamelCase(str) {
     .replace(/^(.)/, (c) => c.toLowerCase());
 }
 
+// shortenTokenName removed - we now use last segment only (matching Style Dictionary behavior)
+
 /**
  * Convert string to PascalCase
  */
@@ -5916,17 +5918,25 @@ function readTokenFile(filePath) {
 
 /**
  * Extract flat tokens from nested structure
+ * Uses ONLY the last segment as token name (matching Style Dictionary behavior)
+ * This ensures consistent naming across all platforms (CSS, JS, iOS, Android)
  */
-function flattenTokens(obj, prefix = '') {
+function flattenTokens(obj) {
   const tokens = {};
-  for (const [key, value] of Object.entries(obj)) {
-    const newKey = prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key);
-    if (value && typeof value === 'object' && '$value' in value) {
-      tokens[newKey] = value.$value !== undefined ? value.$value : value.value;
-    } else if (value && typeof value === 'object' && !Array.isArray(value)) {
-      Object.assign(tokens, flattenTokens(value, newKey));
+  const extract = (node, path = []) => {
+    for (const [key, value] of Object.entries(node)) {
+      if (value && typeof value === 'object') {
+        if ('$value' in value) {
+          // Use only the last key as token name (matching name/custom/js transform)
+          const tokenName = toCamelCase(key);
+          tokens[tokenName] = value.$value !== undefined ? value.$value : value.value;
+        } else if (!Array.isArray(value)) {
+          extract(value, [...path, key]);
+        }
+      }
     }
-  }
+  };
+  extract(obj);
   return tokens;
 }
 
@@ -6037,11 +6047,11 @@ async function buildOptimizedJSOutput() {
       const data = readTokenFile(path.join(TOKENS_DIR, 'brands', brand, 'semantic', 'typography', `typography-${bp}.json`));
       if (!data) return;
       typography[bp] = {};
-      const extractTypo = (obj, prefix = '') => {
+      const extractTypo = (obj) => {
         for (const [key, value] of Object.entries(obj)) {
           if (value && typeof value === 'object') {
             if ('$value' in value && value.$type === 'typography') {
-              const name = prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key);
+              const name = toCamelCase(key); // Use only last segment
               const s = value.$value;
               typography[bp][name] = {
                 fontFamily: s.fontFamily, fontWeight: s.fontWeight || 400,
@@ -6049,7 +6059,7 @@ async function buildOptimizedJSOutput() {
                 lineHeight: typeof s.lineHeight === 'number' ? `${s.lineHeight}px` : String(s.lineHeight)
               };
               if (s.letterSpacing != null) typography[bp][name].letterSpacing = typeof s.letterSpacing === 'number' ? `${s.letterSpacing}px` : String(s.letterSpacing);
-            } else if (!Array.isArray(value)) extractTypo(value, prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key));
+            } else if (!Array.isArray(value)) extractTypo(value);
           }
         }
       };
@@ -6074,16 +6084,16 @@ async function buildOptimizedJSOutput() {
         const data = readTokenFile(path.join(TOKENS_DIR, 'brands', brand, 'semantic', 'effects', `effects-${mode}.json`));
         if (!data) return;
         effects[mode] = {};
-        const extractFx = (obj, prefix = '') => {
+        const extractFx = (obj) => {
           for (const [key, value] of Object.entries(obj)) {
             if (value && typeof value === 'object') {
               if ('$value' in value && value.$type === 'shadow' && Array.isArray(value.$value)) {
-                const name = prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key);
+                const name = toCamelCase(key); // Use only last segment
                 effects[mode][name] = value.$value.map(l => ({
                   offsetX: l.offsetX || 0, offsetY: l.offsetY || 0,
                   radius: l.radius || 0, spread: l.spread || 0, color: l.color || 'rgba(0,0,0,0)'
                 }));
-              } else if (!Array.isArray(value)) extractFx(value, prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key));
+              } else if (!Array.isArray(value)) extractFx(value);
             }
           }
         };
@@ -6411,15 +6421,16 @@ export type SizeValue = string;
   // Build token data lookup for createTheme
   // ========================================
 
-  // Helper to extract typography from token data
+  // Helper to extract typography from token data (uses last segment only)
   const extractTypography = (data) => {
     const result = {};
     if (!data) return result;
-    const extract = (obj, prefix = '') => {
+    const extract = (obj) => {
       for (const [key, value] of Object.entries(obj)) {
         if (value && typeof value === 'object') {
           if ('$value' in value && value.$type === 'typography') {
-            const name = prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key);
+            // Use only the last key as token name (matching Style Dictionary)
+            const name = toCamelCase(key);
             const s = value.$value;
             result[name] = {
               fontFamily: s.fontFamily,
@@ -6428,7 +6439,7 @@ export type SizeValue = string;
               lineHeight: typeof s.lineHeight === 'number' ? `${s.lineHeight}px` : String(s.lineHeight)
             };
           } else if (!Array.isArray(value)) {
-            extract(value, prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key));
+            extract(value);
           }
         }
       }
@@ -6437,15 +6448,16 @@ export type SizeValue = string;
     return result;
   };
 
-  // Helper to extract effects from token data
+  // Helper to extract effects from token data (uses last segment only)
   const extractEffects = (data) => {
     const result = {};
     if (!data) return result;
-    const extract = (obj, prefix = '') => {
+    const extract = (obj) => {
       for (const [key, value] of Object.entries(obj)) {
         if (value && typeof value === 'object') {
           if ('$value' in value && value.$type === 'shadow' && Array.isArray(value.$value)) {
-            const name = prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key);
+            // Use only the last key as token name (matching Style Dictionary)
+            const name = toCamelCase(key);
             result[name] = value.$value.map(l => ({
               offsetX: l.offsetX || 0,
               offsetY: l.offsetY || 0,
@@ -6454,7 +6466,7 @@ export type SizeValue = string;
               color: l.color || 'rgba(0,0,0,0)'
             }));
           } else if (!Array.isArray(value)) {
-            extract(value, prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key));
+            extract(value);
           }
         }
       }
@@ -6636,40 +6648,40 @@ export function getTokens(type, key1, key2) {
       const spacing = spacingData ? flattenTokens(spacingData) : {};
       const density = densityData ? flattenTokens(densityData) : {};
 
-      // Extract typography
+      // Extract typography (uses last segment only)
       const typography = {};
       if (typographyData) {
-        const extractTypo = (obj, prefix = '') => {
+        const extractTypo = (obj) => {
           for (const [key, value] of Object.entries(obj)) {
             if (value && typeof value === 'object') {
               if ('$value' in value && value.$type === 'typography') {
-                const name = prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key);
+                const name = toCamelCase(key);
                 const s = value.$value;
                 typography[name] = {
                   fontFamily: s.fontFamily, fontWeight: s.fontWeight || 400,
                   fontSize: typeof s.fontSize === 'number' ? `${s.fontSize}px` : s.fontSize,
                   lineHeight: typeof s.lineHeight === 'number' ? `${s.lineHeight}px` : String(s.lineHeight)
                 };
-              } else if (!Array.isArray(value)) extractTypo(value, prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key));
+              } else if (!Array.isArray(value)) extractTypo(value);
             }
           }
         };
         extractTypo(typographyData);
       }
 
-      // Extract effects
+      // Extract effects (uses last segment only)
       const effects = {};
       if (effectsData) {
-        const extractFx = (obj, prefix = '') => {
+        const extractFx = (obj) => {
           for (const [key, value] of Object.entries(obj)) {
             if (value && typeof value === 'object') {
               if ('$value' in value && value.$type === 'shadow' && Array.isArray(value.$value)) {
-                const name = prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key);
+                const name = toCamelCase(key);
                 effects[name] = value.$value.map(l => ({
                   offsetX: l.offsetX || 0, offsetY: l.offsetY || 0,
                   radius: l.radius || 0, spread: l.spread || 0, color: l.color || 'rgba(0,0,0,0)'
                 }));
-              } else if (!Array.isArray(value)) extractFx(value, prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key));
+              } else if (!Array.isArray(value)) extractFx(value);
             }
           }
         };
@@ -6727,40 +6739,40 @@ export default ${themeName};
       const spacing = spacingData ? flattenTokens(spacingData) : {};
       const density = advDensityData ? flattenTokens(advDensityData) : {};
 
-      // Extract typography from advertorial
+      // Extract typography from advertorial (uses last segment only)
       const typography = {};
       if (advTypoData) {
-        const extractTypo = (obj, prefix = '') => {
+        const extractTypo = (obj) => {
           for (const [key, value] of Object.entries(obj)) {
             if (value && typeof value === 'object') {
               if ('$value' in value && value.$type === 'typography') {
-                const name = prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key);
+                const name = toCamelCase(key);
                 const s = value.$value;
                 typography[name] = {
                   fontFamily: s.fontFamily, fontWeight: s.fontWeight || 400,
                   fontSize: typeof s.fontSize === 'number' ? `${s.fontSize}px` : s.fontSize,
                   lineHeight: typeof s.lineHeight === 'number' ? `${s.lineHeight}px` : String(s.lineHeight)
                 };
-              } else if (!Array.isArray(value)) extractTypo(value, prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key));
+              } else if (!Array.isArray(value)) extractTypo(value);
             }
           }
         };
         extractTypo(advTypoData);
       }
 
-      // Extract effects from colorBrand
+      // Extract effects from colorBrand (uses last segment only)
       const effects = {};
       if (effectsData) {
-        const extractFx = (obj, prefix = '') => {
+        const extractFx = (obj) => {
           for (const [key, value] of Object.entries(obj)) {
             if (value && typeof value === 'object') {
               if ('$value' in value && value.$type === 'shadow' && Array.isArray(value.$value)) {
-                const name = prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key);
+                const name = toCamelCase(key);
                 effects[name] = value.$value.map(l => ({
                   offsetX: l.offsetX || 0, offsetY: l.offsetY || 0,
                   radius: l.radius || 0, spread: l.spread || 0, color: l.color || 'rgba(0,0,0,0)'
                 }));
-              } else if (!Array.isArray(value)) extractFx(value, prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key));
+              } else if (!Array.isArray(value)) extractFx(value);
             }
           }
         };
