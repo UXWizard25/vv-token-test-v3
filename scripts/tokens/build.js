@@ -6969,11 +6969,308 @@ export default ${themeName};
   rootIdx = JS_FILE_HEADER + `// BILD Design System Tokens\n\n`;
   rootIdx += `export * as primitives from './primitives/index.js';\n`;
   rootIdx += `export * as brands from './brands/index.js';\n`;
-  rootIdx += `export * as themes from './themes/index.js';\n\n`;
+  rootIdx += `export * as themes from './themes/index.js';\n`;
+  rootIdx += `export * as react from './react/index.js';\n\n`;
   BRANDS.forEach(b => { rootIdx += `export * as ${b} from './brands/${b}/index.js';\n`; });
   writeJsFile(path.join(jsDistDir, 'index.js'), rootIdx);
 
   console.log(`  ✅ Generated ${presetThemes.length} pre-built themes`);
+
+  // ========================================
+  // REACT BINDINGS
+  // ========================================
+  console.log('\n  ⚛️  Generating React bindings...');
+
+  const reactDir = path.join(jsDistDir, 'react');
+  fs.mkdirSync(reactDir, { recursive: true });
+
+  // ThemeContext.js
+  const themeContextJs = JS_FILE_HEADER + `// React Context for BILD Design System Theme
+
+import { createContext } from 'react';
+
+export const ThemeContext = createContext(null);
+
+export default ThemeContext;
+`;
+  writeJsFile(path.join(reactDir, 'ThemeContext.js'), themeContextJs);
+
+  // useTheme.js
+  const useThemeJs = JS_FILE_HEADER + `// Hook to access the current theme
+
+import { useContext } from 'react';
+import { ThemeContext } from './ThemeContext.js';
+
+export function useTheme() {
+  const context = useContext(ThemeContext);
+
+  if (context === null) {
+    throw new Error(
+      'useTheme must be used within a ThemeProvider. ' +
+      'Wrap your component tree with <ThemeProvider>.'
+    );
+  }
+
+  return context;
+}
+
+export default useTheme;
+`;
+  writeJsFile(path.join(reactDir, 'useTheme.js'), useThemeJs);
+
+  // useBreakpoint.js
+  const useBreakpointJs = JS_FILE_HEADER + `// Hook for responsive breakpoint detection
+
+import { useState, useEffect } from 'react';
+
+const BREAKPOINTS = {
+  xs: 320,
+  sm: 390,
+  md: 600,
+  lg: 1024
+};
+
+function detectBreakpoint() {
+  if (typeof window === 'undefined') return null;
+  const width = window.innerWidth;
+  if (width >= BREAKPOINTS.lg) return 'lg';
+  if (width >= BREAKPOINTS.md) return 'md';
+  if (width >= BREAKPOINTS.sm) return 'sm';
+  return 'xs';
+}
+
+export function useBreakpoint(defaultBreakpoint = 'md') {
+  const [breakpoint, setBreakpoint] = useState(
+    () => detectBreakpoint() || defaultBreakpoint
+  );
+
+  useEffect(() => {
+    // SSR check
+    if (typeof window === 'undefined') return;
+
+    const handleResize = () => {
+      const detected = detectBreakpoint();
+      if (detected) setBreakpoint(detected);
+    };
+
+    // Set initial value
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return breakpoint;
+}
+
+export function useIsBreakpoint(target) {
+  const current = useBreakpoint();
+  return current === target;
+}
+
+export function useIsBreakpointUp(target) {
+  const current = useBreakpoint();
+  const order = ['xs', 'sm', 'md', 'lg'];
+  return order.indexOf(current) >= order.indexOf(target);
+}
+
+export function useIsBreakpointDown(target) {
+  const current = useBreakpoint();
+  const order = ['xs', 'sm', 'md', 'lg'];
+  return order.indexOf(current) <= order.indexOf(target);
+}
+
+export { BREAKPOINTS };
+
+export default useBreakpoint;
+`;
+  writeJsFile(path.join(reactDir, 'useBreakpoint.js'), useBreakpointJs);
+
+  // ThemeProvider.js
+  const themeProviderJs = JS_FILE_HEADER + `// ThemeProvider component for BILD Design System
+
+import { createElement, useState, useMemo, useEffect } from 'react';
+import { ThemeContext } from './ThemeContext.js';
+import { createTheme } from '../themes/createTheme.js';
+
+const BREAKPOINT_VALUES = {
+  xs: 320,
+  sm: 390,
+  md: 600,
+  lg: 1024
+};
+
+function detectBreakpoint() {
+  if (typeof window === 'undefined') return null;
+  const width = window.innerWidth;
+  if (width >= BREAKPOINT_VALUES.lg) return 'lg';
+  if (width >= BREAKPOINT_VALUES.md) return 'md';
+  if (width >= BREAKPOINT_VALUES.sm) return 'sm';
+  return 'xs';
+}
+
+export function ThemeProvider({
+  brand = 'bild',
+  colorBrand,
+  colorMode = 'light',
+  breakpoint = 'md',
+  density = 'default',
+  autoBreakpoint = false,
+  children
+}) {
+  // Breakpoint state for auto-detection
+  const [detectedBreakpoint, setDetectedBreakpoint] = useState(
+    () => (autoBreakpoint ? detectBreakpoint() : null) || breakpoint
+  );
+
+  // Window resize listener (only when autoBreakpoint=true)
+  useEffect(() => {
+    if (!autoBreakpoint) return;
+    if (typeof window === 'undefined') return;
+
+    const handleResize = () => {
+      const detected = detectBreakpoint();
+      if (detected) setDetectedBreakpoint(detected);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [autoBreakpoint]);
+
+  // Effective breakpoint (prop or auto-detected)
+  const effectiveBreakpoint = autoBreakpoint ? detectedBreakpoint : breakpoint;
+
+  // Create theme object via createTheme()
+  const theme = useMemo(() => {
+    return createTheme({
+      brand,
+      colorBrand,
+      colorMode,
+      breakpoint: effectiveBreakpoint,
+      density
+    });
+  }, [brand, colorBrand, colorMode, effectiveBreakpoint, density]);
+
+  // Context value with additional metadata
+  const contextValue = useMemo(() => ({
+    ...theme,
+    // Expose current configuration
+    brand,
+    colorBrand: theme.__meta?.colorBrand || colorBrand || (brand === 'advertorial' ? 'bild' : brand),
+    colorMode,
+    breakpoint: effectiveBreakpoint,
+    density,
+    autoBreakpoint
+  }), [theme, brand, colorBrand, colorMode, effectiveBreakpoint, density, autoBreakpoint]);
+
+  // Render provider using createElement (no JSX transpilation needed)
+  return createElement(ThemeContext.Provider, { value: contextValue }, children);
+}
+
+export default ThemeProvider;
+`;
+  writeJsFile(path.join(reactDir, 'ThemeProvider.js'), themeProviderJs);
+
+  // React index.js
+  const reactIndexJs = JS_FILE_HEADER + `// React bindings for BILD Design System
+
+export { ThemeContext } from './ThemeContext.js';
+export { ThemeProvider } from './ThemeProvider.js';
+export { useTheme } from './useTheme.js';
+export {
+  useBreakpoint,
+  useIsBreakpoint,
+  useIsBreakpointUp,
+  useIsBreakpointDown,
+  BREAKPOINTS
+} from './useBreakpoint.js';
+`;
+  writeJsFile(path.join(reactDir, 'index.js'), reactIndexJs);
+
+  // React TypeScript definitions
+  const reactIndexDts = `/**
+ * TypeScript definitions for BILD Design System React bindings
+ * Auto-generated - Do not edit directly
+ */
+
+import { Context, ReactNode } from 'react';
+
+// Brand and mode types
+export type Brand = 'bild' | 'sportbild' | 'advertorial';
+export type ColorBrand = 'bild' | 'sportbild';
+export type ColorMode = 'light' | 'dark';
+export type Breakpoint = 'xs' | 'sm' | 'md' | 'lg';
+export type Density = 'default' | 'dense' | 'spacious';
+
+// Theme context value
+export interface ThemeContextValue {
+  brand: Brand;
+  colorBrand: ColorBrand;
+  colorMode: ColorMode;
+  breakpoint: Breakpoint;
+  density: Density;
+  autoBreakpoint: boolean;
+  colors: Record<string, string | number>;
+  spacing: Record<string, string | number>;
+  typography: Record<string, {
+    fontFamily: string;
+    fontWeight: number;
+    fontSize: string;
+    lineHeight: string;
+    letterSpacing?: string;
+  }>;
+  effects: Record<string, Array<{
+    offsetX: number;
+    offsetY: number;
+    radius: number;
+    spread: number;
+    color: string;
+  }>>;
+  __meta?: {
+    brand: Brand;
+    colorBrand: ColorBrand;
+    colorMode: ColorMode;
+    breakpoint: Breakpoint;
+    density: Density;
+  };
+}
+
+// ThemeProvider props
+export interface ThemeProviderProps {
+  brand?: Brand;
+  colorBrand?: ColorBrand;
+  colorMode?: ColorMode;
+  breakpoint?: Breakpoint;
+  density?: Density;
+  autoBreakpoint?: boolean;
+  children: ReactNode;
+}
+
+// Breakpoints constant
+export declare const BREAKPOINTS: {
+  xs: 320;
+  sm: 390;
+  md: 600;
+  lg: 1024;
+};
+
+// Context
+export declare const ThemeContext: Context<ThemeContextValue | null>;
+
+// Components
+export declare function ThemeProvider(props: ThemeProviderProps): JSX.Element;
+
+// Hooks
+export declare function useTheme(): ThemeContextValue;
+export declare function useBreakpoint(defaultBreakpoint?: Breakpoint): Breakpoint;
+export declare function useIsBreakpoint(target: Breakpoint): boolean;
+export declare function useIsBreakpointUp(target: Breakpoint): boolean;
+export declare function useIsBreakpointDown(target: Breakpoint): boolean;
+`;
+  writeJsFile(path.join(reactDir, 'index.d.ts'), reactIndexDts);
+
+  console.log('  ✅ Generated React bindings (ThemeProvider, useTheme, useBreakpoint)');
 
   // Count files
   const countFiles = (dir, ext = '.js') => {
@@ -7232,6 +7529,7 @@ async function main() {
   console.log(`   JS structure (all variants):`);
   console.log(`   - primitives/          (bundled primitives)`);
   console.log(`   - themes/              (createTheme, pre-built themes)`);
+  console.log(`   - react/               (ThemeProvider, useTheme, useBreakpoint)`);
   console.log(`   - brands/{brand}/`);
   console.log(`       ├── colors.js      (light/dark + flat exports)`);
   console.log(`       ├── spacing.js     (breakpoints + flat exports)`);
