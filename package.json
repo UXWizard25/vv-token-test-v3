@@ -31,7 +31,9 @@
     "build": "npm run build:tokens && npm run build:bundles",
     "watch": "nodemon --watch src/design-tokens --ext json --exec npm run build:tokens",
     "clean": "rm -rf dist tokens",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "validate:snapshot:create": "node scripts/tokens/validate-outputs.js --create",
+    "validate:snapshot:check": "node scripts/tokens/validate-outputs.js --check"
   },
   "repository": {
     "type": "git",
