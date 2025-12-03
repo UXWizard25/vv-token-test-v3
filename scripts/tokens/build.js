@@ -6220,19 +6220,201 @@ async function buildOptimizedJSOutput() {
   BRANDS.forEach(b => { rootIdx += `export * as ${b} from './brands/${b}/index.js';\n`; });
   writeJsFile(path.join(jsDistDir, 'index.js'), rootIdx);
 
+  // ========================================
+  // TYPESCRIPT DEFINITIONS
+  // ========================================
+  console.log('\n  📝 Generating TypeScript definitions...');
+
+  // Type definitions header
+  const TS_HEADER = `/**
+ * TypeScript definitions for BILD Design System Tokens
+ * Auto-generated - Do not edit directly
+ */
+
+`;
+
+  // Helper interfaces
+  const baseTypes = TS_HEADER + `// Base type definitions
+
+export interface TypographyStyle {
+  fontFamily: string | null;
+  fontWeight: number;
+  fontSize: string;
+  lineHeight: string;
+  letterSpacing?: string;
+  fontStyle?: string;
+  textTransform?: string;
+  textDecoration?: string;
+}
+
+export interface ShadowLayer {
+  offsetX: number;
+  offsetY: number;
+  radius: number;
+  spread: number;
+  color: string;
+}
+
+export type ColorValue = string;
+export type SpacingValue = string;
+export type SizeValue = string;
+
+`;
+
+  // Generate primitives types
+  let primitivesTypes = TS_HEADER + `import type { ColorValue, SpacingValue, SizeValue } from '../types';\n\n`;
+  primitivesTypes += `export interface Primitives {\n`;
+  primitivesTypes += `  colors: Record<string, ColorValue>;\n`;
+  primitivesTypes += `  spacing: Record<string, SpacingValue>;\n`;
+  primitivesTypes += `  sizing: Record<string, SizeValue>;\n`;
+  primitivesTypes += `  fonts: Record<string, string | number>;\n`;
+  primitivesTypes += `}\n\n`;
+  primitivesTypes += `export declare const primitives: Primitives;\n`;
+  primitivesTypes += `export declare const colors: Primitives['colors'];\n`;
+  primitivesTypes += `export declare const spacing: Primitives['spacing'];\n`;
+  primitivesTypes += `export declare const sizing: Primitives['sizing'];\n`;
+  primitivesTypes += `export declare const fonts: Primitives['fonts'];\n\n`;
+  // Add flat exports
+  Object.values(primitives).forEach(category => {
+    Object.keys(category).forEach(name => {
+      primitivesTypes += `export declare const ${name}: string;\n`;
+    });
+  });
+
+  writeJsFile(path.join(jsDistDir, 'types.d.ts'), baseTypes);
+  writeJsFile(path.join(jsDistDir, 'primitives', 'index.d.ts'), primitivesTypes);
+
+  // Generate brand types
+  for (const brand of BRANDS) {
+    const hasColors = COLOR_BRANDS.includes(brand);
+
+    // Colors types
+    if (hasColors) {
+      let colorsTypes = TS_HEADER + `import type { ColorValue } from '../../types';\n\n`;
+      colorsTypes += `export interface ColorTokens {\n`;
+      colorsTypes += `  light: Record<string, ColorValue>;\n`;
+      colorsTypes += `  dark: Record<string, ColorValue>;\n`;
+      colorsTypes += `}\n\n`;
+      colorsTypes += `export declare const colors: ColorTokens;\n`;
+      colorsTypes += `export declare const light: ColorTokens['light'];\n`;
+      colorsTypes += `export declare const dark: ColorTokens['dark'];\n`;
+      writeJsFile(path.join(jsDistDir, 'brands', brand, 'colors.d.ts'), colorsTypes);
+    }
+
+    // Spacing types
+    let spacingTypes = TS_HEADER + `import type { SpacingValue } from '../../types';\n\n`;
+    spacingTypes += `export interface SpacingTokens {\n`;
+    BREAKPOINTS.forEach(bp => { spacingTypes += `  ${bp}: Record<string, SpacingValue>;\n`; });
+    spacingTypes += `}\n\n`;
+    spacingTypes += `export declare const spacing: SpacingTokens;\n`;
+    BREAKPOINTS.forEach(bp => { spacingTypes += `export declare const ${bp}: SpacingTokens['${bp}'];\n`; });
+    writeJsFile(path.join(jsDistDir, 'brands', brand, 'spacing.d.ts'), spacingTypes);
+
+    // Typography types
+    let typoTypes = TS_HEADER + `import type { TypographyStyle } from '../../types';\n\n`;
+    typoTypes += `export interface TypographyTokens {\n`;
+    BREAKPOINTS.forEach(bp => { typoTypes += `  ${bp}: Record<string, TypographyStyle>;\n`; });
+    typoTypes += `}\n\n`;
+    typoTypes += `export declare const typography: TypographyTokens;\n`;
+    BREAKPOINTS.forEach(bp => { typoTypes += `export declare const ${bp}: TypographyTokens['${bp}'];\n`; });
+    writeJsFile(path.join(jsDistDir, 'brands', brand, 'typography.d.ts'), typoTypes);
+
+    // Effects types
+    if (hasColors) {
+      let fxTypes = TS_HEADER + `import type { ShadowLayer } from '../../types';\n\n`;
+      fxTypes += `export interface EffectsTokens {\n`;
+      fxTypes += `  light: Record<string, ShadowLayer[]>;\n`;
+      fxTypes += `  dark: Record<string, ShadowLayer[]>;\n`;
+      fxTypes += `}\n\n`;
+      fxTypes += `export declare const effects: EffectsTokens;\n`;
+      fxTypes += `export declare const light: EffectsTokens['light'];\n`;
+      fxTypes += `export declare const dark: EffectsTokens['dark'];\n`;
+      writeJsFile(path.join(jsDistDir, 'brands', brand, 'effects.d.ts'), fxTypes);
+    }
+
+    // Density types
+    let densityTypes = TS_HEADER + `import type { SizeValue } from '../../types';\n\n`;
+    densityTypes += `export interface DensityTokens {\n`;
+    DENSITY_MODES.forEach(m => { densityTypes += `  ${m}: Record<string, SizeValue>;\n`; });
+    densityTypes += `}\n\n`;
+    densityTypes += `export declare const density: DensityTokens;\n`;
+    DENSITY_MODES.forEach(m => { densityTypes += `export declare const ${m === 'default' ? 'defaultDensity' : m}: DensityTokens['${m}'];\n`; });
+    writeJsFile(path.join(jsDistDir, 'brands', brand, 'density.d.ts'), densityTypes);
+
+    // Component types
+    const componentsDir = path.join(TOKENS_DIR, 'brands', brand, 'components');
+    if (fs.existsSync(componentsDir)) {
+      const componentNames = fs.readdirSync(componentsDir)
+        .filter(f => fs.statSync(path.join(componentsDir, f)).isDirectory())
+        .filter(f => !f.startsWith('.') && !f.startsWith('_'));
+
+      for (const comp of componentNames) {
+        let compTypes = TS_HEADER + `import type { ColorValue, SpacingValue, TypographyStyle, ShadowLayer } from '../../../types';\n\n`;
+        compTypes += `export interface ${comp}Tokens {\n`;
+        compTypes += `  colors?: { light?: Record<string, ColorValue>; dark?: Record<string, ColorValue>; };\n`;
+        compTypes += `  sizing?: { xs?: Record<string, SpacingValue>; sm?: Record<string, SpacingValue>; md?: Record<string, SpacingValue>; lg?: Record<string, SpacingValue>; };\n`;
+        compTypes += `  density?: { default?: Record<string, SpacingValue>; dense?: Record<string, SpacingValue>; spacious?: Record<string, SpacingValue>; };\n`;
+        compTypes += `  typography?: { xs?: Record<string, TypographyStyle>; sm?: Record<string, TypographyStyle>; md?: Record<string, TypographyStyle>; lg?: Record<string, TypographyStyle>; };\n`;
+        compTypes += `  effects?: { light?: Record<string, ShadowLayer[]>; dark?: Record<string, ShadowLayer[]>; };\n`;
+        compTypes += `}\n\n`;
+        compTypes += `export declare const ${comp}: ${comp}Tokens;\n`;
+        compTypes += `export declare function get${comp}Tokens(colorMode?: 'light' | 'dark', breakpoint?: 'xs' | 'sm' | 'md' | 'lg', density?: 'default' | 'dense' | 'spacious'): Record<string, any>;\n`;
+        compTypes += `export default ${comp};\n`;
+        writeJsFile(path.join(jsDistDir, 'brands', brand, 'components', `${comp}.d.ts`), compTypes);
+      }
+
+      // Components index types
+      if (componentNames.length > 0) {
+        let compIdxTypes = TS_HEADER;
+        componentNames.forEach(c => {
+          compIdxTypes += `export { ${c}, get${c}Tokens } from './${c}';\n`;
+        });
+        writeJsFile(path.join(jsDistDir, 'brands', brand, 'components', 'index.d.ts'), compIdxTypes);
+      }
+    }
+
+    // Brand index types
+    let brandIdxTypes = TS_HEADER;
+    if (hasColors) brandIdxTypes += `export * from './colors';\nexport { colors } from './colors';\n`;
+    brandIdxTypes += `export * from './spacing';\nexport { spacing } from './spacing';\n`;
+    brandIdxTypes += `export * from './typography';\nexport { typography } from './typography';\n`;
+    if (hasColors) brandIdxTypes += `export * from './effects';\nexport { effects } from './effects';\n`;
+    brandIdxTypes += `export * from './density';\nexport { density } from './density';\n`;
+    brandIdxTypes += `export * as components from './components';\n`;
+    writeJsFile(path.join(jsDistDir, 'brands', brand, 'index.d.ts'), brandIdxTypes);
+  }
+
+  // Brands index types
+  let brandsIdxTypes = TS_HEADER;
+  BRANDS.forEach(b => { brandsIdxTypes += `export * as ${b} from './${b}';\n`; });
+  writeJsFile(path.join(jsDistDir, 'brands', 'index.d.ts'), brandsIdxTypes);
+
+  // Root index types
+  let rootIdxTypes = TS_HEADER;
+  rootIdxTypes += `export * as primitives from './primitives';\n`;
+  rootIdxTypes += `export * as brands from './brands';\n\n`;
+  BRANDS.forEach(b => { rootIdxTypes += `export * as ${b} from './brands/${b}';\n`; });
+  rootIdxTypes += `\n// Re-export types\n`;
+  rootIdxTypes += `export type { TypographyStyle, ShadowLayer, ColorValue, SpacingValue, SizeValue } from './types';\n`;
+  writeJsFile(path.join(jsDistDir, 'index.d.ts'), rootIdxTypes);
+
   // Count files
-  const countFiles = (dir) => {
+  const countFiles = (dir, ext = '.js') => {
     if (!fs.existsSync(dir)) return 0;
     let count = 0;
     fs.readdirSync(dir).forEach(item => {
       const p = path.join(dir, item);
-      if (fs.statSync(p).isDirectory()) count += countFiles(p);
-      else if (item.endsWith('.js')) count++;
+      if (fs.statSync(p).isDirectory()) count += countFiles(p, ext);
+      else if (item.endsWith(ext)) count++;
     });
     return count;
   };
 
-  console.log(`\n  ✅ Optimized JS: ${countFiles(jsDistDir)} files (was 918)`);
+  const jsCount = countFiles(jsDistDir, '.js');
+  const dtsCount = countFiles(jsDistDir, '.d.ts');
+
+  console.log(`\n  ✅ Optimized JS: ${jsCount} files (was 918)`);
+  console.log(`  ✅ TypeScript definitions: ${dtsCount} files`);
 }
 
 /**
