@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2025-12-02T14:55:22.357Z",
+  "lastModified": "2025-12-03T10:40:40.195Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -252,7 +252,7 @@
         },
         {
           "id": "VariableID:16630:32557",
-          "name": "LetterSpacing/letterSpaceNeg0_25",
+          "name": "LetterSpacing/letterSpaceNeg0p25",
           "description": "This variable is a primitive for use in creating semantic text styles that need to use a subtle small letter spacing value of -0.25.",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -294,7 +294,7 @@
         },
         {
           "id": "VariableID:16630:32560",
-          "name": "LetterSpacing/letterSpace0_5",
+          "name": "LetterSpacing/letterSpace0p5",
           "description": "This variable is a primitive for use in creating semantic text styles that need to use a slight positive letter spacing value of 0.5.",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -308,7 +308,7 @@
         },
         {
           "id": "VariableID:16630:32561",
-          "name": "LetterSpacing/letterSpace0_25",
+          "name": "LetterSpacing/letterSpace0p25",
           "description": "This variable is a primitive for use in creating semantic text styles that need to use a subtle positive letter spacing value of 0.25.",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -322,7 +322,7 @@
         },
         {
           "id": "VariableID:16630:32562",
-          "name": "LetterSpacing/letterSpaceNeg0_5",
+          "name": "LetterSpacing/letterSpaceNeg0p5",
           "description": "This variable is a primitive for use in creating semantic variables that need to use a subtle negative letter spacing value of -0.5.",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -735,7 +735,7 @@
         },
         {
           "id": "VariableID:588:1978",
-          "name": "BILD/neutral/BILD100",
+          "name": "BILD/white/white100",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1129,7 +1129,7 @@
         },
         {
           "id": "VariableID:3746:1642",
-          "name": "BILD/gray/BILD085-alpha50",
+          "name": "BILD/gray/BILD085Alpha50",
           "description": "The 50% opacity on this color makes it equivalent to BILD093.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1141,7 +1141,7 @@
         },
         {
           "id": "VariableID:3756:1744",
-          "name": "BILD/green/BILDGreen093-alpha50",
+          "name": "BILD/green/BILDGreen093alpha50",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1153,7 +1153,7 @@
         },
         {
           "id": "VariableID:3765:1756",
-          "name": "BILD/green/BILDGreen056-alpha50",
+          "name": "BILD/green/BILDGreen056Alpha50",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1229,7 +1229,7 @@
         },
         {
           "id": "VariableID:7765:32149",
-          "name": "BILD/alpha/alphaBlack20",
+          "name": "BILD/black/blackAlpha20",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1241,7 +1241,7 @@
         },
         {
           "id": "VariableID:7765:33969",
-          "name": "BILD/alpha/alphaBlack10",
+          "name": "BILD/black/blackAlpha10",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1253,7 +1253,7 @@
         },
         {
           "id": "VariableID:8076:22743",
-          "name": "BILD/alpha/alphaBlack60",
+          "name": "BILD/black/blackAlpha60",
           "description": "Used on elevation effects.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1265,7 +1265,7 @@
         },
         {
           "id": "VariableID:8900:5503",
-          "name": "BILD/alpha/alphaBlack30",
+          "name": "BILD/black/blackAlpha30",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1313,7 +1313,7 @@
         },
         {
           "id": "VariableID:12717:3755",
-          "name": "BILD/blue/BILDBlue",
+          "name": "BILD/blue/bildBlue",
           "description": "This Blue color was taken from the Weather 2024 project. Tone: 069",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1493,7 +1493,7 @@
         },
         {
           "id": "VariableID:16894:98370",
-          "name": "BILD/alpha/alphaBlack70",
+          "name": "BILD/black/blackAlpha70",
           "description": "Used on elevation effects.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1505,7 +1505,7 @@
         },
         {
           "id": "VariableID:16914:22433",
-          "name": "BILD/alpha/alphaWhite10",
+          "name": "BILD/white/whiteAlpha10",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1517,7 +1517,7 @@
         },
         {
           "id": "VariableID:16914:22434",
-          "name": "BILD/alpha/alphaWhite20",
+          "name": "BILD/white/whiteAlpha20",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1529,7 +1529,7 @@
         },
         {
           "id": "VariableID:16914:22435",
-          "name": "BILD/alpha/alphaWhite30",
+          "name": "BILD/white/whiteAlpha30",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1544,7 +1544,7 @@
         },
         {
           "id": "VariableID:16914:22436",
-          "name": "BILD/alpha/alphaWhite60",
+          "name": "BILD/white/whiteAlpha60",
           "description": "Used on elevation effects.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1556,7 +1556,7 @@
         },
         {
           "id": "VariableID:16914:22437",
-          "name": "BILD/alpha/alphaWhite70",
+          "name": "BILD/white/whiteAlpha70",
           "description": "Used on elevation effects.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1568,7 +1568,7 @@
         },
         {
           "id": "VariableID:17326:23858",
-          "name": "BILD/neutral/BILDBlack",
+          "name": "BILD/black/black100",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1580,7 +1580,7 @@
         },
         {
           "id": "VariableID:17381:17511",
-          "name": "BILD/alpha/alphaWhite35",
+          "name": "BILD/white/whiteAlpha35",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1592,7 +1592,7 @@
         },
         {
           "id": "VariableID:17385:14798",
-          "name": "BILD/alpha/alphaBILDRed80",
+          "name": "BILD/red/bildRedAlpha80",
           "description": "Used on elevation effects.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1604,7 +1604,7 @@
         },
         {
           "id": "VariableID:17385:14799",
-          "name": "BILD/alpha/alphaBlack80",
+          "name": "BILD/black/blackAlpha80",
           "description": "Used on elevation effects.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1616,7 +1616,7 @@
         },
         {
           "id": "VariableID:17385:14801",
-          "name": "BILD/alpha/alphaWhite80",
+          "name": "BILD/white/whiteAlpha80",
           "description": "Used on elevation effects.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1628,7 +1628,7 @@
         },
         {
           "id": "VariableID:17389:15070",
-          "name": "BILD/alpha/alphaBlack35",
+          "name": "BILD/black/blackAlpha35",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1640,7 +1640,7 @@
         },
         {
           "id": "VariableID:17390:25780",
-          "name": "BILD/alpha/alphaBlack0",
+          "name": "BILD/black/blackAlpha0",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1652,7 +1652,7 @@
         },
         {
           "id": "VariableID:17500:35355",
-          "name": "BILD/alpha/alphaBlack50",
+          "name": "BILD/black/blackAlpha50",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1676,7 +1676,7 @@
         },
         {
           "id": "VariableID:18355:65196",
-          "name": "SportBILD/alpha/spobiBlue016-alpha0",
+          "name": "SportBILD/alpha/spobiBlue016alpha0",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1688,7 +1688,7 @@
         },
         {
           "id": "VariableID:18355:65197",
-          "name": "SportBILD/alpha/spobiBlue016-alpha70",
+          "name": "SportBILD/alpha/spobiBlue016alpha70",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1892,7 +1892,7 @@
         },
         {
           "id": "VariableID:19706:121945",
-          "name": "BILD/alpha/alphaBlack05",
+          "name": "BILD/black/blackAlpha05",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -2129,12 +2129,7 @@
         "VariableID:19706:124726",
         "VariableID:19709:71129",
         "VariableID:19709:71141",
-        "VariableID:19881:148841",
-        "VariableID:20988:206",
-        "VariableID:21003:45",
-        "VariableID:21005:195",
-        "VariableID:21017:13683",
-        "VariableID:21054:260"
+        "VariableID:19881:148841"
       ],
       "variables": [
         {
@@ -3769,7 +3764,10 @@
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
-            "588:0": "#DD0000",
+            "588:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:20360:22977"
+            },
             "592:1": {
               "type": "VARIABLE_ALIAS",
               "id": "VariableID:21076:41637"
@@ -5478,7 +5476,7 @@
         },
         {
           "id": "VariableID:17385:14800",
-          "name": "Component/Mediaplayer/vidPlayerControlsAutoplayButtonBgColor",
+          "name": "Component/MediaPlayer/vidPlayerControlsAutoplayButtonBgColor",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -5500,7 +5498,7 @@
         },
         {
           "id": "VariableID:17385:15019",
-          "name": "Component/Mediaplayer/vidPlayerControlButtonsBgHoverColor",
+          "name": "Component/MediaPlayer/vidPlayerControlButtonsBgHoverColor",
           "description": "This variable is used for hover states of video player control buttons.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -5522,7 +5520,7 @@
         },
         {
           "id": "VariableID:17389:15063",
-          "name": "Component/Mediaplayer/vidPlayerControlButtonsBgColorHover",
+          "name": "Component/MediaPlayer/vidPlayerControlButtonsBgColorHover",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -5586,7 +5584,7 @@
         },
         {
           "id": "VariableID:17495:370",
-          "name": "Component/Mediaplayer/vidPlayerOverlayScrimColor",
+          "name": "Component/MediaPlayer/vidPlayerOverlayScrimColor",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -5608,7 +5606,7 @@
         },
         {
           "id": "VariableID:17593:16476",
-          "name": "Component/Mediaplayer/audioPlayerPlayButtonBgColor",
+          "name": "Component/MediaPlayer/audioPlayerPlayButtonBgColor",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -6446,7 +6444,7 @@
         },
         {
           "id": "VariableID:19706:121815",
-          "name": "Component/Mediaplayer/vidPlayerTooltipBgColor",
+          "name": "Component/MediaPlayer/vidPlayerTooltipBgColor",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -6468,7 +6466,7 @@
         },
         {
           "id": "VariableID:19706:121941",
-          "name": "Component/Mediaplayer/vidPlayerControlButtonsBgColorPressed",
+          "name": "Component/MediaPlayer/vidPlayerControlButtonsBgColorPressed",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -6490,7 +6488,7 @@
         },
         {
           "id": "VariableID:19706:124726",
-          "name": "Component/Mediaplayer/vidPlayerProgressBarPreloadBgColor",
+          "name": "Component/MediaPlayer/vidPlayerProgressBarPreloadBgColor",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -6511,7 +6509,7 @@
         },
         {
           "id": "VariableID:19709:71129",
-          "name": "Component/Mediaplayer/vidPlayerUnmuteButtonBgColor",
+          "name": "Component/MediaPlayer/vidPlayerUnmuteButtonBgColor",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -6532,7 +6530,7 @@
         },
         {
           "id": "VariableID:19709:71141",
-          "name": "Component/Mediaplayer/vidPlayerUnmuteButtonBgColorHover",
+          "name": "Component/MediaPlayer/vidPlayerUnmuteButtonBgColorHover",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -6570,81 +6568,6 @@
             "TEXT_FILL"
           ],
           "hiddenFromPublishing": true,
-          "variableCollectionId": "VariableCollectionId:588:1979"
-        },
-        {
-          "id": "VariableID:20988:206",
-          "name": "Semantic/Core/newTest",
-          "description": "this is a test for the token pipeline",
-          "resolvedType": "COLOR",
-          "valuesByMode": {
-            "588:0": "#007CF9",
-            "592:1": "#B0D1F3"
-          },
-          "scopes": [
-            "ALL_SCOPES"
-          ],
-          "hiddenFromPublishing": false,
-          "variableCollectionId": "VariableCollectionId:588:1979"
-        },
-        {
-          "id": "VariableID:21003:45",
-          "name": "Semantic/Core/testtestakskss",
-          "description": "this is a test for the token pipeline",
-          "resolvedType": "COLOR",
-          "valuesByMode": {
-            "588:0": "#F45B02",
-            "592:1": "#B0D1F3"
-          },
-          "scopes": [
-            "ALL_SCOPES"
-          ],
-          "hiddenFromPublishing": false,
-          "variableCollectionId": "VariableCollectionId:588:1979"
-        },
-        {
-          "id": "VariableID:21005:195",
-          "name": "Semantic/Core/fabianColor",
-          "description": "",
-          "resolvedType": "COLOR",
-          "valuesByMode": {
-            "588:0": "#D31818",
-            "592:1": "#00FF59"
-          },
-          "scopes": [
-            "ALL_SCOPES"
-          ],
-          "hiddenFromPublishing": false,
-          "variableCollectionId": "VariableCollectionId:588:1979"
-        },
-        {
-          "id": "VariableID:21017:13683",
-          "name": "Semantic/Core/philipTest",
-          "description": "",
-          "resolvedType": "COLOR",
-          "valuesByMode": {
-            "588:0": "#00FF73",
-            "592:1": "#00FF59"
-          },
-          "scopes": [
-            "ALL_SCOPES"
-          ],
-          "hiddenFromPublishing": false,
-          "variableCollectionId": "VariableCollectionId:588:1979"
-        },
-        {
-          "id": "VariableID:21054:260",
-          "name": "Semantic/Core/pipelineTestToken",
-          "description": "",
-          "resolvedType": "COLOR",
-          "valuesByMode": {
-            "588:0": "#125631",
-            "592:1": "#00491A"
-          },
-          "scopes": [
-            "ALL_SCOPES"
-          ],
-          "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
         }
       ]
@@ -8032,7 +7955,7 @@
         },
         {
           "id": "VariableID:18682:535",
-          "name": "Component/Inputfield/densityInputFieldInlineSpace",
+          "name": "Component/InputField/densityInputFieldInlineSpace",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -8055,7 +7978,7 @@
         },
         {
           "id": "VariableID:18682:536",
-          "name": "Component/Inputfield/densityInputFieldStackSpace",
+          "name": "Component/InputField/densityInputFieldStackSpace",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -8078,7 +8001,7 @@
         },
         {
           "id": "VariableID:18682:4564",
-          "name": "Component/Inputfield/densityInputFieldHeightSize",
+          "name": "Component/InputField/densityInputFieldHeightSize",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -8101,7 +8024,7 @@
         },
         {
           "id": "VariableID:18693:666",
-          "name": "Component/Inputfield/densityInputFieldLabelFontSize",
+          "name": "Component/InputField/densityInputFieldLabelFontSize",
           "description": "This variable is in the SpaceScaling Collection. It was made to experiment with how scaling size could work across different content scaling / size / contrast themes. Font size across scaling options: compact 15 - default 17 - spacious 19",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -11588,7 +11511,7 @@
         },
         {
           "id": "VariableID:8192:11909",
-          "name": "Component/_DSysDocs/dsCaptionStackSpace0_5x",
+          "name": "Component/_DSysDocs/dsCaptionStackSpace0p5x",
           "description": "This variable is used in documentation pages that have small caption or lables along with a UI component documented. 4 - 4 - 6 - 8",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -12851,7 +12774,7 @@
         },
         {
           "id": "VariableID:8771:2880",
-          "name": "Component/Table/tableColumnWidthSize0_5x",
+          "name": "Component/Table/tableColumnWidthSize0p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -12909,7 +12832,7 @@
         },
         {
           "id": "VariableID:8779:3871",
-          "name": "Component/Table/tableColumnWidthSize1_5x",
+          "name": "Component/Table/tableColumnWidthSize1p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -12938,7 +12861,7 @@
         },
         {
           "id": "VariableID:8778:2963",
-          "name": "Component/Table/tableColumnWidthSize2_5x",
+          "name": "Component/Table/tableColumnWidthSize2p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -13143,7 +13066,7 @@
         },
         {
           "id": "VariableID:9539:13475",
-          "name": "Component/Table/tableColumnWidthSize0_75x",
+          "name": "Component/Table/tableColumnWidthSize0p75x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
