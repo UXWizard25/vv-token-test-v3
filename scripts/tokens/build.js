@@ -5888,53 +5888,6 @@ function writeJsFile(filePath, content) {
 }
 
 /**
- * Convert ESM module to CommonJS
- */
-function esmToCjs(esmContent) {
-  let cjs = esmContent;
-
-  // Convert: export { foo, bar } from './module.js';
-  cjs = cjs.replace(/export\s*\{\s*([^}]+)\s*\}\s*from\s*['"]([^'"]+)['"]\s*;?/g, (match, exports, modulePath) => {
-    const cjsPath = modulePath.replace(/\.js$/, '.cjs');
-    const exportNames = exports.split(',').map(e => e.trim());
-    return `const { ${exportNames.join(', ')} } = require('${cjsPath}');\n` +
-           exportNames.map(n => `exports.${n} = ${n};`).join('\n');
-  });
-
-  // Convert: export * from './module.js';
-  cjs = cjs.replace(/export\s*\*\s*from\s*['"]([^'"]+)['"]\s*;?/g, (match, modulePath) => {
-    const cjsPath = modulePath.replace(/\.js$/, '.cjs');
-    return `Object.assign(exports, require('${cjsPath}'));`;
-  });
-
-  // Convert: export * as name from './module.js';
-  cjs = cjs.replace(/export\s*\*\s*as\s*(\w+)\s*from\s*['"]([^'"]+)['"]\s*;?/g, (match, name, modulePath) => {
-    const cjsPath = modulePath.replace(/\.js$/, '.cjs');
-    return `exports.${name} = require('${cjsPath}');`;
-  });
-
-  // Convert: export const foo = value;
-  cjs = cjs.replace(/export\s+const\s+(\w+)\s*=/g, 'const $1 = exports.$1 =');
-
-  // Convert: export function foo()
-  cjs = cjs.replace(/export\s+function\s+(\w+)/g, 'exports.$1 = function $1');
-
-  // Convert: export default foo;
-  cjs = cjs.replace(/export\s+default\s+(\w+)\s*;?/g, 'module.exports = $1;');
-
-  // Convert: import { foo } from './module.js';
-  cjs = cjs.replace(/import\s*\{\s*([^}]+)\s*\}\s*from\s*['"]([^'"]+)['"]\s*;?/g, (match, imports, modulePath) => {
-    const cjsPath = modulePath.replace(/\.js$/, '.cjs');
-    return `const { ${imports} } = require('${cjsPath}');`;
-  });
-
-  // Convert: import type { ... } from ... (remove - TypeScript only)
-  cjs = cjs.replace(/import\s+type\s*\{[^}]*\}\s*from\s*['"][^'"]+['"]\s*;?/g, '');
-
-  return cjs;
-}
-
-/**
  * Minify JavaScript content
  * Simple minification: remove comments, compact JSON, reduce whitespace
  */
@@ -7035,52 +6988,13 @@ export default ${themeName};
   };
 
   // ========================================
-  // COMMONJS BUILD
+  // MINIFIED BUILD
   // ========================================
-  console.log('\n  📦 Generating CommonJS build...');
-
-  const cjsDistDir = path.join(DIST_DIR, 'cjs');
-  if (fs.existsSync(cjsDistDir)) {
-    fs.rmSync(cjsDistDir, { recursive: true });
-  }
-
-  // Recursively convert all .js files to .cjs
-  const convertToCjs = (srcDir, destDir) => {
-    if (!fs.existsSync(srcDir)) return;
-    fs.mkdirSync(destDir, { recursive: true });
-
-    const items = fs.readdirSync(srcDir);
-    items.forEach(item => {
-      const srcPath = path.join(srcDir, item);
-      const stat = fs.statSync(srcPath);
-
-      if (stat.isDirectory()) {
-        convertToCjs(srcPath, path.join(destDir, item));
-      } else if (item.endsWith('.js')) {
-        const esmContent = fs.readFileSync(srcPath, 'utf8');
-        const cjsContent = esmToCjs(esmContent);
-        const destPath = path.join(destDir, item.replace(/\.js$/, '.cjs'));
-        fs.writeFileSync(destPath, cjsContent, 'utf8');
-      } else if (item.endsWith('.d.ts')) {
-        // Copy TypeScript definitions as-is (rename to .d.cts for CJS)
-        const destPath = path.join(destDir, item.replace(/\.d\.ts$/, '.d.cts'));
-        fs.copyFileSync(srcPath, destPath);
-      }
-    });
-  };
-
-  convertToCjs(jsDistDir, cjsDistDir);
-
-  // ========================================
-  // MINIFIED BUILDS
-  // ========================================
-  console.log('  🗜️  Generating minified builds...');
+  console.log('\n  🗜️  Generating minified build...');
 
   const minEsmDir = path.join(DIST_DIR, 'js.min');
-  const minCjsDir = path.join(DIST_DIR, 'cjs.min');
 
   if (fs.existsSync(minEsmDir)) fs.rmSync(minEsmDir, { recursive: true });
-  if (fs.existsSync(minCjsDir)) fs.rmSync(minCjsDir, { recursive: true });
 
   // Recursively minify all JS files
   const minifyDir = (srcDir, destDir, ext) => {
@@ -7104,13 +7018,10 @@ export default ${themeName};
   };
 
   minifyDir(jsDistDir, minEsmDir, '.js');
-  minifyDir(cjsDistDir, minCjsDir, '.cjs');
 
   const jsCount = countFiles(jsDistDir, '.js');
   const dtsCount = countFiles(jsDistDir, '.d.ts');
-  const cjsCount = countFiles(cjsDistDir, '.cjs');
   const minEsmCount = countFiles(minEsmDir, '.js');
-  const minCjsCount = countFiles(minCjsDir, '.cjs');
 
   // Calculate size reduction
   const getDirectorySize = (dir) => {
@@ -7133,9 +7044,7 @@ export default ${themeName};
   const reduction = Math.round((1 - minEsmSize / esmSize) * 100);
 
   console.log(`\n  ✅ ESM modules: ${jsCount} files`);
-  console.log(`  ✅ CommonJS modules: ${cjsCount} files`);
   console.log(`  ✅ Minified ESM: ${minEsmCount} files (${reduction}% smaller)`);
-  console.log(`  ✅ Minified CJS: ${minCjsCount} files`);
   console.log(`  ✅ TypeScript definitions: ${dtsCount} files`);
 }
 
@@ -7314,8 +7223,6 @@ async function main() {
   console.log(`   ├── scss/       (SCSS variables)`);
   console.log(`   ├── js/         (ESM modules)`);
   console.log(`   ├── js.min/     (ESM minified)`);
-  console.log(`   ├── cjs/        (CommonJS modules)`);
-  console.log(`   ├── cjs.min/    (CommonJS minified)`);
   console.log(`   ├── json/       (JSON)`);
   if (SWIFTUI_ENABLED) console.log(`   ├── ios/        (SwiftUI)`);
   if (COMPOSE_ENABLED) console.log(`   ${FLUTTER_ENABLED ? '├' : '└'}── android/    (Jetpack Compose)`);
