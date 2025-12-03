@@ -6407,9 +6407,125 @@ export type SizeValue = string;
 
   const themesDir = path.join(jsDistDir, 'themes');
 
-  // createTheme utility
+  // ========================================
+  // Build token data lookup for createTheme
+  // ========================================
+
+  // Helper to extract typography from token data
+  const extractTypography = (data) => {
+    const result = {};
+    if (!data) return result;
+    const extract = (obj, prefix = '') => {
+      for (const [key, value] of Object.entries(obj)) {
+        if (value && typeof value === 'object') {
+          if ('$value' in value && value.$type === 'typography') {
+            const name = prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key);
+            const s = value.$value;
+            result[name] = {
+              fontFamily: s.fontFamily,
+              fontWeight: s.fontWeight || 400,
+              fontSize: typeof s.fontSize === 'number' ? `${s.fontSize}px` : s.fontSize,
+              lineHeight: typeof s.lineHeight === 'number' ? `${s.lineHeight}px` : String(s.lineHeight)
+            };
+          } else if (!Array.isArray(value)) {
+            extract(value, prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key));
+          }
+        }
+      }
+    };
+    extract(data);
+    return result;
+  };
+
+  // Helper to extract effects from token data
+  const extractEffects = (data) => {
+    const result = {};
+    if (!data) return result;
+    const extract = (obj, prefix = '') => {
+      for (const [key, value] of Object.entries(obj)) {
+        if (value && typeof value === 'object') {
+          if ('$value' in value && value.$type === 'shadow' && Array.isArray(value.$value)) {
+            const name = prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key);
+            result[name] = value.$value.map(l => ({
+              offsetX: l.offsetX || 0,
+              offsetY: l.offsetY || 0,
+              radius: l.radius || 0,
+              spread: l.spread || 0,
+              color: l.color || 'rgba(0,0,0,0)'
+            }));
+          } else if (!Array.isArray(value)) {
+            extract(value, prefix ? `${prefix}${toPascalCase(key)}` : toCamelCase(key));
+          }
+        }
+      }
+    };
+    extract(data);
+    return result;
+  };
+
+  // Build complete token lookup
+  const tokenLookup = {
+    colors: {},    // [colorBrand][colorMode]
+    spacing: {},   // [brand][breakpoint]
+    typography: {},// [brand][breakpoint]
+    effects: {},   // [colorBrand][colorMode]
+    density: {}    // [brand][densityMode]
+  };
+
+  // Load colors and effects for color brands (bild, sportbild)
+  for (const colorBrand of COLOR_BRANDS) {
+    tokenLookup.colors[colorBrand] = {};
+    tokenLookup.effects[colorBrand] = {};
+
+    for (const colorMode of COLOR_MODES) {
+      const colorsData = readTokenFile(path.join(TOKENS_DIR, 'brands', colorBrand, 'color', `colormode-${colorMode}.json`));
+      tokenLookup.colors[colorBrand][colorMode] = colorsData ? flattenTokens(colorsData) : {};
+
+      const effectsData = readTokenFile(path.join(TOKENS_DIR, 'brands', colorBrand, 'semantic', 'effects', `effects-${colorMode}.json`));
+      tokenLookup.effects[colorBrand][colorMode] = extractEffects(effectsData);
+    }
+  }
+
+  // Load spacing, typography, density for all brands
+  for (const brand of BRANDS) {
+    tokenLookup.spacing[brand] = {};
+    tokenLookup.typography[brand] = {};
+    tokenLookup.density[brand] = {};
+
+    const breakpointsDir = path.join(TOKENS_DIR, 'brands', brand, 'breakpoints');
+    if (fs.existsSync(breakpointsDir)) {
+      for (const bp of BREAKPOINTS) {
+        const bpFile = fs.readdirSync(breakpointsDir).find(f => f.includes(`-${bp}-`) || f.includes(`-${bp}.`));
+        if (bpFile) {
+          const spacingData = readTokenFile(path.join(breakpointsDir, bpFile));
+          tokenLookup.spacing[brand][bp] = spacingData ? flattenTokens(spacingData) : {};
+        }
+      }
+    }
+
+    const typoDir = path.join(TOKENS_DIR, 'brands', brand, 'semantic', 'typography');
+    if (fs.existsSync(typoDir)) {
+      for (const bp of BREAKPOINTS) {
+        const typoData = readTokenFile(path.join(typoDir, `typography-${bp}.json`));
+        tokenLookup.typography[brand][bp] = extractTypography(typoData);
+      }
+    }
+
+    const densityDir = path.join(TOKENS_DIR, 'brands', brand, 'density');
+    if (fs.existsSync(densityDir)) {
+      for (const dm of DENSITY_MODES) {
+        const densityData = readTokenFile(path.join(densityDir, `density-${dm}.json`));
+        tokenLookup.density[brand][dm] = densityData ? flattenTokens(densityData) : {};
+      }
+    }
+  }
+
+  // createTheme utility with embedded token data
   let createThemeJs = JS_FILE_HEADER + `// Theme factory for BILD Design System
 // Supports multi-brand, multi-mode token combinations
+
+// Embedded token data for all brand/mode combinations
+const tokenData = ${JSON.stringify(tokenLookup, null, 2)};
 
 /**
  * Create a theme by combining tokens from different modes
@@ -6419,9 +6535,9 @@ export type SizeValue = string;
  * @param {string} config.colorMode - Color mode ('light' or 'dark')
  * @param {string} config.breakpoint - Breakpoint ('xs', 'sm', 'md', 'lg')
  * @param {string} config.density - Density mode ('default', 'dense', 'spacious')
- * @returns {Object} Combined theme object
+ * @returns {Object} Combined theme object with all tokens
  */
-export function createTheme(config) {
+export function createTheme(config = {}) {
   const {
     brand = 'bild',
     colorBrand,
@@ -6431,22 +6547,40 @@ export function createTheme(config) {
   } = config;
 
   // Determine color source (for Advertorial dual-axis support)
+  // Advertorial uses BILD or SportBILD colors, defaulting to BILD
   const effectiveColorBrand = colorBrand || (brand === 'advertorial' ? 'bild' : brand);
 
-  // Dynamic imports would be used in a real app, but for static builds we use require
-  const theme = {
-    // Metadata
+  // Validate inputs
+  if (!['bild', 'sportbild', 'advertorial'].includes(brand)) {
+    throw new Error(\`Invalid brand: \${brand}. Must be one of: bild, sportbild, advertorial\`);
+  }
+  if (!['bild', 'sportbild'].includes(effectiveColorBrand)) {
+    throw new Error(\`Invalid colorBrand: \${effectiveColorBrand}. Must be one of: bild, sportbild\`);
+  }
+  if (!['light', 'dark'].includes(colorMode)) {
+    throw new Error(\`Invalid colorMode: \${colorMode}. Must be one of: light, dark\`);
+  }
+  if (!['xs', 'sm', 'md', 'lg'].includes(breakpoint)) {
+    throw new Error(\`Invalid breakpoint: \${breakpoint}. Must be one of: xs, sm, md, lg\`);
+  }
+  if (!['default', 'dense', 'spacious'].includes(density)) {
+    throw new Error(\`Invalid density: \${density}. Must be one of: default, dense, spacious\`);
+  }
+
+  return {
     __meta: {
       brand,
       colorBrand: effectiveColorBrand,
       colorMode,
       breakpoint,
-      density,
-      generatedAt: new Date().toISOString()
-    }
+      density
+    },
+    colors: tokenData.colors[effectiveColorBrand]?.[colorMode] || {},
+    spacing: tokenData.spacing[brand]?.[breakpoint] || {},
+    typography: tokenData.typography[brand]?.[breakpoint] || {},
+    effects: tokenData.effects[effectiveColorBrand]?.[colorMode] || {},
+    density: tokenData.density[brand]?.[density] || {}
   };
-
-  return theme;
 }
 
 /**
@@ -6473,6 +6607,13 @@ export const breakpoints = ['xs', 'sm', 'md', 'lg'];
  * Available density modes
  */
 export const densityModes = ['default', 'dense', 'spacious'];
+
+/**
+ * Get token data for a specific combination (lower-level API)
+ */
+export function getTokens(type, key1, key2) {
+  return tokenData[type]?.[key1]?.[key2] || {};
+}
 `;
   writeJsFile(path.join(themesDir, 'createTheme.js'), createThemeJs);
 
@@ -6659,7 +6800,7 @@ export default ${themeName};
 
   // Themes index
   let themesIdx = JS_FILE_HEADER + `// Theme exports\n\n`;
-  themesIdx += `export { createTheme, availableBrands, colorBrands, colorModes, breakpoints, densityModes } from './createTheme.js';\n\n`;
+  themesIdx += `export { createTheme, getTokens, availableBrands, colorBrands, colorModes, breakpoints, densityModes } from './createTheme.js';\n\n`;
   themesIdx += `// Pre-built themes\n`;
   presetThemes.forEach(t => { themesIdx += `export { ${t.name} } from './${t.file}.js';\n`; });
   themesIdx += `\n// All themes object\nexport const themes = {\n`;
@@ -6688,12 +6829,13 @@ export default ${themeName};
   themesIdxDts += `  breakpoint?: 'xs' | 'sm' | 'md' | 'lg';\n`;
   themesIdxDts += `  density?: 'default' | 'dense' | 'spacious';\n`;
   themesIdxDts += `}\n\n`;
-  themesIdxDts += `export declare function createTheme(config: ThemeConfig): Theme;\n`;
-  themesIdxDts += `export declare const availableBrands: string[];\n`;
-  themesIdxDts += `export declare const colorBrands: string[];\n`;
-  themesIdxDts += `export declare const colorModes: string[];\n`;
-  themesIdxDts += `export declare const breakpoints: string[];\n`;
-  themesIdxDts += `export declare const densityModes: string[];\n\n`;
+  themesIdxDts += `export declare function createTheme(config?: ThemeConfig): Theme;\n`;
+  themesIdxDts += `export declare function getTokens(type: 'colors' | 'spacing' | 'typography' | 'effects' | 'density', key1: string, key2: string): Record<string, any>;\n`;
+  themesIdxDts += `export declare const availableBrands: readonly ['bild', 'sportbild', 'advertorial'];\n`;
+  themesIdxDts += `export declare const colorBrands: readonly ['bild', 'sportbild'];\n`;
+  themesIdxDts += `export declare const colorModes: readonly ['light', 'dark'];\n`;
+  themesIdxDts += `export declare const breakpoints: readonly ['xs', 'sm', 'md', 'lg'];\n`;
+  themesIdxDts += `export declare const densityModes: readonly ['default', 'dense', 'spacious'];\n\n`;
   themesIdxDts += `// Pre-built themes\n`;
   presetThemes.forEach(t => { themesIdxDts += `export declare const ${t.name}: Theme;\n`; });
   themesIdxDts += `\nexport declare const themes: Record<string, Theme>;\n`;
