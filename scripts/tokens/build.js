@@ -1674,6 +1674,143 @@ async function optimizeComponentColorCSS() {
 }
 
 /**
+ * Optimizes Component Effects CSS by consolidating identical light/dark effects
+ *
+ * Effects (box-shadow) are often identical between light and dark modes.
+ * This function compares effects-light.css and effects-dark.css files,
+ * and if all effects are identical, consolidates them to a single mode-agnostic file.
+ */
+async function optimizeComponentEffectsCSS() {
+  console.log('\n✨ Optimizing Component Effects CSS:\n');
+
+  let optimizedCount = 0;
+  let skippedCount = 0;
+
+  /**
+   * Parse effects CSS file and extract class rules
+   * Returns: Map<className, ruleContent>
+   */
+  function parseEffectsCssFile(cssContent) {
+    const rules = new Map();
+
+    // Match: [data-brand="..."][data-theme="..."] .class-name { ... }
+    const ruleRegex = /\[data-brand="[^"]+"\]\[data-theme="[^"]+"\]\s+\.([a-z0-9-]+)\s*\{([^}]+)\}/gi;
+    let match;
+
+    while ((match = ruleRegex.exec(cssContent)) !== null) {
+      const className = match[1];
+      const ruleContent = match[2].trim();
+      rules.set(className, ruleContent);
+    }
+
+    return rules;
+  }
+
+  /**
+   * Check if all rules are identical between light and dark
+   */
+  function areEffectsIdentical(lightRules, darkRules) {
+    if (lightRules.size !== darkRules.size) {
+      return false;
+    }
+
+    for (const [className, lightContent] of lightRules) {
+      const darkContent = darkRules.get(className);
+      if (!darkContent || lightContent !== darkContent) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Generate mode-agnostic effects CSS
+   */
+  function generateModeAgnosticCss(header, brand, rules) {
+    const updatedHeader = header.replace(
+      /Context: Mode: \w+/,
+      'Context: Effects (Mode-agnostic)'
+    );
+
+    let output = updatedHeader + '\n\n';
+
+    for (const [className, ruleContent] of rules) {
+      output += `[data-brand="${brand}"] .${className} {\n`;
+      output += `  ${ruleContent}\n`;
+      output += `}\n\n`;
+    }
+
+    return output;
+  }
+
+  for (const brand of BRANDS) {
+    const cssComponentsDir = path.join(DIST_DIR, 'css', 'brands', brand, 'components');
+
+    if (!fs.existsSync(cssComponentsDir)) continue;
+
+    const componentNames = fs.readdirSync(cssComponentsDir).filter(name => {
+      const componentPath = path.join(cssComponentsDir, name);
+      return fs.statSync(componentPath).isDirectory();
+    });
+
+    for (const componentName of componentNames) {
+      const cssDir = path.join(cssComponentsDir, componentName);
+
+      // Find effects CSS files
+      const lightFile = path.join(cssDir, `${componentName.toLowerCase()}-effects-light.css`);
+      const darkFile = path.join(cssDir, `${componentName.toLowerCase()}-effects-dark.css`);
+      const optimizedFile = path.join(cssDir, `${componentName.toLowerCase()}-effects.css`);
+
+      // Both files must exist
+      if (!fs.existsSync(lightFile) || !fs.existsSync(darkFile)) {
+        continue;
+      }
+
+      try {
+        // Read CSS files
+        const lightCss = fs.readFileSync(lightFile, 'utf8');
+        const darkCss = fs.readFileSync(darkFile, 'utf8');
+
+        // Parse rules
+        const lightRules = parseEffectsCssFile(lightCss);
+        const darkRules = parseEffectsCssFile(darkCss);
+
+        // Check if identical
+        if (!areEffectsIdentical(lightRules, darkRules)) {
+          skippedCount++;
+          continue;
+        }
+
+        // Extract header from light file
+        const headerMatch = lightCss.match(/^\/\*\*[\s\S]*?\*\//);
+        const header = headerMatch ? headerMatch[0] : '';
+
+        // Generate optimized CSS
+        const optimizedCss = generateModeAgnosticCss(header, brand, lightRules);
+
+        // Write optimized file
+        fs.writeFileSync(optimizedFile, optimizedCss);
+
+        // Delete original files
+        fs.unlinkSync(lightFile);
+        fs.unlinkSync(darkFile);
+
+        optimizedCount++;
+        console.log(`     ✅ ${brand}/${componentName}: Consolidated to mode-agnostic effects`);
+
+      } catch (e) {
+        console.log(`     ❌ ${componentName}: Error optimizing effects - ${e.message}`);
+      }
+    }
+  }
+
+  console.log(`\n   📊 Summary: ${optimizedCount} components optimized, ${skippedCount} skipped (different effects)`);
+
+  return { optimizedCount, skippedCount };
+}
+
+/**
  * Builds Typography Tokens (brand-specific)
  */
 async function buildTypographyTokens() {
@@ -7693,6 +7830,9 @@ async function main() {
 
   // Build effect tokens
   stats.effectTokens = await buildEffectTokens();
+
+  // Optimize component effects CSS (consolidate identical light/dark effects)
+  stats.effectsCssOptimization = await optimizeComponentEffectsCSS();
 
   // Convert to responsive CSS
   stats.responsiveCSS = await convertToResponsiveCSS();
