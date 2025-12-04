@@ -28,10 +28,14 @@ const COLOR_MODES = ['light', 'dark'];
 const DENSITY_MODES = ['default', 'dense', 'spacious'];
 
 // Platform output toggles - set to false to disable output generation
-const FLUTTER_ENABLED = false;
 const COMPOSE_ENABLED = true;
 const SWIFTUI_ENABLED = true;       // SwiftUI output in dist/ios/
-const ANDROID_XML_ENABLED = false;  // Disabled - Compose is the preferred Android format
+
+// DEPRECATED: Flutter and Android XML outputs are disabled and their formats removed.
+// The code below is kept for backwards compatibility but will not produce output.
+// See scripts/tokens/deprecated/build-flutter-android-xml.js for reference implementation.
+const FLUTTER_ENABLED = false;      // DEPRECATED - Flutter output removed from pipeline
+const ANDROID_XML_ENABLED = false;  // DEPRECATED - Compose is the preferred Android format
 
 // Token type toggles - set to false to exclude from all platform outputs
 const BOOLEAN_TOKENS_ENABLED = false;
@@ -8006,9 +8010,8 @@ async function main() {
   console.log(`   ├── js.min/     (ESM minified)`);
   console.log(`   ├── json/       (JSON)`);
   if (SWIFTUI_ENABLED) console.log(`   ├── ios/        (SwiftUI)`);
-  if (COMPOSE_ENABLED) console.log(`   ${FLUTTER_ENABLED ? '├' : '└'}── android/    (Jetpack Compose)`);
-  if (ANDROID_XML_ENABLED) console.log(`   ${FLUTTER_ENABLED ? '├' : '└'}── android/    (Android XML)`);
-  if (FLUTTER_ENABLED) console.log(`   └── flutter/    (Dart classes)`);
+  if (COMPOSE_ENABLED) console.log(`   └── android/    (Jetpack Compose)`);
+  // DEPRECATED: Flutter and Android XML console output removed
   console.log(``);
   console.log(`   JS structure (all variants):`);
   console.log(`   - primitives/          (bundled primitives)`);

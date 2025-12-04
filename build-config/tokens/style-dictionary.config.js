@@ -2229,8 +2229,7 @@ const customTransformGroups = {
   'custom/scss': ['name/custom/kebab', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/js': ['name/custom/js', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/ios-swift': ['name/custom/ios-swift', 'custom/color/UIColor', 'custom/size/ios-points', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
-  'custom/android': ['name/custom/android', 'color/hex', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
-  'custom/flutter': ['name/custom/flutter-dart', 'color/hex', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  // DEPRECATED: 'custom/android' and 'custom/flutter' moved to deprecated/flutter-android-xml-formats.js
   'custom/compose': ['name/custom/compose', 'color/custom/compose', 'size/custom/compose', 'custom/opacity', 'custom/fontWeight', 'custom/number']
 };
 
@@ -4955,8 +4954,7 @@ module.exports = {
     'name/custom/kebab': nameKebabTransform,
     'name/custom/js': nameJsTransform,
     'name/custom/ios-swift': nameIosSwiftTransform,
-    'name/custom/android': nameAndroidTransform,
-    'name/custom/flutter-dart': nameFlutterDartTransform,
+    // DEPRECATED: 'name/custom/android' and 'name/custom/flutter-dart' moved to deprecated/flutter-android-xml-formats.js
     'name/custom/compose': nameComposeTransform,
     'color/custom/compose': colorComposeTransform,
     'size/custom/compose': sizeComposeTransform,
@@ -4970,8 +4968,7 @@ module.exports = {
     'custom/javascript/es6': javascriptEs6Format,
     'custom/json/nested': jsonNestedFormat,
     'ios-swift/class': iosSwiftClassFormat,
-    'flutter/class': flutterDartClassFormat,
-    'android/resources': androidResourcesFormat,
+    // DEPRECATED: 'flutter/class' and 'android/resources' moved to deprecated/flutter-android-xml-formats.js
 
     // Themed CSS Format - Data-attribute based theme switching
     'custom/css/themed-variables': cssThemedVariablesFormat,
@@ -4985,14 +4982,12 @@ module.exports = {
     'css/effect-classes': cssEffectClassesFormat,
     'javascript/effects': javascriptEffectsFormat,
     'javascript/typography': javascriptTypographyFormat,
-    'flutter/effects': flutterEffectsFormat,
-    'flutter/typography': flutterTypographyFormat,
+    // DEPRECATED: 'flutter/effects' and 'flutter/typography' moved to deprecated/flutter-android-xml-formats.js
     'ios-swift/effects': iosSwiftEffectsFormat,
     'ios-swift/typography': iosSwiftTypographyFormat,
     'scss/effects': scssEffectsFormat,
     'scss/typography': scssTypographyFormat,
-    'android/effects': androidXmlEffectsFormat,
-    'android/typography-styles': androidXmlTypographyFormat,
+    // DEPRECATED: 'android/effects' and 'android/typography-styles' moved to deprecated/flutter-android-xml-formats.js
 
     // Jetpack Compose Formats
     'compose/primitives': composePrimitivesFormat,
