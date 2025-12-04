@@ -241,6 +241,49 @@ function generateUniqueNames(tokens, transformType = 'kebab') {
 }
 
 // ============================================================================
+// SEMANTIC REFERENCE DETECTION HELPERS
+// ============================================================================
+
+/**
+ * Checks if a token references the semantic layer (ColorMode or BreakpointMode)
+ * @param {Object} token - Style Dictionary token
+ * @returns {boolean}
+ */
+function isSemanticReference(token) {
+  return token.$alias?.collectionType === 'semantic';
+}
+
+/**
+ * Checks if ALL tokens in an array are semantic references
+ * @param {Array} tokens - Array of Style Dictionary tokens
+ * @returns {boolean}
+ */
+function allTokensAreSemantic(tokens) {
+  if (!tokens || tokens.length === 0) return false;
+  return tokens.every(token => isSemanticReference(token));
+}
+
+/**
+ * Partitions tokens into semantic and non-semantic groups
+ * @param {Array} tokens - Array of Style Dictionary tokens
+ * @returns {Object} { semantic: [...], nonSemantic: [...] }
+ */
+function partitionTokensByReferenceType(tokens) {
+  const semantic = [];
+  const nonSemantic = [];
+
+  tokens.forEach(token => {
+    if (isSemanticReference(token)) {
+      semantic.push(token);
+    } else {
+      nonSemantic.push(token);
+    }
+  });
+
+  return { semantic, nonSemantic };
+}
+
+// ============================================================================
 // CUSTOM TRANSFORMS
 // ============================================================================
 
@@ -2483,7 +2526,14 @@ const cssThemedVariablesWithAliasFormat = ({ dictionary, options, file }) => {
         if (outputReferences && token.$alias && token.$alias.token) {
           const refName = aliasToVarName(token.$alias.token);
           if (refName && refName !== uniqueName) {
-            output += `  --${uniqueName}: var(--${refName}, ${finalValue});\n`;
+            // Semantic references: var(--semantic-token) WITHOUT fallback
+            // The semantic layer already provides the mode-specific value
+            if (isSemanticReference(token)) {
+              output += `  --${uniqueName}: var(--${refName});\n`;
+            } else {
+              // Non-semantic references: var(--primitive, fallback) as before
+              output += `  --${uniqueName}: var(--${refName}, ${finalValue});\n`;
+            }
             return;
           }
         }
