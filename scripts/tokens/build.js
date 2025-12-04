@@ -1962,9 +1962,14 @@ async function generateResponsiveBreakpointFile(dir, brand, breakpointConfig) {
   output += `}\n\n`;
 
   // Media queries for SM, MD, LG - only output CHANGED values
-  for (const bp of ['sm', 'md', 'lg']) {
+  // Use cascade optimization: compare each breakpoint to the previous one
+  const breakpointOrder = ['sm', 'md', 'lg'];
+  let previousVars = baseVars; // Start with XS as the "previous"
+
+  for (const bp of breakpointOrder) {
     if (breakpointVarMaps[bp] && breakpointConfig[bp]) {
-      const changedVars = getChangedVariables(baseVars, breakpointVarMaps[bp]);
+      // Compare against the previous breakpoint (cascade optimization)
+      const changedVars = getChangedVariables(baseVars, breakpointVarMaps[bp], previousVars);
 
       if (Object.keys(changedVars).length > 0) {
         output += `@media (min-width: ${breakpointConfig[bp]}) {\n`;
@@ -1975,6 +1980,9 @@ async function generateResponsiveBreakpointFile(dir, brand, breakpointConfig) {
         output += `  }\n`;
         output += `}\n\n`;
       }
+
+      // Update previousVars for next iteration (merge current BP values)
+      previousVars = { ...previousVars, ...breakpointVarMaps[bp] };
     }
   }
 
@@ -2048,9 +2056,14 @@ async function generateComponentBreakpointResponsive(dir, componentName, brand, 
   output += `}\n\n`;
 
   // Media queries for SM, MD, LG - only output CHANGED values
-  for (const bp of ['sm', 'md', 'lg']) {
+  // Use cascade optimization: compare each breakpoint to the previous one
+  const breakpointOrder = ['sm', 'md', 'lg'];
+  let previousVars = baseVars; // Start with XS as the "previous"
+
+  for (const bp of breakpointOrder) {
     if (breakpointVarMaps[bp] && breakpointConfig[bp]) {
-      const changedVars = getChangedVariables(baseVars, breakpointVarMaps[bp]);
+      // Compare against the previous breakpoint (cascade optimization)
+      const changedVars = getChangedVariables(baseVars, breakpointVarMaps[bp], previousVars);
 
       if (Object.keys(changedVars).length > 0) {
         output += `@media (min-width: ${breakpointConfig[bp]}) {\n`;
@@ -2061,6 +2074,9 @@ async function generateComponentBreakpointResponsive(dir, componentName, brand, 
         output += `  }\n`;
         output += `}\n\n`;
       }
+
+      // Update previousVars for next iteration (merge current BP values)
+      previousVars = { ...previousVars, ...breakpointVarMaps[bp] };
     }
   }
 
@@ -2124,14 +2140,24 @@ function parseVariablesToMap(variables) {
  * Compares two variable maps and returns only the variables that have different values
  * @param {Object} baseVars - Base (XS) variables map
  * @param {Object} compareVars - Variables to compare against base
+ * @param {Object} previousBpVars - Variables from the previous breakpoint (for cascade optimization)
  * @returns {Object} - Map of variables that have changed
  */
-function getChangedVariables(baseVars, compareVars) {
+function getChangedVariables(baseVars, compareVars, previousBpVars = null) {
   const changed = {};
   for (const [name, value] of Object.entries(compareVars)) {
-    // Include if value is different from base, or if it's a new variable
-    if (baseVars[name] !== value) {
-      changed[name] = value;
+    // If we have a previous breakpoint, only include if different from THAT
+    // (cascade optimization: lg inherits from md which inherits from sm)
+    if (previousBpVars) {
+      // Only add if different from previous breakpoint
+      if (previousBpVars[name] !== value) {
+        changed[name] = value;
+      }
+    } else {
+      // First comparison (sm vs xs): compare against base
+      if (baseVars[name] !== value) {
+        changed[name] = value;
+      }
     }
   }
   return changed;
