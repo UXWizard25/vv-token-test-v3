@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2025-12-03T10:40:40.195Z",
+  "lastModified": "2025-12-04T13:40:35.891Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -658,7 +658,6 @@
         "VariableID:8929:18579",
         "VariableID:8969:49793",
         "VariableID:9697:16953",
-        "VariableID:12717:3755",
         "VariableID:16104:163537",
         "VariableID:16104:163538",
         "VariableID:16104:163539",
@@ -704,12 +703,13 @@
         "VariableID:18489:25046",
         "VariableID:18489:25047",
         "VariableID:18489:25069",
-        "VariableID:19706:121945"
+        "VariableID:19706:121945",
+        "VariableID:21160:123382"
       ],
       "variables": [
         {
           "id": "VariableID:539:2239",
-          "name": "BILD/red/BILDRed",
+          "name": "BILD/red/colorBildRed50",
           "description": "Tone 046",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -723,7 +723,7 @@
         },
         {
           "id": "VariableID:588:1977",
-          "name": "BILD/gray/BILD015",
+          "name": "Shared/neutral/colorNeutral15",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -735,7 +735,7 @@
         },
         {
           "id": "VariableID:588:1978",
-          "name": "BILD/white/white100",
+          "name": "Shared/neutral/colorNeutral100",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -749,7 +749,7 @@
         },
         {
           "id": "VariableID:736:2682",
-          "name": "BILD/gray/BILD085",
+          "name": "Shared/neutral/colorNeutral85",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -761,7 +761,7 @@
         },
         {
           "id": "VariableID:736:2683",
-          "name": "BILD/gray/BILD035",
+          "name": "Shared/neutral/colorNeutral35",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -773,7 +773,7 @@
         },
         {
           "id": "VariableID:2068:3674",
-          "name": "BILD/gray/BILD025",
+          "name": "Shared/neutral/colorNeutral25",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -785,7 +785,7 @@
         },
         {
           "id": "VariableID:2496:18724",
-          "name": "BILD/orange/BILDOrange",
+          "name": "Shared/orange/colorOrange67",
           "description": "Tone: 067",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -797,7 +797,7 @@
         },
         {
           "id": "VariableID:2496:18725",
-          "name": "BILD/green/BILDGreen070",
+          "name": "Shared/green/colorGreen70",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -809,7 +809,7 @@
         },
         {
           "id": "VariableID:2552:18733",
-          "name": "BILD/gray/BILD060",
+          "name": "Shared/neutral/colorNeutral60",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -821,7 +821,7 @@
         },
         {
           "id": "VariableID:2552:18742",
-          "name": "BILD/gray/BILD096",
+          "name": "Shared/neutral/colorNeutral96",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -833,7 +833,7 @@
         },
         {
           "id": "VariableID:2580:18750",
-          "name": "BILD/red/BILDRed035",
+          "name": "BILD/red/colorBildRed35",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -845,7 +845,7 @@
         },
         {
           "id": "VariableID:2580:18751",
-          "name": "BILD/red/BILDRed053",
+          "name": "BILD/red/colorBildRed53",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -857,7 +857,7 @@
         },
         {
           "id": "VariableID:2722:10737",
-          "name": "BILD/green/BILDGreen063",
+          "name": "Shared/green/colorGreen63",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -869,7 +869,7 @@
         },
         {
           "id": "VariableID:2812:809",
-          "name": "BILD/green/BILDGreen093",
+          "name": "Shared/green/colorGreen93",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1077,7 +1077,7 @@
         },
         {
           "id": "VariableID:2881:1765",
-          "name": "BILD/gray/BILD093",
+          "name": "Shared/neutral/colorNeutral93",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1103,7 +1103,7 @@
         },
         {
           "id": "VariableID:2979:10317",
-          "name": "BILD/yellow/BILDYellow",
+          "name": "Shared/yellow/colorYellow80",
           "description": "Tone: 081",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1129,7 +1129,7 @@
         },
         {
           "id": "VariableID:3746:1642",
-          "name": "BILD/gray/BILD085Alpha50",
+          "name": "Shared/alpha/alphaNeutral85a50",
           "description": "The 50% opacity on this color makes it equivalent to BILD093.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1141,7 +1141,7 @@
         },
         {
           "id": "VariableID:3756:1744",
-          "name": "BILD/green/BILDGreen093alpha50",
+          "name": "Shared/alpha/alphaGreen93a50",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1153,7 +1153,7 @@
         },
         {
           "id": "VariableID:3765:1756",
-          "name": "BILD/green/BILDGreen056Alpha50",
+          "name": "Shared/alpha/colorGreen56a50",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1165,7 +1165,7 @@
         },
         {
           "id": "VariableID:3912:4269",
-          "name": "BILD/gray/BILD073",
+          "name": "Shared/neutral/colorNeutral73",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1191,7 +1191,7 @@
         },
         {
           "id": "VariableID:3912:4271",
-          "name": "BILD/gray/BILD045",
+          "name": "Shared/neutral/colorNeutral45",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1217,7 +1217,7 @@
         },
         {
           "id": "VariableID:5457:10118",
-          "name": "BILD/purple/BILDBerry",
+          "name": "BILD/purple/colorBildPurple20",
           "description": "Tone: 020",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1229,7 +1229,7 @@
         },
         {
           "id": "VariableID:7765:32149",
-          "name": "BILD/black/blackAlpha20",
+          "name": "Shared/alpha/alphaBlack20",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1241,7 +1241,7 @@
         },
         {
           "id": "VariableID:7765:33969",
-          "name": "BILD/black/blackAlpha10",
+          "name": "Shared/alpha/alphaBlack10",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1253,7 +1253,7 @@
         },
         {
           "id": "VariableID:8076:22743",
-          "name": "BILD/black/blackAlpha60",
+          "name": "Shared/alpha/alphaBlack60",
           "description": "Used on elevation effects.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1265,7 +1265,7 @@
         },
         {
           "id": "VariableID:8900:5503",
-          "name": "BILD/black/blackAlpha30",
+          "name": "Shared/alpha/alphaBlack30",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1277,7 +1277,7 @@
         },
         {
           "id": "VariableID:8929:18579",
-          "name": "BILD/gray/BILD010",
+          "name": "Shared/neutral/colorNeutral10",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1289,7 +1289,7 @@
         },
         {
           "id": "VariableID:8969:49793",
-          "name": "BILD/gray/BILD020",
+          "name": "Shared/neutral/colorNeutral20",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1301,8 +1301,8 @@
         },
         {
           "id": "VariableID:9697:16953",
-          "name": "BILD/green/BILDGreen040",
-          "description": "This value of green was found in a text field's text color.",
+          "name": "Shared/green/colorGreen40",
+          "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "539:2": "#006E3E"
@@ -1312,20 +1312,8 @@
           "variableCollectionId": "VariableCollectionId:539:2238"
         },
         {
-          "id": "VariableID:12717:3755",
-          "name": "BILD/blue/bildBlue",
-          "description": "This Blue color was taken from the Weather 2024 project. Tone: 069",
-          "resolvedType": "COLOR",
-          "valuesByMode": {
-            "539:2": "#00B1FF"
-          },
-          "scopes": [],
-          "hiddenFromPublishing": true,
-          "variableCollectionId": "VariableCollectionId:539:2238"
-        },
-        {
           "id": "VariableID:16104:163537",
-          "name": "Partner/Fitbook/fitbookCore",
+          "name": "Partner/colorPartnerFitbook",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1337,7 +1325,7 @@
         },
         {
           "id": "VariableID:16104:163538",
-          "name": "Partner/Petbook/petbookCore",
+          "name": "Partner/colorPartnerPetbook",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1349,7 +1337,7 @@
         },
         {
           "id": "VariableID:16104:163539",
-          "name": "Partner/MyHome/myhomeCore",
+          "name": "Partner/colorPartnerMyhome",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1361,7 +1349,7 @@
         },
         {
           "id": "VariableID:16104:163540",
-          "name": "Partner/Travelbook/travelbookCore",
+          "name": "Partner/colorPartnerTravelbook",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1373,7 +1361,7 @@
         },
         {
           "id": "VariableID:16104:163541",
-          "name": "Partner/Techbook/techbookCore",
+          "name": "Partner/colorPartnerTechbook",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1385,7 +1373,7 @@
         },
         {
           "id": "VariableID:16104:163542",
-          "name": "Partner/Kaufberater/kaufberaterCore",
+          "name": "Partner/colorPartnerKaufberater",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1397,7 +1385,7 @@
         },
         {
           "id": "VariableID:16104:163543",
-          "name": "Partner/Bz/bzCore",
+          "name": "Partner/colorBzRed50",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1409,7 +1397,7 @@
         },
         {
           "id": "VariableID:16104:163544",
-          "name": "Partner/Aubi/aubiCore",
+          "name": "Partner/colorAubiRed50",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1421,7 +1409,7 @@
         },
         {
           "id": "VariableID:16104:163545",
-          "name": "Partner/ComputerBILD/cobiCore",
+          "name": "Partner/colorCobiRed50",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1433,7 +1421,7 @@
         },
         {
           "id": "VariableID:16104:163546",
-          "name": "SportBILD/blue/spobiBlue098",
+          "name": "SportBILD/blue/colorSpobiBlue98",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1445,7 +1433,7 @@
         },
         {
           "id": "VariableID:16104:163547",
-          "name": "SportBILD/blue/spobiBlue081",
+          "name": "SportBILD/blue/colorSpobiBlue81",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1457,7 +1445,7 @@
         },
         {
           "id": "VariableID:16107:27",
-          "name": "SportBILD/blue/spobiBlue029",
+          "name": "SportBILD/blue/colorSpobiBlue29",
           "description": "This variable in the current online CSS is called secondary-tenant-color",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1469,7 +1457,7 @@
         },
         {
           "id": "VariableID:16107:28",
-          "name": "SportBILD/blue/spobiBlue016",
+          "name": "SportBILD/blue/colorSpobiBlue16",
           "description": "This variable in the current online CSS is called main-tenant-color for the spobi tenant.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1481,7 +1469,7 @@
         },
         {
           "id": "VariableID:16107:29",
-          "name": "SportBILD/blue/spobiBlue010",
+          "name": "SportBILD/blue/colorSpobiBlue10",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1493,7 +1481,7 @@
         },
         {
           "id": "VariableID:16894:98370",
-          "name": "BILD/black/blackAlpha70",
+          "name": "Shared/alpha/alphaBlack70",
           "description": "Used on elevation effects.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1505,7 +1493,7 @@
         },
         {
           "id": "VariableID:16914:22433",
-          "name": "BILD/white/whiteAlpha10",
+          "name": "Shared/alpha/alphaWhite10",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1517,7 +1505,7 @@
         },
         {
           "id": "VariableID:16914:22434",
-          "name": "BILD/white/whiteAlpha20",
+          "name": "Shared/alpha/alphaWhite20",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1529,7 +1517,7 @@
         },
         {
           "id": "VariableID:16914:22435",
-          "name": "BILD/white/whiteAlpha30",
+          "name": "Shared/alpha/alphaWhite30",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1544,7 +1532,7 @@
         },
         {
           "id": "VariableID:16914:22436",
-          "name": "BILD/white/whiteAlpha60",
+          "name": "Shared/alpha/alphaWhite60",
           "description": "Used on elevation effects.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1556,7 +1544,7 @@
         },
         {
           "id": "VariableID:16914:22437",
-          "name": "BILD/white/whiteAlpha70",
+          "name": "Shared/alpha/alphaWhite70",
           "description": "Used on elevation effects.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1568,7 +1556,7 @@
         },
         {
           "id": "VariableID:17326:23858",
-          "name": "BILD/black/black100",
+          "name": "Shared/neutral/colorNeutral0",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1580,7 +1568,7 @@
         },
         {
           "id": "VariableID:17381:17511",
-          "name": "BILD/white/whiteAlpha35",
+          "name": "Shared/alpha/alphaWhite35",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1592,7 +1580,7 @@
         },
         {
           "id": "VariableID:17385:14798",
-          "name": "BILD/red/bildRedAlpha80",
+          "name": "BILD/alpha/alphaRed50a80",
           "description": "Used on elevation effects.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1604,7 +1592,7 @@
         },
         {
           "id": "VariableID:17385:14799",
-          "name": "BILD/black/blackAlpha80",
+          "name": "Shared/alpha/alphaBlack80",
           "description": "Used on elevation effects.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1616,7 +1604,7 @@
         },
         {
           "id": "VariableID:17385:14801",
-          "name": "BILD/white/whiteAlpha80",
+          "name": "Shared/alpha/alphaWhite80",
           "description": "Used on elevation effects.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1628,7 +1616,7 @@
         },
         {
           "id": "VariableID:17389:15070",
-          "name": "BILD/black/blackAlpha35",
+          "name": "Shared/alpha/alphaBlack35",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1640,7 +1628,7 @@
         },
         {
           "id": "VariableID:17390:25780",
-          "name": "BILD/black/blackAlpha0",
+          "name": "Shared/alpha/alphaBlack0",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1652,7 +1640,7 @@
         },
         {
           "id": "VariableID:17500:35355",
-          "name": "BILD/black/blackAlpha50",
+          "name": "Shared/alpha/alphaBlack50",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1664,7 +1652,7 @@
         },
         {
           "id": "VariableID:18343:6628",
-          "name": "SportBILD/red/spobiRed",
+          "name": "SportBILD/red/colorSpobiRed50",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1676,8 +1664,8 @@
         },
         {
           "id": "VariableID:18355:65196",
-          "name": "SportBILD/alpha/spobiBlue016alpha0",
-          "description": "",
+          "name": "SportBILD/alpha/colorSpobiBlue16a0",
+          "description": "This primitive is used for creating the teaser title background gradient.",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "539:2": "rgba(10, 39, 80, 0)"
@@ -1688,8 +1676,8 @@
         },
         {
           "id": "VariableID:18355:65197",
-          "name": "SportBILD/alpha/spobiBlue016alpha70",
-          "description": "",
+          "name": "SportBILD/alpha/colorSpobiBlue16a70",
+          "description": "This primitive is used for creating the teaser title background gradient.",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "539:2": "rgba(10, 39, 80, 0.699999988079071)"
@@ -1700,7 +1688,7 @@
         },
         {
           "id": "VariableID:18489:23879",
-          "name": "BILD/green/BILDGreen056",
+          "name": "Shared/green/colorGreen56",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1880,7 +1868,7 @@
         },
         {
           "id": "VariableID:18489:25069",
-          "name": "SportBILD/blue/spobiBlue038",
+          "name": "SportBILD/blue/colorSpobiBlue38",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -1892,11 +1880,23 @@
         },
         {
           "id": "VariableID:19706:121945",
-          "name": "BILD/black/blackAlpha05",
+          "name": "Shared/alpha/alphaBlack5",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "539:2": "rgba(0, 0, 0, 0.05000000074505806)"
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:539:2238"
+        },
+        {
+          "id": "VariableID:21160:123382",
+          "name": "Shared/alpha/alphaWhite0",
+          "description": "",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "539:2": "rgba(255, 255, 255, 0)"
           },
           "scopes": [],
           "hiddenFromPublishing": true,
@@ -1908,15 +1908,15 @@
       "id": "VariableCollectionId:588:1979",
       "name": "ColorMode",
       "hiddenFromPublishing": false,
-      "defaultModeId": "592:1",
+      "defaultModeId": "588:0",
       "modes": [
-        {
-          "name": "Dark",
-          "modeId": "592:1"
-        },
         {
           "name": "Light",
           "modeId": "588:0"
+        },
+        {
+          "name": "Dark",
+          "modeId": "592:1"
         }
       ],
       "remote": false,
@@ -7119,7 +7119,7 @@
         },
         {
           "id": "VariableID:4075:55",
-          "name": "size0_5x",
+          "name": "size0p5x",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -26008,7 +26008,7 @@
       "variables": [
         {
           "id": "VariableID:18212:14496",
-          "name": "Global/Core/coreColorPrimary",
+          "name": "Global/Core/coreColorPrimaryBrand",
           "description": "Bild: 046; SpoBi: 016 current css calls this variable main tenant color",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26027,7 +26027,7 @@
         },
         {
           "id": "VariableID:18213:564",
-          "name": "Global/Core/coreColorSecondary",
+          "name": "Global/Core/coreColorSecondaryLight",
           "description": "Bild&SpoBi Tone 100",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26065,7 +26065,7 @@
         },
         {
           "id": "VariableID:18213:566",
-          "name": "Global/Core/coreColorTertiary",
+          "name": "Global/Core/coreColorTertiaryLight",
           "description": "Bild: 015 ; SpoBi: 010",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26103,7 +26103,7 @@
         },
         {
           "id": "VariableID:18213:568",
-          "name": "Global/Attention/accentColorPrimary",
+          "name": "Global/Attention/accentColorPrimaryLight",
           "description": "Bild: Tone 046 ; SpoBi: 016 This variable is used on small UI elements such as the background color for kickers.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26141,7 +26141,7 @@
         },
         {
           "id": "VariableID:18213:570",
-          "name": "Global/Surface/surfaceColorPrimary",
+          "name": "Global/Surface/surfaceColorPrimaryLight",
           "description": "Bild: 100 ; SpoBi: 100",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26179,7 +26179,7 @@
         },
         {
           "id": "VariableID:18215:572",
-          "name": "Global/Surface/surfaceColorSecondary",
+          "name": "Global/Surface/surfaceColorSecondaryLight",
           "description": "Bild: 096 ; SpoBi: 098",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26217,7 +26217,7 @@
         },
         {
           "id": "VariableID:18215:576",
-          "name": "Global/Surface/surfaceColorTertiary",
+          "name": "Global/Surface/surfaceColorTertiaryLight",
           "description": "Bild: 093 ; SpoBi: 081",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26255,7 +26255,7 @@
         },
         {
           "id": "VariableID:18215:578",
-          "name": "Global/Surface/surfaceColorQuartenary",
+          "name": "Global/Surface/surfaceColorQuartenaryLight",
           "description": "Bild: 085 ; SpoBi: 085",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26293,7 +26293,7 @@
         },
         {
           "id": "VariableID:18215:583",
-          "name": "Global/State/colorPrimaryActive",
+          "name": "Global/State/colorPrimaryActiveLight",
           "description": "Bild: 046 ; SpoBi: 029",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26331,7 +26331,7 @@
         },
         {
           "id": "VariableID:18215:585",
-          "name": "Global/Text/textColorPrimary",
+          "name": "Global/Text/textColorPrimaryLight",
           "description": "Bild & SpoBi: Tone 015",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26369,7 +26369,7 @@
         },
         {
           "id": "VariableID:18215:587",
-          "name": "Global/Text/headlineColorPrimary",
+          "name": "Global/Text/headlineColorPrimaryLight",
           "description": "Bild: 015 ; SpoBi: 016",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26407,7 +26407,7 @@
         },
         {
           "id": "VariableID:18215:589",
-          "name": "Global/Text/kickerTextColorOnBg",
+          "name": "Global/Text/kickerTextColorInBoundBox",
           "description": "This variable is used on kicker texts that are on top of a color that is different from the outer color of the overall user interface. Bild & SpoBi: Tone 100",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26426,7 +26426,7 @@
         },
         {
           "id": "VariableID:18215:590",
-          "name": "Global/Text/kickerTextColorOnSurface",
+          "name": "Global/Text/kickerTextColorOnSurfaceLight",
           "description": "This variable is used for the color of kicker texts that are not no top of a different color of the overall user interface. Bild: 046 ; SpoBi: 060",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26464,7 +26464,7 @@
         },
         {
           "id": "VariableID:18218:9878",
-          "name": "Global/Text/textColorSecondary",
+          "name": "Global/Text/textColorSecondaryLight",
           "description": "Bild & SpoBi: Tone 060",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26502,7 +26502,7 @@
         },
         {
           "id": "VariableID:18342:23968",
-          "name": "Global/Text/kickerBgColorOnSurface",
+          "name": "Global/Text/kickerBgColorOnSurfaceLight",
           "description": "Use this variable for the color immediately behind the bounding box of the kicker text element. Bild: 046 ; SpoBi: 029",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26540,7 +26540,7 @@
         },
         {
           "id": "VariableID:18343:22649",
-          "name": "Component/Button/PrimaryNeutral/buttonPrimaryNeutralBgColorIdle",
+          "name": "Component/Button/PrimaryNeutral/buttonPrimaryNeutralBgColorIdleLight",
           "description": "Bild & SpoBi: Tone 015",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26559,7 +26559,7 @@
         },
         {
           "id": "VariableID:18343:26495",
-          "name": "Component/Button/PrimaryNeutral/buttonPrimaryNeutralBgColorHover",
+          "name": "Component/Button/PrimaryNeutral/buttonPrimaryNeutralBgColorHoverLight",
           "description": "Bild & SpoBi: Tone 035",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26616,7 +26616,7 @@
         },
         {
           "id": "VariableID:18345:42067",
-          "name": "Component/BreakingNews/breakingNewsTitleSurfaceColor",
+          "name": "Component/BreakingNews/breakingNewsTitleSurfaceColorBrand",
           "description": "This variable is used for the background color of the \"Breaking News\" title. Bild: 067 ; SpoBi: 016",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26635,7 +26635,7 @@
         },
         {
           "id": "VariableID:18345:42068",
-          "name": "Component/BreakingNews/breakingNewsTopTitleTextColor",
+          "name": "Component/BreakingNews/breakingNewsTopTitleTextColorBrand",
           "description": "This variable is used for the color of the \"breaking\" word in the \"breaking news\" horizontally animated headlines strip. Bild: 010 ; SpoBi: 081",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26692,7 +26692,7 @@
         },
         {
           "id": "VariableID:18345:42309",
-          "name": "Component/BreakingNews/breakingNewsBottomTitleTextColor",
+          "name": "Component/BreakingNews/breakingNewsBottomTitleTextColorBrand",
           "description": "This variable is used for the color of the \"News\" word in the breaking news horizontal animated headlines strip. Bild: 010 ; SpoBi: 100",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26711,7 +26711,7 @@
         },
         {
           "id": "VariableID:18355:65198",
-          "name": "Component/Teaser/teaserTitleBackgroundGradientStart",
+          "name": "Component/Teaser/teaserTitleBackgroundGradientStartBrand",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26730,7 +26730,7 @@
         },
         {
           "id": "VariableID:18355:65199",
-          "name": "Component/Teaser/teaserTitleBackgroundGradientStop",
+          "name": "Component/Teaser/teaserTitleBackgroundGradientStopBrand",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26882,7 +26882,7 @@
         },
         {
           "id": "VariableID:18631:74157",
-          "name": "Component/Menu/menuLinkLaneLabelColor",
+          "name": "Component/Menu/menuLinkLaneLabelColorLight",
           "description": "This variable is used for making possible the default color difference between the Bild and SportBild link lane labels inside the menu component.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -26977,7 +26977,7 @@
         },
         {
           "id": "VariableID:18644:81009",
-          "name": "Component/Menu/menuLinkLaneLabelColorActive",
+          "name": "Component/Menu/menuLinkLaneLabelColorActiveLight",
           "description": "This variable is used for making possible the active color difference between the Bild and SportBild link lane labels inside the menu component.",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -27186,7 +27186,7 @@
         },
         {
           "id": "VariableID:19030:1919",
-          "name": "Component/Avatar/avatarLabelColorHover",
+          "name": "Component/Avatar/avatarLabelColorHoverBrand",
           "description": "This variable is used for decorating the avatar text's underline color. Bild: 046; SpoBi: 029",
           "resolvedType": "COLOR",
           "valuesByMode": {
