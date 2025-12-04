@@ -1410,14 +1410,17 @@ async function buildComponentTokens() {
 /**
  * Optimizes Component Color CSS by consolidating mode files
  *
- * When ALL tokens in a component's color files reference the SAME semantic tokens
- * in both light and dark modes, we can consolidate them into a single mode-agnostic file.
+ * When ALL tokens in a component's color files reference the semantic layer
+ * (ColorMode), we can consolidate light and dark into a single file.
  *
  * This optimization:
- * 1. Checks if all tokens are semantic references
- * 2. Checks if semantic token names are identical between light and dark
- * 3. If yes: Creates a single file with [data-brand] selector (no data-theme)
- * 4. Deletes the redundant mode-specific files
+ * 1. Checks if ALL tokens in BOTH files are semantic references
+ * 2. If yes: Merges both files into one with both mode selectors
+ * 3. Removes fallback values (semantic refs don't need them)
+ * 4. Deletes the original separate files
+ *
+ * Note: Semantic token names can be different between modes (e.g., surfaceColorPrimary
+ * in light vs surfaceColorSecondary in dark) - only the reference TYPE matters.
  *
  * This only affects CSS output - native platforms (iOS/Android) are not modified.
  */
@@ -1435,10 +1438,10 @@ async function optimizeComponentColorCSS() {
       const value = obj[key];
       if (value && typeof value === 'object') {
         // Check if this is a token (has $value and $alias)
-        if (value.$value !== undefined && value.$alias) {
+        if (value.$value !== undefined) {
           tokens.push({
             name: key,
-            alias: value.$alias
+            alias: value.$alias || null
           });
         } else {
           // Recurse into nested objects
@@ -1450,39 +1453,36 @@ async function optimizeComponentColorCSS() {
   }
 
   /**
-   * Check if all tokens are semantic references with identical token names
+   * Check if ALL tokens are semantic references (collectionType === 'semantic')
    */
-  function canOptimize(lightTokens, darkTokens) {
-    // Must have same number of tokens
-    if (lightTokens.length !== darkTokens.length) {
-      return false;
+  function allTokensAreSemantic(tokens) {
+    if (!tokens || tokens.length === 0) return false;
+    return tokens.every(t => t.alias && t.alias.collectionType === 'semantic');
+  }
+
+  /**
+   * Extract CSS variable declarations from a CSS file content
+   */
+  function extractCSSVariables(cssContent) {
+    const variables = [];
+    // Match CSS custom property declarations
+    const regex = /--([a-z0-9-]+):\s*([^;]+);/gi;
+    let match;
+    while ((match = regex.exec(cssContent)) !== null) {
+      variables.push({
+        name: match[1],
+        value: match[2].trim()
+      });
     }
+    return variables;
+  }
 
-    // Create maps for easier comparison
-    const lightMap = new Map(lightTokens.map(t => [t.name, t.alias]));
-    const darkMap = new Map(darkTokens.map(t => [t.name, t.alias]));
-
-    // Check each token
-    for (const [name, lightAlias] of lightMap) {
-      const darkAlias = darkMap.get(name);
-
-      // Token must exist in both modes
-      if (!darkAlias) {
-        return false;
-      }
-
-      // Both must be semantic references
-      if (lightAlias.collectionType !== 'semantic' || darkAlias.collectionType !== 'semantic') {
-        return false;
-      }
-
-      // Semantic token names must be identical
-      if (lightAlias.token !== darkAlias.token) {
-        return false;
-      }
-    }
-
-    return true;
+  /**
+   * Remove fallback values from var() references
+   * var(--token, #fallback) -> var(--token)
+   */
+  function removeFallbacks(value) {
+    return value.replace(/var\((--[a-z0-9-]+),\s*[^)]+\)/gi, 'var($1)');
   }
 
   for (const brand of BRANDS) {
@@ -1522,55 +1522,94 @@ async function optimizeComponentColorCSS() {
       const lightTokens = extractAllTokens(lightData);
       const darkTokens = extractAllTokens(darkData);
 
-      // Check if optimization is possible
-      if (!canOptimize(lightTokens, darkTokens)) {
+      // Check if ALL tokens in BOTH files are semantic references
+      if (!allTokensAreSemantic(lightTokens) || !allTokensAreSemantic(darkTokens)) {
         skippedCount++;
         continue;
       }
 
-      // Optimization possible! Modify CSS files
+      // Optimization possible! Read and merge CSS files
       const cssLightFile = path.join(cssDir, `${componentName.toLowerCase()}-color-light.css`);
       const cssDarkFile = path.join(cssDir, `${componentName.toLowerCase()}-color-dark.css`);
       const cssOptimizedFile = path.join(cssDir, `${componentName.toLowerCase()}-color.css`);
 
-      if (!fs.existsSync(cssLightFile)) {
+      if (!fs.existsSync(cssLightFile) || !fs.existsSync(cssDarkFile)) {
         continue;
       }
 
       try {
-        // Read light CSS file
-        let cssContent = fs.readFileSync(cssLightFile, 'utf8');
+        // Read both CSS files
+        const lightCssContent = fs.readFileSync(cssLightFile, 'utf8');
+        const darkCssContent = fs.readFileSync(cssDarkFile, 'utf8');
 
-        // Update header comment
-        cssContent = cssContent.replace(
-          /Brand: \w+ \| Context: theme: light/,
-          `Brand: ${brand.charAt(0).toUpperCase() + brand.slice(1)} | Context: Color (Mode-agnostic)`
-        );
+        // Extract variables from both files
+        const lightVars = extractCSSVariables(lightCssContent);
+        const darkVars = extractCSSVariables(darkCssContent);
 
-        // Update selector: remove data-theme attribute
-        cssContent = cssContent.replace(
-          /\[data-brand="[^"]+"\]\[data-theme="light"\]/g,
-          `[data-brand="${brand}"]`
-        );
+        // Check if light and dark have identical variables with identical values
+        const lightVarMap = new Map(lightVars.map(v => [v.name, removeFallbacks(v.value)]));
+        const darkVarMap = new Map(darkVars.map(v => [v.name, removeFallbacks(v.value)]));
 
-        // Remove fallback values from semantic references (already done in format, but ensure cleanup)
-        // Match: var(--semantic-token, #hexvalue) -> var(--semantic-token)
-        cssContent = cssContent.replace(
-          /var\((--[a-z-]+),\s*#[A-Fa-f0-9]+\)/g,
-          'var($1)'
-        );
+        let isIdentical = lightVarMap.size === darkVarMap.size;
+        if (isIdentical) {
+          for (const [name, value] of lightVarMap) {
+            if (darkVarMap.get(name) !== value) {
+              isIdentical = false;
+              break;
+            }
+          }
+        }
+
+        // Generate optimized CSS
+        const brandCapitalized = brand.charAt(0).toUpperCase() + brand.slice(1);
+        let output = `/**
+ * Do not edit directly, this file was auto-generated.
+ *
+ * BILD Design System Tokens v1.0.0
+ * Generated by Style Dictionary v4.0.0
+ *
+ * Brand: ${brandCapitalized} | Context: Color (Semantic References)
+ *
+ * Copyright (c) 2024 Axel Springer Deutschland GmbH
+ * Proprietary and confidential. All rights reserved.
+ *
+ * Documentation: https://github.com/UXWizard25/vv-token-test-v3#readme
+ */
+
+`;
+
+        if (isIdentical) {
+          // Same values in both modes -> single selector without data-theme
+          output += `[data-brand="${brand}"] {\n`;
+          for (const v of lightVars) {
+            output += `  --${v.name}: ${removeFallbacks(v.value)};\n`;
+          }
+          output += `}\n`;
+        } else {
+          // Different values -> keep both selectors in one file
+          output += `[data-brand="${brand}"][data-theme="light"] {\n`;
+          for (const v of lightVars) {
+            output += `  --${v.name}: ${removeFallbacks(v.value)};\n`;
+          }
+          output += `}\n\n`;
+
+          output += `[data-brand="${brand}"][data-theme="dark"] {\n`;
+          for (const v of darkVars) {
+            output += `  --${v.name}: ${removeFallbacks(v.value)};\n`;
+          }
+          output += `}\n`;
+        }
 
         // Write optimized file
-        fs.writeFileSync(cssOptimizedFile, cssContent);
+        fs.writeFileSync(cssOptimizedFile, output);
 
         // Delete original mode-specific files
         fs.unlinkSync(cssLightFile);
-        if (fs.existsSync(cssDarkFile)) {
-          fs.unlinkSync(cssDarkFile);
-        }
+        fs.unlinkSync(cssDarkFile);
 
         optimizedCount++;
-        console.log(`     ✅ ${brand}/${componentName}: Consolidated to mode-agnostic file`);
+        const modeInfo = isIdentical ? 'mode-agnostic' : 'merged (light+dark)';
+        console.log(`     ✅ ${brand}/${componentName}: Consolidated to ${modeInfo} file`);
 
       } catch (e) {
         console.log(`     ❌ ${componentName}: Error optimizing CSS - ${e.message}`);
@@ -1578,7 +1617,7 @@ async function optimizeComponentColorCSS() {
     }
   }
 
-  console.log(`\n   📊 Summary: ${optimizedCount} components optimized, ${skippedCount} skipped (mixed/different refs)`);
+  console.log(`\n   📊 Summary: ${optimizedCount} components optimized, ${skippedCount} skipped (has primitive refs)`);
 
   return { optimizedCount, skippedCount };
 }
