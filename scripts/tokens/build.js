@@ -7981,6 +7981,19 @@ async function main() {
     console.log(`\n⚠️  Fehler beim Kopieren von README.js.md: ${err.message}`);
   }
 
+  // Copy README.css.md to dist/css/README.md
+  try {
+    const readmeSrcDir = path.join(__dirname, '../..');
+    const cssReadmeSrc = path.join(readmeSrcDir, 'README.css.md');
+    const cssReadmeDest = path.join(DIST_DIR, 'css/README.md');
+    if (fs.existsSync(cssReadmeSrc)) {
+      fs.copyFileSync(cssReadmeSrc, cssReadmeDest);
+      console.log(`📄 README.css.md → dist/css/README.md ✅`);
+    }
+  } catch (err) {
+    console.log(`⚠️  Fehler beim Kopieren von README.css.md: ${err.message}`);
+  }
+
   console.log(`\n📁 Struktur:`);
   console.log(`   dist/`);
   console.log(`   ├── css/        (CSS with data-attributes)`);
