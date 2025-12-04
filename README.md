@@ -36,7 +36,7 @@ The BILD Design Ops Pipeline transforms design assets from Figma into production
 
 | Pipeline | Input | Output | Platforms |
 |----------|-------|--------|-----------|
-| **🎨 Token Pipeline** | Figma Variables | Design Tokens | 6 platforms |
+| **🎨 Token Pipeline** | Figma Variables | Design Tokens | 3 platforms (6 formats) |
 | **🖼️ Icon Pipeline** | Figma Icons (SVG) | Multi-format Icons | 5 platforms |
 
 Both pipelines use the **TokenSync Figma Plugin** for automated exports.
@@ -371,7 +371,7 @@ npm run clean:icons        # Remove dist/icons/
 | SCSS | Variables | `dist/scss/**/*.scss` | ✅ Production |
 | JavaScript | ES Modules + React | `dist/js/**/*.js` | ✅ Production |
 | JSON | Raw Data | `dist/json/**/*.json` | ✅ Production |
-| iOS Swift | UIColor, CGFloat | `dist/ios/**/*.swift` | ✅ Production |
+| iOS Swift | SwiftUI Color, CGFloat | `dist/ios/**/*.swift` | ✅ Production |
 | Android | Jetpack Compose (Kotlin) | `dist/android/compose/**/*.kt` | ✅ Production |
 
 ### 🖼️ Icon Platforms

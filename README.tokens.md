@@ -32,7 +32,7 @@ Multi-platform design token transformation pipeline powered by **Style Dictionar
 This pipeline processes the multi-layer, multi-brand BILD Design System architecture:
 
 - **3 Brands**: BILD, SportBILD, Advertorial
-- **6 Platforms**: CSS, SCSS, JavaScript, JSON, iOS (Swift), Android (Jetpack Compose)
+- **3 Platforms** (6 formats): Web (CSS, SCSS, JS, JSON), iOS (SwiftUI), Android (Compose)
 - **Multiple Modes**: Density (3), Breakpoints (4), Color Modes (2)
 - **Token Types**: Primitives, Semantic Tokens, Component Tokens (~970 files)
 
@@ -116,7 +116,7 @@ This enables:
 │ Style Dictionary Build                          │
 │ • Platform-specific transforms                  │
 │ • iOS: CGFloat Points (not px strings)          │
-│ • iOS: UIColor objects                          │
+│ • iOS: SwiftUI Color                            │
 └───────────────────────┬─────────────────────────┘
                         ↓
 ┌─────────────────────────────────────────────────┐
@@ -252,16 +252,20 @@ This follows the W3C DTCG spec and industry best practices (Chakra UI, MUI).
 ### iOS Swift
 
 ```swift
-import UIKit
+import SwiftUI
+import BildDesignTokens
 
-// Colors (UIColor objects)
-view.backgroundColor = StyleDictionary.textColorPrimary
+// Colors (SwiftUI Color)
+Rectangle()
+    .fill(BildColorsLight.textColorPrimary)
 
-// Dimensions (CGFloat Points)
-let padding: CGFloat = StyleDictionary.space2x  // 16
+// Dimensions (CGFloat)
+let padding: CGFloat = BildSizingCompact.space2x  // 16
 
-// Typography
-label.font = UIFont.TypographyBildregular.display1
+// With Theme Provider
+.designSystemTheme(colorBrand: .bild, darkTheme: false) {
+    theme.colors.textColorPrimary
+}
 ```
 
 ### Android Jetpack Compose (Dual-Axis Architecture)
@@ -513,7 +517,7 @@ The pipeline applies these transformations to token names:
 | Platform | Format | Example |
 |----------|--------|---------|
 | CSS | `#HEX` / `rgba()` | `#DD0000` |
-| iOS Swift | `UIColor()` object | `UIColor(red: 0.867, ...)` |
+| iOS Swift | `SwiftUI Color` | `Color(red: 0.867, ...)` |
 | Android Compose | `Color(0xFF...)` | `Color(0xFFDD0000)` |
 
 #### Dimensions
