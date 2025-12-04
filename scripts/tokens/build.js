@@ -6242,7 +6242,9 @@ const JS_FILE_HEADER = `/**
 
 /**
  * Convert string to camelCase
- * Handles consecutive uppercase letters (e.g., shadowSoftSM → shadowSoftSm)
+ * - Handles consecutive uppercase letters (e.g., shadowSoftSM → shadowSoftSm)
+ * - Keeps letters after digits lowercase (e.g., space-1-x → space1x, not space1X)
+ * - Works with any input format: camelCase, kebab-case, snake_case
  */
 function toCamelCase(str) {
   return str
@@ -6250,7 +6252,9 @@ function toCamelCase(str) {
     .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
     // Lowercase everything
     .toLowerCase()
-    // Remove separators and capitalize following letter
+    // Keep letters after digits lowercase (remove separator without capitalizing)
+    .replace(/(\d)[-_\s]+([a-z])/g, '$1$2')
+    // Capitalize letters after remaining separators
     .replace(/[-_\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ''))
     // Ensure first character is lowercase
     .replace(/^(.)/, (c) => c.toLowerCase());
