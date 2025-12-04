@@ -129,7 +129,8 @@ const nameTransformers = {
   kebab: (str) => {
     return str
       .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
-      .replace(/([a-zA-Z])(\d)/g, '$1-$2')    // Separate numbers with hyphen (e.g., red50 → red-50)
+      .replace(/([a-zA-Z])(\d)/g, '$1-$2')    // Separate letter-to-number (e.g., red50 → red-50)
+      .replace(/(\d)([a-zA-Z])/g, '$1-$2')    // Separate number-to-letter (e.g., 1x → 1-x)
       .toLowerCase()
       .replace(/[^a-z0-9-]/g, '-')
       .replace(/-+/g, '-')
