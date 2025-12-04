@@ -741,6 +741,8 @@ dependencies {
 |----------|-------------|
 | [README.md](./README.md) | Project Overview |
 | [README.tokens.md](./README.tokens.md) | All Platforms |
+| [README.css.md](./README.css.md) | CSS Custom Properties |
+| [README.js.md](./README.js.md) | JavaScript/React Integration |
 | [README.ios.md](./README.ios.md) | iOS SwiftUI Integration |
 | [CLAUDE.md](./CLAUDE.md) | Build Pipeline Details |
 

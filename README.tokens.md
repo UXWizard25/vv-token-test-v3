@@ -790,6 +790,7 @@ grep "Space2x" dist/ios/shared/Spaceprimitive.swift
 | Document | Description |
 |----------|-------------|
 | [📖 README.md](./README.md) | Main project overview |
+| [📖 README.css.md](./README.css.md) | CSS Custom Properties documentation |
 | [📖 README.js.md](./README.js.md) | JavaScript/React integration (Dual-Axis) |
 | [📖 README.android.md](./README.android.md) | Android Jetpack Compose (Dual-Axis) |
 | [📖 README.ios.md](./README.ios.md) | iOS SwiftUI (Dual-Axis) |

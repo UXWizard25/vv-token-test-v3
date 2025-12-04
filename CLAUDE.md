@@ -15,7 +15,7 @@ npm run clean           # Delete dist/ and tokens/
 
 **Source of Truth:** `src/design-tokens/bild-design-system-raw-data.json` (Figma Export via TokenSync Plugin)
 
-**Platform Documentation:** `README.tokens.md`, `README.js.md`, `README.android.md`, `README.ios.md`
+**Platform Documentation:** `README.tokens.md`, `README.css.md`, `README.js.md`, `README.android.md`, `README.ios.md`
 
 ---
 
@@ -510,9 +510,17 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 | File | Purpose |
 |------|---------|
 | `scripts/tokens/preprocess.js` | Figma JSON → Style Dictionary format |
-| `scripts/tokens/build.js` | Orchestrates Style Dictionary builds + JS output generation |
+| `scripts/tokens/build.js` | Orchestrates Style Dictionary builds + JS output generation + CSS optimizations |
 | `build-config/tokens/style-dictionary.config.js` | Custom transforms & formats |
 | `scripts/tokens/bundles.js` | CSS bundle generation |
+
+### CSS Optimization Functions (in build.js)
+
+| Function | Purpose |
+|----------|---------|
+| `optimizeComponentColorCSS()` | Token-level split: separates mode-agnostic from light/dark-specific color tokens |
+| `optimizeComponentEffectsCSS()` | Consolidates identical light/dark effects into mode-agnostic output |
+| `getChangedVariables()` | Cascade optimization: eliminates redundant @media declarations |
 
 ### JS Output Functions (in build.js)
 
@@ -534,12 +542,15 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 | **@media over data-breakpoint** | Native browser support, no JS required, SSR-compatible |
 | **var() with fallbacks** | Robustness if variables missing, easier debugging |
 | **Separate mode files** | Lazy loading, better caching, easier debugging |
-| **Dual-Axis architecture** | Enables Advertorial + brand colors combination |
+| **Dual-Axis architecture** | Enables Advertorial + brand colors combination (native platforms) |
 | **Unified interfaces** | Polymorphic access, type-safety, runtime brand switching |
 | **Typography as classes** | Groups related properties (font-size, weight, line-height) |
 | **Platform-specific breakpoint mapping** | iOS: 4→2 (compact/regular), Android: 4→3 (Compact/Medium/Expanded per Material 3) |
 | **JS dimension strings with px** | W3C DTCG spec, industry standard (Chakra UI, MUI), CSS-ready values |
 | **JS React ThemeProvider** | Consistent pattern across platforms, Dual-Axis support |
+| **CSS token-level split** | Mode-agnostic tokens separate from light/dark-specific for smaller bundle size |
+| **CSS cascade optimization** | Only output @media when value changes from previous breakpoint |
+| **CSS effects consolidation** | Identical light/dark shadows merged into single mode-agnostic output |
 
 ---
 
@@ -557,6 +568,9 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 | Change JS type mapping | `build.js` → `flattenTokens()` function |
 | Modify React bindings | `build.js` → `generateReactBindings()` function |
 | Change JS output structure | `build.js` → `buildOptimizedJSOutput()` function |
+| Modify CSS color optimization | `build.js` → `optimizeComponentColorCSS()` function |
+| Modify CSS effects optimization | `build.js` → `optimizeComponentEffectsCSS()` function |
+| Change CSS bundle structure | `bundles.js` → `buildBrandTokens()`, `buildBrandBundle()` |
 
 ---
 
