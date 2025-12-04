@@ -32,7 +32,7 @@ Multi-platform design token transformation pipeline powered by **Style Dictionar
 This pipeline processes the multi-layer, multi-brand BILD Design System architecture:
 
 - **3 Brands**: BILD, SportBILD, Advertorial
-- **6 Platforms**: CSS, SCSS, JavaScript, JSON, iOS (Swift), Android (Jetpack Compose) *(Flutter/XML disabled)*
+- **6 Platforms**: CSS, SCSS, JavaScript, JSON, iOS (Swift), Android (Jetpack Compose)
 - **Multiple Modes**: Density (3), Breakpoints (4), Color Modes (2)
 - **Token Types**: Primitives, Semantic Tokens, Component Tokens (~970 files)
 
@@ -264,20 +264,6 @@ let padding: CGFloat = StyleDictionary.space2x  // 16
 label.font = UIFont.TypographyBildregular.display1
 ```
 
-### Flutter (Currently Disabled)
-
-> **Note:** Flutter output is currently disabled via `FLUTTER_ENABLED = false` in build.js.
-> The code remains in place and can be re-enabled when needed.
-
-```dart
-// When enabled:
-import 'package:design_tokens/brands/bild/semantic/color/colormode_light.dart';
-
-Container(
-  color: Colors.textColorPrimary,  // Color(0xFF232629)
-)
-```
-
 ### Android Jetpack Compose (Dual-Axis Architecture)
 
 > **See [README.android.md](./README.android.md) for complete documentation**
@@ -405,18 +391,6 @@ struct MyView: View {
 | `DesignTypographyScheme` | All text styles (TextStyle composites) |
 | `DesignEffectsScheme` | Shadow tokens (ShadowStyle composites, brand-independent) |
 
-### Android XML (Disabled)
-
-> **Note:** Android XML output is disabled by default. Jetpack Compose is the preferred format.
-> Set `ANDROID_XML_ENABLED = true` in build.js to re-enable.
-
-```xml
-<TextView
-    android:textColor="@color/text_color_primary"
-    android:padding="@dimen/space_2x"
-    style="@style/TextAppearance.Bild.Display1" />
-```
-
 ### SCSS
 
 ```scss
@@ -516,8 +490,6 @@ lg (1024px) ─────────→  Expanded (≥ 840dp)
 | JavaScript | `camelCase` | `textColorPrimary` |
 | iOS Swift | `camelCase` | `textColorPrimary` |
 | Android Compose | `camelCase` | `textColorPrimary` |
-| Android XML | `snake_case` | `text_color_primary` |
-| Flutter | `camelCase` | `textColorPrimary` |
 
 ### Name Transformations
 
@@ -543,8 +515,6 @@ The pipeline applies these transformations to token names:
 | CSS | `#HEX` / `rgba()` | `#DD0000` |
 | iOS Swift | `UIColor()` object | `UIColor(red: 0.867, ...)` |
 | Android Compose | `Color(0xFF...)` | `Color(0xFFDD0000)` |
-| Android XML | `#hex` resource | `#dd0000` |
-| Flutter | `Color(0xFF...)` | `Color(0xFFDD0000)` |
 
 #### Dimensions
 
@@ -553,8 +523,6 @@ The pipeline applies these transformations to token names:
 | CSS | `Xpx` | `16px` |
 | iOS Swift | `CGFloat` number | `16` |
 | Android Compose | `X.dp` | `16.dp` |
-| Android XML | `Xpx` dimen | `16px` |
-| Flutter | `"Xpx"` string | `"16px"` |
 
 #### Typography (Compose)
 
@@ -576,7 +544,6 @@ Typography tokens in Compose use `.sp` for accessibility scaling:
 | CSS | `0-1` number | `0.5` |
 | iOS Swift | `CGFloat` | `0.5` |
 | Android Compose | `Float` | `0.5f` |
-| Flutter | `double` | `0.5` |
 
 **Note:** Figma exports opacity as percentage (5, 10, 70). Transform converts to decimal: `5` → `0.05`. iOS/Swift uses per-token type detection to correctly map opacity tokens to `CGFloat` in component protocols.
 
@@ -588,9 +555,7 @@ The build pipeline supports toggles to enable/disable specific outputs:
 // In scripts/tokens/build.js
 
 // Platform output toggles
-const FLUTTER_ENABLED = false;        // Disables dist/flutter/ output
 const COMPOSE_ENABLED = true;         // Enables dist/android/compose/ output
-const ANDROID_XML_ENABLED = false;    // Disables Android XML output
 
 // Token type toggles
 const BOOLEAN_TOKENS_ENABLED = false; // Excludes visibility tokens
@@ -599,8 +564,6 @@ const BOOLEAN_TOKENS_ENABLED = false; // Excludes visibility tokens
 | Toggle | Default | Description |
 |--------|---------|-------------|
 | `COMPOSE_ENABLED` | `true` | Jetpack Compose Kotlin output in `dist/android/compose/` |
-| `ANDROID_XML_ENABLED` | `false` | Android XML resources (disabled, Compose preferred) |
-| `FLUTTER_ENABLED` | `false` | Flutter Dart output in `dist/flutter/` |
 | `BOOLEAN_TOKENS_ENABLED` | `false` | Boolean/visibility tokens (13 tokens like `hideOnMobile`) |
 
 ---
@@ -653,7 +616,6 @@ dist/
 │           │       └── SizingExpanded.kt  # BildSizingExpanded object
 │           └── theme/
 │               └── {Brand}Theme.kt        # CompositionLocal Theme Provider
-└── flutter/                         # Dart Classes (disabled by default)
 ```
 
 ### Compose File Organization
@@ -834,7 +796,7 @@ MIT License - See [LICENSE](./LICENSE) file.
 
 | Feature | Status |
 |---------|--------|
-| 6 Platforms | ✅ (Flutter/XML disabled) |
+| 6 Platforms | ✅ |
 | 3 Brands | ✅ |
 | ~970 Files | ✅ |
 | Figma Scopes | ✅ |
