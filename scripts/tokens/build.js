@@ -1422,9 +1422,10 @@ async function buildComponentTokens() {
  * This only affects CSS output - native platforms (iOS/Android) are not modified.
  */
 async function optimizeComponentColorCSS() {
-  console.log('\n🎯 Optimizing Component Color CSS:\n');
+  console.log('\n🎯 Optimizing Component Color CSS (Token-Level Split):\n');
 
-  let optimizedCount = 0;
+  let fullyOptimizedCount = 0;
+  let partiallyOptimizedCount = 0;
   let skippedCount = 0;
 
   /**
@@ -1450,39 +1451,80 @@ async function optimizeComponentColorCSS() {
   }
 
   /**
-   * Check if all tokens are semantic references with identical token names
+   * Convert camelCase token name to kebab-case CSS variable name
    */
-  function canOptimize(lightTokens, darkTokens) {
-    // Must have same number of tokens
-    if (lightTokens.length !== darkTokens.length) {
-      return false;
-    }
+  function tokenNameToCssVar(tokenName) {
+    return '--' + tokenName
+      .replace(/([a-z])([A-Z])/g, '$1-$2')
+      .replace(/([A-Z])([A-Z][a-z])/g, '$1-$2')
+      .toLowerCase();
+  }
 
-    // Create maps for easier comparison
+  /**
+   * Categorize tokens into optimizable (identical semantic refs) and mode-specific
+   */
+  function categorizeTokens(lightTokens, darkTokens) {
     const lightMap = new Map(lightTokens.map(t => [t.name, t.alias]));
     const darkMap = new Map(darkTokens.map(t => [t.name, t.alias]));
 
-    // Check each token
+    const optimizable = [];  // Can be mode-agnostic
+    const modeSpecific = []; // Must stay in light/dark files
+
     for (const [name, lightAlias] of lightMap) {
       const darkAlias = darkMap.get(name);
 
-      // Token must exist in both modes
-      if (!darkAlias) {
-        return false;
-      }
+      // Check if this token can be optimized
+      const canOptimize = darkAlias &&
+        lightAlias.collectionType === 'semantic' &&
+        darkAlias.collectionType === 'semantic' &&
+        lightAlias.token === darkAlias.token;
 
-      // Both must be semantic references
-      if (lightAlias.collectionType !== 'semantic' || darkAlias.collectionType !== 'semantic') {
-        return false;
-      }
-
-      // Semantic token names must be identical
-      if (lightAlias.token !== darkAlias.token) {
-        return false;
+      if (canOptimize) {
+        optimizable.push(name);
+      } else {
+        modeSpecific.push(name);
       }
     }
 
-    return true;
+    return { optimizable, modeSpecific };
+  }
+
+  /**
+   * Parse CSS file and extract variable declarations
+   * Returns: { header, variables: Map<cssVarName, fullLine> }
+   */
+  function parseCssFile(cssContent) {
+    const headerMatch = cssContent.match(/^\/\*\*[\s\S]*?\*\//);
+    const header = headerMatch ? headerMatch[0] : '';
+
+    // Extract all CSS variable declarations
+    const variables = new Map();
+    const varRegex = /(--[a-z0-9-]+):\s*([^;]+);/gi;
+    let match;
+    while ((match = varRegex.exec(cssContent)) !== null) {
+      variables.set(match[1], `  ${match[1]}: ${match[2]};`);
+    }
+
+    return { header, variables };
+  }
+
+  /**
+   * Generate CSS file content from variables
+   */
+  function generateCssContent(header, selector, variables, context) {
+    const updatedHeader = header.replace(
+      /Context: theme: \w+/,
+      `Context: ${context}`
+    );
+
+    let output = updatedHeader + '\n\n';
+    output += `${selector} {\n`;
+    for (const varLine of variables) {
+      output += varLine + '\n';
+    }
+    output += '}\n';
+
+    return output;
   }
 
   for (const brand of BRANDS) {
@@ -1522,55 +1564,100 @@ async function optimizeComponentColorCSS() {
       const lightTokens = extractAllTokens(lightData);
       const darkTokens = extractAllTokens(darkData);
 
-      // Check if optimization is possible
-      if (!canOptimize(lightTokens, darkTokens)) {
+      // Categorize tokens
+      const { optimizable, modeSpecific } = categorizeTokens(lightTokens, darkTokens);
+
+      // If no tokens can be optimized, skip
+      if (optimizable.length === 0) {
         skippedCount++;
         continue;
       }
 
-      // Optimization possible! Modify CSS files
+      // CSS file paths
       const cssLightFile = path.join(cssDir, `${componentName.toLowerCase()}-color-light.css`);
       const cssDarkFile = path.join(cssDir, `${componentName.toLowerCase()}-color-dark.css`);
       const cssOptimizedFile = path.join(cssDir, `${componentName.toLowerCase()}-color.css`);
 
-      if (!fs.existsSync(cssLightFile)) {
+      if (!fs.existsSync(cssLightFile) || !fs.existsSync(cssDarkFile)) {
         continue;
       }
 
       try {
-        // Read light CSS file
-        let cssContent = fs.readFileSync(cssLightFile, 'utf8');
+        // Parse CSS files
+        const lightCss = parseCssFile(fs.readFileSync(cssLightFile, 'utf8'));
+        const darkCss = parseCssFile(fs.readFileSync(cssDarkFile, 'utf8'));
 
-        // Update header comment
-        cssContent = cssContent.replace(
-          /Brand: \w+ \| Context: theme: light/,
-          `Brand: ${brand.charAt(0).toUpperCase() + brand.slice(1)} | Context: Color (Mode-agnostic)`
-        );
+        // Convert token names to CSS variable names
+        const optimizableCssVars = new Set(optimizable.map(tokenNameToCssVar));
+        const modeSpecificCssVars = new Set(modeSpecific.map(tokenNameToCssVar));
 
-        // Update selector: remove data-theme attribute
-        cssContent = cssContent.replace(
-          /\[data-brand="[^"]+"\]\[data-theme="light"\]/g,
-          `[data-brand="${brand}"]`
-        );
+        // Split variables
+        const optimizedVars = [];
+        const lightOnlyVars = [];
+        const darkOnlyVars = [];
 
-        // Remove fallback values from semantic references (already done in format, but ensure cleanup)
-        // Match: var(--semantic-token, #hexvalue) -> var(--semantic-token)
-        cssContent = cssContent.replace(
-          /var\((--[a-z-]+),\s*#[A-Fa-f0-9]+\)/g,
-          'var($1)'
-        );
-
-        // Write optimized file
-        fs.writeFileSync(cssOptimizedFile, cssContent);
-
-        // Delete original mode-specific files
-        fs.unlinkSync(cssLightFile);
-        if (fs.existsSync(cssDarkFile)) {
-          fs.unlinkSync(cssDarkFile);
+        for (const [cssVar, varLine] of lightCss.variables) {
+          if (optimizableCssVars.has(cssVar)) {
+            // Remove fallback from semantic reference
+            const cleanedLine = varLine.replace(/var\((--[a-z-]+),\s*[^)]+\)/gi, 'var($1)');
+            optimizedVars.push(cleanedLine);
+          } else {
+            lightOnlyVars.push(varLine);
+          }
         }
 
-        optimizedCount++;
-        console.log(`     ✅ ${brand}/${componentName}: Consolidated to mode-agnostic file`);
+        for (const [cssVar, varLine] of darkCss.variables) {
+          if (!optimizableCssVars.has(cssVar)) {
+            darkOnlyVars.push(varLine);
+          }
+        }
+
+        // Write output files
+        if (optimizedVars.length > 0) {
+          const optimizedContent = generateCssContent(
+            lightCss.header,
+            `[data-brand="${brand}"]`,
+            optimizedVars,
+            'Color (Mode-agnostic)'
+          );
+          fs.writeFileSync(cssOptimizedFile, optimizedContent);
+        }
+
+        if (modeSpecific.length === 0) {
+          // All tokens optimized - delete original files
+          fs.unlinkSync(cssLightFile);
+          fs.unlinkSync(cssDarkFile);
+          fullyOptimizedCount++;
+          console.log(`     ✅ ${brand}/${componentName}: Fully consolidated to mode-agnostic file`);
+        } else {
+          // Partial optimization - update light/dark files with remaining tokens
+          if (lightOnlyVars.length > 0) {
+            const lightContent = generateCssContent(
+              lightCss.header,
+              `[data-brand="${brand}"][data-theme="light"]`,
+              lightOnlyVars,
+              'theme: light'
+            );
+            fs.writeFileSync(cssLightFile, lightContent);
+          } else {
+            fs.unlinkSync(cssLightFile);
+          }
+
+          if (darkOnlyVars.length > 0) {
+            const darkContent = generateCssContent(
+              darkCss.header,
+              `[data-brand="${brand}"][data-theme="dark"]`,
+              darkOnlyVars,
+              'theme: dark'
+            );
+            fs.writeFileSync(cssDarkFile, darkContent);
+          } else {
+            fs.unlinkSync(cssDarkFile);
+          }
+
+          partiallyOptimizedCount++;
+          console.log(`     🔀 ${brand}/${componentName}: Split - ${optimizable.length} mode-agnostic, ${modeSpecific.length} mode-specific`);
+        }
 
       } catch (e) {
         console.log(`     ❌ ${componentName}: Error optimizing CSS - ${e.message}`);
@@ -1578,9 +1665,12 @@ async function optimizeComponentColorCSS() {
     }
   }
 
-  console.log(`\n   📊 Summary: ${optimizedCount} components optimized, ${skippedCount} skipped (mixed/different refs)`);
+  console.log(`\n   📊 Summary:`);
+  console.log(`      - ${fullyOptimizedCount} components fully optimized (all tokens mode-agnostic)`);
+  console.log(`      - ${partiallyOptimizedCount} components partially optimized (token-level split)`);
+  console.log(`      - ${skippedCount} components skipped (no semantic refs)`);
 
-  return { optimizedCount, skippedCount };
+  return { fullyOptimizedCount, partiallyOptimizedCount, skippedCount };
 }
 
 /**
