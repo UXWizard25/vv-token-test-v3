@@ -6242,10 +6242,17 @@ const JS_FILE_HEADER = `/**
 
 /**
  * Convert string to camelCase
+ * Handles consecutive uppercase letters (e.g., shadowSoftSM → shadowSoftSm)
  */
 function toCamelCase(str) {
   return str
+    // Split on lowercase-to-uppercase transitions (e.g., softSM → soft-S-M)
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    // Lowercase everything
+    .toLowerCase()
+    // Remove separators and capitalize following letter
     .replace(/[-_\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ''))
+    // Ensure first character is lowercase
     .replace(/^(.)/, (c) => c.toLowerCase());
 }
 
