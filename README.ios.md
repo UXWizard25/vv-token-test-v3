@@ -747,6 +747,8 @@ RoundedRectangle(cornerRadius: 8)
 |----------|-------------|
 | [README.md](./README.md) | Project Overview |
 | [README.tokens.md](./README.tokens.md) | All Platforms |
+| [README.css.md](./README.css.md) | CSS Custom Properties |
+| [README.js.md](./README.js.md) | JavaScript/React Integration |
 | [README.android.md](./README.android.md) | Android Jetpack Compose Integration |
 | [CLAUDE.md](./CLAUDE.md) | Build Pipeline Details |
 

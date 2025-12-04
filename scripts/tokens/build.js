@@ -1408,6 +1408,409 @@ async function buildComponentTokens() {
 }
 
 /**
+ * Optimizes Component Color CSS by consolidating mode files
+ *
+ * When ALL tokens in a component's color files reference the SAME semantic tokens
+ * in both light and dark modes, we can consolidate them into a single mode-agnostic file.
+ *
+ * This optimization:
+ * 1. Checks if all tokens are semantic references
+ * 2. Checks if semantic token names are identical between light and dark
+ * 3. If yes: Creates a single file with [data-brand] selector (no data-theme)
+ * 4. Deletes the redundant mode-specific files
+ *
+ * This only affects CSS output - native platforms (iOS/Android) are not modified.
+ */
+async function optimizeComponentColorCSS() {
+  console.log('\n🎯 Optimizing Component Color CSS (Token-Level Split):\n');
+
+  let fullyOptimizedCount = 0;
+  let partiallyOptimizedCount = 0;
+  let skippedCount = 0;
+
+  /**
+   * Recursively extracts all tokens with their $alias info from nested structure
+   */
+  function extractAllTokens(obj, tokens = []) {
+    for (const key of Object.keys(obj)) {
+      const value = obj[key];
+      if (value && typeof value === 'object') {
+        // Check if this is a token (has $value and $alias)
+        if (value.$value !== undefined && value.$alias) {
+          tokens.push({
+            name: key,
+            alias: value.$alias
+          });
+        } else {
+          // Recurse into nested objects
+          extractAllTokens(value, tokens);
+        }
+      }
+    }
+    return tokens;
+  }
+
+  /**
+   * Convert camelCase token name to kebab-case CSS variable name
+   */
+  function tokenNameToCssVar(tokenName) {
+    return '--' + tokenName
+      .replace(/([a-z])([A-Z])/g, '$1-$2')
+      .replace(/([A-Z])([A-Z][a-z])/g, '$1-$2')
+      .toLowerCase();
+  }
+
+  /**
+   * Categorize tokens into optimizable (identical semantic refs) and mode-specific
+   */
+  function categorizeTokens(lightTokens, darkTokens) {
+    const lightMap = new Map(lightTokens.map(t => [t.name, t.alias]));
+    const darkMap = new Map(darkTokens.map(t => [t.name, t.alias]));
+
+    const optimizable = [];  // Can be mode-agnostic
+    const modeSpecific = []; // Must stay in light/dark files
+
+    for (const [name, lightAlias] of lightMap) {
+      const darkAlias = darkMap.get(name);
+
+      // Check if this token can be optimized
+      const canOptimize = darkAlias &&
+        lightAlias.collectionType === 'semantic' &&
+        darkAlias.collectionType === 'semantic' &&
+        lightAlias.token === darkAlias.token;
+
+      if (canOptimize) {
+        optimizable.push(name);
+      } else {
+        modeSpecific.push(name);
+      }
+    }
+
+    return { optimizable, modeSpecific };
+  }
+
+  /**
+   * Parse CSS file and extract variable declarations
+   * Returns: { header, variables: Map<cssVarName, fullLine> }
+   */
+  function parseCssFile(cssContent) {
+    const headerMatch = cssContent.match(/^\/\*\*[\s\S]*?\*\//);
+    const header = headerMatch ? headerMatch[0] : '';
+
+    // Extract all CSS variable declarations
+    const variables = new Map();
+    const varRegex = /(--[a-z0-9-]+):\s*([^;]+);/gi;
+    let match;
+    while ((match = varRegex.exec(cssContent)) !== null) {
+      variables.set(match[1], `  ${match[1]}: ${match[2]};`);
+    }
+
+    return { header, variables };
+  }
+
+  /**
+   * Generate CSS file content from variables
+   */
+  function generateCssContent(header, selector, variables, context) {
+    const updatedHeader = header.replace(
+      /Context: theme: \w+/,
+      `Context: ${context}`
+    );
+
+    let output = updatedHeader + '\n\n';
+    output += `${selector} {\n`;
+    for (const varLine of variables) {
+      output += varLine + '\n';
+    }
+    output += '}\n';
+
+    return output;
+  }
+
+  for (const brand of BRANDS) {
+    const componentsDir = path.join(TOKENS_DIR, 'brands', brand, 'components');
+    const cssComponentsDir = path.join(DIST_DIR, 'css', 'brands', brand, 'components');
+
+    if (!fs.existsSync(componentsDir)) continue;
+
+    const componentNames = fs.readdirSync(componentsDir).filter(name => {
+      return fs.statSync(path.join(componentsDir, name)).isDirectory();
+    });
+
+    for (const componentName of componentNames) {
+      const componentDir = path.join(componentsDir, componentName);
+      const cssDir = path.join(cssComponentsDir, componentName);
+
+      // Find color token files
+      const lightTokenFile = path.join(componentDir, `${componentName.toLowerCase()}-color-light.json`);
+      const darkTokenFile = path.join(componentDir, `${componentName.toLowerCase()}-color-dark.json`);
+
+      // Both files must exist
+      if (!fs.existsSync(lightTokenFile) || !fs.existsSync(darkTokenFile)) {
+        continue;
+      }
+
+      // Load and parse token files
+      let lightData, darkData;
+      try {
+        lightData = JSON.parse(fs.readFileSync(lightTokenFile, 'utf8'));
+        darkData = JSON.parse(fs.readFileSync(darkTokenFile, 'utf8'));
+      } catch (e) {
+        console.log(`     ⚠️  ${componentName}: Error reading token files`);
+        continue;
+      }
+
+      // Extract all tokens
+      const lightTokens = extractAllTokens(lightData);
+      const darkTokens = extractAllTokens(darkData);
+
+      // Categorize tokens
+      const { optimizable, modeSpecific } = categorizeTokens(lightTokens, darkTokens);
+
+      // If no tokens can be optimized, skip
+      if (optimizable.length === 0) {
+        skippedCount++;
+        continue;
+      }
+
+      // CSS file paths
+      const cssLightFile = path.join(cssDir, `${componentName.toLowerCase()}-color-light.css`);
+      const cssDarkFile = path.join(cssDir, `${componentName.toLowerCase()}-color-dark.css`);
+      const cssOptimizedFile = path.join(cssDir, `${componentName.toLowerCase()}-color.css`);
+
+      if (!fs.existsSync(cssLightFile) || !fs.existsSync(cssDarkFile)) {
+        continue;
+      }
+
+      try {
+        // Parse CSS files
+        const lightCss = parseCssFile(fs.readFileSync(cssLightFile, 'utf8'));
+        const darkCss = parseCssFile(fs.readFileSync(cssDarkFile, 'utf8'));
+
+        // Convert token names to CSS variable names
+        const optimizableCssVars = new Set(optimizable.map(tokenNameToCssVar));
+        const modeSpecificCssVars = new Set(modeSpecific.map(tokenNameToCssVar));
+
+        // Split variables
+        const optimizedVars = [];
+        const lightOnlyVars = [];
+        const darkOnlyVars = [];
+
+        for (const [cssVar, varLine] of lightCss.variables) {
+          if (optimizableCssVars.has(cssVar)) {
+            // Remove fallback from semantic reference
+            const cleanedLine = varLine.replace(/var\((--[a-z-]+),\s*[^)]+\)/gi, 'var($1)');
+            optimizedVars.push(cleanedLine);
+          } else {
+            lightOnlyVars.push(varLine);
+          }
+        }
+
+        for (const [cssVar, varLine] of darkCss.variables) {
+          if (!optimizableCssVars.has(cssVar)) {
+            darkOnlyVars.push(varLine);
+          }
+        }
+
+        // Write output files
+        if (optimizedVars.length > 0) {
+          const optimizedContent = generateCssContent(
+            lightCss.header,
+            `[data-brand="${brand}"]`,
+            optimizedVars,
+            'Color (Mode-agnostic)'
+          );
+          fs.writeFileSync(cssOptimizedFile, optimizedContent);
+        }
+
+        if (modeSpecific.length === 0) {
+          // All tokens optimized - delete original files
+          fs.unlinkSync(cssLightFile);
+          fs.unlinkSync(cssDarkFile);
+          fullyOptimizedCount++;
+          console.log(`     ✅ ${brand}/${componentName}: Fully consolidated to mode-agnostic file`);
+        } else {
+          // Partial optimization - update light/dark files with remaining tokens
+          if (lightOnlyVars.length > 0) {
+            const lightContent = generateCssContent(
+              lightCss.header,
+              `[data-brand="${brand}"][data-theme="light"]`,
+              lightOnlyVars,
+              'theme: light'
+            );
+            fs.writeFileSync(cssLightFile, lightContent);
+          } else {
+            fs.unlinkSync(cssLightFile);
+          }
+
+          if (darkOnlyVars.length > 0) {
+            const darkContent = generateCssContent(
+              darkCss.header,
+              `[data-brand="${brand}"][data-theme="dark"]`,
+              darkOnlyVars,
+              'theme: dark'
+            );
+            fs.writeFileSync(cssDarkFile, darkContent);
+          } else {
+            fs.unlinkSync(cssDarkFile);
+          }
+
+          partiallyOptimizedCount++;
+          console.log(`     🔀 ${brand}/${componentName}: Split - ${optimizable.length} mode-agnostic, ${modeSpecific.length} mode-specific`);
+        }
+
+      } catch (e) {
+        console.log(`     ❌ ${componentName}: Error optimizing CSS - ${e.message}`);
+      }
+    }
+  }
+
+  console.log(`\n   📊 Summary:`);
+  console.log(`      - ${fullyOptimizedCount} components fully optimized (all tokens mode-agnostic)`);
+  console.log(`      - ${partiallyOptimizedCount} components partially optimized (token-level split)`);
+  console.log(`      - ${skippedCount} components skipped (no semantic refs)`);
+
+  return { fullyOptimizedCount, partiallyOptimizedCount, skippedCount };
+}
+
+/**
+ * Optimizes Component Effects CSS by consolidating identical light/dark effects
+ *
+ * Effects (box-shadow) are often identical between light and dark modes.
+ * This function compares effects-light.css and effects-dark.css files,
+ * and if all effects are identical, consolidates them to a single mode-agnostic file.
+ */
+async function optimizeComponentEffectsCSS() {
+  console.log('\n✨ Optimizing Component Effects CSS:\n');
+
+  let optimizedCount = 0;
+  let skippedCount = 0;
+
+  /**
+   * Parse effects CSS file and extract class rules
+   * Returns: Map<className, ruleContent>
+   */
+  function parseEffectsCssFile(cssContent) {
+    const rules = new Map();
+
+    // Match: [data-brand="..."][data-theme="..."] .class-name { ... }
+    const ruleRegex = /\[data-brand="[^"]+"\]\[data-theme="[^"]+"\]\s+\.([a-z0-9-]+)\s*\{([^}]+)\}/gi;
+    let match;
+
+    while ((match = ruleRegex.exec(cssContent)) !== null) {
+      const className = match[1];
+      const ruleContent = match[2].trim();
+      rules.set(className, ruleContent);
+    }
+
+    return rules;
+  }
+
+  /**
+   * Check if all rules are identical between light and dark
+   */
+  function areEffectsIdentical(lightRules, darkRules) {
+    if (lightRules.size !== darkRules.size) {
+      return false;
+    }
+
+    for (const [className, lightContent] of lightRules) {
+      const darkContent = darkRules.get(className);
+      if (!darkContent || lightContent !== darkContent) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Generate mode-agnostic effects CSS
+   */
+  function generateModeAgnosticCss(header, brand, rules) {
+    const updatedHeader = header.replace(
+      /Context: Mode: \w+/,
+      'Context: Effects (Mode-agnostic)'
+    );
+
+    let output = updatedHeader + '\n\n';
+
+    for (const [className, ruleContent] of rules) {
+      output += `[data-brand="${brand}"] .${className} {\n`;
+      output += `  ${ruleContent}\n`;
+      output += `}\n\n`;
+    }
+
+    return output;
+  }
+
+  for (const brand of BRANDS) {
+    const cssComponentsDir = path.join(DIST_DIR, 'css', 'brands', brand, 'components');
+
+    if (!fs.existsSync(cssComponentsDir)) continue;
+
+    const componentNames = fs.readdirSync(cssComponentsDir).filter(name => {
+      const componentPath = path.join(cssComponentsDir, name);
+      return fs.statSync(componentPath).isDirectory();
+    });
+
+    for (const componentName of componentNames) {
+      const cssDir = path.join(cssComponentsDir, componentName);
+
+      // Find effects CSS files
+      const lightFile = path.join(cssDir, `${componentName.toLowerCase()}-effects-light.css`);
+      const darkFile = path.join(cssDir, `${componentName.toLowerCase()}-effects-dark.css`);
+      const optimizedFile = path.join(cssDir, `${componentName.toLowerCase()}-effects.css`);
+
+      // Both files must exist
+      if (!fs.existsSync(lightFile) || !fs.existsSync(darkFile)) {
+        continue;
+      }
+
+      try {
+        // Read CSS files
+        const lightCss = fs.readFileSync(lightFile, 'utf8');
+        const darkCss = fs.readFileSync(darkFile, 'utf8');
+
+        // Parse rules
+        const lightRules = parseEffectsCssFile(lightCss);
+        const darkRules = parseEffectsCssFile(darkCss);
+
+        // Check if identical
+        if (!areEffectsIdentical(lightRules, darkRules)) {
+          skippedCount++;
+          continue;
+        }
+
+        // Extract header from light file
+        const headerMatch = lightCss.match(/^\/\*\*[\s\S]*?\*\//);
+        const header = headerMatch ? headerMatch[0] : '';
+
+        // Generate optimized CSS
+        const optimizedCss = generateModeAgnosticCss(header, brand, lightRules);
+
+        // Write optimized file
+        fs.writeFileSync(optimizedFile, optimizedCss);
+
+        // Delete original files
+        fs.unlinkSync(lightFile);
+        fs.unlinkSync(darkFile);
+
+        optimizedCount++;
+        console.log(`     ✅ ${brand}/${componentName}: Consolidated to mode-agnostic effects`);
+
+      } catch (e) {
+        console.log(`     ❌ ${componentName}: Error optimizing effects - ${e.message}`);
+      }
+    }
+  }
+
+  console.log(`\n   📊 Summary: ${optimizedCount} components optimized, ${skippedCount} skipped (different effects)`);
+
+  return { optimizedCount, skippedCount };
+}
+
+/**
  * Builds Typography Tokens (brand-specific)
  */
 async function buildTypographyTokens() {
@@ -1786,9 +2189,14 @@ async function generateResponsiveBreakpointFile(dir, brand, breakpointConfig) {
   output += `}\n\n`;
 
   // Media queries for SM, MD, LG - only output CHANGED values
-  for (const bp of ['sm', 'md', 'lg']) {
+  // Use cascade optimization: compare each breakpoint to the previous one
+  const breakpointOrder = ['sm', 'md', 'lg'];
+  let previousVars = baseVars; // Start with XS as the "previous"
+
+  for (const bp of breakpointOrder) {
     if (breakpointVarMaps[bp] && breakpointConfig[bp]) {
-      const changedVars = getChangedVariables(baseVars, breakpointVarMaps[bp]);
+      // Compare against the previous breakpoint (cascade optimization)
+      const changedVars = getChangedVariables(baseVars, breakpointVarMaps[bp], previousVars);
 
       if (Object.keys(changedVars).length > 0) {
         output += `@media (min-width: ${breakpointConfig[bp]}) {\n`;
@@ -1799,6 +2207,9 @@ async function generateResponsiveBreakpointFile(dir, brand, breakpointConfig) {
         output += `  }\n`;
         output += `}\n\n`;
       }
+
+      // Update previousVars for next iteration (merge current BP values)
+      previousVars = { ...previousVars, ...breakpointVarMaps[bp] };
     }
   }
 
@@ -1872,9 +2283,14 @@ async function generateComponentBreakpointResponsive(dir, componentName, brand, 
   output += `}\n\n`;
 
   // Media queries for SM, MD, LG - only output CHANGED values
-  for (const bp of ['sm', 'md', 'lg']) {
+  // Use cascade optimization: compare each breakpoint to the previous one
+  const breakpointOrder = ['sm', 'md', 'lg'];
+  let previousVars = baseVars; // Start with XS as the "previous"
+
+  for (const bp of breakpointOrder) {
     if (breakpointVarMaps[bp] && breakpointConfig[bp]) {
-      const changedVars = getChangedVariables(baseVars, breakpointVarMaps[bp]);
+      // Compare against the previous breakpoint (cascade optimization)
+      const changedVars = getChangedVariables(baseVars, breakpointVarMaps[bp], previousVars);
 
       if (Object.keys(changedVars).length > 0) {
         output += `@media (min-width: ${breakpointConfig[bp]}) {\n`;
@@ -1885,6 +2301,9 @@ async function generateComponentBreakpointResponsive(dir, componentName, brand, 
         output += `  }\n`;
         output += `}\n\n`;
       }
+
+      // Update previousVars for next iteration (merge current BP values)
+      previousVars = { ...previousVars, ...breakpointVarMaps[bp] };
     }
   }
 
@@ -1948,14 +2367,24 @@ function parseVariablesToMap(variables) {
  * Compares two variable maps and returns only the variables that have different values
  * @param {Object} baseVars - Base (XS) variables map
  * @param {Object} compareVars - Variables to compare against base
+ * @param {Object} previousBpVars - Variables from the previous breakpoint (for cascade optimization)
  * @returns {Object} - Map of variables that have changed
  */
-function getChangedVariables(baseVars, compareVars) {
+function getChangedVariables(baseVars, compareVars, previousBpVars = null) {
   const changed = {};
   for (const [name, value] of Object.entries(compareVars)) {
-    // Include if value is different from base, or if it's a new variable
-    if (baseVars[name] !== value) {
-      changed[name] = value;
+    // If we have a previous breakpoint, only include if different from THAT
+    // (cascade optimization: lg inherits from md which inherits from sm)
+    if (previousBpVars) {
+      // Only add if different from previous breakpoint
+      if (previousBpVars[name] !== value) {
+        changed[name] = value;
+      }
+    } else {
+      // First comparison (sm vs xs): compare against base
+      if (baseVars[name] !== value) {
+        changed[name] = value;
+      }
     }
   }
   return changed;
@@ -7393,11 +7822,17 @@ async function main() {
   // Build component tokens
   stats.componentTokens = await buildComponentTokens();
 
+  // Optimize component color CSS (consolidate semantic-only mode files)
+  stats.colorCssOptimization = await optimizeComponentColorCSS();
+
   // Build typography tokens
   stats.typographyTokens = await buildTypographyTokens();
 
   // Build effect tokens
   stats.effectTokens = await buildEffectTokens();
+
+  // Optimize component effects CSS (consolidate identical light/dark effects)
+  stats.effectsCssOptimization = await optimizeComponentEffectsCSS();
 
   // Convert to responsive CSS
   stats.responsiveCSS = await convertToResponsiveCSS();
@@ -7455,6 +7890,9 @@ async function main() {
   console.log(`   - Shared Primitives: ${stats.sharedPrimitives.successful}/${stats.sharedPrimitives.total}`);
   console.log(`   - Brand-spezifische Tokens: ${stats.brandSpecific.successfulBuilds}/${stats.brandSpecific.totalBuilds}`);
   console.log(`   - Component Tokens: ${stats.componentTokens.successfulBuilds}/${stats.componentTokens.totalBuilds}`);
+  if (stats.colorCssOptimization) {
+    console.log(`   - Color CSS Optimized: ${stats.colorCssOptimization.optimizedCount} components (${stats.colorCssOptimization.skippedCount} skipped)`);
+  }
   console.log(`   - Typography Builds: ${stats.typographyTokens.successfulBuilds}/${stats.typographyTokens.totalBuilds}`);
   console.log(`   - Effect Builds: ${stats.effectTokens.successfulBuilds}/${stats.effectTokens.totalBuilds}`);
   console.log(`   - Responsive CSS Files: ${stats.responsiveCSS.successfulConversions}/${stats.responsiveCSS.totalConversions}`);
@@ -7494,10 +7932,33 @@ async function main() {
   console.log(`   - Builds erfolgreich: ${successfulBuilds}/${totalBuilds}`);
   console.log(`   - Output-Verzeichnis: dist/\n`);
 
+  // Build optimized JS output (replaces flat structure with grouped files)
+  await buildOptimizedJSOutput();
+
   // Copy platform-specific README files to dist directories
-  console.log(`📄 Kopiere Platform-READMEs:\n`);
+  console.log(`\n📄 Kopiere Platform-READMEs:\n`);
   try {
     const readmeSrcDir = path.join(__dirname, '../..');
+
+    // Copy README.css.md to dist/css/README.md
+    const cssReadmeSrc = path.join(readmeSrcDir, 'README.css.md');
+    const cssReadmeDest = path.join(DIST_DIR, 'css/README.md');
+    if (fs.existsSync(cssReadmeSrc)) {
+      fs.copyFileSync(cssReadmeSrc, cssReadmeDest);
+      console.log(`   ✅ README.css.md → dist/css/README.md`);
+    } else {
+      console.log(`   ⚠️  README.css.md nicht gefunden`);
+    }
+
+    // Copy README.js.md to dist/js/README.md
+    const jsReadmeSrc = path.join(readmeSrcDir, 'README.js.md');
+    const jsReadmeDest = path.join(DIST_DIR, 'js/README.md');
+    if (fs.existsSync(jsReadmeSrc)) {
+      fs.copyFileSync(jsReadmeSrc, jsReadmeDest);
+      console.log(`   ✅ README.js.md → dist/js/README.md`);
+    } else {
+      console.log(`   ⚠️  README.js.md nicht gefunden`);
+    }
 
     // Copy README.android.md to dist/android/compose/README.md
     if (COMPOSE_ENABLED) {
@@ -7522,25 +7983,8 @@ async function main() {
         console.log(`   ⚠️  README.ios.md nicht gefunden`);
       }
     }
-    console.log('');
   } catch (err) {
-    console.log(`   ⚠️  Fehler beim Kopieren der READMEs: ${err.message}\n`);
-  }
-
-  // Build optimized JS output (replaces flat structure with grouped files)
-  await buildOptimizedJSOutput();
-
-  // Copy README.js.md to dist/js/README.md (after JS build creates the directory)
-  try {
-    const readmeSrcDir = path.join(__dirname, '../..');
-    const jsReadmeSrc = path.join(readmeSrcDir, 'README.js.md');
-    const jsReadmeDest = path.join(DIST_DIR, 'js/README.md');
-    if (fs.existsSync(jsReadmeSrc)) {
-      fs.copyFileSync(jsReadmeSrc, jsReadmeDest);
-      console.log(`\n📄 README.js.md → dist/js/README.md ✅`);
-    }
-  } catch (err) {
-    console.log(`\n⚠️  Fehler beim Kopieren von README.js.md: ${err.message}`);
+    console.log(`   ⚠️  Fehler beim Kopieren der READMEs: ${err.message}`);
   }
 
   console.log(`\n📁 Struktur:`);

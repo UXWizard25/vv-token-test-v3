@@ -271,39 +271,10 @@ async function buildBrandTokens(brand) {
 
   let content = generateHeader(brand, 'tokens');
 
-  // 1. Density tokens (from component density files)
-  const componentsDir = path.join(brandSourceDir, 'components');
-  if (fs.existsSync(componentsDir)) {
-    const densityFiles = await glob(`${componentsDir}/**/*-density-*.css`);
+  // Note: Component density tokens are now ONLY in component bundles, not here.
+  // This avoids duplication between tokens.css and component files.
 
-    if (densityFiles.length > 0) {
-      // Group by density mode
-      const densityByMode = { default: [], dense: [], spacious: [] };
-
-      for (const file of densityFiles) {
-        const modeMatch = path.basename(file).match(/density-(default|dense|spacious)/);
-        if (modeMatch && densityByMode[modeMatch[1]]) {
-          densityByMode[modeMatch[1]].push(file);
-        }
-      }
-
-      content += '/* === DENSITY TOKENS === */\n\n';
-
-      for (const mode of ['default', 'dense', 'spacious']) {
-        if (densityByMode[mode].length > 0) {
-          content += `/* Density: ${mode} */\n`;
-          for (const file of densityByMode[mode].sort()) {
-            const fileContent = readAndStripHeader(file);
-            if (fileContent) {
-              content += fileContent + '\n\n';
-            }
-          }
-        }
-      }
-    }
-  }
-
-  // 2. Responsive breakpoint tokens
+  // 1. Responsive breakpoint tokens
   const breakpointResponsive = path.join(brandSourceDir, 'semantic', 'breakpoints', 'breakpoint-responsive.css');
   if (fs.existsSync(breakpointResponsive)) {
     content += '/* === RESPONSIVE BREAKPOINT TOKENS === */\n\n';
@@ -313,7 +284,7 @@ async function buildBrandTokens(brand) {
     }
   }
 
-  // 3. Responsive typography
+  // 2. Responsive typography
   const typographyResponsive = path.join(brandSourceDir, 'semantic', 'typography', 'typography-responsive.css');
   if (fs.existsSync(typographyResponsive)) {
     content += '/* === RESPONSIVE TYPOGRAPHY === */\n\n';
