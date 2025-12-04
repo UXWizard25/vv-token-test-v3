@@ -5197,7 +5197,7 @@ import androidx.compose.ui.unit.sp
  * Design Token Primitives
  *
  * Usage:
- *   DesignTokenPrimitives.Colors.bildred
+ *   DesignTokenPrimitives.Colors.colorBildRed50
  *   DesignTokenPrimitives.Space.space2x
  *   DesignTokenPrimitives.Size.size4x
  *   DesignTokenPrimitives.Font.fontWeightBold

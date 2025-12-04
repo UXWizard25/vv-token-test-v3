@@ -150,14 +150,17 @@ const nameTransformers = {
   // camelCase für JavaScript, Flutter, iOS Swift
   camel: (str) => {
     const kebab = nameTransformers.kebab(str);
-    let camelCase = kebab.replace(/-([a-z0-9])/g, (_, letter) => letter.toUpperCase());
+    // First: Keep letters after numbers lowercase (e.g., 1-x → 1x, not 1X)
+    let result = kebab.replace(/(\d)-([a-z])/g, '$1$2');
+    // Then: Uppercase letters after hyphens (standard camelCase)
+    result = result.replace(/-([a-z0-9])/g, (_, letter) => letter.toUpperCase());
 
     // Prefix with underscore if starts with a number (invalid JS identifier)
-    if (/^[0-9]/.test(camelCase)) {
-      camelCase = '_' + camelCase;
+    if (/^[0-9]/.test(result)) {
+      result = '_' + result;
     }
 
-    return camelCase;
+    return result;
   },
 
   // PascalCase (kept for potential future use)
