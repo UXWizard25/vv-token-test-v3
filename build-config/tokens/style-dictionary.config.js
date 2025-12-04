@@ -485,33 +485,6 @@ const nameIosSwiftTransform = {
 };
 
 /**
- * Transform: Name für Android XML (snake_case)
- * Hyphens sind in Android Resource Namen nicht erlaubt!
- * Verwendet nur das letzte Pfad-Segment für den Token-Namen
- */
-const nameAndroidTransform = {
-  name: 'name/custom/android',
-  type: 'name',
-  transform: (token) => {
-    const lastSegment = token.path[token.path.length - 1];
-    return nameTransformers.snake(lastSegment);
-  }
-};
-
-/**
- * Transform: Name für Flutter Dart (camelCase, behält Unterstriche in Dezimalzahlen)
- * Verwendet nur das letzte Pfad-Segment für den Token-Namen
- */
-const nameFlutterDartTransform = {
-  name: 'name/custom/flutter-dart',
-  type: 'name',
-  transform: (token) => {
-    const lastSegment = token.path[token.path.length - 1];
-    return nameTransformers.camel(lastSegment);
-  }
-};
-
-/**
  * Transform: Name für Jetpack Compose (camelCase für Properties)
  * Verwendet nur das letzte Pfad-Segment für den Token-Namen
  */
@@ -1005,100 +978,6 @@ const iosSwiftClassFormat = ({ dictionary, options, file }) => {
   return output;
 };
 
-/**
- * Format: Flutter Dart Class mit korrekter className Handhabung und Gruppierung
- */
-const flutterDartClassFormat = ({ dictionary, options, file }) => {
-  const className = options.className || file.className || 'StyleDictionary';
-  const context = getContextString(options);
-  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'camel');
-
-  let output = generateFileHeader({
-    fileName: file.destination,
-    commentStyle: 'line',
-    brand: options.brand,
-    context: context
-  });
-
-  output += `import 'dart:ui';\n\nclass ${className} {\n    ${className}._();\n\n`;
-
-  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
-
-  let isFirstTopLevel = true;
-  Object.keys(hierarchicalGroups).forEach(topLevel => {
-    const subGroups = hierarchicalGroups[topLevel];
-
-    if (!isFirstTopLevel) {
-      output += `\n`;
-    }
-    output += `    // ============================================\n`;
-    output += `    // ${topLevel.toUpperCase()}\n`;
-    output += `    // ============================================\n\n`;
-    isFirstTopLevel = false;
-
-    Object.keys(subGroups).forEach(subLevel => {
-      const tokens = subGroups[subLevel];
-
-      if (subLevel) {
-        output += `    // ${topLevel} - ${subLevel}\n`;
-      }
-
-      tokens.forEach(token => {
-        const uniqueName = uniqueNames.get(token.path.join('.'));
-        const comment = token.comment || token.description;
-        if (comment) {
-          output += `    /** ${comment} */\n`;
-        }
-
-        let valueOutput;
-        const value = token.$value !== undefined ? token.$value : token.value;
-        const type = token.$type || token.type;
-
-        if (type === 'color') {
-          if (value.startsWith('#')) {
-            const hex = value.replace('#', '');
-            let argb;
-            if (hex.length === 6) {
-              argb = 'FF' + hex;
-            } else if (hex.length === 8) {
-              argb = hex.substring(6, 8) + hex.substring(0, 6);
-            } else {
-              argb = 'FF000000';
-            }
-            valueOutput = `Color(0x${argb})`;
-          } else if (value.startsWith('rgb')) {
-            const match = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
-            if (match) {
-              const r = parseInt(match[1]).toString(16).padStart(2, '0');
-              const g = parseInt(match[2]).toString(16).padStart(2, '0');
-              const b = parseInt(match[3]).toString(16).padStart(2, '0');
-              const a = match[4] ? Math.round(parseFloat(match[4]) * 255).toString(16).padStart(2, '0') : 'FF';
-              valueOutput = `Color(0x${a}${r}${g}${b})`;
-            } else {
-              valueOutput = `"${value}"`;
-            }
-          } else {
-            valueOutput = `"${value}"`;
-          }
-        } else if (typeof value === 'number') {
-          valueOutput = value;
-        } else if (typeof value === 'string') {
-          valueOutput = `"${value}"`;
-        } else {
-          valueOutput = value;
-        }
-
-        output += `    static const ${uniqueName} = ${valueOutput};\n`;
-      });
-
-      output += `\n`;
-    });
-  });
-
-  output += `}\n`;
-  return output;
-};
-
 // ============================================================================
 // COMPOSITE TOKEN FORMATS
 // ============================================================================
@@ -1363,177 +1242,6 @@ const iosSwiftTypographyFormat = ({ dictionary, options }) => {
 };
 
 /**
- * Format: Android XML Resources with hierarchical grouping
- */
-const androidResourcesFormat = ({ dictionary, options, file }) => {
-  const context = getContextString(options);
-  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'snake');
-
-  let output = `<?xml version="1.0" encoding="UTF-8"?>\n\n`;
-  output += generateFileHeader({
-    fileName: file.destination,
-    commentStyle: 'xml',
-    brand: options.brand,
-    context: context
-  });
-  output += `<resources>\n`;
-
-  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
-
-  let isFirstTopLevel = true;
-  Object.keys(hierarchicalGroups).forEach(topLevel => {
-    const subGroups = hierarchicalGroups[topLevel];
-
-    if (!isFirstTopLevel) {
-      output += `\n`;
-    }
-    output += `  <!-- ============================================\n`;
-    output += `       ${topLevel.toUpperCase()}\n`;
-    output += `       ============================================ -->\n\n`;
-    isFirstTopLevel = false;
-
-    Object.keys(subGroups).forEach(subLevel => {
-      const tokens = subGroups[subLevel];
-
-      if (subLevel) {
-        output += `  <!-- ${topLevel} - ${subLevel} -->\n`;
-      }
-
-      tokens.forEach(token => {
-        const uniqueName = uniqueNames.get(token.path.join('.'));
-        const value = token.$value !== undefined ? token.$value : token.value;
-        const type = token.$type || token.type;
-        const comment = token.comment || token.description;
-
-        let resourceType = 'string';
-        if (type === 'color') {
-          resourceType = 'color';
-        } else if (type === 'dimension' || type === 'number') {
-          resourceType = 'dimen';
-        }
-
-        output += `  <${resourceType} name="${uniqueName}">${value}</${resourceType}>`;
-        if (comment) {
-          output += `<!-- ${comment} -->`;
-        }
-        output += `\n`;
-      });
-
-      output += `\n`;
-    });
-  });
-
-  output += `</resources>\n`;
-  return output;
-};
-
-/**
- * Helper: Convert token name to Android TextAppearance style name
- * Transforms: "ateaser-ateaserkicker" → "ATeaser.Kicker"
- *             "buttonlabel" → "ButtonLabel"
- */
-const toAndroidTypographyStyleName = (tokenName, brand) => {
-  // Remove common prefixes and clean up the name
-  let cleanName = tokenName;
-
-  // Split by hyphens and process each part
-  const parts = cleanName.split('-').map(part => {
-    // Convert camelCase or lowercase to PascalCase
-    return part
-      .replace(/([a-z])([A-Z])/g, '$1.$2')  // Split camelCase with dots
-      .split('.')
-      .map(segment => segment.charAt(0).toUpperCase() + segment.slice(1).toLowerCase())
-      .join('');
-  });
-
-  // Join with dots for Android style hierarchy
-  const stylePart = parts.join('.');
-
-  // Format brand name (capitalize first letter)
-  const brandName = brand.charAt(0).toUpperCase() + brand.slice(1);
-
-  return `TextAppearance.${brandName}.${stylePart}`;
-};
-
-/**
- * Format: Android XML Typography Styles
- * Uses Material Design naming convention: TextAppearance.Brand.Component.Style
- */
-const androidXmlTypographyFormat = ({ dictionary, options }) => {
-  const { brand, breakpoint } = options;
-
-  let output = `<?xml version="1.0" encoding="utf-8"?>\n`;
-  output += generateFileHeader({
-    fileName: `typography_styles.xml`,
-    commentStyle: 'xml',
-    brand: brand,
-    context: `Breakpoint: ${breakpoint}`
-  });
-  output += `<resources>\n`;
-
-  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
-
-  let isFirstTopLevel = true;
-  Object.keys(hierarchicalGroups).forEach(topLevel => {
-    const subGroups = hierarchicalGroups[topLevel];
-
-    // Add top-level header
-    if (!isFirstTopLevel) {
-      output += `\n`;
-    }
-    output += `    <!-- ============================================\n`;
-    output += `         ${topLevel.toUpperCase()}\n`;
-    output += `         ============================================ -->\n\n`;
-    isFirstTopLevel = false;
-
-    Object.keys(subGroups).forEach(subLevel => {
-      const tokens = subGroups[subLevel];
-
-      // Add sub-level header if exists
-      if (subLevel) {
-        output += `    <!-- ${topLevel} - ${subLevel} -->\n`;
-      }
-
-      tokens.forEach(token => {
-        if (token.$type === 'typography' && token.$value) {
-          const style = token.$value;
-          // Convert to Android TextAppearance naming convention
-          const rawName = token.path[token.path.length - 1];
-          const styleName = toAndroidTypographyStyleName(rawName, brand);
-
-          output += `    <style name="${styleName}">\n`;
-          if (style.fontFamily) output += `        <item name="android:fontFamily">${style.fontFamily}</item>\n`;
-          if (style.fontSize) {
-            const size = parseFloat(style.fontSize);
-            output += `        <item name="android:textSize">${size}sp</item>\n`;
-          }
-          if (style.fontWeight && style.fontWeight >= 700) {
-            output += `        <item name="android:textStyle">bold</item>\n`;
-          }
-          if (style.lineHeight) {
-            const lineHeight = parseFloat(style.lineHeight);
-            output += `        <item name="android:lineHeight">${lineHeight}sp</item>\n`;
-          }
-          if (style.letterSpacing) {
-            const letterSpacing = parseFloat(style.letterSpacing);
-            output += `        <item name="android:letterSpacing">${letterSpacing / 16}</item>\n`;
-          }
-          // Android only supports textAllCaps (uppercase), not lowercase or capitalize
-          if (style.textCase === 'UPPER') {
-            output += `        <item name="android:textAllCaps">true</item>\n`;
-          }
-          output += `    </style>\n`;
-        }
-      });
-    });
-  });
-
-  output += `</resources>\n`;
-
-  return output;
-};
-
-/**
  * Format: iOS Swift Effects
  * Exports shadow tokens as properly formatted Swift code
  */
@@ -1682,98 +1390,6 @@ const javascriptEffectsFormat = ({ dictionary, options }) => {
 };
 
 /**
- * Format: Flutter Dart Effects
- * Exports shadow tokens as properly formatted Dart objects
- */
-const flutterEffectsFormat = ({ dictionary, options }) => {
-  const { brand, colorMode } = options;
-  const className = `Effects${brand.charAt(0).toUpperCase() + brand.slice(1)}${colorMode.charAt(0).toUpperCase() + colorMode.slice(1)}`;
-  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'camel');
-
-  let output = generateFileHeader({
-    fileName: `effects-${colorMode}.dart`,
-    commentStyle: 'line',
-    brand: brand,
-    context: `Mode: ${colorMode}`
-  });
-
-  output += `import 'dart:ui';\n\n`;
-  output += `class ${className} {\n`;
-  output += `    ${className}._();\n\n`;
-
-  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
-
-  Object.keys(hierarchicalGroups).forEach(topLevel => {
-    const subGroups = hierarchicalGroups[topLevel];
-
-    output += `    // ============================================\n`;
-    output += `    // ${topLevel.toUpperCase()}\n`;
-    output += `    // ============================================\n\n`;
-
-    Object.keys(subGroups).forEach(subLevel => {
-      const tokens = subGroups[subLevel];
-
-      if (subLevel) {
-        output += `    // ${topLevel} - ${subLevel}\n`;
-      }
-
-      tokens.forEach(token => {
-        if (token.$type === 'shadow' && Array.isArray(token.$value)) {
-          const uniqueName = uniqueNames.get(token.path.join('.'));
-
-          if (token.comment) {
-            output += `    /** ${token.comment} */\n`;
-          }
-
-          // Convert shadow array to Dart BoxShadow list
-          const shadowsDart = token.$value.map(effect => {
-            if (effect.type === 'dropShadow') {
-              // Parse color
-              let colorValue = 'Color(0xFF000000)';
-              if (effect.color) {
-                const colorStr = effect.color.replace(/\s/g, '');
-                if (colorStr.startsWith('rgba')) {
-                  const match = colorStr.match(/rgba?\((\d+),(\d+),(\d+),?([\d.]*)\)/);
-                  if (match) {
-                    const r = parseInt(match[1]).toString(16).padStart(2, '0');
-                    const g = parseInt(match[2]).toString(16).padStart(2, '0');
-                    const b = parseInt(match[3]).toString(16).padStart(2, '0');
-                    const a = match[4] ? Math.round(parseFloat(match[4]) * 255).toString(16).padStart(2, '0') : 'FF';
-                    colorValue = `Color(0x${a}${r}${g}${b})`;
-                  }
-                } else if (colorStr.startsWith('#')) {
-                  const hex = colorStr.replace('#', '');
-                  if (hex.length === 6) {
-                    colorValue = `Color(0xFF${hex})`;
-                  } else if (hex.length === 8) {
-                    colorValue = `Color(0x${hex.substring(6, 8)}${hex.substring(0, 6)})`;
-                  }
-                }
-              }
-
-              return `BoxShadow(
-      offset: Offset(${effect.offsetX || 0}, ${effect.offsetY || 0}),
-      blurRadius: ${effect.radius || 0},
-      spreadRadius: ${effect.spread || 0},
-      color: ${colorValue}
-    )`;
-            }
-            return null;
-          }).filter(Boolean);
-
-          output += `    static const ${uniqueName} = [\n      ${shadowsDart.join(',\n      ')}\n    ];\n`;
-        }
-      });
-
-      output += `\n`;
-    });
-  });
-
-  output += `}\n`;
-  return output;
-};
-
-/**
  * Format: JavaScript/TypeScript Typography
  * Exports typography tokens as properly formatted objects
  */
@@ -1839,27 +1455,6 @@ const javascriptTypographyFormat = ({ dictionary, options }) => {
 };
 
 /**
- * Format: Flutter Dart Typography
- * Exports typography tokens as properly formatted Dart objects
- */
-/**
- * Helper: Map font weight number to Flutter FontWeight
- */
-function mapFontWeight(weight) {
-  if (!weight) return 'FontWeight.w400';
-  const w = parseInt(weight);
-  if (w >= 900) return 'FontWeight.w900';
-  if (w >= 800) return 'FontWeight.w800';
-  if (w >= 700) return 'FontWeight.w700';
-  if (w >= 600) return 'FontWeight.w600';
-  if (w >= 500) return 'FontWeight.w500';
-  if (w >= 400) return 'FontWeight.w400';
-  if (w >= 300) return 'FontWeight.w300';
-  if (w >= 200) return 'FontWeight.w200';
-  return 'FontWeight.w100';
-}
-
-/**
  * Helper: Map Figma textCase to CSS text-transform value
  * Figma exports: UPPER, LOWER, TITLE, ORIGINAL
  * CSS expects: uppercase, lowercase, capitalize, none
@@ -1874,85 +1469,6 @@ function mapTextCase(figmaTextCase) {
   };
   return mapping[figmaTextCase] || figmaTextCase.toLowerCase();
 }
-
-/**
- * Format: Flutter Dart Typography using TextStyle class
- * Exports typography tokens as properly typed TextStyle objects
- */
-const flutterTypographyFormat = ({ dictionary, options }) => {
-  const { brand, breakpoint, sizeClass } = options;
-  const className = `Typography${brand.charAt(0).toUpperCase() + brand.slice(1)}${(sizeClass || breakpoint).charAt(0).toUpperCase() + (sizeClass || breakpoint).slice(1)}`;
-  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'camel');
-
-  let output = generateFileHeader({
-    fileName: `typography-${sizeClass || breakpoint}.dart`,
-    commentStyle: 'line',
-    brand: brand,
-    context: `SizeClass: ${sizeClass || breakpoint}`
-  });
-
-  output += `import 'package:flutter/material.dart';\n\n`;
-  output += `/// Typography tokens for ${brand} at ${sizeClass || breakpoint} size class\n`;
-  output += `/// Usage: Text('Hello', style: ${className}.display1)\n`;
-  output += `class ${className} {\n`;
-  output += `    ${className}._();\n\n`;
-
-  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
-
-  Object.keys(hierarchicalGroups).forEach(topLevel => {
-    const subGroups = hierarchicalGroups[topLevel];
-
-    output += `    // ============================================\n`;
-    output += `    // ${topLevel.toUpperCase()}\n`;
-    output += `    // ============================================\n\n`;
-
-    Object.keys(subGroups).forEach(subLevel => {
-      const tokens = subGroups[subLevel];
-
-      if (subLevel) {
-        output += `    // ${topLevel} - ${subLevel}\n`;
-      }
-
-      tokens.forEach(token => {
-        if (token.$type === 'typography' && token.$value) {
-          const uniqueName = uniqueNames.get(token.path.join('.'));
-          const style = token.$value;
-
-          if (token.comment) {
-            output += `    /// ${token.comment}\n`;
-          }
-
-          // Build TextStyle with proper Flutter types
-          const fontSize = typeof style.fontSize === 'number' ? style.fontSize : parseFloat(style.fontSize) || 16;
-          const lineHeight = typeof style.lineHeight === 'number' ? style.lineHeight : parseFloat(style.lineHeight);
-          const letterSpacing = typeof style.letterSpacing === 'number' ? style.letterSpacing : parseFloat(style.letterSpacing);
-
-          // Calculate height ratio (Flutter uses height as multiplier, not absolute value)
-          const heightRatio = lineHeight && fontSize ? (lineHeight / fontSize).toFixed(2) : null;
-
-          output += `    static const TextStyle ${uniqueName} = TextStyle(\n`;
-          if (style.fontFamily) output += `      fontFamily: '${style.fontFamily}',\n`;
-          output += `      fontSize: ${fontSize},\n`;
-          if (style.fontWeight) output += `      fontWeight: ${mapFontWeight(style.fontWeight)},\n`;
-          if (heightRatio && heightRatio !== '1.00') output += `      height: ${heightRatio},\n`;
-          if (letterSpacing) output += `      letterSpacing: ${letterSpacing},\n`;
-          if (style.fontStyle && style.fontStyle !== 'null' && style.fontStyle.toLowerCase() === 'italic') {
-            output += `      fontStyle: FontStyle.italic,\n`;
-          }
-          if (style.textDecoration && style.textDecoration !== 'NONE') {
-            const decoration = style.textDecoration.toLowerCase();
-            if (decoration === 'underline') output += `      decoration: TextDecoration.underline,\n`;
-            else if (decoration === 'line-through' || decoration === 'strikethrough') output += `      decoration: TextDecoration.lineThrough,\n`;
-          }
-          output += `    );\n\n`;
-        }
-      });
-    });
-  });
-
-  output += `}\n`;
-  return output;
-};
 
 /**
  * SCSS Effects Format - Outputs shadow tokens as SCSS maps
@@ -2081,137 +1597,6 @@ const scssTypographyFormat = ({ dictionary, options }) => {
   return output;
 };
 
-/**
- * Helper: Calculate Material Design elevation from shadow blur radius
- * Based on Material Design shadow specs where blur roughly maps to elevation
- */
-function calculateElevationFromShadow(effects) {
-  if (!effects || effects.length === 0) return 0;
-
-  // Get the maximum blur radius from all shadow layers
-  const maxBlur = Math.max(...effects.map(e => e.radius || 0));
-  const maxOffset = Math.max(...effects.map(e => Math.abs(e.offsetY || 0)));
-
-  // Material Design elevation mapping (approximate)
-  // Elevation 1dp ≈ blur 1-2px, 4dp ≈ blur 4-6px, 8dp ≈ blur 12-16px, etc.
-  const combined = maxBlur + maxOffset;
-
-  if (combined <= 3) return 1;
-  if (combined <= 6) return 2;
-  if (combined <= 10) return 4;
-  if (combined <= 16) return 6;
-  if (combined <= 24) return 8;
-  if (combined <= 32) return 12;
-  if (combined <= 48) return 16;
-  return 24;
-}
-
-/**
- * Android XML Effects Format - Outputs shadow tokens with Material Design elevation + raw data
- */
-const androidXmlEffectsFormat = ({ dictionary, options }) => {
-  const { brand, colorMode } = options;
-  const uniqueNames = generateUniqueNames(dictionary.allTokens, 'snake');
-
-  let output = `<?xml version="1.0" encoding="utf-8"?>\n`;
-
-  // Generate header with additional note about Android shadows
-  const header = generateFileHeader({
-    fileName: `effects-${colorMode}.xml`,
-    commentStyle: 'xml',
-    brand: brand,
-    context: `Mode: ${colorMode}`
-  });
-
-  // Insert Android-specific note before closing comment
-  output += header.replace('-->\n', `\n  NOTE: This file provides both Material Design elevation values and raw shadow data.\n  - Use elevation dimens with CardView, MaterialCardView, or android:elevation\n  - Use string-arrays for custom shadow implementations if needed\n-->\n`);
-
-  output += `<resources>\n`;
-
-  const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
-
-  // First pass: Output elevation dimens
-  output += `\n  <!-- ============================================ -->\n`;
-  output += `  <!-- MATERIAL DESIGN ELEVATION VALUES -->\n`;
-  output += `  <!-- Use with android:elevation or CardView.cardElevation -->\n`;
-  output += `  <!-- ============================================ -->\n\n`;
-
-  Object.keys(hierarchicalGroups).forEach(topLevel => {
-    const subGroups = hierarchicalGroups[topLevel];
-
-    Object.keys(subGroups).forEach(subLevel => {
-      const tokens = subGroups[subLevel];
-
-      tokens.forEach(token => {
-        if (token.$type === 'shadow' && Array.isArray(token.$value)) {
-          const uniqueName = uniqueNames.get(token.path.join('.'));
-          const elevation = calculateElevationFromShadow(token.$value);
-
-          output += `  <dimen name="${uniqueName}_elevation">${elevation}dp</dimen>\n`;
-        }
-      });
-    });
-  });
-
-  // Second pass: Output raw shadow data as string-arrays
-  Object.keys(hierarchicalGroups).forEach(topLevel => {
-    const subGroups = hierarchicalGroups[topLevel];
-
-    output += `\n  <!-- ============================================ -->\n`;
-    output += `  <!-- ${topLevel.toUpperCase()} - RAW SHADOW DATA -->\n`;
-    output += `  <!-- For custom shadow implementations -->\n`;
-    output += `  <!-- ============================================ -->\n\n`;
-
-    Object.keys(subGroups).forEach(subLevel => {
-      const tokens = subGroups[subLevel];
-
-      if (subLevel) {
-        output += `  <!-- ${topLevel} - ${subLevel} -->\n`;
-      }
-
-      tokens.forEach(token => {
-        if (token.$type === 'shadow' && Array.isArray(token.$value)) {
-          const uniqueName = uniqueNames.get(token.path.join('.'));
-
-          if (token.comment) {
-            output += `  <!-- ${token.comment} -->\n`;
-          }
-
-          // Output shadow data as string-array for custom implementations
-          output += `  <string-array name="${uniqueName}_data">\n`;
-          token.$value.forEach((effect, idx) => {
-            if (effect.type === 'dropShadow') {
-              // Parse color to Android format
-              let colorValue = '#FF000000';
-              if (effect.color) {
-                const colorStr = effect.color.replace(/\s/g, '');
-                if (colorStr.startsWith('rgba')) {
-                  const match = colorStr.match(/rgba?\((\d+),(\d+),(\d+),?([\d.]*)\)/);
-                  if (match) {
-                    const r = parseInt(match[1]).toString(16).padStart(2, '0');
-                    const g = parseInt(match[2]).toString(16).padStart(2, '0');
-                    const b = parseInt(match[3]).toString(16).padStart(2, '0');
-                    const a = match[4] ? Math.round(parseFloat(match[4]) * 255).toString(16).padStart(2, '0') : 'FF';
-                    colorValue = `#${a}${r}${g}${b}`;
-                  }
-                } else if (colorStr.startsWith('#')) {
-                  colorValue = colorStr;
-                }
-              }
-
-              output += `    <item>offsetX:${effect.offsetX || 0}|offsetY:${effect.offsetY || 0}|radius:${effect.radius || 0}|spread:${effect.spread || 0}|color:${colorValue}</item>\n`;
-            }
-          });
-          output += `  </string-array>\n\n`;
-        }
-      });
-    });
-  });
-
-  output += `</resources>\n`;
-  return output;
-};
-
 // ============================================================================
 // TRANSFORM GROUPS
 // ============================================================================
@@ -2229,7 +1614,6 @@ const customTransformGroups = {
   'custom/scss': ['name/custom/kebab', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/js': ['name/custom/js', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/ios-swift': ['name/custom/ios-swift', 'custom/color/UIColor', 'custom/size/ios-points', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
-  // DEPRECATED: 'custom/android' and 'custom/flutter' moved to deprecated/flutter-android-xml-formats.js
   'custom/compose': ['name/custom/compose', 'color/custom/compose', 'size/custom/compose', 'custom/opacity', 'custom/fontWeight', 'custom/number']
 };
 
@@ -4954,7 +4338,6 @@ module.exports = {
     'name/custom/kebab': nameKebabTransform,
     'name/custom/js': nameJsTransform,
     'name/custom/ios-swift': nameIosSwiftTransform,
-    // DEPRECATED: 'name/custom/android' and 'name/custom/flutter-dart' moved to deprecated/flutter-android-xml-formats.js
     'name/custom/compose': nameComposeTransform,
     'color/custom/compose': colorComposeTransform,
     'size/custom/compose': sizeComposeTransform,
@@ -4968,7 +4351,6 @@ module.exports = {
     'custom/javascript/es6': javascriptEs6Format,
     'custom/json/nested': jsonNestedFormat,
     'ios-swift/class': iosSwiftClassFormat,
-    // DEPRECATED: 'flutter/class' and 'android/resources' moved to deprecated/flutter-android-xml-formats.js
 
     // Themed CSS Format - Data-attribute based theme switching
     'custom/css/themed-variables': cssThemedVariablesFormat,
@@ -4982,12 +4364,10 @@ module.exports = {
     'css/effect-classes': cssEffectClassesFormat,
     'javascript/effects': javascriptEffectsFormat,
     'javascript/typography': javascriptTypographyFormat,
-    // DEPRECATED: 'flutter/effects' and 'flutter/typography' moved to deprecated/flutter-android-xml-formats.js
     'ios-swift/effects': iosSwiftEffectsFormat,
     'ios-swift/typography': iosSwiftTypographyFormat,
     'scss/effects': scssEffectsFormat,
     'scss/typography': scssTypographyFormat,
-    // DEPRECATED: 'android/effects' and 'android/typography-styles' moved to deprecated/flutter-android-xml-formats.js
 
     // Jetpack Compose Formats
     'compose/primitives': composePrimitivesFormat,

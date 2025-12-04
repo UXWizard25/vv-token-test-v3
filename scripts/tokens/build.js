@@ -31,12 +31,6 @@ const DENSITY_MODES = ['default', 'dense', 'spacious'];
 const COMPOSE_ENABLED = true;
 const SWIFTUI_ENABLED = true;       // SwiftUI output in dist/ios/
 
-// DEPRECATED: Flutter and Android XML outputs are disabled and their formats removed.
-// The code below is kept for backwards compatibility but will not produce output.
-// See scripts/tokens/deprecated/build-flutter-android-xml.js for reference implementation.
-const FLUTTER_ENABLED = false;      // DEPRECATED - Flutter output removed from pipeline
-const ANDROID_XML_ENABLED = false;  // DEPRECATED - Compose is the preferred Android format
-
 // Token type toggles - set to false to exclude from all platform outputs
 const BOOLEAN_TOKENS_ENABLED = false;
 
@@ -223,88 +217,6 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
               return cssOptions.mode;
             })(),
             sizeClass: getSizeClassName(cssOptions.mode)
-          }
-        }]
-      }
-    }),
-    // Android XML: For breakpoint mode, use sizeclass folder and naming, skip non-native breakpoints
-    // Disabled by default - Compose is the preferred Android format
-    ...((cssOptions.modeType === 'breakpoint' && !isNativeBreakpoint(cssOptions.mode)) || !ANDROID_XML_ENABLED ? {} : {
-      android: {
-        transformGroup: 'custom/android',
-        buildPath: (() => {
-          let androidPath = buildPath.replace(DIST_DIR + '/css/', '');
-          // For semantic breakpoint tokens, change folder from 'breakpoints' to 'sizeclass'
-          if (cssOptions.modeType === 'breakpoint' && androidPath.includes('/breakpoints')) {
-            androidPath = androidPath.replace('/breakpoints', '/sizeclass');
-          }
-          return `${DIST_DIR}/android/res/values/${androidPath}/`;
-        })(),
-        files: [{
-          destination: (() => {
-            // For breakpoint tokens, use sizeclass naming
-            if (cssOptions.modeType === 'breakpoint' && cssOptions.mode) {
-              const sizeClass = getSizeClassName(cssOptions.mode);
-              const isComponent = buildPath.includes('/components/');
-              if (isComponent) {
-                const componentMatch = buildPath.match(/\/components\/([^/]+)/);
-                const componentName = componentMatch ? componentMatch[1].toLowerCase() : '';
-                return `${componentName}-sizeclass-${sizeClass}.xml`;
-              }
-              return `sizeclass-${sizeClass}.xml`;
-            }
-            return `${fileName}.xml`;
-          })(),
-          format: 'android/resources',
-          filter: tokenFilter,
-          options: { outputReferences: false }
-        }]
-      }
-    }),
-    // Flutter: For breakpoint mode, use sizeclass folder and naming, skip non-native breakpoints
-    ...((cssOptions.modeType === 'breakpoint' && !isNativeBreakpoint(cssOptions.mode)) || !FLUTTER_ENABLED ? {} : {
-      flutter: {
-        transformGroup: 'custom/flutter',
-        buildPath: (() => {
-          let flutterPath = buildPath.replace(DIST_DIR + '/css/', '');
-          // For semantic breakpoint tokens, change folder from 'breakpoints' to 'sizeclass'
-          if (cssOptions.modeType === 'breakpoint' && flutterPath.includes('/breakpoints')) {
-            flutterPath = flutterPath.replace('/breakpoints', '/sizeclass');
-          }
-          return `${DIST_DIR}/flutter/${flutterPath}/`;
-        })(),
-        files: [{
-          destination: (() => {
-            // For breakpoint tokens, use sizeclass naming
-            if (cssOptions.modeType === 'breakpoint' && cssOptions.mode) {
-              const sizeClass = getSizeClassName(cssOptions.mode);
-              const isComponent = buildPath.includes('/components/');
-              if (isComponent) {
-                const componentMatch = buildPath.match(/\/components\/([^/]+)/);
-                const componentName = componentMatch ? componentMatch[1].toLowerCase() : '';
-                return `${componentName}_sizeclass_${sizeClass}.dart`;
-              }
-              return `sizeclass_${sizeClass}.dart`;
-            }
-            return `${fileName}.dart`;
-          })(),
-          format: 'flutter/class',
-          filter: tokenFilter,
-          options: {
-            outputReferences: false,
-            className: (() => {
-              if (cssOptions.modeType === 'breakpoint' && cssOptions.mode) {
-                const sizeClass = getSizeClassName(cssOptions.mode);
-                const isComponent = buildPath.includes('/components/');
-                if (isComponent) {
-                  const componentMatch = buildPath.match(/\/components\/([^/]+)/);
-                  const componentName = componentMatch ? componentMatch[1] : '';
-                  return `${componentName}Sizeclass${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}`;
-                }
-                return `Sizeclass${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}`;
-              }
-              return fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('');
-            })()
           }
         }]
       }
@@ -634,24 +546,6 @@ function createTypographyConfig(brand, breakpoint) {
         files: [{ destination: `${fileName}.json`, format: 'json', options: { outputReferences: false } }]
       },
 
-      // Flutter: Custom Typography format - only compact (sm) and regular (lg)
-      // Output to semantic/typography/ with sizeclass in filename (uses iOS breakpoints for Flutter)
-      ...(FLUTTER_ENABLED && isNativeBreakpoint(breakpoint, 'ios') ? {
-        flutter: {
-          transforms: ['attribute/cti'],
-          buildPath: `${DIST_DIR}/flutter/brands/${brand}/semantic/typography/`,
-          files: [{
-            destination: `typography_sizeclass_${getSizeClassName(breakpoint, 'ios')}.dart`,
-            format: 'flutter/typography',
-            options: {
-              brand: brandName,
-              breakpoint,
-              sizeClass: getSizeClassName(breakpoint, 'ios')
-            }
-          }]
-        }
-      } : {}),
-
       // SCSS: Custom Typography format
       scss: {
         transforms: ['attribute/cti'],
@@ -699,25 +593,6 @@ function createTypographyConfig(brand, breakpoint) {
               breakpoint,
               sizeClass: getSizeClassName(breakpoint, 'android'),
               platform: 'android'
-            }
-          }]
-        }
-      } : {}),
-
-      // Android XML: Only compact (sm), medium (md), and expanded (lg) with custom format
-      // Output to semantic/typography/ with sizeclass in filename
-      // Disabled by default - Compose is the preferred Android format
-      ...(isNativeBreakpoint(breakpoint, 'android') && ANDROID_XML_ENABLED ? {
-        android: {
-          transforms: ['attribute/cti'],
-          buildPath: `${DIST_DIR}/android/brands/${brand}/semantic/typography/`,
-          files: [{
-            destination: `typography-sizeclass-${getSizeClassName(breakpoint, 'android')}.xml`,
-            format: 'android/typography-styles',
-            options: {
-              brand: brandName,
-              breakpoint,
-              sizeClass: getSizeClassName(breakpoint, 'android')
             }
           }]
         }
@@ -777,22 +652,6 @@ function createEffectConfig(brand, colorMode) {
         }]
       },
 
-      // Flutter: Custom Effects format
-      ...(FLUTTER_ENABLED ? {
-        flutter: {
-          transforms: ['attribute/cti'],
-          buildPath: `${DIST_DIR}/flutter/brands/${brand}/semantic/effects/`,
-          files: [{
-            destination: `${fileName}.dart`,
-            format: 'flutter/effects',
-            options: {
-              brand: brandName,
-              colorMode
-            }
-          }]
-        }
-      } : {}),
-
       // SCSS: Custom Effects format
       scss: {
         transforms: ['attribute/cti'],
@@ -817,23 +676,6 @@ function createEffectConfig(brand, colorMode) {
             destination: `Effects${colorMode === 'light' ? 'Light' : 'Dark'}.kt`,
             format: 'compose/effects',
             options: {
-              colorMode
-            }
-          }]
-        }
-      } : {}),
-
-      // Android XML: Custom Effects format
-      // Disabled by default - Compose is the preferred Android format
-      ...(ANDROID_XML_ENABLED ? {
-        android: {
-          transforms: ['attribute/cti'],
-          buildPath: `${DIST_DIR}/android/brands/${brand}/semantic/effects/`,
-          files: [{
-            destination: `${fileName}.xml`,
-            format: 'android/effects',
-            options: {
-              brand: brandName,
               colorMode
             }
           }]
@@ -1152,40 +994,6 @@ function createComponentTypographyConfig(sourceFile, brand, componentName, fileN
           }]
         }
       } : {}),
-      // Flutter: Only compact (sm) and regular (lg) with sizeclass naming
-      ...(FLUTTER_ENABLED && breakpoint && isNativeBreakpoint(breakpoint) ? {
-        flutter: {
-          transforms: ['attribute/cti'],
-          buildPath: `${DIST_DIR}/flutter/brands/${brand}/components/${componentName}/`,
-          files: [{
-            destination: `${componentName.toLowerCase()}_sizeclass_${getSizeClassName(breakpoint)}.dart`,
-            format: 'flutter/typography',
-            options: {
-              brand: brandName,
-              breakpoint,
-              componentName,
-              sizeClass: getSizeClassName(breakpoint)
-            }
-          }]
-        }
-      } : {}),
-      // Android XML: Only compact (sm) and regular (lg) with sizeclass naming
-      // Disabled by default - Compose is the preferred Android format
-      ...(breakpoint && isNativeBreakpoint(breakpoint) && ANDROID_XML_ENABLED ? {
-        android: {
-          transforms: ['attribute/cti'],
-          buildPath: `${DIST_DIR}/android/brands/${brand}/components/${componentName}/`,
-          files: [{
-            destination: `${componentName.toLowerCase()}-sizeclass-${getSizeClassName(breakpoint)}.xml`,
-            format: 'android/typography-styles',
-            options: {
-              brand: brandName,
-              breakpoint,
-              componentName
-            }
-          }]
-        }
-      } : {}),
       // Compose: Compact (sm), Medium (md), and Expanded (lg) with Material 3 WindowSizeClass naming
       ...(COMPOSE_ENABLED && breakpoint && isNativeBreakpoint(breakpoint, 'android') ? {
         compose: {
@@ -1265,21 +1073,6 @@ function createComponentEffectsConfig(sourceFile, brand, componentName, fileName
           }
         }]
       },
-      ...(FLUTTER_ENABLED ? {
-        flutter: {
-          transforms: ['attribute/cti'],
-          buildPath: `${DIST_DIR}/flutter/brands/${brand}/components/${componentName}/`,
-          files: [{
-            destination: `${fileName}.dart`,
-            format: 'flutter/effects',
-            options: {
-              brand: brandName,
-              colorMode,
-              componentName
-            }
-          }]
-        }
-      } : {}),
       // Compose: Component Effects format
       ...(COMPOSE_ENABLED ? {
         compose: {
@@ -1288,22 +1081,6 @@ function createComponentEffectsConfig(sourceFile, brand, componentName, fileName
           files: [{
             destination: `${componentName}Effects${colorMode ? colorMode.charAt(0).toUpperCase() + colorMode.slice(1) : ''}.kt`,
             format: 'compose/component-effects',
-            options: {
-              brand: brandName,
-              colorMode,
-              componentName
-            }
-          }]
-        }
-      } : {}),
-      // Android XML: Disabled by default - Compose is the preferred Android format
-      ...(ANDROID_XML_ENABLED ? {
-        android: {
-          transforms: ['attribute/cti'],
-          buildPath: `${DIST_DIR}/android/brands/${brand}/components/${componentName}/`,
-          files: [{
-            destination: `${fileName}.xml`,
-            format: 'android/effects',
             options: {
               brand: brandName,
               colorMode,
@@ -2492,24 +2269,11 @@ function createManifest(stats) {
           brands: 'ios/brands/{brand}/',
           sizeClasses: 'ios/brands/{brand}/sizeclass-{compact|regular}/'
         },
-        ...(ANDROID_XML_ENABLED ? {
-          android: {
-            shared: 'android/res/values/shared/',
-            brands: 'android/res/values/brands/{brand}/',
-            sizeClasses: 'android/brands/{brand}/sizeclass-{compact|regular}/'
-          }
-        } : {}),
         ...(COMPOSE_ENABLED ? {
           compose: {
             shared: 'android/compose/shared/',
             brands: 'android/compose/brands/{brand}/',
             sizeClasses: 'android/compose/brands/{brand}/semantic/sizeclass/'
-          }
-        } : {}),
-        ...(FLUTTER_ENABLED ? {
-          flutter: {
-            shared: 'flutter/shared/',
-            brands: 'flutter/brands/{brand}/'
           }
         } : {})
       }
@@ -8011,7 +7775,6 @@ async function main() {
   console.log(`   ├── json/       (JSON)`);
   if (SWIFTUI_ENABLED) console.log(`   ├── ios/        (SwiftUI)`);
   if (COMPOSE_ENABLED) console.log(`   └── android/    (Jetpack Compose)`);
-  // DEPRECATED: Flutter and Android XML console output removed
   console.log(``);
   console.log(`   JS structure (all variants):`);
   console.log(`   - primitives/          (bundled primitives)`);

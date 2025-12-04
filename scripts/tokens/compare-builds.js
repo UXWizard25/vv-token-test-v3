@@ -155,49 +155,23 @@ const platformParsers = {
     }
   },
 
-  xml: {
-    extensions: ['.xml'],
+  kotlin: {
+    extensions: ['.kt'],
     icon: '🤖',
-    name: 'Android (XML)',
-    parseTokens: (content) => {
-      const tokens = new Map();
-      // Match XML resources: <type name="token_name">value</type>
-      const regex = /<(color|dimen|string|string-array) name="([\w_-]+)"[^>]*>([^<]*)<\/\1>/g;
-      let match;
-      while ((match = regex.exec(content)) !== null) {
-        tokens.set(match[2], match[3].trim());
-      }
-      return tokens;
-    }
-  },
-
-  dart: {
-    extensions: ['.dart'],
-    icon: '🐦',
-    name: 'Flutter (Dart)',
+    name: 'Android (Compose)',
     parseTokens: (content) => {
       const tokens = new Map();
 
-      // Match Dart static const with array values: static const name = [ ... ];
-      const arrayRegex = /static const (\w+) = \[([^\]]+)\];/gs;
+      // Match Kotlin val/const val: val TokenName = value
+      const valRegex = /(?:const\s+)?val\s+(\w+)\s*=\s*(.+)$/gm;
       let match;
-      while ((match = arrayRegex.exec(content)) !== null) {
-        const arrContent = match[2].trim().replace(/\s+/g, ' ');
-        tokens.set(match[1], `[${arrContent}]`);
+      while ((match = valRegex.exec(content)) !== null) {
+        tokens.set(match[1], match[2].trim());
       }
 
-      // Match Dart static const with map values: static const name = { ... };
-      const mapRegex = /static const (\w+) = \{([^}]+)\};/gs;
-      while ((match = mapRegex.exec(content)) !== null) {
-        if (!tokens.has(match[1])) {
-          const mapContent = match[2].trim().replace(/\s+/g, ' ');
-          tokens.set(match[1], `{${mapContent}}`);
-        }
-      }
-
-      // Match simple Dart static consts: static const tokenName = value;
-      const regex = /static const (\w+) = ([^;{[\n]+);/g;
-      while ((match = regex.exec(content)) !== null) {
+      // Match Kotlin object properties with explicit types: val Name: Type = value
+      const typedValRegex = /val\s+(\w+):\s*\w+\s*=\s*(.+)$/gm;
+      while ((match = typedValRegex.exec(content)) !== null) {
         if (!tokens.has(match[1])) {
           tokens.set(match[1], match[2].trim());
         }
@@ -324,9 +298,7 @@ function detectPlatform(filePath) {
   } else if (filePath.startsWith('ios/')) {
     return 'swift';
   } else if (filePath.startsWith('android/')) {
-    return 'xml';
-  } else if (filePath.startsWith('flutter/')) {
-    return 'dart';
+    return 'kotlin';  // Android Compose uses .kt files
   } else if (filePath.startsWith('json/')) {
     return 'json';
   }

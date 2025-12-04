@@ -32,7 +32,7 @@ const IMPACT_LABELS = {
   none: 'No Changes'
 };
 
-const PLATFORM_ORDER = ['css', 'scss', 'js', 'swift', 'xml', 'dart', 'json'];
+const PLATFORM_ORDER = ['css', 'scss', 'js', 'swift', 'kotlin', 'json'];
 
 const DIST_DIR = path.join(__dirname, '../../dist');
 
@@ -160,14 +160,14 @@ function getPlatformNamesGroupedByToken(tokens) {
 
 /**
  * Generate horizontal platform names table
- * Format: | Token | 🌐 CSS | 📜 SCSS | 💛 JS | 🍎 Swift | 🤖 Android | 🐦 Dart |
+ * Format: | Token | 🌐 CSS | 📜 SCSS | 💛 JS | 🍎 Swift | 🤖 Android |
  */
 function generatePlatformNamesTable(groupedTokens) {
   if (groupedTokens.length === 0) return '';
 
   let md = '\n<details>\n<summary>Platform-specific names</summary>\n\n';
-  md += '| Token | 🌐 CSS | 📜 SCSS | 💛 JS | 🍎 Swift | 🤖 Android | 🐦 Dart |\n';
-  md += '|-------|--------|--------|-------|----------|------------|--------|\n';
+  md += '| Token | 🌐 CSS | 📜 SCSS | 💛 JS | 🍎 Swift | 🤖 Android |\n';
+  md += '|-------|--------|--------|-------|----------|------------|\n';
 
   for (const entry of groupedTokens) {
     const p = entry.platforms;
@@ -176,8 +176,7 @@ function generatePlatformNamesTable(groupedTokens) {
     md += `| \`${truncate(p.scss || '-', 18)}\` `;
     md += `| \`${truncate(p.js || p.json || '-', 16)}\` `;
     md += `| \`${truncate(p.swift || '-', 18)}\` `;
-    md += `| \`${truncate(p.xml || '-', 18)}\` `;
-    md += `| \`${truncate(p.dart || '-', 16)}\` |\n`;
+    md += `| \`${truncate(p.kotlin || '-', 18)}\` |\n`;
   }
 
   md += '</details>\n';
@@ -810,8 +809,7 @@ function generateGitHubRelease(diff, options = {}) {
   if (packageSize) {
     md += `- **Package Size:** ${packageSize}\n`;
   }
-  // Note: Flutter Dart output is currently disabled in build.js (FLUTTER_ENABLED = false)
-  md += '- **Formats:** CSS, SCSS, JavaScript, Swift, Android XML, JSON\n';
+  md += '- **Formats:** CSS, SCSS, JavaScript, Swift, Android Compose, JSON\n';
   md += '- **Brands:** BILD, SportBILD, Advertorial\n';
   md += '- **Modes:** Light/Dark, Responsive Breakpoints\n';
   md += '\n';
