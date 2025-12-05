@@ -2,13 +2,14 @@
 
 > **CSS Custom Properties für Web-Anwendungen**
 >
-> Data-Attribute basiert, responsive, multi-brand ready.
+> Dual-Axis Architektur, responsive, multi-brand ready.
 
 ---
 
 ## Table of Contents
 
 - [Quick Start](#quick-start)
+- [Dual-Axis Architecture](#dual-axis-architecture)
 - [File Structure](#file-structure)
 - [Naming Conventions](#naming-conventions)
 - [Data Attributes](#data-attributes)
@@ -27,7 +28,7 @@
 
 ```html
 <!DOCTYPE html>
-<html data-brand="bild" data-theme="light" data-density="default">
+<html data-color-brand="bild" data-content-brand="bild" data-theme="light" data-density="default">
 <head>
   <!-- Option A: All-in-one Bundle -->
   <link rel="stylesheet" href="css/bundles/bild.css">
@@ -70,8 +71,52 @@ document.documentElement.dataset.theme = 'dark';
 // Switch density
 document.documentElement.dataset.density = 'dense';
 
-// Switch brand
-document.documentElement.dataset.brand = 'sportbild';
+// Switch color brand (colors + effects)
+document.documentElement.dataset.colorBrand = 'sportbild';
+
+// Switch content brand (typography + sizing)
+document.documentElement.dataset.contentBrand = 'advertorial';
+```
+
+---
+
+## Dual-Axis Architecture
+
+The CSS output uses a **Dual-Axis Architecture** to separate concerns:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  data-color-brand          │  data-content-brand               │
+│  (ColorBrand Axis)         │  (ContentBrand Axis)              │
+├────────────────────────────┼────────────────────────────────────┤
+│  Colors                    │  Typography                       │
+│  Effects/Shadows           │  Sizing/Spacing                   │
+│                            │  Breakpoints                      │
+│                            │  Density                          │
+├────────────────────────────┼────────────────────────────────────┤
+│  Values: bild, sportbild   │  Values: bild, sportbild,         │
+│                            │          advertorial              │
+└────────────────────────────┴────────────────────────────────────┘
+```
+
+### Why Dual-Axis?
+
+**Advertorial** content needs its own typography and sizing but should inherit colors from the parent brand (BILD or SportBILD). The Dual-Axis architecture enables this:
+
+```html
+<!-- Advertorial in BILD context -->
+<html data-color-brand="bild" data-theme="light">
+  <article data-content-brand="advertorial">
+    <!-- Uses BILD colors + Advertorial typography -->
+  </article>
+</html>
+
+<!-- Advertorial in SportBILD context -->
+<html data-color-brand="sportbild" data-theme="dark">
+  <article data-content-brand="advertorial">
+    <!-- Uses SportBILD colors + Advertorial typography -->
+  </article>
+</html>
 ```
 
 ---
@@ -84,9 +129,9 @@ dist/css/
 │   └── primitives.css        # Color, Space, Size, Font primitives
 │
 ├── bundles/                   # All-in-one bundles per brand
-│   ├── bild.css              # (~116 KB)
-│   ├── sportbild.css         # (~117 KB)
-│   └── advertorial.css       # (~83 KB)
+│   ├── bild.css              # (~122 KB)
+│   ├── sportbild.css         # (~124 KB)
+│   └── advertorial.css       # (~81 KB)
 │
 ├── bild/                      # Modular files
 │   ├── theme.css             # Semantic colors + Effects (light/dark)
@@ -100,8 +145,10 @@ dist/css/
 ├── sportbild/                 # Same structure as bild
 │   └── ...
 │
-└── advertorial/               # Same structure (40 components)
-    └── ...
+└── advertorial/               # ContentBrand only (no theme.css content)
+    ├── theme.css             # Empty (inherits from ColorBrand)
+    ├── tokens.css            # Typography + Breakpoints
+    └── components/           # 39 components
 ```
 
 ---
@@ -126,28 +173,33 @@ CSS tokens use **kebab-case** with hyphen separation before AND after numbers:
 
 ### Required Attributes
 
-| Attribute | Values | Default | Description |
-|-----------|--------|---------|-------------|
-| `data-brand` | `bild`, `sportbild`, `advertorial` | - | Brand selection (required) |
-| `data-theme` | `light`, `dark` | `light` | Color mode |
-| `data-density` | `default`, `dense`, `spacious` | `default` | Spacing density |
+| Attribute | Values | Axis | Description |
+|-----------|--------|------|-------------|
+| `data-color-brand` | `bild`, `sportbild` | ColorBrand | Colors + Effects |
+| `data-content-brand` | `bild`, `sportbild`, `advertorial` | ContentBrand | Typography + Sizing |
+| `data-theme` | `light`, `dark` | - | Color mode |
+| `data-density` | `default`, `dense`, `spacious` | - | Spacing density |
 
-### Selector Specificity
+### Selector Patterns
 
 ```css
-/* Brand only (sizing, typography) */
-[data-brand="bild"] { }
+/* ColorBrand Axis (colors + effects) */
+[data-color-brand="bild"][data-theme="light"] { --text-color-primary: ...; }
+[data-color-brand="bild"][data-theme="dark"] { --text-color-primary: ...; }
+[data-color-brand="bild"][data-theme="light"] .shadow-soft-md { box-shadow: ...; }
 
-/* Brand + Theme (colors) */
-[data-brand="bild"][data-theme="light"] { }
-[data-brand="bild"][data-theme="dark"] { }
+/* ContentBrand Axis (typography + sizing) */
+[data-content-brand="bild"] { --grid-space-resp-base: ...; }
+[data-content-brand="bild"] { .headline-1 { font-family: ...; } }
 
-/* Brand + Density */
-[data-brand="bild"][data-density="default"] { }
-[data-brand="bild"][data-density="dense"] { }
+/* ContentBrand + Density */
+[data-content-brand="bild"][data-density="default"] { ... }
+[data-content-brand="bild"][data-density="dense"] { ... }
 
-/* Brand + Theme + Class (effects) */
-[data-brand="bild"][data-theme="light"] .shadow-soft-md { }
+/* ContentBrand + Breakpoints */
+@media (min-width: 600px) {
+  [data-content-brand="bild"] { ... }
+}
 ```
 
 ---
@@ -162,7 +214,7 @@ Best for: Simple projects, quick prototyping.
 <link rel="stylesheet" href="css/bundles/bild.css">
 ```
 
-Contains: Primitives + Theme + Tokens + All Components (~116 KB)
+Contains: Primitives + Theme + Tokens + All Components (~122 KB)
 
 ### Option B: Modular Loading
 
@@ -200,9 +252,9 @@ Raw design values, brand-independent.
 ```css
 :root {
   /* Colors */
-  --bildred: #DD0000;
-  --bild015: #232629;
-  --white100: #FFFFFF;
+  --color-bild-red-50: #DD0000;
+  --color-neutral-15: #232629;
+  --color-neutral-100: #FFFFFF;
 
   /* Spacing (note: numbers are hyphen-separated) */
   --space-1-x: 8px;
@@ -221,48 +273,47 @@ Raw design values, brand-independent.
 
 ### 2. Semantic Tokens (theme.css)
 
-Meaningful design intent, theme-aware.
+Meaningful design intent, theme-aware. Uses **ColorBrand** axis.
 
 ```css
-[data-brand="bild"][data-theme="light"] {
+[data-color-brand="bild"][data-theme="light"] {
   /* Text */
-  --text-color-primary: var(--bild015, #232629);
-  --text-color-accent: var(--bildred, #DD0000);
+  --text-color-primary: var(--color-neutral-15, #232629);
+  --text-color-accent: var(--color-bild-red-50, #DD0000);
 
   /* Surfaces */
-  --surface-color-primary: var(--white100, #FFFFFF);
-  --surface-color-secondary: var(--bild096, #F2F4F5);
+  --surface-color-primary: var(--color-neutral-100, #FFFFFF);
+  --surface-color-secondary: var(--color-neutral-96, #F2F4F5);
 
   /* Borders */
-  --border-color-medium-contrast: var(--bild085, #CED4DA);
+  --border-color-medium-contrast: var(--color-neutral-85, #CED4DA);
 
   /* Core */
-  --core-color-primary: var(--bildred, #DD0000);
+  --core-color-primary: var(--color-bild-red-50, #DD0000);
 }
 ```
 
 ### 3. Responsive Tokens (tokens.css)
 
-Breakpoint-aware sizing and typography.
+Breakpoint-aware sizing and typography. Uses **ContentBrand** axis.
 
 ```css
 /* Base (mobile-first) */
-[data-brand="bild"] {
+[data-content-brand="bild"] {
   --headline-1-font-size: 48px;
   --grid-space-resp-base: var(--space-1-p-5-x, 12px);
 }
 
 /* Tablet (600px+) */
 @media (min-width: 600px) {
-  [data-brand="bild"] {
+  [data-content-brand="bild"] {
     --headline-1-font-size: 72px;
-    --grid-space-resp-base: var(--space-1-p-5-x, 12px);
   }
 }
 
 /* Desktop (1024px+) */
 @media (min-width: 1024px) {
-  [data-brand="bild"] {
+  [data-content-brand="bild"] {
     --headline-1-font-size: 100px;
     --grid-space-resp-base: var(--space-2-x, 16px);
   }
@@ -271,23 +322,23 @@ Breakpoint-aware sizing and typography.
 
 ### 4. Component Tokens (components/*.css)
 
-Component-specific design decisions.
+Component-specific design decisions. Uses both axes.
 
 ```css
-/* Button colors (theme-aware) */
-[data-brand="bild"][data-theme="light"] {
-  --button-primary-brand-bg-color-idle: var(--bildred, #DD0000);
-  --button-primary-label-color: var(--white100, #FFFFFF);
+/* Colors → ColorBrand Axis */
+[data-color-brand="bild"][data-theme="light"] {
+  --button-primary-brand-bg-color-idle: var(--color-bild-red-50, #DD0000);
+  --button-primary-label-color: var(--color-neutral-100, #FFFFFF);
 }
 
-/* Button density (density-aware) */
-[data-brand="bild"][data-density="default"] {
-  --density-button-inline-space: var(--space2p5x, 20px);
+/* Density → ContentBrand Axis */
+[data-content-brand="bild"][data-density="default"] {
+  --density-button-inline-space: var(--space-2-p-5-x, 20px);
   --density-button-label-font-size: 17px;
 }
 
-/* Button sizing (responsive) */
-[data-brand="bild"] {
+/* Sizing → ContentBrand Axis */
+[data-content-brand="bild"] {
   --button-border-radius: var(--border-radius-md);
   --button-border-width-size: var(--border-width-thick);
 }
@@ -312,14 +363,14 @@ Tokens only appear in media queries when values change:
 
 ```css
 /* Base value */
-[data-brand="bild"] {
-  --article-headline-font-size: var(--headline2-font-size);  /* xs: 40px */
+[data-content-brand="bild"] {
+  --article-headline-font-size: var(--headline-2-font-size);  /* xs: 40px */
 }
 
 /* Changes at md */
 @media (min-width: 600px) {
-  [data-brand="bild"] {
-    --article-headline-font-size: var(--headline1-font-size);  /* md: 72px */
+  [data-content-brand="bild"] {
+    --article-headline-font-size: var(--headline-1-font-size);  /* md: 72px */
   }
 }
 
@@ -336,36 +387,38 @@ Each component file contains:
 
 ```css
 /* === COLOR TOKENS (LIGHT MODE) === */
-[data-brand="bild"][data-theme="light"] {
+[data-color-brand="bild"][data-theme="light"] {
   --component-bg-color: ...;
   --component-text-color: ...;
 }
 
 /* === COLOR TOKENS (DARK MODE) === */
-[data-brand="bild"][data-theme="dark"] {
+[data-color-brand="bild"][data-theme="dark"] {
   --component-bg-color: ...;
   --component-text-color: ...;
 }
 
 /* === DENSITY TOKENS === */
-[data-brand="bild"][data-density="default"] { ... }
-[data-brand="bild"][data-density="dense"] { ... }
-[data-brand="bild"][data-density="spacious"] { ... }
+[data-content-brand="bild"][data-density="default"] { ... }
+[data-content-brand="bild"][data-density="dense"] { ... }
+[data-content-brand="bild"][data-density="spacious"] { ... }
 
 /* === TYPOGRAPHY TOKENS === */
-[data-brand="bild"] {
+[data-content-brand="bild"] {
   .component-label { font-family: ...; font-size: ...; }
 }
 
 /* === BREAKPOINT TOKENS === */
-[data-brand="bild"] { ... }
-@media (min-width: 600px) { ... }
-@media (min-width: 1024px) { ... }
+[data-content-brand="bild"] { ... }
+@media (min-width: 600px) { [data-content-brand="bild"] { ... } }
+@media (min-width: 1024px) { [data-content-brand="bild"] { ... } }
 ```
 
-### Available Components (52)
+### Available Components
 
-Accordion, Alert, Article, AudioPlayer, Avatar, Badge, Breadcrumb, BreakingNews, Button, Card, Carousel, Chip, Datepicker, Drawers, Dropdown, Empties, Foldout, Footer, Gallery, Hey, Icon, InfoElement, InputField, Kicker, LiveTicker, MediaPlayer, Menu, MenuItem, NewsTicker, Pagination, PartnerLinks, Paywall, Quote, RadioButton, Search, SectionTitle, Selection, Separator, Skeletons, Slider, SocialShareButton, SpecialNavi, Spinner, Subheader, Tab, Table, Teaser, TextLink, ToggleSwitch, Video, ...
+**BILD/SportBILD (52):** Accordion, Alert, Article, AudioPlayer, Avatar, Badge, Breadcrumb, BreakingNews, Button, Card, Carousel, Chip, Datepicker, Drawers, Dropdown, Empties, Foldout, Footer, Gallery, Hey, Icon, InfoElement, InputField, Kicker, LiveTicker, MediaPlayer, Menu, MenuItem, NewsTicker, Pagination, PartnerLinks, Paywall, Quote, RadioButton, Search, SectionTitle, Selection, Separator, Skeletons, Slider, SocialShareButton, SpecialNavi, Spinner, Subheader, Tab, Table, Teaser, TextLink, ToggleSwitch, Video, ...
+
+**Advertorial (39):** Subset of above (no Alert, Gallery, Hey, etc.)
 
 ---
 
@@ -373,16 +426,16 @@ Accordion, Alert, Article, AudioPlayer, Avatar, Badge, Breadcrumb, BreakingNews,
 
 ### Typography Classes
 
-Typography tokens are output as CSS classes:
+Typography tokens are output as CSS classes under **ContentBrand**:
 
 ```css
-[data-brand="bild"] {
+[data-content-brand="bild"] {
   .button-label {
     font-family: var(--font-family-gotham-xnarrow, Gotham XNarrow);
     font-weight: 700;
     font-size: var(--button-label-font-size, 15px);
     line-height: var(--button-label-line-height, 15px);
-    letter-spacing: var(--letter-space0p5, 0.5px);
+    letter-spacing: var(--letter-space-0-p-5, 0.5px);
     text-transform: uppercase;
   }
 }
@@ -395,17 +448,17 @@ Usage:
 
 ### Effect Classes
 
-Shadows are output as CSS classes:
+Shadows are output as CSS classes under **ColorBrand**:
 
 ```css
 /* Semantic effects */
-[data-brand="bild"][data-theme="light"] .shadow-soft-md {
+[data-color-brand="bild"][data-theme="light"] .shadow-soft-md {
   box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.03), ...;
 }
 
-/* Component effects (mode-agnostic when identical) */
-[data-brand="bild"] .alert-shadow-down {
-  box-shadow: 0px 6px 10px 0px var(--black-alpha20, rgba(0, 0, 0, 0.2));
+/* Component effects */
+[data-color-brand="bild"] .alert-shadow-down {
+  box-shadow: 0px 6px 10px 0px var(--alpha-black-20, rgba(0, 0, 0, 0.2));
 }
 ```
 
@@ -418,6 +471,35 @@ Usage:
 ---
 
 ## Usage Examples
+
+### Standard BILD App
+
+```html
+<html data-color-brand="bild" data-content-brand="bild" data-theme="light" data-density="default">
+```
+
+### Advertorial in BILD
+
+```html
+<html data-color-brand="bild" data-theme="light">
+  <main data-content-brand="bild">
+    <!-- Regular BILD content -->
+  </main>
+  <article data-content-brand="advertorial">
+    <!-- Advertorial with BILD colors but Advertorial typography -->
+  </article>
+</html>
+```
+
+### Advertorial in SportBILD (Dark Mode)
+
+```html
+<html data-color-brand="sportbild" data-theme="dark">
+  <article data-content-brand="advertorial" data-density="spacious">
+    <!-- Advertorial with SportBILD dark colors -->
+  </article>
+</html>
+```
 
 ### Basic Button
 
@@ -438,27 +520,6 @@ Usage:
 
 .my-button:hover {
   background: var(--button-primary-brand-bg-color-hover);
-}
-```
-
-### Responsive Card
-
-```css
-.card {
-  background: var(--surface-color-primary);
-  padding: var(--grid-space-resp-base);
-  border-radius: var(--border-radius-md);
-}
-
-.card-title {
-  color: var(--headline-color-primary);
-  font-size: var(--headline3-font-size);
-  margin-bottom: var(--stack-space-resp-sm);
-}
-
-.card-body {
-  color: var(--text-color-primary);
-  font-size: var(--body-font-size);
 }
 ```
 
@@ -499,15 +560,15 @@ CSS Custom Properties are supported in all modern browsers:
 For legacy browser support, fallback values are included:
 
 ```css
---text-color-primary: var(--bild015, #232629);
-/*                              ↑ fallback value */
+--text-color-primary: var(--color-neutral-15, #232629);
+/*                                            ↑ fallback value */
 ```
 
 ---
 
 ## Related Documentation
 
-- [JavaScript/React Tokens](./README.js.md)
-- [Android Compose Tokens](./README.android.md)
-- [iOS SwiftUI Tokens](./README.ios.md)
+- [JavaScript/React Tokens](./dist/js/README.md)
+- [Android Compose Tokens](./dist/android/compose/README.md)
+- [iOS SwiftUI Tokens](./dist/ios/README.md)
 - [Architecture Overview](./CLAUDE.md)
