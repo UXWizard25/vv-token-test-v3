@@ -1645,8 +1645,15 @@ function processEffectTokens(effectStyles, aliasLookup, collections) {
   console.log(`  ℹ️  ${semanticEffectStyles.length} semantic styles, ${componentEffectStyles.length} component styles`);
 
   // Process semantic effects (existing logic)
-  // For each brand
+  // For each brand (only ColorBrands - skip Advertorial)
   Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
+    // Skip brands without BrandColorMapping (Advertorial)
+    // Effects belong to ColorBrand axis, not ContentBrand
+    if (!hasBrandColorMapping(collections, brandName)) {
+      console.log(`  ⏭️  ${brandName}: Skipped (no ColorBrand - effects inherited from parent)`);
+      return;
+    }
+
     console.log(`  🏷️  Brand: ${brandName}`);
 
     // For each ColorMode
@@ -1750,11 +1757,18 @@ function processEffectTokens(effectStyles, aliasLookup, collections) {
     });
   });
 
-  // Process component effects
+  // Process component effects (only ColorBrands - skip Advertorial)
   if (componentEffectStyles.length > 0) {
     console.log('\n  🧩 Processing Component Effects:\n');
 
     Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
+      // Skip brands without BrandColorMapping (Advertorial)
+      // Component effects belong to ColorBrand axis, not ContentBrand
+      if (!hasBrandColorMapping(collections, brandName)) {
+        console.log(`  ⏭️  ${brandName}: Skipped (no ColorBrand)`);
+        return;
+      }
+
       const brandKey = brandName.toLowerCase();
       console.log(`  🏷️  Brand: ${brandName}`);
 
