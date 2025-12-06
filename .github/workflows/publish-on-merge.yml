@@ -7,6 +7,7 @@ on:
       - main
     paths:
       - 'src/design-tokens/**'
+      - 'src/components/**'
 
 permissions:
   contents: write
@@ -79,11 +80,11 @@ jobs:
           echo "new=$NEW_VERSION" >> $GITHUB_OUTPUT
 
       # 6. Token Build durchführen
-      - name: Build Design Tokens
+      - name: Build Design Tokens and Stencil Components
         id: build
         run: |
-          echo "🎨 Building design tokens..."
-          npm run build 2>&1 | tee build-output.log
+          echo "🎨 Building design tokens and Stencil components..."
+          npm run build:all 2>&1 | tee build-output.log
 
           # Extrahiere Build-Statistiken
           SUCCESSFUL_BUILDS=$(grep -oP 'Builds erfolgreich: \K\d+' build-output.log || echo "0")
@@ -244,7 +245,7 @@ jobs:
               echo "- **Build Status:** ✅ ${{ steps.build.outputs.successful_builds }}/${{ steps.build.outputs.total_builds }} successful"
               echo "- **Package Size:** ${{ steps.package.outputs.package_size }}"
               # Note: Flutter Dart output currently disabled (FLUTTER_ENABLED = false in build.js)
-              echo "- **Formats:** CSS, SCSS, JavaScript, Swift, Android XML, JSON"
+              echo "- **Formats:** CSS, SCSS, JavaScript, Swift, Android XML, JSON, Stencil Components"
               echo ""
               echo "### 🔗 Links"
               echo ""

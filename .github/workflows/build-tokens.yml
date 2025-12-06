@@ -10,8 +10,10 @@ on:
       - 'claude/**'
     paths:
       - 'src/design-tokens/**'
+      - 'src/components/**'
       - 'scripts/tokens/**'
       - 'build-config/tokens/**'
+      - 'build-config/stencil/**'
       - 'package.json'
 
   # Manueller Trigger über GitHub UI
@@ -76,11 +78,11 @@ jobs:
           echo "⚙️ Preprocessing Figma tokens..."
           npm run preprocess
 
-      - name: Build Tokens and Bundles
+      - name: Build Tokens, Bundles, and Stencil Components
         id: build
         run: |
-          echo "🎨 Building tokens and bundles..."
-          npm run build 2>&1 | tee build-output.log
+          echo "🎨 Building tokens, bundles, and Stencil components..."
+          npm run build:all 2>&1 | tee build-output.log
 
           # Extrahiere Build-Statistiken
           SUCCESSFUL_BUILDS=$(grep -oP 'Builds erfolgreich: \K\d+' build-output.log || echo "0")
@@ -143,6 +145,7 @@ jobs:
           echo "- **SCSS Files:** $(find dist -name '*.scss' | wc -l)" >> $GITHUB_STEP_SUMMARY
           echo "- **JavaScript Files:** $(find dist -name '*.js' | wc -l)" >> $GITHUB_STEP_SUMMARY
           echo "- **JSON Files:** $(find dist -name '*.json' | wc -l)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Stencil Components:** $(find dist/stencil -type f 2>/dev/null | wc -l) files" >> $GITHUB_STEP_SUMMARY
 
       # 8. Comment PR with Artifacts (if this is a PR)
       - name: Comment PR with Build Artifacts
@@ -178,6 +181,7 @@ jobs:
             - \`dist/json/\` - JSON Data
             - \`dist/ios/\` - Swift Classes
             - \`dist/android/\` - Android XML
+            - \`dist/stencil/\` - **Stencil Web Components** (ESM, Custom Elements)
             <!-- Flutter Dart output currently disabled (FLUTTER_ENABLED = false in build.js) -->
 
             <details>

@@ -10,6 +10,9 @@
 npm run build:tokens    # Full build (preprocess + style-dictionary)
 npm run build:bundles   # Regenerate CSS bundles only
 npm run build           # Everything (tokens + bundles)
+npm run build:stencil   # Build Stencil Web Components
+npm run dev:stencil     # Stencil dev server (port 3333)
+npm run build:all       # Everything (tokens + bundles + stencil)
 npm run clean           # Delete dist/ and tokens/
 ```
 
@@ -637,6 +640,270 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 | Change CSS bundle structure | `bundles.js` → `buildBrandTokens()`, `buildBrandBundle()` |
 | Modify CSS Dual-Axis selectors | `style-dictionary.config.js` → `getBrandAttribute()`, `build.js` → optimization functions |
 | Modify token naming conventions | `style-dictionary.config.js` → `nameTransformers`, `build.js` → `toCamelCase()` |
+| Add new Stencil component | `src/components/ds-{name}/ds-{name}.tsx`, `ds-{name}.css` |
+| Modify Stencil config | `build-config/stencil/stencil.config.ts` |
+| Change Stencil output targets | `build-config/stencil/stencil.config.ts` → `outputTargets` |
+| Change global CSS bundle for Stencil | `build-config/stencil/stencil.config.ts` → `globalStyle` |
+
+---
+
+## Shadow DOM / Web Components Support
+
+The CSS output is **Shadow DOM compatible** for use with Web Component frameworks like **Stencil**, **Lit**, or native Web Components.
+
+### How It Works
+
+CSS Custom Properties **inherit through the Shadow DOM boundary**. This is the key mechanism that enables theming:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    CSS CUSTOM PROPERTY INHERITANCE                          │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  Light DOM                          Shadow DOM                              │
+│  ──────────────────────────────────────────────────────────────────────    │
+│                                                                             │
+│  <body data-color-brand="bild"      <my-button>                             │
+│        data-content-brand="bild"      #shadow-root                          │
+│        data-theme="light">              .button-label {                     │
+│    │                                      /* These INHERIT from body! */    │
+│    │  CSS Variables set here:             color: var(--button-label-color); │
+│    │  --button-label-color: #FFF;         font-size: var(--button-label-   │
+│    │  --button-primary-bg: #DD0000;                    font-size);          │
+│    │  --font-family-gotham: Gotham;       background: var(--button-primary │
+│    │                                                   -bg);                │
+│    └──────────────────────────────►     }                                   │
+│         Variables inherit           </my-button>                            │
+│         through Shadow DOM                                                  │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Dual Selector Output
+
+The CSS output includes **dual selectors** for both Light DOM and Shadow DOM contexts:
+
+```css
+/* Token Variables - Work in both contexts */
+[data-color-brand="bild"][data-theme="light"],
+:host([data-color-brand="bild"][data-theme="light"]) {
+  --button-primary-brand-bg-color-idle: var(--color-bild-red-50, #DD0000);
+  --button-primary-label-color: var(--color-neutral-100, #FFFFFF);
+}
+
+/* Typography Classes - Light DOM convenience */
+[data-content-brand="bild"] .display-1,
+:host([data-content-brand="bild"]) .display-1 {
+  font-family: var(--font-family-gotham, Gotham);
+  font-size: var(--display-1-font-size, 40px);
+}
+```
+
+### Usage Pattern for Stencil Components
+
+**Recommended: Use CSS Custom Properties directly**
+
+```tsx
+// my-button.tsx (Stencil Component)
+@Component({
+  tag: 'my-button',
+  shadow: true,
+  styles: `
+    :host {
+      display: inline-block;
+    }
+
+    .btn {
+      /* All token values inherit from Light DOM automatically! */
+      background: var(--button-primary-brand-bg-color-idle);
+      color: var(--button-primary-label-color);
+      padding: var(--button-stack-space) var(--button-inline-space);
+      border-radius: var(--button-border-radius);
+    }
+
+    .btn:hover {
+      background: var(--button-primary-brand-bg-color-hover);
+    }
+
+    .label {
+      font-family: var(--font-family-gotham);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--button-label-font-size);
+    }
+  `
+})
+export class MyButton {
+  render() {
+    return (
+      <button class="btn">
+        <span class="label"><slot></slot></span>
+      </button>
+    );
+  }
+}
+```
+
+```html
+<!-- Usage - Tokens set on body, inherited into all Shadow DOMs -->
+<body data-color-brand="bild" data-content-brand="bild" data-theme="light" data-density="default">
+  <my-button>BILD Button</my-button>  <!-- Red button -->
+</body>
+
+<body data-color-brand="sportbild" data-content-brand="sportbild" data-theme="dark">
+  <my-button>Sport Button</my-button>  <!-- Blue button -->
+</body>
+```
+
+### What Works in Shadow DOM
+
+| Feature | Mechanism | Status |
+|---------|-----------|--------|
+| **Color Tokens** | CSS Custom Properties inheritance | ✅ Works |
+| **Spacing Tokens** | CSS Custom Properties inheritance | ✅ Works |
+| **Typography Tokens** | CSS Custom Properties inheritance | ✅ Works |
+| **Responsive Breakpoints** | @media queries (global) | ✅ Works |
+| **Light/Dark Mode** | CSS Custom Properties inheritance | ✅ Works |
+| **Density Modes** | CSS Custom Properties inheritance | ✅ Works |
+| **Typography Classes** | `:host([attr])` selector | ⚠️ Requires attribute on component |
+| **Effect Classes** | `:host([attr])` selector | ⚠️ Requires attribute on component |
+
+### Important Notes
+
+1. **CSS Custom Properties are the primary mechanism** - They inherit automatically through Shadow DOM
+2. **Typography classes (`.display-1`, `.body`, etc.)** are convenience utilities for Light DOM; in Shadow DOM, use the underlying CSS Custom Properties directly
+3. **`:host([attr])` selectors** only match when the attribute is on the component itself, not on ancestors
+4. **`:host-context([attr])`** would look up ancestors but is **not supported in Firefox**
+
+### Architecture Decision
+
+| Approach | Browser Support | Recommendation |
+|----------|-----------------|----------------|
+| CSS Custom Properties | ✅ All browsers | **Primary mechanism** |
+| `:host([attr])` selectors | ✅ All browsers | For component-level attributes |
+| `:host-context([attr])` | ❌ No Firefox | **Not recommended** |
+
+---
+
+## Stencil Web Components Integration
+
+The design system includes a **Stencil-based component library** for building Web Components that consume design tokens.
+
+### Project Structure
+
+```
+build-config/
+  stencil/
+    stencil.config.ts     # Stencil configuration
+    tsconfig.json         # TypeScript config for Stencil
+
+src/
+  components/
+    ds-button/            # Button component
+      ds-button.tsx
+      ds-button.css
+    ds-card/              # Card component
+      ds-card.tsx
+      ds-card.css
+    index.html            # Dev/test page with brand switcher
+
+dist/
+  stencil/
+    bds/                  # Lazy-loaded components
+    components/           # Custom Elements (auto-define)
+    esm/                  # ES Modules
+    www/                  # Dev server output
+    docs/                 # Auto-generated component docs
+```
+
+### npm Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `npm run build:stencil` | Build Stencil components (requires tokens built first) |
+| `npm run dev:stencil` | Start dev server with hot reload (port 3333) |
+| `npm run build:all` | Build tokens + bundles + Stencil in sequence |
+
+### Creating New Components
+
+1. **Create component directory:**
+   ```
+   src/components/ds-{name}/
+     ds-{name}.tsx
+     ds-{name}.css
+   ```
+
+2. **Component structure:**
+   ```tsx
+   import { Component, Prop, h } from '@stencil/core';
+
+   @Component({
+     tag: 'ds-{name}',
+     styleUrl: 'ds-{name}.css',
+     shadow: true,
+   })
+   export class Ds{Name} {
+     @Prop() variant: string = 'default';
+
+     render() {
+       return (
+         <div class={`ds-{name} ds-{name}--${this.variant}`}>
+           <slot></slot>
+         </div>
+       );
+     }
+   }
+   ```
+
+3. **Use design tokens in CSS:**
+   ```css
+   :host {
+     display: block;
+   }
+
+   .ds-{name} {
+     /* Tokens inherit from Light DOM automatically */
+     background: var(--surface-color-primary);
+     color: var(--text-color-primary);
+     padding: var(--space-2-x);
+     border-radius: var(--border-radius-md);
+   }
+   ```
+
+### Key Configuration (stencil.config.ts)
+
+| Option | Value | Purpose |
+|--------|-------|---------|
+| `namespace` | `bds` | Component prefix (BILD Design System) |
+| `srcDir` | `../../src/components` | Source directory |
+| `globalStyle` | `../../dist/css/bundles/bild.css` | Token CSS bundle |
+| `outputTargets` | `dist`, `dist-custom-elements`, `www` | Build outputs |
+
+### Brand Switching in Components
+
+Components automatically adapt to brand/theme/density changes via CSS Custom Property inheritance:
+
+```html
+<!-- BILD Brand (default density) -->
+<body data-color-brand="bild" data-content-brand="bild" data-theme="light" data-density="default">
+  <ds-button variant="primary">BILD Button</ds-button>
+</body>
+
+<!-- SportBILD Brand (dense layout) -->
+<body data-color-brand="sportbild" data-content-brand="sportbild" data-theme="dark" data-density="dense">
+  <ds-button variant="primary">Sport Button</ds-button>
+</body>
+```
+
+**Demo Page Brand Switcher** (`src/components/index.html`):
+
+| Selector | Options | Data Attribute |
+|----------|---------|----------------|
+| Color Brand | BILD, SportBILD | `data-color-brand` |
+| Theme | Light, Dark | `data-theme` |
+| Content Brand | BILD, SportBILD, Advertorial | `data-content-brand` |
+| Density | Default, Dense, Spacious | `data-density` |
+
+No JavaScript required – pure CSS Custom Property inheritance through Shadow DOM.
 
 ---
 
@@ -649,3 +916,8 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 | Native build errors | Interface out of sync | Check unified interface generation |
 | Wrong colors | ColorBrand/ContentBrand mismatch | Verify Dual-Axis configuration |
 | Missing tokens | Scope not assigned in Figma | Add appropriate scope in Figma |
+| Tokens not applying in Shadow DOM | Variables not set on ancestor | Ensure `data-*` attributes are on `<body>` or wrapper |
+| Typography classes not working in Shadow DOM | Using class instead of variables | Use `var(--token-name)` directly instead of classes |
+| Stencil build fails with "Unable to find CSS" | Tokens not built | Run `npm run build` before `npm run build:stencil` |
+| Stencil components not rendering | Script not loaded | Check `<script src="/build/bds.esm.js">` in HTML |
+| Brand switching not working in Stencil | Missing data attributes | Add `data-color-brand`, `data-content-brand`, `data-theme` to `<body>` |

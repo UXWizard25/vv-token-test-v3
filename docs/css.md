@@ -548,6 +548,170 @@ setDensity('spacious'); // Generous spacing
 
 ---
 
+## Shadow DOM / Web Components
+
+The CSS output is **Shadow DOM compatible** for use with frameworks like **Stencil**, **Lit**, or native Web Components.
+
+### How It Works
+
+CSS Custom Properties **inherit through the Shadow DOM boundary**:
+
+```html
+<!-- Light DOM: Tokens are set here -->
+<body data-color-brand="bild" data-content-brand="bild" data-theme="light">
+
+  <!-- Shadow DOM: Tokens are inherited! -->
+  <my-button>
+    <!-- #shadow-root -->
+    <!-- var(--button-primary-bg) works here! -->
+  </my-button>
+
+</body>
+```
+
+### Stencil Component Example
+
+```tsx
+// my-button.tsx
+@Component({
+  tag: 'my-button',
+  shadow: true,
+  styles: `
+    .btn {
+      /* Token values inherit from Light DOM automatically */
+      background: var(--button-primary-brand-bg-color-idle);
+      color: var(--button-primary-label-color);
+      padding: var(--button-stack-space) var(--button-inline-space);
+      border-radius: var(--button-border-radius);
+    }
+
+    .btn:hover {
+      background: var(--button-primary-brand-bg-color-hover);
+    }
+
+    .label {
+      font-family: var(--font-family-gotham);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--button-label-font-size);
+    }
+  `
+})
+export class MyButton {
+  render() {
+    return (
+      <button class="btn">
+        <span class="label"><slot></slot></span>
+      </button>
+    );
+  }
+}
+```
+
+### Multi-Brand Theming
+
+```html
+<!-- BILD Brand -->
+<body data-color-brand="bild" data-content-brand="bild" data-theme="light">
+  <my-button>Red Button</my-button>
+</body>
+
+<!-- SportBILD Brand -->
+<body data-color-brand="sportbild" data-content-brand="sportbild" data-theme="dark">
+  <my-button>Blue Button</my-button>
+</body>
+```
+
+The same component automatically adapts to different brands!
+
+### Dual Selectors
+
+CSS output includes dual selectors for both Light DOM and Shadow DOM:
+
+```css
+/* Works in Light DOM AND Shadow DOM (when attribute on component) */
+[data-color-brand="bild"][data-theme="light"],
+:host([data-color-brand="bild"][data-theme="light"]) {
+  --button-primary-brand-bg-color-idle: var(--color-bild-red-50, #DD0000);
+}
+```
+
+### What Works in Shadow DOM
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| Token Variables | ✅ | CSS Custom Properties inherit through Shadow DOM |
+| @media Breakpoints | ✅ | Global, work everywhere |
+| Light/Dark Mode | ✅ | Variables change, components update |
+| Density Modes | ✅ | Variables inherit |
+| Typography Classes | ⚠️ | Use `var()` directly instead of classes |
+| Effect Classes | ⚠️ | Use `var()` directly instead of classes |
+
+### Best Practice
+
+**For Shadow DOM components, use CSS Custom Properties directly:**
+
+```css
+/* ✅ Recommended - Variables inherit */
+.label {
+  font-family: var(--font-family-gotham);
+  font-size: var(--display-1-font-size);
+  line-height: var(--display-1-line-height);
+}
+
+/* ⚠️ Classes require attribute on component */
+.label {
+  /* This needs [data-content-brand] on the component itself */
+}
+```
+
+> **Note:** Typography classes (`.display-1`, `.body`, etc.) are convenience utilities for Light DOM. For Shadow DOM, use the underlying CSS Custom Properties directly.
+
+### Stencil Project Setup
+
+The design system includes a pre-configured Stencil project with demo components:
+
+```bash
+# Build tokens first (required)
+npm run build
+
+# Build Stencil components
+npm run build:stencil
+
+# Start dev server with hot reload (port 3333)
+npm run dev:stencil
+```
+
+**Demo Components:**
+- `<ds-button>` – Button with variant prop (primary, secondary, tertiary)
+- `<ds-card>` – Card with surface prop (primary, secondary)
+
+**Brand Switcher (index.html):**
+
+The demo page includes a brand switcher with all four theming axes:
+
+| Selector | Options | Data Attribute |
+|----------|---------|----------------|
+| Color Brand | BILD, SportBILD | `data-color-brand` |
+| Theme | Light, Dark | `data-theme` |
+| Content Brand | BILD, SportBILD, Advertorial | `data-content-brand` |
+| Density | Default, Dense, Spacious | `data-density` |
+
+**Project Structure:**
+```
+build-config/stencil/
+  stencil.config.ts       # Stencil configuration
+  tsconfig.json           # TypeScript config
+
+src/components/
+  ds-button/              # Button component
+  ds-card/                # Card component
+  index.html              # Dev/test page with brand switcher
+```
+
+> See [CLAUDE.md](../CLAUDE.md#stencil-web-components-integration) for complete Stencil documentation.
+
+---
+
 ## Browser Support
 
 CSS Custom Properties are supported in all modern browsers:

@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+.ds-card {
+  border-radius: var(--border-radius-lg, 8px);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+/* Primary Surface */
+.ds-card--primary {
+  background-color: var(--card-surface-bg-color, var(--surface-color-primary, #FFFFFF));
+  box-shadow: var(--shadow-soft-md, 0 2px 8px rgba(0, 0, 0, 0.1));
+}
+
+/* Secondary Surface */
+.ds-card--secondary {
+  background-color: var(--surface-color-secondary, #F8F9FA);
+  box-shadow: var(--shadow-soft-sm, 0 1px 4px rgba(0, 0, 0, 0.08));
+}
+
+.ds-card__header {
+  padding: var(--space-2-x, 16px) var(--space-2-x, 16px) 0;
+}
+
+.ds-card__title {
+  margin: 0;
+  font-family: var(--font-family-gotham-narrow, sans-serif);
+  font-weight: var(--font-weight-bold, 700);
+  font-size: var(--headline-3-font-size, 20px);
+  line-height: var(--headline-3-line-height, 24px);
+  color: var(--text-color-primary, #232629);
+}
+
+.ds-card__content {
+  padding: var(--space-2-x, 16px);
+}
+
+/* Hover effect */
+.ds-card--primary:hover {
+  box-shadow: var(--shadow-soft-lg, 0 4px 16px rgba(0, 0, 0, 0.12));
+}

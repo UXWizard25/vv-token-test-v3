@@ -52,6 +52,7 @@ Both pipelines use the **TokenSync Figma Plugin** for automated exports.
 | **JavaScript/React** | ESM + ThemeProvider (Dual-Axis) | - | [📖 docs/js.md](./docs/js.md) |
 | **Android Compose** | Jetpack Compose (Dual-Axis) | - | [📖 docs/android.md](./docs/android.md) |
 | **iOS SwiftUI** | SwiftUI (Dual-Axis) | - | [📖 docs/ios.md](./docs/ios.md) |
+| **Web Components** | Stencil, Lit, Shadow DOM | - | [📖 docs/css.md](./docs/css.md#shadow-dom--web-components) |
 
 ---
 
@@ -208,6 +209,21 @@ import com.bild.designsystem.shared.DesignSystemTheme
 DesignSystemTheme(brand = Brand.Bild) { /* ... */ }
 ```
 
+```tsx
+// Web Components (Stencil) - CSS Custom Properties inherit through Shadow DOM
+@Component({
+  tag: 'my-button',
+  shadow: true,
+  styles: `
+    .btn {
+      background: var(--button-primary-brand-bg-color-idle);
+      color: var(--button-primary-label-color);
+    }
+  `
+})
+export class MyButton { /* ... */ }
+```
+
 ### Icon Usage
 
 ```tsx
@@ -267,9 +283,13 @@ vv-token-test-v3/
 ├── 📁 src/
 │   ├── design-tokens/                  # 🎨 Figma token export
 │   │   └── bild-design-system-raw-data.json
-│   └── icons/                          # 🖼️ Figma icon export
-│       ├── icon-*.svg
-│       └── .codepoints.json            # Flutter codepoint registry
+│   ├── icons/                          # 🖼️ Figma icon export
+│   │   ├── icon-*.svg
+│   │   └── .codepoints.json            # Flutter codepoint registry
+│   └── components/                     # 🧩 Stencil Web Components
+│       ├── ds-button/                  # Button component
+│       ├── ds-card/                    # Card component
+│       └── index.html                  # Dev/test page
 │
 ├── 📁 scripts/
 │   ├── tokens/                         # Token scripts
@@ -290,9 +310,12 @@ vv-token-test-v3/
 ├── 📁 build-config/
 │   ├── tokens/
 │   │   └── style-dictionary.config.js  # Token transforms
-│   └── icons/
-│       ├── svgo.config.js              # SVG optimization
-│       └── tsconfig.json               # React TypeScript config
+│   ├── icons/
+│   │   ├── svgo.config.js              # SVG optimization
+│   │   └── tsconfig.json               # React TypeScript config
+│   └── stencil/
+│       ├── stencil.config.ts           # Stencil Web Components config
+│       └── tsconfig.json               # Stencil TypeScript config
 │
 ├── 📁 tokens/                          # Preprocessed (Git tracked)
 ├── 📁 dist/                            # Build output (Git ignored)
@@ -323,6 +346,14 @@ npm run preprocess         # Figma JSON → Style Dictionary format
 npm run build:tokens       # Style Dictionary → 7 platforms
 npm run build:bundles      # Generate convenience bundles
 npm run clean              # Remove dist/ and tokens/
+```
+
+### 🧩 Stencil Components
+
+```bash
+npm run build:stencil      # Build Stencil Web Components
+npm run dev:stencil        # Dev server with hot reload (port 3333)
+npm run build:all          # Full build (tokens + bundles + stencil)
 ```
 
 ### 🖼️ Icons

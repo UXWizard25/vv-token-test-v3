@@ -106,10 +106,13 @@
     "preprocess": "node scripts/tokens/preprocess.js",
     "build:tokens": "npm run preprocess && node scripts/tokens/build.js",
     "build:bundles": "node scripts/tokens/bundles.js",
+    "build:stencil": "stencil build --config build-config/stencil/stencil.config.ts",
+    "dev:stencil": "stencil build --dev --watch --serve --config build-config/stencil/stencil.config.ts",
     "build": "npm run build:tokens && npm run build:bundles",
+    "build:all": "npm run build && npm run build:stencil",
     "watch": "nodemon --watch src/design-tokens --ext json --exec npm run build:tokens",
     "clean": "rm -rf dist tokens",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build:all"
   },
   "repository": {
     "type": "git",
@@ -136,6 +139,7 @@
     "access": "public"
   },
   "devDependencies": {
+    "@stencil/core": "^4.38.3",
     "@svgr/core": "^8.1.0",
     "@types/react": "^19.2.7",
     "fantasticon": "^3.0.0",
