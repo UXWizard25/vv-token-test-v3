@@ -21,7 +21,7 @@ const path = require('path');
 const PATHS = {
   src: path.resolve(__dirname, '../../dist/icons/react-src'),
   output: path.resolve(__dirname, '../../dist/icons/react'),
-  tsconfig: path.resolve(__dirname, '../../tsconfig.icons.json'),
+  tsconfig: path.resolve(__dirname, '../../build-config/icons/tsconfig.json'),
 };
 
 // ============================================================================

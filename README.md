@@ -291,14 +291,14 @@ vv-token-test-v3/
 │   ├── tokens/
 │   │   └── style-dictionary.config.js  # Token transforms
 │   └── icons/
-│       └── svgo.config.js              # SVG optimization
+│       ├── svgo.config.js              # SVG optimization
+│       └── tsconfig.json               # React TypeScript config
 │
 ├── 📁 tokens/                          # Preprocessed (Git tracked)
 ├── 📁 dist/                            # Build output (Git ignored)
 │
 ├── 📄 package.json                     # Token package config
 ├── 📄 package.icons.json               # Icon package config
-├── 📄 tsconfig.icons.json              # React TypeScript config
 │
 ├── 📄 README.md                        # 👈 This file
 ├── 📄 README.tokens.md                 # Token documentation
