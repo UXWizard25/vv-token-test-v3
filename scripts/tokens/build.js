@@ -2127,12 +2127,17 @@ async function generateComponentBreakpointResponsive(dir, componentName, brand, 
 
 /**
  * Extracts CSS custom property declarations from data-attribute selector
+ * Supports both single selectors and dual selectors (with :host)
  */
 function extractRootVariables(content) {
   const variables = [];
 
-  // Match [data-content-brand="..."][data-breakpoint="..."] { ... } or :root { ... } (Dual-Axis)
-  const selectorMatch = content.match(/(?:\[data-content-brand="[^"]+"\]\[data-breakpoint="[^"]+"\]|:root)\s*\{([\s\S]*)\}/);
+  // Match patterns:
+  // 1. [data-content-brand="..."][data-breakpoint="..."] { ... }
+  // 2. [data-content-brand="..."][data-breakpoint="..."],\n:host(...) { ... } (dual selector)
+  // 3. :root { ... }
+  // 4. :root,\n:host { ... } (dual selector)
+  const selectorMatch = content.match(/(?:\[data-content-brand="[^"]+"\]\[data-breakpoint="[^"]+"\](?:,\s*:host\([^)]+\))?|:root(?:,\s*:host)?)\s*\{([\s\S]*)\}/);
   if (selectorMatch) {
     const selectorContent = selectorMatch[1];
 
