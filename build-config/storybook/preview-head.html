@@ -1,0 +1,34 @@
+<!--
+  BILD Design System - Storybook Preview Head
+
+  1. CSS Bundles (Dual-Axis Architecture):
+     - bild.css: BILD colors + BILD content tokens
+     - sportbild.css: SportBILD colors + SportBILD content tokens
+     - advertorial.css: Advertorial content tokens only (uses parent color brand)
+
+  2. Stencil Components:
+     - Loaded via ESM module for custom element registration
+-->
+
+<!-- Design Token CSS Bundles -->
+<link rel="stylesheet" href="/css/bundles/bild.css" />
+<link rel="stylesheet" href="/css/bundles/sportbild.css" />
+<link rel="stylesheet" href="/css/bundles/advertorial.css" />
+
+<!-- Stencil Web Components -->
+<script type="module" src="/stencil/bds/bds.esm.js"></script>
+
+<style>
+  /* Ensure Storybook canvas uses design system tokens */
+  body {
+    font-family: var(--font-family-gotham, system-ui, -apple-system, sans-serif);
+    background-color: var(--surface-color-canvas, #F0F2F4);
+    color: var(--text-color-primary, #232629);
+    margin: 0;
+  }
+
+  /* Story wrapper inherits tokens from decorator's data attributes */
+  .sb-show-main {
+    background-color: transparent;
+  }
+</style>
