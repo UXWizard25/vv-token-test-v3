@@ -1,7 +1,5 @@
 import type { Preview } from '@storybook/web-components';
 import { html } from 'lit';
-import { addons } from '@storybook/preview-api';
-import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
 
 // Import custom themes for UI styling
 import { bildLightTheme, bildDarkTheme } from './manager';
@@ -9,22 +7,8 @@ import { bildLightTheme, bildDarkTheme } from './manager';
 // Stencil components are loaded via script tag in preview-head.html
 // This ensures they're available before stories render
 
-/**
- * Sync dark mode toggle with content area
- *
- * When the dark mode toggle is clicked, update data-theme on body.
- * CSS will automatically update because selectors like [data-theme="dark"] will match.
- */
-try {
-  const channel = addons.getChannel();
-  channel.on(DARK_MODE_EVENT_NAME, (isDark: boolean) => {
-    if (typeof document !== 'undefined' && document.body) {
-      document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
-    }
-  });
-} catch (e) {
-  // Channel not available during initial load, ignore
-}
+// Track if we've set up the dark mode listener
+let darkModeListenerSetup = false;
 
 /**
  * 4-Axis Design Token Decorator
@@ -37,6 +21,27 @@ try {
  */
 const withDesignTokens = (Story: () => unknown, context: { globals: Record<string, string> }) => {
   const { colorBrand, contentBrand, theme, density } = context.globals;
+
+  // Set up dark mode listener once (when first story renders)
+  if (!darkModeListenerSetup && typeof window !== 'undefined') {
+    darkModeListenerSetup = true;
+
+    // Dynamically import to avoid issues during SSR/build
+    import('@storybook/preview-api').then(({ addons }) => {
+      try {
+        const channel = addons.getChannel();
+        channel.on('DARK_MODE', (isDark: boolean) => {
+          if (document.body) {
+            document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+          }
+        });
+      } catch (e) {
+        console.warn('Could not set up dark mode listener:', e);
+      }
+    }).catch(() => {
+      // Ignore import errors
+    });
+  }
 
   // Set attributes on document.body for global CSS inheritance
   if (typeof document !== 'undefined' && document.body) {
