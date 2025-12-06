@@ -10,6 +10,9 @@
 npm run build:tokens    # Full build (preprocess + style-dictionary)
 npm run build:bundles   # Regenerate CSS bundles only
 npm run build           # Everything (tokens + bundles)
+npm run build:stencil   # Build Stencil Web Components
+npm run dev:stencil     # Stencil dev server (port 3333)
+npm run build:all       # Everything (tokens + bundles + stencil)
 npm run clean           # Delete dist/ and tokens/
 ```
 
@@ -637,6 +640,10 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 | Change CSS bundle structure | `bundles.js` → `buildBrandTokens()`, `buildBrandBundle()` |
 | Modify CSS Dual-Axis selectors | `style-dictionary.config.js` → `getBrandAttribute()`, `build.js` → optimization functions |
 | Modify token naming conventions | `style-dictionary.config.js` → `nameTransformers`, `build.js` → `toCamelCase()` |
+| Add new Stencil component | `src/components/ds-{name}/ds-{name}.tsx`, `ds-{name}.css` |
+| Modify Stencil config | `build-config/stencil/stencil.config.ts` |
+| Change Stencil output targets | `build-config/stencil/stencil.config.ts` → `outputTargets` |
+| Change global CSS bundle for Stencil | `build-config/stencil/stencil.config.ts` → `globalStyle` |
 
 ---
 
@@ -777,6 +784,120 @@ export class MyButton {
 
 ---
 
+## Stencil Web Components Integration
+
+The design system includes a **Stencil-based component library** for building Web Components that consume design tokens.
+
+### Project Structure
+
+```
+build-config/
+  stencil/
+    stencil.config.ts     # Stencil configuration
+    tsconfig.json         # TypeScript config for Stencil
+
+src/
+  components/
+    ds-button/            # Button component
+      ds-button.tsx
+      ds-button.css
+    ds-card/              # Card component
+      ds-card.tsx
+      ds-card.css
+    index.html            # Dev/test page with brand switcher
+
+dist/
+  stencil/
+    bds/                  # Lazy-loaded components
+    components/           # Custom Elements (auto-define)
+    esm/                  # ES Modules
+    www/                  # Dev server output
+    docs/                 # Auto-generated component docs
+```
+
+### npm Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `npm run build:stencil` | Build Stencil components (requires tokens built first) |
+| `npm run dev:stencil` | Start dev server with hot reload (port 3333) |
+| `npm run build:all` | Build tokens + bundles + Stencil in sequence |
+
+### Creating New Components
+
+1. **Create component directory:**
+   ```
+   src/components/ds-{name}/
+     ds-{name}.tsx
+     ds-{name}.css
+   ```
+
+2. **Component structure:**
+   ```tsx
+   import { Component, Prop, h } from '@stencil/core';
+
+   @Component({
+     tag: 'ds-{name}',
+     styleUrl: 'ds-{name}.css',
+     shadow: true,
+   })
+   export class Ds{Name} {
+     @Prop() variant: string = 'default';
+
+     render() {
+       return (
+         <div class={`ds-{name} ds-{name}--${this.variant}`}>
+           <slot></slot>
+         </div>
+       );
+     }
+   }
+   ```
+
+3. **Use design tokens in CSS:**
+   ```css
+   :host {
+     display: block;
+   }
+
+   .ds-{name} {
+     /* Tokens inherit from Light DOM automatically */
+     background: var(--surface-color-primary);
+     color: var(--text-color-primary);
+     padding: var(--space-2-x);
+     border-radius: var(--border-radius-md);
+   }
+   ```
+
+### Key Configuration (stencil.config.ts)
+
+| Option | Value | Purpose |
+|--------|-------|---------|
+| `namespace` | `bds` | Component prefix (BILD Design System) |
+| `srcDir` | `../../src/components` | Source directory |
+| `globalStyle` | `../../dist/css/bundles/bild.css` | Token CSS bundle |
+| `outputTargets` | `dist`, `dist-custom-elements`, `www` | Build outputs |
+
+### Brand Switching in Components
+
+Components automatically adapt to brand/theme changes via CSS Custom Property inheritance:
+
+```html
+<!-- BILD Brand -->
+<body data-color-brand="bild" data-content-brand="bild" data-theme="light">
+  <ds-button variant="primary">BILD Button</ds-button>
+</body>
+
+<!-- SportBILD Brand -->
+<body data-color-brand="sportbild" data-content-brand="sportbild" data-theme="dark">
+  <ds-button variant="primary">Sport Button</ds-button>
+</body>
+```
+
+No JavaScript required – pure CSS Custom Property inheritance through Shadow DOM.
+
+---
+
 ## Common Issues
 
 | Problem | Likely Cause | Solution |
@@ -788,3 +909,6 @@ export class MyButton {
 | Missing tokens | Scope not assigned in Figma | Add appropriate scope in Figma |
 | Tokens not applying in Shadow DOM | Variables not set on ancestor | Ensure `data-*` attributes are on `<body>` or wrapper |
 | Typography classes not working in Shadow DOM | Using class instead of variables | Use `var(--token-name)` directly instead of classes |
+| Stencil build fails with "Unable to find CSS" | Tokens not built | Run `npm run build` before `npm run build:stencil` |
+| Stencil components not rendering | Script not loaded | Check `<script src="/build/bds.esm.js">` in HTML |
+| Brand switching not working in Stencil | Missing data attributes | Add `data-color-brand`, `data-content-brand`, `data-theme` to `<body>` |

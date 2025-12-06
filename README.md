@@ -283,9 +283,13 @@ vv-token-test-v3/
 ├── 📁 src/
 │   ├── design-tokens/                  # 🎨 Figma token export
 │   │   └── bild-design-system-raw-data.json
-│   └── icons/                          # 🖼️ Figma icon export
-│       ├── icon-*.svg
-│       └── .codepoints.json            # Flutter codepoint registry
+│   ├── icons/                          # 🖼️ Figma icon export
+│   │   ├── icon-*.svg
+│   │   └── .codepoints.json            # Flutter codepoint registry
+│   └── components/                     # 🧩 Stencil Web Components
+│       ├── ds-button/                  # Button component
+│       ├── ds-card/                    # Card component
+│       └── index.html                  # Dev/test page
 │
 ├── 📁 scripts/
 │   ├── tokens/                         # Token scripts
@@ -306,9 +310,12 @@ vv-token-test-v3/
 ├── 📁 build-config/
 │   ├── tokens/
 │   │   └── style-dictionary.config.js  # Token transforms
-│   └── icons/
-│       ├── svgo.config.js              # SVG optimization
-│       └── tsconfig.json               # React TypeScript config
+│   ├── icons/
+│   │   ├── svgo.config.js              # SVG optimization
+│   │   └── tsconfig.json               # React TypeScript config
+│   └── stencil/
+│       ├── stencil.config.ts           # Stencil Web Components config
+│       └── tsconfig.json               # Stencil TypeScript config
 │
 ├── 📁 tokens/                          # Preprocessed (Git tracked)
 ├── 📁 dist/                            # Build output (Git ignored)
@@ -339,6 +346,14 @@ npm run preprocess         # Figma JSON → Style Dictionary format
 npm run build:tokens       # Style Dictionary → 7 platforms
 npm run build:bundles      # Generate convenience bundles
 npm run clean              # Remove dist/ and tokens/
+```
+
+### 🧩 Stencil Components
+
+```bash
+npm run build:stencil      # Build Stencil Web Components
+npm run dev:stencil        # Dev server with hot reload (port 3333)
+npm run build:all          # Full build (tokens + bundles + stencil)
 ```
 
 ### 🖼️ Icons

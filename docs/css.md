@@ -666,6 +666,39 @@ CSS output includes dual selectors for both Light DOM and Shadow DOM:
 
 > **Note:** Typography classes (`.display-1`, `.body`, etc.) are convenience utilities for Light DOM. For Shadow DOM, use the underlying CSS Custom Properties directly.
 
+### Stencil Project Setup
+
+The design system includes a pre-configured Stencil project with demo components:
+
+```bash
+# Build tokens first (required)
+npm run build
+
+# Build Stencil components
+npm run build:stencil
+
+# Start dev server with hot reload (port 3333)
+npm run dev:stencil
+```
+
+**Demo Components:**
+- `<ds-button>` – Button with variant prop (primary, secondary, tertiary)
+- `<ds-card>` – Card with surface prop (primary, secondary)
+
+**Project Structure:**
+```
+build-config/stencil/
+  stencil.config.ts       # Stencil configuration
+  tsconfig.json           # TypeScript config
+
+src/components/
+  ds-button/              # Button component
+  ds-card/                # Card component
+  index.html              # Dev/test page with brand switcher
+```
+
+> See [CLAUDE.md](../CLAUDE.md#stencil-web-components-integration) for complete Stencil documentation.
+
 ---
 
 ## Browser Support

@@ -143,6 +143,11 @@ npm run build
 npm run preprocess     # Figma JSON → Style Dictionary format
 npm run build:tokens   # Style Dictionary → 7 platforms
 npm run build:bundles  # Generate CSS bundle files
+
+# Stencil Web Components
+npm run build:stencil  # Build Stencil components (requires tokens built first)
+npm run dev:stencil    # Dev server with hot reload (port 3333)
+npm run build:all      # Full build including Stencil
 ```
 
 ## Token Type Mapping
@@ -848,3 +853,4 @@ MIT License - See [LICENSE](./LICENSE) file.
 | Jetpack Compose | ✅ |
 | Theme Provider | ✅ |
 | Shadow DOM / Web Components | ✅ |
+| Stencil Components | ✅ |
