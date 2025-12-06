@@ -8,6 +8,10 @@
 
   2. Stencil Components:
      - Loaded via ESM module for custom element registration
+
+  IMPORTANT: All data attributes are set on document.documentElement (html element)
+  because CSS selectors require all attributes on the same element:
+  [data-color-brand="bild"][data-theme="light"] { ... }
 -->
 
 <!-- Design Token CSS Bundles (relative paths for GitHub Pages compatibility) -->
@@ -27,25 +31,21 @@
     margin: 0;
   }
 
-  /* Story wrapper inherits tokens from decorator's data attributes */
+  /* Story wrapper inherits tokens from html element's data attributes */
   .sb-show-main {
     background-color: transparent;
   }
 </style>
 
 <script>
-  // Set initial data attributes on body for CSS token inheritance
-  // Wait for DOM to be ready since this script runs in <head> before <body> exists
-  function setInitialAttributes() {
-    document.body.setAttribute('data-color-brand', 'bild');
-    document.body.setAttribute('data-content-brand', 'bild');
-    document.body.setAttribute('data-theme', 'light');
-    document.body.setAttribute('data-density', 'default');
-  }
-
-  if (document.body) {
-    setInitialAttributes();
-  } else {
-    document.addEventListener('DOMContentLoaded', setInitialAttributes);
-  }
+  // Set initial data attributes on documentElement (html) for CSS token inheritance
+  // All attributes must be on the same element for CSS selectors to match:
+  // [data-color-brand="bild"][data-theme="light"] { ... }
+  (function() {
+    var html = document.documentElement;
+    html.setAttribute('data-color-brand', 'bild');
+    html.setAttribute('data-content-brand', 'bild');
+    html.setAttribute('data-theme', 'light');
+    html.setAttribute('data-density', 'default');
+  })();
 </script>
