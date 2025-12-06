@@ -640,6 +640,143 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 
 ---
 
+## Shadow DOM / Web Components Support
+
+The CSS output is **Shadow DOM compatible** for use with Web Component frameworks like **Stencil**, **Lit**, or native Web Components.
+
+### How It Works
+
+CSS Custom Properties **inherit through the Shadow DOM boundary**. This is the key mechanism that enables theming:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    CSS CUSTOM PROPERTY INHERITANCE                          │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  Light DOM                          Shadow DOM                              │
+│  ──────────────────────────────────────────────────────────────────────    │
+│                                                                             │
+│  <body data-color-brand="bild"      <my-button>                             │
+│        data-content-brand="bild"      #shadow-root                          │
+│        data-theme="light">              .button-label {                     │
+│    │                                      /* These INHERIT from body! */    │
+│    │  CSS Variables set here:             color: var(--button-label-color); │
+│    │  --button-label-color: #FFF;         font-size: var(--button-label-   │
+│    │  --button-primary-bg: #DD0000;                    font-size);          │
+│    │  --font-family-gotham: Gotham;       background: var(--button-primary │
+│    │                                                   -bg);                │
+│    └──────────────────────────────►     }                                   │
+│         Variables inherit           </my-button>                            │
+│         through Shadow DOM                                                  │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Dual Selector Output
+
+The CSS output includes **dual selectors** for both Light DOM and Shadow DOM contexts:
+
+```css
+/* Token Variables - Work in both contexts */
+[data-color-brand="bild"][data-theme="light"],
+:host([data-color-brand="bild"][data-theme="light"]) {
+  --button-primary-brand-bg-color-idle: var(--color-bild-red-50, #DD0000);
+  --button-primary-label-color: var(--color-neutral-100, #FFFFFF);
+}
+
+/* Typography Classes - Light DOM convenience */
+[data-content-brand="bild"] .display-1,
+:host([data-content-brand="bild"]) .display-1 {
+  font-family: var(--font-family-gotham, Gotham);
+  font-size: var(--display-1-font-size, 40px);
+}
+```
+
+### Usage Pattern for Stencil Components
+
+**Recommended: Use CSS Custom Properties directly**
+
+```tsx
+// my-button.tsx (Stencil Component)
+@Component({
+  tag: 'my-button',
+  shadow: true,
+  styles: `
+    :host {
+      display: inline-block;
+    }
+
+    .btn {
+      /* All token values inherit from Light DOM automatically! */
+      background: var(--button-primary-brand-bg-color-idle);
+      color: var(--button-primary-label-color);
+      padding: var(--button-stack-space) var(--button-inline-space);
+      border-radius: var(--button-border-radius);
+    }
+
+    .btn:hover {
+      background: var(--button-primary-brand-bg-color-hover);
+    }
+
+    .label {
+      font-family: var(--font-family-gotham);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--button-label-font-size);
+    }
+  `
+})
+export class MyButton {
+  render() {
+    return (
+      <button class="btn">
+        <span class="label"><slot></slot></span>
+      </button>
+    );
+  }
+}
+```
+
+```html
+<!-- Usage - Tokens set on body, inherited into all Shadow DOMs -->
+<body data-color-brand="bild" data-content-brand="bild" data-theme="light" data-density="default">
+  <my-button>BILD Button</my-button>  <!-- Red button -->
+</body>
+
+<body data-color-brand="sportbild" data-content-brand="sportbild" data-theme="dark">
+  <my-button>Sport Button</my-button>  <!-- Blue button -->
+</body>
+```
+
+### What Works in Shadow DOM
+
+| Feature | Mechanism | Status |
+|---------|-----------|--------|
+| **Color Tokens** | CSS Custom Properties inheritance | ✅ Works |
+| **Spacing Tokens** | CSS Custom Properties inheritance | ✅ Works |
+| **Typography Tokens** | CSS Custom Properties inheritance | ✅ Works |
+| **Responsive Breakpoints** | @media queries (global) | ✅ Works |
+| **Light/Dark Mode** | CSS Custom Properties inheritance | ✅ Works |
+| **Density Modes** | CSS Custom Properties inheritance | ✅ Works |
+| **Typography Classes** | `:host([attr])` selector | ⚠️ Requires attribute on component |
+| **Effect Classes** | `:host([attr])` selector | ⚠️ Requires attribute on component |
+
+### Important Notes
+
+1. **CSS Custom Properties are the primary mechanism** - They inherit automatically through Shadow DOM
+2. **Typography classes (`.display-1`, `.body`, etc.)** are convenience utilities for Light DOM; in Shadow DOM, use the underlying CSS Custom Properties directly
+3. **`:host([attr])` selectors** only match when the attribute is on the component itself, not on ancestors
+4. **`:host-context([attr])`** would look up ancestors but is **not supported in Firefox**
+
+### Architecture Decision
+
+| Approach | Browser Support | Recommendation |
+|----------|-----------------|----------------|
+| CSS Custom Properties | ✅ All browsers | **Primary mechanism** |
+| `:host([attr])` selectors | ✅ All browsers | For component-level attributes |
+| `:host-context([attr])` | ❌ No Firefox | **Not recommended** |
+
+---
+
 ## Common Issues
 
 | Problem | Likely Cause | Solution |
@@ -649,3 +786,5 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 | Native build errors | Interface out of sync | Check unified interface generation |
 | Wrong colors | ColorBrand/ContentBrand mismatch | Verify Dual-Axis configuration |
 | Missing tokens | Scope not assigned in Figma | Add appropriate scope in Figma |
+| Tokens not applying in Shadow DOM | Variables not set on ancestor | Ensure `data-*` attributes are on `<body>` or wrapper |
+| Typography classes not working in Shadow DOM | Using class instead of variables | Use `var(--token-name)` directly instead of classes |

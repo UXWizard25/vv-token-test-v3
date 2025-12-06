@@ -35,6 +35,7 @@ This pipeline processes the multi-layer, multi-brand BILD Design System architec
 - **3 Platforms** (6 formats): Web (CSS, SCSS, JS, JSON), iOS (SwiftUI), Android (Compose)
 - **Multiple Modes**: Density (3), Breakpoints (4), Color Modes (2)
 - **Token Types**: Primitives, Semantic Tokens, Component Tokens (~970 files)
+- **Shadow DOM Compatible**: Works with Stencil, Lit, and native Web Components
 
 ### Token Architecture (4 Layers)
 
@@ -405,6 +406,44 @@ struct MyView: View {
   padding: $space2x;
 }
 ```
+
+### Web Components (Stencil, Lit)
+
+CSS Custom Properties **inherit through Shadow DOM**, enabling seamless theming:
+
+```tsx
+// Stencil Component
+@Component({
+  tag: 'my-button',
+  shadow: true,
+  styles: `
+    .btn {
+      /* Token values inherit from Light DOM automatically! */
+      background: var(--button-primary-brand-bg-color-idle);
+      color: var(--button-primary-label-color);
+      padding: var(--button-stack-space) var(--button-inline-space);
+      border-radius: var(--button-border-radius);
+    }
+    .btn:hover {
+      background: var(--button-primary-brand-bg-color-hover);
+    }
+  `
+})
+export class MyButton { /* ... */ }
+```
+
+```html
+<!-- Usage: Tokens on body, components inherit automatically -->
+<body data-color-brand="bild" data-content-brand="bild" data-theme="light">
+  <my-button>BILD Button</my-button>  <!-- Red -->
+</body>
+
+<body data-color-brand="sportbild" data-theme="dark">
+  <my-button>Sport Button</my-button>  <!-- Blue -->
+</body>
+```
+
+> **Note:** See [docs/css.md](./docs/css.md#shadow-dom--web-components) for complete Shadow DOM documentation.
 
 ## Responsive CSS Architecture
 
@@ -808,3 +847,4 @@ MIT License - See [LICENSE](./LICENSE) file.
 | Responsive CSS | ✅ |
 | Jetpack Compose | ✅ |
 | Theme Provider | ✅ |
+| Shadow DOM / Web Components | ✅ |

@@ -52,6 +52,7 @@ Both pipelines use the **TokenSync Figma Plugin** for automated exports.
 | **JavaScript/React** | ESM + ThemeProvider (Dual-Axis) | - | [📖 docs/js.md](./docs/js.md) |
 | **Android Compose** | Jetpack Compose (Dual-Axis) | - | [📖 docs/android.md](./docs/android.md) |
 | **iOS SwiftUI** | SwiftUI (Dual-Axis) | - | [📖 docs/ios.md](./docs/ios.md) |
+| **Web Components** | Stencil, Lit, Shadow DOM | - | [📖 docs/css.md](./docs/css.md#shadow-dom--web-components) |
 
 ---
 
@@ -206,6 +207,21 @@ import com.bild.designsystem.shared.Brand
 import com.bild.designsystem.shared.DesignSystemTheme
 
 DesignSystemTheme(brand = Brand.Bild) { /* ... */ }
+```
+
+```tsx
+// Web Components (Stencil) - CSS Custom Properties inherit through Shadow DOM
+@Component({
+  tag: 'my-button',
+  shadow: true,
+  styles: `
+    .btn {
+      background: var(--button-primary-brand-bg-color-idle);
+      color: var(--button-primary-label-color);
+    }
+  `
+})
+export class MyButton { /* ... */ }
 ```
 
 ### Icon Usage
