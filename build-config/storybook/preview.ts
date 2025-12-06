@@ -16,6 +16,14 @@ import { html } from 'lit';
 const withDesignTokens = (Story: () => unknown, context: { globals: Record<string, string> }) => {
   const { colorBrand, contentBrand, theme, density } = context.globals;
 
+  // Also set attributes on document.body for global CSS inheritance
+  if (typeof document !== 'undefined') {
+    document.body.setAttribute('data-color-brand', colorBrand);
+    document.body.setAttribute('data-content-brand', contentBrand);
+    document.body.setAttribute('data-theme', theme);
+    document.body.setAttribute('data-density', density);
+  }
+
   return html`
     <div
       data-color-brand=${colorBrand}
