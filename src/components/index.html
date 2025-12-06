@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BILD Design System - Stencil Components</title>
+    <script type="module" src="/build/bds.esm.js"></script>
+    <script nomodule src="/build/bds.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        margin: 0;
+        padding: 24px;
+        background: var(--surface-color-canvas, #F0F2F4);
+        min-height: 100vh;
+      }
+      h1, h2 {
+        color: var(--text-color-primary, #232629);
+        margin-top: 0;
+      }
+      .section {
+        margin-bottom: 48px;
+      }
+      .demo-row {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .brand-switcher {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        background: white;
+        padding: 16px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        z-index: 1000;
+      }
+      .brand-switcher label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+      }
+      .brand-switcher select {
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        width: 100%;
+      }
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+      }
+    </style>
+  </head>
+  <body data-color-brand="bild" data-content-brand="bild" data-theme="light" data-density="default">
+
+    <div class="brand-switcher">
+      <label>Color Brand:</label>
+      <select id="colorBrand" onchange="updateBrand()">
+        <option value="bild">BILD</option>
+        <option value="sportbild">SportBILD</option>
+      </select>
+
+      <label style="margin-top: 12px;">Theme:</label>
+      <select id="theme" onchange="updateBrand()">
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+
+      <label style="margin-top: 12px;">Content Brand:</label>
+      <select id="contentBrand" onchange="updateBrand()">
+        <option value="bild">BILD</option>
+        <option value="sportbild">SportBILD</option>
+        <option value="advertorial">Advertorial</option>
+      </select>
+    </div>
+
+    <h1>BILD Design System Components</h1>
+    <p>Demo page for testing Stencil Web Components with design tokens.</p>
+
+    <div class="section">
+      <h2>Buttons</h2>
+
+      <h3>Primary</h3>
+      <div class="demo-row">
+        <ds-button variant="primary">Primary Button</ds-button>
+        <ds-button variant="primary" disabled>Disabled</ds-button>
+      </div>
+
+      <h3>Secondary</h3>
+      <div class="demo-row">
+        <ds-button variant="secondary">Secondary Button</ds-button>
+        <ds-button variant="secondary" disabled>Disabled</ds-button>
+      </div>
+
+      <h3>Tertiary</h3>
+      <div class="demo-row">
+        <ds-button variant="tertiary">Tertiary Button</ds-button>
+        <ds-button variant="tertiary" disabled>Disabled</ds-button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Cards</h2>
+      <div class="card-grid">
+        <ds-card card-title="Primary Card">
+          <p style="margin: 0; color: var(--text-color-secondary, #6C757D);">
+            This is a card with the primary surface. It uses design tokens for styling.
+          </p>
+          <div style="margin-top: 16px;">
+            <ds-button variant="primary">Action</ds-button>
+          </div>
+        </ds-card>
+
+        <ds-card card-title="Secondary Card" surface="secondary">
+          <p style="margin: 0; color: var(--text-color-secondary, #6C757D);">
+            This is a card with the secondary surface variant.
+          </p>
+          <div style="margin-top: 16px;">
+            <ds-button variant="secondary">Action</ds-button>
+          </div>
+        </ds-card>
+
+        <ds-card>
+          <p style="margin: 0; color: var(--text-color-primary, #232629);">
+            A card without a title, just content.
+          </p>
+        </ds-card>
+      </div>
+    </div>
+
+    <script>
+      function updateBrand() {
+        const colorBrand = document.getElementById('colorBrand').value;
+        const contentBrand = document.getElementById('contentBrand').value;
+        const theme = document.getElementById('theme').value;
+
+        document.body.dataset.colorBrand = colorBrand;
+        document.body.dataset.contentBrand = contentBrand;
+        document.body.dataset.theme = theme;
+      }
+    </script>
+  </body>
+</html>
