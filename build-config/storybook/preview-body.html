@@ -1,0 +1,33 @@
+<script>
+  // Listen for dark mode changes from storybook-dark-mode addon
+  // This script runs in the preview iframe where stories are rendered
+  (function() {
+    // Wait for the Storybook channel to be available
+    function setupDarkModeListener() {
+      try {
+        // Access the channel from the parent window
+        if (window.__STORYBOOK_ADDONS_CHANNEL__) {
+          window.__STORYBOOK_ADDONS_CHANNEL__.on('DARK_MODE', function(isDark) {
+            document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+          });
+          return true;
+        }
+        return false;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    // Try to set up immediately
+    if (!setupDarkModeListener()) {
+      // If not ready, try again after a short delay
+      var attempts = 0;
+      var interval = setInterval(function() {
+        if (setupDarkModeListener() || attempts > 50) {
+          clearInterval(interval);
+        }
+        attempts++;
+      }, 100);
+    }
+  })();
+</script>
