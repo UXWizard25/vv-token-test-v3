@@ -81,6 +81,13 @@
         <option value="sportbild">SportBILD</option>
         <option value="advertorial">Advertorial</option>
       </select>
+
+      <label style="margin-top: 12px;">Density:</label>
+      <select id="density" onchange="updateBrand()">
+        <option value="default">Default</option>
+        <option value="dense">Dense</option>
+        <option value="spacious">Spacious</option>
+      </select>
     </div>
 
     <h1>BILD Design System Components</h1>
@@ -142,10 +149,12 @@
         const colorBrand = document.getElementById('colorBrand').value;
         const contentBrand = document.getElementById('contentBrand').value;
         const theme = document.getElementById('theme').value;
+        const density = document.getElementById('density').value;
 
         document.body.dataset.colorBrand = colorBrand;
         document.body.dataset.contentBrand = contentBrand;
         document.body.dataset.theme = theme;
+        document.body.dataset.density = density;
       }
     </script>
   </body>
