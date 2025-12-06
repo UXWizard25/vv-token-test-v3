@@ -13,23 +13,24 @@ import { withThemeByDataAttribute } from '@storybook/addon-themes';
  * - data-content-brand: Controls typography, spacing, density (bild, sportbild, advertorial)
  * - data-density: Spacing density (default, dense, spacious)
  *
- * Note: data-theme is handled by withThemeByDataAttribute from @storybook/addon-themes
+ * IMPORTANT: All attributes MUST be set on document.documentElement (html)
+ * because withThemeByDataAttribute sets data-theme there, and CSS selectors
+ * require all attributes on the same element:
+ * [data-color-brand="bild"][data-theme="light"] { ... }
  */
 const withDesignTokens = (Story: () => unknown, context: { globals: Record<string, string> }) => {
   const { colorBrand, contentBrand, density } = context.globals;
 
-  // Set attributes on document.body for global CSS inheritance
-  if (typeof document !== 'undefined' && document.body) {
-    document.body.setAttribute('data-color-brand', colorBrand);
-    document.body.setAttribute('data-content-brand', contentBrand);
-    document.body.setAttribute('data-density', density);
+  // Set attributes on document.documentElement (html) for CSS selector matching
+  // withThemeByDataAttribute also sets data-theme on documentElement
+  if (typeof document !== 'undefined' && document.documentElement) {
+    document.documentElement.setAttribute('data-color-brand', colorBrand);
+    document.documentElement.setAttribute('data-content-brand', contentBrand);
+    document.documentElement.setAttribute('data-density', density);
   }
 
   return html`
     <div
-      data-color-brand=${colorBrand}
-      data-content-brand=${contentBrand}
-      data-density=${density}
       style="padding: 1rem; min-height: 100px;"
     >
       ${Story()}
@@ -38,10 +39,10 @@ const withDesignTokens = (Story: () => unknown, context: { globals: Record<strin
 };
 
 const preview: Preview = {
-  // Global decorators
+  // Global decorators - order matters! withThemeByDataAttribute should run first
   decorators: [
     withDesignTokens,
-    // Theme decorator from @storybook/addon-themes - sets data-theme attribute
+    // Theme decorator from @storybook/addon-themes - sets data-theme on document.documentElement
     withThemeByDataAttribute({
       themes: {
         light: 'light',
