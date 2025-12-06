@@ -120,6 +120,32 @@ function getBrandAttribute(modeType, filePath = '') {
 }
 
 /**
+ * Builds a dual selector for Light DOM and Shadow DOM compatibility.
+ *
+ * This enables CSS to work in both contexts:
+ * - Light DOM: Standard attribute selectors match elements in the document
+ * - Shadow DOM: :host() selectors match when attributes are on the custom element
+ *
+ * @param {string} attrSelector - The attribute selector, e.g., [data-color-brand="bild"]
+ * @param {string} [classSelector] - Optional class selector, e.g., .headline-1
+ * @returns {string} Combined selector for both contexts
+ *
+ * @example
+ * buildDualSelector('[data-color-brand="bild"]')
+ * // Returns: '[data-color-brand="bild"],\n:host([data-color-brand="bild"])'
+ *
+ * @example
+ * buildDualSelector('[data-content-brand="bild"]', '.headline-1')
+ * // Returns: '[data-content-brand="bild"] .headline-1,\n:host([data-content-brand="bild"]) .headline-1'
+ */
+function buildDualSelector(attrSelector, classSelector = '') {
+  if (classSelector) {
+    return `${attrSelector} ${classSelector},\n:host(${attrSelector}) ${classSelector}`;
+  }
+  return `${attrSelector},\n:host(${attrSelector})`;
+}
+
+/**
  * Groups tokens hierarchically by path segments
  * Returns a structure: { topLevel: { subLevel: [tokens] } }
  */
@@ -1032,9 +1058,10 @@ const cssTypographyClassesFormat = ({ dictionary, options }) => {
   const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
   // Build data-attribute selector for Dual-Axis Architecture (ContentBrand + breakpoint)
+  // Uses dual selector for Shadow DOM compatibility (applied per class below)
   const brandLowercase = brand.toLowerCase();
   const brandAttr = getBrandAttribute('breakpoint'); // Typography uses ContentBrand axis
-  const dataSelector = `[${brandAttr}="${brandLowercase}"][data-breakpoint="${breakpoint}"]`;
+  const attrSelector = `[${brandAttr}="${brandLowercase}"][data-breakpoint="${breakpoint}"]`;
 
   let isFirstTopLevel = true;
   Object.keys(hierarchicalGroups).forEach(topLevel => {
@@ -1084,8 +1111,9 @@ const cssTypographyClassesFormat = ({ dictionary, options }) => {
             output += `/* ${token.comment} */\n`;
           }
 
-          // Wrap class selector with data-attribute selector (Strategy A)
-          output += `${dataSelector} .${className} {\n`;
+          // Wrap class selector with dual selector for Shadow DOM compatibility
+          const dualSelector = buildDualSelector(attrSelector, `.${className}`);
+          output += `${dualSelector} {\n`;
           if (style.fontFamily) output += `  font-family: ${getValueWithAlias('fontFamily', style.fontFamily)};\n`;
           if (style.fontWeight) output += `  font-weight: ${getValueWithAlias('fontWeight', style.fontWeight)};\n`;
           if (style.fontSize) output += `  font-size: ${getValueWithAlias('fontSize', style.fontSize, 'px')};\n`;
@@ -1124,9 +1152,10 @@ const cssEffectClassesFormat = ({ dictionary, options }) => {
   const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
   // Build data-attribute selector for Dual-Axis Architecture (ColorBrand + theme)
+  // Uses dual selector for Shadow DOM compatibility (applied per class below)
   const brandLowercase = brand.toLowerCase();
   const brandAttr = getBrandAttribute('theme'); // Effects use ColorBrand axis
-  const dataSelector = `[${brandAttr}="${brandLowercase}"][data-theme="${colorMode}"]`;
+  const attrSelector = `[${brandAttr}="${brandLowercase}"][data-theme="${colorMode}"]`;
 
   let isFirstTopLevel = true;
   Object.keys(hierarchicalGroups).forEach(topLevel => {
@@ -1164,8 +1193,9 @@ const cssEffectClassesFormat = ({ dictionary, options }) => {
             output += `/* ${token.comment} */\n`;
           }
 
-          // Wrap class selector with data-attribute selector (Strategy A)
-          output += `${dataSelector} .${className} {\n`;
+          // Wrap class selector with dual selector for Shadow DOM compatibility
+          const dualSelector = buildDualSelector(attrSelector, `.${className}`);
+          output += `${dualSelector} {\n`;
 
           // Convert to CSS box-shadow with var() references for colors
           const shadows = token.$value.map((effect, index) => {
@@ -1708,9 +1738,9 @@ const cssThemedVariablesFormat = ({ dictionary, options, file }) => {
 
   const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
-  // Optional: Include :root fallback for default values
+  // Optional: Include :root, :host fallback for default values (Shadow DOM compatible)
   if (includeRoot) {
-    output += `:root {\n`;
+    output += `:root,\n:host {\n`;
     output += `  /* Default values (will be overridden by data-attributes) */\n`;
 
     Object.keys(hierarchicalGroups).forEach(topLevel => {
@@ -1792,7 +1822,9 @@ function aliasToVarName(tokenName) {
  * For combined tokens (typography/effects): Uses $aliases object/array
  */
 const cssVariablesWithAliasFormat = ({ dictionary, options, file }) => {
-  const selector = options.selector || ':root';
+  const baseSelector = options.selector || ':root';
+  // Shadow DOM compatibility: :root becomes :root, :host
+  const selector = baseSelector === ':root' ? ':root,\n:host' : baseSelector;
   const context = getContextString(options);
   const { outputReferences = true } = options;
 
@@ -1880,6 +1912,7 @@ const cssThemedVariablesWithAliasFormat = ({ dictionary, options, file }) => {
   });
 
   // Build selector based on brand and mode (Dual-Axis Architecture)
+  // Uses buildDualSelector for Shadow DOM compatibility
   let selector;
   const brandAttr = getBrandAttribute(modeType, file.destination);
 
@@ -1887,23 +1920,27 @@ const cssThemedVariablesWithAliasFormat = ({ dictionary, options, file }) => {
     const dataMode = modeType === 'theme' ? 'data-theme' :
                      modeType === 'breakpoint' ? 'data-breakpoint' :
                      modeType === 'density' ? 'data-density' : 'data-mode';
-    selector = `[${brandAttr}="${brand}"][${dataMode}="${mode}"]`;
+    const attrSelector = `[${brandAttr}="${brand}"][${dataMode}="${mode}"]`;
+    selector = buildDualSelector(attrSelector);
   } else if (brand) {
-    selector = `[${brandAttr}="${brand}"]`;
+    const attrSelector = `[${brandAttr}="${brand}"]`;
+    selector = buildDualSelector(attrSelector);
   } else if (mode) {
     const dataMode = modeType === 'theme' ? 'data-theme' :
                      modeType === 'breakpoint' ? 'data-breakpoint' :
                      modeType === 'density' ? 'data-density' : 'data-mode';
-    selector = `[${dataMode}="${mode}"]`;
+    const attrSelector = `[${dataMode}="${mode}"]`;
+    selector = buildDualSelector(attrSelector);
   } else {
-    selector = ':root';
+    // Fallback to :root, :host for Shadow DOM compatibility
+    selector = ':root,\n:host';
   }
 
   const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
-  // Optional: Include :root fallback for default values
+  // Optional: Include :root, :host fallback for default values (Shadow DOM compatible)
   if (includeRoot) {
-    output += `:root {\n`;
+    output += `:root,\n:host {\n`;
     output += `  /* Default values (will be overridden by data-attributes) */\n`;
 
     Object.keys(hierarchicalGroups).forEach(topLevel => {

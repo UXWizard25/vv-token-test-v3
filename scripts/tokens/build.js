@@ -68,6 +68,21 @@ function getSizeClassName(breakpoint, platform = 'ios') {
 }
 
 /**
+ * Builds a dual selector for Light DOM and Shadow DOM compatibility.
+ * Used in responsive CSS generation to support both contexts.
+ *
+ * @param {string} attrSelector - The attribute selector, e.g., [data-content-brand="bild"]
+ * @param {string} [classSelector] - Optional class selector, e.g., .headline-1
+ * @returns {string} Combined selector for both contexts
+ */
+function buildDualSelector(attrSelector, classSelector = '') {
+  if (classSelector) {
+    return `${attrSelector} ${classSelector},\n:host(${attrSelector}) ${classSelector}`;
+  }
+  return `${attrSelector},\n:host(${attrSelector})`;
+}
+
+/**
  * Creates platform configuration for standard tokens (Primitives, Brand-specific, etc.)
  * CSS version with data-attributes for runtime theme switching
  *
@@ -1394,10 +1409,12 @@ async function optimizeComponentColorCSS() {
         }
 
         // Write output files (Dual-Axis: Color tokens use data-color-brand)
+        // Uses dual selectors for Shadow DOM compatibility
         if (optimizedVars.length > 0) {
+          const colorSelector = buildDualSelector(`[data-color-brand="${brand}"]`);
           const optimizedContent = generateCssContent(
             lightCss.header,
-            `[data-color-brand="${brand}"]`,
+            colorSelector,
             optimizedVars,
             'Color (Mode-agnostic)'
           );
@@ -1412,10 +1429,12 @@ async function optimizeComponentColorCSS() {
           console.log(`     ✅ ${brand}/${componentName}: Fully consolidated to mode-agnostic file`);
         } else {
           // Partial optimization - update light/dark files with remaining tokens
+          // Uses dual selectors for Shadow DOM compatibility
           if (lightOnlyVars.length > 0) {
+            const lightSelector = buildDualSelector(`[data-color-brand="${brand}"][data-theme="light"]`);
             const lightContent = generateCssContent(
               lightCss.header,
-              `[data-color-brand="${brand}"][data-theme="light"]`,
+              lightSelector,
               lightOnlyVars,
               'theme: light'
             );
@@ -1425,9 +1444,10 @@ async function optimizeComponentColorCSS() {
           }
 
           if (darkOnlyVars.length > 0) {
+            const darkSelector = buildDualSelector(`[data-color-brand="${brand}"][data-theme="dark"]`);
             const darkContent = generateCssContent(
               darkCss.header,
-              `[data-color-brand="${brand}"][data-theme="dark"]`,
+              darkSelector,
               darkOnlyVars,
               'theme: dark'
             );
@@ -1507,6 +1527,7 @@ async function optimizeComponentEffectsCSS() {
 
   /**
    * Generate mode-agnostic effects CSS
+   * Uses dual selectors for Shadow DOM compatibility
    */
   function generateModeAgnosticCss(header, brand, rules) {
     const updatedHeader = header.replace(
@@ -1517,7 +1538,8 @@ async function optimizeComponentEffectsCSS() {
     let output = updatedHeader + '\n\n';
 
     for (const [className, ruleContent] of rules) {
-      output += `[data-color-brand="${brand}"] .${className} {\n`;
+      const dualSelector = buildDualSelector(`[data-color-brand="${brand}"]`, `.${className}`);
+      output += `${dualSelector} {\n`;
       output += `  ${ruleContent}\n`;
       output += `}\n\n`;
     }
@@ -1886,7 +1908,10 @@ async function generateResponsiveFile(dir, baseName, brand, breakpointConfig, op
   }
 
   // Generate responsive CSS with media queries (Dual-Axis: Typography uses ContentBrand)
-  output += `[data-content-brand="${brand}"] {\n`;
+  // Uses dual selectors for Shadow DOM compatibility
+  const attrSelector = `[data-content-brand="${brand}"]`;
+
+  output += `${attrSelector},\n:host(${attrSelector}) {\n`;
 
   // Base styles (XS)
   if (breakpointClasses.xs && breakpointClasses.xs.length > 0) {
@@ -1961,7 +1986,11 @@ async function generateResponsiveBreakpointFile(dir, brand, breakpointConfig) {
   const baseVars = breakpointVarMaps.xs || breakpointVarMaps.sm || breakpointVarMaps.md || breakpointVarMaps.lg;
 
   // Generate responsive CSS with media queries (Dual-Axis: Breakpoints use ContentBrand)
-  output += `[data-content-brand="${brand}"] {\n`;
+  // Uses dual selectors for Shadow DOM compatibility
+  const attrSelector = `[data-content-brand="${brand}"]`;
+  const dualSelector = buildDualSelector(attrSelector);
+
+  output += `${dualSelector} {\n`;
   if (baseVars && Object.keys(baseVars).length > 0) {
     for (const [varName, value] of Object.entries(baseVars)) {
       output += `  ${varName}: ${value};\n`;
@@ -1981,7 +2010,7 @@ async function generateResponsiveBreakpointFile(dir, brand, breakpointConfig) {
 
       if (Object.keys(changedVars).length > 0) {
         output += `@media (min-width: ${breakpointConfig[bp]}) {\n`;
-        output += `  [data-content-brand="${brand}"] {\n`;
+        output += `  ${dualSelector} {\n`;
         for (const [varName, value] of Object.entries(changedVars)) {
           output += `    ${varName}: ${value};\n`;
         }
@@ -2001,6 +2030,7 @@ async function generateResponsiveBreakpointFile(dir, brand, breakpointConfig) {
  * Generates a responsive CSS file with media queries for component breakpoint tokens
  * Converts [data-content-brand][data-breakpoint] selectors to @media queries (Dual-Axis)
  * Only outputs values that change between breakpoints to minimize redundancy
+ * Uses dual selectors for Shadow DOM compatibility
  */
 async function generateComponentBreakpointResponsive(dir, componentName, brand, breakpointConfig) {
   const breakpointFiles = {};
@@ -2054,8 +2084,12 @@ async function generateComponentBreakpointResponsive(dir, componentName, brand, 
   const baseVars = breakpointVarMaps.xs || breakpointVarMaps.sm || breakpointVarMaps.md || breakpointVarMaps.lg;
 
   // Generate responsive CSS with media queries (Dual-Axis: Component breakpoints use ContentBrand)
+  // Uses dual selectors for Shadow DOM compatibility
+  const attrSelector = `[data-content-brand="${brand}"]`;
+  const dualSelector = buildDualSelector(attrSelector);
+
   // Base styles (XS)
-  output += `[data-content-brand="${brand}"] {\n`;
+  output += `${dualSelector} {\n`;
   if (baseVars && Object.keys(baseVars).length > 0) {
     for (const [varName, value] of Object.entries(baseVars)) {
       output += `  ${varName}: ${value};\n`;
@@ -2075,7 +2109,7 @@ async function generateComponentBreakpointResponsive(dir, componentName, brand, 
 
       if (Object.keys(changedVars).length > 0) {
         output += `@media (min-width: ${breakpointConfig[bp]}) {\n`;
-        output += `  [data-content-brand="${brand}"] {\n`;
+        output += `  ${dualSelector} {\n`;
         for (const [varName, value] of Object.entries(changedVars)) {
           output += `    ${varName}: ${value};\n`;
         }
