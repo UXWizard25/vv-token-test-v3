@@ -55,6 +55,14 @@ export const DocsContainer: React.FC<React.PropsWithChildren<DocsContainerProps>
     };
   }, []);
 
+  // Update data-theme attribute on document for CSS custom property inheritance
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      console.log('[DocsContainer] Set data-theme to:', isDark ? 'dark' : 'light');
+    }
+  }, [isDark]);
+
   console.log('[DocsContainer] Rendering with isDark:', isDark);
 
   return (
