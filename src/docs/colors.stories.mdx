@@ -1,0 +1,92 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="Foundations/Colors" />
+
+# Colors
+
+Das BILD Design System verwendet eine **4-Layer Token Architektur** für Farben.
+
+## Color Primitives
+
+### BILD Red
+
+| Name | Wert | CSS Variable |
+|------|------|--------------|
+| Red 50 | #DD0000 | --color-bild-red-50 |
+| Red 53 | #F52D2D | --color-bild-red-53 |
+| Red 35 | #AF0002 | --color-bild-red-35 |
+| Red 25 | #7D0001 | --color-bild-red-25 |
+
+### Neutral Scale
+
+| Name | Wert | CSS Variable |
+|------|------|--------------|
+| Neutral 100 | #FFFFFF | --color-neutral-100 |
+| Neutral 96 | #F2F4F5 | --color-neutral-96 |
+| Neutral 85 | #CED4DA | --color-neutral-85 |
+| Neutral 73 | #AEB4B9 | --color-neutral-73 |
+| Neutral 45 | #666B70 | --color-neutral-45 |
+| Neutral 35 | #4B525A | --color-neutral-35 |
+| Neutral 25 | #343C41 | --color-neutral-25 |
+| Neutral 15 | #232629 | --color-neutral-15 |
+| Neutral 10 | #1C1C1C | --color-neutral-10 |
+| Neutral 0 | #000000 | --color-neutral-0 |
+
+### Feedback Colors
+
+| Name | Wert | CSS Variable |
+|------|------|--------------|
+| Success | #1D7D3F | --color-feedback-success |
+| Warning | #E5A000 | --color-feedback-warning |
+| Error | #D32F2F | --color-feedback-error |
+| Info | #0288D1 | --color-feedback-info |
+
+## Semantic Colors
+
+### Text Colors
+
+| Token | Light | Dark | Verwendung |
+|-------|-------|------|------------|
+| --text-color-primary | #232629 | #F2F4F5 | Haupttext |
+| --text-color-secondary | #666B70 | #AEB4B9 | Sekundärtext |
+| --text-color-accent | #DD0000 | #F52D2D | Akzenttext |
+| --text-color-inverse | #FFFFFF | #232629 | Invertiert |
+
+### Surface Colors
+
+| Token | Light | Dark | Verwendung |
+|-------|-------|------|------------|
+| --surface-color-primary | #FFFFFF | #232629 | Hauptfläche |
+| --surface-color-secondary | #F2F4F5 | #1C1C1C | Sekundär |
+| --surface-color-canvas | #F0F2F4 | #141414 | Hintergrund |
+
+### Core Colors
+
+| Token | Light | Dark |
+|-------|-------|------|
+| --core-color-primary | #DD0000 | #DD0000 |
+| --core-color-secondary | #232629 | #F2F4F5 |
+
+## Brand Colors
+
+### data-color-brand="bild"
+- Primär: **BILD Rot** (#DD0000)
+- Für: BILD App, BILD.de
+
+### data-color-brand="sportbild"
+- Primär: **SportBILD Blau** (#0066B3)
+- Für: SportBILD App, sportbild.de
+
+## Usage
+
+```css
+.my-component {
+  color: var(--text-color-primary);
+  background: var(--surface-color-primary);
+  border-color: var(--border-color-medium-contrast);
+}
+
+.highlight {
+  color: var(--text-color-accent);
+}
+```

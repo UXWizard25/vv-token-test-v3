@@ -1,0 +1,62 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="Introduction" />
+
+# BILD Design System
+
+Willkommen zum **BILD Design System** - einem umfassenden Design Token System für konsistente Marken-Erlebnisse.
+
+## 4-Layer Token Architektur
+
+| Layer | Name | Beschreibung |
+|-------|------|--------------|
+| 0 | Primitives | Rohe Werte (Farben, Größen, Fonts) |
+| 1 | Mapping | Markenspezifische Zuordnung |
+| 2 | Semantic | Bedeutungsbasierte Tokens |
+| 3 | Components | Komponenten-spezifische Tokens |
+
+## Dual-Axis Architektur
+
+Das System trennt **Color Brand** und **Content Brand** für maximale Flexibilität:
+
+### Color Brand (Farben + Effects)
+- BILD (Rot)
+- SportBILD (Blau)
+
+### Content Brand (Typography + Spacing)
+- BILD
+- SportBILD
+- Advertorial
+
+## Theming Controls
+
+Nutze die **Toolbar oben** um verschiedene Konfigurationen zu testen:
+
+| Control | Optionen |
+|---------|----------|
+| Color Brand | BILD, SportBILD |
+| Content Brand | BILD, SportBILD, Advertorial |
+| Theme | Light, Dark |
+| Density | Default, Dense, Spacious |
+
+## Quick Links
+
+- [Colors](?path=/docs/foundations-colors--docs)
+- [Typography](?path=/docs/foundations-typography--docs)
+- [Spacing](?path=/docs/foundations-spacing--docs)
+- [Effects](?path=/docs/foundations-effects--docs)
+
+## HTML Setup
+
+```html
+<html
+  data-color-brand="bild"
+  data-content-brand="bild"
+  data-theme="light"
+  data-density="default"
+>
+  <head>
+    <link rel="stylesheet" href="/css/bundles/bild.css" />
+  </head>
+</html>
+```
