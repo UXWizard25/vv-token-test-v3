@@ -20,7 +20,7 @@ export const config: Config = {
       dir: '../../packages/components/dist/www',
       serviceWorker: null,
       copy: [
-        { src: '../../packages/tokens/dist/css', dest: 'css' },
+        { src: '../../tokens/dist/css', dest: 'css' },
       ],
     },
     {
