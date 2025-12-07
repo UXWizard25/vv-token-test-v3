@@ -2,7 +2,7 @@ import type { Preview } from '@storybook/web-components';
 import { html } from 'lit';
 import { addons } from '@storybook/preview-api';
 import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
-import { bildLightTheme, bildDarkTheme } from './manager';
+import { bildLightTheme, bildDarkTheme } from './themes';
 import { DocsContainer } from './DocsContainer';
 
 // Stencil components are loaded via script tag in preview-head.html
