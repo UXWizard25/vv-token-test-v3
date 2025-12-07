@@ -18,12 +18,12 @@ const DOCS_DIR = path.join(__dirname, '../../packages/components/docs');
 
 /**
  * Convert camelCase token name to kebab-case CSS variable name
+ * IMPORTANT: Must match Style Dictionary's nameTransformers.kebab exactly!
  */
 function toKebabCase(str) {
   return str
-    .replace(/([a-z])(\d)/g, '$1-$2')
-    .replace(/(\d)([a-z])/g, '$1-$2')
-    .replace(/([a-z])([A-Z])/g, '$1-$2')
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')  // lowercase/digit before uppercase: "1U" → "1-U"
+    .replace(/([a-zA-Z])(\d)/g, '$1-$2')      // letter before digit: "e1" → "e-1"
     .toLowerCase();
 }
 
