@@ -4,6 +4,9 @@ import { Meta } from '@storybook/blocks';
 
 <style>
   {`
+    .color-section {
+      margin-bottom: 2rem;
+    }
     .color-table {
       width: 100%;
       border-collapse: collapse;
@@ -12,14 +15,18 @@ import { Meta } from '@storybook/blocks';
     .color-table th, .color-table td {
       padding: 0.75rem;
       text-align: left;
-      border-bottom: 1px solid #e0e0e0;
+      border-bottom: 1px solid var(--border-color-low-contrast);
     }
     .color-table th {
-      background: #f5f5f5;
+      background: var(--surface-color-secondary);
       font-weight: 600;
+      color: var(--text-color-primary);
+    }
+    .color-table td {
+      color: var(--text-color-primary);
     }
     .color-table code {
-      background: #f0f0f0;
+      background: var(--surface-color-tertiary);
       padding: 0.2rem 0.4rem;
       border-radius: 3px;
       font-size: 0.85em;
@@ -29,77 +36,99 @@ import { Meta } from '@storybook/blocks';
       width: 24px;
       height: 24px;
       border-radius: 4px;
-      border: 1px solid rgba(0,0,0,0.1);
+      border: 1px solid var(--border-color-low-contrast);
       vertical-align: middle;
       margin-right: 8px;
     }
     .color-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 16px;
       margin: 1rem 0 2rem;
     }
     .color-card {
       border-radius: 8px;
       overflow: hidden;
-      border: 1px solid #e0e0e0;
+      border: 1px solid var(--border-color-low-contrast);
+      background: var(--surface-color-primary);
     }
     .color-card-swatch {
-      height: 80px;
+      height: 64px;
     }
     .color-card-info {
       padding: 12px;
-      background: white;
+      background: var(--surface-color-primary);
     }
     .color-card-name {
       font-weight: 600;
-      margin-bottom: 4px;
+      font-size: 13px;
+      color: var(--text-color-primary);
+      margin-bottom: 2px;
     }
-    .color-card-value {
-      font-size: 12px;
-      color: #666;
+    .color-card-token {
+      font-size: 11px;
+      color: var(--text-color-secondary);
       font-family: monospace;
+    }
+    .hint-box {
+      padding: 12px 16px;
+      background: var(--surface-color-tertiary);
+      border-radius: 8px;
+      border-left: 4px solid var(--core-color-primary);
+      margin: 1rem 0;
+      font-size: 14px;
+      color: var(--text-color-primary);
+    }
+    .category-header {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-color-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-color-low-contrast);
     }
   `}
 </style>
 
 # Colors
 
-Das BILD Design System verwendet eine **4-Layer Token Architektur** für Farben.
+The BILD Design System uses a **4-layer token architecture** for colors.
+
+<div className="hint-box">
+  <strong>Live Preview:</strong> All color swatches below use CSS custom properties. Switch brands and themes using the <strong>toolbar above</strong> to see values change in real-time.
+</div>
 
 ---
 
 ## Color Primitives
 
-### BILD Red
+These are the raw color values from Layer 0 (no modes).
+
+### Brand Colors
 
 <div className="color-grid">
   <div className="color-card">
-    <div className="color-card-swatch" style={{background: '#DD0000'}}></div>
+    <div className="color-card-swatch" style={{background: 'var(--color-bild-red-50)'}}></div>
     <div className="color-card-info">
-      <div className="color-card-name">Red 50</div>
-      <div className="color-card-value">#DD0000</div>
+      <div className="color-card-name">BILD Red 50</div>
+      <div className="color-card-token">--color-bild-red-50</div>
     </div>
   </div>
   <div className="color-card">
-    <div className="color-card-swatch" style={{background: '#F52D2D'}}></div>
+    <div className="color-card-swatch" style={{background: 'var(--color-bild-red-53)'}}></div>
     <div className="color-card-info">
-      <div className="color-card-name">Red 53</div>
-      <div className="color-card-value">#F52D2D</div>
+      <div className="color-card-name">BILD Red 53</div>
+      <div className="color-card-token">--color-bild-red-53</div>
     </div>
   </div>
   <div className="color-card">
-    <div className="color-card-swatch" style={{background: '#AF0002'}}></div>
+    <div className="color-card-swatch" style={{background: 'var(--color-bild-red-35)'}}></div>
     <div className="color-card-info">
-      <div className="color-card-name">Red 35</div>
-      <div className="color-card-value">#AF0002</div>
-    </div>
-  </div>
-  <div className="color-card">
-    <div className="color-card-swatch" style={{background: '#7D0001'}}></div>
-    <div className="color-card-info">
-      <div className="color-card-name">Red 25</div>
-      <div className="color-card-value">#7D0001</div>
+      <div className="color-card-name">BILD Red 35</div>
+      <div className="color-card-token">--color-bild-red-35</div>
     </div>
   </div>
 </div>
@@ -108,45 +137,94 @@ Das BILD Design System verwendet eine **4-Layer Token Architektur** für Farben.
 
 <div className="color-grid">
   <div className="color-card">
-    <div className="color-card-swatch" style={{background: '#FFFFFF'}}></div>
+    <div className="color-card-swatch" style={{background: 'var(--color-neutral-100)'}}></div>
     <div className="color-card-info">
       <div className="color-card-name">Neutral 100</div>
-      <div className="color-card-value">#FFFFFF</div>
+      <div className="color-card-token">--color-neutral-100</div>
     </div>
   </div>
   <div className="color-card">
-    <div className="color-card-swatch" style={{background: '#F2F4F5'}}></div>
+    <div className="color-card-swatch" style={{background: 'var(--color-neutral-96)'}}></div>
     <div className="color-card-info">
       <div className="color-card-name">Neutral 96</div>
-      <div className="color-card-value">#F2F4F5</div>
+      <div className="color-card-token">--color-neutral-96</div>
     </div>
   </div>
   <div className="color-card">
-    <div className="color-card-swatch" style={{background: '#CED4DA'}}></div>
+    <div className="color-card-swatch" style={{background: 'var(--color-neutral-93)'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Neutral 93</div>
+      <div className="color-card-token">--color-neutral-93</div>
+    </div>
+  </div>
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: 'var(--color-neutral-85)'}}></div>
     <div className="color-card-info">
       <div className="color-card-name">Neutral 85</div>
-      <div className="color-card-value">#CED4DA</div>
+      <div className="color-card-token">--color-neutral-85</div>
     </div>
   </div>
   <div className="color-card">
-    <div className="color-card-swatch" style={{background: '#666B70'}}></div>
+    <div className="color-card-swatch" style={{background: 'var(--color-neutral-73)'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Neutral 73</div>
+      <div className="color-card-token">--color-neutral-73</div>
+    </div>
+  </div>
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: 'var(--color-neutral-60)'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Neutral 60</div>
+      <div className="color-card-token">--color-neutral-60</div>
+    </div>
+  </div>
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: 'var(--color-neutral-45)'}}></div>
     <div className="color-card-info">
       <div className="color-card-name">Neutral 45</div>
-      <div className="color-card-value">#666B70</div>
+      <div className="color-card-token">--color-neutral-45</div>
     </div>
   </div>
   <div className="color-card">
-    <div className="color-card-swatch" style={{background: '#232629'}}></div>
+    <div className="color-card-swatch" style={{background: 'var(--color-neutral-35)'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Neutral 35</div>
+      <div className="color-card-token">--color-neutral-35</div>
+    </div>
+  </div>
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: 'var(--color-neutral-25)'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Neutral 25</div>
+      <div className="color-card-token">--color-neutral-25</div>
+    </div>
+  </div>
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: 'var(--color-neutral-20)'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Neutral 20</div>
+      <div className="color-card-token">--color-neutral-20</div>
+    </div>
+  </div>
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: 'var(--color-neutral-15)'}}></div>
     <div className="color-card-info">
       <div className="color-card-name">Neutral 15</div>
-      <div className="color-card-value">#232629</div>
+      <div className="color-card-token">--color-neutral-15</div>
     </div>
   </div>
   <div className="color-card">
-    <div className="color-card-swatch" style={{background: '#000000'}}></div>
+    <div className="color-card-swatch" style={{background: 'var(--color-neutral-10)'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Neutral 10</div>
+      <div className="color-card-token">--color-neutral-10</div>
+    </div>
+  </div>
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: 'var(--color-neutral-0)'}}></div>
     <div className="color-card-info">
       <div className="color-card-name">Neutral 0</div>
-      <div className="color-card-value">#000000</div>
+      <div className="color-card-token">--color-neutral-0</div>
     </div>
   </div>
 </div>
@@ -155,132 +233,557 @@ Das BILD Design System verwendet eine **4-Layer Token Architektur** für Farben.
 
 <div className="color-grid">
   <div className="color-card">
-    <div className="color-card-swatch" style={{background: '#1D7D3F'}}></div>
+    <div className="color-card-swatch" style={{background: 'var(--color-green-70)'}}></div>
     <div className="color-card-info">
-      <div className="color-card-name">Success</div>
-      <div className="color-card-value">#1D7D3F</div>
+      <div className="color-card-name">Green 70</div>
+      <div className="color-card-token">--color-green-70</div>
     </div>
   </div>
   <div className="color-card">
-    <div className="color-card-swatch" style={{background: '#E5A000'}}></div>
+    <div className="color-card-swatch" style={{background: 'var(--color-green-93)'}}></div>
     <div className="color-card-info">
-      <div className="color-card-name">Warning</div>
-      <div className="color-card-value">#E5A000</div>
+      <div className="color-card-name">Green 93</div>
+      <div className="color-card-token">--color-green-93</div>
     </div>
   </div>
   <div className="color-card">
-    <div className="color-card-swatch" style={{background: '#D32F2F'}}></div>
+    <div className="color-card-swatch" style={{background: 'var(--color-orange-67)'}}></div>
     <div className="color-card-info">
-      <div className="color-card-name">Error</div>
-      <div className="color-card-value">#D32F2F</div>
+      <div className="color-card-name">Orange 67</div>
+      <div className="color-card-token">--color-orange-67</div>
     </div>
   </div>
   <div className="color-card">
-    <div className="color-card-swatch" style={{background: '#0288D1'}}></div>
+    <div className="color-card-swatch" style={{background: 'var(--color-yellow-80)'}}></div>
     <div className="color-card-info">
-      <div className="color-card-name">Info</div>
-      <div className="color-card-value">#0288D1</div>
+      <div className="color-card-name">Yellow 80</div>
+      <div className="color-card-token">--color-yellow-80</div>
     </div>
   </div>
 </div>
 
 ---
 
-## Semantic Colors
+## Semantic Colors (ColorMode Collection)
 
-### Text Colors
+These are meaning-based tokens from Layer 2 that adapt to light/dark mode.
+
+<div className="category-header">Text Colors</div>
 
 <table className="color-table">
   <thead>
     <tr>
       <th>Token</th>
-      <th>Light</th>
-      <th>Dark</th>
-      <th>Verwendung</th>
+      <th>Preview</th>
+      <th>Usage</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>--text-color-primary</code></td>
-      <td><span className="color-swatch" style={{background: '#232629'}}></span>#232629</td>
-      <td><span className="color-swatch" style={{background: '#F2F4F5'}}></span>#F2F4F5</td>
-      <td>Haupttext</td>
+      <td><span className="color-swatch" style={{background: 'var(--text-color-primary)'}}></span></td>
+      <td>Main body text</td>
     </tr>
     <tr>
       <td><code>--text-color-secondary</code></td>
-      <td><span className="color-swatch" style={{background: '#666B70'}}></span>#666B70</td>
-      <td><span className="color-swatch" style={{background: '#AEB4B9'}}></span>#AEB4B9</td>
-      <td>Sekundärtext</td>
+      <td><span className="color-swatch" style={{background: 'var(--text-color-secondary)'}}></span></td>
+      <td>Secondary/muted text</td>
+    </tr>
+    <tr>
+      <td><code>--text-color-muted</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--text-color-muted)'}}></span></td>
+      <td>Subtle info, timestamps</td>
     </tr>
     <tr>
       <td><code>--text-color-accent</code></td>
-      <td><span className="color-swatch" style={{background: '#DD0000'}}></span>#DD0000</td>
-      <td><span className="color-swatch" style={{background: '#F52D2D'}}></span>#F52D2D</td>
-      <td>Akzenttext</td>
+      <td><span className="color-swatch" style={{background: 'var(--text-color-accent)'}}></span></td>
+      <td>Links, interactive text</td>
+    </tr>
+    <tr>
+      <td><code>--text-color-accent-constant</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--text-color-accent-constant)'}}></span></td>
+      <td>Fixed brand color text</td>
+    </tr>
+    <tr>
+      <td><code>--text-color-primary-inverse</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--text-color-primary-inverse)'}}></span></td>
+      <td>Text on inverse backgrounds</td>
+    </tr>
+    <tr>
+      <td><code>--text-color-primary-constant</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--text-color-primary-constant)'}}></span></td>
+      <td>Fixed primary text</td>
+    </tr>
+    <tr>
+      <td><code>--text-color-primary-inverse-constant</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--text-color-primary-inverse-constant)'}}></span></td>
+      <td>Fixed inverse text</td>
+    </tr>
+    <tr>
+      <td><code>--text-color-attention-high</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--text-color-attention-high)'}}></span></td>
+      <td>Errors, warnings</td>
+    </tr>
+    <tr>
+      <td><code>--text-color-attention-medium</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--text-color-attention-medium)'}}></span></td>
+      <td>Medium warnings</td>
+    </tr>
+    <tr>
+      <td><code>--text-color-success-constant</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--text-color-success-constant)'}}></span></td>
+      <td>Success messages</td>
+    </tr>
+    <tr>
+      <td><code>--text-color-on-dark-surface</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--text-color-on-dark-surface)'}}></span></td>
+      <td>Text on dark surfaces</td>
     </tr>
   </tbody>
 </table>
 
-### Surface Colors
+<div className="category-header">Surface Colors</div>
 
 <table className="color-table">
   <thead>
     <tr>
       <th>Token</th>
-      <th>Light</th>
-      <th>Dark</th>
-      <th>Verwendung</th>
+      <th>Preview</th>
+      <th>Usage</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>--surface-color-primary</code></td>
-      <td><span className="color-swatch" style={{background: '#FFFFFF'}}></span>#FFFFFF</td>
-      <td><span className="color-swatch" style={{background: '#232629'}}></span>#232629</td>
-      <td>Hauptfläche</td>
+      <td><span className="color-swatch" style={{background: 'var(--surface-color-primary)'}}></span></td>
+      <td>Main background</td>
     </tr>
     <tr>
       <td><code>--surface-color-secondary</code></td>
-      <td><span className="color-swatch" style={{background: '#F2F4F5'}}></span>#F2F4F5</td>
-      <td><span className="color-swatch" style={{background: '#1C1C1C'}}></span>#1C1C1C</td>
-      <td>Sekundär</td>
+      <td><span className="color-swatch" style={{background: 'var(--surface-color-secondary)'}}></span></td>
+      <td>Cards, panels</td>
+    </tr>
+    <tr>
+      <td><code>--surface-color-tertiary</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--surface-color-tertiary)'}}></span></td>
+      <td>Inner containers</td>
+    </tr>
+    <tr>
+      <td><code>--surface-color-quartenary</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--surface-color-quartenary)'}}></span></td>
+      <td>Highest elevation</td>
+    </tr>
+    <tr>
+      <td><code>--surface-color-primary-inverse</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--surface-color-primary-inverse)'}}></span></td>
+      <td>Inverse cards</td>
+    </tr>
+    <tr>
+      <td><code>--surface-color-tertiary-inverse</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--surface-color-tertiary-inverse)'}}></span></td>
+      <td>Inverse inner containers</td>
+    </tr>
+    <tr>
+      <td><code>--surface-color-quartenary-inverse</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--surface-color-quartenary-inverse)'}}></span></td>
+      <td>Inverse highest elevation</td>
+    </tr>
+    <tr>
+      <td><code>--surface-color-primary-constant-light</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--surface-color-primary-constant-light)'}}></span></td>
+      <td>Fixed light surface</td>
+    </tr>
+    <tr>
+      <td><code>--surface-color-primary-constant-dark</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--surface-color-primary-constant-dark)'}}></span></td>
+      <td>Fixed dark surface</td>
+    </tr>
+    <tr>
+      <td><code>--surface-color-success</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--surface-color-success)'}}></span></td>
+      <td>Success banners</td>
     </tr>
   </tbody>
 </table>
 
----
+<div className="category-header">Core Colors</div>
 
-## Brand Colors
+<table className="color-table">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Preview</th>
+      <th>Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--core-color-primary</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--core-color-primary)'}}></span></td>
+      <td>Main brand color (buttons, highlights)</td>
+    </tr>
+    <tr>
+      <td><code>--core-color-secondary</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--core-color-secondary)'}}></span></td>
+      <td>Secondary brand tone</td>
+    </tr>
+    <tr>
+      <td><code>--core-color-tertiary</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--core-color-tertiary)'}}></span></td>
+      <td>Tertiary brand accent</td>
+    </tr>
+    <tr>
+      <td><code>--core-color-secondary-constant</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--core-color-secondary-constant)'}}></span></td>
+      <td>Fixed secondary</td>
+    </tr>
+    <tr>
+      <td><code>--core-color-tertiary-constant</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--core-color-tertiary-constant)'}}></span></td>
+      <td>Fixed tertiary</td>
+    </tr>
+  </tbody>
+</table>
 
-### BILD
-<div style={{display: 'flex', alignItems: 'center', gap: '12px', padding: '16px', background: '#fafafa', borderRadius: '8px', marginBottom: '16px'}}>
-  <div style={{width: '60px', height: '60px', background: '#DD0000', borderRadius: '8px'}}></div>
-  <div>
-    <div style={{fontWeight: 600}}>BILD Rot</div>
-    <div style={{color: '#666', fontSize: '14px'}}>#DD0000 · data-color-brand="bild"</div>
-  </div>
-</div>
+<div className="category-header">Border Colors</div>
 
-### SportBILD
-<div style={{display: 'flex', alignItems: 'center', gap: '12px', padding: '16px', background: '#fafafa', borderRadius: '8px'}}>
-  <div style={{width: '60px', height: '60px', background: '#0066B3', borderRadius: '8px'}}></div>
-  <div>
-    <div style={{fontWeight: 600}}>SportBILD Blau</div>
-    <div style={{color: '#666', fontSize: '14px'}}>#0066B3 · data-color-brand="sportbild"</div>
-  </div>
-</div>
+<table className="color-table">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Preview</th>
+      <th>Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--border-color-low-contrast</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--border-color-low-contrast)'}}></span></td>
+      <td>Subtle dividers</td>
+    </tr>
+    <tr>
+      <td><code>--border-color-medium-contrast</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--border-color-medium-contrast)'}}></span></td>
+      <td>Standard borders</td>
+    </tr>
+    <tr>
+      <td><code>--border-color-high-contrast</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--border-color-high-contrast)'}}></span></td>
+      <td>Focus rings</td>
+    </tr>
+    <tr>
+      <td><code>--border-color-low-contrast-constant</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--border-color-low-contrast-constant)'}}></span></td>
+      <td>Fixed subtle border</td>
+    </tr>
+    <tr>
+      <td><code>--border-color-success</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--border-color-success)'}}></span></td>
+      <td>Success validation</td>
+    </tr>
+    <tr>
+      <td><code>--border-color-warning</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--border-color-warning)'}}></span></td>
+      <td>Error validation</td>
+    </tr>
+    <tr>
+      <td><code>--border-color-primary-disabled</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--border-color-primary-disabled)'}}></span></td>
+      <td>Disabled primary</td>
+    </tr>
+    <tr>
+      <td><code>--border-color-secondary-disabled</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--border-color-secondary-disabled)'}}></span></td>
+      <td>Disabled secondary</td>
+    </tr>
+  </tbody>
+</table>
+
+<div className="category-header">Icon Colors</div>
+
+<table className="color-table">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Preview</th>
+      <th>Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--icon-color-primary</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--icon-color-primary)'}}></span></td>
+      <td>Primary icons</td>
+    </tr>
+    <tr>
+      <td><code>--icon-color-inverse</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--icon-color-inverse)'}}></span></td>
+      <td>Icons on dark surfaces</td>
+    </tr>
+    <tr>
+      <td><code>--icon-color-primary-constant</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--icon-color-primary-constant)'}}></span></td>
+      <td>Fixed primary icon</td>
+    </tr>
+    <tr>
+      <td><code>--icon-color-secondary-constant</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--icon-color-secondary-constant)'}}></span></td>
+      <td>Fixed secondary icon</td>
+    </tr>
+    <tr>
+      <td><code>--icon-color-constant-on-dark</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--icon-color-constant-on-dark)'}}></span></td>
+      <td>Fixed icon on dark</td>
+    </tr>
+    <tr>
+      <td><code>--icon-color-success</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--icon-color-success)'}}></span></td>
+      <td>Success checkmarks</td>
+    </tr>
+  </tbody>
+</table>
+
+<div className="category-header">State Colors</div>
+
+<table className="color-table">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Preview</th>
+      <th>Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--color-primary-active</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--color-primary-active)'}}></span></td>
+      <td>Active/pressed primary</td>
+    </tr>
+    <tr>
+      <td><code>--color-primary-disabled</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--color-primary-disabled)'}}></span></td>
+      <td>Disabled primary</td>
+    </tr>
+    <tr>
+      <td><code>--color-secondary-active</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--color-secondary-active)'}}></span></td>
+      <td>Active/pressed secondary</td>
+    </tr>
+    <tr>
+      <td><code>--color-secondary-disabled</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--color-secondary-disabled)'}}></span></td>
+      <td>Disabled secondary</td>
+    </tr>
+    <tr>
+      <td><code>--color-secondary-active-inverse</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--color-secondary-active-inverse)'}}></span></td>
+      <td>Active inverse secondary</td>
+    </tr>
+    <tr>
+      <td><code>--color-tertiary-active</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--color-tertiary-active)'}}></span></td>
+      <td>Active tertiary</td>
+    </tr>
+    <tr>
+      <td><code>--color-tertiary-disabled</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--color-tertiary-disabled)'}}></span></td>
+      <td>Disabled tertiary</td>
+    </tr>
+  </tbody>
+</table>
+
+<div className="category-header">Attention Colors</div>
+
+<table className="color-table">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Preview</th>
+      <th>Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--attention-color-high</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--attention-color-high)'}}></span></td>
+      <td>Errors, critical alerts</td>
+    </tr>
+    <tr>
+      <td><code>--attention-color-medium</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--attention-color-medium)'}}></span></td>
+      <td>Warnings</td>
+    </tr>
+    <tr>
+      <td><code>--attention-color-low</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--attention-color-low)'}}></span></td>
+      <td>Informational</td>
+    </tr>
+    <tr>
+      <td><code>--attention-color-extra-low</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--attention-color-extra-low)'}}></span></td>
+      <td>System-neutral surfaces</td>
+    </tr>
+    <tr>
+      <td><code>--attention-color-success-primary</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--attention-color-success-primary)'}}></span></td>
+      <td>Success indicators</td>
+    </tr>
+    <tr>
+      <td><code>--attention-color-success-secondary</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--attention-color-success-secondary)'}}></span></td>
+      <td>Secondary success</td>
+    </tr>
+    <tr>
+      <td><code>--accent-color-primary</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--accent-color-primary)'}}></span></td>
+      <td>Accent highlights</td>
+    </tr>
+    <tr>
+      <td><code>--accent-color-primary-constant</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--accent-color-primary-constant)'}}></span></td>
+      <td>Fixed accent</td>
+    </tr>
+  </tbody>
+</table>
+
+<div className="category-header">Label Colors</div>
+
+<table className="color-table">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Preview</th>
+      <th>Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--label-color-primary</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--label-color-primary)'}}></span></td>
+      <td>Primary labels</td>
+    </tr>
+    <tr>
+      <td><code>--label-color-secondary</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--label-color-secondary)'}}></span></td>
+      <td>Secondary labels</td>
+    </tr>
+    <tr>
+      <td><code>--label-color-tertiary</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--label-color-tertiary)'}}></span></td>
+      <td>Tertiary labels</td>
+    </tr>
+    <tr>
+      <td><code>--label-color-disabled</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--label-color-disabled)'}}></span></td>
+      <td>Disabled labels</td>
+    </tr>
+    <tr>
+      <td><code>--label-color-primary-constant</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--label-color-primary-constant)'}}></span></td>
+      <td>Fixed primary label</td>
+    </tr>
+    <tr>
+      <td><code>--label-color-primary-inverse</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--label-color-primary-inverse)'}}></span></td>
+      <td>Inverse label</td>
+    </tr>
+    <tr>
+      <td><code>--label-color-primary-inverse-constant</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--label-color-primary-inverse-constant)'}}></span></td>
+      <td>Fixed inverse label</td>
+    </tr>
+  </tbody>
+</table>
+
+<div className="category-header">Heading Colors</div>
+
+<table className="color-table">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Preview</th>
+      <th>Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--headline-color-primary</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--headline-color-primary)'}}></span></td>
+      <td>Main headlines</td>
+    </tr>
+    <tr>
+      <td><code>--headline-color-white-const</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--headline-color-white-const)'}}></span></td>
+      <td>Fixed white headlines</td>
+    </tr>
+    <tr>
+      <td><code>--kicker-text-color-on-surface</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--kicker-text-color-on-surface)'}}></span></td>
+      <td>Kickers on surfaces</td>
+    </tr>
+    <tr>
+      <td><code>--kicker-text-color-on-red</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--kicker-text-color-on-red)'}}></span></td>
+      <td>Kickers on red</td>
+    </tr>
+    <tr>
+      <td><code>--kicker-text-color-on-dark-bg</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--kicker-text-color-on-dark-bg)'}}></span></td>
+      <td>Kickers on dark backgrounds</td>
+    </tr>
+    <tr>
+      <td><code>--kicker-text-color-on-bright-bg</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--kicker-text-color-on-bright-bg)'}}></span></td>
+      <td>Kickers on bright backgrounds</td>
+    </tr>
+  </tbody>
+</table>
+
+<div className="category-header">Overlay Colors</div>
+
+<table className="color-table">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Preview</th>
+      <th>Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--overlay-scrim-black</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--overlay-scrim-black)'}}></span></td>
+      <td>Modal overlays (dark)</td>
+    </tr>
+    <tr>
+      <td><code>--overlay-scrim-white</code></td>
+      <td><span className="color-swatch" style={{background: 'var(--overlay-scrim-white)'}}></span></td>
+      <td>Light overlays</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
 ## Usage
 
 ```css
+/* Using semantic color tokens */
 .my-component {
   color: var(--text-color-primary);
   background: var(--surface-color-primary);
+  border: 1px solid var(--border-color-low-contrast);
 }
 
+/* Highlight text */
 .highlight {
   color: var(--text-color-accent);
+}
+
+/* Success state */
+.success-message {
+  color: var(--text-color-success-constant);
+  background: var(--surface-color-success);
+  border: 1px solid var(--border-color-success);
 }
 ```
