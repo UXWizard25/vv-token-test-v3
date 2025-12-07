@@ -215,12 +215,12 @@ packages/components/
 │   │   └── ds-card.stories.ts
 │   └── components.d.ts           # Generated type definitions
 │
-├── docs/                         # Storybook MDX documentation
-│   ├── intro.mdx                 # Introduction & overview
-│   ├── colors.mdx                # Color tokens
-│   ├── typography.mdx            # Typography tokens
-│   ├── spacing.mdx               # Spacing & density
-│   └── effects.mdx               # Shadows & effects
+├── docs/                         # Storybook MDX documentation (mostly auto-generated)
+│   ├── intro.mdx                 # Introduction & overview (manual)
+│   ├── colors.mdx                # Color tokens (auto-generated)
+│   ├── typography.mdx            # Typography tokens (auto-generated)
+│   ├── spacing.mdx               # Spacing & density (auto-generated)
+│   └── effects.mdx               # Shadows & effects (auto-generated)
 │
 ├── dist/                         # Built output (gitignored)
 │   ├── esm/                      # ES Modules
@@ -317,14 +317,31 @@ Interactive component documentation with live theming.
 ```bash
 npm run storybook          # Start dev server (port 6006)
 npm run build:storybook    # Build static site
+npm run build:docs         # Regenerate foundation docs from tokens
 ```
 
 ### Features
 
 - **4-Axis Controls**: Color Brand, Content Brand, Theme, Density
 - **Component Stories**: All variants with controls
-- **Styleguide Pages**: Colors, Typography, Spacing, Effects
+- **Styleguide Pages**: Colors, Typography, Spacing, Effects (auto-generated)
 - **Dark Mode Toggle**: Synced with design tokens
+
+### Auto-Generated Documentation
+
+Foundation pages (Colors, Typography, Spacing, Effects) are automatically generated from token JSON files by `scripts/tokens/generate-docs.js`. This ensures documentation stays in sync with the actual token values.
+
+```bash
+# Regenerate docs after token changes
+npm run build:docs
+```
+
+| Page | Source |
+|------|--------|
+| Colors | `Semantic > Color` tokens |
+| Typography | `Semantic > Typography` tokens |
+| Spacing | `Semantic > Space` tokens (Inline, Stack, Gap) |
+| Effects | Semantic shadow tokens |
 
 ### Writing Stories
 
