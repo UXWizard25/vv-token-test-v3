@@ -35,6 +35,89 @@
   .sb-show-main {
     background-color: transparent;
   }
+
+  /* ========================================
+     Storybook Docs Theme Overrides
+     These ensure the docs pages adapt to dark mode
+     ======================================== */
+
+  /* Docs page wrapper */
+  .sbdocs-wrapper {
+    background-color: var(--surface-color-canvas, #F0F2F4) !important;
+  }
+
+  /* Docs content area */
+  .sbdocs-content {
+    background-color: var(--surface-color-primary, #FFFFFF) !important;
+    color: var(--text-color-primary, #232629) !important;
+  }
+
+  /* Docs preview/story containers */
+  .docs-story,
+  .sbdocs-preview {
+    background-color: var(--surface-color-primary, #FFFFFF) !important;
+    border-color: var(--border-color-low-contrast, #CED4DA) !important;
+  }
+
+  /* MDX content typography */
+  .sbdocs h1, .sbdocs h2, .sbdocs h3, .sbdocs h4, .sbdocs h5, .sbdocs h6,
+  .sbdocs-h1, .sbdocs-h2, .sbdocs-h3, .sbdocs-h4, .sbdocs-h5, .sbdocs-h6 {
+    color: var(--text-color-primary, #232629) !important;
+  }
+
+  .sbdocs p, .sbdocs li, .sbdocs td, .sbdocs th,
+  .sbdocs-p {
+    color: var(--text-color-primary, #232629) !important;
+  }
+
+  /* Code blocks */
+  .sbdocs code,
+  .sbdocs pre {
+    background-color: var(--surface-color-tertiary, #E8EAED) !important;
+    color: var(--text-color-primary, #232629) !important;
+  }
+
+  /* Tables */
+  .sbdocs table {
+    border-color: var(--border-color-low-contrast, #CED4DA) !important;
+  }
+
+  .sbdocs th {
+    background-color: var(--surface-color-secondary, #F2F4F5) !important;
+  }
+
+  .sbdocs td, .sbdocs th {
+    border-color: var(--border-color-low-contrast, #CED4DA) !important;
+  }
+
+  /* Links */
+  .sbdocs a {
+    color: var(--text-color-accent, #DD0000) !important;
+  }
+
+  /* Horizontal rules */
+  .sbdocs hr {
+    border-color: var(--border-color-low-contrast, #CED4DA) !important;
+  }
+
+  /* Blockquotes */
+  .sbdocs blockquote {
+    background-color: var(--surface-color-secondary, #F2F4F5) !important;
+    border-left-color: var(--core-color-primary, #DD0000) !important;
+    color: var(--text-color-primary, #232629) !important;
+  }
+
+  /* ArgTypes/Controls tables */
+  .docblock-argstable {
+    background-color: var(--surface-color-primary, #FFFFFF) !important;
+  }
+
+  .docblock-argstable th,
+  .docblock-argstable td {
+    background-color: var(--surface-color-primary, #FFFFFF) !important;
+    border-color: var(--border-color-low-contrast, #CED4DA) !important;
+    color: var(--text-color-primary, #232629) !important;
+  }
 </style>
 
 <script>
