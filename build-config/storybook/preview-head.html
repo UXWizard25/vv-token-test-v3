@@ -118,6 +118,158 @@
     border-color: var(--border-color-low-contrast, #CED4DA) !important;
     color: var(--text-color-primary, #232629) !important;
   }
+
+  /* ========================================
+     Additional Dark Mode Overrides
+     Story containers, controls, inputs
+     ======================================== */
+
+  /* Story canvas/preview area */
+  .sb-show-main.sb-main-padded {
+    background-color: var(--surface-color-canvas, #F0F2F4) !important;
+  }
+
+  /* Docs story preview wrapper */
+  .sbdocs .sb-story,
+  .sbdocs-preview .sb-story,
+  .docs-story > div,
+  .docs-story > div > div {
+    background-color: var(--surface-color-primary, #FFFFFF) !important;
+  }
+
+  /* Story source/code container */
+  .docblock-source {
+    background-color: var(--surface-color-tertiary, #E8EAED) !important;
+  }
+
+  .docblock-source pre,
+  .docblock-source code {
+    background-color: transparent !important;
+    color: var(--text-color-primary, #232629) !important;
+  }
+
+  /* Table striped rows */
+  .sbdocs tr:nth-child(even),
+  .docblock-argstable tr:nth-child(even) {
+    background-color: var(--surface-color-secondary, #F2F4F5) !important;
+  }
+
+  .sbdocs tr:nth-child(odd),
+  .docblock-argstable tr:nth-child(odd) {
+    background-color: var(--surface-color-primary, #FFFFFF) !important;
+  }
+
+  /* Controls panel */
+  .docblock-argstable-body td {
+    background-color: var(--surface-color-primary, #FFFFFF) !important;
+    color: var(--text-color-primary, #232629) !important;
+  }
+
+  /* Input fields in controls */
+  .docblock-argstable input,
+  .docblock-argstable select,
+  .docblock-argstable textarea {
+    background-color: var(--surface-color-primary, #FFFFFF) !important;
+    border-color: var(--border-color-low-contrast, #CED4DA) !important;
+    color: var(--text-color-primary, #232629) !important;
+  }
+
+  /* Control labels and descriptions */
+  .docblock-argstable-body td span,
+  .docblock-argstable-body td p {
+    color: var(--text-color-primary, #232629) !important;
+  }
+
+  /* Subtitle/description text */
+  .sbdocs .sbdocs-subtitle,
+  .sbdocs .sbdocs-description {
+    color: var(--text-color-secondary, #666B70) !important;
+  }
+
+  /* Addon panel backgrounds */
+  [id^="panel-tab-content"] {
+    background-color: var(--surface-color-primary, #FFFFFF) !important;
+  }
+
+  /* ArgsTable header row */
+  .docblock-argstable thead tr {
+    background-color: var(--surface-color-secondary, #F2F4F5) !important;
+  }
+
+  .docblock-argstable thead th {
+    background-color: var(--surface-color-secondary, #F2F4F5) !important;
+    color: var(--text-color-secondary, #666B70) !important;
+  }
+
+  /* Reset button and other small buttons */
+  .docblock-argstable button {
+    background-color: var(--surface-color-tertiary, #E8EAED) !important;
+    color: var(--text-color-primary, #232629) !important;
+    border-color: var(--border-color-low-contrast, #CED4DA) !important;
+  }
+
+  /* Type badges/pills */
+  .docblock-argstable-body td code {
+    background-color: var(--surface-color-tertiary, #E8EAED) !important;
+    color: var(--text-color-primary, #232629) !important;
+  }
+
+  /* Property name column */
+  .docblock-argstable-body td:first-child {
+    color: var(--text-color-primary, #232629) !important;
+  }
+
+  /* Default value display */
+  .docblock-argstable-body td:last-child {
+    color: var(--text-color-primary, #232629) !important;
+  }
+
+  /* Canvas toolbar */
+  .sb-bar {
+    background-color: var(--surface-color-primary, #FFFFFF) !important;
+    border-color: var(--border-color-low-contrast, #CED4DA) !important;
+  }
+
+  .sb-bar button {
+    color: var(--text-color-primary, #232629) !important;
+  }
+
+  /* Zoom/viewport toolbar */
+  [class*="zoom"] {
+    background-color: var(--surface-color-primary, #FFFFFF) !important;
+  }
+
+  /* Empty state messages */
+  .sb-nopreview,
+  .sb-errordisplay {
+    background-color: var(--surface-color-canvas, #F0F2F4) !important;
+    color: var(--text-color-primary, #232629) !important;
+  }
+
+  /* Syntax highlighting adjustments for dark mode */
+  .token.comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    color: var(--text-color-tertiary, #9CA3AB) !important;
+  }
+
+  .token.property,
+  .token.tag,
+  .token.boolean,
+  .token.number,
+  .token.constant,
+  .token.symbol {
+    color: var(--core-color-primary, #DD0000) !important;
+  }
+
+  .token.selector,
+  .token.attr-name,
+  .token.string,
+  .token.char,
+  .token.builtin {
+    color: var(--text-color-accent, #DD0000) !important;
+  }
 </style>
 
 <script>
