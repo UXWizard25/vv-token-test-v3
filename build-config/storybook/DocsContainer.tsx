@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { DocsContainer as BaseContainer } from '@storybook/blocks';
-import { addons } from '@storybook/preview-api';
-import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
+import { useDarkMode } from 'storybook-dark-mode';
 import { bildLightTheme, bildDarkTheme } from './manager';
 
 /**
@@ -15,33 +14,7 @@ export const DocsContainer: React.FC<React.ComponentProps<typeof BaseContainer>>
   children,
   ...props
 }) => {
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    const channel = addons.getChannel();
-
-    // Set initial state from localStorage if available
-    const stored = localStorage.getItem('sb-addon-themes-3');
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        setIsDark(parsed.current === 'dark');
-      } catch {
-        // Ignore parse errors
-      }
-    }
-
-    // Listen for dark mode changes
-    const handleDarkModeChange = (dark: boolean) => {
-      setIsDark(dark);
-    };
-
-    channel.on(DARK_MODE_EVENT_NAME, handleDarkModeChange);
-
-    return () => {
-      channel.off(DARK_MODE_EVENT_NAME, handleDarkModeChange);
-    };
-  }, []);
+  const isDark = useDarkMode();
 
   return (
     <BaseContainer {...props} theme={isDark ? bildDarkTheme : bildLightTheme}>
