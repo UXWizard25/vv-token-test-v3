@@ -42,10 +42,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AXS-Digital/vv-tokens-test.git",
+    "url": "git+https://github.com/UXWizard25/vv-token-test-v3.git",
     "directory": "packages/components"
   },
-  "homepage": "https://github.com/AXS-Digital/vv-tokens-test#readme",
+  "homepage": "https://github.com/UXWizard25/vv-token-test-v3#readme",
   "publishConfig": {
     "access": "public"
   },
