@@ -90,9 +90,8 @@ function extractTokensFromCategory(category, prefix = '') {
  */
 function generateColorTableRows(tokens) {
   return tokens.map(token => {
-    const usage = token.comment
-      ? token.comment.split('.')[0].replace(/^[A-Z]/, c => c.toLowerCase())
-      : toDisplayName(token.name);
+    // Use full comment if available, otherwise generate from token name
+    const usage = token.comment || toDisplayName(token.name);
 
     return `    <tr>
       <td><code>${token.cssVar}</code></td>
@@ -486,10 +485,8 @@ ${fontRows}
 
       // Generate style samples
       for (const style of styles) {
-        // Extract first sentence of comment as description, or generate a default
-        let description = style.comment
-          ? style.comment.split('.')[0].trim()
-          : `${toDisplayName(style.name)} typography style`;
+        // Use full comment if available, or generate a default description
+        let description = style.comment || `${toDisplayName(style.name)} typography style`;
 
         typographyClassesSection += `<div className="font-sample">
   <div className="font-sample-label">.${style.className}</div>
@@ -1061,10 +1058,8 @@ ${shadows.map(s => `  <div className="shadow-card ${s.className}">
     for (const [effectKey, effectValue] of Object.entries(categoryEffects)) {
       if (effectValue && effectValue.$type === 'shadow') {
         const className = toKebabCase(effectKey);
-        // Generate usage description from comment or create a default
-        let usage = effectValue.comment
-          ? effectValue.comment.split('.')[0].trim()
-          : `${toDisplayName(effectKey)} effect`;
+        // Use full comment if available, or create a default description
+        const usage = effectValue.comment || `${toDisplayName(effectKey)} effect`;
 
         allShadows.push({
           cssVar: `--${className}`,
