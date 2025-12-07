@@ -113,5 +113,10 @@
   "license": "MIT",
   "publishConfig": {
     "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UXWizard25/vv-token-test-v3.git",
+    "directory": "packages/tokens"
   }
 }

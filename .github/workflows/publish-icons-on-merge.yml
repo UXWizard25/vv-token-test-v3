@@ -78,6 +78,13 @@ jobs:
           NEW_PATCH=$((PATCH + 1))
           NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
 
+          # Check if tag already exists, keep incrementing until we find an unused version
+          while git tag -l "icons-v$NEW_VERSION" | grep -q "icons-v$NEW_VERSION"; do
+            echo "Tag icons-v$NEW_VERSION already exists, incrementing..."
+            NEW_PATCH=$((NEW_PATCH + 1))
+            NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
+          done
+
           echo "New version: $NEW_VERSION"
 
           # Update packages/icons/package.json

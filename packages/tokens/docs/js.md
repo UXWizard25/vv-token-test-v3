@@ -1,4 +1,4 @@
-# JavaScript/React - Design System Tokens
+# ⚡ JavaScript/React - Design System Tokens
 
 > **ESM Design Tokens for JavaScript & React**
 >
@@ -6,48 +6,54 @@
 
 ---
 
-## Table of Contents
+## 📋 Table of Contents
 
-- [Quick Start](#quick-start)
-- [Dual-Axis Architecture](#dual-axis-architecture)
-- [React ThemeProvider](#react-themeprovider)
-- [Token Access](#token-access)
-- [Multi-Brand Apps](#multi-brand-apps)
-- [File Structure](#file-structure)
-- [API Reference](#api-reference)
-- [Token Type Mapping](#token-type-mapping)
-- [Naming Conventions](#naming-conventions)
+- [🚀 Quick Start](#-quick-start)
+- [🔀 Dual-Axis Architecture](#-dual-axis-architecture)
+- [🎨 React ThemeProvider](#-react-themeprovider)
+- [🔑 Token Access](#-token-access)
+- [🏷️ Multi-Brand Apps](#️-multi-brand-apps)
+- [📁 File Structure](#-file-structure)
+- [📚 API Reference](#-api-reference)
+- [🌳 Tree-Shaking](#-tree-shaking)
+- [📘 TypeScript Support](#-typescript-support)
+- [💅 CSS-in-JS Integration](#-css-in-js-integration)
+- [✅ Best Practices](#-best-practices)
+- [🔄 Token Type Mapping](#-token-type-mapping)
+- [⚙️ Requirements](#️-requirements)
+- [📝 Naming Conventions](#-naming-conventions)
+- [📖 Related Documentation](#-related-documentation)
 
 ---
 
-## Quick Start
+## 🚀 Quick Start
 
 ### 1. Install Package
 
 ```bash
-npm install @bild/design-tokens
+npm install @marioschmidt/design-system-tokens
 ```
 
 ### 2. Import Tokens
 
 ```javascript
 // Import pre-built themes
-import { bildLight, bildDark, sportbildLight } from '@bild/design-tokens/js/themes';
+import { bildLight, bildDark, sportbildLight } from '@marioschmidt/design-system-tokens/js/themes';
 
 // Or create dynamic themes
-import { createTheme } from '@bild/design-tokens/js/themes';
+import { createTheme } from '@marioschmidt/design-system-tokens/js/themes';
 
 // Import primitives directly
-import { colorPrimitive, spacePrimitive } from '@bild/design-tokens/js/primitives';
+import { colorPrimitive, spacePrimitive } from '@marioschmidt/design-system-tokens/js/primitives';
 
 // Import React bindings
-import { ThemeProvider, useTheme, useBreakpoint } from '@bild/design-tokens/js/react';
+import { ThemeProvider, useTheme, useBreakpoint } from '@marioschmidt/design-system-tokens/js/react';
 ```
 
 ### 3. Use with React
 
 ```jsx
-import { ThemeProvider, useTheme } from '@bild/design-tokens/js/react';
+import { ThemeProvider, useTheme } from '@marioschmidt/design-system-tokens/js/react';
 
 function App() {
   return (
@@ -80,7 +86,7 @@ function MyComponent() {
 ### 4. Use without React
 
 ```javascript
-import { createTheme } from '@bild/design-tokens/js/themes';
+import { createTheme } from '@marioschmidt/design-system-tokens/js/themes';
 
 // Create a theme for specific configuration
 const theme = createTheme({
@@ -99,7 +105,7 @@ console.log(theme.typography.headline1);        // { fontFamily, fontSize: "72px
 
 ---
 
-## Dual-Axis Architecture
+## 🔀 Dual-Axis Architecture
 
 The design system uses a **Dual-Axis Architecture** that separates color selection from content selection:
 
@@ -143,12 +149,12 @@ The design system uses a **Dual-Axis Architecture** that separates color selecti
 
 ---
 
-## React ThemeProvider
+## 🎨 React ThemeProvider
 
 ### Basic Usage
 
 ```jsx
-import { ThemeProvider, useTheme } from '@bild/design-tokens/js/react';
+import { ThemeProvider, useTheme } from '@marioschmidt/design-system-tokens/js/react';
 
 function App() {
   return (
@@ -207,7 +213,7 @@ function App() {
 ### useTheme Hook
 
 ```jsx
-import { useTheme } from '@bild/design-tokens/js/react';
+import { useTheme } from '@marioschmidt/design-system-tokens/js/react';
 
 function MyComponent() {
   const {
@@ -240,7 +246,7 @@ import {
   useIsBreakpointUp,
   useIsBreakpointDown,
   BREAKPOINTS
-} from '@bild/design-tokens/js/react';
+} from '@marioschmidt/design-system-tokens/js/react';
 
 function ResponsiveComponent() {
   const breakpoint = useBreakpoint();           // 'xs' | 'sm' | 'md' | 'lg'
@@ -261,7 +267,7 @@ function ResponsiveComponent() {
 ### Breakpoint Values
 
 ```javascript
-import { BREAKPOINTS } from '@bild/design-tokens/js/react';
+import { BREAKPOINTS } from '@marioschmidt/design-system-tokens/js/react';
 
 // BREAKPOINTS = {
 //   xs: 320,   // Mobile (default)
@@ -273,7 +279,7 @@ import { BREAKPOINTS } from '@bild/design-tokens/js/react';
 
 ---
 
-## Token Access
+## 🔑 Token Access
 
 ### Pre-built Themes
 
@@ -289,7 +295,7 @@ import {
   advertorialInBildDark,
   advertorialInSportbildLight,
   advertorialInSportbildDark
-} from '@bild/design-tokens/js/themes';
+} from '@marioschmidt/design-system-tokens/js/themes';
 
 // Access tokens directly
 const primaryColor = bildLight.colors.textColorPrimary;  // "#232629"
@@ -301,7 +307,7 @@ const spacing = bildLight.spacing.gridSpaceRespBase;     // "12px"
 For runtime configuration:
 
 ```javascript
-import { createTheme, availableBrands, colorModes, breakpoints } from '@bild/design-tokens/js/themes';
+import { createTheme, availableBrands, colorModes, breakpoints } from '@marioschmidt/design-system-tokens/js/themes';
 
 // Create theme with specific configuration
 const theme = createTheme({
@@ -326,7 +332,7 @@ import {
   spacePrimitive,
   sizePrimitive,
   fontPrimitive
-} from '@bild/design-tokens/js/primitives';
+} from '@marioschmidt/design-system-tokens/js/primitives';
 
 // Raw color values
 console.log(colorPrimitive.bildred);    // "#dd0000"
@@ -349,9 +355,9 @@ console.log(fontPrimitive.gothamXnarrow);  // "Gotham XNarrow"
 
 ```javascript
 // Import specific brand tokens
-import * as bild from '@bild/design-tokens/js/brands/bild';
-import * as sportbild from '@bild/design-tokens/js/brands/sportbild';
-import * as advertorial from '@bild/design-tokens/js/brands/advertorial';
+import * as bild from '@marioschmidt/design-system-tokens/js/brands/bild';
+import * as sportbild from '@marioschmidt/design-system-tokens/js/brands/sportbild';
+import * as advertorial from '@marioschmidt/design-system-tokens/js/brands/advertorial';
 
 // Access brand semantic tokens
 console.log(bild.semantic.color.light.textColorPrimary);
@@ -360,13 +366,13 @@ console.log(sportbild.semantic.color.dark.accentColorPrimary);
 
 ---
 
-## Multi-Brand Apps
+## 🏷️ Multi-Brand Apps
 
 ### Runtime Brand Switching
 
 ```jsx
 import { useState } from 'react';
-import { ThemeProvider, useTheme } from '@bild/design-tokens/js/react';
+import { ThemeProvider, useTheme } from '@marioschmidt/design-system-tokens/js/react';
 
 function App() {
   const [colorBrand, setColorBrand] = useState('bild');
@@ -431,7 +437,7 @@ const contentBrand = process.env.REACT_APP_CONTENT_BRAND || 'bild';
 
 ---
 
-## File Structure
+## 📁 File Structure
 
 ```
 dist/js/
@@ -484,7 +490,7 @@ dist/js/
 
 ---
 
-## API Reference
+## 📚 API Reference
 
 ### createTheme(options)
 
@@ -623,20 +629,20 @@ const BREAKPOINTS: {
 
 ---
 
-## Tree-Shaking
+## 🌳 Tree-Shaking
 
 The package is designed for optimal tree-shaking:
 
 ```javascript
 // Good: Import only what you need
-import { bildLight } from '@bild/design-tokens/js/themes/bild-light';
-import { colorPrimitive } from '@bild/design-tokens/js/primitives/colorprimitive';
+import { bildLight } from '@marioschmidt/design-system-tokens/js/themes/bild-light';
+import { colorPrimitive } from '@marioschmidt/design-system-tokens/js/primitives/colorprimitive';
 
 // Also good: Named imports from index
-import { bildLight, createTheme } from '@bild/design-tokens/js/themes';
+import { bildLight, createTheme } from '@marioschmidt/design-system-tokens/js/themes';
 
 // Less optimal: Namespace import (includes all)
-import * as themes from '@bild/design-tokens/js/themes';
+import * as themes from '@marioschmidt/design-system-tokens/js/themes';
 ```
 
 ### Bundle Size
@@ -651,13 +657,13 @@ import * as themes from '@bild/design-tokens/js/themes';
 
 ---
 
-## TypeScript Support
+## 📘 TypeScript Support
 
 Full TypeScript definitions are included:
 
 ```typescript
-import type { Theme } from '@bild/design-tokens/js/themes';
-import { createTheme } from '@bild/design-tokens/js/themes';
+import type { Theme } from '@marioschmidt/design-system-tokens/js/themes';
+import { createTheme } from '@marioschmidt/design-system-tokens/js/themes';
 
 const theme: Theme = createTheme({
   colorBrand: 'bild',
@@ -670,13 +676,13 @@ const color: string = theme.color.textColorPrimary;
 
 ---
 
-## CSS-in-JS Integration
+## 💅 CSS-in-JS Integration
 
 ### With styled-components
 
 ```jsx
 import styled from 'styled-components';
-import { ThemeProvider as DSThemeProvider, useTheme } from '@bild/design-tokens/js/react';
+import { ThemeProvider as DSThemeProvider, useTheme } from '@marioschmidt/design-system-tokens/js/react';
 import { ThemeProvider as SCThemeProvider } from 'styled-components';
 
 // Wrap styled-components ThemeProvider
@@ -706,7 +712,7 @@ const Card = styled.div`
 
 ```jsx
 import { ThemeProvider } from '@emotion/react';
-import { useTheme } from '@bild/design-tokens/js/react';
+import { useTheme } from '@marioschmidt/design-system-tokens/js/react';
 
 function ThemeWrapper({ children }) {
   const { theme } = useTheme();
@@ -717,7 +723,7 @@ function ThemeWrapper({ children }) {
 ### With Vanilla CSS Variables
 
 ```javascript
-import { bildLight } from '@bild/design-tokens/js/themes';
+import { bildLight } from '@marioschmidt/design-system-tokens/js/themes';
 
 // Generate CSS custom properties - values are already CSS-ready
 function generateCSSVariables(theme) {
@@ -743,7 +749,7 @@ function generateCSSVariables(theme) {
 
 ---
 
-## Best Practices
+## ✅ Best Practices
 
 ### 1. Use Dual-Axis for Advertorial
 
@@ -763,10 +769,10 @@ function generateCSSVariables(theme) {
 
 ```javascript
 // For SSG/static: Use pre-built themes
-import { bildLight } from '@bild/design-tokens/js/themes';
+import { bildLight } from '@marioschmidt/design-system-tokens/js/themes';
 
 // For dynamic apps: Use createTheme
-import { createTheme } from '@bild/design-tokens/js/themes';
+import { createTheme } from '@marioschmidt/design-system-tokens/js/themes';
 ```
 
 ### 3. Enable Auto-Breakpoint for Responsive UIs
@@ -792,7 +798,7 @@ import { createTheme } from '@bild/design-tokens/js/themes';
 
 ---
 
-## Token Type Mapping
+## 🔄 Token Type Mapping
 
 Token values are automatically formatted based on their `$type` from the Figma source, following the [W3C Design Tokens Community Group (DTCG)](https://www.designtokens.org/) specification:
 
@@ -851,7 +857,7 @@ theme.effects.shadowSoftMd = [
 
 ---
 
-## Requirements
+## ⚙️ Requirements
 
 - Node.js 16+ (ESM support)
 - React 18+ (for React bindings)
@@ -859,7 +865,7 @@ theme.effects.shadowSoftMd = [
 
 ---
 
-## Naming Conventions
+## 📝 Naming Conventions
 
 JavaScript tokens use **camelCase** with lowercase letters after numbers:
 
@@ -891,17 +897,13 @@ theme.effects.shadowSoftSm      // [{ offsetX: 0, ... }]
 
 ---
 
-## Related Documentation
+## 📖 Related Documentation
 
 | Document | Description |
 |----------|-------------|
-| [README.md](../README.md) | Project Overview |
-| [README.tokens.md](../README.tokens.md) | All Platforms |
-| [css.md](./css.md) | CSS Custom Properties |
-| [ios.md](./ios.md) | iOS SwiftUI Integration |
-| [android.md](./android.md) | Android Jetpack Compose |
-| [CLAUDE.md](../CLAUDE.md) | Build Pipeline Details |
-
----
-
-**Generated by BILD Design System Token Pipeline**
+| [CSS](./css.md) | CSS Custom Properties & Shadow DOM |
+| [Android Compose](./android.md) | Kotlin tokens for Jetpack Compose |
+| [iOS SwiftUI](./ios.md) | Swift tokens for SwiftUI |
+| [Tokens README](../README.md) | Token pipeline overview |
+| [Main README](../../README.md) | Project overview |
+| [CLAUDE.md](../../CLAUDE.md) | Architecture & build details |

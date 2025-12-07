@@ -1,6 +1,6 @@
 # 🖼️ BILD Design System Icons
 
-> **Part of the [BILD Design Ops Pipeline](./README.md)** | [Token Documentation](./README.tokens.md)
+> **Part of the [BILD Design Ops Pipeline](../../README.md)** | [Token Documentation](../tokens/README.md) | [Component Documentation](../components/README.md)
 
 Multi-platform icon transformation pipeline for the BILD Design System.
 
@@ -534,8 +534,9 @@ import addSvg from '@marioschmidt/design-system-icons/svg/add.svg';
 
 | Document | Description |
 |----------|-------------|
-| [📖 README.md](./README.md) | Main project overview |
-| [📖 README.tokens.md](./README.tokens.md) | Token pipeline documentation |
+| [📖 Main README](../../README.md) | Project overview |
+| [📖 Tokens README](../tokens/README.md) | Token pipeline documentation |
+| [📖 Components README](../components/README.md) | Stencil Web Components |
 
 ---
 

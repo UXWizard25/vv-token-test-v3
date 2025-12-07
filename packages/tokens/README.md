@@ -1,6 +1,6 @@
 # 🎨 BILD Design System - Token Pipeline
 
-> **Part of the [BILD Design Ops Pipeline](./README.md)** | [Icon Documentation](./README.icons.md)
+> **Part of the [BILD Design Ops Pipeline](../../README.md)** | [Icon Documentation](../icons/README.md) | [Component Documentation](../components/README.md)
 
 Multi-platform design token transformation pipeline powered by **Style Dictionary v4** with **Figma-scoped semantic type detection**.
 
@@ -820,12 +820,13 @@ grep "Space2x" dist/ios/shared/Spaceprimitive.swift
 
 | Document | Description |
 |----------|-------------|
-| [📖 README.md](./README.md) | Main project overview |
+| [📖 Main README](../../README.md) | Project overview |
 | [📖 docs/css.md](./docs/css.md) | CSS Custom Properties documentation |
 | [📖 docs/js.md](./docs/js.md) | JavaScript/React integration (Dual-Axis) |
 | [📖 docs/android.md](./docs/android.md) | Android Jetpack Compose (Dual-Axis) |
 | [📖 docs/ios.md](./docs/ios.md) | iOS SwiftUI (Dual-Axis) |
-| [📖 README.icons.md](./README.icons.md) | Icon pipeline documentation |
+| [📖 Icons README](../icons/README.md) | Icon pipeline documentation |
+| [📖 Components README](../components/README.md) | Stencil Web Components |
 | [Style Dictionary](https://styledictionary.com/) | Build tool documentation |
 
 ---
