@@ -66,14 +66,14 @@ jobs:
           CURRENT_VERSION=${LATEST_TAG#v}
           echo "Current version: $CURRENT_VERSION"
 
-          # Setze Version in package.json (temporär, nur für Build)
+          # Bump version in workspace package (packages/tokens/package.json)
+          cd packages/tokens
           npm version $CURRENT_VERSION --no-git-tag-version --allow-same-version
-
-          # Erhöhe Patch-Version
           npm version patch --no-git-tag-version
+          cd ../..
 
-          # Neue Version
-          NEW_VERSION=$(node -p "require('./package.json').version")
+          # Neue Version aus Workspace package lesen
+          NEW_VERSION=$(node -p "require('./packages/tokens/package.json').version")
           echo "New version: $NEW_VERSION"
 
           echo "current=$CURRENT_VERSION" >> $GITHUB_OUTPUT
@@ -157,7 +157,7 @@ jobs:
       - name: Publish to npmjs.org
         run: |
           echo "📦 Publishing @marioschmidt/design-system-tokens@${{ steps.version.outputs.new }} to npmjs.org..."
-          npm publish
+          npm publish -w @marioschmidt/design-system-tokens --access public
           echo "✅ Package published successfully!"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
