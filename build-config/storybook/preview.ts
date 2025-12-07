@@ -1,14 +1,59 @@
 import type { Preview } from '@storybook/web-components';
 import { html } from 'lit';
+import { addons } from '@storybook/preview-api';
+import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
+import { bildLightTheme, bildDarkTheme } from './manager';
 
 // Stencil components are loaded via script tag in preview-head.html
 // This ensures they're available before stories render
 
 /**
+ * Initialize global data attributes on document load
+ * This ensures attributes are set for BOTH stories AND docs pages
+ */
+function initializeGlobalAttributes() {
+  if (typeof document !== 'undefined' && document.documentElement) {
+    // Set initial values - these will be updated by the decorator for stories
+    // and by the dark mode channel for theme
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.setAttribute('data-color-brand', 'bild');
+    document.documentElement.setAttribute('data-content-brand', 'bild');
+    document.documentElement.setAttribute('data-density', 'default');
+  }
+}
+
+// Initialize on load
+initializeGlobalAttributes();
+
+/**
+ * Listen to dark mode changes from storybook-dark-mode addon
+ * Updates data-theme attribute on document.documentElement
+ */
+const channel = addons.getChannel();
+channel.on(DARK_MODE_EVENT_NAME, (isDark: boolean) => {
+  if (typeof document !== 'undefined' && document.documentElement) {
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  }
+});
+
+/**
+ * Listen to globals updates for docs pages
+ * This ensures data attributes are updated even when no decorator runs (pure MDX pages)
+ */
+channel.on('updateGlobals', (args: { globals: Record<string, string> }) => {
+  if (typeof document !== 'undefined' && document.documentElement && args.globals) {
+    const { colorBrand, contentBrand, density } = args.globals;
+    if (colorBrand) document.documentElement.setAttribute('data-color-brand', colorBrand);
+    if (contentBrand) document.documentElement.setAttribute('data-content-brand', contentBrand);
+    if (density) document.documentElement.setAttribute('data-density', density);
+  }
+});
+
+/**
  * Design Token Decorator
  *
  * Sets data attributes for the Dual-Axis architecture:
- * - data-theme: Light/dark mode (light, dark)
+ * - data-theme: Light/dark mode (controlled by storybook-dark-mode addon)
  * - data-color-brand: Controls colors and effects (bild, sportbild)
  * - data-content-brand: Controls typography, spacing, density (bild, sportbild, advertorial)
  * - data-density: Spacing density (default, dense, spacious)
@@ -17,11 +62,11 @@ import { html } from 'lit';
  * [data-color-brand="bild"][data-theme="light"] { ... }
  */
 const withDesignTokens = (Story: () => unknown, context: { globals: Record<string, string> }) => {
-  const { theme, colorBrand, contentBrand, density } = context.globals;
+  const { colorBrand, contentBrand, density } = context.globals;
 
-  // Set all attributes on document.documentElement (html) for CSS selector matching
+  // Set attributes on document.documentElement (html) for CSS selector matching
+  // Note: data-theme is controlled by storybook-dark-mode addon channel
   if (typeof document !== 'undefined' && document.documentElement) {
-    document.documentElement.setAttribute('data-theme', theme);
     document.documentElement.setAttribute('data-color-brand', colorBrand);
     document.documentElement.setAttribute('data-content-brand', contentBrand);
     document.documentElement.setAttribute('data-density', density);
@@ -40,19 +85,8 @@ const preview: Preview = {
   decorators: [withDesignTokens],
 
   // Toolbar controls - order here determines toolbar order
+  // Note: Theme is now controlled by storybook-dark-mode addon (sun/moon toggle)
   globalTypes: {
-    theme: {
-      description: 'Color theme (light/dark)',
-      toolbar: {
-        title: 'Theme',
-        icon: 'mirror',
-        items: [
-          { value: 'light', title: 'Light', icon: 'sun' },
-          { value: 'dark', title: 'Dark', icon: 'moon' },
-        ],
-        dynamicTitle: true,
-      },
-    },
     colorBrand: {
       description: 'Color brand (colors & effects)',
       toolbar: {
@@ -95,7 +129,6 @@ const preview: Preview = {
 
   // Initial global values
   initialGlobals: {
-    theme: 'light',
     colorBrand: 'bild',
     contentBrand: 'bild',
     density: 'default',
@@ -127,6 +160,13 @@ const preview: Preview = {
     // Docs configuration
     docs: {
       toc: true,
+    },
+
+    // Dark mode addon configuration
+    darkMode: {
+      dark: bildDarkTheme,
+      light: bildLightTheme,
+      stylePreview: true, // Apply dark class to preview
     },
   },
 };

@@ -1,5 +1,13 @@
 <!--
   preview-body.html is kept minimal.
-  Theme switching is handled by @storybook/addon-themes via withThemeByDataAttribute decorator.
-  Brand and density switching is handled by the withDesignTokens decorator in preview.ts.
+
+  Theme Switching Architecture:
+  - Light/Dark mode: Controlled by storybook-dark-mode addon (sun/moon toggle)
+  - Color Brand: Controlled by toolbar globalType → withDesignTokens decorator
+  - Content Brand: Controlled by toolbar globalType → withDesignTokens decorator
+  - Density: Controlled by toolbar globalType → withDesignTokens decorator
+
+  Channel listeners in preview.ts handle:
+  - DARK_MODE_EVENT_NAME → updates data-theme attribute
+  - updateGlobals → updates other data attributes for docs pages
 -->

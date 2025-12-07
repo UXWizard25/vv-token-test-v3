@@ -979,38 +979,45 @@ scripts/tokens/
 | `preview.ts` | `withDesignTokens` decorator, toolbar controls, dark mode themes |
 | `manager.ts` | Custom BILD themes for Storybook UI (sidebar, toolbar) |
 | `preview-head.html` | CSS bundle import, initial `data-*` attributes on body |
-| `preview-body.html` | Dark mode sync via localStorage polling |
+| `preview-body.html` | Documentation comments only |
 
 ### Key Features
 
 **4-Axis Token Architecture in Toolbar:**
 
-| Control | Options | Data Attribute |
-|---------|---------|----------------|
-| Color Brand | BILD, SportBILD | `data-color-brand` |
-| Content Brand | BILD, SportBILD, Advertorial | `data-content-brand` |
-| Theme | Light, Dark (via dark mode toggle) | `data-theme` |
-| Density | Default, Dense, Spacious | `data-density` |
+| Control | Options | Data Attribute | Mechanism |
+|---------|---------|----------------|-----------|
+| Theme | Light, Dark | `data-theme` | `storybook-dark-mode` addon (sun/moon toggle) |
+| Color Brand | BILD, SportBILD | `data-color-brand` | Toolbar globalType + decorator |
+| Content Brand | BILD, SportBILD, Advertorial | `data-content-brand` | Toolbar globalType + decorator |
+| Density | Default, Dense, Spacious | `data-density` | Toolbar globalType + decorator |
 
-**Dark Mode Sync:**
+**Theme & Controls Sync Architecture:**
 
-The `storybook-dark-mode` addon controls both UI and content area:
+The architecture ensures all controls work on both Stories AND Docs pages:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                         DARK MODE ARCHITECTURE                               │
+│                      STORYBOOK THEMING ARCHITECTURE                          │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
-│  Manager (Storybook UI)          Preview (Component Area)                   │
+│  Manager (Storybook UI)              Preview (Component/Docs Area)          │
 │  ─────────────────────────────────────────────────────────────────────────  │
 │                                                                             │
-│  storybook-dark-mode addon       preview-body.html script:                  │
-│  ├── Stores state in             ├── Reads localStorage on load             │
-│  │   localStorage                ├── Polls localStorage every 200ms         │
-│  │   (sb-addon-themes-3)         └── Sets body[data-theme]                  │
-│  └── Applies UI theme                                                       │
+│  storybook-dark-mode addon           preview.ts:                            │
+│  ├── Sun/Moon toggle in toolbar      ├── DARK_MODE_EVENT_NAME listener      │
+│  ├── bildLightTheme / bildDarkTheme  │   → sets data-theme attribute        │
+│  └── Syncs UI sidebar/toolbar        ├── updateGlobals listener             │
+│                                      │   → sets brand/density attributes    │
+│  Toolbar globalTypes:                └── withDesignTokens decorator         │
+│  ├── colorBrand dropdown                 → sets attributes for stories      │
+│  ├── contentBrand dropdown                                                  │
+│  └── density dropdown                                                       │
 │                                                                             │
-│  Toggle Click → localStorage → Polling detects → body[data-theme] updated  │
+│  Channel Events:                                                            │
+│  ├── DARK_MODE_EVENT_NAME  → Updates data-theme                             │
+│  └── updateGlobals         → Updates data-color-brand, data-content-brand,  │
+│                               data-density (for docs pages)                 │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
