@@ -787,60 +787,6 @@ ${tokenRows}
 `;
   }
 
-  // Scan for component-level effects dynamically
-  let componentEffectsSection = '';
-  const componentsDir = path.join(TOKENS_DIR, 'brands/bild/components');
-
-  if (fs.existsSync(componentsDir)) {
-    const componentEffects = [];
-    const componentDirs = fs.readdirSync(componentsDir);
-
-    for (const componentDir of componentDirs) {
-      const effectsLightPath = path.join(componentsDir, componentDir, `${componentDir.toLowerCase()}-effects-light.json`);
-
-      if (fs.existsSync(effectsLightPath)) {
-        const compEffects = loadTokens(effectsLightPath);
-        if (compEffects) {
-          for (const [tokenKey, tokenValue] of Object.entries(compEffects)) {
-            if (tokenValue && tokenValue.$type === 'shadow') {
-              const cssVar = `--${toKebabCase(tokenKey)}`;
-              componentEffects.push({
-                component: componentDir,
-                cssVar: cssVar,
-                comment: tokenValue.comment || ''
-              });
-            }
-          }
-        }
-      }
-    }
-
-    if (componentEffects.length > 0) {
-      const compRows = componentEffects.map(c => `    <tr>
-      <td>${c.component}</td>
-      <td><code>${c.cssVar}</code></td>
-    </tr>`).join('\n');
-
-      componentEffectsSection = `
-## Component-Level Effects
-
-Some components have their own effect tokens:
-
-<table className="effects-table">
-  <thead>
-    <tr>
-      <th>Component</th>
-      <th>Token</th>
-    </tr>
-  </thead>
-  <tbody>
-${compRows}
-  </tbody>
-</table>
-`;
-    }
-  }
-
   // Final MDX content
   const mdxContent = `import { Meta } from '@storybook/blocks';
 
@@ -953,9 +899,6 @@ ${shadowSections}
 
 You can also use CSS custom properties directly for more control:
 ${shadowTokensTable}
----
-
-${componentEffectsSection}
 ---
 
 ## Usage
