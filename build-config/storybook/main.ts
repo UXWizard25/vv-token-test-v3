@@ -9,8 +9,11 @@ function getAbsolutePath(value: string): string {
 }
 
 const config: StorybookConfig = {
-  // Stories location: next to components
-  stories: ['../../src/components/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  // Stories and documentation location
+  stories: [
+    '../../src/docs/**/*.mdx',                              // Foundations & docs
+    '../../src/components/**/*.stories.@(js|jsx|mjs|ts|tsx)' // Component stories
+  ],
 
   // Addons
   addons: [
@@ -25,7 +28,7 @@ const config: StorybookConfig = {
     options: {},
   },
 
-  // Static directories for CSS bundles and Stencil components
+  // Static directories for CSS bundles, Stencil components, and JSON tokens
   staticDirs: [
     {
       from: '../../dist/css',
@@ -34,6 +37,10 @@ const config: StorybookConfig = {
     {
       from: '../../dist/stencil',
       to: '/stencil',
+    },
+    {
+      from: '../../dist/json',
+      to: '/json',
     },
   ],
 

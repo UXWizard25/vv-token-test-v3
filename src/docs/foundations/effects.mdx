@@ -1,0 +1,121 @@
+{/* @ts-nocheck */}
+import { Meta } from '@storybook/blocks';
+import { ShadowItem } from '../components/ShadowGallery';
+
+<Meta title="Foundations/Effects" />
+
+# Effects
+
+Das BILD Design System bietet vordefinierte Effekte für Elevation und visuelle Tiefe.
+
+---
+
+## Shadow Scale
+
+Schatten erzeugen visuelle Hierarchie durch simulierte Elevation.
+
+### Soft Shadows
+
+Weiche, natürliche Schatten für Cards, Panels und schwebende Elemente.
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '24px', marginTop: '24px' }}>
+  <ShadowItem name="Shadow Soft SM" className="shadow-soft-sm" />
+  <ShadowItem name="Shadow Soft MD" className="shadow-soft-md" />
+  <ShadowItem name="Shadow Soft LG" className="shadow-soft-lg" />
+  <ShadowItem name="Shadow Soft XL" className="shadow-soft-xl" />
+</div>
+
+### Hard Shadows
+
+Harte Schatten für betonte Elemente und Overlays.
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '24px', marginTop: '24px' }}>
+  <ShadowItem name="Shadow Hard SM" className="shadow-hard-sm" />
+  <ShadowItem name="Shadow Hard MD" className="shadow-hard-md" />
+  <ShadowItem name="Shadow Hard LG" className="shadow-hard-lg" />
+</div>
+
+---
+
+## Elevation Levels
+
+| Level | Shadow | Verwendung |
+|-------|--------|------------|
+| 0 | Kein Schatten | Flache Elemente, Hintergrund |
+| 1 | `shadow-soft-sm` | Subtile Erhöhung, Cards |
+| 2 | `shadow-soft-md` | Dropdown Menus, Popovers |
+| 3 | `shadow-soft-lg` | Modals, Dialoge |
+| 4 | `shadow-soft-xl` | Toast Notifications, schwebende Elemente |
+
+---
+
+## Light vs Dark Mode
+
+Schatten passen sich automatisch an den Theme-Modus an:
+
+| Mode | Charakteristik |
+|------|----------------|
+| **Light** | Dunklere Schatten auf hellem Grund |
+| **Dark** | Subtilere Schatten, mehr Transparenz |
+
+> **Tipp:** Wechsle das Theme im Toolbar um die Unterschiede zu sehen.
+
+**Wichtig:** Effects sind **markenunabhängig** - sie ändern sich nur basierend auf Light/Dark Mode, nicht auf BILD vs SportBILD.
+
+---
+
+## CSS Classes
+
+```html
+<!-- Via CSS Klasse -->
+<div class="shadow-soft-md">Card mit mittlerem Schatten</div>
+<div class="shadow-soft-lg">Modal mit großem Schatten</div>
+```
+
+---
+
+## CSS Custom Properties
+
+```css
+/* Oder via CSS Variables */
+.my-card {
+  box-shadow: var(--shadow-soft-md);
+}
+
+.my-modal {
+  box-shadow: var(--shadow-soft-lg);
+}
+
+/* Hover State mit Transition */
+.interactive-card {
+  box-shadow: var(--shadow-soft-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.interactive-card:hover {
+  box-shadow: var(--shadow-soft-md);
+}
+```
+
+---
+
+## Component Token Examples
+
+Einige Komponenten haben eigene Shadow-Tokens:
+
+| Component | Token | Default Value |
+|-----------|-------|---------------|
+| Menu | `--menu-shadow` | `shadow-soft-md` |
+| Modal | `--modal-shadow` | `shadow-soft-lg` |
+| Tooltip | `--tooltip-shadow` | `shadow-soft-sm` |
+| Toast | `--toast-shadow` | `shadow-soft-lg` |
+
+---
+
+## Best Practices
+
+1. **Konsistenz:** Verwende die vordefinierten Shadow-Klassen
+2. **Hierarchie:** Höhere Elevation = größerer Schatten
+3. **Interaktion:** Erhöhe Schatten bei Hover/Focus für Feedback
+4. **Performance:** Schatten sind GPU-beschleunigt via `will-change`
+5. **Zugänglichkeit:** Verlasse dich nicht nur auf Schatten für Grenzen

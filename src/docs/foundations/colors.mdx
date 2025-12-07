@@ -1,0 +1,125 @@
+{/* @ts-nocheck */}
+import { Meta } from '@storybook/blocks';
+import { ColorSwatch } from '../components/ColorPalette';
+
+<Meta title="Foundations/Colors" />
+
+# Colors
+
+Das BILD Design System verwendet eine **4-Layer Token Architektur** für Farben:
+
+1. **Primitives** - Rohe Farbwerte (Layer 0)
+2. **Brand Mapping** - Markenspezifische Zuordnung (Layer 1)
+3. **Semantic** - Bedeutungsbasierte Tokens (Layer 2)
+4. **Component** - Komponenten-spezifische Tokens (Layer 3)
+
+---
+
+## Color Primitives
+
+Die Basis-Farbpalette - absolute Werte ohne Kontext.
+
+### BILD Red
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px', marginTop: '16px' }}>
+  <ColorSwatch name="Red 50" value="#DD0000" cssVar="--color-bild-red-50" />
+  <ColorSwatch name="Red 53" value="#F52D2D" cssVar="--color-bild-red-53" />
+  <ColorSwatch name="Red 35" value="#AF0002" cssVar="--color-bild-red-35" />
+  <ColorSwatch name="Red 25" value="#7D0001" cssVar="--color-bild-red-25" />
+</div>
+
+### Neutral Scale
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px', marginTop: '16px' }}>
+  <ColorSwatch name="Neutral 100" value="#FFFFFF" cssVar="--color-neutral-100" />
+  <ColorSwatch name="Neutral 96" value="#F2F4F5" cssVar="--color-neutral-96" />
+  <ColorSwatch name="Neutral 85" value="#CED4DA" cssVar="--color-neutral-85" />
+  <ColorSwatch name="Neutral 73" value="#AEB4B9" cssVar="--color-neutral-73" />
+  <ColorSwatch name="Neutral 45" value="#666B70" cssVar="--color-neutral-45" />
+  <ColorSwatch name="Neutral 35" value="#4B525A" cssVar="--color-neutral-35" />
+  <ColorSwatch name="Neutral 25" value="#343C41" cssVar="--color-neutral-25" />
+  <ColorSwatch name="Neutral 15" value="#232629" cssVar="--color-neutral-15" />
+  <ColorSwatch name="Neutral 10" value="#1C1C1C" cssVar="--color-neutral-10" />
+  <ColorSwatch name="Neutral 0" value="#000000" cssVar="--color-neutral-0" />
+</div>
+
+### Feedback Colors
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px', marginTop: '16px' }}>
+  <ColorSwatch name="Success" value="#1D7D3F" cssVar="--color-feedback-success" />
+  <ColorSwatch name="Warning" value="#E5A000" cssVar="--color-feedback-warning" />
+  <ColorSwatch name="Error" value="#D32F2F" cssVar="--color-feedback-error" />
+  <ColorSwatch name="Info" value="#0288D1" cssVar="--color-feedback-info" />
+</div>
+
+---
+
+## Semantic Colors
+
+Bedeutungsbasierte Tokens - reagieren auf **Light/Dark Mode**.
+
+> **Tipp:** Wechsle das Theme im Toolbar um Light/Dark Mode zu sehen.
+
+### Text Colors
+
+| Token | Light | Dark | Verwendung |
+|-------|-------|------|------------|
+| `--text-color-primary` | #232629 | #F2F4F5 | Haupttext |
+| `--text-color-secondary` | #666B70 | #AEB4B9 | Sekundärtext |
+| `--text-color-accent` | #DD0000 | #F52D2D | Akzenttext |
+| `--text-color-inverse` | #FFFFFF | #232629 | Invertierter Text |
+
+### Surface Colors
+
+| Token | Light | Dark | Verwendung |
+|-------|-------|------|------------|
+| `--surface-color-primary` | #FFFFFF | #232629 | Hauptfläche |
+| `--surface-color-secondary` | #F2F4F5 | #1C1C1C | Sekundärfläche |
+| `--surface-color-canvas` | #F0F2F4 | #141414 | Hintergrund |
+
+### Core Colors
+
+| Token | Light | Dark | Verwendung |
+|-------|-------|------|------------|
+| `--core-color-primary` | #DD0000 | #DD0000 | Primäre Markenfarbe |
+| `--core-color-secondary` | #232629 | #F2F4F5 | Sekundäre Farbe |
+
+---
+
+## Brand Colors
+
+Die **Dual-Axis Architektur** trennt Farben nach Marke:
+
+### data-color-brand="bild"
+- Primär: **BILD Rot** (#DD0000)
+- Für: BILD App, BILD.de
+
+### data-color-brand="sportbild"
+- Primär: **SportBILD Blau** (#0066B3)
+- Für: SportBILD App, sportbild.de
+
+```html
+<!-- BILD Farben -->
+<html data-color-brand="bild" data-theme="light">
+
+<!-- SportBILD Farben -->
+<html data-color-brand="sportbild" data-theme="dark">
+```
+
+---
+
+## Usage
+
+```css
+/* Semantic Tokens verwenden */
+.my-component {
+  color: var(--text-color-primary);
+  background: var(--surface-color-primary);
+  border-color: var(--border-color-medium-contrast);
+}
+
+/* Akzentfarbe */
+.highlight {
+  color: var(--text-color-accent);
+}
+```
