@@ -7795,10 +7795,11 @@ async function main() {
   // Copy platform-specific README files to dist directories
   console.log(`\n📄 Kopiere Platform-READMEs:\n`);
   try {
-    const readmeSrcDir = path.join(__dirname, '../..');
+    // Docs are in packages/tokens/docs/
+    const readmeSrcDir = path.join(__dirname, '../../packages/tokens/docs');
 
     // Copy docs/css.md to dist/css/README.md
-    const cssReadmeSrc = path.join(readmeSrcDir, 'docs/css.md');
+    const cssReadmeSrc = path.join(readmeSrcDir, 'css.md');
     const cssReadmeDest = path.join(DIST_DIR, 'css/README.md');
     if (fs.existsSync(cssReadmeSrc)) {
       fs.copyFileSync(cssReadmeSrc, cssReadmeDest);
@@ -7808,7 +7809,7 @@ async function main() {
     }
 
     // Copy docs/js.md to dist/js/README.md
-    const jsReadmeSrc = path.join(readmeSrcDir, 'docs/js.md');
+    const jsReadmeSrc = path.join(readmeSrcDir, 'js.md');
     const jsReadmeDest = path.join(DIST_DIR, 'js/README.md');
     if (fs.existsSync(jsReadmeSrc)) {
       fs.copyFileSync(jsReadmeSrc, jsReadmeDest);
@@ -7819,7 +7820,7 @@ async function main() {
 
     // Copy docs/android.md to dist/android/compose/README.md
     if (COMPOSE_ENABLED) {
-      const androidReadmeSrc = path.join(readmeSrcDir, 'docs/android.md');
+      const androidReadmeSrc = path.join(readmeSrcDir, 'android.md');
       const androidReadmeDest = path.join(DIST_DIR, 'android/compose/README.md');
       if (fs.existsSync(androidReadmeSrc)) {
         fs.copyFileSync(androidReadmeSrc, androidReadmeDest);
@@ -7831,7 +7832,7 @@ async function main() {
 
     // Copy docs/ios.md to dist/ios/README.md
     if (SWIFTUI_ENABLED) {
-      const iosReadmeSrc = path.join(readmeSrcDir, 'docs/ios.md');
+      const iosReadmeSrc = path.join(readmeSrcDir, 'ios.md');
       const iosReadmeDest = path.join(DIST_DIR, 'ios/README.md');
       if (fs.existsSync(iosReadmeSrc)) {
         fs.copyFileSync(iosReadmeSrc, iosReadmeDest);
