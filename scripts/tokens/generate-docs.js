@@ -86,12 +86,27 @@ function extractTokensFromCategory(category, prefix = '') {
 }
 
 /**
+ * Sanitize text for MDX - replace newlines with spaces to avoid paragraph breaks
+ * MDX interprets blank lines as paragraph separators which breaks HTML structure
+ */
+function sanitizeForMdx(text) {
+  if (!text) return text;
+  return text
+    .replace(/\r\n/g, ' ')  // Windows line endings
+    .replace(/\n\n+/g, ' ') // Multiple newlines (paragraphs) → single space
+    .replace(/\n/g, ' ')    // Single newlines → space
+    .replace(/\s+/g, ' ')   // Collapse multiple spaces
+    .trim();
+}
+
+/**
  * Generate color token table rows
  */
 function generateColorTableRows(tokens) {
   return tokens.map(token => {
     // Use full comment if available, otherwise generate from token name
-    const usage = token.comment || toDisplayName(token.name);
+    // Sanitize to prevent MDX parsing errors from newlines in comments
+    const usage = sanitizeForMdx(token.comment) || toDisplayName(token.name);
 
     return `    <tr>
       <td><code>${token.cssVar}</code></td>
@@ -525,7 +540,8 @@ ${fontRows}
       // Generate style samples
       for (const style of styles) {
         // Use full comment if available, or generate a default description
-        let description = style.comment || `${toDisplayName(style.name)} typography style`;
+        // Sanitize to prevent MDX parsing errors from newlines in comments
+        let description = sanitizeForMdx(style.comment) || `${toDisplayName(style.name)} typography style`;
 
         typographyClassesSection += `<div className="font-sample">
   <div className="font-sample-label">.${style.className}</div>
@@ -819,8 +835,9 @@ ${spacingCards}
   if (allSpacingTokens.length > 0) {
     const tokenRows = allSpacingTokens.map(t => {
       // Generate usage description from comment
+      // Sanitize to prevent MDX parsing errors from newlines in comments
       let usage = t.comment
-        ? t.comment.split('–').slice(-1)[0].trim()
+        ? sanitizeForMdx(t.comment.split('–').slice(-1)[0])
         : toDisplayName(t.name);
 
       return `    <tr>
@@ -1071,7 +1088,8 @@ function generateEffectsDocs() {
       categoryTitle = categoryTitle.charAt(0).toUpperCase() + categoryTitle.slice(1) + ' Shadows';
 
       // Get category description from the first shadow's comment if available
-      const categoryDesc = shadows[0].comment || '';
+      // Sanitize to prevent MDX parsing errors from newlines in comments
+      const categoryDesc = sanitizeForMdx(shadows[0].comment) || '';
 
       shadowSections += `
 <div className="category-header">${categoryTitle}</div>
@@ -1098,7 +1116,8 @@ ${shadows.map(s => `  <div className="shadow-card ${s.className}">
       if (effectValue && effectValue.$type === 'shadow') {
         const className = toKebabCase(effectKey);
         // Use full comment if available, or create a default description
-        const usage = effectValue.comment || `${toDisplayName(effectKey)} effect`;
+        // Sanitize to prevent MDX parsing errors from newlines in comments
+        const usage = sanitizeForMdx(effectValue.comment) || `${toDisplayName(effectKey)} effect`;
 
         allShadows.push({
           cssVar: `--${className}`,
