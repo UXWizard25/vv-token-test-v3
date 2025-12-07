@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2025-12-05T10:43:28.206Z",
+  "lastModified": "2025-12-07T15:32:24.017Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -2129,8 +2129,7 @@
         "VariableID:19706:124726",
         "VariableID:19709:71129",
         "VariableID:19709:71141",
-        "VariableID:19881:148841",
-        "VariableID:21230:171"
+        "VariableID:19881:148841"
       ],
       "variables": [
         {
@@ -6569,21 +6568,6 @@
             "TEXT_FILL"
           ],
           "hiddenFromPublishing": true,
-          "variableCollectionId": "VariableCollectionId:588:1979"
-        },
-        {
-          "id": "VariableID:21230:171",
-          "name": "Semantic/Core/showAndShareTest",
-          "description": "Use this on elements that need to maintain the dark color across themes and color modes.",
-          "resolvedType": "COLOR",
-          "valuesByMode": {
-            "588:0": "#026FDB",
-            "592:1": "#FF00FB"
-          },
-          "scopes": [
-            "ALL_SCOPES"
-          ],
-          "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
         }
       ]
