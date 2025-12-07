@@ -1,0 +1,61 @@
+{
+  "name": "@bild/design-icons",
+  "version": "1.0.0",
+  "description": "BILD Design System Icons - Multi-platform icon assets",
+  "main": "dist/react/index.js",
+  "module": "dist/react/index.js",
+  "types": "dist/react/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js",
+      "default": "./dist/react/index.js"
+    },
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js",
+      "default": "./dist/react/index.js"
+    },
+    "./react/*": {
+      "types": "./dist/react/*.d.ts",
+      "import": "./dist/react/*.js",
+      "default": "./dist/react/*.js"
+    },
+    "./svg/*": "./dist/svg/*",
+    "./android/*": "./dist/android/*",
+    "./flutter/*": "./dist/flutter/*",
+    "./ios/*": "./dist/ios/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "node ../../scripts/icons/build-icons.js",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "icons",
+    "design-system",
+    "svg",
+    "react-icons",
+    "android-icons",
+    "flutter-icons",
+    "ios-icons",
+    "bild"
+  ],
+  "author": "BILD Design System Team",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  }
+}

@@ -1,122 +1,24 @@
 {
-  "name": "@marioschmidt/design-system-tokens",
+  "name": "bild-design-system",
   "version": "1.0.0",
-  "description": "BILD Design System Token Pipeline with Style Dictionary - Multi-brand design tokens for BILD, SportBILD, and Advertorial",
-  "main": "dist/js/index.js",
-  "module": "dist/js/index.js",
-  "types": "dist/js/index.d.ts",
-  "sideEffects": false,
-  "exports": {
-    ".": {
-      "types": "./dist/js/index.d.ts",
-      "import": "./dist/js/index.js"
-    },
-    "./themes": {
-      "types": "./dist/js/themes/index.d.ts",
-      "import": "./dist/js/themes/index.js"
-    },
-    "./primitives": {
-      "types": "./dist/js/primitives/index.d.ts",
-      "import": "./dist/js/primitives/index.js"
-    },
-    "./bild": {
-      "types": "./dist/js/brands/bild/index.d.ts",
-      "import": "./dist/js/brands/bild/index.js"
-    },
-    "./bild/colors": {
-      "types": "./dist/js/brands/bild/colors.d.ts",
-      "import": "./dist/js/brands/bild/colors.js"
-    },
-    "./bild/spacing": {
-      "types": "./dist/js/brands/bild/spacing.d.ts",
-      "import": "./dist/js/brands/bild/spacing.js"
-    },
-    "./bild/typography": {
-      "types": "./dist/js/brands/bild/typography.d.ts",
-      "import": "./dist/js/brands/bild/typography.js"
-    },
-    "./bild/effects": {
-      "types": "./dist/js/brands/bild/effects.d.ts",
-      "import": "./dist/js/brands/bild/effects.js"
-    },
-    "./bild/components": {
-      "types": "./dist/js/brands/bild/components/index.d.ts",
-      "import": "./dist/js/brands/bild/components/index.js"
-    },
-    "./bild/components/*": {
-      "types": "./dist/js/brands/bild/components/*.d.ts",
-      "import": "./dist/js/brands/bild/components/*.js"
-    },
-    "./sportbild": {
-      "types": "./dist/js/brands/sportbild/index.d.ts",
-      "import": "./dist/js/brands/sportbild/index.js"
-    },
-    "./sportbild/colors": {
-      "types": "./dist/js/brands/sportbild/colors.d.ts",
-      "import": "./dist/js/brands/sportbild/colors.js"
-    },
-    "./sportbild/spacing": {
-      "types": "./dist/js/brands/sportbild/spacing.d.ts",
-      "import": "./dist/js/brands/sportbild/spacing.js"
-    },
-    "./sportbild/typography": {
-      "types": "./dist/js/brands/sportbild/typography.d.ts",
-      "import": "./dist/js/brands/sportbild/typography.js"
-    },
-    "./sportbild/effects": {
-      "types": "./dist/js/brands/sportbild/effects.d.ts",
-      "import": "./dist/js/brands/sportbild/effects.js"
-    },
-    "./sportbild/components": {
-      "types": "./dist/js/brands/sportbild/components/index.d.ts",
-      "import": "./dist/js/brands/sportbild/components/index.js"
-    },
-    "./sportbild/components/*": {
-      "types": "./dist/js/brands/sportbild/components/*.d.ts",
-      "import": "./dist/js/brands/sportbild/components/*.js"
-    },
-    "./advertorial": {
-      "types": "./dist/js/brands/advertorial/index.d.ts",
-      "import": "./dist/js/brands/advertorial/index.js"
-    },
-    "./advertorial/spacing": {
-      "types": "./dist/js/brands/advertorial/spacing.d.ts",
-      "import": "./dist/js/brands/advertorial/spacing.js"
-    },
-    "./advertorial/typography": {
-      "types": "./dist/js/brands/advertorial/typography.d.ts",
-      "import": "./dist/js/brands/advertorial/typography.js"
-    },
-    "./css/*": "./dist/css/*",
-    "./scss/*": "./dist/scss/*",
-    "./json/*": "./dist/json/*",
-    "./min": {
-      "types": "./dist/js/index.d.ts",
-      "import": "./dist/js.min/index.js"
-    },
-    "./package.json": "./package.json"
-  },
-  "files": [
-    "dist/",
-    "README.md",
-    "README.tokens.md",
-    "LICENSE"
+  "private": true,
+  "description": "BILD Design System - Monorepo for design tokens, icons, and web components",
+  "workspaces": [
+    "packages/*"
   ],
   "scripts": {
-    "preprocess": "node scripts/tokens/preprocess.js",
-    "build:tokens": "npm run preprocess && node scripts/tokens/build.js",
-    "build:bundles": "node scripts/tokens/bundles.js",
-    "build:stencil": "stencil build --config build-config/stencil/stencil.config.ts",
-    "dev:stencil": "stencil build --dev --watch --serve --config build-config/stencil/stencil.config.ts",
-    "build": "npm run build:tokens && npm run build:bundles",
-    "build:all": "npm run build && npm run build:stencil",
-    "storybook": "storybook dev -p 6006 -c build-config/storybook",
-    "prestorybook": "npm run build:all",
-    "build:storybook": "storybook build -c build-config/storybook -o dist/storybook",
-    "prebuild:storybook": "npm run build:all",
-    "watch": "nodemon --watch src/design-tokens --ext json --exec npm run build:tokens",
-    "clean": "rm -rf dist tokens",
-    "prepublishOnly": "npm run build:all"
+    "build": "npm run build:tokens && npm run build:components",
+    "build:tokens": "npm run build -w @bild/design-tokens",
+    "build:icons": "npm run build -w @bild/design-icons",
+    "build:components": "npm run build -w @bild/design-components",
+    "build:all": "npm run build:tokens && npm run build:icons && npm run build:components",
+    "dev:stencil": "npm run dev -w @bild/design-components",
+    "storybook": "npm run build:tokens && npm run build:components && storybook dev -p 6006 -c build-config/storybook",
+    "build:storybook": "npm run build:tokens && npm run build:components && storybook build -c build-config/storybook -o dist/storybook",
+    "clean": "npm run clean --workspaces --if-present && rm -rf dist",
+    "publish:tokens": "npm publish -w @bild/design-tokens",
+    "publish:icons": "npm publish -w @bild/design-icons",
+    "publish:components": "npm publish -w @bild/design-components"
   },
   "repository": {
     "type": "git",
@@ -126,22 +28,8 @@
     "url": "https://github.com/UXWizard25/vv-token-test-v3/issues"
   },
   "homepage": "https://github.com/UXWizard25/vv-token-test-v3#readme",
-  "keywords": [
-    "design-tokens",
-    "style-dictionary",
-    "figma",
-    "design-system",
-    "bild",
-    "sportbild",
-    "css-variables",
-    "scss",
-    "tokens"
-  ],
-  "author": "UXWizard25",
+  "author": "BILD Design System Team",
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
   "devDependencies": {
     "@stencil/core": "^4.38.3",
     "@storybook/addon-docs": "^8.6.14",
@@ -154,6 +42,7 @@
     "@svgr/core": "^8.1.0",
     "@types/react": "^19.2.7",
     "fantasticon": "^3.0.0",
+    "glob": "^10.3.10",
     "lit": "^3.3.1",
     "nodemon": "^3.0.1",
     "storybook": "^8.6.14",

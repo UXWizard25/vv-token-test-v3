@@ -28,8 +28,8 @@ const path = require('path');
 
 const PATHS = {
   root: path.resolve(__dirname, '../..'),
-  input: path.resolve(__dirname, '../../src/icons'),
-  output: path.resolve(__dirname, '../../dist/icons'),
+  input: path.resolve(__dirname, '../../packages/icons/src'),
+  output: path.resolve(__dirname, '../../packages/icons/dist'),
 };
 
 // ============================================================================

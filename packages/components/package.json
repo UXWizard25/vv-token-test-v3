@@ -1,0 +1,54 @@
+{
+  "name": "@bild/design-components",
+  "version": "1.0.0",
+  "description": "BILD Design System Web Components - Stencil-based component library",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./loader": {
+      "import": "./dist/loader/index.js",
+      "require": "./dist/loader/index.cjs.js",
+      "types": "./dist/loader/index.d.ts"
+    },
+    "./components": {
+      "import": "./dist/components/index.js",
+      "types": "./dist/components/index.d.ts"
+    }
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "stencil build --config ../../build-config/stencil/stencil.config.ts",
+    "dev": "stencil build --dev --watch --serve --config ../../build-config/stencil/stencil.config.ts",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "web-components",
+    "stencil",
+    "design-system",
+    "bild",
+    "custom-elements"
+  ],
+  "author": "BILD Design System Team",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@bild/design-tokens": "^1.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@bild/design-tokens": {
+      "optional": true
+    }
+  }
+}

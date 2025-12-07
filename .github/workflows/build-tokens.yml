@@ -9,12 +9,14 @@ on:
       - develop
       - 'claude/**'
     paths:
-      - 'src/design-tokens/**'
-      - 'src/components/**'
+      - 'packages/tokens/src/**'
+      - 'packages/components/src/**'
       - 'scripts/tokens/**'
       - 'build-config/tokens/**'
       - 'build-config/stencil/**'
       - 'package.json'
+      - 'packages/tokens/package.json'
+      - 'packages/components/package.json'
 
   # Manueller Trigger über GitHub UI
   workflow_dispatch:
@@ -102,8 +104,9 @@ jobs:
         with:
           name: design-tokens-${{ github.sha }}
           path: |
-            dist/
-            tokens/
+            packages/tokens/dist/
+            packages/tokens/.tokens/
+            packages/components/dist/
             build-output.log
           retention-days: 30
 
@@ -122,30 +125,30 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "#### CSS Bundles" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          ls -1 dist/bundles/quick-start/*.css 2>/dev/null || echo "No bundles generated"
+          ls -1 packages/tokens/dist/bundles/quick-start/*.css 2>/dev/null || echo "No bundles generated"
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
           echo "#### Brand Tokens" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          ls -1 dist/css/brands/bild/semantic/color/*.css 2>/dev/null | head -5 || echo "No files generated"
+          ls -1 packages/tokens/dist/css/brands/bild/semantic/color/*.css 2>/dev/null | head -5 || echo "No files generated"
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
           echo "#### Shared Primitives" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          ls -1 dist/css/shared/*.css 2>/dev/null | head -5 || echo "No files generated"
+          ls -1 packages/tokens/dist/css/shared/*.css 2>/dev/null | head -5 || echo "No files generated"
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
           echo "### 📊 File Statistics" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Total Files Generated:** $(find dist -type f | wc -l)" >> $GITHUB_STEP_SUMMARY
-          echo "- **CSS Files:** $(find dist -name '*.css' | wc -l)" >> $GITHUB_STEP_SUMMARY
-          echo "- **SCSS Files:** $(find dist -name '*.scss' | wc -l)" >> $GITHUB_STEP_SUMMARY
-          echo "- **JavaScript Files:** $(find dist -name '*.js' | wc -l)" >> $GITHUB_STEP_SUMMARY
-          echo "- **JSON Files:** $(find dist -name '*.json' | wc -l)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Stencil Components:** $(find dist/stencil -type f 2>/dev/null | wc -l) files" >> $GITHUB_STEP_SUMMARY
+          echo "- **Token Files Generated:** $(find packages/tokens/dist -type f 2>/dev/null | wc -l)" >> $GITHUB_STEP_SUMMARY
+          echo "- **CSS Files:** $(find packages/tokens/dist -name '*.css' 2>/dev/null | wc -l)" >> $GITHUB_STEP_SUMMARY
+          echo "- **SCSS Files:** $(find packages/tokens/dist -name '*.scss' 2>/dev/null | wc -l)" >> $GITHUB_STEP_SUMMARY
+          echo "- **JavaScript Files:** $(find packages/tokens/dist -name '*.js' 2>/dev/null | wc -l)" >> $GITHUB_STEP_SUMMARY
+          echo "- **JSON Files:** $(find packages/tokens/dist -name '*.json' 2>/dev/null | wc -l)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Stencil Components:** $(find packages/components/dist -type f 2>/dev/null | wc -l) files" >> $GITHUB_STEP_SUMMARY
 
       # 8. Comment PR with Artifacts (if this is a PR)
       - name: Comment PR with Build Artifacts
@@ -156,11 +159,11 @@ jobs:
             const fs = require('fs');
 
             // Get file statistics
-            const totalFiles = parseInt(require('child_process').execSync('find dist -type f 2>/dev/null | wc -l').toString().trim());
-            const cssFiles = parseInt(require('child_process').execSync('find dist -name "*.css" 2>/dev/null | wc -l').toString().trim());
-            const scssFiles = parseInt(require('child_process').execSync('find dist -name "*.scss" 2>/dev/null | wc -l').toString().trim());
-            const jsFiles = parseInt(require('child_process').execSync('find dist -name "*.js" 2>/dev/null | wc -l').toString().trim());
-            const jsonFiles = parseInt(require('child_process').execSync('find dist -name "*.json" 2>/dev/null | wc -l').toString().trim());
+            const totalFiles = parseInt(require('child_process').execSync('find packages/tokens/dist packages/components/dist -type f 2>/dev/null | wc -l').toString().trim());
+            const cssFiles = parseInt(require('child_process').execSync('find packages/tokens/dist -name "*.css" 2>/dev/null | wc -l').toString().trim());
+            const scssFiles = parseInt(require('child_process').execSync('find packages/tokens/dist -name "*.scss" 2>/dev/null | wc -l').toString().trim());
+            const jsFiles = parseInt(require('child_process').execSync('find packages/tokens/dist packages/components/dist -name "*.js" 2>/dev/null | wc -l').toString().trim());
+            const jsonFiles = parseInt(require('child_process').execSync('find packages/tokens/dist -name "*.json" 2>/dev/null | wc -l').toString().trim());
 
             const comment = `## 🎨 Design Tokens Build erfolgreich!
 
@@ -174,14 +177,14 @@ jobs:
             [⬇️ **Download Build Artifacts**](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
             **Enthalten:**
-            - \`dist/bundles/\` - **Optimized CSS Bundles** (Quick Start, Semantic, Components)
-            - \`dist/css/\` - CSS Custom Properties (with data-attributes)
-            - \`dist/scss/\` - SCSS Variables
-            - \`dist/js/\` - JavaScript ES6
-            - \`dist/json/\` - JSON Data
-            - \`dist/ios/\` - Swift Classes
-            - \`dist/android/\` - Android XML
-            - \`dist/stencil/\` - **Stencil Web Components** (ESM, Custom Elements)
+            - \`packages/tokens/dist/bundles/\` - **Optimized CSS Bundles** (Quick Start, Semantic, Components)
+            - \`packages/tokens/dist/css/\` - CSS Custom Properties (with data-attributes)
+            - \`packages/tokens/dist/scss/\` - SCSS Variables
+            - \`packages/tokens/dist/js/\` - JavaScript ES6
+            - \`packages/tokens/dist/json/\` - JSON Data
+            - \`packages/tokens/dist/ios/\` - Swift Classes
+            - \`packages/tokens/dist/android/\` - Android XML
+            - \`packages/components/dist/\` - **Stencil Web Components** (ESM, Custom Elements)
             <!-- Flutter Dart output currently disabled (FLUTTER_ENABLED = false in build.js) -->
 
             <details>
@@ -242,10 +245,15 @@ jobs:
 
       - name: Create Release Archive
         run: |
-          cd artifacts/dist
-          zip -r ../../design-tokens-${{ github.ref_name }}.zip .
-          cd ../..
-          tar -czf design-tokens-${{ github.ref_name }}.tar.gz -C artifacts/dist .
+          # Create combined archive from both packages
+          mkdir -p release-build
+          cp -r artifacts/packages/tokens/dist/* release-build/
+          mkdir -p release-build/stencil
+          cp -r artifacts/packages/components/dist/* release-build/stencil/
+          cd release-build
+          zip -r ../design-tokens-${{ github.ref_name }}.zip .
+          cd ..
+          tar -czf design-tokens-${{ github.ref_name }}.tar.gz -C release-build .
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1

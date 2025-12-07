@@ -22,8 +22,8 @@ const path = require('path');
 // ============================================================================
 
 const PATHS = {
-  input: path.resolve(__dirname, '../../dist/icons/svg'),
-  output: path.resolve(__dirname, '../../dist/icons/ios/Assets.xcassets/Icons'),
+  input: path.resolve(__dirname, '../../packages/icons/dist/svg'),
+  output: path.resolve(__dirname, '../../packages/icons/dist/ios/Assets.xcassets/Icons'),
 };
 
 // ============================================================================

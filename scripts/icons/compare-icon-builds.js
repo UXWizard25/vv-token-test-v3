@@ -28,7 +28,7 @@ const crypto = require('crypto');
 
 const PATHS = {
   oldBuild: process.argv[2] || path.resolve(__dirname, '../../dist-icons-old'),
-  newBuild: process.argv[3] || path.resolve(__dirname, '../../dist/icons'),
+  newBuild: process.argv[3] || path.resolve(__dirname, '../../packages/icons/dist'),
   output: path.resolve(__dirname, '../../icons-diff.json'),
 };
 

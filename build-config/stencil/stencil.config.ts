@@ -2,30 +2,30 @@ import { Config } from '@stencil/core';
 
 export const config: Config = {
   namespace: 'bds',
-  srcDir: '../../src/components',
-  globalStyle: '../../dist/css/bundles/bild.css',
+  srcDir: '../../packages/components/src',
+  globalStyle: '../../packages/tokens/dist/css/bundles/bild.css',
   outputTargets: [
     {
       type: 'dist',
-      dir: '../../dist/stencil',
+      dir: '../../packages/components/dist',
       esmLoaderPath: '../loader',
     },
     {
       type: 'dist-custom-elements',
-      dir: '../../dist/stencil/components',
+      dir: '../../packages/components/dist/components',
       customElementsExportBehavior: 'auto-define-custom-elements',
     },
     {
       type: 'www',
-      dir: '../../dist/stencil/www',
+      dir: '../../packages/components/dist/www',
       serviceWorker: null,
       copy: [
-        { src: '../../dist/css', dest: 'css' },
+        { src: '../../packages/tokens/dist/css', dest: 'css' },
       ],
     },
     {
       type: 'docs-readme',
-      dir: '../../dist/stencil/docs',
+      dir: '../../packages/components/dist/docs',
     },
   ],
   testing: {

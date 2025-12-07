@@ -6,9 +6,9 @@
 #
 # Workflow:
 #   1. Detect icon changes in merge commit
-#   2. Bump version in package.icons.json
+#   2. Bump version in packages/icons/package.json
 #   3. Build fresh icon assets
-#   4. Publish to npm
+#   4. Publish to npm via workspace
 #   5. Create GitHub release
 #
 # ============================================================================
@@ -20,7 +20,7 @@ on:
     branches:
       - main
     paths:
-      - 'src/icons/**'
+      - 'packages/icons/src/**'
 
 # Prevent concurrent publishes
 concurrency:
@@ -66,8 +66,8 @@ jobs:
       - name: Bump version
         id: version
         run: |
-          # Read current version
-          CURRENT_VERSION=$(cat package.icons.json | grep '"version"' | head -1 | sed 's/.*"version": "\(.*\)".*/\1/')
+          # Read current version from workspace package
+          CURRENT_VERSION=$(cat packages/icons/package.json | grep '"version"' | head -1 | sed 's/.*"version": "\(.*\)".*/\1/')
           echo "Current version: $CURRENT_VERSION"
 
           # Bump patch version
@@ -80,8 +80,8 @@ jobs:
 
           echo "New version: $NEW_VERSION"
 
-          # Update package.icons.json
-          sed -i "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$NEW_VERSION\"/" package.icons.json
+          # Update packages/icons/package.json
+          sed -i "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$NEW_VERSION\"/" packages/icons/package.json
 
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
           echo "previous_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
@@ -99,7 +99,7 @@ jobs:
       - name: Count icons
         id: count
         run: |
-          SVG_COUNT=$(find dist/icons/svg -name "*.svg" 2>/dev/null | wc -l || echo 0)
+          SVG_COUNT=$(find packages/icons/dist/svg -name "*.svg" 2>/dev/null | wc -l || echo 0)
           echo "count=$SVG_COUNT" >> $GITHUB_OUTPUT
 
       # ========================================
@@ -111,11 +111,11 @@ jobs:
           echo "::group::Validating package contents"
 
           # Check required directories exist
-          [ -d "dist/icons/svg" ] || (echo "Missing dist/icons/svg" && exit 1)
-          [ -d "dist/icons/react" ] || (echo "Missing dist/icons/react" && exit 1)
+          [ -d "packages/icons/dist/svg" ] || (echo "Missing packages/icons/dist/svg" && exit 1)
+          [ -d "packages/icons/dist/react" ] || (echo "Missing packages/icons/dist/react" && exit 1)
 
           # Check for at least one icon
-          SVG_COUNT=$(find dist/icons/svg -name "*.svg" | wc -l)
+          SVG_COUNT=$(find packages/icons/dist/svg -name "*.svg" | wc -l)
           if [ "$SVG_COUNT" -eq 0 ]; then
             echo "No SVG icons found - skipping publish"
             echo "skip=true" >> $GITHUB_OUTPUT
@@ -130,33 +130,13 @@ jobs:
       # Publish
       # ========================================
 
-      - name: Prepare package for publish
-        if: steps.count.outputs.count != '0'
-        run: |
-          # Create a temporary package.json for publishing
-          cp package.icons.json package.json.backup
-
-          # The icons package uses package.icons.json
-          # We need to publish from that
-
       - name: Publish to npm
         if: steps.count.outputs.count != '0'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          # Publish using package.icons.json as the manifest
-          # npm publish reads from package.json by default
-
-          # Temporarily swap package files
-          mv package.json package.tokens.json
-          mv package.icons.json package.json
-
-          # Publish
-          npm publish --access public || echo "Publish failed or package already exists"
-
-          # Restore
-          mv package.json package.icons.json
-          mv package.tokens.json package.json
+          # Publish via npm workspace - no more package.json swap hack needed!
+          npm publish -w @bild/design-icons --access public || echo "Publish failed or package already exists"
 
       # ========================================
       # Commit & Tag
@@ -168,7 +148,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add package.icons.json
+          git add packages/icons/package.json
           git commit -m "chore(icons): bump version to ${{ steps.version.outputs.version }}" || true
           git push || true
 
@@ -247,5 +227,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: icon-release-${{ steps.version.outputs.version }}
-          path: dist/icons/
+          path: packages/icons/dist/
           retention-days: 90

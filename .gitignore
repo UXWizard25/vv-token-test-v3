@@ -4,9 +4,14 @@ node_modules/
 yarn.lock
 pnpm-lock.yaml
 
-# Build outputs
+# Build outputs (per package)
+packages/*/dist/
+
+# Style Dictionary intermediate files
+packages/tokens/.tokens/
+
+# Root dist (Storybook output)
 dist/
-/tokens/
 
 # Icon build comparison
 dist-icons-old/

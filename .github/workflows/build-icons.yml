@@ -24,19 +24,19 @@ on:
       - figma-icons
       - 'claude/**'
     paths:
-      - 'src/icons/**'
+      - 'packages/icons/src/**'
       - 'scripts/icons/**'
       - 'build-config/icons/**'
-      - 'package.icons.json'
+      - 'packages/icons/package.json'
       - '.github/workflows/build-icons.yml'
   pull_request:
     branches:
       - main
     paths:
-      - 'src/icons/**'
+      - 'packages/icons/src/**'
       - 'scripts/icons/**'
       - 'build-config/icons/**'
-      - 'package.icons.json'
+      - 'packages/icons/package.json'
   workflow_dispatch:
     inputs:
       clean_build:
@@ -83,7 +83,7 @@ jobs:
 
       - name: Clean previous build
         if: ${{ github.event.inputs.clean_build == 'true' }}
-        run: rm -rf dist/icons
+        run: rm -rf packages/icons/dist
 
       # ========================================
       # Build
@@ -97,9 +97,9 @@ jobs:
           echo "::endgroup::"
 
           # Count generated files
-          SVG_COUNT=$(find dist/icons/svg -name "*.svg" 2>/dev/null | wc -l || echo 0)
-          REACT_COUNT=$(find dist/icons/react -name "*.tsx" 2>/dev/null | wc -l || echo 0)
-          ANDROID_COUNT=$(find dist/icons/android -name "*.xml" 2>/dev/null | wc -l || echo 0)
+          SVG_COUNT=$(find packages/icons/dist/svg -name "*.svg" 2>/dev/null | wc -l || echo 0)
+          REACT_COUNT=$(find packages/icons/dist/react -name "*.tsx" 2>/dev/null | wc -l || echo 0)
+          ANDROID_COUNT=$(find packages/icons/dist/android -name "*.xml" 2>/dev/null | wc -l || echo 0)
 
           echo "svg_count=$SVG_COUNT" >> $GITHUB_OUTPUT
           echo "react_count=$REACT_COUNT" >> $GITHUB_OUTPUT
@@ -113,7 +113,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: icon-assets
-          path: dist/icons/
+          path: packages/icons/dist/
           retention-days: 30
           if-no-files-found: warn
 

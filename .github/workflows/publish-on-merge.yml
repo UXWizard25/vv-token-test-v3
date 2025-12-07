@@ -6,8 +6,8 @@ on:
     branches:
       - main
     paths:
-      - 'src/design-tokens/**'
-      - 'src/components/**'
+      - 'packages/tokens/src/**'
+      - 'packages/components/src/**'
 
 permissions:
   contents: write
@@ -169,7 +169,7 @@ jobs:
           echo "📊 Building baseline for token comparison..."
 
           # Aktuellen dist speichern
-          mv dist/ dist-new/
+          mv packages/tokens/dist/ dist-new/
 
           # Vorherigen Tag finden
           PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD~1 2>/dev/null || echo "")
@@ -178,25 +178,26 @@ jobs:
             echo "Building baseline from $PREVIOUS_TAG..."
 
             # Zu vorherigem Tag wechseln und bauen
-            git checkout "$PREVIOUS_TAG" -- src/design-tokens/ 2>/dev/null || true
-            npm run build 2>/dev/null || true
+            git checkout "$PREVIOUS_TAG" -- packages/tokens/src/ 2>/dev/null || true
+            npm run build:tokens 2>/dev/null || true
 
-            if [ -d "dist" ]; then
-              mv dist/ dist-old/
+            if [ -d "packages/tokens/dist" ]; then
+              mv packages/tokens/dist/ dist-old/
               echo "has_baseline=true" >> $GITHUB_OUTPUT
             else
               echo "has_baseline=false" >> $GITHUB_OUTPUT
             fi
 
             # Zurück zum aktuellen Stand
-            git checkout HEAD -- src/design-tokens/ 2>/dev/null || true
+            git checkout HEAD -- packages/tokens/src/ 2>/dev/null || true
           else
             echo "No previous tag found, skipping baseline"
             echo "has_baseline=false" >> $GITHUB_OUTPUT
           fi
 
-          # dist-new zurück zu dist
-          mv dist-new/ dist/
+          # dist-new zurück zu packages/tokens/dist
+          mkdir -p packages/tokens
+          mv dist-new/ packages/tokens/dist/
 
       # 13. Token-Diff generieren
       - name: Generate Token Diff
@@ -206,7 +207,7 @@ jobs:
             echo "🔍 Comparing token builds..."
             node scripts/tokens/compare-builds.js \
               --old dist-old/ \
-              --new dist/ \
+              --new packages/tokens/dist/ \
               --output dist-diff.json
 
             echo "has_diff=true" >> $GITHUB_OUTPUT

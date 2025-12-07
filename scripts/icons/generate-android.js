@@ -18,8 +18,8 @@ const path = require('path');
 // ============================================================================
 
 const PATHS = {
-  input: path.resolve(__dirname, '../../dist/icons/svg'),
-  output: path.resolve(__dirname, '../../dist/icons/android/drawable'),
+  input: path.resolve(__dirname, '../../packages/icons/dist/svg'),
+  output: path.resolve(__dirname, '../../packages/icons/dist/android/drawable'),
 };
 
 const ANDROID_CONFIG = {

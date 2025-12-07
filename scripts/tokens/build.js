@@ -16,8 +16,8 @@ const path = require('path');
 // Import custom config
 const customConfig = require('../../build-config/tokens/style-dictionary.config.js');
 
-const TOKENS_DIR = path.join(__dirname, '../../tokens');
-const DIST_DIR = path.join(__dirname, '../../dist');
+const TOKENS_DIR = path.join(__dirname, '../../packages/tokens/.tokens');
+const DIST_DIR = path.join(__dirname, '../../packages/tokens/dist');
 
 // Brands and breakpoints
 const BRANDS = ['bild', 'sportbild', 'advertorial'];
@@ -2549,7 +2549,7 @@ function parseKotlinTokens(content) {
  */
 function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
   // Determine required imports based on token values (Material 3: Compact, Medium, Expanded)
@@ -3181,7 +3181,7 @@ function parseSwiftTokens(content) {
  */
 function generateAggregatedSwiftComponentFile(brand, componentName, tokenGroups) {
   const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
   // Check what token groups exist
@@ -3709,7 +3709,7 @@ async function generateComposeThemeProviders() {
  */
 function generateThemeProviderFile(brand, hasColors = true) {
   const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
   // For brands without colors, we need to use a shared color scheme (BildColorScheme)
@@ -3917,7 +3917,7 @@ object ${brandPascal}Theme {
  * Creates: dist/android/compose/shared/Density.kt
  */
 function generateSharedDensityFile() {
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
   return `/**
@@ -3966,7 +3966,7 @@ enum class Density {
  * Uses Material 3 WindowSizeClass breakpoints: Compact (<600dp), Medium (600-839dp), Expanded (≥840dp)
  */
 function generateSharedWindowSizeClassFile() {
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
   return `/**
@@ -4030,7 +4030,7 @@ enum class WindowSizeClass {
  * Only brands with their own color tokens (bild, sportbild)
  */
 function generateColorBrandEnumFile() {
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
   const brandEntries = COLOR_BRANDS.map(brand => {
@@ -4082,7 +4082,7 @@ ${brandEntries}
  * All brands including those without own colors (advertorial)
  */
 function generateContentBrandEnumFile() {
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
   const brandEntries = CONTENT_BRANDS.map(brand => {
@@ -4138,7 +4138,7 @@ ${brandEntries}
  * All color brands implement this interface for polymorphic color access
  */
 function generateDesignColorSchemeFile() {
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
   // Read color properties from existing BildColorScheme to ensure consistency
@@ -4220,7 +4220,7 @@ ${propertyDeclarations}
  * Creates: dist/android/compose/shared/DesignSizingScheme.kt
  */
 function generateDesignSizingSchemeFile() {
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
   // Read sizing properties from existing BildSizingScheme
@@ -4288,7 +4288,7 @@ ${propertyDeclarations}
  * Creates: dist/android/compose/shared/DesignTextStyle.kt
  */
 function generateSharedDesignTextStyleFile() {
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
   return `/**
@@ -4380,7 +4380,7 @@ data class DesignTextStyle(
  * Creates: dist/android/compose/shared/DesignTypographyScheme.kt
  */
 function generateSharedDesignTypographySchemeFile() {
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
   // Read typography properties from existing BildTypographyScheme
@@ -4457,7 +4457,7 @@ ${propertyDeclarations}
  * Creates: dist/android/compose/shared/DropShadow.kt
  */
 function generateSharedDropShadowFile() {
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
   return `/**
@@ -4504,7 +4504,7 @@ data class DropShadow(
  * Creates: dist/android/compose/shared/ShadowStyle.kt
  */
 function generateSharedShadowStyleFile() {
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
   return `/**
@@ -4589,7 +4589,7 @@ data class ShadowStyle(
  * Creates: dist/android/compose/shared/DesignEffectsScheme.kt
  */
 function generateSharedDesignEffectsSchemeFile() {
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
   return `/**
@@ -4654,7 +4654,7 @@ interface DesignEffectsScheme {
  * Creates: dist/android/compose/shared/DesignSystemTheme.kt
  */
 function generateDesignSystemThemeFile() {
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
   // Generate color imports for all color brands
@@ -5018,7 +5018,7 @@ async function consolidateComposePrimitives() {
   }
 
   // Generate consolidated file
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
   let output = `/**
@@ -5147,7 +5147,7 @@ async function aggregateComposeSemantics() {
 
     try {
       const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-      const packageJson = require('../../package.json');
+      const packageJson = require('../../packages/tokens/package.json');
       const version = packageJson.version;
 
       // Collect semantic tokens
@@ -5402,7 +5402,7 @@ async function generateSwiftUISharedFiles() {
     fs.mkdirSync(sharedDir, { recursive: true });
   }
 
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
   let successful = 0;
 
@@ -5956,7 +5956,7 @@ async function generateSwiftUIThemeProviders() {
     return { totalThemes: 0, successfulThemes: 0 };
   }
 
-  const packageJson = require('../../package.json');
+  const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
   // Only generate theme providers for color brands (those with their own color tokens)

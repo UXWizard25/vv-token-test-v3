@@ -11,8 +11,8 @@ function getAbsolutePath(value: string): string {
 const config: StorybookConfig = {
   // Stories and documentation location
   stories: [
-    '../../src/docs/**/*.mdx',                               // Documentation
-    '../../src/components/**/*.stories.@(js|jsx|mjs|ts|tsx)' // Component stories
+    '../../packages/components/docs/**/*.mdx',                               // Documentation
+    '../../packages/components/src/**/*.stories.@(js|jsx|mjs|ts|tsx)' // Component stories
   ],
 
   // Addons
@@ -30,15 +30,15 @@ const config: StorybookConfig = {
   // Static directories for CSS bundles, Stencil components, and JSON tokens
   staticDirs: [
     {
-      from: '../../dist/css',
+      from: '../../packages/tokens/dist/css',
       to: '/css',
     },
     {
-      from: '../../dist/stencil',
+      from: '../../packages/components/dist',
       to: '/stencil',
     },
     {
-      from: '../../dist/json',
+      from: '../../packages/tokens/dist/json',
       to: '/json',
     },
   ],

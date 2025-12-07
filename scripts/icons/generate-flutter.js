@@ -20,9 +20,9 @@ const path = require('path');
 // ============================================================================
 
 const PATHS = {
-  input: path.resolve(__dirname, '../../dist/icons/svg'),
-  output: path.resolve(__dirname, '../../dist/icons/flutter'),
-  codepoints: path.resolve(__dirname, '../../src/icons/.codepoints.json'),
+  input: path.resolve(__dirname, '../../packages/icons/dist/svg'),
+  output: path.resolve(__dirname, '../../packages/icons/dist/flutter'),
+  codepoints: path.resolve(__dirname, '../../packages/icons/src/.codepoints.json'),
 };
 
 const FLUTTER_CONFIG = {

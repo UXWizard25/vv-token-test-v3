@@ -8,8 +8,8 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "../../dist/icons/react",
-    "rootDir": "../../dist/icons/react-src",
+    "outDir": "../../packages/icons/dist/react",
+    "rootDir": "../../packages/icons/dist/react-src",
     "strict": true,
     "noEmit": false,
     "esModuleInterop": true,
@@ -21,6 +21,6 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false
   },
-  "include": ["../../dist/icons/react-src/**/*.tsx"],
+  "include": ["../../packages/icons/dist/react-src/**/*.tsx"],
   "exclude": ["node_modules"]
 }

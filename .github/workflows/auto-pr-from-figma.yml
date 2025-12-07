@@ -6,7 +6,7 @@ on:
     branches:
       - figma-tokens
     paths:
-      - 'src/design-tokens/**'
+      - 'packages/tokens/src/**'
 
 permissions:
   contents: write
@@ -66,23 +66,23 @@ jobs:
           echo "📦 Building baseline from main branch for full dist/ comparison..."
 
           # Sichere neue Builds
-          mv tokens/ tokens-new/
-          mv dist/ dist-new/
+          mv packages/tokens/.tokens/ tokens-new/
+          mv packages/tokens/dist/ dist-new/
 
           # Sichere neue Source-Datei
-          cp src/design-tokens/bild-design-system-raw-data.json /tmp/new-source.json
+          cp packages/tokens/src/bild-design-system-raw-data.json /tmp/new-source.json
 
           # Hole Source von main Branch
           git fetch origin main
-          if git show origin/main:src/design-tokens/bild-design-system-raw-data.json > src/design-tokens/bild-design-system-raw-data.json 2>/dev/null; then
+          if git show origin/main:packages/tokens/src/bild-design-system-raw-data.json > packages/tokens/src/bild-design-system-raw-data.json 2>/dev/null; then
             echo "✅ Main branch source loaded"
 
             # Build mit main Source
-            npm run build 2>&1 || echo "Baseline build completed"
+            npm run build:tokens 2>&1 || echo "Baseline build completed"
 
             # Verschiebe zu dist-old für Vergleich
-            if [ -d "dist" ]; then
-              mv dist/ dist-old/
+            if [ -d "packages/tokens/dist" ]; then
+              mv packages/tokens/dist/ dist-old/
               echo "baseline_available=true" >> $GITHUB_OUTPUT
             else
               mkdir -p dist-old
@@ -90,7 +90,7 @@ jobs:
             fi
 
             # Aufräumen
-            rm -rf tokens/
+            rm -rf packages/tokens/.tokens/
           else
             echo "⚠️ No main branch source found (first PR?)"
             mkdir -p dist-old
@@ -98,12 +98,13 @@ jobs:
           fi
 
           # Stelle neue Source und Builds wieder her
-          mv /tmp/new-source.json src/design-tokens/bild-design-system-raw-data.json
-          mv tokens-new/ tokens/
-          mv dist-new/ dist/
+          mv /tmp/new-source.json packages/tokens/src/bild-design-system-raw-data.json
+          mkdir -p packages/tokens
+          mv tokens-new/ packages/tokens/.tokens/
+          mv dist-new/ packages/tokens/dist/
 
           echo "✅ Baseline comparison ready"
-          echo "📁 dist-old/ = main branch, dist/ = new version"
+          echo "📁 dist-old/ = main branch, packages/tokens/dist/ = new version"
 
       # 6. Vergleiche Dist Builds (alle Plattformen)
       - name: Compare Dist Builds
@@ -123,7 +124,7 @@ jobs:
 
           node scripts/tokens/compare-builds.js \
             --old dist-old/ \
-            --new dist/ \
+            --new packages/tokens/dist/ \
             --output dist-diff.json
 
           # Extrahiere Summary für Output
@@ -150,8 +151,8 @@ jobs:
         with:
           name: figma-tokens-${{ github.sha }}
           path: |
-            dist/
-            tokens/
+            packages/tokens/dist/
+            packages/tokens/.tokens/
             dist-diff.json
             build-output.log
           retention-days: 30

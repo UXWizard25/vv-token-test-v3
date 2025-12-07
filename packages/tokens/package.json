@@ -1,0 +1,116 @@
+{
+  "name": "@bild/design-tokens",
+  "version": "1.0.0",
+  "description": "BILD Design System Tokens - Multi-brand design tokens for BILD, SportBILD, and Advertorial",
+  "main": "dist/js/index.js",
+  "module": "dist/js/index.js",
+  "types": "dist/js/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/js/index.d.ts",
+      "import": "./dist/js/index.js"
+    },
+    "./themes": {
+      "types": "./dist/js/themes/index.d.ts",
+      "import": "./dist/js/themes/index.js"
+    },
+    "./primitives": {
+      "types": "./dist/js/primitives/index.d.ts",
+      "import": "./dist/js/primitives/index.js"
+    },
+    "./bild": {
+      "types": "./dist/js/brands/bild/index.d.ts",
+      "import": "./dist/js/brands/bild/index.js"
+    },
+    "./bild/colors": {
+      "types": "./dist/js/brands/bild/colors.d.ts",
+      "import": "./dist/js/brands/bild/colors.js"
+    },
+    "./bild/spacing": {
+      "types": "./dist/js/brands/bild/spacing.d.ts",
+      "import": "./dist/js/brands/bild/spacing.js"
+    },
+    "./bild/typography": {
+      "types": "./dist/js/brands/bild/typography.d.ts",
+      "import": "./dist/js/brands/bild/typography.js"
+    },
+    "./bild/effects": {
+      "types": "./dist/js/brands/bild/effects.d.ts",
+      "import": "./dist/js/brands/bild/effects.js"
+    },
+    "./bild/components": {
+      "types": "./dist/js/brands/bild/components/index.d.ts",
+      "import": "./dist/js/brands/bild/components/index.js"
+    },
+    "./bild/components/*": {
+      "types": "./dist/js/brands/bild/components/*.d.ts",
+      "import": "./dist/js/brands/bild/components/*.js"
+    },
+    "./sportbild": {
+      "types": "./dist/js/brands/sportbild/index.d.ts",
+      "import": "./dist/js/brands/sportbild/index.js"
+    },
+    "./sportbild/colors": {
+      "types": "./dist/js/brands/sportbild/colors.d.ts",
+      "import": "./dist/js/brands/sportbild/colors.js"
+    },
+    "./sportbild/spacing": {
+      "types": "./dist/js/brands/sportbild/spacing.d.ts",
+      "import": "./dist/js/brands/sportbild/spacing.js"
+    },
+    "./sportbild/typography": {
+      "types": "./dist/js/brands/sportbild/typography.d.ts",
+      "import": "./dist/js/brands/sportbild/typography.js"
+    },
+    "./sportbild/effects": {
+      "types": "./dist/js/brands/sportbild/effects.d.ts",
+      "import": "./dist/js/brands/sportbild/effects.js"
+    },
+    "./sportbild/components": {
+      "types": "./dist/js/brands/sportbild/components/index.d.ts",
+      "import": "./dist/js/brands/sportbild/components/index.js"
+    },
+    "./sportbild/components/*": {
+      "types": "./dist/js/brands/sportbild/components/*.d.ts",
+      "import": "./dist/js/brands/sportbild/components/*.js"
+    },
+    "./advertorial": {
+      "types": "./dist/js/brands/advertorial/index.d.ts",
+      "import": "./dist/js/brands/advertorial/index.js"
+    },
+    "./advertorial/spacing": {
+      "types": "./dist/js/brands/advertorial/spacing.d.ts",
+      "import": "./dist/js/brands/advertorial/spacing.js"
+    },
+    "./advertorial/typography": {
+      "types": "./dist/js/brands/advertorial/typography.d.ts",
+      "import": "./dist/js/brands/advertorial/typography.js"
+    },
+    "./css/*": "./dist/css/*",
+    "./scss/*": "./dist/scss/*",
+    "./json/*": "./dist/json/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "node ../../scripts/tokens/preprocess.js && node ../../scripts/tokens/build.js && node ../../scripts/tokens/bundles.js",
+    "clean": "rm -rf dist .tokens"
+  },
+  "keywords": [
+    "design-tokens",
+    "style-dictionary",
+    "figma",
+    "design-system",
+    "bild",
+    "sportbild",
+    "css-variables"
+  ],
+  "author": "BILD Design System Team",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}

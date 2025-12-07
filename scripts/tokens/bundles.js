@@ -36,10 +36,10 @@ const fs = require('fs');
 const path = require('path');
 const { glob } = require('glob');
 
-const DIST_DIR = path.join(__dirname, '../..', 'dist');
+const DIST_DIR = path.join(__dirname, '../..', 'packages/tokens/dist');
 const CSS_DIR = path.join(DIST_DIR, 'css');
 const BRANDS = ['bild', 'sportbild', 'advertorial'];
-const PACKAGE_VERSION = require('../../package.json').version;
+const PACKAGE_VERSION = require('../../packages/tokens/package.json').version;
 
 // ============================================================================
 // HEADER GENERATORS
