@@ -95,7 +95,7 @@ function generateColorTableRows(tokens) {
 
     return `    <tr>
       <td><code>${token.cssVar}</code></td>
-      <td><span className="color-swatch" style={{background: 'var(${token.cssVar})'}}></span></td>
+      <td><span className="color-swatch"><span style={{background: 'var(${token.cssVar})'}}></span></span></td>
       <td>${usage}</td>
     </tr>`;
   }).join('\n');
@@ -184,7 +184,7 @@ ${generateColorTableRows(tokens)}
     }
 
     const generateColorCards = (tokens) => tokens.map(t => `  <div className="color-card">
-    <div className="color-card-swatch" style={{background: 'var(${t.cssVar})'}}></div>
+    <div className="color-card-swatch"><span style={{background: 'var(${t.cssVar})'}}></span></div>
     <div className="color-card-info">
       <div className="color-card-name">${t.displayName}</div>
       <div className="color-card-token">${t.cssVar}</div>
@@ -261,6 +261,26 @@ ${generateColorCards(tokens)}
       border: 1px solid var(--border-color-low-contrast);
       vertical-align: middle;
       margin-right: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Checkerboard pattern for transparency */
+    .color-swatch::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(45deg, #e0e0e0 25%, transparent 25%),
+        linear-gradient(-45deg, #e0e0e0 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #e0e0e0 75%),
+        linear-gradient(-45deg, transparent 75%, #e0e0e0 75%);
+      background-size: 8px 8px;
+      background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+      background-color: #fff;
+    }
+    .color-swatch > span {
+      position: absolute;
+      inset: 0;
     }
     .color-grid {
       display: grid;
@@ -276,6 +296,25 @@ ${generateColorCards(tokens)}
     }
     .color-card-swatch {
       height: 64px;
+      position: relative;
+    }
+    /* Checkerboard pattern for transparency in cards */
+    .color-card-swatch::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(45deg, #e0e0e0 25%, transparent 25%),
+        linear-gradient(-45deg, #e0e0e0 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #e0e0e0 75%),
+        linear-gradient(-45deg, transparent 75%, #e0e0e0 75%);
+      background-size: 12px 12px;
+      background-position: 0 0, 0 6px, 6px -6px, -6px 0px;
+      background-color: #fff;
+    }
+    .color-card-swatch > span {
+      position: absolute;
+      inset: 0;
     }
     .color-card-info {
       padding: 12px;
