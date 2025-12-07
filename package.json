@@ -8,8 +8,8 @@
   ],
   "scripts": {
     "preprocess": "node scripts/tokens/preprocess.js",
-    "build": "npm run preprocess && npm run build:tokens && npm run build:components",
-    "build:tokens": "node scripts/tokens/build.js && node scripts/tokens/bundles.js",
+    "build": "npm run build:tokens && npm run build:components",
+    "build:tokens": "npm run preprocess && node scripts/tokens/build.js && node scripts/tokens/bundles.js",
     "build:icons": "npm run build -w @marioschmidt/design-system-icons",
     "build:components": "npm run build -w @marioschmidt/design-system-components",
     "build:all": "npm run build:tokens && npm run build:icons && npm run build:components",
