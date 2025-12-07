@@ -26,25 +26,36 @@ export const DocsContainer: React.FC<React.PropsWithChildren<DocsContainerProps>
     // Get initial state from localStorage
     if (typeof window === 'undefined') return false;
     try {
+      // Try storybook-dark-mode key
       const stored = window.localStorage.getItem('sb-addon-themes-3');
+      console.log('[DocsContainer] localStorage sb-addon-themes-3:', stored);
       if (stored) {
         const parsed = JSON.parse(stored);
+        console.log('[DocsContainer] parsed:', parsed);
         return parsed.current === 'dark';
       }
-    } catch {
-      // Ignore
+    } catch (e) {
+      console.error('[DocsContainer] localStorage error:', e);
     }
     return false;
   });
 
   useEffect(() => {
-    // Listen for dark mode changes
-    channel.on(DARK_MODE_EVENT_NAME, setIsDark);
+    console.log('[DocsContainer] Setting up channel listener for:', DARK_MODE_EVENT_NAME);
+
+    const handleDarkModeChange = (dark: boolean) => {
+      console.log('[DocsContainer] Received dark mode event:', dark);
+      setIsDark(dark);
+    };
+
+    channel.on(DARK_MODE_EVENT_NAME, handleDarkModeChange);
 
     return () => {
-      channel.off(DARK_MODE_EVENT_NAME, setIsDark);
+      channel.off(DARK_MODE_EVENT_NAME, handleDarkModeChange);
     };
   }, []);
+
+  console.log('[DocsContainer] Rendering with isDark:', isDark);
 
   return (
     <BaseContainer
