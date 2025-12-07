@@ -3,6 +3,7 @@ import { html } from 'lit';
 import { addons } from '@storybook/preview-api';
 import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
 import { bildLightTheme, bildDarkTheme } from './manager';
+import { DocsContainer } from './DocsContainer';
 
 // Stencil components are loaded via script tag in preview-head.html
 // This ensures they're available before stories render
@@ -157,9 +158,10 @@ const preview: Preview = {
       ],
     },
 
-    // Docs configuration
+    // Docs configuration with custom container for dynamic theme switching
     docs: {
       toc: true,
+      container: DocsContainer,
     },
 
     // Dark mode addon configuration
