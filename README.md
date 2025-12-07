@@ -287,6 +287,12 @@ vv-token-test-v3/
 │   ├── icons/                          # 🖼️ Figma icon export
 │   │   ├── icon-*.svg
 │   │   └── .codepoints.json            # Flutter codepoint registry
+│   ├── docs/                           # 📖 Storybook styleguide pages
+│   │   ├── intro.mdx                   # Introduction & overview
+│   │   ├── colors.mdx                  # Color tokens & palettes
+│   │   ├── typography.mdx              # Font families & text styles
+│   │   ├── spacing.mdx                 # Spacing scale & density
+│   │   └── effects.mdx                 # Shadows & effects
 │   └── components/                     # 🧩 Stencil Web Components
 │       ├── ds-button/                  # Button component
 │       ├── ds-card/                    # Card component
@@ -447,6 +453,17 @@ Storybook provides an interactive component development environment with the **4
 - **Dark Mode Integration**: Unified dark mode toggle syncs both Storybook UI and component preview
 - **Custom BILD Themes**: Storybook UI styled with BILD Design System colors
 - **Web Components Ready**: Full support for Stencil components in stories
+- **Styleguide Documentation**: Visual documentation pages for design system foundations
+
+### Styleguide Pages
+
+| Page | Content |
+|------|---------|
+| **Introduction** | Overview, brand architecture, quick links |
+| **Colors** | Color palettes with visual swatches, semantic tokens |
+| **Typography** | Font families, weights, text style samples |
+| **Spacing** | Spacing scale visualization, density modes |
+| **Effects** | Shadow tokens with live previews |
 
 ### Quick Start
 

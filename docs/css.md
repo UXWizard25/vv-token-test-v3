@@ -780,6 +780,20 @@ export const Primary: Story = {
 };
 ```
 
+### Styleguide Documentation
+
+The `src/docs/` directory contains visual documentation pages for design system foundations:
+
+| Page | File | Description |
+|------|------|-------------|
+| Introduction | `intro.mdx` | Overview, brand architecture, links |
+| Colors | `colors.mdx` | Color palettes with visual swatches |
+| Typography | `typography.mdx` | Font families, weights, text styles |
+| Spacing | `spacing.mdx` | Spacing scale, density modes |
+| Effects | `effects.mdx` | Shadow tokens with live previews |
+
+These pages use MDX with `@storybook/blocks` and include styled visual elements like color swatches, spacing bars, and shadow cards.
+
 ### Configuration
 
 | File | Purpose |

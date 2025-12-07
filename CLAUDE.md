@@ -652,6 +652,8 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 | Modify Storybook UI themes | `build-config/storybook/manager.ts` |
 | Change dark mode sync behavior | `build-config/storybook/preview-body.html` |
 | Add static files to Storybook | `build-config/storybook/main.ts` → `staticDirs` |
+| Add/modify styleguide documentation | `src/docs/*.mdx` |
+| Change styleguide stories pattern | `build-config/storybook/main.ts` → `stories` glob |
 
 ---
 
@@ -931,6 +933,12 @@ build-config/
     preview-body.html       # Dark mode sync script
 
 src/
+  docs/                     # Styleguide documentation pages
+    intro.mdx               # Introduction & overview
+    colors.mdx              # Color tokens & palettes
+    typography.mdx          # Font families & text styles
+    spacing.mdx             # Spacing scale & density
+    effects.mdx             # Shadows & effects
   components/
     ds-button/
       ds-button.stories.ts  # Story file (co-located with component)
@@ -1063,6 +1071,48 @@ const bildDarkTheme = create({
 });
 ```
 
+### Styleguide Documentation
+
+The `src/docs/` directory contains MDX documentation pages for the design system foundations:
+
+| Page | File | Content |
+|------|------|---------|
+| **Introduction** | `intro.mdx` | Overview, brand cards, architecture links |
+| **Colors** | `colors.mdx` | Color palettes, semantic tokens, brand colors |
+| **Typography** | `typography.mdx` | Font families, weights, text styles |
+| **Spacing** | `spacing.mdx` | Spacing scale, density modes, responsive spacing |
+| **Effects** | `effects.mdx` | Shadow tokens, light/dark mode shadows |
+
+**MDX Format Notes:**
+
+- Uses `@storybook/blocks` for `Meta` import
+- HTML tables with inline CSS (markdown tables don't render properly in MDX)
+- `<style>{``}` blocks for component styling
+- Visual elements (color swatches, spacing bars, shadow cards) via inline JSX
+
+**Writing Documentation Pages:**
+
+```mdx
+{/* src/docs/example.mdx */}
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Styleguide/Example" />
+
+<style>{`
+  .example-card {
+    padding: 16px;
+    border-radius: 8px;
+    background: var(--surface-color-primary);
+  }
+`}</style>
+
+# Example Page
+
+<div className="example-card">
+  Content with design token styling
+</div>
+```
+
 ---
 
 ## Common Issues
@@ -1085,3 +1135,7 @@ const bildDarkTheme = create({
 | Stories not found | Wrong stories glob pattern | Check `main.ts` → `stories` path pattern |
 | CSS tokens not loading in Storybook | Static dirs misconfigured | Verify `main.ts` → `staticDirs` and `npm run build` completed |
 | Components not rendering in stories | Stencil not built | Run `npm run build:all` before `npm run storybook` |
+| MDX parsing error (acorn/FunctionDeclaration) | Wrong MDX format or imports | Use `@storybook/blocks` import, avoid TSX components in MDX |
+| "No matching indexer found" for MDX | Wrong file extension | Use `.mdx` for docs-only pages, `.stories.ts` for component stories |
+| Markdown tables showing as raw text | MDX doesn't render markdown tables | Use HTML `<table>` elements with inline CSS instead |
+| Styleguide pages not appearing | Stories glob pattern wrong | Check `main.ts` → `stories` includes `src/docs/**/*.mdx` |
