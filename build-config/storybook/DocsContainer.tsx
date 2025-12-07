@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { DocsContainer as BaseContainer } from '@storybook/blocks';
+import { DocsContainer as BaseContainer, type DocsContainerProps } from '@storybook/blocks';
 import { addons } from '@storybook/preview-api';
 import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
 import { bildLightTheme, bildDarkTheme } from './manager';
+
+// Get channel outside component to ensure it's available immediately
+const channel = addons.getChannel();
 
 /**
  * Custom DocsContainer that dynamically switches the Storybook docs theme
@@ -11,13 +14,16 @@ import { bildLightTheme, bildDarkTheme } from './manager';
  * Note: We can't use useDarkMode() hook here because it's a Storybook hook
  * that only works inside decorators. Instead we use the channel API with
  * React's useState/useEffect.
+ *
+ * @see https://github.com/storybookjs/storybook/issues/28758
  */
-export const DocsContainer: React.FC<React.ComponentProps<typeof BaseContainer>> = ({
+export const DocsContainer: React.FC<React.PropsWithChildren<DocsContainerProps>> = ({
   children,
+  context,
   ...props
 }) => {
-  // Get initial state from localStorage
-  const getInitialDarkMode = (): boolean => {
+  const [isDark, setIsDark] = useState<boolean>(() => {
+    // Get initial state from localStorage
     if (typeof window === 'undefined') return false;
     try {
       const stored = window.localStorage.getItem('sb-addon-themes-3');
@@ -29,26 +35,23 @@ export const DocsContainer: React.FC<React.ComponentProps<typeof BaseContainer>>
       // Ignore
     }
     return false;
-  };
-
-  const [isDark, setIsDark] = useState(getInitialDarkMode);
+  });
 
   useEffect(() => {
-    const channel = addons.getChannel();
-
-    const handleDarkModeChange = (dark: boolean) => {
-      setIsDark(dark);
-    };
-
-    channel.on(DARK_MODE_EVENT_NAME, handleDarkModeChange);
+    // Listen for dark mode changes
+    channel.on(DARK_MODE_EVENT_NAME, setIsDark);
 
     return () => {
-      channel.off(DARK_MODE_EVENT_NAME, handleDarkModeChange);
+      channel.off(DARK_MODE_EVENT_NAME, setIsDark);
     };
   }, []);
 
   return (
-    <BaseContainer {...props} theme={isDark ? bildDarkTheme : bildLightTheme}>
+    <BaseContainer
+      context={context}
+      theme={isDark ? bildDarkTheme : bildLightTheme}
+      {...props}
+    >
       {children}
     </BaseContainer>
   );
