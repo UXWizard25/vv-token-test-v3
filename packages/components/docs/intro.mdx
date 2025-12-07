@@ -4,6 +4,10 @@ import { Meta } from '@storybook/blocks';
 
 <style>
   {`
+    .intro-container {
+      background: var(--surface-color-primary);
+      color: var(--text-color-primary);
+    }
     .intro-table {
       width: 100%;
       border-collapse: collapse;
@@ -12,14 +16,14 @@ import { Meta } from '@storybook/blocks';
     .intro-table th, .intro-table td {
       padding: 0.75rem;
       text-align: left;
-      border-bottom: 1px solid #e0e0e0;
+      border-bottom: 1px solid var(--border-color-low-contrast);
     }
     .intro-table th {
-      background: #f5f5f5;
+      background: var(--surface-color-secondary);
       font-weight: 600;
     }
     .intro-table code {
-      background: #f0f0f0;
+      background: var(--surface-color-tertiary);
       padding: 0.2rem 0.4rem;
       border-radius: 3px;
       font-size: 0.85em;
@@ -29,9 +33,26 @@ import { Meta } from '@storybook/blocks';
       align-items: center;
       gap: 16px;
       padding: 16px;
-      background: #fafafa;
+      background: var(--surface-color-secondary);
       border-radius: 8px;
       margin: 8px 0;
+    }
+    .brand-swatch-primary {
+      width: 48px;
+      height: 48px;
+      background: var(--core-color-primary);
+      border-radius: 8px;
+    }
+    .brand-swatch-tertiary {
+      width: 48px;
+      height: 48px;
+      background: var(--core-color-tertiary);
+      border-radius: 8px;
+      color: var(--text-color-primary-inverse);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
     }
     .link-grid {
       display: grid;
@@ -41,85 +62,99 @@ import { Meta } from '@storybook/blocks';
     }
     .link-card {
       padding: 20px;
-      background: #fafafa;
+      background: var(--surface-color-secondary);
       border-radius: 8px;
       text-decoration: none;
       color: inherit;
       transition: background 0.2s;
+      border: 1px solid var(--border-color-low-contrast);
     }
     .link-card:hover {
-      background: #f0f0f0;
+      background: var(--surface-color-tertiary);
     }
     .link-card-title {
       font-weight: 600;
       margin-bottom: 4px;
+      color: var(--text-color-primary);
     }
     .link-card-desc {
       font-size: 14px;
-      color: #666;
+      color: var(--text-color-secondary);
+    }
+    .hint-box {
+      padding: 12px 16px;
+      background: var(--surface-color-tertiary);
+      border-radius: 8px;
+      border-left: 4px solid var(--core-color-primary);
+      margin: 1rem 0;
+      font-size: 14px;
     }
   `}
 </style>
 
 # BILD Design System
 
-Willkommen zum **BILD Design System** - einem umfassenden Design Token System für konsistente Marken-Erlebnisse.
+Welcome to the **BILD Design System** - a comprehensive design token system for consistent brand experiences across platforms.
+
+<div className="hint-box">
+  <strong>Developer Tip:</strong> Use the <strong>toolbar controls above</strong> to switch between brands, themes, and density modes. All documentation adapts automatically.
+</div>
 
 ---
 
-## 4-Layer Token Architektur
+## 4-Layer Token Architecture
 
 <table className="intro-table">
   <thead>
     <tr>
       <th>Layer</th>
       <th>Name</th>
-      <th>Beschreibung</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>0</td>
       <td>Primitives</td>
-      <td>Rohe Werte (Farben, Größen, Fonts)</td>
+      <td>Raw values (colors, sizes, fonts) - no modes</td>
     </tr>
     <tr>
       <td>1</td>
       <td>Mapping</td>
-      <td>Markenspezifische Zuordnung</td>
+      <td>Brand-specific mapping (BILD, SportBILD, Advertorial)</td>
     </tr>
     <tr>
       <td>2</td>
       <td>Semantic</td>
-      <td>Bedeutungsbasierte Tokens</td>
+      <td>Meaning-based tokens (ColorMode, BreakpointMode, Density)</td>
     </tr>
     <tr>
       <td>3</td>
       <td>Components</td>
-      <td>Komponenten-spezifische Tokens</td>
+      <td>Component-specific tokens (~55 components)</td>
     </tr>
   </tbody>
 </table>
 
 ---
 
-## Dual-Axis Architektur
+## Dual-Axis Architecture
 
-Das System trennt **Color Brand** und **Content Brand** für maximale Flexibilität:
+The system separates **Color Brand** and **Content Brand** for maximum flexibility:
 
 <div className="brand-card">
-  <div style={{width: '48px', height: '48px', background: '#DD0000', borderRadius: '8px'}}></div>
+  <div className="brand-swatch-primary"></div>
   <div>
-    <div style={{fontWeight: 600}}>Color Brand: BILD / SportBILD</div>
-    <div style={{color: '#666', fontSize: '14px'}}>Farben + Effects</div>
+    <div style={{fontWeight: 600, color: 'var(--text-color-primary)'}}>Color Brand: BILD / SportBILD</div>
+    <div style={{color: 'var(--text-color-secondary)', fontSize: '14px'}}>Colors + Effects (set via <code>data-color-brand</code>)</div>
   </div>
 </div>
 
 <div className="brand-card">
-  <div style={{width: '48px', height: '48px', background: '#232629', borderRadius: '8px', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600}}>Aa</div>
+  <div className="brand-swatch-tertiary">Aa</div>
   <div>
-    <div style={{fontWeight: 600}}>Content Brand: BILD / SportBILD / Advertorial</div>
-    <div style={{color: '#666', fontSize: '14px'}}>Typography + Spacing</div>
+    <div style={{fontWeight: 600, color: 'var(--text-color-primary)'}}>Content Brand: BILD / SportBILD / Advertorial</div>
+    <div style={{color: 'var(--text-color-secondary)', fontSize: '14px'}}>Typography + Spacing (set via <code>data-content-brand</code>)</div>
   </div>
 </div>
 
@@ -127,31 +162,36 @@ Das System trennt **Color Brand** und **Content Brand** für maximale Flexibilit
 
 ## Theming Controls
 
-Nutze die **Toolbar oben** um verschiedene Konfigurationen zu testen:
+Use the **toolbar above** to test different configurations:
 
 <table className="intro-table">
   <thead>
     <tr>
       <th>Control</th>
-      <th>Optionen</th>
+      <th>Options</th>
+      <th>CSS Attribute</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>Color Brand</td>
       <td>BILD, SportBILD</td>
+      <td><code>data-color-brand</code></td>
     </tr>
     <tr>
       <td>Content Brand</td>
       <td>BILD, SportBILD, Advertorial</td>
+      <td><code>data-content-brand</code></td>
     </tr>
     <tr>
       <td>Theme</td>
       <td>Light, Dark</td>
+      <td><code>data-theme</code></td>
     </tr>
     <tr>
       <td>Density</td>
       <td>Default, Dense, Spacious</td>
+      <td><code>data-density</code></td>
     </tr>
   </tbody>
 </table>
@@ -163,19 +203,19 @@ Nutze die **Toolbar oben** um verschiedene Konfigurationen zu testen:
 <div className="link-grid">
   <a className="link-card" href="?path=/docs/foundations-colors--docs">
     <div className="link-card-title">Colors</div>
-    <div className="link-card-desc">Farbpalette und semantische Farben</div>
+    <div className="link-card-desc">Color primitives and semantic tokens</div>
   </a>
   <a className="link-card" href="?path=/docs/foundations-typography--docs">
     <div className="link-card-title">Typography</div>
-    <div className="link-card-desc">Schriften und Textgrößen</div>
+    <div className="link-card-desc">Font families and text styles</div>
   </a>
   <a className="link-card" href="?path=/docs/foundations-spacing--docs">
     <div className="link-card-title">Spacing</div>
-    <div className="link-card-desc">Abstände und Grid</div>
+    <div className="link-card-desc">Spacing scale and grid system</div>
   </a>
   <a className="link-card" href="?path=/docs/foundations-effects--docs">
     <div className="link-card-title">Effects</div>
-    <div className="link-card-desc">Schatten und Effekte</div>
+    <div className="link-card-desc">Shadows and visual effects</div>
   </a>
 </div>
 
@@ -195,3 +235,13 @@ Nutze die **Toolbar oben** um verschiedene Konfigurationen zu testen:
   </head>
 </html>
 ```
+
+---
+
+## Token Naming Convention
+
+| Platform | Format | Example |
+|----------|--------|---------|
+| CSS | `kebab-case` | `--text-color-primary` |
+| JavaScript | `camelCase` | `textColorPrimary` |
+| Swift/Kotlin | `camelCase` | `textColorPrimary` |

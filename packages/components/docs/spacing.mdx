@@ -12,21 +12,22 @@ import { Meta } from '@storybook/blocks';
     .spacing-table th, .spacing-table td {
       padding: 0.75rem;
       text-align: left;
-      border-bottom: 1px solid #e0e0e0;
+      border-bottom: 1px solid var(--border-color-low-contrast);
+      color: var(--text-color-primary);
     }
     .spacing-table th {
-      background: #f5f5f5;
+      background: var(--surface-color-secondary);
       font-weight: 600;
     }
     .spacing-table code {
-      background: #f0f0f0;
+      background: var(--surface-color-tertiary);
       padding: 0.2rem 0.4rem;
       border-radius: 3px;
       font-size: 0.85em;
     }
     .spacing-bar {
       height: 24px;
-      background: #DD0000;
+      background: var(--core-color-primary);
       border-radius: 4px;
       opacity: 0.8;
     }
@@ -35,147 +36,331 @@ import { Meta } from '@storybook/blocks';
       align-items: center;
       gap: 16px;
       padding: 12px;
-      background: #fafafa;
+      background: var(--surface-color-secondary);
       border-radius: 8px;
       margin: 8px 0;
     }
     .spacing-value {
-      min-width: 60px;
+      min-width: 80px;
       font-family: monospace;
+      font-size: 13px;
+      color: var(--text-color-secondary);
+    }
+    .spacing-token {
+      font-family: monospace;
+      font-size: 12px;
+      color: var(--text-color-secondary);
+      margin-left: auto;
+    }
+    .hint-box {
+      padding: 12px 16px;
+      background: var(--surface-color-tertiary);
+      border-radius: 8px;
+      border-left: 4px solid var(--core-color-primary);
+      margin: 1rem 0;
       font-size: 14px;
+      color: var(--text-color-primary);
+    }
+    .category-header {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-color-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-color-low-contrast);
     }
     .density-card {
       padding: 16px;
-      background: #fafafa;
+      background: var(--surface-color-secondary);
       border-radius: 8px;
       margin: 8px 0;
+      border: 1px solid var(--border-color-low-contrast);
+    }
+    .density-title {
+      font-weight: 600;
+      color: var(--text-color-primary);
+      margin-bottom: 8px;
+    }
+    .density-desc {
+      font-size: 14px;
+      color: var(--text-color-secondary);
+    }
+    .density-demo {
+      display: flex;
+      gap: var(--content-gap-md);
+      margin-top: 12px;
+    }
+    .density-box {
+      width: 40px;
+      height: 40px;
+      background: var(--core-color-primary);
+      border-radius: 4px;
+      opacity: 0.6;
     }
   `}
 </style>
 
 # Spacing
 
-Das BILD Design System verwendet ein **8px Basis-Grid**.
+The BILD Design System uses an **8px base grid** with semantic spacing tokens from the BreakpointMode collection.
 
----
-
-## Spacing Scale
-
-<div className="spacing-demo">
-  <span className="spacing-value">4px</span>
-  <div className="spacing-bar" style={{width: '4px'}}></div>
-  <code>--space-0-5-x</code>
-</div>
-
-<div className="spacing-demo">
-  <span className="spacing-value">8px</span>
-  <div className="spacing-bar" style={{width: '8px'}}></div>
-  <code>--space-1-x</code>
-</div>
-
-<div className="spacing-demo">
-  <span className="spacing-value">16px</span>
-  <div className="spacing-bar" style={{width: '16px'}}></div>
-  <code>--space-2-x</code>
-</div>
-
-<div className="spacing-demo">
-  <span className="spacing-value">24px</span>
-  <div className="spacing-bar" style={{width: '24px'}}></div>
-  <code>--space-3-x</code>
-</div>
-
-<div className="spacing-demo">
-  <span className="spacing-value">32px</span>
-  <div className="spacing-bar" style={{width: '32px'}}></div>
-  <code>--space-4-x</code>
-</div>
-
-<div className="spacing-demo">
-  <span className="spacing-value">48px</span>
-  <div className="spacing-bar" style={{width: '48px'}}></div>
-  <code>--space-6-x</code>
-</div>
-
-<div className="spacing-demo">
-  <span className="spacing-value">64px</span>
-  <div className="spacing-bar" style={{width: '64px'}}></div>
-  <code>--space-8-x</code>
+<div className="hint-box">
+  <strong>Live Preview:</strong> All spacing visualizations use CSS custom properties. Switch <strong>density modes</strong> and resize your browser to see values change responsively.
 </div>
 
 ---
 
-## Semantic Spacing
+## Semantic Spacing Tokens
+
+These are the meaning-based spacing tokens that adapt to breakpoints and density settings.
+
+<div className="category-header">Grid Spacing (Responsive)</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">XS Grid</span>
+  <div className="spacing-bar" style={{width: 'var(--grid-space-resp-sm)'}}></div>
+  <span className="spacing-token">--grid-space-resp-sm</span>
+</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">Base Grid</span>
+  <div className="spacing-bar" style={{width: 'var(--grid-space-resp-base)'}}></div>
+  <span className="spacing-token">--grid-space-resp-base</span>
+</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">LG Grid</span>
+  <div className="spacing-bar" style={{width: 'var(--grid-space-resp-lg)'}}></div>
+  <span className="spacing-token">--grid-space-resp-lg</span>
+</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">XL Grid</span>
+  <div className="spacing-bar" style={{width: 'var(--grid-space-resp-xl)'}}></div>
+  <span className="spacing-token">--grid-space-resp-xl</span>
+</div>
+
+<div className="category-header">Content Gap</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">SM Gap</span>
+  <div className="spacing-bar" style={{width: 'var(--content-gap-sm)'}}></div>
+  <span className="spacing-token">--content-gap-sm</span>
+</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">MD Gap</span>
+  <div className="spacing-bar" style={{width: 'var(--content-gap-md)'}}></div>
+  <span className="spacing-token">--content-gap-md</span>
+</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">LG Gap</span>
+  <div className="spacing-bar" style={{width: 'var(--content-gap-lg)'}}></div>
+  <span className="spacing-token">--content-gap-lg</span>
+</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">XL Gap</span>
+  <div className="spacing-bar" style={{width: 'var(--content-gap-xl)'}}></div>
+  <span className="spacing-token">--content-gap-xl</span>
+</div>
+
+<div className="category-header">Page Layout</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">Page Inline</span>
+  <div className="spacing-bar" style={{width: 'var(--page-inline-space)'}}></div>
+  <span className="spacing-token">--page-inline-space</span>
+</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">Stack XS</span>
+  <div className="spacing-bar" style={{width: 'var(--page-stack-space-xs)'}}></div>
+  <span className="spacing-token">--page-stack-space-xs</span>
+</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">Stack SM</span>
+  <div className="spacing-bar" style={{width: 'var(--page-stack-space-sm)'}}></div>
+  <span className="spacing-token">--page-stack-space-sm</span>
+</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">Stack MD</span>
+  <div className="spacing-bar" style={{width: 'var(--page-stack-space-md)'}}></div>
+  <span className="spacing-token">--page-stack-space-md</span>
+</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">Stack LG</span>
+  <div className="spacing-bar" style={{width: 'var(--page-stack-space-lg)'}}></div>
+  <span className="spacing-token">--page-stack-space-lg</span>
+</div>
+
+---
+
+## Density Modes
+
+The spacing system supports three density modes via the `data-density` attribute:
+
+<div className="density-card">
+  <div className="density-title">Default (1.0x)</div>
+  <div className="density-desc">Standard UI spacing · <code>data-density="default"</code></div>
+  <div className="density-demo">
+    <div className="density-box"></div>
+    <div className="density-box"></div>
+    <div className="density-box"></div>
+  </div>
+</div>
+
+<div className="density-card">
+  <div className="density-title">Dense (0.75x)</div>
+  <div className="density-desc">Compact layouts, data tables, lists · <code>data-density="dense"</code></div>
+</div>
+
+<div className="density-card">
+  <div className="density-title">Spacious (1.25x)</div>
+  <div className="density-desc">Hero sections, marketing layouts · <code>data-density="spacious"</code></div>
+</div>
+
+**Try it:** Use the **Density** control in the toolbar above to see spacing change.
+
+---
+
+## Responsive Breakpoints
+
+Spacing tokens adapt to viewport width via CSS `@media` queries:
 
 <table className="spacing-table">
   <thead>
     <tr>
-      <th>Token</th>
-      <th>Wert</th>
-      <th>Verwendung</th>
+      <th>Breakpoint</th>
+      <th>Min-Width</th>
+      <th>Device Class</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code>--grid-space-resp-base</code></td>
-      <td>12-24px</td>
-      <td>Basis Grid Gap (responsive)</td>
+      <td><code>xs</code></td>
+      <td>320px</td>
+      <td>Mobile (default)</td>
     </tr>
     <tr>
-      <td><code>--grid-margin</code></td>
-      <td>16-48px</td>
-      <td>Außenrand des Grids</td>
+      <td><code>sm</code></td>
+      <td>390px</td>
+      <td>Large Mobile</td>
     </tr>
     <tr>
-      <td><code>--content-gap-sm</code></td>
-      <td>8px</td>
-      <td>Kleine Abstände</td>
+      <td><code>md</code></td>
+      <td>600px</td>
+      <td>Tablet</td>
     </tr>
     <tr>
-      <td><code>--content-gap-md</code></td>
-      <td>16px</td>
-      <td>Standard Abstände</td>
-    </tr>
-    <tr>
-      <td><code>--content-gap-lg</code></td>
-      <td>24px</td>
-      <td>Große Abstände</td>
-    </tr>
-    <tr>
-      <td><code>--content-gap-xl</code></td>
-      <td>32px</td>
-      <td>Extra große Abstände</td>
+      <td><code>lg</code></td>
+      <td>1024px</td>
+      <td>Desktop</td>
     </tr>
   </tbody>
 </table>
 
 ---
 
-## Density Modes
+## All Spacing Tokens
 
-<div className="density-card">
-  <div style={{fontWeight: 600, marginBottom: '8px'}}>Default (1.0x)</div>
-  <div style={{color: '#666', fontSize: '14px'}}>Standard UI · data-density="default"</div>
-</div>
-
-<div className="density-card">
-  <div style={{fontWeight: 600, marginBottom: '8px'}}>Dense (0.75x)</div>
-  <div style={{color: '#666', fontSize: '14px'}}>Datentabellen, Listen · data-density="dense"</div>
-</div>
-
-<div className="density-card">
-  <div style={{fontWeight: 600, marginBottom: '8px'}}>Spacious (1.25x)</div>
-  <div style={{color: '#666', fontSize: '14px'}}>Hero Sections · data-density="spacious"</div>
-</div>
+<table className="spacing-table">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--grid-space-resp-sm</code></td>
+      <td>Small responsive grid gaps</td>
+    </tr>
+    <tr>
+      <td><code>--grid-space-resp-base</code></td>
+      <td>Base responsive grid gaps (gutters)</td>
+    </tr>
+    <tr>
+      <td><code>--grid-space-resp-lg</code></td>
+      <td>Large responsive grid gaps</td>
+    </tr>
+    <tr>
+      <td><code>--grid-space-resp-xl</code></td>
+      <td>Extra large responsive grid gaps</td>
+    </tr>
+    <tr>
+      <td><code>--content-gap-sm</code></td>
+      <td>Small content spacing (8px)</td>
+    </tr>
+    <tr>
+      <td><code>--content-gap-md</code></td>
+      <td>Medium content spacing (16px)</td>
+    </tr>
+    <tr>
+      <td><code>--content-gap-lg</code></td>
+      <td>Large content spacing (24px)</td>
+    </tr>
+    <tr>
+      <td><code>--content-gap-xl</code></td>
+      <td>Extra large content spacing (32px)</td>
+    </tr>
+    <tr>
+      <td><code>--page-inline-space</code></td>
+      <td>Page horizontal padding</td>
+    </tr>
+    <tr>
+      <td><code>--page-stack-space-xs</code></td>
+      <td>Extra small vertical section spacing</td>
+    </tr>
+    <tr>
+      <td><code>--page-stack-space-sm</code></td>
+      <td>Small vertical section spacing</td>
+    </tr>
+    <tr>
+      <td><code>--page-stack-space-md</code></td>
+      <td>Medium vertical section spacing</td>
+    </tr>
+    <tr>
+      <td><code>--page-stack-space-lg</code></td>
+      <td>Large vertical section spacing</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
 ## Usage
 
 ```css
-.my-component {
-  padding: var(--space-2-x);
-  margin-bottom: var(--space-3-x);
-  gap: var(--content-gap-md);
+/* Grid layout with responsive gaps */
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-space-resp-base);
+}
+
+/* Content with semantic spacing */
+.card {
+  padding: var(--content-gap-lg);
+  margin-bottom: var(--content-gap-xl);
+}
+
+/* Page-level spacing */
+.page-section {
+  padding-inline: var(--page-inline-space);
+  padding-block: var(--page-stack-space-md);
+}
+
+/* Flex container with adaptive gaps */
+.button-group {
+  display: flex;
+  gap: var(--content-gap-sm);
 }
 ```
