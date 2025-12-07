@@ -2,53 +2,183 @@ import { Meta } from '@storybook/blocks';
 
 <Meta title="Foundations/Effects" />
 
+<style>
+  {`
+    .effects-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0 2rem;
+    }
+    .effects-table th, .effects-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .effects-table th {
+      background: #f5f5f5;
+      font-weight: 600;
+    }
+    .effects-table code {
+      background: #f0f0f0;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.85em;
+    }
+    .shadow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 24px;
+      margin: 1rem 0 2rem;
+      padding: 24px;
+      background: #f5f5f5;
+      border-radius: 12px;
+    }
+    .shadow-card {
+      height: 100px;
+      background: white;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #666;
+    }
+    .shadow-soft-sm { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08); }
+    .shadow-soft-md { box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.08); }
+    .shadow-soft-lg { box-shadow: 0 10px 20px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.08); }
+    .shadow-soft-xl { box-shadow: 0 20px 40px rgba(0,0,0,0.15), 0 8px 16px rgba(0,0,0,0.1); }
+  `}
+</style>
+
 # Effects
 
 Das BILD Design System bietet vordefinierte Effekte für Elevation und visuelle Tiefe.
+
+---
 
 ## Shadow Scale
 
 ### Soft Shadows
 
-| Name | CSS Klasse | Verwendung |
-|------|------------|------------|
-| Shadow Soft SM | .shadow-soft-sm | Subtile Erhöhung |
-| Shadow Soft MD | .shadow-soft-md | Cards, Panels |
-| Shadow Soft LG | .shadow-soft-lg | Dropdowns, Popovers |
-| Shadow Soft XL | .shadow-soft-xl | Modals, Overlays |
+<div className="shadow-grid">
+  <div className="shadow-card shadow-soft-sm">
+    <div style={{textAlign: 'center'}}>
+      <div style={{fontWeight: 600}}>SM</div>
+      <div>.shadow-soft-sm</div>
+    </div>
+  </div>
+  <div className="shadow-card shadow-soft-md">
+    <div style={{textAlign: 'center'}}>
+      <div style={{fontWeight: 600}}>MD</div>
+      <div>.shadow-soft-md</div>
+    </div>
+  </div>
+  <div className="shadow-card shadow-soft-lg">
+    <div style={{textAlign: 'center'}}>
+      <div style={{fontWeight: 600}}>LG</div>
+      <div>.shadow-soft-lg</div>
+    </div>
+  </div>
+  <div className="shadow-card shadow-soft-xl">
+    <div style={{textAlign: 'center'}}>
+      <div style={{fontWeight: 600}}>XL</div>
+      <div>.shadow-soft-xl</div>
+    </div>
+  </div>
+</div>
 
-### Hard Shadows
-
-| Name | CSS Klasse | Verwendung |
-|------|------------|------------|
-| Shadow Hard SM | .shadow-hard-sm | Kleine Elemente |
-| Shadow Hard MD | .shadow-hard-md | Mittlere Elemente |
-| Shadow Hard LG | .shadow-hard-lg | Große Elemente |
+---
 
 ## Elevation Levels
 
-| Level | Shadow | Verwendung |
-|-------|--------|------------|
-| 0 | Kein Schatten | Flache Elemente |
-| 1 | shadow-soft-sm | Cards |
-| 2 | shadow-soft-md | Dropdowns |
-| 3 | shadow-soft-lg | Modals |
-| 4 | shadow-soft-xl | Overlays |
+<table className="effects-table">
+  <thead>
+    <tr>
+      <th>Level</th>
+      <th>Shadow</th>
+      <th>Verwendung</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Kein Schatten</td>
+      <td>Flache Elemente</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td><code>.shadow-soft-sm</code></td>
+      <td>Cards, Buttons</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><code>.shadow-soft-md</code></td>
+      <td>Dropdowns, Popovers</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><code>.shadow-soft-lg</code></td>
+      <td>Modals, Dialoge</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><code>.shadow-soft-xl</code></td>
+      <td>Overlays, Toasts</td>
+    </tr>
+  </tbody>
+</table>
+
+---
 
 ## Light vs Dark Mode
 
-| Mode | Charakteristik |
-|------|----------------|
-| Light | Dunklere Schatten |
-| Dark | Subtilere Schatten |
+<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', margin: '1rem 0'}}>
+  <div style={{padding: '16px', background: '#fafafa', borderRadius: '8px'}}>
+    <div style={{fontWeight: 600, marginBottom: '8px'}}>Light Mode</div>
+    <div style={{color: '#666', fontSize: '14px'}}>Dunklere, sichtbarere Schatten</div>
+  </div>
+  <div style={{padding: '16px', background: '#232629', borderRadius: '8px', color: 'white'}}>
+    <div style={{fontWeight: 600, marginBottom: '8px'}}>Dark Mode</div>
+    <div style={{color: '#aaa', fontSize: '14px'}}>Subtilere Schatten, mehr Transparenz</div>
+  </div>
+</div>
 
 **Wichtig:** Effects sind **markenunabhängig** - sie ändern sich nur bei Light/Dark Mode.
 
-## Usage
+---
 
-```html
-<div class="shadow-soft-md">Card mit Schatten</div>
-```
+## Component Tokens
+
+<table className="effects-table">
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Token</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Menu</td>
+      <td><code>--menu-shadow</code></td>
+    </tr>
+    <tr>
+      <td>Modal</td>
+      <td><code>--modal-shadow</code></td>
+    </tr>
+    <tr>
+      <td>Tooltip</td>
+      <td><code>--tooltip-shadow</code></td>
+    </tr>
+    <tr>
+      <td>Toast</td>
+      <td><code>--toast-shadow</code></td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Usage
 
 ```css
 .my-card {
@@ -64,12 +194,3 @@ Das BILD Design System bietet vordefinierte Effekte für Elevation und visuelle 
   box-shadow: var(--shadow-soft-md);
 }
 ```
-
-## Component Tokens
-
-| Component | Token |
-|-----------|-------|
-| Menu | --menu-shadow |
-| Modal | --modal-shadow |
-| Tooltip | --tooltip-shadow |
-| Toast | --toast-shadow |

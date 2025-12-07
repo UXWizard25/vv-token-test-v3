@@ -2,58 +2,173 @@ import { Meta } from '@storybook/blocks';
 
 <Meta title="Foundations/Spacing" />
 
+<style>
+  {`
+    .spacing-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0 2rem;
+    }
+    .spacing-table th, .spacing-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .spacing-table th {
+      background: #f5f5f5;
+      font-weight: 600;
+    }
+    .spacing-table code {
+      background: #f0f0f0;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.85em;
+    }
+    .spacing-bar {
+      height: 24px;
+      background: #DD0000;
+      border-radius: 4px;
+      opacity: 0.8;
+    }
+    .spacing-demo {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px;
+      background: #fafafa;
+      border-radius: 8px;
+      margin: 8px 0;
+    }
+    .spacing-value {
+      min-width: 60px;
+      font-family: monospace;
+      font-size: 14px;
+    }
+    .density-card {
+      padding: 16px;
+      background: #fafafa;
+      border-radius: 8px;
+      margin: 8px 0;
+    }
+  `}
+</style>
+
 # Spacing
 
 Das BILD Design System verwendet ein **8px Basis-Grid**.
 
+---
+
 ## Spacing Scale
 
-| Token | Wert | Beschreibung |
-|-------|------|--------------|
-| --space-0-5-x | 4px | Halber Basiswert |
-| --space-1-x | 8px | Basis |
-| --space-1-5-x | 12px | 1.5x Basis |
-| --space-2-x | 16px | 2x Basis |
-| --space-3-x | 24px | 3x Basis |
-| --space-4-x | 32px | 4x Basis |
-| --space-5-x | 40px | 5x Basis |
-| --space-6-x | 48px | 6x Basis |
-| --space-8-x | 64px | 8x Basis |
-| --space-10-x | 80px | 10x Basis |
-| --space-12-x | 96px | 12x Basis |
+<div className="spacing-demo">
+  <span className="spacing-value">4px</span>
+  <div className="spacing-bar" style={{width: '4px'}}></div>
+  <code>--space-0-5-x</code>
+</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">8px</span>
+  <div className="spacing-bar" style={{width: '8px'}}></div>
+  <code>--space-1-x</code>
+</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">16px</span>
+  <div className="spacing-bar" style={{width: '16px'}}></div>
+  <code>--space-2-x</code>
+</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">24px</span>
+  <div className="spacing-bar" style={{width: '24px'}}></div>
+  <code>--space-3-x</code>
+</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">32px</span>
+  <div className="spacing-bar" style={{width: '32px'}}></div>
+  <code>--space-4-x</code>
+</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">48px</span>
+  <div className="spacing-bar" style={{width: '48px'}}></div>
+  <code>--space-6-x</code>
+</div>
+
+<div className="spacing-demo">
+  <span className="spacing-value">64px</span>
+  <div className="spacing-bar" style={{width: '64px'}}></div>
+  <code>--space-8-x</code>
+</div>
+
+---
 
 ## Semantic Spacing
 
-### Grid Spacing
+<table className="spacing-table">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Wert</th>
+      <th>Verwendung</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--grid-space-resp-base</code></td>
+      <td>12-24px</td>
+      <td>Basis Grid Gap (responsive)</td>
+    </tr>
+    <tr>
+      <td><code>--grid-margin</code></td>
+      <td>16-48px</td>
+      <td>Außenrand des Grids</td>
+    </tr>
+    <tr>
+      <td><code>--content-gap-sm</code></td>
+      <td>8px</td>
+      <td>Kleine Abstände</td>
+    </tr>
+    <tr>
+      <td><code>--content-gap-md</code></td>
+      <td>16px</td>
+      <td>Standard Abstände</td>
+    </tr>
+    <tr>
+      <td><code>--content-gap-lg</code></td>
+      <td>24px</td>
+      <td>Große Abstände</td>
+    </tr>
+    <tr>
+      <td><code>--content-gap-xl</code></td>
+      <td>32px</td>
+      <td>Extra große Abstände</td>
+    </tr>
+  </tbody>
+</table>
 
-| Token | Wert | Verwendung |
-|-------|------|------------|
-| --grid-space-resp-base | 12-24px | Basis Grid Gap (responsive) |
-| --grid-margin | 16-48px | Außenrand des Grids |
-| --grid-gutter | 16-24px | Abstand zwischen Spalten |
-
-### Content Spacing
-
-| Token | Wert |
-|-------|------|
-| --content-gap-sm | 8px |
-| --content-gap-md | 16px |
-| --content-gap-lg | 24px |
-| --content-gap-xl | 32px |
+---
 
 ## Density Modes
 
-| Mode | Faktor | Verwendung |
-|------|--------|------------|
-| default | 1.0x | Standard UI |
-| dense | 0.75x | Datentabellen, Listen |
-| spacious | 1.25x | Hero Sections |
+<div className="density-card">
+  <div style={{fontWeight: 600, marginBottom: '8px'}}>Default (1.0x)</div>
+  <div style={{color: '#666', fontSize: '14px'}}>Standard UI · data-density="default"</div>
+</div>
 
-```html
-<html data-density="default">
-<html data-density="dense">
-<html data-density="spacious">
-```
+<div className="density-card">
+  <div style={{fontWeight: 600, marginBottom: '8px'}}>Dense (0.75x)</div>
+  <div style={{color: '#666', fontSize: '14px'}}>Datentabellen, Listen · data-density="dense"</div>
+</div>
+
+<div className="density-card">
+  <div style={{fontWeight: 600, marginBottom: '8px'}}>Spacious (1.25x)</div>
+  <div style={{color: '#666', fontSize: '14px'}}>Hero Sections · data-density="spacious"</div>
+</div>
+
+---
 
 ## Usage
 
