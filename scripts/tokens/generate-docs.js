@@ -681,6 +681,335 @@ Typography scales automatically based on viewport width:
 }
 
 /**
+ * Generate the effects.mdx documentation
+ */
+function generateEffectsDocs() {
+  // Load semantic effects tokens
+  const effectsPath = path.join(TOKENS_DIR, 'brands/bild/semantic/effects/effects-light.json');
+  const effects = loadTokens(effectsPath);
+
+  if (!effects) {
+    console.error('Could not load effects tokens');
+    return null;
+  }
+
+  // Build shadow sections dynamically from JSON structure
+  let shadowSections = '';
+
+  // Iterate over all top-level categories (e.g., dropshadowsoft, dropshadowhard)
+  for (const [categoryKey, categoryEffects] of Object.entries(effects)) {
+    if (!categoryEffects || typeof categoryEffects !== 'object') continue;
+
+    // Extract shadow tokens from this category
+    const shadows = [];
+    for (const [effectKey, effectValue] of Object.entries(categoryEffects)) {
+      if (effectValue && (effectValue.$value || effectValue.value) && effectValue.$type === 'shadow') {
+        // Generate CSS class name from effect key (e.g., "shadowSoftSm" -> "shadow-soft-sm")
+        const className = toKebabCase(effectKey);
+
+        shadows.push({
+          name: effectKey,
+          displayName: toDisplayName(effectKey).replace('Shadow ', '').toUpperCase(),
+          className: className,
+          cssVar: `--${className}`,
+          comment: effectValue.comment || ''
+        });
+      }
+    }
+
+    if (shadows.length > 0) {
+      // Generate category title from key (e.g., "dropshadowsoft" -> "Soft Shadows")
+      let categoryTitle = toDisplayName(categoryKey)
+        .replace('Dropshadow', '')
+        .replace('Drop Shadow', '')
+        .trim();
+      // Capitalize first letter
+      categoryTitle = categoryTitle.charAt(0).toUpperCase() + categoryTitle.slice(1) + ' Shadows';
+
+      // Get category description from the first shadow's comment if available
+      const categoryDesc = shadows[0].comment || '';
+
+      shadowSections += `
+<div className="category-header">${categoryTitle}</div>
+${categoryDesc ? `<p className="category-desc">${categoryDesc}</p>` : ''}
+
+<div className="shadow-grid">
+${shadows.map(s => `  <div className="shadow-card ${s.className}">
+    <div className="shadow-name">${s.displayName}</div>
+    <div className="shadow-class">.${s.className}</div>
+  </div>`).join('\n')}
+</div>
+`;
+    }
+  }
+
+  // Generate shadow tokens table dynamically
+  let shadowTokensTable = '';
+  const allShadows = [];
+
+  for (const [categoryKey, categoryEffects] of Object.entries(effects)) {
+    if (!categoryEffects || typeof categoryEffects !== 'object') continue;
+
+    for (const [effectKey, effectValue] of Object.entries(categoryEffects)) {
+      if (effectValue && effectValue.$type === 'shadow') {
+        const className = toKebabCase(effectKey);
+        // Generate usage description from comment or create a default
+        let usage = effectValue.comment
+          ? effectValue.comment.split('.')[0].trim()
+          : `${toDisplayName(effectKey)} effect`;
+
+        allShadows.push({
+          cssVar: `--${className}`,
+          usage: usage
+        });
+      }
+    }
+  }
+
+  if (allShadows.length > 0) {
+    const tokenRows = allShadows.map(s => `    <tr>
+      <td><code>${s.cssVar}</code></td>
+      <td>${s.usage}</td>
+    </tr>`).join('\n');
+
+    shadowTokensTable = `
+<table className="effects-table">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+${tokenRows}
+  </tbody>
+</table>
+`;
+  }
+
+  // Scan for component-level effects dynamically
+  let componentEffectsSection = '';
+  const componentsDir = path.join(TOKENS_DIR, 'brands/bild/components');
+
+  if (fs.existsSync(componentsDir)) {
+    const componentEffects = [];
+    const componentDirs = fs.readdirSync(componentsDir);
+
+    for (const componentDir of componentDirs) {
+      const effectsLightPath = path.join(componentsDir, componentDir, `${componentDir.toLowerCase()}-effects-light.json`);
+
+      if (fs.existsSync(effectsLightPath)) {
+        const compEffects = loadTokens(effectsLightPath);
+        if (compEffects) {
+          for (const [tokenKey, tokenValue] of Object.entries(compEffects)) {
+            if (tokenValue && tokenValue.$type === 'shadow') {
+              const cssVar = `--${toKebabCase(tokenKey)}`;
+              componentEffects.push({
+                component: componentDir,
+                cssVar: cssVar,
+                comment: tokenValue.comment || ''
+              });
+            }
+          }
+        }
+      }
+    }
+
+    if (componentEffects.length > 0) {
+      const compRows = componentEffects.map(c => `    <tr>
+      <td>${c.component}</td>
+      <td><code>${c.cssVar}</code></td>
+    </tr>`).join('\n');
+
+      componentEffectsSection = `
+## Component-Level Effects
+
+Some components have their own effect tokens:
+
+<table className="effects-table">
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Token</th>
+    </tr>
+  </thead>
+  <tbody>
+${compRows}
+  </tbody>
+</table>
+`;
+    }
+  }
+
+  // Final MDX content
+  const mdxContent = `import { Meta } from '@storybook/blocks';
+
+<Meta title="Foundations/Effects" />
+
+{/*
+  AUTO-GENERATED FILE - DO NOT EDIT MANUALLY
+  Generated by: scripts/tokens/generate-docs.js
+  To update: run npm run build:docs or npm run build:tokens
+*/}
+
+<style>
+  {\`
+    .effects-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0 2rem;
+    }
+    .effects-table th, .effects-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color-low-contrast);
+      color: var(--text-color-primary);
+    }
+    .effects-table th {
+      background: var(--surface-color-secondary);
+      font-weight: 600;
+    }
+    .effects-table code {
+      background: var(--surface-color-tertiary);
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.85em;
+    }
+    .shadow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 24px;
+      margin: 1rem 0 2rem;
+      padding: 24px;
+      background: var(--surface-color-secondary);
+      border-radius: 12px;
+    }
+    .shadow-card {
+      height: 100px;
+      background: var(--surface-color-primary);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .shadow-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-color-primary);
+      margin-bottom: 4px;
+    }
+    .shadow-class {
+      font-size: 11px;
+      color: var(--text-color-secondary);
+      font-family: monospace;
+    }
+    .hint-box {
+      padding: 12px 16px;
+      background: var(--surface-color-tertiary);
+      border-radius: 8px;
+      border-left: 4px solid var(--core-color-primary);
+      margin: 1rem 0;
+      font-size: 14px;
+      color: var(--text-color-primary);
+    }
+    .category-header {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-color-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-color-low-contrast);
+    }
+    .category-desc {
+      font-size: 14px;
+      color: var(--text-color-secondary);
+      margin: 0 0 1rem 0;
+    }
+  \`}
+</style>
+
+# Effects
+
+The design system provides predefined shadow effects for elevation and visual depth.
+
+<div className="hint-box">
+  <strong>Live Preview:</strong> All shadow cards use CSS classes that adapt to light/dark mode. Toggle the <strong>theme</strong> in the toolbar to see shadows change.
+</div>
+
+---
+
+## Shadow Scale
+
+These CSS classes apply predefined shadow values. The shadows automatically adapt to light/dark mode.
+${shadowSections}
+---
+
+## Shadow Tokens
+
+You can also use CSS custom properties directly for more control:
+${shadowTokensTable}
+---
+
+${componentEffectsSection}
+---
+
+## Usage
+
+### Using CSS Classes
+
+\`\`\`html
+<!-- Apply shadow class directly -->
+<div class="card shadow-soft-md">
+  Card content
+</div>
+
+<!-- Interactive shadow on hover -->
+<div class="card shadow-soft-sm hover:shadow-soft-md">
+  Hoverable card
+</div>
+\`\`\`
+
+### Using CSS Variables
+
+\`\`\`css
+/* Direct token usage */
+.my-card {
+  box-shadow: var(--shadow-soft-md);
+}
+
+/* Interactive shadow transition */
+.interactive-card {
+  box-shadow: var(--shadow-soft-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.interactive-card:hover {
+  box-shadow: var(--shadow-soft-md);
+}
+\`\`\`
+
+### Combining with Other Tokens
+
+\`\`\`css
+.floating-panel {
+  background: var(--surface-color-primary);
+  border: 1px solid var(--border-color-low-contrast);
+  border-radius: 8px;
+  box-shadow: var(--shadow-soft-lg);
+  padding: var(--content-gap-lg);
+}
+\`\`\`
+`;
+
+  return mdxContent;
+}
+
+/**
  * Main execution
  */
 function main() {
@@ -707,6 +1036,15 @@ function main() {
     const typographyPath = path.join(DOCS_DIR, 'typography.mdx');
     fs.writeFileSync(typographyPath, typographyDocs);
     console.log(`  Written: ${typographyPath}`);
+  }
+
+  // Generate effects documentation
+  console.log('Generating effects.mdx...');
+  const effectsDocs = generateEffectsDocs();
+  if (effectsDocs) {
+    const effectsPath = path.join(DOCS_DIR, 'effects.mdx');
+    fs.writeFileSync(effectsPath, effectsDocs);
+    console.log(`  Written: ${effectsPath}`);
   }
 
   console.log('\nDocumentation generation complete!');
