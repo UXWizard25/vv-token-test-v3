@@ -23,6 +23,7 @@ const bildLightTheme = create({
   // UI colors (light mode)
   appBg: '#F2F4F5', // --color-neutral-96
   appContentBg: '#FFFFFF', // --color-neutral-100
+  appPreviewBg: '#FFFFFF', // --color-neutral-100 (preview/canvas area)
   appBorderColor: '#CED4DA', // --color-neutral-85
   appBorderRadius: 4,
 
@@ -59,6 +60,7 @@ const bildDarkTheme = create({
   // UI colors (dark mode)
   appBg: '#1C1C1C', // --color-neutral-10
   appContentBg: '#232629', // --color-neutral-15
+  appPreviewBg: '#232629', // --color-neutral-15 (preview/canvas area)
   appBorderColor: '#4B525A', // --color-neutral-35
   appBorderRadius: 4,
 
