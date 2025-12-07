@@ -2,49 +2,184 @@ import { Meta } from '@storybook/blocks';
 
 <Meta title="Introduction" />
 
+<style>
+  {`
+    .intro-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0 2rem;
+    }
+    .intro-table th, .intro-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .intro-table th {
+      background: #f5f5f5;
+      font-weight: 600;
+    }
+    .intro-table code {
+      background: #f0f0f0;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.85em;
+    }
+    .brand-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: #fafafa;
+      border-radius: 8px;
+      margin: 8px 0;
+    }
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      margin: 1rem 0 2rem;
+    }
+    .link-card {
+      padding: 20px;
+      background: #fafafa;
+      border-radius: 8px;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.2s;
+    }
+    .link-card:hover {
+      background: #f0f0f0;
+    }
+    .link-card-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .link-card-desc {
+      font-size: 14px;
+      color: #666;
+    }
+  `}
+</style>
+
 # BILD Design System
 
 Willkommen zum **BILD Design System** - einem umfassenden Design Token System für konsistente Marken-Erlebnisse.
 
+---
+
 ## 4-Layer Token Architektur
 
-| Layer | Name | Beschreibung |
-|-------|------|--------------|
-| 0 | Primitives | Rohe Werte (Farben, Größen, Fonts) |
-| 1 | Mapping | Markenspezifische Zuordnung |
-| 2 | Semantic | Bedeutungsbasierte Tokens |
-| 3 | Components | Komponenten-spezifische Tokens |
+<table className="intro-table">
+  <thead>
+    <tr>
+      <th>Layer</th>
+      <th>Name</th>
+      <th>Beschreibung</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Primitives</td>
+      <td>Rohe Werte (Farben, Größen, Fonts)</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Mapping</td>
+      <td>Markenspezifische Zuordnung</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Semantic</td>
+      <td>Bedeutungsbasierte Tokens</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Components</td>
+      <td>Komponenten-spezifische Tokens</td>
+    </tr>
+  </tbody>
+</table>
+
+---
 
 ## Dual-Axis Architektur
 
 Das System trennt **Color Brand** und **Content Brand** für maximale Flexibilität:
 
-### Color Brand (Farben + Effects)
-- BILD (Rot)
-- SportBILD (Blau)
+<div className="brand-card">
+  <div style={{width: '48px', height: '48px', background: '#DD0000', borderRadius: '8px'}}></div>
+  <div>
+    <div style={{fontWeight: 600}}>Color Brand: BILD / SportBILD</div>
+    <div style={{color: '#666', fontSize: '14px'}}>Farben + Effects</div>
+  </div>
+</div>
 
-### Content Brand (Typography + Spacing)
-- BILD
-- SportBILD
-- Advertorial
+<div className="brand-card">
+  <div style={{width: '48px', height: '48px', background: '#232629', borderRadius: '8px', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600}}>Aa</div>
+  <div>
+    <div style={{fontWeight: 600}}>Content Brand: BILD / SportBILD / Advertorial</div>
+    <div style={{color: '#666', fontSize: '14px'}}>Typography + Spacing</div>
+  </div>
+</div>
+
+---
 
 ## Theming Controls
 
 Nutze die **Toolbar oben** um verschiedene Konfigurationen zu testen:
 
-| Control | Optionen |
-|---------|----------|
-| Color Brand | BILD, SportBILD |
-| Content Brand | BILD, SportBILD, Advertorial |
-| Theme | Light, Dark |
-| Density | Default, Dense, Spacious |
+<table className="intro-table">
+  <thead>
+    <tr>
+      <th>Control</th>
+      <th>Optionen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Color Brand</td>
+      <td>BILD, SportBILD</td>
+    </tr>
+    <tr>
+      <td>Content Brand</td>
+      <td>BILD, SportBILD, Advertorial</td>
+    </tr>
+    <tr>
+      <td>Theme</td>
+      <td>Light, Dark</td>
+    </tr>
+    <tr>
+      <td>Density</td>
+      <td>Default, Dense, Spacious</td>
+    </tr>
+  </tbody>
+</table>
+
+---
 
 ## Quick Links
 
-- [Colors](?path=/docs/foundations-colors--docs)
-- [Typography](?path=/docs/foundations-typography--docs)
-- [Spacing](?path=/docs/foundations-spacing--docs)
-- [Effects](?path=/docs/foundations-effects--docs)
+<div className="link-grid">
+  <a className="link-card" href="?path=/docs/foundations-colors--docs">
+    <div className="link-card-title">Colors</div>
+    <div className="link-card-desc">Farbpalette und semantische Farben</div>
+  </a>
+  <a className="link-card" href="?path=/docs/foundations-typography--docs">
+    <div className="link-card-title">Typography</div>
+    <div className="link-card-desc">Schriften und Textgrößen</div>
+  </a>
+  <a className="link-card" href="?path=/docs/foundations-spacing--docs">
+    <div className="link-card-title">Spacing</div>
+    <div className="link-card-desc">Abstände und Grid</div>
+  </a>
+  <a className="link-card" href="?path=/docs/foundations-effects--docs">
+    <div className="link-card-title">Effects</div>
+    <div className="link-card-desc">Schatten und Effekte</div>
+  </a>
+</div>
+
+---
 
 ## HTML Setup
 

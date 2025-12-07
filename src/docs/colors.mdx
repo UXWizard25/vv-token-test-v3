@@ -2,80 +2,275 @@ import { Meta } from '@storybook/blocks';
 
 <Meta title="Foundations/Colors" />
 
+<style>
+  {`
+    .color-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0 2rem;
+    }
+    .color-table th, .color-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .color-table th {
+      background: #f5f5f5;
+      font-weight: 600;
+    }
+    .color-table code {
+      background: #f0f0f0;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.85em;
+    }
+    .color-swatch {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      border: 1px solid rgba(0,0,0,0.1);
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+      margin: 1rem 0 2rem;
+    }
+    .color-card {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e0e0e0;
+    }
+    .color-card-swatch {
+      height: 80px;
+    }
+    .color-card-info {
+      padding: 12px;
+      background: white;
+    }
+    .color-card-name {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .color-card-value {
+      font-size: 12px;
+      color: #666;
+      font-family: monospace;
+    }
+  `}
+</style>
+
 # Colors
 
 Das BILD Design System verwendet eine **4-Layer Token Architektur** für Farben.
+
+---
 
 ## Color Primitives
 
 ### BILD Red
 
-| Name | Wert | CSS Variable |
-|------|------|--------------|
-| Red 50 | #DD0000 | --color-bild-red-50 |
-| Red 53 | #F52D2D | --color-bild-red-53 |
-| Red 35 | #AF0002 | --color-bild-red-35 |
-| Red 25 | #7D0001 | --color-bild-red-25 |
+<div className="color-grid">
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: '#DD0000'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Red 50</div>
+      <div className="color-card-value">#DD0000</div>
+    </div>
+  </div>
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: '#F52D2D'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Red 53</div>
+      <div className="color-card-value">#F52D2D</div>
+    </div>
+  </div>
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: '#AF0002'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Red 35</div>
+      <div className="color-card-value">#AF0002</div>
+    </div>
+  </div>
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: '#7D0001'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Red 25</div>
+      <div className="color-card-value">#7D0001</div>
+    </div>
+  </div>
+</div>
 
 ### Neutral Scale
 
-| Name | Wert | CSS Variable |
-|------|------|--------------|
-| Neutral 100 | #FFFFFF | --color-neutral-100 |
-| Neutral 96 | #F2F4F5 | --color-neutral-96 |
-| Neutral 85 | #CED4DA | --color-neutral-85 |
-| Neutral 73 | #AEB4B9 | --color-neutral-73 |
-| Neutral 45 | #666B70 | --color-neutral-45 |
-| Neutral 35 | #4B525A | --color-neutral-35 |
-| Neutral 25 | #343C41 | --color-neutral-25 |
-| Neutral 15 | #232629 | --color-neutral-15 |
-| Neutral 10 | #1C1C1C | --color-neutral-10 |
-| Neutral 0 | #000000 | --color-neutral-0 |
+<div className="color-grid">
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: '#FFFFFF'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Neutral 100</div>
+      <div className="color-card-value">#FFFFFF</div>
+    </div>
+  </div>
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: '#F2F4F5'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Neutral 96</div>
+      <div className="color-card-value">#F2F4F5</div>
+    </div>
+  </div>
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: '#CED4DA'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Neutral 85</div>
+      <div className="color-card-value">#CED4DA</div>
+    </div>
+  </div>
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: '#666B70'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Neutral 45</div>
+      <div className="color-card-value">#666B70</div>
+    </div>
+  </div>
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: '#232629'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Neutral 15</div>
+      <div className="color-card-value">#232629</div>
+    </div>
+  </div>
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: '#000000'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Neutral 0</div>
+      <div className="color-card-value">#000000</div>
+    </div>
+  </div>
+</div>
 
 ### Feedback Colors
 
-| Name | Wert | CSS Variable |
-|------|------|--------------|
-| Success | #1D7D3F | --color-feedback-success |
-| Warning | #E5A000 | --color-feedback-warning |
-| Error | #D32F2F | --color-feedback-error |
-| Info | #0288D1 | --color-feedback-info |
+<div className="color-grid">
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: '#1D7D3F'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Success</div>
+      <div className="color-card-value">#1D7D3F</div>
+    </div>
+  </div>
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: '#E5A000'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Warning</div>
+      <div className="color-card-value">#E5A000</div>
+    </div>
+  </div>
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: '#D32F2F'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Error</div>
+      <div className="color-card-value">#D32F2F</div>
+    </div>
+  </div>
+  <div className="color-card">
+    <div className="color-card-swatch" style={{background: '#0288D1'}}></div>
+    <div className="color-card-info">
+      <div className="color-card-name">Info</div>
+      <div className="color-card-value">#0288D1</div>
+    </div>
+  </div>
+</div>
+
+---
 
 ## Semantic Colors
 
 ### Text Colors
 
-| Token | Light | Dark | Verwendung |
-|-------|-------|------|------------|
-| --text-color-primary | #232629 | #F2F4F5 | Haupttext |
-| --text-color-secondary | #666B70 | #AEB4B9 | Sekundärtext |
-| --text-color-accent | #DD0000 | #F52D2D | Akzenttext |
-| --text-color-inverse | #FFFFFF | #232629 | Invertiert |
+<table className="color-table">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Light</th>
+      <th>Dark</th>
+      <th>Verwendung</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--text-color-primary</code></td>
+      <td><span className="color-swatch" style={{background: '#232629'}}></span>#232629</td>
+      <td><span className="color-swatch" style={{background: '#F2F4F5'}}></span>#F2F4F5</td>
+      <td>Haupttext</td>
+    </tr>
+    <tr>
+      <td><code>--text-color-secondary</code></td>
+      <td><span className="color-swatch" style={{background: '#666B70'}}></span>#666B70</td>
+      <td><span className="color-swatch" style={{background: '#AEB4B9'}}></span>#AEB4B9</td>
+      <td>Sekundärtext</td>
+    </tr>
+    <tr>
+      <td><code>--text-color-accent</code></td>
+      <td><span className="color-swatch" style={{background: '#DD0000'}}></span>#DD0000</td>
+      <td><span className="color-swatch" style={{background: '#F52D2D'}}></span>#F52D2D</td>
+      <td>Akzenttext</td>
+    </tr>
+  </tbody>
+</table>
 
 ### Surface Colors
 
-| Token | Light | Dark | Verwendung |
-|-------|-------|------|------------|
-| --surface-color-primary | #FFFFFF | #232629 | Hauptfläche |
-| --surface-color-secondary | #F2F4F5 | #1C1C1C | Sekundär |
-| --surface-color-canvas | #F0F2F4 | #141414 | Hintergrund |
+<table className="color-table">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Light</th>
+      <th>Dark</th>
+      <th>Verwendung</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--surface-color-primary</code></td>
+      <td><span className="color-swatch" style={{background: '#FFFFFF'}}></span>#FFFFFF</td>
+      <td><span className="color-swatch" style={{background: '#232629'}}></span>#232629</td>
+      <td>Hauptfläche</td>
+    </tr>
+    <tr>
+      <td><code>--surface-color-secondary</code></td>
+      <td><span className="color-swatch" style={{background: '#F2F4F5'}}></span>#F2F4F5</td>
+      <td><span className="color-swatch" style={{background: '#1C1C1C'}}></span>#1C1C1C</td>
+      <td>Sekundär</td>
+    </tr>
+  </tbody>
+</table>
 
-### Core Colors
-
-| Token | Light | Dark |
-|-------|-------|------|
-| --core-color-primary | #DD0000 | #DD0000 |
-| --core-color-secondary | #232629 | #F2F4F5 |
+---
 
 ## Brand Colors
 
-### data-color-brand="bild"
-- Primär: **BILD Rot** (#DD0000)
-- Für: BILD App, BILD.de
+### BILD
+<div style={{display: 'flex', alignItems: 'center', gap: '12px', padding: '16px', background: '#fafafa', borderRadius: '8px', marginBottom: '16px'}}>
+  <div style={{width: '60px', height: '60px', background: '#DD0000', borderRadius: '8px'}}></div>
+  <div>
+    <div style={{fontWeight: 600}}>BILD Rot</div>
+    <div style={{color: '#666', fontSize: '14px'}}>#DD0000 · data-color-brand="bild"</div>
+  </div>
+</div>
 
-### data-color-brand="sportbild"
-- Primär: **SportBILD Blau** (#0066B3)
-- Für: SportBILD App, sportbild.de
+### SportBILD
+<div style={{display: 'flex', alignItems: 'center', gap: '12px', padding: '16px', background: '#fafafa', borderRadius: '8px'}}>
+  <div style={{width: '60px', height: '60px', background: '#0066B3', borderRadius: '8px'}}></div>
+  <div>
+    <div style={{fontWeight: 600}}>SportBILD Blau</div>
+    <div style={{color: '#666', fontSize: '14px'}}>#0066B3 · data-color-brand="sportbild"</div>
+  </div>
+</div>
+
+---
 
 ## Usage
 
@@ -83,7 +278,6 @@ Das BILD Design System verwendet eine **4-Layer Token Architektur** für Farben.
 .my-component {
   color: var(--text-color-primary);
   background: var(--surface-color-primary);
-  border-color: var(--border-color-medium-contrast);
 }
 
 .highlight {

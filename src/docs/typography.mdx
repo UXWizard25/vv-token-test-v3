@@ -1,53 +1,235 @@
-import { Meta } from '@storybook/blocks';
+import { Meta, Unstyled } from '@storybook/blocks';
 
 <Meta title="Foundations/Typography" />
+
+<style>
+  {`
+    .typo-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0 2rem;
+    }
+    .typo-table th, .typo-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .typo-table th {
+      background: #f5f5f5;
+      font-weight: 600;
+    }
+    .typo-table code {
+      background: #f0f0f0;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.85em;
+    }
+    .font-sample {
+      padding: 1rem;
+      background: #fafafa;
+      border-radius: 8px;
+      margin: 0.5rem 0;
+    }
+    .display-sample { font-size: 48px; font-weight: 900; line-height: 1.1; }
+    .heading-sample { font-size: 32px; font-weight: 700; line-height: 1.2; }
+    .body-sample { font-size: 16px; font-weight: 400; line-height: 1.5; }
+  `}
+</style>
 
 # Typography
 
 Das BILD Design System verwendet **Gotham** als primäre Schriftfamilie.
 
+---
+
 ## Font Families
 
-| Name | CSS Variable | Fallback |
-|------|--------------|----------|
-| Gotham XNarrow | --font-family-gotham-xnarrow | Arial Narrow, sans-serif |
-| Gotham Condensed | --font-family-gotham-condensed | Arial Narrow, sans-serif |
-| Gotham Narrow | --font-family-gotham-narrow | Arial, sans-serif |
+<table className="typo-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>CSS Variable</th>
+      <th>Fallback</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Gotham XNarrow</td>
+      <td><code>--font-family-gotham-xnarrow</code></td>
+      <td>Arial Narrow, sans-serif</td>
+    </tr>
+    <tr>
+      <td>Gotham Condensed</td>
+      <td><code>--font-family-gotham-condensed</code></td>
+      <td>Arial Narrow, sans-serif</td>
+    </tr>
+    <tr>
+      <td>Gotham Narrow</td>
+      <td><code>--font-family-gotham-narrow</code></td>
+      <td>Arial, sans-serif</td>
+    </tr>
+  </tbody>
+</table>
+
+---
 
 ## Font Weights
 
-| Token | Wert | Verwendung |
-|-------|------|------------|
-| --font-weight-regular | 400 | Fließtext |
-| --font-weight-medium | 500 | Betonte Elemente |
-| --font-weight-bold | 700 | Headlines, CTAs |
-| --font-weight-black | 900 | Display Headlines |
+<table className="typo-table">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Wert</th>
+      <th>Verwendung</th>
+      <th>Beispiel</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--font-weight-regular</code></td>
+      <td>400</td>
+      <td>Fließtext</td>
+      <td style={{fontWeight: 400}}>Regular Text</td>
+    </tr>
+    <tr>
+      <td><code>--font-weight-medium</code></td>
+      <td>500</td>
+      <td>Betonte Elemente</td>
+      <td style={{fontWeight: 500}}>Medium Text</td>
+    </tr>
+    <tr>
+      <td><code>--font-weight-bold</code></td>
+      <td>700</td>
+      <td>Headlines, CTAs</td>
+      <td style={{fontWeight: 700}}>Bold Text</td>
+    </tr>
+    <tr>
+      <td><code>--font-weight-black</code></td>
+      <td>900</td>
+      <td>Display Headlines</td>
+      <td style={{fontWeight: 900}}>Black Text</td>
+    </tr>
+  </tbody>
+</table>
+
+---
 
 ## Type Scale
 
 ### Display Styles
 
-| Style | xs | sm | md | lg |
-|-------|----|----|----|----|
-| .display-1 | 40px | 48px | 56px | 72px |
-| .display-2 | 32px | 40px | 48px | 56px |
+<div className="font-sample">
+  <div className="display-sample">Display 1 - 72px</div>
+</div>
+
+<table className="typo-table">
+  <thead>
+    <tr>
+      <th>Style</th>
+      <th>xs (320px)</th>
+      <th>sm (390px)</th>
+      <th>md (600px)</th>
+      <th>lg (1024px)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>.display-1</code></td>
+      <td>40px</td>
+      <td>48px</td>
+      <td>56px</td>
+      <td>72px</td>
+    </tr>
+    <tr>
+      <td><code>.display-2</code></td>
+      <td>32px</td>
+      <td>40px</td>
+      <td>48px</td>
+      <td>56px</td>
+    </tr>
+  </tbody>
+</table>
 
 ### Heading Styles
 
-| Style | xs | sm | md | lg |
-|-------|----|----|----|----|
-| .heading-1 | 28px | 32px | 40px | 48px |
-| .heading-2 | 24px | 28px | 32px | 40px |
-| .heading-3 | 20px | 24px | 28px | 32px |
+<div className="font-sample">
+  <div className="heading-sample">Heading 1 - 48px</div>
+</div>
+
+<table className="typo-table">
+  <thead>
+    <tr>
+      <th>Style</th>
+      <th>xs</th>
+      <th>sm</th>
+      <th>md</th>
+      <th>lg</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>.heading-1</code></td>
+      <td>28px</td>
+      <td>32px</td>
+      <td>40px</td>
+      <td>48px</td>
+    </tr>
+    <tr>
+      <td><code>.heading-2</code></td>
+      <td>24px</td>
+      <td>28px</td>
+      <td>32px</td>
+      <td>40px</td>
+    </tr>
+    <tr>
+      <td><code>.heading-3</code></td>
+      <td>20px</td>
+      <td>24px</td>
+      <td>28px</td>
+      <td>32px</td>
+    </tr>
+  </tbody>
+</table>
 
 ### Body Styles
 
-| Style | Größe | Line Height |
-|-------|-------|-------------|
-| .body-lg | 18px | 28px |
-| .body-md | 16px | 24px |
-| .body-sm | 14px | 20px |
-| .body-xs | 12px | 16px |
+<div className="font-sample">
+  <div className="body-sample">Body text - 16px with comfortable line height for readability.</div>
+</div>
+
+<table className="typo-table">
+  <thead>
+    <tr>
+      <th>Style</th>
+      <th>Größe</th>
+      <th>Line Height</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>.body-lg</code></td>
+      <td>18px</td>
+      <td>28px</td>
+    </tr>
+    <tr>
+      <td><code>.body-md</code></td>
+      <td>16px</td>
+      <td>24px</td>
+    </tr>
+    <tr>
+      <td><code>.body-sm</code></td>
+      <td>14px</td>
+      <td>20px</td>
+    </tr>
+    <tr>
+      <td><code>.body-xs</code></td>
+      <td>12px</td>
+      <td>16px</td>
+    </tr>
+  </tbody>
+</table>
+
+---
 
 ## Usage
 
@@ -62,12 +244,3 @@ Das BILD Design System verwendet **Gotham** als primäre Schriftfamilie.
   font-weight: var(--font-weight-bold);
 }
 ```
-
-## Responsive Behavior
-
-| Breakpoint | Min-Width |
-|------------|-----------|
-| xs | 320px |
-| sm | 390px |
-| md | 600px |
-| lg | 1024px |
