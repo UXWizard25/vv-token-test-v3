@@ -1,0 +1,66 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="Foundations/Spacing" />
+
+# Spacing
+
+Das BILD Design System verwendet ein **8px Basis-Grid**.
+
+## Spacing Scale
+
+| Token | Wert | Beschreibung |
+|-------|------|--------------|
+| --space-0-5-x | 4px | Halber Basiswert |
+| --space-1-x | 8px | Basis |
+| --space-1-5-x | 12px | 1.5x Basis |
+| --space-2-x | 16px | 2x Basis |
+| --space-3-x | 24px | 3x Basis |
+| --space-4-x | 32px | 4x Basis |
+| --space-5-x | 40px | 5x Basis |
+| --space-6-x | 48px | 6x Basis |
+| --space-8-x | 64px | 8x Basis |
+| --space-10-x | 80px | 10x Basis |
+| --space-12-x | 96px | 12x Basis |
+
+## Semantic Spacing
+
+### Grid Spacing
+
+| Token | Wert | Verwendung |
+|-------|------|------------|
+| --grid-space-resp-base | 12-24px | Basis Grid Gap (responsive) |
+| --grid-margin | 16-48px | Außenrand des Grids |
+| --grid-gutter | 16-24px | Abstand zwischen Spalten |
+
+### Content Spacing
+
+| Token | Wert |
+|-------|------|
+| --content-gap-sm | 8px |
+| --content-gap-md | 16px |
+| --content-gap-lg | 24px |
+| --content-gap-xl | 32px |
+
+## Density Modes
+
+| Mode | Faktor | Verwendung |
+|------|--------|------------|
+| default | 1.0x | Standard UI |
+| dense | 0.75x | Datentabellen, Listen |
+| spacious | 1.25x | Hero Sections |
+
+```html
+<html data-density="default">
+<html data-density="dense">
+<html data-density="spacious">
+```
+
+## Usage
+
+```css
+.my-component {
+  padding: var(--space-2-x);
+  margin-bottom: var(--space-3-x);
+  gap: var(--content-gap-md);
+}
+```

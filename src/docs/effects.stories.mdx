@@ -1,0 +1,75 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="Foundations/Effects" />
+
+# Effects
+
+Das BILD Design System bietet vordefinierte Effekte für Elevation und visuelle Tiefe.
+
+## Shadow Scale
+
+### Soft Shadows
+
+| Name | CSS Klasse | Verwendung |
+|------|------------|------------|
+| Shadow Soft SM | .shadow-soft-sm | Subtile Erhöhung |
+| Shadow Soft MD | .shadow-soft-md | Cards, Panels |
+| Shadow Soft LG | .shadow-soft-lg | Dropdowns, Popovers |
+| Shadow Soft XL | .shadow-soft-xl | Modals, Overlays |
+
+### Hard Shadows
+
+| Name | CSS Klasse | Verwendung |
+|------|------------|------------|
+| Shadow Hard SM | .shadow-hard-sm | Kleine Elemente |
+| Shadow Hard MD | .shadow-hard-md | Mittlere Elemente |
+| Shadow Hard LG | .shadow-hard-lg | Große Elemente |
+
+## Elevation Levels
+
+| Level | Shadow | Verwendung |
+|-------|--------|------------|
+| 0 | Kein Schatten | Flache Elemente |
+| 1 | shadow-soft-sm | Cards |
+| 2 | shadow-soft-md | Dropdowns |
+| 3 | shadow-soft-lg | Modals |
+| 4 | shadow-soft-xl | Overlays |
+
+## Light vs Dark Mode
+
+| Mode | Charakteristik |
+|------|----------------|
+| Light | Dunklere Schatten |
+| Dark | Subtilere Schatten |
+
+**Wichtig:** Effects sind **markenunabhängig** - sie ändern sich nur bei Light/Dark Mode.
+
+## Usage
+
+```html
+<div class="shadow-soft-md">Card mit Schatten</div>
+```
+
+```css
+.my-card {
+  box-shadow: var(--shadow-soft-md);
+}
+
+.interactive-card {
+  box-shadow: var(--shadow-soft-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.interactive-card:hover {
+  box-shadow: var(--shadow-soft-md);
+}
+```
+
+## Component Tokens
+
+| Component | Token |
+|-----------|-------|
+| Menu | --menu-shadow |
+| Modal | --modal-shadow |
+| Tooltip | --tooltip-shadow |
+| Toast | --toast-shadow |

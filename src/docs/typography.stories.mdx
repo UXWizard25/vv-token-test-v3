@@ -1,0 +1,73 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="Foundations/Typography" />
+
+# Typography
+
+Das BILD Design System verwendet **Gotham** als primäre Schriftfamilie.
+
+## Font Families
+
+| Name | CSS Variable | Fallback |
+|------|--------------|----------|
+| Gotham XNarrow | --font-family-gotham-xnarrow | Arial Narrow, sans-serif |
+| Gotham Condensed | --font-family-gotham-condensed | Arial Narrow, sans-serif |
+| Gotham Narrow | --font-family-gotham-narrow | Arial, sans-serif |
+
+## Font Weights
+
+| Token | Wert | Verwendung |
+|-------|------|------------|
+| --font-weight-regular | 400 | Fließtext |
+| --font-weight-medium | 500 | Betonte Elemente |
+| --font-weight-bold | 700 | Headlines, CTAs |
+| --font-weight-black | 900 | Display Headlines |
+
+## Type Scale
+
+### Display Styles
+
+| Style | xs | sm | md | lg |
+|-------|----|----|----|----|
+| .display-1 | 40px | 48px | 56px | 72px |
+| .display-2 | 32px | 40px | 48px | 56px |
+
+### Heading Styles
+
+| Style | xs | sm | md | lg |
+|-------|----|----|----|----|
+| .heading-1 | 28px | 32px | 40px | 48px |
+| .heading-2 | 24px | 28px | 32px | 40px |
+| .heading-3 | 20px | 24px | 28px | 32px |
+
+### Body Styles
+
+| Style | Größe | Line Height |
+|-------|-------|-------------|
+| .body-lg | 18px | 28px |
+| .body-md | 16px | 24px |
+| .body-sm | 14px | 20px |
+| .body-xs | 12px | 16px |
+
+## Usage
+
+```html
+<h1 class="display-1">Breaking News</h1>
+<p class="body-md">Standard Fließtext...</p>
+```
+
+```css
+.custom-headline {
+  font-family: var(--font-family-gotham-xnarrow);
+  font-weight: var(--font-weight-bold);
+}
+```
+
+## Responsive Behavior
+
+| Breakpoint | Min-Width |
+|------------|-----------|
+| xs | 320px |
+| sm | 390px |
+| md | 600px |
+| lg | 1024px |
