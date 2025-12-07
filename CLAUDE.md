@@ -4,18 +4,35 @@
 
 ---
 
+## Monorepo Structure
+
+This repository uses **npm workspaces** to manage multiple packages:
+
+| Package | npm Name | Location | Build Command |
+|---------|----------|----------|---------------|
+| Tokens | `@marioschmidt/design-system-tokens` | `packages/tokens/` | `npm run build:tokens` |
+| Icons | `@marioschmidt/design-system-icons` | `packages/icons/` | `npm run build:icons` |
+| Components | `@marioschmidt/design-system-components` | `packages/components/` | `npm run build:components` |
+
+---
+
 ## Quick Reference
 
 ```bash
-npm run build:tokens    # Full build (preprocess + style-dictionary)
-npm run build:bundles   # Regenerate CSS bundles only
-npm run build           # Everything (tokens + bundles)
-npm run build:stencil   # Build Stencil Web Components
+npm run build           # Full build (tokens + components)
+npm run build:tokens    # Build tokens (preprocess + style-dictionary + bundles)
+npm run build:icons     # Build icons package
+npm run build:components # Build Stencil Web Components
+npm run build:all       # Everything (tokens + icons + components)
 npm run dev:stencil     # Stencil dev server (port 3333)
-npm run build:all       # Everything (tokens + bundles + stencil)
 npm run storybook       # Storybook dev server (port 6006)
 npm run build:storybook # Build static Storybook
-npm run clean           # Delete dist/ and tokens/
+npm run clean           # Delete all dist/ and tokens/
+
+# Publishing (via workspace)
+npm run publish:tokens     # npm publish -w @marioschmidt/design-system-tokens
+npm run publish:icons      # npm publish -w @marioschmidt/design-system-icons
+npm run publish:components # npm publish -w @marioschmidt/design-system-components
 ```
 
 **Source of Truth:** `src/design-tokens/bild-design-system-raw-data.json` (Figma Export via TokenSync Plugin)
@@ -508,14 +525,14 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 │              │ • Custom format functions                                    │
 │              │ • Native theme provider generation                           │
 │              ▼                                                              │
-│  dist/ (Platform outputs)                                                   │
+│  packages/tokens/dist/ (Platform outputs)                                   │
 │  ├── css/, scss/, js/, json/                                                │
 │  ├── ios/ (Swift)                                                           │
 │  └── android/compose/ (Kotlin)                                              │
 │              │                                                              │
 │              │ bundles.js                                                   │
 │              ▼                                                              │
-│  dist/css/bundles/ (Convenience CSS bundles per brand)                      │
+│  packages/tokens/dist/css/bundles/ (Convenience CSS bundles per brand)      │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -801,6 +818,16 @@ The design system includes a **Stencil-based component library** for building We
 ### Project Structure
 
 ```
+packages/
+  components/             # @marioschmidt/design-system-components
+    package.json
+    dist/                 # Built Stencil components
+      bds/                # Lazy-loaded components
+      components/         # Custom Elements (auto-define)
+      esm/                # ES Modules
+      www/                # Dev server output
+      docs/               # Auto-generated component docs
+
 build-config/
   stencil/
     stencil.config.ts     # Stencil configuration
@@ -815,23 +842,15 @@ src/
       ds-card.tsx
       ds-card.css
     index.html            # Dev/test page with brand switcher
-
-dist/
-  stencil/
-    bds/                  # Lazy-loaded components
-    components/           # Custom Elements (auto-define)
-    esm/                  # ES Modules
-    www/                  # Dev server output
-    docs/                 # Auto-generated component docs
 ```
 
 ### npm Scripts
 
 | Script | Purpose |
 |--------|---------|
-| `npm run build:stencil` | Build Stencil components (requires tokens built first) |
+| `npm run build:components` | Build Stencil components (requires tokens built first) |
 | `npm run dev:stencil` | Start dev server with hot reload (port 3333) |
-| `npm run build:all` | Build tokens + bundles + Stencil in sequence |
+| `npm run build:all` | Build tokens + icons + Stencil in sequence |
 
 ### Creating New Components
 
@@ -885,7 +904,7 @@ dist/
 |--------|-------|---------|
 | `namespace` | `bds` | Component prefix (BILD Design System) |
 | `srcDir` | `../../src/components` | Source directory |
-| `globalStyle` | `../../dist/css/bundles/bild.css` | Token CSS bundle |
+| `globalStyle` | `../../packages/tokens/dist/css/bundles/bild.css` | Token CSS bundle |
 | `outputTargets` | `dist`, `dist-custom-elements`, `www` | Build outputs |
 
 ### Brand Switching in Components
@@ -1000,8 +1019,8 @@ The `storybook-dark-mode` addon controls both UI and content area:
 
 | Path | Mapped To | Purpose |
 |------|-----------|---------|
-| `dist/css` | `/css` | Design token CSS bundles |
-| `dist/stencil` | `/stencil` | Built Stencil components |
+| `packages/tokens/dist/css` | `/css` | Design token CSS bundles |
+| `packages/components/dist` | `/stencil` | Built Stencil components |
 
 ### Writing Stories
 
@@ -1126,7 +1145,7 @@ import { Meta } from '@storybook/blocks';
 | Missing tokens | Scope not assigned in Figma | Add appropriate scope in Figma |
 | Tokens not applying in Shadow DOM | Variables not set on ancestor | Ensure `data-*` attributes are on `<body>` or wrapper |
 | Typography classes not working in Shadow DOM | Using class instead of variables | Use `var(--token-name)` directly instead of classes |
-| Stencil build fails with "Unable to find CSS" | Tokens not built | Run `npm run build` before `npm run build:stencil` |
+| Stencil build fails with "Unable to find CSS" | Tokens not built | Run `npm run build:tokens` before `npm run build:components` |
 | Stencil components not rendering | Script not loaded | Check `<script src="/build/bds.esm.js">` in HTML |
 | Brand switching not working in Stencil | Missing data attributes | Add `data-color-brand`, `data-content-brand`, `data-theme` to `<body>` |
 | Storybook shows loading spinner | Build error in preview | Check console for errors, ensure `npm run build:all` completed |

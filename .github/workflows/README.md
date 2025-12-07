@@ -1,5 +1,17 @@
 # GitHub Actions Workflows
 
+## 📦 Monorepo Structure
+
+This repository uses **npm workspaces** to manage multiple packages:
+
+| Package | npm Name | Build Command |
+|---------|----------|---------------|
+| `packages/tokens` | `@marioschmidt/design-system-tokens` | `npm run build:tokens` |
+| `packages/icons` | `@marioschmidt/design-system-icons` | `npm run build:icons` |
+| `packages/components` | `@marioschmidt/design-system-components` | `npm run build:components` |
+
+---
+
 ## 📋 Available Workflows
 
 ### `build-tokens.yml` - Design Token Build Pipeline

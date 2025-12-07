@@ -210,6 +210,16 @@ ForEach(BildIcon.allCases, id: \.self) { icon in
 
 ## 📁 File Structure
 
+### Monorepo Structure
+
+This package is part of the npm workspaces monorepo:
+
+| Package | npm Name | Location |
+|---------|----------|----------|
+| Tokens | `@marioschmidt/design-system-tokens` | `packages/tokens/` |
+| Icons | `@marioschmidt/design-system-icons` | `packages/icons/` |
+| Components | `@marioschmidt/design-system-components` | `packages/components/` |
+
 ```
 src/icons/
 ├── icon-add.svg           ← Source SVGs from Figma
@@ -231,7 +241,7 @@ scripts/icons/
 build-config/icons/
 └── svgo.config.js         ← SVG optimization config
 
-dist/icons/                 ← Generated output (gitignored)
+packages/icons/dist/        ← Generated output (gitignored)
 ├── svg/                   ← Optimized SVGs
 ├── react-src/             ← TSX source (intermediate)
 ├── react/                 ← Compiled ESM JavaScript

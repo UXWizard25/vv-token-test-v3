@@ -278,8 +278,21 @@ Both pipelines integrate with Figma via the **TokenSync Plugin**:
 
 ## 📁 Project Structure
 
+This project uses **npm workspaces** to manage multiple packages in a monorepo structure.
+
 ```
 vv-token-test-v3/
+│
+├── 📁 packages/                        # 📦 NPM Workspace Packages
+│   ├── tokens/                         # @marioschmidt/design-system-tokens
+│   │   ├── package.json
+│   │   └── dist/                       # Built token files
+│   ├── icons/                          # @marioschmidt/design-system-icons
+│   │   ├── package.json
+│   │   └── dist/                       # Built icon files
+│   └── components/                     # @marioschmidt/design-system-components
+│       ├── package.json
+│       └── dist/                       # Built Stencil components
 │
 ├── 📁 src/
 │   ├── design-tokens/                  # 🎨 Figma token export
@@ -331,10 +344,9 @@ vv-token-test-v3/
 │       └── preview-body.html           # Dark mode sync
 │
 ├── 📁 tokens/                          # Preprocessed (Git tracked)
-├── 📁 dist/                            # Build output (Git ignored)
+├── 📁 dist/                            # Shared build output (Git ignored)
 │
-├── 📄 package.json                     # Token package config
-├── 📄 package.icons.json               # Icon package config
+├── 📄 package.json                     # Root package (workspaces config)
 │
 ├── 📁 docs/                            # Platform documentation
 │   ├── css.md                          # CSS Custom Properties
@@ -347,6 +359,14 @@ vv-token-test-v3/
 └── 📄 README.icons.md                  # Icon documentation
 ```
 
+### npm Workspaces
+
+| Package | npm Name | Description |
+|---------|----------|-------------|
+| `packages/tokens` | `@marioschmidt/design-system-tokens` | Multi-platform design tokens |
+| `packages/icons` | `@marioschmidt/design-system-icons` | Multi-platform icon assets |
+| `packages/components` | `@marioschmidt/design-system-components` | Stencil Web Components |
+
 ---
 
 ## ⚙️ Build Commands
@@ -354,19 +374,23 @@ vv-token-test-v3/
 ### 🎨 Tokens
 
 ```bash
-npm run build              # Full build (preprocess + tokens + bundles)
-npm run preprocess         # Figma JSON → Style Dictionary format
-npm run build:tokens       # Style Dictionary → 7 platforms
-npm run build:bundles      # Generate convenience bundles
-npm run clean              # Remove dist/ and tokens/
+npm run build              # Full build (preprocess + tokens + components)
+npm run build:tokens       # Build tokens only (preprocess + style-dictionary + bundles)
+npm run build:all          # Full build (tokens + icons + components)
+npm run clean              # Remove all dist/ and tokens/
+```
+
+### 🖼️ Icons
+
+```bash
+npm run build:icons        # Build icons package (all platforms)
 ```
 
 ### 🧩 Stencil Components
 
 ```bash
-npm run build:stencil      # Build Stencil Web Components
+npm run build:components   # Build Stencil Web Components
 npm run dev:stencil        # Dev server with hot reload (port 3333)
-npm run build:all          # Full build (tokens + bundles + stencil)
 ```
 
 ### 📚 Storybook
@@ -376,16 +400,12 @@ npm run storybook          # Start Storybook dev server (port 6006)
 npm run build:storybook    # Build static Storybook for deployment
 ```
 
-### 🖼️ Icons
+### 📦 Publishing (Workspace Commands)
 
 ```bash
-npm run build:icons        # Full build (all platforms)
-npm run build:icons:svg    # SVG optimization only
-npm run build:icons:react  # React components only
-npm run build:icons:android
-npm run build:icons:flutter
-npm run build:icons:ios
-npm run clean:icons        # Remove dist/icons/
+npm run publish:tokens     # Publish @marioschmidt/design-system-tokens
+npm run publish:icons      # Publish @marioschmidt/design-system-icons
+npm run publish:components # Publish @marioschmidt/design-system-components
 ```
 
 ---

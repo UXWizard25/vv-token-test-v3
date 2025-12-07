@@ -136,19 +136,29 @@ npm install @marioschmidt/design-system-tokens
 ## Quick Start
 
 ```bash
-# Full build
+# Full build (tokens + components)
 npm run build
 
-# Or run steps separately
-npm run preprocess     # Figma JSON → Style Dictionary format
-npm run build:tokens   # Style Dictionary → 7 platforms
-npm run build:bundles  # Generate CSS bundle files
+# Build tokens only
+npm run build:tokens   # Preprocess + Style Dictionary + bundles
+
+# Build everything (tokens + icons + components)
+npm run build:all
 
 # Stencil Web Components
-npm run build:stencil  # Build Stencil components (requires tokens built first)
-npm run dev:stencil    # Dev server with hot reload (port 3333)
-npm run build:all      # Full build including Stencil
+npm run build:components  # Build Stencil components (requires tokens built first)
+npm run dev:stencil       # Dev server with hot reload (port 3333)
 ```
+
+### Monorepo Structure
+
+This package is part of the npm workspaces monorepo:
+
+| Package | npm Name | Location |
+|---------|----------|----------|
+| Tokens | `@marioschmidt/design-system-tokens` | `packages/tokens/` |
+| Icons | `@marioschmidt/design-system-icons` | `packages/icons/` |
+| Components | `@marioschmidt/design-system-components` | `packages/components/` |
 
 ## Token Type Mapping
 
@@ -627,8 +637,10 @@ const BOOLEAN_TOKENS_ENABLED = false; // Excludes visibility tokens
 
 ## 📁 Output Structure
 
+Token output is located in `packages/tokens/dist/`:
+
 ```
-dist/
+packages/tokens/dist/
 ├── css/
 │   ├── shared/                      # Primitives
 │   ├── bundles/                     # Convenience bundles (Quick Start)
