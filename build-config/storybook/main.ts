@@ -1,5 +1,6 @@
 import type { StorybookConfig } from '@storybook/web-components-vite';
 import { join, dirname } from 'path';
+import react from '@vitejs/plugin-react';
 
 /**
  * Resolve package path helper
@@ -47,6 +48,11 @@ const config: StorybookConfig = {
   viteFinal: async (config) => {
     return {
       ...config,
+      // Add React plugin for DocsContainer.tsx
+      plugins: [
+        ...(config.plugins ?? []),
+        react(),
+      ],
       // Ensure proper resolution for Stencil components
       resolve: {
         ...config.resolve,
@@ -61,6 +67,8 @@ const config: StorybookConfig = {
           ...(config.optimizeDeps?.include ?? []),
           'lit',
           'lit/decorators.js',
+          'react',
+          'react-dom',
         ],
       },
     };
