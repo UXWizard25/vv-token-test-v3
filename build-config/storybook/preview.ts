@@ -148,12 +148,12 @@ const preview: Preview = {
       },
     },
 
-    // Backgrounds addon - use canvas background
+    // Backgrounds addon - use canvas background (consistent with sidebar)
     backgrounds: {
       default: 'canvas',
       values: [
-        { name: 'canvas', value: 'var(--surface-color-canvas, #F0F2F4)' },
-        { name: 'white', value: '#ffffff' },
+        { name: 'canvas', value: 'var(--surface-color-canvas, #FFFFFF)' },
+        { name: 'light-gray', value: '#F2F4F5' },
         { name: 'dark', value: '#232629' },
       ],
     },

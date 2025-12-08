@@ -21,11 +21,11 @@ export const bildLightTheme = create({
   colorPrimary: '#DD0000', // --color-bild-red-50
   colorSecondary: '#DD0000', // --color-bild-red-50
 
-  // UI colors (light mode)
-  appBg: '#F2F4F5', // --color-neutral-96
+  // UI colors (light mode) - consistent backgrounds
+  appBg: '#FFFFFF', // Same as content for consistency
   appContentBg: '#FFFFFF', // --color-neutral-100
   appPreviewBg: '#FFFFFF', // --color-neutral-100 (preview/canvas area)
-  appBorderColor: '#CED4DA', // --color-neutral-85
+  appBorderColor: '#E8EAED', // Lighter border for subtle separation
   appBorderRadius: 4,
 
   // Text colors (light mode)
