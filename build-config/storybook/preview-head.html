@@ -414,6 +414,305 @@
   html[data-theme="dark"] .sb-show-main {
     background-color: #1C1C1C !important;
   }
+
+  /* ========================================
+     STORY CANVAS / PREVIEW AREA
+     The white box where components render
+     ======================================== */
+
+  [data-theme="dark"] .docs-story,
+  [data-theme="dark"] .docs-story > div,
+  [data-theme="dark"] .docs-story > div > div,
+  html[data-theme="dark"] .docs-story,
+  html[data-theme="dark"] .docs-story > div,
+  html[data-theme="dark"] .docs-story > div > div {
+    background-color: #232629 !important;
+  }
+
+  /* Story iframe container */
+  [data-theme="dark"] [id^="story--"],
+  html[data-theme="dark"] [id^="story--"] {
+    background-color: #232629 !important;
+  }
+
+  /* Zoom toolbar in story canvas */
+  [data-theme="dark"] .docs-story button,
+  [data-theme="dark"] .docs-story [class*="zoom"],
+  html[data-theme="dark"] .docs-story button,
+  html[data-theme="dark"] .docs-story [class*="zoom"] {
+    background-color: #2E3438 !important;
+    color: #F2F4F5 !important;
+    border-color: #4B525A !important;
+  }
+
+  /* "Show code" button */
+  [data-theme="dark"] .docs-story button svg,
+  html[data-theme="dark"] .docs-story button svg {
+    fill: #F2F4F5 !important;
+    color: #F2F4F5 !important;
+  }
+
+  /* ========================================
+     CONTROLS TABLE / ARGSTABLE
+     Input fields, toggles, selects
+     ======================================== */
+
+  /* Input fields */
+  [data-theme="dark"] .docblock-argstable input,
+  [data-theme="dark"] .docblock-argstable select,
+  [data-theme="dark"] .docblock-argstable textarea,
+  html[data-theme="dark"] .docblock-argstable input,
+  html[data-theme="dark"] .docblock-argstable select,
+  html[data-theme="dark"] .docblock-argstable textarea {
+    background-color: #2E3438 !important;
+    border-color: #4B525A !important;
+    color: #F2F4F5 !important;
+  }
+
+  /* Boolean toggle switch */
+  [data-theme="dark"] [class*="BooleanControl"],
+  [data-theme="dark"] [class*="boolean"],
+  html[data-theme="dark"] [class*="BooleanControl"],
+  html[data-theme="dark"] [class*="boolean"] {
+    background-color: #2E3438 !important;
+  }
+
+  /* Toggle switch button */
+  [data-theme="dark"] [class*="BooleanControl"] button,
+  html[data-theme="dark"] [class*="BooleanControl"] button {
+    background-color: #4B525A !important;
+    border-color: #4B525A !important;
+  }
+
+  /* Type badges/pills (string, boolean, etc.) */
+  [data-theme="dark"] .docblock-argstable span[class*="Type"],
+  [data-theme="dark"] .docblock-argstable code,
+  html[data-theme="dark"] .docblock-argstable span[class*="Type"],
+  html[data-theme="dark"] .docblock-argstable code {
+    background-color: #3A4048 !important;
+    color: #CED4DA !important;
+  }
+
+  /* Default value badges */
+  [data-theme="dark"] .docblock-argstable [class*="Default"],
+  html[data-theme="dark"] .docblock-argstable [class*="Default"] {
+    background-color: #3A4048 !important;
+    color: #9CA3AB !important;
+  }
+
+  /* Select dropdown */
+  [data-theme="dark"] select option,
+  html[data-theme="dark"] select option {
+    background-color: #232629 !important;
+    color: #F2F4F5 !important;
+  }
+
+  /* Reset button in controls */
+  [data-theme="dark"] .docblock-argstable [class*="Reset"],
+  [data-theme="dark"] .docblock-argstable [class*="reset"],
+  html[data-theme="dark"] .docblock-argstable [class*="Reset"],
+  html[data-theme="dark"] .docblock-argstable [class*="reset"] {
+    color: #9CA3AB !important;
+  }
+
+  /* ========================================
+     ADDITIONAL UI ELEMENTS
+     ======================================== */
+
+  /* All buttons in docs */
+  [data-theme="dark"] .sbdocs button,
+  html[data-theme="dark"] .sbdocs button {
+    background-color: #2E3438 !important;
+    border-color: #4B525A !important;
+    color: #F2F4F5 !important;
+  }
+
+  /* Dividers/separators */
+  [data-theme="dark"] hr,
+  [data-theme="dark"] .sbdocs hr,
+  html[data-theme="dark"] hr,
+  html[data-theme="dark"] .sbdocs hr {
+    border-color: #4B525A !important;
+    background-color: #4B525A !important;
+  }
+
+  /* Secondary/muted text */
+  [data-theme="dark"] .sbdocs [class*="subtitle"],
+  [data-theme="dark"] .sbdocs [class*="Subtitle"],
+  [data-theme="dark"] .sbdocs [class*="muted"],
+  html[data-theme="dark"] .sbdocs [class*="subtitle"],
+  html[data-theme="dark"] .sbdocs [class*="Subtitle"],
+  html[data-theme="dark"] .sbdocs [class*="muted"] {
+    color: #9CA3AB !important;
+  }
+
+  /* Description text in controls */
+  [data-theme="dark"] .docblock-argstable td p,
+  [data-theme="dark"] .docblock-argstable td span,
+  html[data-theme="dark"] .docblock-argstable td p,
+  html[data-theme="dark"] .docblock-argstable td span {
+    color: #CED4DA !important;
+  }
+
+  /* First column (property names) - make them brighter */
+  [data-theme="dark"] .docblock-argstable td:first-child,
+  [data-theme="dark"] .docblock-argstable td:first-child span,
+  html[data-theme="dark"] .docblock-argstable td:first-child,
+  html[data-theme="dark"] .docblock-argstable td:first-child span {
+    color: #F2F4F5 !important;
+  }
+
+  /* Inline code in docs */
+  [data-theme="dark"] .sbdocs :not(pre) > code,
+  html[data-theme="dark"] .sbdocs :not(pre) > code {
+    background-color: #3A4048 !important;
+    color: #FF8A8A !important;
+  }
+
+  /* Scrollbar styling for dark mode */
+  [data-theme="dark"] ::-webkit-scrollbar {
+    background-color: #1C1C1C;
+  }
+
+  [data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background-color: #4B525A;
+    border-radius: 4px;
+  }
+
+  [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background-color: #666B70;
+  }
+
+  /* ========================================
+     CODE BLOCK COPY BUTTON
+     ======================================== */
+
+  [data-theme="dark"] .docblock-source button,
+  [data-theme="dark"] [class*="Source"] button,
+  [data-theme="dark"] pre + button,
+  [data-theme="dark"] [class*="copy"] button,
+  [data-theme="dark"] button[class*="copy"],
+  [data-theme="dark"] button[class*="Copy"],
+  html[data-theme="dark"] .docblock-source button,
+  html[data-theme="dark"] [class*="Source"] button,
+  html[data-theme="dark"] button[class*="copy"],
+  html[data-theme="dark"] button[class*="Copy"] {
+    background-color: #3A4048 !important;
+    border-color: #4B525A !important;
+    color: #F2F4F5 !important;
+  }
+
+  [data-theme="dark"] .docblock-source button:hover,
+  html[data-theme="dark"] .docblock-source button:hover {
+    background-color: #4B525A !important;
+  }
+
+  /* ========================================
+     CONTROLS - ALL INPUT TYPES
+     More specific selectors for Storybook 8
+     ======================================== */
+
+  /* Text inputs */
+  [data-theme="dark"] input[type="text"],
+  [data-theme="dark"] input[type="number"],
+  [data-theme="dark"] input[type="search"],
+  [data-theme="dark"] input:not([type]),
+  [data-theme="dark"] textarea,
+  html[data-theme="dark"] input[type="text"],
+  html[data-theme="dark"] input[type="number"],
+  html[data-theme="dark"] input[type="search"],
+  html[data-theme="dark"] input:not([type]),
+  html[data-theme="dark"] textarea {
+    background-color: #2E3438 !important;
+    border-color: #4B525A !important;
+    color: #F2F4F5 !important;
+  }
+
+  /* Select dropdowns */
+  [data-theme="dark"] select,
+  html[data-theme="dark"] select {
+    background-color: #2E3438 !important;
+    border-color: #4B525A !important;
+    color: #F2F4F5 !important;
+  }
+
+  /* Boolean/Toggle controls - target the wrapper and inner elements */
+  [data-theme="dark"] [data-testid="BooleanControl"],
+  [data-theme="dark"] [class*="BooleanControl"],
+  [data-theme="dark"] [class*="Toggle"],
+  [data-theme="dark"] [class*="toggle"],
+  [data-theme="dark"] label[class*="Bool"],
+  html[data-theme="dark"] [data-testid="BooleanControl"],
+  html[data-theme="dark"] [class*="BooleanControl"],
+  html[data-theme="dark"] [class*="Toggle"],
+  html[data-theme="dark"] [class*="toggle"],
+  html[data-theme="dark"] label[class*="Bool"] {
+    background-color: #2E3438 !important;
+    border-color: #4B525A !important;
+  }
+
+  /* Toggle switch track */
+  [data-theme="dark"] [class*="BooleanControl"] span,
+  [data-theme="dark"] [class*="Toggle"] span,
+  html[data-theme="dark"] [class*="BooleanControl"] span,
+  html[data-theme="dark"] [class*="Toggle"] span {
+    background-color: #4B525A !important;
+  }
+
+  /* Toggle switch handle/knob */
+  [data-theme="dark"] [class*="BooleanControl"] span span,
+  [data-theme="dark"] [class*="Toggle"] span span,
+  html[data-theme="dark"] [class*="BooleanControl"] span span,
+  html[data-theme="dark"] [class*="Toggle"] span span {
+    background-color: #9CA3AB !important;
+  }
+
+  /* Active/checked toggle */
+  [data-theme="dark"] input:checked + [class*="Toggle"] span,
+  [data-theme="dark"] [class*="BooleanControl"][data-selected] span,
+  html[data-theme="dark"] input:checked + [class*="Toggle"] span,
+  html[data-theme="dark"] [class*="BooleanControl"][data-selected] span {
+    background-color: #DD0000 !important;
+  }
+
+  /* Control wrapper backgrounds */
+  [data-theme="dark"] [class*="Control"],
+  html[data-theme="dark"] [class*="Control"] {
+    background-color: transparent !important;
+  }
+
+  /* Specific input wrapper in argstable */
+  [data-theme="dark"] .docblock-argstable td input,
+  [data-theme="dark"] .docblock-argstable td select,
+  [data-theme="dark"] .docblock-argstable td textarea,
+  [data-theme="dark"] .docblock-argstable td [class*="Control"],
+  html[data-theme="dark"] .docblock-argstable td input,
+  html[data-theme="dark"] .docblock-argstable td select,
+  html[data-theme="dark"] .docblock-argstable td textarea,
+  html[data-theme="dark"] .docblock-argstable td [class*="Control"] {
+    background-color: #2E3438 !important;
+    border-color: #4B525A !important;
+    color: #F2F4F5 !important;
+  }
+
+  /* Placeholder text */
+  [data-theme="dark"] input::placeholder,
+  [data-theme="dark"] textarea::placeholder,
+  html[data-theme="dark"] input::placeholder,
+  html[data-theme="dark"] textarea::placeholder {
+    color: #666B70 !important;
+  }
+
+  /* Focus states */
+  [data-theme="dark"] input:focus,
+  [data-theme="dark"] select:focus,
+  [data-theme="dark"] textarea:focus,
+  html[data-theme="dark"] input:focus,
+  html[data-theme="dark"] select:focus,
+  html[data-theme="dark"] textarea:focus {
+    border-color: #DD0000 !important;
+    outline-color: #DD0000 !important;
+  }
 </style>
 
 <script>
