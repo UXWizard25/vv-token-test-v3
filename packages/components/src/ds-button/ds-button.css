@@ -13,7 +13,7 @@
   /* Token-based styling */
   padding: var(--button-stack-space, 6px) var(--button-inline-space, 16px);
   border-radius: var(--button-border-radius, 4px);
-  font-family: var(--font-family-gotham-xnarrow, sans-serif);
+  font-family: var(--button-label-font-family);
   font-weight: var(--font-weight-bold, 700);
   font-size: var(--button-label-font-size, 15px);
   line-height: var(--button-label-line-height, 15px);
