@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2025-12-08T11:27:37.192Z",
+  "lastModified": "2025-12-08T16:41:06.782Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -8153,7 +8153,6 @@
         "VariableID:7822:41770",
         "VariableID:7823:67058",
         "VariableID:7857:72414",
-        "VariableID:7861:73329",
         "VariableID:7866:44647",
         "VariableID:7873:925",
         "VariableID:7937:10070",
@@ -8442,7 +8441,6 @@
         "VariableID:17810:19258",
         "VariableID:17810:19259",
         "VariableID:17918:76378",
-        "VariableID:18131:41274",
         "VariableID:18174:13486",
         "VariableID:18293:50630",
         "VariableID:18293:50631",
@@ -11113,35 +11111,6 @@
             "WIDTH_HEIGHT"
           ],
           "hiddenFromPublishing": true,
-          "variableCollectionId": "VariableCollectionId:7017:25696"
-        },
-        {
-          "id": "VariableID:7861:73329",
-          "name": "Semantic/Typography/FontSize/Label/label4FontSize",
-          "description": "This token is used in the font size parameter of the label4 text style. The value remains constant at 8.",
-          "resolvedType": "FLOAT",
-          "valuesByMode": {
-            "7015:1": {
-              "type": "VARIABLE_ALIAS",
-              "id": "VariableID:18038:10706"
-            },
-            "7015:2": {
-              "type": "VARIABLE_ALIAS",
-              "id": "VariableID:18038:10706"
-            },
-            "7017:0": {
-              "type": "VARIABLE_ALIAS",
-              "id": "VariableID:18038:10706"
-            },
-            "16706:1": {
-              "type": "VARIABLE_ALIAS",
-              "id": "VariableID:18038:10706"
-            }
-          },
-          "scopes": [
-            "FONT_SIZE"
-          ],
-          "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:7017:25696"
         },
         {
@@ -18796,35 +18765,6 @@
           "variableCollectionId": "VariableCollectionId:7017:25696"
         },
         {
-          "id": "VariableID:18131:41274",
-          "name": "Semantic/Typography/LineHeight/Label/label4LineHeight",
-          "description": "",
-          "resolvedType": "FLOAT",
-          "valuesByMode": {
-            "7015:1": {
-              "type": "VARIABLE_ALIAS",
-              "id": "VariableID:18038:10779"
-            },
-            "7015:2": {
-              "type": "VARIABLE_ALIAS",
-              "id": "VariableID:18038:10779"
-            },
-            "7017:0": {
-              "type": "VARIABLE_ALIAS",
-              "id": "VariableID:18038:10779"
-            },
-            "16706:1": {
-              "type": "VARIABLE_ALIAS",
-              "id": "VariableID:18038:10779"
-            }
-          },
-          "scopes": [
-            "LINE_HEIGHT"
-          ],
-          "hiddenFromPublishing": false,
-          "variableCollectionId": "VariableCollectionId:7017:25696"
-        },
-        {
           "id": "VariableID:18174:13486",
           "name": "Semantic/Typography/FontWeight/Headline/headline1FontWeightST",
           "description": "This variable is a string type variable for controlling not only headline font weight but also the italic style for Sport Bild headlines.",
@@ -20768,7 +20708,6 @@
         "VariableID:18038:10703",
         "VariableID:18038:10704",
         "VariableID:18038:10705",
-        "VariableID:18038:10706",
         "VariableID:18038:10707",
         "VariableID:18038:10708",
         "VariableID:18038:10709",
@@ -20841,7 +20780,6 @@
         "VariableID:18038:10776",
         "VariableID:18038:10777",
         "VariableID:18038:10778",
-        "VariableID:18038:10779",
         "VariableID:18038:10780",
         "VariableID:18038:10781",
         "VariableID:18038:10782",
@@ -22242,23 +22180,6 @@
           "variableCollectionId": "VariableCollectionId:18038:10593"
         },
         {
-          "id": "VariableID:18038:10706",
-          "name": "Global/Typography/FontSize/Label/label4FontSize",
-          "description": "",
-          "resolvedType": "FLOAT",
-          "valuesByMode": {
-            "18038:0": 8,
-            "18094:0": 8,
-            "18094:1": 8
-          },
-          "scopes": [
-            "FONT_SIZE",
-            "LINE_HEIGHT"
-          ],
-          "hiddenFromPublishing": true,
-          "variableCollectionId": "VariableCollectionId:18038:10593"
-        },
-        {
           "id": "VariableID:18038:10707",
           "name": "Global/Typography/FontSize/Label/label1RespFontSizeXS",
           "description": "",
@@ -23407,22 +23328,6 @@
             "18038:0": 14.399999618530273,
             "18094:0": 14.399999618530273,
             "18094:1": 14.399999618530273
-          },
-          "scopes": [
-            "LINE_HEIGHT"
-          ],
-          "hiddenFromPublishing": true,
-          "variableCollectionId": "VariableCollectionId:18038:10593"
-        },
-        {
-          "id": "VariableID:18038:10779",
-          "name": "Global/Typography/LineHeight/Label/label4LineHeight",
-          "description": "Bild 10 | SpoBi 10 | Ads 10 | The label 4 text style uses this variable for its line height parameter.",
-          "resolvedType": "FLOAT",
-          "valuesByMode": {
-            "18038:0": 10,
-            "18094:0": 10,
-            "18094:1": 10
           },
           "scopes": [
             "LINE_HEIGHT"
@@ -28855,42 +28760,6 @@
         "fontWeight": {
           "type": "VARIABLE_ALIAS",
           "id": "VariableID:7514:1760"
-        }
-      }
-    },
-    {
-      "id": "S:9de3f2726451851e7eadd02caab97f1e18fd1b44,",
-      "name": "Global/Label/label4",
-      "description": "Labels identify interface elements such as form fields, buttons, or navigation items. They ensure clarity and usability in functional contexts. This text style should be chosen when shorter small identifier texts in a small font size is needed where as the footnote text style should be used for longer descriptive texts. This text style's font size value remains constant at 8.",
-      "type": "TEXT",
-      "fontName": {
-        "family": "Gotham XNarrow",
-        "style": "Book"
-      },
-      "paragraphSpacing": 0,
-      "paragraphIndent": 0,
-      "textCase": "ORIGINAL",
-      "textDecoration": "NONE",
-      "boundVariables": {
-        "letterSpacing": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:8524:34363"
-        },
-        "fontSize": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:7861:73329"
-        },
-        "fontFamily": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:7510:7080"
-        },
-        "lineHeight": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:18131:41274"
-        },
-        "fontWeight": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:7551:22"
         }
       }
     },
