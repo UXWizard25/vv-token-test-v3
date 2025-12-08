@@ -1388,9 +1388,9 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
         if (textStyle.boundVariables) {
           Object.entries(textStyle.boundVariables).forEach(([property, alias]) => {
             if (alias.type === 'VARIABLE_ALIAS') {
-              // For fontSize and lineHeight: accept Semantic-level (BreakpointMode) as endpoint
-              // These are responsive values that change per breakpoint
-              const acceptSemanticEndpoint = (property === 'fontSize' || property === 'lineHeight');
+              // Accept Semantic-level (BreakpointMode) as endpoint for ALL typography properties
+              // This preserves var() references for brand-switching (fontFamily, fontWeight change per brand)
+              const acceptSemanticEndpoint = true;
 
               // Extract DEEP alias info - follows chain to primitive (or semantic for typography)
               const aliasInfo = getDeepAliasInfo(alias.id, aliasLookup, collections, context, { acceptSemanticEndpoint });
@@ -1509,9 +1509,9 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
           if (textStyle.boundVariables) {
             Object.entries(textStyle.boundVariables).forEach(([property, alias]) => {
               if (alias.type === 'VARIABLE_ALIAS') {
-                // For fontSize and lineHeight: accept Semantic-level (BreakpointMode) as endpoint
-                // These are responsive values that change per breakpoint
-                const acceptSemanticEndpoint = (property === 'fontSize' || property === 'lineHeight');
+                // Accept Semantic-level (BreakpointMode) as endpoint for ALL typography properties
+                // This preserves var() references for brand-switching (fontFamily, fontWeight change per brand)
+                const acceptSemanticEndpoint = true;
 
                 // Extract DEEP alias info - follows chain to primitive (or semantic for typography)
                 const aliasInfo = getDeepAliasInfo(alias.id, aliasLookup, collections, context, { acceptSemanticEndpoint });

@@ -1090,10 +1090,16 @@ const cssTypographyClassesFormat = ({ dictionary, options }) => {
           const aliases = token.$aliases || {};
 
           // Helper to get value with var() reference if alias exists
+          // Semantic references don't need fallbacks (always defined in same bundle)
           const getValueWithAlias = (property, value, unit = '') => {
             const alias = aliases[property];
             if (alias?.token) {
               const varName = nameTransformers.kebab(alias.token);
+              // Semantic references: no fallback needed
+              if (alias.collectionType === 'semantic') {
+                return `var(--${varName})`;
+              }
+              // Primitive references: include fallback
               const formattedValue = unit && typeof value === 'number' ? `${value}${unit}` : value;
               return `var(--${varName}, ${formattedValue})`;
             }
