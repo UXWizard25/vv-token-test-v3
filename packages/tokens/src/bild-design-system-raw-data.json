@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2025-12-07T15:45:48.383Z",
+  "lastModified": "2025-12-08T09:43:46.853Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -8522,7 +8522,8 @@
         "VariableID:20153:462",
         "VariableID:20243:56065",
         "VariableID:20534:79979",
-        "VariableID:20534:79980"
+        "VariableID:20534:79980",
+        "VariableID:21292:45"
       ],
       "variables": [
         {
@@ -20639,6 +20640,35 @@
           ],
           "hiddenFromPublishing": true,
           "variableCollectionId": "VariableCollectionId:7017:25696"
+        },
+        {
+          "id": "VariableID:21292:45",
+          "name": "Component/Button/buttonLabelFontFamily",
+          "description": "",
+          "resolvedType": "STRING",
+          "valuesByMode": {
+            "7015:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:7510:7080"
+            },
+            "7015:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:7510:7080"
+            },
+            "7017:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:7510:7080"
+            },
+            "16706:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:7510:7080"
+            }
+          },
+          "scopes": [
+            "FONT_FAMILY"
+          ],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:7017:25696"
         }
       ]
     },
@@ -29644,7 +29674,7 @@
         },
         "fontFamily": {
           "type": "VARIABLE_ALIAS",
-          "id": "VariableID:7510:7080"
+          "id": "VariableID:21292:45"
         },
         "lineHeight": {
           "type": "VARIABLE_ALIAS",
