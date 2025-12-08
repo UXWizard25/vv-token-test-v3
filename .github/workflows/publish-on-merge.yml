@@ -47,7 +47,7 @@ jobs:
           echo "📦 Installing dependencies..."
           npm ci
 
-      # 5. Version erhöhen (Patch) - Synchronized für Tokens + Components
+      # 5. Version erhöhen (Patch) - Synchronized für alle 4 Packages
       - name: Bump Version (Patch)
         id: version
         run: |
@@ -66,7 +66,7 @@ jobs:
           CURRENT_VERSION=${LATEST_TAG#v}
           echo "Current version: $CURRENT_VERSION"
 
-          # Bump version in BOTH packages (synchronized)
+          # Bump version in tokens package first
           echo "📦 Bumping tokens package..."
           cd packages/tokens
           npm version $CURRENT_VERSION --no-git-tag-version --allow-same-version
@@ -77,22 +77,32 @@ jobs:
           NEW_VERSION=$(node -p "require('./packages/tokens/package.json').version")
           echo "New version: $NEW_VERSION"
 
-          # Sync Components package to same version
-          echo "📦 Syncing components package to same version..."
+          # Sync all other packages to same version
+          echo "📦 Syncing components package to version $NEW_VERSION..."
           cd packages/components
           npm version $NEW_VERSION --no-git-tag-version --allow-same-version
           cd ../..
 
-          echo "✅ Both packages at version $NEW_VERSION"
+          echo "📦 Syncing react package to version $NEW_VERSION..."
+          cd packages/react
+          npm version $NEW_VERSION --no-git-tag-version --allow-same-version
+          cd ../..
+
+          echo "📦 Syncing vue package to version $NEW_VERSION..."
+          cd packages/vue
+          npm version $NEW_VERSION --no-git-tag-version --allow-same-version
+          cd ../..
+
+          echo "✅ All 4 packages at version $NEW_VERSION"
 
           echo "current=$CURRENT_VERSION" >> $GITHUB_OUTPUT
           echo "new=$NEW_VERSION" >> $GITHUB_OUTPUT
 
-      # 6. Token Build durchführen
-      - name: Build Design Tokens and Stencil Components
+      # 6. Token Build durchführen (inkl. React/Vue Wrappers)
+      - name: Build Design Tokens, Stencil Components, and Framework Wrappers
         id: build
         run: |
-          echo "🎨 Building design tokens and Stencil components..."
+          echo "🎨 Building design tokens, Stencil components, and React/Vue wrappers..."
           npm run build:all 2>&1 | tee build-output.log
 
           # Extrahiere Build-Statistiken
@@ -179,6 +189,22 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Publish React Wrappers to npmjs.org
+        run: |
+          echo "📦 Publishing @marioschmidt/design-system-react@${{ steps.version.outputs.new }} to npmjs.org..."
+          npm publish -w @marioschmidt/design-system-react --access public
+          echo "✅ React package published successfully!"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish Vue Wrappers to npmjs.org
+        run: |
+          echo "📦 Publishing @marioschmidt/design-system-vue@${{ steps.version.outputs.new }} to npmjs.org..."
+          npm publish -w @marioschmidt/design-system-vue --access public
+          echo "✅ Vue package published successfully!"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       # 12. Build Baseline für Vergleich (vom vorherigen Tag)
       - name: Build Baseline for Comparison
         id: baseline
@@ -260,6 +286,12 @@ jobs:
               echo ""
               echo "# Web Components (Stencil)"
               echo "npm install @marioschmidt/design-system-components@${{ steps.version.outputs.new }}"
+              echo ""
+              echo "# React Wrappers"
+              echo "npm install @marioschmidt/design-system-react@${{ steps.version.outputs.new }}"
+              echo ""
+              echo "# Vue Wrappers"
+              echo "npm install @marioschmidt/design-system-vue@${{ steps.version.outputs.new }}"
               echo '```'
               echo ""
               echo "### 📋 Build Info"
@@ -268,12 +300,15 @@ jobs:
               echo "- **Package Size:** ${{ steps.package.outputs.package_size }}"
               echo "- **Tokens:** CSS, SCSS, JavaScript, Swift, Android XML, JSON"
               echo "- **Components:** Stencil Web Components"
+              echo "- **Framework Wrappers:** React, Vue"
               echo ""
               echo "### 🔗 Links"
               echo ""
               echo "- [📖 Documentation](https://github.com/${{ github.repository }}#readme)"
               echo "- [📦 Tokens on npm](https://www.npmjs.com/package/@marioschmidt/design-system-tokens)"
               echo "- [📦 Components on npm](https://www.npmjs.com/package/@marioschmidt/design-system-components)"
+              echo "- [📦 React on npm](https://www.npmjs.com/package/@marioschmidt/design-system-react)"
+              echo "- [📦 Vue on npm](https://www.npmjs.com/package/@marioschmidt/design-system-vue)"
             } > release-notes.md
           fi
 
@@ -301,6 +336,8 @@ jobs:
           echo "**Packages:**" >> $GITHUB_STEP_SUMMARY
           echo "- \`@marioschmidt/design-system-tokens\`" >> $GITHUB_STEP_SUMMARY
           echo "- \`@marioschmidt/design-system-components\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`@marioschmidt/design-system-react\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`@marioschmidt/design-system-vue\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Previous Version:** \`${{ steps.version.outputs.current }}\`" >> $GITHUB_STEP_SUMMARY
           echo "**New Version:** \`${{ steps.version.outputs.new }}\`" >> $GITHUB_STEP_SUMMARY
@@ -312,13 +349,21 @@ jobs:
           echo "# Design Tokens" >> $GITHUB_STEP_SUMMARY
           echo "npm install @marioschmidt/design-system-tokens@${{ steps.version.outputs.new }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "# Web Components" >> $GITHUB_STEP_SUMMARY
+          echo "# Web Components (Stencil)" >> $GITHUB_STEP_SUMMARY
           echo "npm install @marioschmidt/design-system-components@${{ steps.version.outputs.new }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "# React Wrappers" >> $GITHUB_STEP_SUMMARY
+          echo "npm install @marioschmidt/design-system-react@${{ steps.version.outputs.new }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "# Vue Wrappers" >> $GITHUB_STEP_SUMMARY
+          echo "npm install @marioschmidt/design-system-vue@${{ steps.version.outputs.new }}" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 🔗 Links" >> $GITHUB_STEP_SUMMARY
           echo "- [📦 Tokens on npm](https://www.npmjs.com/package/@marioschmidt/design-system-tokens)" >> $GITHUB_STEP_SUMMARY
           echo "- [📦 Components on npm](https://www.npmjs.com/package/@marioschmidt/design-system-components)" >> $GITHUB_STEP_SUMMARY
+          echo "- [📦 React on npm](https://www.npmjs.com/package/@marioschmidt/design-system-react)" >> $GITHUB_STEP_SUMMARY
+          echo "- [📦 Vue on npm](https://www.npmjs.com/package/@marioschmidt/design-system-vue)" >> $GITHUB_STEP_SUMMARY
           echo "- [📋 Release Notes](https://github.com/${{ github.repository }}/releases/tag/v${{ steps.version.outputs.new }})" >> $GITHUB_STEP_SUMMARY
           echo "- [🎨 Pull Requests](https://github.com/${{ github.repository }}/pulls?q=is%3Apr+is%3Amerged)" >> $GITHUB_STEP_SUMMARY
 
