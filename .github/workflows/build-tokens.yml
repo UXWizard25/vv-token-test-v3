@@ -11,12 +11,17 @@ on:
     paths:
       - 'packages/tokens/src/**'
       - 'packages/components/src/**'
+      - 'packages/react/src/**'
+      - 'packages/vue/src/**'
       - 'scripts/tokens/**'
+      - 'scripts/fix-vue-imports.js'
       - 'build-config/tokens/**'
       - 'build-config/stencil/**'
       - 'package.json'
       - 'packages/tokens/package.json'
       - 'packages/components/package.json'
+      - 'packages/react/package.json'
+      - 'packages/vue/package.json'
 
   # Manueller Trigger über GitHub UI
   workflow_dispatch:
@@ -80,10 +85,10 @@ jobs:
           echo "⚙️ Preprocessing Figma tokens..."
           npm run preprocess
 
-      - name: Build Tokens, Bundles, and Stencil Components
+      - name: Build Tokens, Components, and Framework Wrappers
         id: build
         run: |
-          echo "🎨 Building tokens, bundles, and Stencil components..."
+          echo "🎨 Building tokens, Stencil components, and React/Vue wrappers..."
           npm run build:all 2>&1 | tee build-output.log
 
           # Extrahiere Build-Statistiken
@@ -107,6 +112,8 @@ jobs:
             packages/tokens/dist/
             packages/tokens/.tokens/
             packages/components/dist/
+            packages/react/dist/
+            packages/vue/dist/
             build-output.log
           retention-days: 30
 

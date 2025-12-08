@@ -1,0 +1,5 @@
+{
+  "name": "@marioschmidt/design-system-components",
+  "version": "1.0.0",
+  "types": "../../packages/components/dist/types/index.d.ts"
+}

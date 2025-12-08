@@ -11,6 +11,8 @@ A comprehensive design operations pipeline for the BILD Design System. Transform
 [![npm tokens](https://img.shields.io/npm/v/@marioschmidt/design-system-tokens.svg?label=tokens)](https://www.npmjs.com/package/@marioschmidt/design-system-tokens)
 [![npm icons](https://img.shields.io/npm/v/@marioschmidt/design-system-icons.svg?label=icons)](https://www.npmjs.com/package/@marioschmidt/design-system-icons)
 [![npm components](https://img.shields.io/npm/v/@marioschmidt/design-system-components.svg?label=components)](https://www.npmjs.com/package/@marioschmidt/design-system-components)
+[![npm react](https://img.shields.io/npm/v/@marioschmidt/design-system-react.svg?label=react)](https://www.npmjs.com/package/@marioschmidt/design-system-react)
+[![npm vue](https://img.shields.io/npm/v/@marioschmidt/design-system-vue.svg?label=vue)](https://www.npmjs.com/package/@marioschmidt/design-system-vue)
 
 ---
 
@@ -50,6 +52,8 @@ Both pipelines use the **CodeBridge Figma Plugin** for automated exports.
 | **@marioschmidt/design-system-tokens** | Multi-platform design tokens (CSS, JS, iOS, Android) | [📖 README](./packages/tokens/README.md) |
 | **@marioschmidt/design-system-icons** | Multi-platform icon assets (React, iOS, Android, Flutter) | [📖 README](./packages/icons/README.md) |
 | **@marioschmidt/design-system-components** | Stencil Web Components | [📖 README](./packages/components/README.md) |
+| **@marioschmidt/design-system-react** | React wrapper components | [📖 README](./packages/react/README.md) |
+| **@marioschmidt/design-system-vue** | Vue 3 wrapper components | [📖 README](./packages/vue/README.md) |
 
 ### 📚 Platform Documentation
 
@@ -176,8 +180,14 @@ npm install @marioschmidt/design-system-tokens
 # Icons
 npm install @marioschmidt/design-system-icons
 
-# Web Components
+# Web Components (Vanilla JS)
 npm install @marioschmidt/design-system-components
+
+# React Wrappers
+npm install @marioschmidt/design-system-react
+
+# Vue 3 Wrappers
+npm install @marioschmidt/design-system-vue
 ```
 
 ### Usage Examples
@@ -216,6 +226,34 @@ import { Add, Search } from '@marioschmidt/design-system-icons';
 </body>
 ```
 
+```tsx
+// React
+import { DsButton, DsCard } from '@marioschmidt/design-system-react';
+
+function App() {
+  return (
+    <div data-color-brand="bild" data-theme="light">
+      <DsButton variant="primary">Click me</DsButton>
+      <DsCard cardTitle="Hello">Card content</DsCard>
+    </div>
+  );
+}
+```
+
+```vue
+<!-- Vue 3 -->
+<script setup>
+import { DsButton, DsCard } from '@marioschmidt/design-system-vue';
+</script>
+
+<template>
+  <div data-color-brand="bild" data-theme="light">
+    <DsButton variant="primary">Click me</DsButton>
+    <DsCard card-title="Hello">Card content</DsCard>
+  </div>
+</template>
+```
+
 ➡️ See [Package Documentation](#-packages) for complete usage guides.
 
 ---
@@ -239,12 +277,24 @@ vv-token-test-v3/
 │   │   ├── README.md
 │   │   └── package.json
 │   │
-│   └── components/                # @marioschmidt/design-system-components
-│       ├── src/                   # Stencil components (ds-button, ds-card)
-│       │   ├── ds-button/
-│       │   └── ds-card/
-│       ├── docs/                  # Storybook MDX pages (intro, colors, typography, etc.)
-│       ├── dist/                  # Built Stencil output
+│   ├── components/                # @marioschmidt/design-system-components
+│   │   ├── src/                   # Stencil components (ds-button, ds-card)
+│   │   │   ├── ds-button/
+│   │   │   └── ds-card/
+│   │   ├── docs/                  # Storybook MDX pages (intro, colors, typography, etc.)
+│   │   ├── dist/                  # Built Stencil output
+│   │   ├── README.md
+│   │   └── package.json
+│   │
+│   ├── react/                     # @marioschmidt/design-system-react
+│   │   ├── src/                   # Auto-generated React wrappers
+│   │   ├── dist/                  # Built output
+│   │   ├── README.md
+│   │   └── package.json
+│   │
+│   └── vue/                       # @marioschmidt/design-system-vue
+│       ├── src/                   # Auto-generated Vue wrappers
+│       ├── dist/                  # Built output
 │       ├── README.md
 │       └── package.json
 │
@@ -286,12 +336,15 @@ vv-token-test-v3/
 ```bash
 # Full builds
 npm run build              # Tokens + Components
-npm run build:all          # Tokens + Icons + Components
+npm run build:all          # Tokens + Icons + Components + React/Vue Wrappers
 
 # Individual builds
 npm run build:tokens       # Preprocess + Style Dictionary + Bundles
 npm run build:icons        # All icon platforms
-npm run build:components   # Stencil Web Components
+npm run build:components   # Stencil Web Components + generate React/Vue wrappers
+npm run build:react        # React wrapper package
+npm run build:vue          # Vue wrapper package
+npm run build:wrappers     # Both React + Vue
 
 # Development
 npm run dev:stencil        # Stencil dev server (port 3333)
@@ -301,6 +354,8 @@ npm run storybook          # Storybook (port 6006)
 npm run publish:tokens
 npm run publish:icons
 npm run publish:components
+npm run publish:react
+npm run publish:vue
 
 # Maintenance
 npm run clean              # Remove all dist/ and tokens/
@@ -312,11 +367,11 @@ npm run clean              # Remove all dist/ and tokens/
 
 | Workflow | Trigger | Action |
 |----------|---------|--------|
-| `build-tokens.yml` | Push to main/develop | Build tokens + upload artifacts |
+| `build-tokens.yml` | Push to main/develop | Build tokens + components + wrappers, upload artifacts |
 | `build-icons.yml` | Push to main/develop | Build icons + upload artifacts |
 | `auto-pr-from-figma.yml` | Push to `figma-tokens` | Create/update PR with release notes |
 | `auto-pr-from-figma-icons.yml` | Push to `figma-icons` | Create/update PR with release notes |
-| `publish-on-merge.yml` | Merge to main (tokens/components src) | npm publish + GitHub Release |
+| `publish-on-merge.yml` | Merge to main (tokens/components src) | npm publish (tokens, components, react, vue) + GitHub Release |
 | `publish-icons-on-merge.yml` | Merge to main (icons src) | npm publish + GitHub Release |
 
 ---

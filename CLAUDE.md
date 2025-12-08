@@ -13,6 +13,8 @@ This repository uses **npm workspaces** to manage multiple packages:
 | Tokens | `@marioschmidt/design-system-tokens` | `packages/tokens/` | `npm run build:tokens` |
 | Icons | `@marioschmidt/design-system-icons` | `packages/icons/` | `npm run build:icons` |
 | Components | `@marioschmidt/design-system-components` | `packages/components/` | `npm run build:components` |
+| React | `@marioschmidt/design-system-react` | `packages/react/` | `npm run build:react` |
+| Vue | `@marioschmidt/design-system-vue` | `packages/vue/` | `npm run build:vue` |
 
 ---
 
@@ -23,7 +25,10 @@ npm run build           # Full build (tokens + components)
 npm run build:tokens    # Build tokens (preprocess + style-dictionary + bundles)
 npm run build:icons     # Build icons package
 npm run build:components # Build Stencil Web Components
-npm run build:all       # Everything (tokens + icons + components)
+npm run build:react     # Build React wrapper components
+npm run build:vue       # Build Vue 3 wrapper components
+npm run build:wrappers  # Build both React and Vue wrappers
+npm run build:all       # Everything (tokens + icons + components + wrappers)
 npm run dev:stencil     # Stencil dev server (port 3333)
 npm run storybook       # Storybook dev server (port 6006)
 npm run build:storybook # Build static Storybook
@@ -34,6 +39,8 @@ npm run clean           # Delete all dist/ and tokens/
 npm run publish:tokens     # npm publish -w @marioschmidt/design-system-tokens
 npm run publish:icons      # npm publish -w @marioschmidt/design-system-icons
 npm run publish:components # npm publish -w @marioschmidt/design-system-components
+npm run publish:react      # npm publish -w @marioschmidt/design-system-react
+npm run publish:vue        # npm publish -w @marioschmidt/design-system-vue
 ```
 
 **Source of Truth:** `src/design-tokens/bild-design-system-raw-data.json` (Figma Export via CodeBridge Plugin)
@@ -662,6 +669,9 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 | Modify CSS Dual-Axis selectors | `style-dictionary.config.js` → `getBrandAttribute()`, `build.js` → optimization functions |
 | Modify token naming conventions | `style-dictionary.config.js` → `nameTransformers`, `build.js` → `toCamelCase()` |
 | Add new Stencil component | `src/components/ds-{name}/ds-{name}.tsx`, `ds-{name}.css` |
+| Modify React wrappers | `packages/react/lib/`, `build-config/stencil/stencil.config.ts` → `reactOutputTarget` |
+| Modify Vue wrappers | `packages/vue/lib/`, `build-config/stencil/stencil.config.ts` → `vueOutputTarget` |
+| Fix Vue import paths | `scripts/fix-vue-imports.js` |
 | Modify Stencil config | `build-config/stencil/stencil.config.ts` |
 | Change Stencil output targets | `build-config/stencil/stencil.config.ts` → `outputTargets` |
 | Change global CSS bundle for Stencil | `build-config/stencil/stencil.config.ts` → `globalStyle` |
@@ -832,10 +842,27 @@ packages/
       www/                # Dev server output
       docs/               # Auto-generated component docs
 
+  react/                  # @marioschmidt/design-system-react
+    package.json
+    lib/                  # Auto-generated React wrappers
+      components/         # React component wrappers (DsButton, DsCard, etc.)
+      react-component-lib/  # Stencil React runtime utilities
+      index.ts            # Package entry point
+
+  vue/                    # @marioschmidt/design-system-vue
+    package.json
+    lib/                  # Auto-generated Vue 3 wrappers
+      components/         # Vue component wrappers (DsButton, DsCard, etc.)
+      vue-component-lib/  # Stencil Vue runtime utilities
+      index.ts            # Package entry point
+
 build-config/
   stencil/
-    stencil.config.ts     # Stencil configuration
+    stencil.config.ts     # Stencil configuration (includes React/Vue output targets)
     tsconfig.json         # TypeScript config for Stencil
+
+scripts/
+  fix-vue-imports.js      # Fixes JSX import path in Vue wrappers
 
 src/
   components/
@@ -853,8 +880,11 @@ src/
 | Script | Purpose |
 |--------|---------|
 | `npm run build:components` | Build Stencil components (requires tokens built first) |
+| `npm run build:react` | Build React wrapper components |
+| `npm run build:vue` | Build Vue 3 wrapper components |
+| `npm run build:wrappers` | Build both React and Vue wrappers |
 | `npm run dev:stencil` | Start dev server with hot reload (port 3333) |
-| `npm run build:all` | Build tokens + icons + Stencil in sequence |
+| `npm run build:all` | Build tokens + icons + Stencil + wrappers in sequence |
 
 ### Creating New Components
 
@@ -937,6 +967,148 @@ Components automatically adapt to brand/theme/density changes via CSS Custom Pro
 | Density | Default, Dense, Spacious | `data-density` |
 
 No JavaScript required – pure CSS Custom Property inheritance through Shadow DOM.
+
+---
+
+## React & Vue Wrappers
+
+The design system provides **auto-generated wrapper packages** for React and Vue 3, built using Stencil's output targets.
+
+### Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        FRAMEWORK WRAPPER ARCHITECTURE                        │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  Stencil Build Process                                                      │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│                                                                             │
+│  src/components/           stencil.config.ts                                │
+│  ├── ds-button/     ──────►  outputTargets:                                 │
+│  │   ├── ds-button.tsx       ├── dist (Web Components)                      │
+│  │   └── ds-button.css       ├── dist-custom-elements                       │
+│  ├── ds-card/                ├── reactOutputTarget → packages/react/lib/    │
+│  │   └── ...                 └── vueOutputTarget → packages/vue/lib/        │
+│  └── ...                                                                    │
+│                                                                             │
+│  React Wrappers (packages/react/)                                           │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│                                                                             │
+│  lib/                                                                       │
+│  ├── components/              # Auto-generated React components             │
+│  │   ├── DsButton.ts          # Wraps <ds-button> Web Component             │
+│  │   └── DsCard.ts            # Wraps <ds-card> Web Component               │
+│  ├── react-component-lib/     # Stencil React runtime utilities             │
+│  │   ├── createComponent.ts   # Creates React wrapper components            │
+│  │   └── utils/               # Event handling, ref forwarding              │
+│  └── index.ts                 # Package exports                             │
+│                                                                             │
+│  Vue 3 Wrappers (packages/vue/)                                             │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│                                                                             │
+│  lib/                                                                       │
+│  ├── components/              # Auto-generated Vue components               │
+│  │   ├── DsButton.ts          # Wraps <ds-button> Web Component             │
+│  │   └── DsCard.ts            # Wraps <ds-card> Web Component               │
+│  ├── vue-component-lib/       # Stencil Vue runtime utilities               │
+│  │   ├── utils.ts             # Vue component creation utilities            │
+│  │   └── ...                                                                │
+│  └── index.ts                 # Package exports                             │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### How Wrappers Work
+
+| Feature | Implementation |
+|---------|----------------|
+| **Component Registration** | Uses `defineCustomElement()` to lazy-load Web Components |
+| **Props** | Mapped from Stencil `@Prop()` decorators to framework props |
+| **Events** | Converted to framework event patterns (`onClick` / `@click`) |
+| **Refs** | Forwarded to underlying Web Component element |
+| **TypeScript** | Full type definitions from Stencil's generated types |
+| **Tree Shaking** | Individual component imports for optimal bundle size |
+
+### Usage Examples
+
+**React:**
+```tsx
+import { DsButton, DsCard } from '@marioschmidt/design-system-react';
+import '@marioschmidt/design-system-tokens/css/bundles/bild.css';
+
+function App() {
+  return (
+    <div data-color-brand="bild" data-theme="light">
+      <DsButton variant="primary" onClick={() => console.log('clicked')}>
+        Click me
+      </DsButton>
+      <DsCard cardTitle="Hello">Card content</DsCard>
+    </div>
+  );
+}
+```
+
+**Vue 3:**
+```vue
+<script setup>
+import { DsButton, DsCard } from '@marioschmidt/design-system-vue';
+</script>
+
+<template>
+  <div data-color-brand="bild" data-theme="light">
+    <DsButton variant="primary" @click="handleClick">
+      Click me
+    </DsButton>
+    <DsCard card-title="Hello">Card content</DsCard>
+  </div>
+</template>
+
+<style>
+@import '@marioschmidt/design-system-tokens/css/bundles/bild.css';
+</style>
+```
+
+### Key Configuration (stencil.config.ts)
+
+```typescript
+import { reactOutputTarget } from '@stencil/react-output-target';
+import { vueOutputTarget } from '@stencil/vue-output-target';
+
+export const config: Config = {
+  outputTargets: [
+    // ... other targets
+    reactOutputTarget({
+      outDir: '../react/lib/components',
+    }),
+    vueOutputTarget({
+      componentCorePackage: '@marioschmidt/design-system-components',
+      proxiesFile: '../vue/lib/components/index.ts',
+    }),
+  ],
+};
+```
+
+### Vue Import Fix
+
+The Vue output target generates incorrect JSX import paths. The `scripts/fix-vue-imports.js` script automatically corrects these after build:
+
+```javascript
+// Before (incorrect):
+import { JSX } from '@marioschmidt/design-system-components/dist/types/components';
+
+// After (correct):
+import { JSX } from '@marioschmidt/design-system-components';
+```
+
+### Common Issues
+
+| Problem | Cause | Solution |
+|---------|-------|----------|
+| React components not rendering | Web Component not registered | Import ensures `defineCustomElement()` is called |
+| Vue template errors | camelCase props in template | Use kebab-case: `card-title` not `cardTitle` |
+| Types not found | Build not complete | Run `npm run build:components` before `npm run build:wrappers` |
+| Vue JSX import error | Incorrect import path | Run `npm run build:vue` (includes fix script) |
 
 ---
 
@@ -1175,3 +1347,9 @@ npm run build:docs
 | "No matching indexer found" for MDX | Wrong file extension | Use `.mdx` for docs-only pages, `.stories.ts` for component stories |
 | Markdown tables showing as raw text | MDX doesn't render markdown tables | Use HTML `<table>` elements with inline CSS instead |
 | Styleguide pages not appearing | Stories glob pattern wrong | Check `main.ts` → `stories` includes `src/docs/**/*.mdx` |
+| React wrapper import error | Package not built | Run `npm run build:react` after `npm run build:components` |
+| Vue wrapper import error | Package not built | Run `npm run build:vue` after `npm run build:components` |
+| Vue JSX type error | Incorrect import path in generated code | Run `npm run build:vue` (includes fix-vue-imports.js) |
+| React/Vue components not styled | Missing token CSS | Import `@marioschmidt/design-system-tokens/css/bundles/bild.css` |
+| Vue props not working | Using camelCase in template | Use kebab-case in templates: `card-title` not `cardTitle` |
+| Type definitions missing | Stencil build incomplete | Ensure `npm run build:components` completed successfully |

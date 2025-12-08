@@ -1,0 +1,43 @@
+{
+  "name": "@marioschmidt/design-system-vue",
+  "version": "1.0.0",
+  "description": "Vue wrapper components for BILD Design System",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@stencil/vue-output-target": "^0.11.8"
+  },
+  "peerDependencies": {
+    "vue": ">=3",
+    "@marioschmidt/design-system-components": "^1.0.0"
+  },
+  "devDependencies": {
+    "vue": "^3.3.0",
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "vue",
+    "web-components",
+    "design-system",
+    "bild",
+    "stencil"
+  ],
+  "author": "BILD Design System Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UXWizard25/vv-token-test-v3.git",
+    "directory": "packages/vue"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

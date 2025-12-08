@@ -1,4 +1,6 @@
 import { Config } from '@stencil/core';
+import { reactOutputTarget } from '@stencil/react-output-target';
+import { vueOutputTarget } from '@stencil/vue-output-target';
 
 export const config: Config = {
   namespace: 'bds',
@@ -14,6 +16,7 @@ export const config: Config = {
       type: 'dist-custom-elements',
       dir: '../../packages/components/dist/components',
       customElementsExportBehavior: 'auto-define-custom-elements',
+      externalRuntime: false,
     },
     {
       type: 'www',
@@ -27,6 +30,19 @@ export const config: Config = {
       type: 'docs-readme',
       dir: '../../packages/components/dist/docs',
     },
+    // React wrapper output
+    reactOutputTarget({
+      outDir: '../../packages/react/src',
+      stencilPackageName: '@marioschmidt/design-system-components',
+      customElementsDir: 'dist/components',
+    }),
+    // Vue wrapper output
+    vueOutputTarget({
+      componentCorePackage: '@marioschmidt/design-system-components',
+      proxiesFile: '../../packages/vue/src/components.ts',
+      includeImportCustomElements: true,
+      customElementsDir: 'dist/components',
+    }),
   ],
   testing: {
     browserHeadless: 'new',

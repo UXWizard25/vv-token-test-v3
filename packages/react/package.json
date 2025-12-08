@@ -1,0 +1,46 @@
+{
+  "name": "@marioschmidt/design-system-react",
+  "version": "1.0.0",
+  "description": "React wrapper components for BILD Design System",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@stencil/react-output-target": "^1.2.0"
+  },
+  "peerDependencies": {
+    "react": ">=17",
+    "react-dom": ">=17",
+    "@marioschmidt/design-system-components": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "typescript": "^5.0.0",
+    "react": "^18.2.0"
+  },
+  "keywords": [
+    "react",
+    "web-components",
+    "design-system",
+    "bild",
+    "stencil"
+  ],
+  "author": "BILD Design System Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UXWizard25/vv-token-test-v3.git",
+    "directory": "packages/react"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

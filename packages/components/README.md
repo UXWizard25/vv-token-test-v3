@@ -4,6 +4,10 @@
 
 Stencil-based Web Components for the BILD Design System. Components consume design tokens via CSS Custom Properties and work in any framework.
 
+**Framework-specific wrappers available:**
+- [React Wrappers](../react/README.md) - `@marioschmidt/design-system-react`
+- [Vue 3 Wrappers](../vue/README.md) - `@marioschmidt/design-system-vue`
+
 [![npm version](https://img.shields.io/npm/v/@marioschmidt/design-system-components.svg)](https://www.npmjs.com/package/@marioschmidt/design-system-components)
 [![Build Status](https://github.com/UXWizard25/vv-token-test-v3/workflows/Build%20Design%20Tokens/badge.svg)](https://github.com/UXWizard25/vv-token-test-v3/actions)
 
@@ -13,6 +17,7 @@ Stencil-based Web Components for the BILD Design System. Components consume desi
 
 - [📦 Installation](#-installation)
 - [🚀 Usage](#-usage)
+- [⚛️ React & Vue](#️-react--vue)
 - [🧩 Available Components](#-available-components)
 - [🎨 Theming](#-theming)
 - [🌓 Shadow DOM](#-shadow-dom)
@@ -86,6 +91,61 @@ import { DsButton, DsCard } from '@marioschmidt/design-system-components';
 </body>
 </html>
 ```
+
+---
+
+## ⚛️ React & Vue
+
+For better framework integration, use our auto-generated wrapper packages:
+
+### React
+
+```bash
+npm install @marioschmidt/design-system-react
+```
+
+```tsx
+import { DsButton, DsCard } from '@marioschmidt/design-system-react';
+import '@marioschmidt/design-system-tokens/css/bundles/bild.css';
+
+function App() {
+  return (
+    <div data-color-brand="bild" data-theme="light">
+      <DsButton variant="primary" onClick={() => console.log('clicked')}>
+        Click me
+      </DsButton>
+    </div>
+  );
+}
+```
+
+[📖 Full React Documentation](../react/README.md)
+
+### Vue 3
+
+```bash
+npm install @marioschmidt/design-system-vue
+```
+
+```vue
+<script setup>
+import { DsButton, DsCard } from '@marioschmidt/design-system-vue';
+</script>
+
+<template>
+  <div data-color-brand="bild" data-theme="light">
+    <DsButton variant="primary" @click="handleClick">
+      Click me
+    </DsButton>
+  </div>
+</template>
+
+<style>
+@import '@marioschmidt/design-system-tokens/css/bundles/bild.css';
+</style>
+```
+
+[📖 Full Vue Documentation](../vue/README.md)
 
 ---
 
@@ -380,6 +440,8 @@ export const Primary: StoryObj = {
 | Document | Description |
 |----------|-------------|
 | [📖 Main README](../../README.md) | Project overview |
+| [📖 React Wrappers](../react/README.md) | React wrapper components |
+| [📖 Vue Wrappers](../vue/README.md) | Vue 3 wrapper components |
 | [📖 Tokens README](../tokens/README.md) | Design tokens documentation |
 | [📖 Icons README](../icons/README.md) | Icon library documentation |
 | [📖 CSS Documentation](../tokens/docs/css.md) | CSS Custom Properties & Shadow DOM |
@@ -401,3 +463,5 @@ MIT
 | 4-Axis Theming | ✅ |
 | TypeScript | ✅ |
 | Storybook | ✅ |
+| React Wrappers | ✅ |
+| Vue 3 Wrappers | ✅ |

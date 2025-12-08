@@ -4,14 +4,14 @@
   "description": "BILD Design System Web Components - Stencil-based component library",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/types/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
   "exports": {
     ".": {
       "import": "./dist/index.js",
       "require": "./dist/index.cjs.js",
-      "types": "./dist/types/index.d.ts"
+      "types": "./dist/types/components.d.ts"
     },
     "./loader": {
       "import": "./dist/loader/index.js",
@@ -20,7 +20,15 @@
     },
     "./components": {
       "import": "./dist/components/index.js",
-      "types": "./dist/components/index.d.ts"
+      "types": "./dist/types/components.d.ts"
+    },
+    "./dist/components": {
+      "import": "./dist/components/index.js",
+      "types": "./dist/types/components.d.ts"
+    },
+    "./dist/components/*": {
+      "import": "./dist/components/*",
+      "types": "./dist/components/*.d.ts"
     }
   },
   "files": [
