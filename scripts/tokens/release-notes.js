@@ -675,172 +675,316 @@ function generateBreakingChangesSection(diff, options = {}) {
 // LAYER 3: VISUAL CHANGES (Modified Tokens with Diff Metrics)
 // =============================================================================
 
+// Known brands and modes for matrix display
+const KNOWN_BRANDS = ['bild', 'sportbild', 'advertorial'];
+const KNOWN_MODES = ['light', 'dark'];
+const KNOWN_BREAKPOINTS = ['xs', 'sm', 'md', 'lg'];
+
+/**
+ * Generate a color matrix table for a single token
+ * Rows: modes (light/dark), Columns: brands
+ */
+function generateColorMatrix(token) {
+  const contexts = token.valuesByContext || {};
+  const contextKeys = Object.keys(contexts);
+  if (contextKeys.length <= 1) return null;
+
+  // Determine which brands and modes are present
+  const brands = new Set();
+  const modes = new Set();
+  for (const key of contextKeys) {
+    const ctx = contexts[key];
+    if (ctx.brand) brands.add(ctx.brand);
+    if (ctx.mode) modes.add(ctx.mode);
+  }
+
+  // Need at least 2 contexts for a matrix
+  if (brands.size === 0 && modes.size <= 1) return null;
+
+  const brandList = KNOWN_BRANDS.filter(b => brands.has(b));
+  const modeList = KNOWN_MODES.filter(m => modes.has(m));
+
+  // If we only have modes (no brand differentiation)
+  if (brandList.length === 0 && modeList.length > 1) {
+    let md = `**\`${token.displayName}\`**\n\n`;
+    md += '| Mode | Change | ΔE |\n';
+    md += '|------|--------|----|\n';
+    for (const mode of modeList) {
+      const ctx = contexts[mode] || contexts[`/${mode}`];
+      if (ctx) {
+        const deltaE = calculateDeltaE(ctx.old, ctx.new);
+        const diffInfo = deltaE ? `${deltaE.icon} ${deltaE.deltaE}` : '–';
+        md += `| ${mode} | \`${truncate(ctx.old, 9)}\` → \`${truncate(ctx.new, 9)}\` | ${diffInfo} |\n`;
+      }
+    }
+    return md + '\n';
+  }
+
+  // Full matrix: brands × modes
+  if (brandList.length > 0 && modeList.length > 0) {
+    let md = `**\`${token.displayName}\`**\n\n`;
+    md += '| | ' + brandList.map(b => b.charAt(0).toUpperCase() + b.slice(1)).join(' | ') + ' |\n';
+    md += '|---' + brandList.map(() => '|---').join('') + '|\n';
+
+    for (const mode of modeList) {
+      const modeLabel = mode === 'light' ? '🌞 Light' : '🌙 Dark';
+      const cells = brandList.map(brand => {
+        const key = `${brand}/${mode}`;
+        const ctx = contexts[key];
+        if (!ctx) return '–';
+        const deltaE = calculateDeltaE(ctx.old, ctx.new);
+        return deltaE ? `${deltaE.icon} ΔE=${deltaE.deltaE}` : '–';
+      });
+      md += `| ${modeLabel} | ${cells.join(' | ')} |\n`;
+    }
+    return md + '\n';
+  }
+
+  return null;
+}
+
+/**
+ * Generate a breakpoint matrix table for a single token (typography/sizing/spacing)
+ * Rows: breakpoints (xs/sm/md/lg), Columns: brands
+ */
+function generateBreakpointMatrix(token) {
+  const contexts = token.valuesByContext || {};
+  const contextKeys = Object.keys(contexts);
+  if (contextKeys.length <= 1) return null;
+
+  // Determine which brands and breakpoints are present
+  const brands = new Set();
+  const breakpoints = new Set();
+  for (const key of contextKeys) {
+    const ctx = contexts[key];
+    if (ctx.brand) brands.add(ctx.brand);
+    if (ctx.breakpoint) breakpoints.add(ctx.breakpoint);
+  }
+
+  if (breakpoints.size <= 1) return null;
+
+  const brandList = KNOWN_BRANDS.filter(b => brands.has(b));
+  const bpList = KNOWN_BREAKPOINTS.filter(bp => breakpoints.has(bp));
+
+  // If we only have breakpoints (no brand differentiation)
+  if (brandList.length === 0 && bpList.length > 1) {
+    let md = `**\`${token.displayName}\`**\n\n`;
+    md += '| BP | Change | Diff |\n';
+    md += '|----|--------|------|\n';
+    for (const bp of bpList) {
+      const ctx = contexts[bp] || contexts[`/${bp}`];
+      if (ctx) {
+        const dimDiff = calculateDimensionDiff(ctx.old, ctx.new);
+        const diffInfo = dimDiff ? `${dimDiff.icon} ${dimDiff.display}` : '–';
+        md += `| ${bp} | \`${ctx.old}\` → \`${ctx.new}\` | ${diffInfo} |\n`;
+      }
+    }
+    return md + '\n';
+  }
+
+  // Full matrix: brands × breakpoints
+  if (brandList.length > 0 && bpList.length > 1) {
+    let md = `**\`${token.displayName}\`**\n\n`;
+    md += '| | ' + brandList.map(b => b.charAt(0).toUpperCase() + b.slice(1)).join(' | ') + ' |\n';
+    md += '|---' + brandList.map(() => '|---').join('') + '|\n';
+
+    for (const bp of bpList) {
+      const cells = brandList.map(brand => {
+        const key = `${brand}/${bp}`;
+        const ctx = contexts[key];
+        if (!ctx) return '–';
+        const dimDiff = calculateDimensionDiff(ctx.old, ctx.new);
+        return dimDiff ? `${dimDiff.icon} ${dimDiff.display}` : '–';
+      });
+      md += `| ${bp} | ${cells.join(' | ')} |\n`;
+    }
+    return md + '\n';
+  }
+
+  return null;
+}
+
+/**
+ * Generate simple row for token without multiple contexts
+ */
+function generateSimpleColorRow(token) {
+  const deltaE = calculateDeltaE(token.oldValue, token.newValue);
+  const diffInfo = deltaE ? `${deltaE.icon} ΔE=${deltaE.deltaE} (${deltaE.perception})` : '';
+  return `| \`${truncate(token.displayName, 28)}\` | \`${truncate(token.oldValue, 9)}\` → \`${truncate(token.newValue, 9)}\` | ${diffInfo} |\n`;
+}
+
+function generateSimpleDimensionRow(token) {
+  const dimDiff = calculateDimensionDiff(token.oldValue, token.newValue);
+  const diffDisplay = dimDiff ? `${dimDiff.icon} ${dimDiff.display}` : '';
+  return `| \`${truncate(token.displayName, 30)}\` | \`${token.oldValue}\` → \`${token.newValue}\` | ${diffDisplay} |\n`;
+}
+
 /**
  * Generate visual changes section - shows modified tokens grouped by category
  * with visual diff calculations (Delta E for colors, % for dimensions)
+ * Uses matrix display for tokens with multiple contexts (brand/mode/breakpoint)
  */
 function generateVisualChangesSection(diff, options = {}) {
   const { maxTokens = 12 } = options;
 
-  // Get modified tokens
+  // Get modified tokens (only atomic value changes, no combined tokens)
   const modifiedTokens = diff?.byUniqueToken?.modified || [];
   if (modifiedTokens.length === 0) return '';
 
-  // Group by category
+  // Separate tokens with multiple contexts from simple tokens
   const byCategory = {
-    colors: [],
-    typography: [],
-    spacing: [],
-    sizing: [],
-    effects: [],
-    other: []
+    colors: { matrix: [], simple: [] },
+    typography: { matrix: [], simple: [] },
+    spacing: { matrix: [], simple: [] },
+    sizing: { matrix: [], simple: [] },
+    effects: { matrix: [], simple: [] },
+    other: { simple: [] }
   };
 
   for (const token of modifiedTokens) {
     const category = categorizeTokenForDisplay(token.displayName, token.oldValue);
-    if (byCategory[category]) {
-      byCategory[category].push(token);
-    } else {
-      byCategory.other.push(token);
+    const hasMultiple = token.hasMultipleContexts && Object.keys(token.valuesByContext || {}).length > 1;
+
+    if (category === 'other') {
+      byCategory.other.simple.push(token);
+    } else if (byCategory[category]) {
+      if (hasMultiple) {
+        byCategory[category].matrix.push(token);
+      } else {
+        byCategory[category].simple.push(token);
+      }
     }
   }
 
   let md = '## 🟡 Visual Changes\n\n';
   md += '> Modified tokens with visual impact analysis\n\n';
 
-  // Colors with Delta E
-  if (byCategory.colors.length > 0) {
-    md += `### 🎨 Colors (${byCategory.colors.length})\n\n`;
-    md += '| Token | Change | Visual Diff |\n';
-    md += '|-------|--------|-------------|\n';
+  // Colors with Delta E (matrix for multi-context, table for simple)
+  const colorTotal = byCategory.colors.matrix.length + byCategory.colors.simple.length;
+  if (colorTotal > 0) {
+    md += `### 🎨 Colors (${colorTotal})\n\n`;
 
-    for (const token of byCategory.colors.slice(0, maxTokens)) {
-      const deltaE = calculateDeltaE(token.oldValue, token.newValue);
-      let diffInfo = '';
-      if (deltaE) {
-        diffInfo = `${deltaE.icon} ΔE=${deltaE.deltaE} (${deltaE.perception})`;
+    // Matrix tokens first
+    for (const token of byCategory.colors.matrix.slice(0, maxTokens)) {
+      const matrix = generateColorMatrix(token);
+      if (matrix) {
+        md += matrix;
       }
-      md += `| \`${truncate(token.displayName, 28)}\` | \`${truncate(token.oldValue, 9)}\` → \`${truncate(token.newValue, 9)}\` | ${diffInfo} |\n`;
     }
 
-    if (byCategory.colors.length > maxTokens) {
-      md += `| ... | *${byCategory.colors.length - maxTokens} more* | |\n`;
-    }
-    md += '\n';
-  }
-
-  // Typography (combined token changes)
-  const typographyTokens = byCategory.typography;
-  const styleChanges = diff?.styleChanges?.typography?.modified || [];
-  if (typographyTokens.length > 0 || styleChanges.length > 0) {
-    const totalTypo = typographyTokens.length + styleChanges.length;
-    md += `### 📝 Typography (${totalTypo})\n\n`;
-
-    // Style changes (combined tokens with property-level diff)
-    if (styleChanges.length > 0) {
-      md += '| Style | Property | Change | Diff |\n';
-      md += '|-------|----------|--------|------|\n';
-
-      for (const style of styleChanges.slice(0, maxTokens)) {
-        const props = style.changedProperties || [];
-        for (const prop of props.slice(0, 3)) {
-          const dimDiff = calculateDimensionDiff(String(prop.oldValue), String(prop.newValue));
-          const diffDisplay = dimDiff ? `${dimDiff.icon} ${dimDiff.display}` : '';
-          md += `| \`${truncate(style.name, 18)}\` | ${prop.property} | \`${truncate(String(prop.oldValue), 8)}\` → \`${truncate(String(prop.newValue), 8)}\` | ${diffDisplay} |\n`;
-        }
+    // Simple tokens in table
+    if (byCategory.colors.simple.length > 0) {
+      md += '| Token | Change | Visual Diff |\n';
+      md += '|-------|--------|-------------|\n';
+      for (const token of byCategory.colors.simple.slice(0, maxTokens)) {
+        md += generateSimpleColorRow(token);
+      }
+      if (byCategory.colors.simple.length > maxTokens) {
+        md += `| ... | *${byCategory.colors.simple.length - maxTokens} more* | |\n`;
       }
       md += '\n';
     }
+  }
 
-    // Simple typography tokens
-    if (typographyTokens.length > 0) {
+  // Typography
+  const typoTotal = byCategory.typography.matrix.length + byCategory.typography.simple.length;
+  if (typoTotal > 0) {
+    md += `### 📝 Typography (${typoTotal})\n\n`;
+
+    for (const token of byCategory.typography.matrix.slice(0, maxTokens)) {
+      const matrix = generateBreakpointMatrix(token);
+      if (matrix) {
+        md += matrix;
+      }
+    }
+
+    if (byCategory.typography.simple.length > 0) {
       md += '| Token | Change | Diff |\n';
       md += '|-------|--------|------|\n';
-
-      for (const token of typographyTokens.slice(0, maxTokens)) {
-        const dimDiff = calculateDimensionDiff(token.oldValue, token.newValue);
-        const diffDisplay = dimDiff ? `${dimDiff.icon} ${dimDiff.display}` : '';
-        md += `| \`${truncate(token.displayName, 30)}\` | \`${truncate(token.oldValue, 10)}\` → \`${truncate(token.newValue, 10)}\` | ${diffDisplay} |\n`;
+      for (const token of byCategory.typography.simple.slice(0, maxTokens)) {
+        md += generateSimpleDimensionRow(token);
       }
-
-      if (typographyTokens.length > maxTokens) {
-        md += `| ... | *${typographyTokens.length - maxTokens} more* | |\n`;
+      if (byCategory.typography.simple.length > maxTokens) {
+        md += `| ... | *${byCategory.typography.simple.length - maxTokens} more* | |\n`;
       }
       md += '\n';
     }
   }
 
-  // Spacing with percentage diff
-  if (byCategory.spacing.length > 0) {
-    md += `### 📏 Spacing (${byCategory.spacing.length})\n\n`;
-    md += '| Token | Change | Diff |\n';
-    md += '|-------|--------|------|\n';
+  // Spacing
+  const spacingTotal = byCategory.spacing.matrix.length + byCategory.spacing.simple.length;
+  if (spacingTotal > 0) {
+    md += `### 📏 Spacing (${spacingTotal})\n\n`;
 
-    for (const token of byCategory.spacing.slice(0, maxTokens)) {
-      const dimDiff = calculateDimensionDiff(token.oldValue, token.newValue);
-      const diffDisplay = dimDiff ? `${dimDiff.icon} ${dimDiff.display}` : '';
-      md += `| \`${truncate(token.displayName, 32)}\` | \`${token.oldValue}\` → \`${token.newValue}\` | ${diffDisplay} |\n`;
-    }
-
-    if (byCategory.spacing.length > maxTokens) {
-      md += `| ... | *${byCategory.spacing.length - maxTokens} more* | |\n`;
-    }
-    md += '\n';
-  }
-
-  // Sizing with percentage diff
-  if (byCategory.sizing.length > 0) {
-    md += `### 📐 Sizing (${byCategory.sizing.length})\n\n`;
-    md += '| Token | Change | Diff |\n';
-    md += '|-------|--------|------|\n';
-
-    for (const token of byCategory.sizing.slice(0, maxTokens)) {
-      const dimDiff = calculateDimensionDiff(token.oldValue, token.newValue);
-      const diffDisplay = dimDiff ? `${dimDiff.icon} ${dimDiff.display}` : '';
-      md += `| \`${truncate(token.displayName, 32)}\` | \`${token.oldValue}\` → \`${token.newValue}\` | ${diffDisplay} |\n`;
-    }
-
-    if (byCategory.sizing.length > maxTokens) {
-      md += `| ... | *${byCategory.sizing.length - maxTokens} more* | |\n`;
-    }
-    md += '\n';
-  }
-
-  // Effects
-  const effectChanges = diff?.styleChanges?.effects?.modified || [];
-  if (byCategory.effects.length > 0 || effectChanges.length > 0) {
-    const totalEffects = byCategory.effects.length + effectChanges.length;
-    md += `### ✨ Effects (${totalEffects})\n\n`;
-
-    if (effectChanges.length > 0) {
-      md += '| Style | Changed Properties |\n';
-      md += '|-------|--------------------|\n';
-
-      for (const style of effectChanges.slice(0, maxTokens)) {
-        const props = (style.changedProperties || []).map(p => p.property).join(', ');
-        md += `| \`${truncate(style.name, 25)}\` | ${truncate(props, 35)} |\n`;
+    for (const token of byCategory.spacing.matrix.slice(0, maxTokens)) {
+      const matrix = generateBreakpointMatrix(token);
+      if (matrix) {
+        md += matrix;
       }
-      md += '\n';
     }
 
-    if (byCategory.effects.length > 0) {
-      md += '| Token | Change |\n';
-      md += '|-------|--------|\n';
-
-      for (const token of byCategory.effects.slice(0, maxTokens)) {
-        md += `| \`${truncate(token.displayName, 32)}\` | \`${truncate(token.oldValue, 20)}\` → \`${truncate(token.newValue, 20)}\` |\n`;
+    if (byCategory.spacing.simple.length > 0) {
+      md += '| Token | Change | Diff |\n';
+      md += '|-------|--------|------|\n';
+      for (const token of byCategory.spacing.simple.slice(0, maxTokens)) {
+        md += generateSimpleDimensionRow(token);
+      }
+      if (byCategory.spacing.simple.length > maxTokens) {
+        md += `| ... | *${byCategory.spacing.simple.length - maxTokens} more* | |\n`;
       }
       md += '\n';
     }
   }
 
-  // Other
-  if (byCategory.other.length > 0) {
-    md += `<details>\n<summary>📦 Other (${byCategory.other.length})</summary>\n\n`;
+  // Sizing
+  const sizingTotal = byCategory.sizing.matrix.length + byCategory.sizing.simple.length;
+  if (sizingTotal > 0) {
+    md += `### 📐 Sizing (${sizingTotal})\n\n`;
+
+    for (const token of byCategory.sizing.matrix.slice(0, maxTokens)) {
+      const matrix = generateBreakpointMatrix(token);
+      if (matrix) {
+        md += matrix;
+      }
+    }
+
+    if (byCategory.sizing.simple.length > 0) {
+      md += '| Token | Change | Diff |\n';
+      md += '|-------|--------|------|\n';
+      for (const token of byCategory.sizing.simple.slice(0, maxTokens)) {
+        md += generateSimpleDimensionRow(token);
+      }
+      if (byCategory.sizing.simple.length > maxTokens) {
+        md += `| ... | *${byCategory.sizing.simple.length - maxTokens} more* | |\n`;
+      }
+      md += '\n';
+    }
+  }
+
+  // Effects (no matrix, just simple display for now)
+  const effectsTotal = byCategory.effects.matrix.length + byCategory.effects.simple.length;
+  if (effectsTotal > 0) {
+    md += `### ✨ Effects (${effectsTotal})\n\n`;
     md += '| Token | Change |\n';
     md += '|-------|--------|\n';
 
-    for (const token of byCategory.other.slice(0, maxTokens)) {
+    const allEffects = [...byCategory.effects.matrix, ...byCategory.effects.simple];
+    for (const token of allEffects.slice(0, maxTokens)) {
+      md += `| \`${truncate(token.displayName, 32)}\` | \`${truncate(token.oldValue, 20)}\` → \`${truncate(token.newValue, 20)}\` |\n`;
+    }
+    if (allEffects.length > maxTokens) {
+      md += `| ... | *${allEffects.length - maxTokens} more* |\n`;
+    }
+    md += '\n';
+  }
+
+  // Other (collapsible)
+  if (byCategory.other.simple.length > 0) {
+    md += `<details>\n<summary>📦 Other (${byCategory.other.simple.length})</summary>\n\n`;
+    md += '| Token | Change |\n';
+    md += '|-------|--------|\n';
+
+    for (const token of byCategory.other.simple.slice(0, maxTokens)) {
       md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.oldValue, 15)}\` → \`${truncate(token.newValue, 15)}\` |\n`;
     }
     md += '\n</details>\n\n';

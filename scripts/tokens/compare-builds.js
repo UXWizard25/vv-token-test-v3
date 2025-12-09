@@ -841,23 +841,106 @@ function detectPlatform(filePath) {
 }
 
 /**
+ * Build a context key from metadata for valuesByContext grouping
+ * Format: "brand/mode" for colors, "brand/breakpoint" for sizing, etc.
+ * Returns null if no relevant context is found
+ */
+function buildContextKey(metadata) {
+  const parts = [];
+
+  // Brand is always first if present
+  if (metadata.brand) {
+    parts.push(metadata.brand);
+  }
+
+  // Add mode for color tokens
+  if (metadata.mode) {
+    parts.push(metadata.mode);
+  }
+
+  // Add breakpoint for sizing/typography tokens
+  if (metadata.breakpoint) {
+    parts.push(metadata.breakpoint);
+  }
+
+  // Add density if present
+  if (metadata.density) {
+    parts.push(metadata.density);
+  }
+
+  return parts.length > 0 ? parts.join('/') : null;
+}
+
+/**
  * Extract metadata from file path
  */
 function extractFileMetadata(filePath) {
   const parts = filePath.split('/');
+  const fileName = path.basename(filePath);
+  const fileNameLower = fileName.toLowerCase();
+
   const metadata = {
     platform: detectPlatform(filePath),
     brand: null,
     layer: null,
     tokenLayer: null, // normalized layer: primitive, semantic, component
     component: null,
-    fileName: path.basename(filePath)
+    fileName: fileName,
+    // New context fields for Visual Changes matrix
+    mode: null,       // light | dark (color mode)
+    breakpoint: null, // xs | sm | md | lg
+    density: null     // default | dense | spacious
   };
 
   // Extract brand
   const brandIndex = parts.indexOf('brands');
   if (brandIndex !== -1 && parts[brandIndex + 1]) {
     metadata.brand = parts[brandIndex + 1];
+  }
+
+  // Extract color mode from filename
+  // Patterns: color-light.css, color-dark.css, effects-light.css, *-light.json, etc.
+  if (/[-_](light|dark)\b/i.test(fileNameLower) || /^(light|dark)\./i.test(fileNameLower)) {
+    const modeMatch = fileNameLower.match(/[-_]?(light|dark)/i);
+    if (modeMatch) {
+      metadata.mode = modeMatch[1].toLowerCase();
+    }
+  }
+  // Also check path for colormode folder
+  if (parts.includes('colormode') || parts.some(p => /colormode/i.test(p))) {
+    const modeMatch = fileNameLower.match(/(light|dark)/i);
+    if (modeMatch) {
+      metadata.mode = modeMatch[1].toLowerCase();
+    }
+  }
+
+  // Extract breakpoint from filename
+  // Patterns: typography-xs.css, typography-lg.css, breakpoint-md.css, sizing-sm.json
+  const breakpointMatch = fileNameLower.match(/[-_](xs|sm|md|lg)\b/i);
+  if (breakpointMatch) {
+    metadata.breakpoint = breakpointMatch[1].toLowerCase();
+  }
+  // Also check path for breakpoint/breakpointmode folder
+  if (parts.includes('breakpoint') || parts.includes('breakpointmode') ||
+      parts.some(p => /breakpoint/i.test(p))) {
+    const bpMatch = fileNameLower.match(/(xs|sm|md|lg)/i);
+    if (bpMatch) {
+      metadata.breakpoint = bpMatch[1].toLowerCase();
+    }
+  }
+
+  // Extract density from filename
+  // Patterns: density-dense.css, density-spacious.css, *-dense.json
+  const densityMatch = fileNameLower.match(/[-_](default|dense|spacious)\b/i);
+  if (densityMatch) {
+    metadata.density = densityMatch[1].toLowerCase();
+  }
+  // Also check path for density folder
+  if (parts.includes('density')) {
+    const denMatch = fileNameLower.match(/(default|dense|spacious)/i);
+    if (denMatch) {
+      metadata.density = denMatch[1].toLowerCase();
+    }
   }
 
   // Extract layer (semantic, components, shared, overrides)
@@ -1160,11 +1243,39 @@ function compareDistBuilds(oldDir, newDir) {
         const normalized = normalizeTokenName(token.name);
         uniqueTokensModified.add(normalized);
         if (!tokenDetailsModified.has(normalized)) {
-          tokenDetailsModified.set(normalized, { oldValue: token.oldValue, newValue: token.newValue, layer: tokenLayer, platforms: [] });
+          tokenDetailsModified.set(normalized, {
+            oldValue: token.oldValue,
+            newValue: token.newValue,
+            layer: tokenLayer,
+            platforms: [],
+            valuesByContext: new Map() // brand/mode/breakpoint/density → { old, new }
+          });
         }
-        tokenDetailsModified.get(normalized).platforms.push({
-          ...platformInfo, tokenName: token.name, file: diff.file, layer: tokenLayer
+        const details = tokenDetailsModified.get(normalized);
+        details.platforms.push({
+          ...platformInfo,
+          tokenName: token.name,
+          file: diff.file,
+          layer: tokenLayer,
+          // Include context info in platform data
+          brand: diff.metadata.brand,
+          mode: diff.metadata.mode,
+          breakpoint: diff.metadata.breakpoint,
+          density: diff.metadata.density
         });
+
+        // Build context key and store values per context
+        const contextKey = buildContextKey(diff.metadata);
+        if (contextKey && !details.valuesByContext.has(contextKey)) {
+          details.valuesByContext.set(contextKey, {
+            old: token.oldValue,
+            new: token.newValue,
+            brand: diff.metadata.brand,
+            mode: diff.metadata.mode,
+            breakpoint: diff.metadata.breakpoint,
+            density: diff.metadata.density
+          });
+        }
       }
       for (const token of diff.changes.removed) {
         const normalized = normalizeTokenName(token.name);
@@ -1214,13 +1325,21 @@ function compareDistBuilds(oldDir, newDir) {
     });
   }
   for (const [normalized, details] of tokenDetailsModified) {
+    // Convert valuesByContext Map to Object for JSON serialization
+    const valuesByContext = {};
+    for (const [key, value] of details.valuesByContext) {
+      valuesByContext[key] = value;
+    }
+
     results.byUniqueToken.modified.push({
       normalizedName: normalized,
       displayName: details.platforms[0]?.tokenName || normalized,
       oldValue: details.oldValue,
       newValue: details.newValue,
       layer: details.layer,
-      platforms: details.platforms
+      platforms: details.platforms,
+      valuesByContext: valuesByContext, // brand/mode/breakpoint context → { old, new }
+      hasMultipleContexts: details.valuesByContext.size > 1
     });
   }
   for (const [normalized, details] of tokenDetailsRemoved) {
