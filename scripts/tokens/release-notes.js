@@ -45,6 +45,15 @@ const CATEGORY_CONFIG = {
 
 const CATEGORY_ORDER = ['colors', 'typography', 'spacing', 'sizing', 'effects', 'other'];
 
+const LAYER_CONFIG = {
+  primitive: { icon: '⚙️', label: 'Primitives' },
+  semantic: { icon: '🎯', label: 'Semantic' },
+  component: { icon: '🧩', label: 'Components' }
+};
+
+// Consumption layers are the ones consumers directly use (semantic + component)
+const CONSUMPTION_LAYERS = ['semantic', 'component'];
+
 const DIST_DIR = path.join(__dirname, '../../packages/tokens/dist');
 
 // =============================================================================
@@ -419,26 +428,37 @@ function generateRenamesSection(diff, options = {}) {
 }
 
 // =============================================================================
-// LAYER 2c: CATEGORIZED CHANGES
+// LAYER 2c: CATEGORIZED CHANGES (Consumption Layer Only)
 // =============================================================================
 
 /**
+ * Filter tokens to only include consumption layer (semantic + component)
+ */
+function filterConsumptionLayer(tokens) {
+  if (!tokens) return [];
+  return tokens.filter(t => CONSUMPTION_LAYERS.includes(t.layer) || !t.layer);
+}
+
+/**
  * Generate categorized changes section - groups changes by token category
+ * Only shows consumption layer tokens (semantic + component), not primitives
  */
 function generateCategorizedChangesSection(diff, options = {}) {
   if (!diff || !diff.byCategory) return '';
 
   const { maxTokensPerCategory = 10 } = options;
   let md = '## 📊 Changes by Category\n\n';
+  md += '> 🎯 Showing semantic & component layer tokens (consumer-facing)\n\n';
   let hasChanges = false;
 
   for (const category of CATEGORY_ORDER) {
     const catData = diff.byCategory[category];
     if (!catData) continue;
 
-    const modified = catData.modified || [];
-    const added = catData.added || [];
-    const removed = catData.removed || [];
+    // Filter to only consumption layer tokens
+    const modified = filterConsumptionLayer(catData.modified || []);
+    const added = filterConsumptionLayer(catData.added || []);
+    const removed = filterConsumptionLayer(catData.removed || []);
     const total = modified.length + added.length + removed.length;
 
     if (total === 0) continue;
@@ -493,6 +513,114 @@ function generateCategorizedChangesSection(diff, options = {}) {
 
   md += '---\n\n';
   return md;
+}
+
+// =============================================================================
+// LAYER 2e: SOURCE CHANGES (Primitives)
+// =============================================================================
+
+/**
+ * Generate source changes section for primitive tokens
+ * Shows low-level token changes that affect semantic/component layers
+ */
+function generateSourceChangesSection(diff, options = {}) {
+  if (!diff || !diff.byLayer || !diff.byLayer.primitive) return '';
+
+  const { maxTokens = 10 } = options;
+  const primitives = diff.byLayer.primitive;
+
+  const modified = primitives.modified || [];
+  const added = primitives.added || [];
+  const removed = primitives.removed || [];
+  const total = modified.length + added.length + removed.length;
+
+  if (total === 0) return '';
+
+  let md = '## ⚙️ Source Changes\n\n';
+  md += '<details>\n';
+  md += `<summary>Primitive Token Updates (${total} changes)</summary>\n\n`;
+  md += '> ℹ️ Low-level tokens that may affect semantic/component values\n\n';
+
+  // Modified primitives
+  if (modified.length > 0) {
+    md += `**Modified (${modified.length}):**\n\n`;
+    md += '| Token | Change | Category |\n';
+    md += '|-------|--------|----------|\n';
+    for (const token of modified.slice(0, maxTokens)) {
+      const cat = CATEGORY_CONFIG[categorizeTokenForDisplay(token.displayName, token.oldValue)] || CATEGORY_CONFIG.other;
+      const changeDisplay = `\`${truncate(token.oldValue, 12)}\` → \`${truncate(token.newValue, 12)}\``;
+      md += `| \`${truncate(token.displayName, 28)}\` | ${changeDisplay} | ${cat.icon} |\n`;
+    }
+    if (modified.length > maxTokens) {
+      md += `| ... | *${modified.length - maxTokens} more* | |\n`;
+    }
+    md += '\n';
+  }
+
+  // Added primitives
+  if (added.length > 0) {
+    md += `**Added (${added.length}):**\n\n`;
+    md += '| Token | Value | Category |\n';
+    md += '|-------|-------|----------|\n';
+    for (const token of added.slice(0, maxTokens)) {
+      const cat = CATEGORY_CONFIG[categorizeTokenForDisplay(token.displayName, token.value)] || CATEGORY_CONFIG.other;
+      md += `| \`${truncate(token.displayName, 28)}\` | \`${truncate(token.value, 18)}\` | ${cat.icon} |\n`;
+    }
+    if (added.length > maxTokens) {
+      md += `| ... | *${added.length - maxTokens} more* | |\n`;
+    }
+    md += '\n';
+  }
+
+  // Removed primitives
+  if (removed.length > 0) {
+    md += `**Removed (${removed.length}):**\n\n`;
+    md += '| Token | Previous Value | Category |\n';
+    md += '|-------|----------------|----------|\n';
+    for (const token of removed.slice(0, maxTokens)) {
+      const cat = CATEGORY_CONFIG[categorizeTokenForDisplay(token.displayName, token.value)] || CATEGORY_CONFIG.other;
+      md += `| \`${truncate(token.displayName, 28)}\` | \`${truncate(token.value, 18)}\` | ${cat.icon} |\n`;
+    }
+    if (removed.length > maxTokens) {
+      md += `| ... | *${removed.length - maxTokens} more* | |\n`;
+    }
+    md += '\n';
+  }
+
+  md += '</details>\n\n';
+  md += '---\n\n';
+  return md;
+}
+
+/**
+ * Helper to categorize token for display (simplified version)
+ */
+function categorizeTokenForDisplay(tokenName, value) {
+  const name = (tokenName || '').toLowerCase();
+
+  // Color detection by value
+  if (typeof value === 'string' && (value.startsWith('#') || value.startsWith('rgb'))) {
+    return 'colors';
+  }
+
+  // Name-based detection
+  if (/color|bg|background|foreground|fill|stroke|text-color|surface|accent/i.test(name)) {
+    return 'colors';
+  }
+  if (/font-?size|line-?height|letter-?spacing|font-?weight|font-?family|typography/i.test(name)) {
+    return 'typography';
+  }
+  if (/space|gap|inline|stack|inset|margin|padding/i.test(name)) {
+    return 'spacing';
+  }
+  if (/shadow|effect|elevation|blur/i.test(name)) {
+    return 'effects';
+  }
+  if (/size|width|height|radius|border-radius/i.test(name)) {
+    return 'sizing';
+  }
+
+  return 'other';
 }
 
 // =============================================================================
@@ -873,16 +1001,19 @@ function generatePRComment(diff, options = {}) {
   // 2. Renamed Tokens (if any - high priority)
   md += generateRenamesSection(diff, { maxTokens: 10 });
 
-  // 3. Categorized Changes (grouped by type)
+  // 3. Categorized Changes (consumption layer: semantic + component)
   md += generateCategorizedChangesSection(diff, { maxTokensPerCategory: 8 });
 
   // 4. Affected Components
   md += generateAffectedComponentsSection(diff, { maxComponents: 8 });
 
-  // 5. Dynamic Review Checklist
+  // 5. Source Changes (primitive layer - collapsible, for advanced users)
+  md += generateSourceChangesSection(diff, { maxTokens: 8 });
+
+  // 6. Dynamic Review Checklist
   md += generateDynamicChecklist(diff);
 
-  // 6. Technical Details (collapsible)
+  // 7. Technical Details (collapsible)
   md += generateTechnicalDetails(diff, options);
 
   // Footer

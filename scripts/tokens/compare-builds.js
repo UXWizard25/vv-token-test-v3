@@ -476,10 +476,52 @@ function categorizeTokenFromDist(tokenName, value) {
 // =============================================================================
 
 /**
- * Detect token layer from collection name
+ * Token layer constants
  */
-function detectLayer(collectionName) {
-  if (!collectionName) return 'unknown';
+const TOKEN_LAYERS = {
+  primitive: { icon: '⚙️', label: 'Primitives', order: 0 },
+  semantic: { icon: '🎯', label: 'Semantic', order: 1 },
+  component: { icon: '🧩', label: 'Components', order: 2 }
+};
+
+/**
+ * Detect token layer from file path (dist-based detection)
+ *
+ * Path patterns:
+ *   /shared/           → primitive (color primitives, space primitives, etc.)
+ *   /semantic/         → semantic (ColorMode, BreakpointMode outputs)
+ *   /components/       → component (Button, Card, etc.)
+ *   /bundles/          → bundle (skip - aggregated files)
+ */
+function detectLayerFromPath(filePath) {
+  if (!filePath) return 'semantic'; // Default
+
+  const normalized = filePath.toLowerCase();
+
+  // Primitives - shared folder contains raw primitive values
+  if (normalized.includes('/shared/') || normalized.includes('/primitives/')) {
+    return 'primitive';
+  }
+
+  // Components - component-specific tokens
+  if (normalized.includes('/components/')) {
+    return 'component';
+  }
+
+  // Bundles - skip (aggregated files, not layer-specific)
+  if (normalized.includes('/bundles/')) {
+    return 'bundle';
+  }
+
+  // Default to semantic (ColorMode, BreakpointMode, etc.)
+  return 'semantic';
+}
+
+/**
+ * Detect token layer from collection name (source-based detection)
+ */
+function detectLayerFromCollection(collectionName) {
+  if (!collectionName) return 'semantic';
 
   const normalized = collectionName.replace(/^_/, '').toLowerCase();
 
@@ -488,9 +530,9 @@ function detectLayer(collectionName) {
     return 'primitive';
   }
 
-  // Mapping (Layer 1)
+  // Mapping (Layer 1) - treat as semantic for consumer purposes
   if (/brandtokenmapping|brandcolormapping|density/i.test(normalized)) {
-    return 'mapping';
+    return 'semantic';
   }
 
   // Semantic (Layer 2)
@@ -498,8 +540,9 @@ function detectLayer(collectionName) {
     return 'semantic';
   }
 
-  // Component (Layer 3) - detected from token path
-  return 'semantic'; // Default for unknown
+  // Component (Layer 3) - often has component name in collection
+  // Default to semantic for unknown
+  return 'semantic';
 }
 
 // =============================================================================
@@ -572,6 +615,7 @@ function extractFileMetadata(filePath) {
     platform: detectPlatform(filePath),
     brand: null,
     layer: null,
+    tokenLayer: null, // normalized layer: primitive, semantic, component
     component: null,
     fileName: path.basename(filePath)
   };
@@ -585,18 +629,26 @@ function extractFileMetadata(filePath) {
   // Extract layer (semantic, components, shared, overrides)
   if (parts.includes('components')) {
     metadata.layer = 'components';
+    metadata.tokenLayer = 'component';
     const compIndex = parts.indexOf('components');
     if (parts[compIndex + 1]) {
       metadata.component = parts[compIndex + 1];
     }
   } else if (parts.includes('semantic')) {
     metadata.layer = 'semantic';
+    metadata.tokenLayer = 'semantic';
   } else if (parts.includes('shared')) {
     metadata.layer = 'shared';
+    metadata.tokenLayer = 'primitive';
   } else if (parts.includes('overrides')) {
     metadata.layer = 'overrides';
+    metadata.tokenLayer = 'semantic';
   } else if (parts.includes('bundles')) {
     metadata.layer = 'bundles';
+    metadata.tokenLayer = 'bundle'; // Skip in layer grouping
+  } else {
+    // Default based on path detection
+    metadata.tokenLayer = detectLayerFromPath(filePath);
   }
 
   return metadata;
@@ -754,9 +806,9 @@ function compareDistBuilds(oldDir, newDir) {
   const uniqueTokensRemoved = new Set();
 
   // Maps to group token details by normalized name
-  const tokenDetailsAdded = new Map();    // normalizedName -> { platforms: [...], value, ... }
-  const tokenDetailsModified = new Map(); // normalizedName -> { platforms: [...], oldValue, newValue, ... }
-  const tokenDetailsRemoved = new Map();  // normalizedName -> { platforms: [...], value, ... }
+  const tokenDetailsAdded = new Map();    // normalizedName -> { platforms: [...], value, layer, ... }
+  const tokenDetailsModified = new Map(); // normalizedName -> { platforms: [...], oldValue, newValue, layer, ... }
+  const tokenDetailsRemoved = new Map();  // normalizedName -> { platforms: [...], value, layer, ... }
 
   // Compare all files
   const results = {
@@ -815,6 +867,9 @@ function compareDistBuilds(oldDir, newDir) {
 
     const platformInfo = { key: platform, name: platformData.name, icon: platformData.icon };
 
+    // Get token layer from file metadata
+    const tokenLayer = diff.metadata.tokenLayer || 'semantic';
+
     if (diff.type === 'added') {
       results.summary.filesAdded++;
       platformData.filesAdded++;
@@ -825,10 +880,10 @@ function compareDistBuilds(oldDir, newDir) {
         const normalized = normalizeTokenName(token.name);
         uniqueTokensAdded.add(normalized);
         if (!tokenDetailsAdded.has(normalized)) {
-          tokenDetailsAdded.set(normalized, { value: token.value, platforms: [] });
+          tokenDetailsAdded.set(normalized, { value: token.value, layer: tokenLayer, platforms: [] });
         }
         tokenDetailsAdded.get(normalized).platforms.push({
-          ...platformInfo, tokenName: token.name, file: diff.file
+          ...platformInfo, tokenName: token.name, file: diff.file, layer: tokenLayer
         });
       }
     } else if (diff.type === 'removed') {
@@ -841,10 +896,10 @@ function compareDistBuilds(oldDir, newDir) {
         const normalized = normalizeTokenName(token.name);
         uniqueTokensRemoved.add(normalized);
         if (!tokenDetailsRemoved.has(normalized)) {
-          tokenDetailsRemoved.set(normalized, { value: token.value, platforms: [] });
+          tokenDetailsRemoved.set(normalized, { value: token.value, layer: tokenLayer, platforms: [] });
         }
         tokenDetailsRemoved.get(normalized).platforms.push({
-          ...platformInfo, tokenName: token.name, file: diff.file
+          ...platformInfo, tokenName: token.name, file: diff.file, layer: tokenLayer
         });
       }
     } else if (diff.type === 'modified') {
@@ -861,30 +916,30 @@ function compareDistBuilds(oldDir, newDir) {
         const normalized = normalizeTokenName(token.name);
         uniqueTokensAdded.add(normalized);
         if (!tokenDetailsAdded.has(normalized)) {
-          tokenDetailsAdded.set(normalized, { value: token.value, platforms: [] });
+          tokenDetailsAdded.set(normalized, { value: token.value, layer: tokenLayer, platforms: [] });
         }
         tokenDetailsAdded.get(normalized).platforms.push({
-          ...platformInfo, tokenName: token.name, file: diff.file
+          ...platformInfo, tokenName: token.name, file: diff.file, layer: tokenLayer
         });
       }
       for (const token of diff.changes.modified) {
         const normalized = normalizeTokenName(token.name);
         uniqueTokensModified.add(normalized);
         if (!tokenDetailsModified.has(normalized)) {
-          tokenDetailsModified.set(normalized, { oldValue: token.oldValue, newValue: token.newValue, platforms: [] });
+          tokenDetailsModified.set(normalized, { oldValue: token.oldValue, newValue: token.newValue, layer: tokenLayer, platforms: [] });
         }
         tokenDetailsModified.get(normalized).platforms.push({
-          ...platformInfo, tokenName: token.name, file: diff.file
+          ...platformInfo, tokenName: token.name, file: diff.file, layer: tokenLayer
         });
       }
       for (const token of diff.changes.removed) {
         const normalized = normalizeTokenName(token.name);
         uniqueTokensRemoved.add(normalized);
         if (!tokenDetailsRemoved.has(normalized)) {
-          tokenDetailsRemoved.set(normalized, { value: token.value, platforms: [] });
+          tokenDetailsRemoved.set(normalized, { value: token.value, layer: tokenLayer, platforms: [] });
         }
         tokenDetailsRemoved.get(normalized).platforms.push({
-          ...platformInfo, tokenName: token.name, file: diff.file
+          ...platformInfo, tokenName: token.name, file: diff.file, layer: tokenLayer
         });
       }
     }
@@ -920,6 +975,7 @@ function compareDistBuilds(oldDir, newDir) {
       normalizedName: normalized,
       displayName: details.platforms[0]?.tokenName || normalized,
       value: details.value,
+      layer: details.layer,
       platforms: details.platforms
     });
   }
@@ -929,6 +985,7 @@ function compareDistBuilds(oldDir, newDir) {
       displayName: details.platforms[0]?.tokenName || normalized,
       oldValue: details.oldValue,
       newValue: details.newValue,
+      layer: details.layer,
       platforms: details.platforms
     });
   }
@@ -937,6 +994,7 @@ function compareDistBuilds(oldDir, newDir) {
       normalizedName: normalized,
       displayName: details.platforms[0]?.tokenName || normalized,
       value: details.value,
+      layer: details.layer,
       platforms: details.platforms
     });
   }
@@ -1071,6 +1129,9 @@ Example:
   // Add category groupings
   results.byCategory = groupByCategory(results);
 
+  // Add layer groupings
+  results.byLayer = groupByLayer(results);
+
   const output = JSON.stringify(results, null, 2);
 
   if (options.output) {
@@ -1113,6 +1174,41 @@ function groupByCategory(results) {
   return categories;
 }
 
+/**
+ * Group token changes by layer (primitive, semantic, component)
+ */
+function groupByLayer(results) {
+  const layers = {
+    primitive: { added: [], modified: [], removed: [] },
+    semantic: { added: [], modified: [], removed: [] },
+    component: { added: [], modified: [], removed: [] }
+  };
+
+  // Group from byUniqueToken
+  if (results.byUniqueToken) {
+    for (const token of results.byUniqueToken.added || []) {
+      const layer = token.layer || 'semantic';
+      if (layers[layer]) {
+        layers[layer].added.push(token);
+      }
+    }
+    for (const token of results.byUniqueToken.modified || []) {
+      const layer = token.layer || 'semantic';
+      if (layers[layer]) {
+        layers[layer].modified.push(token);
+      }
+    }
+    for (const token of results.byUniqueToken.removed || []) {
+      const layer = token.layer || 'semantic';
+      if (layers[layer]) {
+        layers[layer].removed.push(token);
+      }
+    }
+  }
+
+  return layers;
+}
+
 if (require.main === module) {
   main();
 }
@@ -1124,5 +1220,8 @@ module.exports = {
   detectRenames,
   categorizeTokenFromDist,
   categorizeTokenFromSource,
-  TOKEN_CATEGORIES
+  detectLayerFromPath,
+  groupByLayer,
+  TOKEN_CATEGORIES,
+  TOKEN_LAYERS
 };
