@@ -65,30 +65,59 @@ jobs:
         run: |
           echo "📦 Building baseline from main branch for full dist/ comparison..."
 
+          # === DEBUG: Zeige Status vor dem Sichern ===
+          echo "📂 Current state before saving:"
+          echo "  .tokens/ exists: $([ -d packages/tokens/.tokens ] && echo 'yes' || echo 'no')"
+          echo "  dist/ exists: $([ -d packages/tokens/dist ] && echo 'yes' || echo 'no')"
+          echo "  dist/ files: $(find packages/tokens/dist -type f 2>/dev/null | wc -l)"
+
           # Sichere neue Builds
           mv packages/tokens/.tokens/ tokens-new/
           mv packages/tokens/dist/ dist-new/
 
+          echo "📂 After saving new builds:"
+          echo "  tokens-new/ files: $(find tokens-new -type f 2>/dev/null | wc -l)"
+          echo "  dist-new/ files: $(find dist-new -type f 2>/dev/null | wc -l)"
+
           # Sichere neue Source-Datei
           cp packages/tokens/src/bild-design-system-raw-data.json /tmp/new-source.json
+          echo "  new-source.json: $(ls -la /tmp/new-source.json | awk '{print $5}') bytes"
 
           # Hole Source von main Branch
           git fetch origin main
+          echo ""
+          echo "🔍 Fetching main branch source..."
+
           if git show origin/main:packages/tokens/src/bild-design-system-raw-data.json > /tmp/old-source.json 2>/dev/null; then
-            echo "✅ Main branch source loaded"
+            echo "✅ Main branch source loaded: $(ls -la /tmp/old-source.json | awk '{print $5}') bytes"
+
+            # Prüfe ob Source-Dateien unterschiedlich sind
+            if diff -q /tmp/old-source.json /tmp/new-source.json > /dev/null 2>&1; then
+              echo "⚠️ WARNING: Source files are IDENTICAL! No token changes expected."
+            else
+              echo "✅ Source files differ - token changes expected"
+            fi
 
             # Kopiere main source für Build
             cp /tmp/old-source.json packages/tokens/src/bild-design-system-raw-data.json
 
             # Build mit main Source
-            npm run build:tokens 2>&1 || echo "Baseline build completed"
+            echo ""
+            echo "🔨 Building baseline tokens..."
+            if npm run build:tokens 2>&1; then
+              echo "✅ Baseline build succeeded"
+            else
+              echo "❌ Baseline build FAILED"
+            fi
 
             # Verschiebe zu dist-old für Vergleich
             if [ -d "packages/tokens/dist" ]; then
+              echo "📂 Baseline dist/ created with $(find packages/tokens/dist -type f | wc -l) files"
               mv packages/tokens/dist/ dist-old/
               echo "baseline_available=true" >> $GITHUB_OUTPUT
               echo "source_available=true" >> $GITHUB_OUTPUT
             else
+              echo "❌ ERROR: Baseline dist/ was NOT created!"
               mkdir -p dist-old
               echo "baseline_available=false" >> $GITHUB_OUTPUT
               echo "source_available=false" >> $GITHUB_OUTPUT
@@ -109,14 +138,39 @@ jobs:
           mv tokens-new/ packages/tokens/.tokens/
           mv dist-new/ packages/tokens/dist/
 
+          echo ""
           echo "✅ Baseline comparison ready"
-          echo "📁 dist-old/ = main branch, packages/tokens/dist/ = new version"
+          echo "📁 Final state:"
+          echo "   dist-old/ files: $(find dist-old -type f 2>/dev/null | wc -l)"
+          echo "   packages/tokens/dist/ files: $(find packages/tokens/dist -type f 2>/dev/null | wc -l)"
 
       # 6. Vergleiche Dist Builds (alle Plattformen)
       - name: Compare Dist Builds
         id: diff
         run: |
           echo "🔍 Comparing full dist/ builds across all platforms..."
+
+          # === DEBUGGING: Zeige Verzeichnisinhalte ===
+          echo ""
+          echo "📂 DEBUG: Directory contents"
+          echo "=== dist-old/ ==="
+          ls -la dist-old/ 2>/dev/null | head -10 || echo "  (empty or not found)"
+          echo "  Total files: $(find dist-old/ -type f 2>/dev/null | wc -l)"
+
+          echo "=== packages/tokens/dist/ ==="
+          ls -la packages/tokens/dist/ 2>/dev/null | head -10 || echo "  (empty or not found)"
+          echo "  Total files: $(find packages/tokens/dist/ -type f 2>/dev/null | wc -l)"
+
+          echo "=== Source files ==="
+          echo "  /tmp/old-source.json: $(ls -la /tmp/old-source.json 2>/dev/null | awk '{print $5}' || echo 'not found') bytes"
+          echo "  new source: $(ls -la packages/tokens/src/bild-design-system-raw-data.json 2>/dev/null | awk '{print $5}' || echo 'not found') bytes"
+          echo ""
+
+          # === Workflow Output Status ===
+          echo "📋 Workflow outputs:"
+          echo "  baseline_available: ${{ steps.baseline.outputs.baseline_available }}"
+          echo "  source_available: ${{ steps.baseline.outputs.source_available }}"
+          echo ""
 
           # Warnung wenn keine Baseline vorhanden
           if [ "${{ steps.baseline.outputs.baseline_available }}" == "false" ]; then
@@ -129,7 +183,9 @@ jobs:
           fi
 
           # Führe Vergleich mit Source-Dateien für Rename-Erkennung durch
+          echo "🔧 Running compare-builds.js..."
           if [ "${{ steps.baseline.outputs.source_available }}" == "true" ]; then
+            echo "  → With source files for rename detection"
             node scripts/tokens/compare-builds.js \
               --old dist-old/ \
               --new packages/tokens/dist/ \
@@ -137,6 +193,7 @@ jobs:
               --source-new packages/tokens/src/bild-design-system-raw-data.json \
               --output dist-diff.json
           else
+            echo "  → Without source files (no rename detection)"
             node scripts/tokens/compare-builds.js \
               --old dist-old/ \
               --new packages/tokens/dist/ \
@@ -145,11 +202,17 @@ jobs:
 
           # Extrahiere Summary für Output
           if [ -f "dist-diff.json" ]; then
+            echo ""
+            echo "📊 dist-diff.json created successfully"
+
             ADDED=$(cat dist-diff.json | jq -r '.summary.tokensAdded // 0')
             MODIFIED=$(cat dist-diff.json | jq -r '.summary.tokensModified // 0')
             DELETED=$(cat dist-diff.json | jq -r '.summary.tokensRemoved // 0')
             IMPACT=$(cat dist-diff.json | jq -r '.summary.impactLevel // "unknown"')
             FILES_CHANGED=$(cat dist-diff.json | jq -r '(.summary.filesAdded + .summary.filesModified + .summary.filesRemoved) // 0')
+            UNIQUE_ADDED=$(cat dist-diff.json | jq -r '.summary.uniqueTokensAdded // 0')
+            UNIQUE_MODIFIED=$(cat dist-diff.json | jq -r '.summary.uniqueTokensModified // 0')
+            UNIQUE_REMOVED=$(cat dist-diff.json | jq -r '.summary.uniqueTokensRemoved // 0')
 
             echo "added=$ADDED" >> $GITHUB_OUTPUT
             echo "modified=$MODIFIED" >> $GITHUB_OUTPUT
@@ -157,8 +220,14 @@ jobs:
             echo "impact=$IMPACT" >> $GITHUB_OUTPUT
             echo "files_changed=$FILES_CHANGED" >> $GITHUB_OUTPUT
 
-            echo "📊 Diff Summary: +$ADDED | ~$MODIFIED | -$DELETED tokens (Impact: $IMPACT)"
-            echo "📁 Files changed: $FILES_CHANGED"
+            echo ""
+            echo "📊 Diff Summary:"
+            echo "   Platform occurrences: +$ADDED | ~$MODIFIED | -$DELETED"
+            echo "   Unique tokens: +$UNIQUE_ADDED | ~$UNIQUE_MODIFIED | -$UNIQUE_REMOVED"
+            echo "   Files changed: $FILES_CHANGED"
+            echo "   Impact level: $IMPACT"
+          else
+            echo "❌ ERROR: dist-diff.json was not created!"
           fi
 
       # 7. Upload Build Artifacts
