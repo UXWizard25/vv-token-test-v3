@@ -1019,8 +1019,10 @@ function generateSimpleDimensionRow(token) {
 function generateVisualChangesSection(diff, options = {}) {
   const { maxTokens = 12 } = options;
 
-  // Get modified tokens (only atomic value changes, no combined tokens)
-  const modifiedTokens = diff?.byUniqueToken?.modified || [];
+  // Get modified tokens (only consumption layer - semantic + component)
+  // Primitive layer modifications are shown in Internal Changes
+  const allModified = diff?.byUniqueToken?.modified || [];
+  const modifiedTokens = allModified.filter(t => CONSUMPTION_LAYERS.includes(t.layer));
   if (modifiedTokens.length === 0) return '';
 
   // Separate tokens with multiple contexts from simple tokens
@@ -1207,17 +1209,22 @@ function generateSafeChangesSection(diff, options = {}) {
   const addedTypography = grouped?.added?.typography || [];
   const addedEffects = grouped?.added?.effects || [];
 
-  // Get internal changes (from breaking changes section data)
+  // Get internal changes (primitive layer - no consumer impact)
   const allRemovedTokens = diff?.byUniqueToken?.removed || [];
   const internalRemovedTokens = grouped?.internal?.removed ||
     allRemovedTokens.filter(t => !CONSUMPTION_LAYERS.includes(t.layer));
+
+  // Get internal modified tokens (primitive layer modifications)
+  const allModifiedTokens = diff?.byUniqueToken?.modified || [];
+  const internalModifiedTokens = grouped?.internal?.modified ||
+    allModifiedTokens.filter(t => !CONSUMPTION_LAYERS.includes(t.layer));
 
   const variableRenames = diff?.renames || [];
   const nonBreakingRenames = variableRenames.filter(r => !CONSUMPTION_LAYERS.includes(r.layer));
 
   const totalAdded = addedTokens.length + addedTypography.length + addedEffects.length;
   const hasAdded = totalAdded > 0;
-  const hasInternal = internalRemovedTokens.length > 0 || nonBreakingRenames.length > 0;
+  const hasInternal = internalRemovedTokens.length > 0 || internalModifiedTokens.length > 0 || nonBreakingRenames.length > 0;
 
   if (!hasAdded && !hasInternal) return '';
 
@@ -1307,9 +1314,24 @@ function generateSafeChangesSection(diff, options = {}) {
 
   // Internal Changes (Primitive Layer)
   if (hasInternal) {
-    const totalInternal = internalRemovedTokens.length + nonBreakingRenames.length;
+    const totalInternal = internalRemovedTokens.length + internalModifiedTokens.length + nonBreakingRenames.length;
     md += `### 🔧 Internal Changes (${totalInternal})\n\n`;
-    md += '<details>\n<summary>Primitive layer cleanup (no consumer impact)</summary>\n\n';
+    md += '<details>\n<summary>Primitive layer changes (no consumer impact)</summary>\n\n';
+
+    if (internalModifiedTokens.length > 0) {
+      md += `**Modified (${internalModifiedTokens.length}):**\n\n`;
+      md += '| Token | Change |\n';
+      md += '|-------|--------|\n';
+
+      for (const token of internalModifiedTokens.slice(0, maxTokens)) {
+        md += `| \`${token.displayName}\` | ${formatDimensionChangeInline(token.oldValue, token.newValue)} |\n`;
+      }
+
+      if (internalModifiedTokens.length > maxTokens) {
+        md += `| ... | *${internalModifiedTokens.length - maxTokens} more* |\n`;
+      }
+      md += '\n';
+    }
 
     if (internalRemovedTokens.length > 0) {
       md += `**Removed (${internalRemovedTokens.length}):**\n\n`;
