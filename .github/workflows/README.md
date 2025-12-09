@@ -212,4 +212,114 @@ On errors:
 
 ---
 
-**Last updated**: 2025-11-27
+### `publish-on-merge.yml` - Automated Publishing with Impact-Based Versioning
+
+Automatically publishes all packages to npm when changes are merged to main, with intelligent version bumping based on token change impact.
+
+#### 🚀 Triggers
+
+**Automatic:**
+- Push to `main` branch
+
+#### 📦 What Happens?
+
+```
+Push to main
+     │
+     ▼
+Build current tokens (for comparison)
+     │
+     ▼
+Checkout previous release tag → Build baseline
+     │
+     ▼
+Run compare-builds.js → Calculate impact level
+     │
+     ├── Tokens REMOVED?   → BREAKING  → npm version minor
+     ├── Tokens MODIFIED?  → MODERATE  → npm version patch
+     ├── Tokens ADDED?     → MINOR     → npm version patch
+     └── No changes?       → NONE      → npm version patch
+     │
+     ▼
+Final build with correct version in headers
+     │
+     ▼
+Publish all packages to npm
+     │
+     ▼
+Create GitHub Release with release notes
+```
+
+#### 🎯 Impact-Based Versioning
+
+The workflow analyzes token changes to determine the appropriate version bump:
+
+| Impact Level | Condition | Version Bump | Example Changes |
+|--------------|-----------|--------------|-----------------|
+| `breaking` | Tokens or files removed | `minor` | Deleted `--button-primary-bg`, removed component file |
+| `moderate` | Token values modified | `patch` | Color changed from `#DD0000` to `#EE0000` |
+| `minor` | Tokens or files added | `patch` | New `--button-tertiary-*` tokens added |
+| `none` | No token changes | `patch` | Only workflow/script changes |
+
+**Note:** Breaking changes bump `minor` instead of `major` during the 0.x/1.x development phase.
+
+#### 🔒 Race Condition Prevention
+
+The workflow uses a concurrency group to prevent parallel publish conflicts:
+
+```yaml
+concurrency:
+  group: publish-main
+  cancel-in-progress: false
+```
+
+This ensures:
+- Only one publish workflow runs at a time
+- Subsequent pushes queue and wait
+- No npm version conflicts
+
+#### 📦 Published Packages
+
+All packages are published with synchronized versions:
+
+| Package | npm Name |
+|---------|----------|
+| Tokens | `@marioschmidt/design-system-tokens` |
+| Icons | `@marioschmidt/design-system-icons` |
+| Components | `@marioschmidt/design-system-components` |
+| React | `@marioschmidt/design-system-react` |
+| Vue | `@marioschmidt/design-system-vue` |
+
+#### ⚙️ Key Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `scripts/tokens/compare-builds.js` | Compares current vs baseline tokens, calculates impact level |
+| `scripts/tokens/release-notes.js` | Generates human-readable release notes from diff |
+
+#### 🔒 Permissions
+
+The workflow requires:
+- `contents: write` - For version commits and releases
+- `NPM_TOKEN` secret - For npm publishing
+
+#### 🚨 Troubleshooting
+
+**Version not bumping correctly:**
+- Check `compare-builds.js` output in workflow logs
+- Verify baseline tag exists: `git tag -l`
+- Check diff output: `scripts/tokens/compare-builds.js --baseline dist-baseline --current packages/tokens/dist`
+
+**Publish failed:**
+- Check NPM_TOKEN secret is valid
+- Verify npm registry access
+- Check for existing version (npm won't republish same version)
+
+**Race condition occurred:**
+- Concurrency group should prevent this
+- Check if another workflow is running in parallel
+- Verify `cancel-in-progress: false` is set
+
+---
+
+**Last updated**: 2025-12-09

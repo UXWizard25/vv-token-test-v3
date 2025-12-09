@@ -786,8 +786,35 @@ Android Compose uses type-safe units. The pipeline automatically maps token type
 - **Creates**: Pull Request to main with release notes
 
 ### publish-on-merge.yml
-- **Trigger**: Merge to main
-- **Actions**: Version bump, npm publish, GitHub Release
+- **Trigger**: Push to main
+- **Actions**: Impact-based version bump, npm publish, GitHub Release
+
+#### Impact-Based Semantic Versioning
+
+The publish workflow automatically determines the version bump based on token changes:
+
+| Impact Level | Condition | Version Bump |
+|--------------|-----------|--------------|
+| `breaking` | Tokens/files removed | `minor` |
+| `moderate` | Token values modified | `patch` |
+| `minor` | Tokens/files added | `patch` |
+| `none` | No token changes | `patch` |
+
+The `compare-builds.js` script analyzes the diff between the current build and the previous release to calculate the impact level.
+
+#### Race Condition Prevention
+
+```yaml
+concurrency:
+  group: publish-main
+  cancel-in-progress: false
+```
+
+Only one publish workflow runs at a time. Subsequent pushes queue and wait.
+
+#### Synchronized Versioning
+
+All packages (tokens, icons, components, react, vue) are published with the same version number.
 
 ## 🆘 Troubleshooting
 

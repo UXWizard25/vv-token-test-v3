@@ -545,6 +545,108 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
+---
+
+## CI/CD & Automated Versioning
+
+### Workflow Overview
+
+| Workflow | Trigger | Purpose |
+|----------|---------|---------|
+| `build-tokens.yml` | Push to main/develop/claude/** | Build tokens, upload artifacts |
+| `publish-on-merge.yml` | Push to main | Build, version bump, publish to npm |
+| `auto-pr-from-figma.yml` | Push to figma-tokens | Create PR with release notes |
+
+### Impact-Based Semantic Versioning
+
+The `publish-on-merge.yml` workflow automatically determines version bumps based on token change impact:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                      IMPACT-BASED VERSIONING FLOW                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  Push to main                                                               │
+│       │                                                                     │
+│       ▼                                                                     │
+│  Build current tokens (for comparison)                                      │
+│       │                                                                     │
+│       ▼                                                                     │
+│  Checkout previous release tag → Build baseline                             │
+│       │                                                                     │
+│       ▼                                                                     │
+│  Run compare-builds.js → Generate diff                                      │
+│       │                                                                     │
+│       ├─── Tokens REMOVED?      → Impact: BREAKING  → Version: MINOR       │
+│       ├─── Tokens MODIFIED?     → Impact: MODERATE  → Version: PATCH       │
+│       ├─── Tokens ADDED?        → Impact: MINOR     → Version: PATCH       │
+│       └─── No changes?          → Impact: NONE      → Version: PATCH       │
+│                                                                             │
+│       ▼                                                                     │
+│  npm version {bump_type} → Final build with correct version                 │
+│       │                                                                     │
+│       ▼                                                                     │
+│  Publish all packages to npm (tokens, icons, components, react, vue)        │
+│       │                                                                     │
+│       ▼                                                                     │
+│  Create GitHub Release with release notes                                   │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Impact Level Determination
+
+The `compare-builds.js` script calculates impact level by analyzing token changes:
+
+| Impact Level | Condition | Version Bump | Examples |
+|--------------|-----------|--------------|----------|
+| `breaking` | Tokens or files removed | `minor` | Deleted `--button-primary-bg`, removed component |
+| `moderate` | Token values modified | `patch` | Changed `#DD0000` to `#EE0000` |
+| `minor` | Tokens or files added | `patch` | New `--button-tertiary-*` tokens |
+| `none` | No token changes | `patch` | Only workflow/script changes |
+
+**Note:** Breaking changes bump `minor` (not `major`) because we're still in 0.x/1.x development phase. For true semver, `breaking` would bump `major`.
+
+### Race Condition Prevention
+
+The workflow uses a concurrency group to prevent race conditions:
+
+```yaml
+concurrency:
+  group: publish-main
+  cancel-in-progress: false
+```
+
+This ensures:
+- Only one publish workflow runs at a time
+- Subsequent pushes wait for the current publish to complete
+- No version conflicts from parallel npm publishes
+
+### Synchronized Package Versioning
+
+All packages are versioned together (monorepo sync):
+
+| Package | npm Name | Version Sync |
+|---------|----------|--------------|
+| Tokens | `@marioschmidt/design-system-tokens` | ✅ |
+| Icons | `@marioschmidt/design-system-icons` | ✅ |
+| Components | `@marioschmidt/design-system-components` | ✅ |
+| React | `@marioschmidt/design-system-react` | ✅ |
+| Vue | `@marioschmidt/design-system-vue` | ✅ |
+
+The root `package.json` version is bumped, and all workspace packages inherit via `npm version` in workspace mode.
+
+### Key CI/CD Files
+
+| File | Purpose |
+|------|---------|
+| `.github/workflows/publish-on-merge.yml` | Main publish workflow with impact-based versioning |
+| `.github/workflows/build-tokens.yml` | Token build and artifact upload |
+| `scripts/tokens/compare-builds.js` | Diff analysis and impact level calculation |
+| `scripts/tokens/release-notes.js` | Release notes generation from diff |
+
+---
+
 ### Key Files
 
 | File | Purpose |
@@ -685,6 +787,10 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 | Change styleguide stories pattern | `build-config/storybook/main.ts` → `stories` glob |
 | Modify auto-generated docs structure | `scripts/tokens/generate-docs.js` → `generateColorsDocs()`, `generateTypographyDocs()`, etc. |
 | Change token source for docs | Token JSON files in `packages/tokens/.tokens/` |
+| Modify CI/CD publish workflow | `.github/workflows/publish-on-merge.yml` |
+| Change version bump logic | `.github/workflows/publish-on-merge.yml` → "Determine Version Bump Type" step |
+| Modify token diff analysis | `scripts/tokens/compare-builds.js` → `calculateImpactLevel()` |
+| Change release notes format | `scripts/tokens/release-notes.js` |
 
 ---
 
