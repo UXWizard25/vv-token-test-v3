@@ -47,12 +47,11 @@ jobs:
           echo "📦 Installing dependencies..."
           npm ci
 
-      # 5. Version erhöhen (Patch) - Synchronized für alle 4 Packages
-      - name: Bump Version (Patch)
-        id: version
+      # 5. Letzten Tag ermitteln (für Baseline und Version)
+      - name: Get Latest Tag
+        id: latest_tag
         run: |
           # Hole letzten Token-Tag (v*.*.*, NICHT icons-v*)
-          # Filtere explizit für Tags die mit 'v' beginnen und NICHT 'icons-v'
           LATEST_TAG=$(git tag -l 'v[0-9]*.[0-9]*.[0-9]*' --sort=-version:refname | head -1)
 
           if [ -z "$LATEST_TAG" ]; then
@@ -66,11 +65,142 @@ jobs:
           CURRENT_VERSION=${LATEST_TAG#v}
           echo "Current version: $CURRENT_VERSION"
 
+          echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+          echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+
+      # 6. Erster Build (für Diff-Vergleich, mit aktueller Version)
+      - name: Build Tokens for Comparison
+        run: |
+          echo "🎨 Building tokens for comparison..."
+          npm run build:tokens 2>&1 | tee build-output.log
+          echo "✅ Initial build complete"
+
+      # 7. Baseline vom vorherigen Tag erstellen
+      - name: Build Baseline from Previous Tag
+        id: baseline
+        run: |
+          echo "📊 Building baseline for token comparison..."
+
+          # Aktuellen dist speichern
+          cp -r packages/tokens/dist/ dist-new/
+
+          # Vorherigen Tag für Baseline
+          LATEST_TAG="${{ steps.latest_tag.outputs.tag }}"
+
+          if [ -n "$LATEST_TAG" ] && [ "$LATEST_TAG" != "v1.0.0" ]; then
+            echo "Building baseline from $LATEST_TAG..."
+
+            # Source-Dateien vom vorherigen Tag holen
+            git checkout "$LATEST_TAG" -- packages/tokens/src/ 2>/dev/null || true
+
+            # Baseline bauen
+            rm -rf packages/tokens/dist/
+            npm run build:tokens 2>/dev/null || true
+
+            if [ -d "packages/tokens/dist" ]; then
+              mv packages/tokens/dist/ dist-old/
+              echo "has_baseline=true" >> $GITHUB_OUTPUT
+              echo "✅ Baseline built from $LATEST_TAG"
+            else
+              echo "has_baseline=false" >> $GITHUB_OUTPUT
+              echo "⚠️ Could not build baseline"
+            fi
+
+            # Zurück zum aktuellen Stand
+            git checkout HEAD -- packages/tokens/src/ 2>/dev/null || true
+          else
+            echo "No previous tag found, skipping baseline"
+            echo "has_baseline=false" >> $GITHUB_OUTPUT
+          fi
+
+          # dist-new zurück zu packages/tokens/dist
+          rm -rf packages/tokens/dist/
+          mv dist-new/ packages/tokens/dist/
+
+      # 8. Token-Diff generieren und Impact Level ermitteln
+      - name: Generate Token Diff and Determine Impact
+        id: diff
+        run: |
+          if [ "${{ steps.baseline.outputs.has_baseline }}" = "true" ] && [ -d "dist-old" ]; then
+            echo "🔍 Comparing token builds..."
+            node scripts/tokens/compare-builds.js \
+              --old dist-old/ \
+              --new packages/tokens/dist/ \
+              --output dist-diff.json
+
+            # Impact Level aus Diff extrahieren
+            IMPACT_LEVEL=$(node -p "require('./dist-diff.json').summary.impactLevel")
+            echo "Impact level: $IMPACT_LEVEL"
+
+            # Statistiken ausgeben
+            TOKENS_ADDED=$(node -p "require('./dist-diff.json').summary.uniqueTokensAdded")
+            TOKENS_MODIFIED=$(node -p "require('./dist-diff.json').summary.uniqueTokensModified")
+            TOKENS_REMOVED=$(node -p "require('./dist-diff.json').summary.uniqueTokensRemoved")
+
+            echo "📊 Token Changes:"
+            echo "   🟢 Added: $TOKENS_ADDED"
+            echo "   🟡 Modified: $TOKENS_MODIFIED"
+            echo "   🔴 Removed: $TOKENS_REMOVED"
+
+            echo "has_diff=true" >> $GITHUB_OUTPUT
+            echo "impact_level=$IMPACT_LEVEL" >> $GITHUB_OUTPUT
+            echo "tokens_added=$TOKENS_ADDED" >> $GITHUB_OUTPUT
+            echo "tokens_modified=$TOKENS_MODIFIED" >> $GITHUB_OUTPUT
+            echo "tokens_removed=$TOKENS_REMOVED" >> $GITHUB_OUTPUT
+          else
+            echo "No baseline available, using default impact level"
+            echo "has_diff=false" >> $GITHUB_OUTPUT
+            echo "impact_level=minor" >> $GITHUB_OUTPUT
+          fi
+
+      # 9. Version Bump Type basierend auf Impact Level bestimmen
+      - name: Determine Version Bump Type
+        id: bump_type
+        run: |
+          IMPACT="${{ steps.diff.outputs.impact_level }}"
+
+          echo "🎯 Determining version bump type for impact: $IMPACT"
+
+          # Impact-basiertes Versioning:
+          # - breaking (tokens removed) → minor bump (1.0.x → 1.1.0)
+          # - moderate (tokens modified) → patch bump (1.0.x → 1.0.y)
+          # - minor (tokens added) → patch bump (1.0.x → 1.0.y)
+          # - none → patch bump (for other changes like formatting)
+
+          case "$IMPACT" in
+            breaking)
+              BUMP_TYPE="minor"
+              echo "🔴 Breaking changes detected → minor version bump"
+              ;;
+            moderate)
+              BUMP_TYPE="patch"
+              echo "🟡 Moderate changes detected → patch version bump"
+              ;;
+            minor)
+              BUMP_TYPE="patch"
+              echo "🟢 Minor changes detected → patch version bump"
+              ;;
+            *)
+              BUMP_TYPE="patch"
+              echo "⚪ No significant changes → patch version bump"
+              ;;
+          esac
+
+          echo "bump_type=$BUMP_TYPE" >> $GITHUB_OUTPUT
+
+      # 10. Version erhöhen (basierend auf Impact)
+      - name: Bump Version
+        id: version
+        run: |
+          CURRENT_VERSION="${{ steps.latest_tag.outputs.version }}"
+          BUMP_TYPE="${{ steps.bump_type.outputs.bump_type }}"
+
+          echo "📦 Bumping version: $CURRENT_VERSION → $BUMP_TYPE"
+
           # Bump version in tokens package first
-          echo "📦 Bumping tokens package..."
           cd packages/tokens
           npm version $CURRENT_VERSION --no-git-tag-version --allow-same-version
-          npm version patch --no-git-tag-version
+          npm version $BUMP_TYPE --no-git-tag-version
           cd ../..
 
           # Neue Version aus Tokens package lesen
@@ -78,17 +208,16 @@ jobs:
           echo "New version: $NEW_VERSION"
 
           # Sync all other packages to same version
-          echo "📦 Syncing components package to version $NEW_VERSION..."
+          echo "📦 Syncing all packages to version $NEW_VERSION..."
+
           cd packages/components
           npm version $NEW_VERSION --no-git-tag-version --allow-same-version
           cd ../..
 
-          echo "📦 Syncing react package to version $NEW_VERSION..."
           cd packages/react
           npm version $NEW_VERSION --no-git-tag-version --allow-same-version
           cd ../..
 
-          echo "📦 Syncing vue package to version $NEW_VERSION..."
           cd packages/vue
           npm version $NEW_VERSION --no-git-tag-version --allow-same-version
           cd ../..
@@ -97,12 +226,13 @@ jobs:
 
           echo "current=$CURRENT_VERSION" >> $GITHUB_OUTPUT
           echo "new=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "bump_type=$BUMP_TYPE" >> $GITHUB_OUTPUT
 
-      # 6. Token Build durchführen (inkl. React/Vue Wrappers)
-      - name: Build Design Tokens, Stencil Components, and Framework Wrappers
+      # 11. Finaler Build mit korrekter Version (für Headers)
+      - name: Final Build with Correct Version
         id: build
         run: |
-          echo "🎨 Building design tokens, Stencil components, and React/Vue wrappers..."
+          echo "🎨 Building with version ${{ steps.version.outputs.new }}..."
           npm run build:all 2>&1 | tee build-output.log
 
           # Extrahiere Build-Statistiken
@@ -119,7 +249,7 @@ jobs:
 
           echo "✅ Build successful: $SUCCESSFUL_BUILDS/$TOTAL_BUILDS"
 
-      # 7. Package Inhalt validieren
+      # 12. Package Inhalt validieren
       - name: Validate Package Contents
         run: |
           echo "📋 Validating package contents..."
@@ -129,7 +259,7 @@ jobs:
           echo "📁 Package will contain:"
           npm pack --dry-run 2>&1 | grep -E "npm notice.*B " | head -20 || true
 
-      # 8. Package erstellen und Größe ermitteln
+      # 13. Package erstellen und Größe ermitteln
       - name: Create Package and Get Size
         id: package
         run: |
@@ -144,7 +274,7 @@ jobs:
           echo "package_size=$PACKAGE_SIZE" >> $GITHUB_OUTPUT
           echo "✅ Package: $PACKAGE_FILE ($PACKAGE_SIZE)"
 
-      # 9. Tag erstellen (Version ist nur lokal für Publishing)
+      # 14. Tag erstellen
       - name: Create Git Tag
         run: |
           TAG_NAME="v${{ steps.version.outputs.new }}"
@@ -157,7 +287,7 @@ jobs:
             echo "✅ Created tag: $TAG_NAME"
           fi
 
-      # 10. Push Tag (Version Bump wird nicht committed, nur Tag)
+      # 15. Push Tag
       - name: Push Tag
         run: |
           TAG_NAME="v${{ steps.version.outputs.new }}"
@@ -172,7 +302,7 @@ jobs:
 
           echo "ℹ️  Note: Version bump is not committed to main (avoids race conditions)"
 
-      # 11. Packages veröffentlichen (Tokens + Components)
+      # 16. Packages veröffentlichen
       - name: Publish Tokens to npmjs.org
         run: |
           echo "📦 Publishing @marioschmidt/design-system-tokens@${{ steps.version.outputs.new }} to npmjs.org..."
@@ -205,61 +335,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      # 12. Build Baseline für Vergleich (vom vorherigen Tag)
-      - name: Build Baseline for Comparison
-        id: baseline
-        run: |
-          echo "📊 Building baseline for token comparison..."
-
-          # Aktuellen dist speichern
-          mv packages/tokens/dist/ dist-new/
-
-          # Vorherigen Tag finden
-          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD~1 2>/dev/null || echo "")
-
-          if [ -n "$PREVIOUS_TAG" ]; then
-            echo "Building baseline from $PREVIOUS_TAG..."
-
-            # Zu vorherigem Tag wechseln und bauen
-            git checkout "$PREVIOUS_TAG" -- packages/tokens/src/ 2>/dev/null || true
-            npm run build:tokens 2>/dev/null || true
-
-            if [ -d "packages/tokens/dist" ]; then
-              mv packages/tokens/dist/ dist-old/
-              echo "has_baseline=true" >> $GITHUB_OUTPUT
-            else
-              echo "has_baseline=false" >> $GITHUB_OUTPUT
-            fi
-
-            # Zurück zum aktuellen Stand
-            git checkout HEAD -- packages/tokens/src/ 2>/dev/null || true
-          else
-            echo "No previous tag found, skipping baseline"
-            echo "has_baseline=false" >> $GITHUB_OUTPUT
-          fi
-
-          # dist-new zurück zu packages/tokens/dist
-          mkdir -p packages/tokens
-          mv dist-new/ packages/tokens/dist/
-
-      # 13. Token-Diff generieren
-      - name: Generate Token Diff
-        id: diff
-        run: |
-          if [ "${{ steps.baseline.outputs.has_baseline }}" = "true" ] && [ -d "dist-old" ]; then
-            echo "🔍 Comparing token builds..."
-            node scripts/tokens/compare-builds.js \
-              --old dist-old/ \
-              --new packages/tokens/dist/ \
-              --output dist-diff.json
-
-            echo "has_diff=true" >> $GITHUB_OUTPUT
-          else
-            echo "No baseline available, skipping diff"
-            echo "has_diff=false" >> $GITHUB_OUTPUT
-          fi
-
-      # 14. Release Notes generieren
+      # 17. Release Notes generieren (Diff bereits vorhanden)
       - name: Generate Release Notes
         id: release_notes
         run: |
@@ -298,7 +374,8 @@ jobs:
               echo ""
               echo "- **Build Status:** ✅ ${{ steps.build.outputs.successful_builds }}/${{ steps.build.outputs.total_builds }} successful"
               echo "- **Package Size:** ${{ steps.package.outputs.package_size }}"
-              echo "- **Tokens:** CSS, SCSS, JavaScript, Swift, Android XML, JSON"
+              echo "- **Version Bump:** ${{ steps.version.outputs.bump_type }} (based on token impact)"
+              echo "- **Tokens:** CSS, SCSS, JavaScript, Swift, Android Compose, JSON"
               echo "- **Components:** Stencil Web Components"
               echo "- **Framework Wrappers:** React, Vue"
               echo ""
@@ -317,7 +394,7 @@ jobs:
           cat release-notes.md >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      # 15. GitHub Release erstellen
+      # 18. GitHub Release erstellen
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
@@ -328,7 +405,7 @@ jobs:
           prerelease: false
           generate_release_notes: false
 
-      # 16. Success Summary
+      # 19. Success Summary
       - name: Create Publish Summary
         run: |
           echo "## 🚀 Packages Published Successfully!" >> $GITHUB_STEP_SUMMARY
@@ -341,7 +418,16 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Previous Version:** \`${{ steps.version.outputs.current }}\`" >> $GITHUB_STEP_SUMMARY
           echo "**New Version:** \`${{ steps.version.outputs.new }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Version Bump:** \`${{ steps.version.outputs.bump_type }}\` (based on impact: ${{ steps.diff.outputs.impact_level }})" >> $GITHUB_STEP_SUMMARY
           echo "**Registry:** npmjs.org" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📊 Token Changes" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Type | Count |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|------:|" >> $GITHUB_STEP_SUMMARY
+          echo "| 🟢 Added | ${{ steps.diff.outputs.tokens_added || '0' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🟡 Modified | ${{ steps.diff.outputs.tokens_modified || '0' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🔴 Removed | ${{ steps.diff.outputs.tokens_removed || '0' }} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📥 Installation" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -367,7 +453,7 @@ jobs:
           echo "- [📋 Release Notes](https://github.com/${{ github.repository }}/releases/tag/v${{ steps.version.outputs.new }})" >> $GITHUB_STEP_SUMMARY
           echo "- [🎨 Pull Requests](https://github.com/${{ github.repository }}/pulls?q=is%3Apr+is%3Amerged)" >> $GITHUB_STEP_SUMMARY
 
-      # 17. Bei Fehler benachrichtigen
+      # 20. Bei Fehler benachrichtigen
       - name: Notify on Failure
         if: failure()
         run: |
