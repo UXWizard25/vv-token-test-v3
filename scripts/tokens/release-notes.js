@@ -34,7 +34,170 @@ const IMPACT_LABELS = {
 
 const PLATFORM_ORDER = ['css', 'scss', 'js', 'swift', 'kotlin', 'json'];
 
+const CATEGORY_CONFIG = {
+  colors: { icon: '🎨', label: 'Colors' },
+  typography: { icon: '📝', label: 'Typography' },
+  spacing: { icon: '📏', label: 'Spacing' },
+  sizing: { icon: '📐', label: 'Sizing' },
+  effects: { icon: '✨', label: 'Effects' },
+  other: { icon: '📦', label: 'Other' }
+};
+
+const CATEGORY_ORDER = ['colors', 'typography', 'spacing', 'sizing', 'effects', 'other'];
+
+const LAYER_CONFIG = {
+  primitive: { icon: '⚙️', label: 'Primitives' },
+  semantic: { icon: '🎯', label: 'Semantic' },
+  component: { icon: '🧩', label: 'Components' }
+};
+
+// Consumption layers are the ones consumers directly use (semantic + component)
+const CONSUMPTION_LAYERS = ['semantic', 'component'];
+
 const DIST_DIR = path.join(__dirname, '../../packages/tokens/dist');
+
+// =============================================================================
+// VISUAL DIFF UTILITIES
+// =============================================================================
+
+/**
+ * Parse hex color to RGB
+ */
+function hexToRgb(hex) {
+  if (!hex || typeof hex !== 'string') return null;
+  hex = hex.replace('#', '');
+  if (hex.length === 3) {
+    hex = hex.split('').map(c => c + c).join('');
+  }
+  if (hex.length !== 6) return null;
+  const num = parseInt(hex, 16);
+  return {
+    r: (num >> 16) & 255,
+    g: (num >> 8) & 255,
+    b: num & 255
+  };
+}
+
+/**
+ * Convert RGB to LAB color space (for Delta E calculation)
+ */
+function rgbToLab(rgb) {
+  if (!rgb) return null;
+
+  // RGB to XYZ
+  let r = rgb.r / 255, g = rgb.g / 255, b = rgb.b / 255;
+  r = r > 0.04045 ? Math.pow((r + 0.055) / 1.055, 2.4) : r / 12.92;
+  g = g > 0.04045 ? Math.pow((g + 0.055) / 1.055, 2.4) : g / 12.92;
+  b = b > 0.04045 ? Math.pow((b + 0.055) / 1.055, 2.4) : b / 12.92;
+
+  const x = (r * 0.4124 + g * 0.3576 + b * 0.1805) / 0.95047;
+  const y = (r * 0.2126 + g * 0.7152 + b * 0.0722) / 1.00000;
+  const z = (r * 0.0193 + g * 0.1192 + b * 0.9505) / 1.08883;
+
+  // XYZ to LAB
+  const fx = x > 0.008856 ? Math.pow(x, 1/3) : (7.787 * x) + 16/116;
+  const fy = y > 0.008856 ? Math.pow(y, 1/3) : (7.787 * y) + 16/116;
+  const fz = z > 0.008856 ? Math.pow(z, 1/3) : (7.787 * z) + 16/116;
+
+  return {
+    L: (116 * fy) - 16,
+    a: 500 * (fx - fy),
+    b: 200 * (fy - fz)
+  };
+}
+
+/**
+ * Calculate Delta E (CIE76) between two colors
+ * Returns: { deltaE, perception }
+ * Perception levels:
+ * - < 1: Not perceptible
+ * - 1-2: Perceptible through close observation
+ * - 2-10: Perceptible at a glance
+ * - 11-49: Colors are more similar than opposite
+ * - 100: Colors are exact opposite
+ */
+function calculateDeltaE(color1, color2) {
+  const rgb1 = hexToRgb(color1);
+  const rgb2 = hexToRgb(color2);
+  if (!rgb1 || !rgb2) return null;
+
+  const lab1 = rgbToLab(rgb1);
+  const lab2 = rgbToLab(rgb2);
+  if (!lab1 || !lab2) return null;
+
+  const deltaE = Math.sqrt(
+    Math.pow(lab2.L - lab1.L, 2) +
+    Math.pow(lab2.a - lab1.a, 2) +
+    Math.pow(lab2.b - lab1.b, 2)
+  );
+
+  let perception, icon;
+  if (deltaE < 1) {
+    perception = 'nicht sichtbar';
+    icon = '⚪';
+  } else if (deltaE < 2) {
+    perception = 'kaum sichtbar';
+    icon = '🟢';
+  } else if (deltaE < 5) {
+    perception = 'subtil';
+    icon = '🟡';
+  } else if (deltaE < 10) {
+    perception = 'deutlich';
+    icon = '🟠';
+  } else {
+    perception = 'stark';
+    icon = '🔴';
+  }
+
+  return { deltaE: Math.round(deltaE * 10) / 10, perception, icon };
+}
+
+/**
+ * Calculate percentage change for dimensions
+ */
+function calculateDimensionDiff(oldValue, newValue) {
+  // Extract numeric values
+  const oldNum = parseFloat(oldValue);
+  const newNum = parseFloat(newValue);
+
+  if (isNaN(oldNum) || isNaN(newNum) || oldNum === 0) return null;
+
+  const percentChange = ((newNum - oldNum) / oldNum) * 100;
+  const rounded = Math.round(percentChange);
+
+  let icon;
+  const absChange = Math.abs(rounded);
+  if (absChange === 0) {
+    icon = '⚪';
+  } else if (absChange <= 10) {
+    icon = '🟢';
+  } else if (absChange <= 25) {
+    icon = '🟡';
+  } else if (absChange <= 50) {
+    icon = '🟠';
+  } else {
+    icon = '🔴';
+  }
+
+  const sign = rounded > 0 ? '+' : '';
+  return { percent: rounded, display: `${sign}${rounded}%`, icon };
+}
+
+/**
+ * Detect if a value is a color
+ */
+function isColorValue(value) {
+  if (!value || typeof value !== 'string') return false;
+  return value.startsWith('#') || value.startsWith('rgb');
+}
+
+/**
+ * Detect if a value is a dimension (px, rem, em, etc.)
+ */
+function isDimensionValue(value) {
+  if (!value || typeof value !== 'string') return false;
+  return /^-?\d+(\.\d+)?(px|rem|em|%|pt|vw|vh)?$/i.test(value.trim());
+}
 
 // =============================================================================
 // UTILITIES
@@ -207,24 +370,62 @@ ${commitSha ? `**Commit**: \`${commitSha}\`` : ''}
 
   let md = `## ${impactEmoji} Token Update\n\n`;
 
-  // Quick stats - use unique token counts for clear summary
-  const stats = [];
-  const uniqueRemoved = summary.uniqueTokensRemoved ?? summary.tokensRemoved;
-  const uniqueModified = summary.uniqueTokensModified ?? summary.tokensModified;
-  const uniqueAdded = summary.uniqueTokensAdded ?? summary.tokensAdded;
+  // Collect counts
+  const uniqueModified = summary.uniqueTokensModified ?? summary.tokensModified ?? 0;
+  const uniqueAdded = summary.uniqueTokensAdded ?? summary.tokensAdded ?? 0;
+  const uniqueStylesRenamed = summary.uniqueStylesRenamed ?? 0;
 
-  if (uniqueRemoved > 0) {
-    stats.push(`🔴 **${uniqueRemoved} Removed**`);
-  }
-  if (uniqueModified > 0) {
-    stats.push(`🟡 **${uniqueModified} Modified**`);
-  }
-  if (uniqueAdded > 0) {
-    stats.push(`🟢 **${uniqueAdded} Added**`);
-  }
+  // Calculate removed counts by layer (consumption vs primitive)
+  const removedTokens = diff?.byUniqueToken?.removed || [];
+  const breakingRemoved = removedTokens.filter(t => CONSUMPTION_LAYERS.includes(t.layer)).length;
+  const internalRemoved = removedTokens.filter(t => !CONSUMPTION_LAYERS.includes(t.layer)).length;
 
-  if (stats.length > 0) {
-    md += stats.join(' | ') + '\n\n';
+  // Calculate renamed counts by layer (consumption vs primitive)
+  const variableRenames = diff?.renames || [];
+  const breakingRenames = variableRenames.filter(r => CONSUMPTION_LAYERS.includes(r.layer)).length;
+  const internalRenames = variableRenames.filter(r => !CONSUMPTION_LAYERS.includes(r.layer)).length;
+  const totalRenames = variableRenames.length + uniqueStylesRenamed;
+
+  // Summary table with Impact classification
+  const hasChanges = uniqueAdded > 0 || uniqueModified > 0 || removedTokens.length > 0 || totalRenames > 0;
+
+  if (hasChanges) {
+    md += '### 📊 Summary\n\n';
+    md += '| Change Type | Count | Impact |\n';
+    md += '|-------------|------:|--------|\n';
+
+    // Order: Safe (Added, Internal) -> Visual (Modified) -> Breaking (Removed consumption, Renamed breaking)
+    if (uniqueAdded > 0) {
+      md += `| ➕ Added | ${uniqueAdded} | 🟢 Safe |\n`;
+    }
+    if (uniqueModified > 0) {
+      md += `| ✏️ Modified | ${uniqueModified} | 🟡 Visual |\n`;
+    }
+    if (breakingRemoved > 0) {
+      md += `| ➖ Removed (breaking) | ${breakingRemoved} | 🔴 Breaking |\n`;
+    }
+    if (internalRemoved > 0) {
+      md += `| ➖ Removed (internal) | ${internalRemoved} | 🟢 Safe |\n`;
+    }
+    if (breakingRenames > 0) {
+      md += `| 🔄 Renamed (breaking) | ${breakingRenames} | 🔴 Breaking |\n`;
+    }
+    if (internalRenames > 0) {
+      md += `| 🔄 Renamed (internal) | ${internalRenames} | 🟢 Safe |\n`;
+    }
+
+    md += '\n';
+
+    // Overall risk indicator - only consumption layer changes are breaking
+    const hasBreaking = breakingRemoved > 0 || breakingRenames > 0;
+    const hasVisual = uniqueModified > 0;
+    if (hasBreaking) {
+      md += '**Overall Risk:** 🔴 Breaking Changes Detected\n\n';
+    } else if (hasVisual) {
+      md += '**Overall Risk:** 🟡 Visual Changes\n\n';
+    } else {
+      md += '**Overall Risk:** 🟢 Safe (Additions Only)\n\n';
+    }
   } else {
     md += '⚪ **No token changes detected**\n\n';
   }
@@ -353,6 +554,945 @@ function generateUnifiedTokenChanges(diff, options = {}) {
   }
 
   md += '---\n\n';
+
+  return md;
+}
+
+// =============================================================================
+// LAYER 2b: BREAKING CHANGES (Removed + Renamed)
+// =============================================================================
+
+/**
+ * Generate breaking changes section - shows ONLY breaking changes
+ * Breaking = Removed OR Renamed in consumption layer (semantic + component)
+ * Internal (primitive) changes are shown in Safe Changes section
+ */
+function generateBreakingChangesSection(diff, options = {}) {
+  const { maxTokens = 15 } = options;
+
+  // Collect removed tokens - only consumption layer
+  const allRemovedTokens = diff?.byUniqueToken?.removed || [];
+  const breakingRemovedTokens = allRemovedTokens.filter(t => CONSUMPTION_LAYERS.includes(t.layer));
+
+  // Collect breaking renames - only consumption layer
+  const variableRenames = diff?.renames || [];
+  const styleRenames = diff?.styleRenames || [];
+  const breakingVariableRenames = variableRenames.filter(r => CONSUMPTION_LAYERS.includes(r.layer));
+  const breakingStyleRenames = styleRenames.filter(r => CONSUMPTION_LAYERS.includes(r.layer));
+
+  const totalBreakingRenames = breakingVariableRenames.length + breakingStyleRenames.length;
+  const hasBreakingChanges = breakingRemovedTokens.length > 0 || totalBreakingRenames > 0;
+
+  if (!hasBreakingChanges) return '';
+
+  let md = '';
+
+  // === Breaking Changes Section (Removed + Renamed in Consumption Layer) ===
+  if (hasBreakingChanges) {
+    md += '## 🔴 Breaking Changes\n\n';
+    md += '> ⚠️ **These changes require code updates**\n\n';
+
+    // --- Removed Tokens (Consumption Layer Only) ---
+    if (breakingRemovedTokens.length > 0) {
+      md += `### ➖ Removed Tokens (${breakingRemovedTokens.length})\n\n`;
+      md += '| Token | Previous Value | Layer | Category |\n';
+      md += '|-------|----------------|-------|----------|\n';
+
+      for (const token of breakingRemovedTokens.slice(0, maxTokens)) {
+        const cat = CATEGORY_CONFIG[categorizeTokenForDisplay(token.displayName, token.value)] || CATEGORY_CONFIG.other;
+        const layerConfig = LAYER_CONFIG[token.layer] || LAYER_CONFIG.semantic;
+        md += `| \`${truncate(token.displayName, 32)}\` | \`${truncate(token.value, 18)}\` | ${layerConfig.icon} | ${cat.icon} |\n`;
+      }
+
+      if (breakingRemovedTokens.length > maxTokens) {
+        md += `| ... | *${breakingRemovedTokens.length - maxTokens} more* | | |\n`;
+      }
+      md += '\n';
+    }
+
+    // --- Breaking Renames ---
+    if (totalBreakingRenames > 0) {
+      md += `### 🔄 Renamed Tokens (${totalBreakingRenames})\n\n`;
+      md += '> Auto-detected via Figma ID (100% confidence)\n\n';
+
+      // Variable renames (semantic + component layer)
+      if (breakingVariableRenames.length > 0) {
+        md += '| Old Name | → | New Name | Layer | Category |\n';
+        md += '|----------|:---:|----------|-------|----------|\n';
+
+        for (const rename of breakingVariableRenames.slice(0, maxTokens)) {
+          const catConfig = CATEGORY_CONFIG[rename.category] || CATEGORY_CONFIG.other;
+          const layerConfig = LAYER_CONFIG[rename.layer] || LAYER_CONFIG.semantic;
+          md += `| \`${truncate(rename.oldName, 28)}\` | → | \`${truncate(rename.newName, 28)}\` | ${layerConfig.icon} | ${catConfig.icon} |\n`;
+        }
+
+        if (breakingVariableRenames.length > maxTokens) {
+          md += `| ... | | *${breakingVariableRenames.length - maxTokens} more* | | |\n`;
+        }
+        md += '\n';
+      }
+
+      // Style renames (Typography + Effects)
+      if (breakingStyleRenames.length > 0) {
+        md += '**Styles:**\n\n';
+        md += '| Old Name | → | New Name | Type |\n';
+        md += '|----------|:---:|----------|------|\n';
+
+        for (const rename of breakingStyleRenames.slice(0, maxTokens)) {
+          const typeIcon = rename.type === 'typography' ? '📝' : '✨';
+          md += `| \`${truncate(rename.oldName, 30)}\` | → | \`${truncate(rename.newName, 30)}\` | ${typeIcon} |\n`;
+        }
+
+        if (breakingStyleRenames.length > maxTokens) {
+          md += `| ... | | *${breakingStyleRenames.length - maxTokens} more* | |\n`;
+        }
+        md += '\n';
+      }
+    }
+
+    // Migration help for all breaking changes
+    const allBreakingRenames = [...breakingVariableRenames, ...breakingStyleRenames];
+    if (allBreakingRenames.length > 0) {
+      md += '<details>\n<summary>📋 Migration Commands</summary>\n\n';
+      md += '```bash\n# Find & Replace suggestions:\n';
+      for (const rename of allBreakingRenames.slice(0, 8)) {
+        const oldSimple = rename.oldName.split('/').pop();
+        const newSimple = rename.newName.split('/').pop();
+        md += `# ${oldSimple} → ${newSimple}\n`;
+      }
+      if (allBreakingRenames.length > 8) {
+        md += `# ... and ${allBreakingRenames.length - 8} more\n`;
+      }
+      md += '```\n\n</details>\n\n';
+    }
+
+    md += '---\n\n';
+  }
+
+  return md;
+}
+
+// =============================================================================
+// LAYER 3: VISUAL CHANGES (Modified Tokens with Diff Metrics)
+// =============================================================================
+
+// Known brands and modes for matrix display
+const KNOWN_BRANDS = ['bild', 'sportbild', 'advertorial'];
+const KNOWN_MODES = ['light', 'dark'];
+const KNOWN_BREAKPOINTS = ['xs', 'sm', 'md', 'lg'];
+
+/**
+ * Generate a color matrix table for a single token
+ * Rows: modes (light/dark), Columns: brands
+ */
+function generateColorMatrix(token) {
+  const contexts = token.valuesByContext || {};
+  const contextKeys = Object.keys(contexts);
+  if (contextKeys.length <= 1) return null;
+
+  // Determine which brands and modes are present
+  const brands = new Set();
+  const modes = new Set();
+  for (const key of contextKeys) {
+    const ctx = contexts[key];
+    if (ctx.brand) brands.add(ctx.brand);
+    if (ctx.mode) modes.add(ctx.mode);
+  }
+
+  // Need at least 2 contexts for a matrix
+  if (brands.size === 0 && modes.size <= 1) return null;
+
+  const brandList = KNOWN_BRANDS.filter(b => brands.has(b));
+  const modeList = KNOWN_MODES.filter(m => modes.has(m));
+
+  // If we only have modes (no brand differentiation)
+  if (brandList.length === 0 && modeList.length > 1) {
+    let md = `**\`${token.displayName}\`**\n\n`;
+    md += '| Mode | Change | ΔE |\n';
+    md += '|------|--------|----|\n';
+    for (const mode of modeList) {
+      const ctx = contexts[mode] || contexts[`/${mode}`];
+      if (ctx) {
+        const deltaE = calculateDeltaE(ctx.old, ctx.new);
+        const diffInfo = deltaE ? `${deltaE.icon} ${deltaE.deltaE}` : '–';
+        md += `| ${mode} | \`${truncate(ctx.old, 9)}\` → \`${truncate(ctx.new, 9)}\` | ${diffInfo} |\n`;
+      }
+    }
+    return md + '\n';
+  }
+
+  // Full matrix: brands × modes
+  if (brandList.length > 0 && modeList.length > 0) {
+    let md = `**\`${token.displayName}\`**\n\n`;
+    md += '| | ' + brandList.map(b => b.charAt(0).toUpperCase() + b.slice(1)).join(' | ') + ' |\n';
+    md += '|---' + brandList.map(() => '|---').join('') + '|\n';
+
+    for (const mode of modeList) {
+      const modeLabel = mode === 'light' ? '🌞 Light' : '🌙 Dark';
+      const cells = brandList.map(brand => {
+        const key = `${brand}/${mode}`;
+        const ctx = contexts[key];
+        if (!ctx) return '–';
+        const deltaE = calculateDeltaE(ctx.old, ctx.new);
+        return deltaE ? `${deltaE.icon} ΔE=${deltaE.deltaE}` : '–';
+      });
+      md += `| ${modeLabel} | ${cells.join(' | ')} |\n`;
+    }
+    return md + '\n';
+  }
+
+  return null;
+}
+
+/**
+ * Generate a breakpoint matrix table for a single token (typography/sizing/spacing)
+ * Rows: breakpoints (xs/sm/md/lg), Columns: brands
+ */
+function generateBreakpointMatrix(token) {
+  const contexts = token.valuesByContext || {};
+  const contextKeys = Object.keys(contexts);
+  if (contextKeys.length <= 1) return null;
+
+  // Determine which brands and breakpoints are present
+  const brands = new Set();
+  const breakpoints = new Set();
+  for (const key of contextKeys) {
+    const ctx = contexts[key];
+    if (ctx.brand) brands.add(ctx.brand);
+    if (ctx.breakpoint) breakpoints.add(ctx.breakpoint);
+  }
+
+  if (breakpoints.size <= 1) return null;
+
+  const brandList = KNOWN_BRANDS.filter(b => brands.has(b));
+  const bpList = KNOWN_BREAKPOINTS.filter(bp => breakpoints.has(bp));
+
+  // If we only have breakpoints (no brand differentiation)
+  if (brandList.length === 0 && bpList.length > 1) {
+    let md = `**\`${token.displayName}\`**\n\n`;
+    md += '| BP | Change | Diff |\n';
+    md += '|----|--------|------|\n';
+    for (const bp of bpList) {
+      const ctx = contexts[bp] || contexts[`/${bp}`];
+      if (ctx) {
+        const dimDiff = calculateDimensionDiff(ctx.old, ctx.new);
+        const diffInfo = dimDiff ? `${dimDiff.icon} ${dimDiff.display}` : '–';
+        md += `| ${bp} | \`${ctx.old}\` → \`${ctx.new}\` | ${diffInfo} |\n`;
+      }
+    }
+    return md + '\n';
+  }
+
+  // Full matrix: brands × breakpoints
+  if (brandList.length > 0 && bpList.length > 1) {
+    let md = `**\`${token.displayName}\`**\n\n`;
+    md += '| | ' + brandList.map(b => b.charAt(0).toUpperCase() + b.slice(1)).join(' | ') + ' |\n';
+    md += '|---' + brandList.map(() => '|---').join('') + '|\n';
+
+    for (const bp of bpList) {
+      const cells = brandList.map(brand => {
+        const key = `${brand}/${bp}`;
+        const ctx = contexts[key];
+        if (!ctx) return '–';
+        const dimDiff = calculateDimensionDiff(ctx.old, ctx.new);
+        return dimDiff ? `${dimDiff.icon} ${dimDiff.display}` : '–';
+      });
+      md += `| ${bp} | ${cells.join(' | ')} |\n`;
+    }
+    return md + '\n';
+  }
+
+  return null;
+}
+
+/**
+ * Generate simple row for token without multiple contexts
+ */
+function generateSimpleColorRow(token) {
+  const deltaE = calculateDeltaE(token.oldValue, token.newValue);
+  const diffInfo = deltaE ? `${deltaE.icon} ΔE=${deltaE.deltaE} (${deltaE.perception})` : '';
+  return `| \`${truncate(token.displayName, 28)}\` | \`${truncate(token.oldValue, 9)}\` → \`${truncate(token.newValue, 9)}\` | ${diffInfo} |\n`;
+}
+
+function generateSimpleDimensionRow(token) {
+  const dimDiff = calculateDimensionDiff(token.oldValue, token.newValue);
+  const diffDisplay = dimDiff ? `${dimDiff.icon} ${dimDiff.display}` : '';
+  return `| \`${truncate(token.displayName, 30)}\` | \`${token.oldValue}\` → \`${token.newValue}\` | ${diffDisplay} |\n`;
+}
+
+/**
+ * Generate visual changes section - shows modified tokens grouped by category
+ * with visual diff calculations (Delta E for colors, % for dimensions)
+ * Uses matrix display for tokens with multiple contexts (brand/mode/breakpoint)
+ */
+function generateVisualChangesSection(diff, options = {}) {
+  const { maxTokens = 12 } = options;
+
+  // Get modified tokens (only atomic value changes, no combined tokens)
+  const modifiedTokens = diff?.byUniqueToken?.modified || [];
+  if (modifiedTokens.length === 0) return '';
+
+  // Separate tokens with multiple contexts from simple tokens
+  const byCategory = {
+    colors: { matrix: [], simple: [] },
+    typography: { matrix: [], simple: [] },
+    spacing: { matrix: [], simple: [] },
+    sizing: { matrix: [], simple: [] },
+    effects: { matrix: [], simple: [] },
+    other: { simple: [] }
+  };
+
+  for (const token of modifiedTokens) {
+    const category = categorizeTokenForDisplay(token.displayName, token.oldValue);
+    const hasMultiple = token.hasMultipleContexts && Object.keys(token.valuesByContext || {}).length > 1;
+
+    if (category === 'other') {
+      byCategory.other.simple.push(token);
+    } else if (byCategory[category]) {
+      if (hasMultiple) {
+        byCategory[category].matrix.push(token);
+      } else {
+        byCategory[category].simple.push(token);
+      }
+    }
+  }
+
+  let md = '## 🟡 Visual Changes\n\n';
+  md += '> Modified tokens with visual impact analysis\n\n';
+
+  // Colors with Delta E (matrix for multi-context, table for simple)
+  const colorTotal = byCategory.colors.matrix.length + byCategory.colors.simple.length;
+  if (colorTotal > 0) {
+    md += `### 🎨 Colors (${colorTotal})\n\n`;
+
+    // Matrix tokens first
+    for (const token of byCategory.colors.matrix.slice(0, maxTokens)) {
+      const matrix = generateColorMatrix(token);
+      if (matrix) {
+        md += matrix;
+      }
+    }
+
+    // Simple tokens in table
+    if (byCategory.colors.simple.length > 0) {
+      md += '| Token | Change | Visual Diff |\n';
+      md += '|-------|--------|-------------|\n';
+      for (const token of byCategory.colors.simple.slice(0, maxTokens)) {
+        md += generateSimpleColorRow(token);
+      }
+      if (byCategory.colors.simple.length > maxTokens) {
+        md += `| ... | *${byCategory.colors.simple.length - maxTokens} more* | |\n`;
+      }
+      md += '\n';
+    }
+  }
+
+  // Typography
+  const typoTotal = byCategory.typography.matrix.length + byCategory.typography.simple.length;
+  if (typoTotal > 0) {
+    md += `### 📝 Typography (${typoTotal})\n\n`;
+
+    for (const token of byCategory.typography.matrix.slice(0, maxTokens)) {
+      const matrix = generateBreakpointMatrix(token);
+      if (matrix) {
+        md += matrix;
+      }
+    }
+
+    if (byCategory.typography.simple.length > 0) {
+      md += '| Token | Change | Diff |\n';
+      md += '|-------|--------|------|\n';
+      for (const token of byCategory.typography.simple.slice(0, maxTokens)) {
+        md += generateSimpleDimensionRow(token);
+      }
+      if (byCategory.typography.simple.length > maxTokens) {
+        md += `| ... | *${byCategory.typography.simple.length - maxTokens} more* | |\n`;
+      }
+      md += '\n';
+    }
+  }
+
+  // Spacing
+  const spacingTotal = byCategory.spacing.matrix.length + byCategory.spacing.simple.length;
+  if (spacingTotal > 0) {
+    md += `### 📏 Spacing (${spacingTotal})\n\n`;
+
+    for (const token of byCategory.spacing.matrix.slice(0, maxTokens)) {
+      const matrix = generateBreakpointMatrix(token);
+      if (matrix) {
+        md += matrix;
+      }
+    }
+
+    if (byCategory.spacing.simple.length > 0) {
+      md += '| Token | Change | Diff |\n';
+      md += '|-------|--------|------|\n';
+      for (const token of byCategory.spacing.simple.slice(0, maxTokens)) {
+        md += generateSimpleDimensionRow(token);
+      }
+      if (byCategory.spacing.simple.length > maxTokens) {
+        md += `| ... | *${byCategory.spacing.simple.length - maxTokens} more* | |\n`;
+      }
+      md += '\n';
+    }
+  }
+
+  // Sizing
+  const sizingTotal = byCategory.sizing.matrix.length + byCategory.sizing.simple.length;
+  if (sizingTotal > 0) {
+    md += `### 📐 Sizing (${sizingTotal})\n\n`;
+
+    for (const token of byCategory.sizing.matrix.slice(0, maxTokens)) {
+      const matrix = generateBreakpointMatrix(token);
+      if (matrix) {
+        md += matrix;
+      }
+    }
+
+    if (byCategory.sizing.simple.length > 0) {
+      md += '| Token | Change | Diff |\n';
+      md += '|-------|--------|------|\n';
+      for (const token of byCategory.sizing.simple.slice(0, maxTokens)) {
+        md += generateSimpleDimensionRow(token);
+      }
+      if (byCategory.sizing.simple.length > maxTokens) {
+        md += `| ... | *${byCategory.sizing.simple.length - maxTokens} more* | |\n`;
+      }
+      md += '\n';
+    }
+  }
+
+  // Effects (no matrix, just simple display for now)
+  const effectsTotal = byCategory.effects.matrix.length + byCategory.effects.simple.length;
+  if (effectsTotal > 0) {
+    md += `### ✨ Effects (${effectsTotal})\n\n`;
+    md += '| Token | Change |\n';
+    md += '|-------|--------|\n';
+
+    const allEffects = [...byCategory.effects.matrix, ...byCategory.effects.simple];
+    for (const token of allEffects.slice(0, maxTokens)) {
+      md += `| \`${truncate(token.displayName, 32)}\` | \`${truncate(token.oldValue, 20)}\` → \`${truncate(token.newValue, 20)}\` |\n`;
+    }
+    if (allEffects.length > maxTokens) {
+      md += `| ... | *${allEffects.length - maxTokens} more* |\n`;
+    }
+    md += '\n';
+  }
+
+  // Other (collapsible)
+  if (byCategory.other.simple.length > 0) {
+    md += `<details>\n<summary>📦 Other (${byCategory.other.simple.length})</summary>\n\n`;
+    md += '| Token | Change |\n';
+    md += '|-------|--------|\n';
+
+    for (const token of byCategory.other.simple.slice(0, maxTokens)) {
+      md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.oldValue, 15)}\` → \`${truncate(token.newValue, 15)}\` |\n`;
+    }
+    md += '\n</details>\n\n';
+  }
+
+  md += '---\n\n';
+  return md;
+}
+
+// =============================================================================
+// LAYER 4: SAFE CHANGES (Added + Internal)
+// =============================================================================
+
+/**
+ * Generate safe changes section - combines added tokens and internal (primitive) changes
+ */
+function generateSafeChangesSection(diff, options = {}) {
+  const { maxTokens = 10 } = options;
+
+  // Get added tokens
+  const addedTokens = diff?.byUniqueToken?.added || [];
+
+  // Get internal changes (from breaking changes section data)
+  const allRemovedTokens = diff?.byUniqueToken?.removed || [];
+  const internalRemovedTokens = allRemovedTokens.filter(t => !CONSUMPTION_LAYERS.includes(t.layer));
+
+  const variableRenames = diff?.renames || [];
+  const nonBreakingRenames = variableRenames.filter(r => !CONSUMPTION_LAYERS.includes(r.layer));
+
+  const hasAdded = addedTokens.length > 0;
+  const hasInternal = internalRemovedTokens.length > 0 || nonBreakingRenames.length > 0;
+
+  if (!hasAdded && !hasInternal) return '';
+
+  let md = '## 🟢 Safe Changes\n\n';
+
+  // Added Tokens grouped by category
+  if (hasAdded) {
+    md += `### ➕ Added Tokens (${addedTokens.length})\n\n`;
+
+    // Group by category
+    const byCategory = {
+      colors: [],
+      typography: [],
+      spacing: [],
+      sizing: [],
+      effects: [],
+      other: []
+    };
+
+    for (const token of addedTokens) {
+      const category = categorizeTokenForDisplay(token.displayName, token.value);
+      if (byCategory[category]) {
+        byCategory[category].push(token);
+      } else {
+        byCategory.other.push(token);
+      }
+    }
+
+    for (const [category, tokens] of Object.entries(byCategory)) {
+      if (tokens.length === 0) continue;
+
+      const config = CATEGORY_CONFIG[category] || CATEGORY_CONFIG.other;
+      md += `<details>\n<summary>${config.icon} ${config.label} (${tokens.length})</summary>\n\n`;
+      md += '| Token | Value |\n';
+      md += '|-------|-------|\n';
+
+      for (const token of tokens.slice(0, maxTokens)) {
+        md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.value, 25)}\` |\n`;
+      }
+
+      if (tokens.length > maxTokens) {
+        md += `| ... | *${tokens.length - maxTokens} more* |\n`;
+      }
+
+      md += '\n</details>\n\n';
+    }
+  }
+
+  // Internal Changes (Primitive Layer)
+  if (hasInternal) {
+    const totalInternal = internalRemovedTokens.length + nonBreakingRenames.length;
+    md += `### 🔧 Internal Changes (${totalInternal})\n\n`;
+    md += '<details>\n<summary>Primitive layer cleanup (no consumer impact)</summary>\n\n';
+
+    if (internalRemovedTokens.length > 0) {
+      md += `**Removed (${internalRemovedTokens.length}):**\n\n`;
+      md += '| Token | Previous Value |\n';
+      md += '|-------|----------------|\n';
+
+      for (const token of internalRemovedTokens.slice(0, maxTokens)) {
+        md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.value, 25)}\` |\n`;
+      }
+
+      if (internalRemovedTokens.length > maxTokens) {
+        md += `| ... | *${internalRemovedTokens.length - maxTokens} more* |\n`;
+      }
+      md += '\n';
+    }
+
+    if (nonBreakingRenames.length > 0) {
+      md += `**Renamed (${nonBreakingRenames.length}):**\n\n`;
+      md += '| Old Name | → | New Name |\n';
+      md += '|----------|:---:|----------|\n';
+
+      for (const rename of nonBreakingRenames.slice(0, maxTokens)) {
+        md += `| \`${truncate(rename.oldName, 28)}\` | → | \`${truncate(rename.newName, 28)}\` |\n`;
+      }
+
+      if (nonBreakingRenames.length > maxTokens) {
+        md += `| ... | | *${nonBreakingRenames.length - maxTokens} more* |\n`;
+      }
+      md += '\n';
+    }
+
+    md += '</details>\n\n';
+  }
+
+  md += '---\n\n';
+  return md;
+}
+
+/**
+ * Helper to categorize token for display (used for removed tokens)
+ */
+function categorizeTokenForDisplay(tokenName, value) {
+  const name = (tokenName || '').toLowerCase();
+
+  // Color detection by value
+  if (typeof value === 'string' && (value.startsWith('#') || value.startsWith('rgb'))) {
+    return 'colors';
+  }
+
+  // Name-based detection
+  if (/color|bg|background|foreground|fill|stroke|text-color|surface|accent/i.test(name)) {
+    return 'colors';
+  }
+  if (/font-?size|line-?height|letter-?spacing|font-?weight|font-?family|typography/i.test(name)) {
+    return 'typography';
+  }
+  if (/space|gap|inline|stack|inset|margin|padding/i.test(name)) {
+    return 'spacing';
+  }
+  if (/shadow|effect|elevation|blur/i.test(name)) {
+    return 'effects';
+  }
+  if (/size|width|height|radius|border-radius/i.test(name)) {
+    return 'sizing';
+  }
+
+  return 'other';
+}
+
+/**
+ * Generate combined token changes section (Typography/Effects property changes)
+ */
+function generateStyleChangesSection(diff, options = {}) {
+  if (!diff?.styleChanges) return '';
+
+  const { maxTokens = 10 } = options;
+  const typography = diff.styleChanges.typography || { added: [], modified: [], removed: [] };
+  const effects = diff.styleChanges.effects || { added: [], modified: [], removed: [] };
+
+  const totalTypography = typography.added.length + typography.modified.length + typography.removed.length;
+  const totalEffects = effects.added.length + effects.modified.length + effects.removed.length;
+
+  if (totalTypography === 0 && totalEffects === 0) return '';
+
+  let md = '## 📝 Combined Token Changes\n\n';
+
+  // Typography changes
+  if (totalTypography > 0) {
+    md += `<details>\n<summary>📝 Typography (${totalTypography} changes)</summary>\n\n`;
+
+    // Modified with property details
+    if (typography.modified.length > 0) {
+      md += `**Modified (${typography.modified.length}):**\n\n`;
+      md += '| Style | Changed Properties |\n';
+      md += '|-------|--------------------|\n';
+
+      for (const style of typography.modified.slice(0, maxTokens)) {
+        const propChanges = (style.changedProperties || [])
+          .map(p => `${p.property}: ${truncate(String(p.oldValue), 10)} → ${truncate(String(p.newValue), 10)}`)
+          .join(', ');
+        const renamed = style.wasRenamed ? ' 🔄' : '';
+        md += `| \`${truncate(style.name, 25)}\`${renamed} | ${truncate(propChanges, 50)} |\n`;
+      }
+      md += '\n';
+    }
+
+    // Added
+    if (typography.added.length > 0) {
+      md += `**Added (${typography.added.length}):** `;
+      md += typography.added.slice(0, 5).map(s => `\`${truncate(s.name, 20)}\``).join(', ');
+      if (typography.added.length > 5) md += `, +${typography.added.length - 5} more`;
+      md += '\n\n';
+    }
+
+    // Removed
+    if (typography.removed.length > 0) {
+      md += `**Removed (${typography.removed.length}):** `;
+      md += typography.removed.slice(0, 5).map(s => `\`${truncate(s.name, 20)}\``).join(', ');
+      if (typography.removed.length > 5) md += `, +${typography.removed.length - 5} more`;
+      md += '\n\n';
+    }
+
+    md += '</details>\n\n';
+  }
+
+  // Effects changes
+  if (totalEffects > 0) {
+    md += `<details>\n<summary>✨ Effects (${totalEffects} changes)</summary>\n\n`;
+
+    // Modified with property details
+    if (effects.modified.length > 0) {
+      md += `**Modified (${effects.modified.length}):**\n\n`;
+      md += '| Style | Changed Properties |\n';
+      md += '|-------|--------------------|\n';
+
+      for (const style of effects.modified.slice(0, maxTokens)) {
+        const propChanges = (style.changedProperties || [])
+          .map(p => p.property)
+          .join(', ');
+        const renamed = style.wasRenamed ? ' 🔄' : '';
+        md += `| \`${truncate(style.name, 25)}\`${renamed} | ${truncate(propChanges, 50)} |\n`;
+      }
+      md += '\n';
+    }
+
+    // Added
+    if (effects.added.length > 0) {
+      md += `**Added (${effects.added.length}):** `;
+      md += effects.added.slice(0, 5).map(s => `\`${truncate(s.name, 20)}\``).join(', ');
+      if (effects.added.length > 5) md += `, +${effects.added.length - 5} more`;
+      md += '\n\n';
+    }
+
+    // Removed
+    if (effects.removed.length > 0) {
+      md += `**Removed (${effects.removed.length}):** `;
+      md += effects.removed.slice(0, 5).map(s => `\`${truncate(s.name, 20)}\``).join(', ');
+      if (effects.removed.length > 5) md += `, +${effects.removed.length - 5} more`;
+      md += '\n\n';
+    }
+
+    md += '</details>\n\n';
+  }
+
+  md += '---\n\n';
+  return md;
+}
+
+// =============================================================================
+// LAYER 2c: CATEGORIZED CHANGES (Consumption Layer Only)
+// =============================================================================
+
+/**
+ * Filter tokens to only include consumption layer (semantic + component)
+ */
+function filterConsumptionLayer(tokens) {
+  if (!tokens) return [];
+  return tokens.filter(t => CONSUMPTION_LAYERS.includes(t.layer) || !t.layer);
+}
+
+/**
+ * Generate categorized changes section - groups changes by token category
+ * Only shows consumption layer tokens (semantic + component), not primitives
+ */
+function generateCategorizedChangesSection(diff, options = {}) {
+  if (!diff || !diff.byCategory) return '';
+
+  const { maxTokensPerCategory = 10 } = options;
+  let md = '## 📊 Changes by Category\n\n';
+  md += '> 🎯 Showing Modified & Added tokens (Removed tokens are in Breaking Changes above)\n\n';
+  let hasChanges = false;
+
+  for (const category of CATEGORY_ORDER) {
+    const catData = diff.byCategory[category];
+    if (!catData) continue;
+
+    // Filter to only consumption layer tokens
+    // Note: Removed tokens are shown in Breaking Changes section, not here
+    const modified = filterConsumptionLayer(catData.modified || []);
+    const added = filterConsumptionLayer(catData.added || []);
+    const total = modified.length + added.length;
+
+    if (total === 0) continue;
+    hasChanges = true;
+
+    const config = CATEGORY_CONFIG[category];
+    md += `<details>\n<summary>${config.icon} <b>${config.label}</b> (${total} changes)</summary>\n\n`;
+
+    // Modified
+    if (modified.length > 0) {
+      md += `**Modified (${modified.length}):**\n\n`;
+      md += '| Token | Old | New |\n|-------|-----|-----|\n';
+      for (const token of modified.slice(0, maxTokensPerCategory)) {
+        md += `| \`${truncate(token.displayName, 30)}\` | \`${truncate(token.oldValue, 15)}\` | \`${truncate(token.newValue, 15)}\` |\n`;
+      }
+      if (modified.length > maxTokensPerCategory) {
+        md += `| ... | *${modified.length - maxTokensPerCategory} more* | |\n`;
+      }
+      md += '\n';
+    }
+
+    // Added
+    if (added.length > 0) {
+      md += `**Added (${added.length}):**\n\n`;
+      md += '| Token | Value |\n|-------|-------|\n';
+      for (const token of added.slice(0, maxTokensPerCategory)) {
+        md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.value, 20)}\` |\n`;
+      }
+      if (added.length > maxTokensPerCategory) {
+        md += `| ... | *${added.length - maxTokensPerCategory} more* |\n`;
+      }
+      md += '\n';
+    }
+
+    md += '</details>\n\n';
+  }
+
+  if (!hasChanges) return '';
+
+  md += '---\n\n';
+  return md;
+}
+
+// =============================================================================
+// LAYER 2e: SOURCE CHANGES (Primitives)
+// =============================================================================
+
+/**
+ * Generate source changes section for primitive tokens
+ * Shows low-level token changes that affect semantic/component layers
+ */
+function generateSourceChangesSection(diff, options = {}) {
+  if (!diff || !diff.byLayer || !diff.byLayer.primitive) return '';
+
+  const { maxTokens = 10 } = options;
+  const primitives = diff.byLayer.primitive;
+
+  const modified = primitives.modified || [];
+  const added = primitives.added || [];
+  const removed = primitives.removed || [];
+  const total = modified.length + added.length + removed.length;
+
+  if (total === 0) return '';
+
+  let md = '## ⚙️ Source Changes\n\n';
+  md += '<details>\n';
+  md += `<summary>Primitive Token Updates (${total} changes)</summary>\n\n`;
+  md += '> ℹ️ Low-level tokens that may affect semantic/component values\n\n';
+
+  // Modified primitives
+  if (modified.length > 0) {
+    md += `**Modified (${modified.length}):**\n\n`;
+    md += '| Token | Change | Category |\n';
+    md += '|-------|--------|----------|\n';
+    for (const token of modified.slice(0, maxTokens)) {
+      const cat = CATEGORY_CONFIG[categorizeTokenForDisplay(token.displayName, token.oldValue)] || CATEGORY_CONFIG.other;
+      const changeDisplay = `\`${truncate(token.oldValue, 12)}\` → \`${truncate(token.newValue, 12)}\``;
+      md += `| \`${truncate(token.displayName, 28)}\` | ${changeDisplay} | ${cat.icon} |\n`;
+    }
+    if (modified.length > maxTokens) {
+      md += `| ... | *${modified.length - maxTokens} more* | |\n`;
+    }
+    md += '\n';
+  }
+
+  // Added primitives
+  if (added.length > 0) {
+    md += `**Added (${added.length}):**\n\n`;
+    md += '| Token | Value | Category |\n';
+    md += '|-------|-------|----------|\n';
+    for (const token of added.slice(0, maxTokens)) {
+      const cat = CATEGORY_CONFIG[categorizeTokenForDisplay(token.displayName, token.value)] || CATEGORY_CONFIG.other;
+      md += `| \`${truncate(token.displayName, 28)}\` | \`${truncate(token.value, 18)}\` | ${cat.icon} |\n`;
+    }
+    if (added.length > maxTokens) {
+      md += `| ... | *${added.length - maxTokens} more* | |\n`;
+    }
+    md += '\n';
+  }
+
+  // Removed primitives
+  if (removed.length > 0) {
+    md += `**Removed (${removed.length}):**\n\n`;
+    md += '| Token | Previous Value | Category |\n';
+    md += '|-------|----------------|----------|\n';
+    for (const token of removed.slice(0, maxTokens)) {
+      const cat = CATEGORY_CONFIG[categorizeTokenForDisplay(token.displayName, token.value)] || CATEGORY_CONFIG.other;
+      md += `| \`${truncate(token.displayName, 28)}\` | \`${truncate(token.value, 18)}\` | ${cat.icon} |\n`;
+    }
+    if (removed.length > maxTokens) {
+      md += `| ... | *${removed.length - maxTokens} more* | |\n`;
+    }
+    md += '\n';
+  }
+
+  md += '</details>\n\n';
+  md += '---\n\n';
+  return md;
+}
+// =============================================================================
+// LAYER 2d: AFFECTED COMPONENTS
+// =============================================================================
+
+/**
+ * Generate affected components section - shows which components have token changes
+ */
+function generateAffectedComponentsSection(diff, options = {}) {
+  if (!diff || !diff.byComponent) return '';
+
+  const components = Object.entries(diff.byComponent);
+  if (components.length === 0) return '';
+
+  const { maxComponents = 10 } = options;
+
+  let md = '## 🧩 Affected Components\n\n';
+
+  const displayComponents = components.slice(0, maxComponents);
+  for (const [componentName, changes] of displayComponents) {
+    const changeCount = changes.length;
+    const types = new Set(changes.map(c => c.changeType));
+    const icons = [];
+    if (types.has('removed')) icons.push('🔴');
+    if (types.has('modified')) icons.push('🟡');
+    if (types.has('added')) icons.push('🟢');
+
+    md += `- **${componentName}** (${changeCount} changes) ${icons.join(' ')}\n`;
+  }
+
+  if (components.length > maxComponents) {
+    md += `- *... and ${components.length - maxComponents} more components*\n`;
+  }
+
+  md += '\n---\n\n';
+  return md;
+}
+
+// =============================================================================
+// LAYER 5b: DYNAMIC REVIEW CHECKLIST
+// =============================================================================
+
+/**
+ * Generate dynamic review checklist based on what actually changed
+ */
+function generateDynamicChecklist(diff, options = {}) {
+  if (!diff) return '';
+
+  let md = '## ✅ Review Checklist\n\n';
+
+  const hasRenames = diff.renames?.length > 0;
+  const hasBreaking = diff.summary?.uniqueTokensRemoved > 0;
+  const hasModified = diff.summary?.uniqueTokensModified > 0;
+  const hasAdded = diff.summary?.uniqueTokensAdded > 0;
+
+  // Determine what categories changed
+  const changedCategories = new Set();
+  if (diff.byCategory) {
+    for (const [cat, data] of Object.entries(diff.byCategory)) {
+      if ((data.modified?.length || 0) + (data.added?.length || 0) + (data.removed?.length || 0) > 0) {
+        changedCategories.add(cat);
+      }
+    }
+  }
+
+  // Breaking changes section
+  if (hasBreaking || hasRenames) {
+    md += '### ⚠️ Required Actions\n\n';
+    if (hasBreaking) {
+      md += '- [ ] Migration plan created for removed tokens\n';
+      md += '- [ ] Affected codebases identified and updated\n';
+    }
+    if (hasRenames) {
+      md += '- [ ] Renamed tokens updated in codebase (find & replace)\n';
+      md += '- [ ] Build verification passed after renames\n';
+    }
+    md += '\n';
+  }
+
+  // Visual review section
+  if (hasModified || hasAdded) {
+    md += '### 👁️ Visual Review\n\n';
+    if (changedCategories.has('colors')) {
+      md += '- [ ] Color changes verified in **Light** mode\n';
+      md += '- [ ] Color changes verified in **Dark** mode\n';
+    }
+    if (changedCategories.has('typography')) {
+      md += '- [ ] Typography changes reviewed across breakpoints\n';
+    }
+    if (changedCategories.has('spacing') || changedCategories.has('sizing')) {
+      md += '- [ ] Layout changes verified (spacing/sizing)\n';
+    }
+    if (changedCategories.has('effects')) {
+      md += '- [ ] Shadow/effect changes reviewed\n';
+    }
+    md += '- [ ] Visual regression tests passed\n';
+    md += '\n';
+  }
+
+  // General checklist
+  md += '### 📋 General\n\n';
+  md += '- [ ] Changes reviewed with design team\n';
+  md += '- [ ] Documentation updated if needed\n';
+  md += '- [ ] No unintended side effects observed\n';
+  md += '\n---\n\n';
 
   return md;
 }
@@ -616,16 +1756,31 @@ function generatePostMergeInfo() {
 // =============================================================================
 
 /**
- * Generate PR Comment format (compact)
+ * Generate PR Comment format (compact, optimized structure)
  */
 function generatePRComment(diff, options = {}) {
   let md = '';
 
+  // 1. Executive Summary with Impact Table (always)
   md += generateExecutiveSummary(diff, options);
-  md += generateUnifiedTokenChanges(diff, { maxTokensPerSection: 10 });
-  md += generateReviewChecklist(diff);
+
+  // 2. Breaking Changes (Removed + Renamed in consumption layer - highest priority)
+  md += generateBreakingChangesSection(diff, { maxTokens: 10 });
+
+  // 3. Visual Changes (Modified tokens with diff metrics - colors, dimensions)
+  md += generateVisualChangesSection(diff, { maxTokens: 10 });
+
+  // 4. Safe Changes (Added + Internal/Primitive changes)
+  md += generateSafeChangesSection(diff, { maxTokens: 10 });
+
+  // 5. Affected Components
+  md += generateAffectedComponentsSection(diff, { maxComponents: 8 });
+
+  // 6. Dynamic Review Checklist
+  md += generateDynamicChecklist(diff);
+
+  // 7. Technical Details (collapsible)
   md += generateTechnicalDetails(diff, options);
-  md += generatePostMergeInfo();
 
   // Footer
   const repo = process.env.GITHUB_REPOSITORY || 'UXWizard25/vv-token-test-v3';
@@ -663,6 +1818,7 @@ function generateConsoleOutput(diff) {
   const uniqueAdded = summary.uniqueTokensAdded ?? summary.tokensAdded;
   const uniqueModified = summary.uniqueTokensModified ?? summary.tokensModified;
   const uniqueRemoved = summary.uniqueTokensRemoved ?? summary.tokensRemoved;
+  const uniqueRenamed = summary.uniqueTokensRenamed ?? 0;
 
   let output = '\n';
   output += '═══════════════════════════════════════════════════════════\n';
@@ -677,13 +1833,28 @@ function generateConsoleOutput(diff) {
   output += '  Unique Token Changes:\n';
   output += `    🔴 Removed:  ${uniqueRemoved} tokens\n`;
   output += `    🟡 Modified: ${uniqueModified} tokens\n`;
-  output += `    🟢 Added:    ${uniqueAdded} tokens\n\n`;
+  output += `    🟢 Added:    ${uniqueAdded} tokens\n`;
+  output += `    🔄 Renamed:  ${uniqueRenamed} tokens\n\n`;
 
   // Files
   output += '  Files:\n';
   output += `    📁 Added:    ${summary.filesAdded}\n`;
   output += `    📝 Modified: ${summary.filesModified}\n`;
   output += `    🗑️  Removed:  ${summary.filesRemoved}\n\n`;
+
+  // Renames (if any)
+  if (diff.renames && diff.renames.length > 0) {
+    output += '  Renamed Tokens:\n';
+    for (const rename of diff.renames.slice(0, 5)) {
+      const oldSimple = rename.oldName.split('/').pop();
+      const newSimple = rename.newName.split('/').pop();
+      output += `    🔄 ${oldSimple} → ${newSimple}\n`;
+    }
+    if (diff.renames.length > 5) {
+      output += `    ... and ${diff.renames.length - 5} more\n`;
+    }
+    output += '\n';
+  }
 
   // Platform breakdown
   output += '  By Platform:\n';
@@ -734,13 +1905,29 @@ function generateGitHubRelease(diff, options = {}) {
     md += '\n';
   }
 
+  // Renamed tokens (if any)
+  if (diff?.renames?.length > 0) {
+    md += '### 🔄 Renamed Tokens\n\n';
+    md += '> ✅ Auto-detected via Figma Variable ID\n\n';
+    md += '| Old Name | → | New Name |\n';
+    md += '|----------|:---:|----------|\n';
+    for (const rename of diff.renames.slice(0, 8)) {
+      md += `| \`${truncate(rename.oldName, 30)}\` | → | \`${truncate(rename.newName, 30)}\` |\n`;
+    }
+    if (diff.renames.length > 8) {
+      md += `| ... | | *${diff.renames.length - 8} more* |\n`;
+    }
+    md += '\n';
+  }
+
   // Summary table
   if (diff?.summary) {
     const s = diff.summary;
     const uniqueRemoved = s.uniqueTokensRemoved ?? s.tokensRemoved ?? 0;
     const uniqueModified = s.uniqueTokensModified ?? s.tokensModified ?? 0;
     const uniqueAdded = s.uniqueTokensAdded ?? s.tokensAdded ?? 0;
-    const total = uniqueRemoved + uniqueModified + uniqueAdded;
+    const uniqueRenamed = s.uniqueTokensRenamed ?? 0;
+    const total = uniqueRemoved + uniqueModified + uniqueAdded + uniqueRenamed;
 
     if (total > 0) {
       md += '### 📊 Changes Summary\n\n';
@@ -748,6 +1935,9 @@ function generateGitHubRelease(diff, options = {}) {
       md += '|------|------:|--------|\n';
       if (uniqueRemoved > 0) {
         md += `| 🔴 Removed | ${uniqueRemoved} | ⚠️ Breaking |\n`;
+      }
+      if (uniqueRenamed > 0) {
+        md += `| 🔄 Renamed | ${uniqueRenamed} | Migration needed |\n`;
       }
       if (uniqueModified > 0) {
         md += `| 🟡 Modified | ${uniqueModified} | Visual changes |\n`;
@@ -759,42 +1949,51 @@ function generateGitHubRelease(diff, options = {}) {
     }
   }
 
-  // Token changes (collapsible)
-  if (diff?.byUniqueToken) {
-    const { added, modified, removed } = diff.byUniqueToken;
-    const hasChanges = added.length > 0 || modified.length > 0 || removed.length > 0;
+  // Categorized changes (collapsible)
+  if (diff?.byCategory) {
+    let hasChanges = false;
+    for (const cat of CATEGORY_ORDER) {
+      const catData = diff.byCategory[cat];
+      if (catData && ((catData.modified?.length || 0) + (catData.added?.length || 0) + (catData.removed?.length || 0) > 0)) {
+        hasChanges = true;
+        break;
+      }
+    }
 
     if (hasChanges) {
       md += '<details>\n';
-      md += '<summary>📝 <b>View All Token Changes</b></summary>\n\n';
+      md += '<summary>📝 <b>View Changes by Category</b></summary>\n\n';
 
-      // Modified tokens
-      if (modified.length > 0) {
-        md += `#### 🟡 Modified (${modified.length})\n\n`;
-        md += '| Token | Change |\n';
-        md += '|-------|--------|\n';
-        for (const token of modified.slice(0, 15)) {
-          const change = formatValueChange(token.oldValue, token.newValue);
-          md += `| \`${truncate(token.displayName, 30)}\` | ${change} |\n`;
-        }
-        if (modified.length > 15) {
-          md += `| ... | *${modified.length - 15} more* |\n`;
-        }
-        md += '\n';
-      }
+      for (const category of CATEGORY_ORDER) {
+        const catData = diff.byCategory[category];
+        if (!catData) continue;
 
-      // Added tokens
-      if (added.length > 0) {
-        md += `#### 🟢 Added (${added.length})\n\n`;
-        md += '| Token | Value |\n';
-        md += '|-------|-------|\n';
-        for (const token of added.slice(0, 10)) {
-          md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.value, 30)}\` |\n`;
+        const modified = catData.modified || [];
+        const added = catData.added || [];
+        const removed = catData.removed || [];
+        const total = modified.length + added.length + removed.length;
+        if (total === 0) continue;
+
+        const config = CATEGORY_CONFIG[category];
+        md += `#### ${config.icon} ${config.label} (${total})\n\n`;
+
+        if (modified.length > 0) {
+          md += '**Modified:**\n';
+          for (const token of modified.slice(0, 5)) {
+            md += `- \`${truncate(token.displayName, 35)}\`: ${truncate(token.oldValue, 12)} → ${truncate(token.newValue, 12)}\n`;
+          }
+          if (modified.length > 5) md += `- *... and ${modified.length - 5} more*\n`;
+          md += '\n';
         }
-        if (added.length > 10) {
-          md += `| ... | *${added.length - 10} more* |\n`;
+
+        if (added.length > 0) {
+          md += '**Added:**\n';
+          for (const token of added.slice(0, 5)) {
+            md += `- \`${truncate(token.displayName, 35)}\`\n`;
+          }
+          if (added.length > 5) md += `- *... and ${added.length - 5} more*\n`;
+          md += '\n';
         }
-        md += '\n';
       }
 
       md += '</details>\n\n';

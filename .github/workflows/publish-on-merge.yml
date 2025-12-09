@@ -90,11 +90,25 @@ jobs:
           # Aktuellen dist speichern
           cp -r packages/tokens/dist/ dist-new/
 
+          # Aktuelle Source-Datei speichern (für Rename-Detection)
+          cp packages/tokens/src/bild-design-system-raw-data.json source-new.json
+          echo "✅ Saved current source file"
+
           # Vorherigen Tag für Baseline
           LATEST_TAG="${{ steps.latest_tag.outputs.tag }}"
 
           if [ -n "$LATEST_TAG" ] && [ "$LATEST_TAG" != "v1.0.0" ]; then
             echo "Building baseline from $LATEST_TAG..."
+
+            # Source-Datei vom vorherigen Tag holen (für Rename-Detection)
+            git show "$LATEST_TAG:packages/tokens/src/bild-design-system-raw-data.json" > source-old.json 2>/dev/null || true
+            if [ -f "source-old.json" ] && [ -s "source-old.json" ]; then
+              echo "✅ Saved baseline source file from $LATEST_TAG"
+              echo "has_source_baseline=true" >> $GITHUB_OUTPUT
+            else
+              echo "⚠️ Could not get baseline source file"
+              echo "has_source_baseline=false" >> $GITHUB_OUTPUT
+            fi
 
             # Source-Dateien vom vorherigen Tag holen
             git checkout "$LATEST_TAG" -- packages/tokens/src/ 2>/dev/null || true
@@ -117,6 +131,7 @@ jobs:
           else
             echo "No previous tag found, skipping baseline"
             echo "has_baseline=false" >> $GITHUB_OUTPUT
+            echo "has_source_baseline=false" >> $GITHUB_OUTPUT
           fi
 
           # dist-new zurück zu packages/tokens/dist
@@ -129,10 +144,17 @@ jobs:
         run: |
           if [ "${{ steps.baseline.outputs.has_baseline }}" = "true" ] && [ -d "dist-old" ]; then
             echo "🔍 Comparing token builds..."
-            node scripts/tokens/compare-builds.js \
-              --old dist-old/ \
-              --new packages/tokens/dist/ \
-              --output dist-diff.json
+
+            # Build compare command with optional source files for rename detection
+            COMPARE_CMD="node scripts/tokens/compare-builds.js --old dist-old/ --new packages/tokens/dist/"
+
+            if [ "${{ steps.baseline.outputs.has_source_baseline }}" = "true" ] && [ -f "source-old.json" ] && [ -f "source-new.json" ]; then
+              echo "📎 Including source files for rename detection..."
+              COMPARE_CMD="$COMPARE_CMD --source-old source-old.json --source-new source-new.json"
+            fi
+
+            COMPARE_CMD="$COMPARE_CMD --output dist-diff.json"
+            eval $COMPARE_CMD
 
             # Impact Level aus Diff extrahieren
             IMPACT_LEVEL=$(node -p "require('./dist-diff.json').summary.impactLevel")
@@ -142,21 +164,25 @@ jobs:
             TOKENS_ADDED=$(node -p "require('./dist-diff.json').summary.uniqueTokensAdded")
             TOKENS_MODIFIED=$(node -p "require('./dist-diff.json').summary.uniqueTokensModified")
             TOKENS_REMOVED=$(node -p "require('./dist-diff.json').summary.uniqueTokensRemoved")
+            TOKENS_RENAMED=$(node -p "require('./dist-diff.json').summary.uniqueTokensRenamed || 0")
 
             echo "📊 Token Changes:"
             echo "   🟢 Added: $TOKENS_ADDED"
             echo "   🟡 Modified: $TOKENS_MODIFIED"
             echo "   🔴 Removed: $TOKENS_REMOVED"
+            echo "   🔄 Renamed: $TOKENS_RENAMED"
 
             echo "has_diff=true" >> $GITHUB_OUTPUT
             echo "impact_level=$IMPACT_LEVEL" >> $GITHUB_OUTPUT
             echo "tokens_added=$TOKENS_ADDED" >> $GITHUB_OUTPUT
             echo "tokens_modified=$TOKENS_MODIFIED" >> $GITHUB_OUTPUT
             echo "tokens_removed=$TOKENS_REMOVED" >> $GITHUB_OUTPUT
+            echo "tokens_renamed=$TOKENS_RENAMED" >> $GITHUB_OUTPUT
           else
             echo "No baseline available, using default impact level"
             echo "has_diff=false" >> $GITHUB_OUTPUT
             echo "impact_level=minor" >> $GITHUB_OUTPUT
+            echo "tokens_renamed=0" >> $GITHUB_OUTPUT
           fi
 
       # 9. Version Bump Type basierend auf Impact Level bestimmen
@@ -434,6 +460,7 @@ jobs:
           echo "| 🟢 Added | ${{ steps.diff.outputs.tokens_added || '0' }} |" >> $GITHUB_STEP_SUMMARY
           echo "| 🟡 Modified | ${{ steps.diff.outputs.tokens_modified || '0' }} |" >> $GITHUB_STEP_SUMMARY
           echo "| 🔴 Removed | ${{ steps.diff.outputs.tokens_removed || '0' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🔄 Renamed | ${{ steps.diff.outputs.tokens_renamed || '0' }} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📥 Installation" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
