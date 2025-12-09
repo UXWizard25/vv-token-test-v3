@@ -1370,9 +1370,9 @@ function compareDistBuilds(oldDir, newDir) {
  * Primitive layer removed/renamed = Safe (internal cleanup)
  */
 function calculateImpactLevel(results) {
-  // Check for breaking renames (consumption layer renames)
-  const hasBreakingRenames = (results.renames || []).some(r => r.isBreaking);
-  const hasBreakingStyleRenames = (results.styleRenames || []).some(r => r.isBreaking);
+  // Check for breaking renames (consumption layer renames - layer-based classification)
+  const hasBreakingRenames = (results.renames || []).some(r => CONSUMPTION_LAYERS.includes(r.layer));
+  const hasBreakingStyleRenames = (results.styleRenames || []).some(r => CONSUMPTION_LAYERS.includes(r.layer));
 
   // Check for breaking removed tokens (consumption layer only)
   const removedTokens = results.byUniqueToken?.removed || [];
