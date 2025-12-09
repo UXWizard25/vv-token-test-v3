@@ -253,6 +253,256 @@ function normalizeTokenName(name) {
 }
 
 // =============================================================================
+// SOURCE FILE PARSING (for Rename Detection)
+// =============================================================================
+
+/**
+ * Parse Figma source file and extract variable metadata
+ * @param {string} sourcePath - Path to bild-design-system-raw-data.json
+ * @returns {Map} - Map of variableId -> { id, name, resolvedType, scopes, collectionId, collectionName }
+ */
+function parseSourceFile(sourcePath) {
+  if (!fs.existsSync(sourcePath)) {
+    console.log(`⚠️  Source file not found: ${sourcePath}`);
+    return new Map();
+  }
+
+  try {
+    const data = JSON.parse(fs.readFileSync(sourcePath, 'utf-8'));
+    const variables = new Map();
+
+    if (!data.collections || !Array.isArray(data.collections)) {
+      console.log(`⚠️  Invalid source file format: missing collections`);
+      return variables;
+    }
+
+    data.collections.forEach(collection => {
+      if (!collection.variables) return;
+
+      collection.variables.forEach(variable => {
+        variables.set(variable.id, {
+          id: variable.id,
+          name: variable.name,
+          resolvedType: variable.resolvedType,
+          scopes: variable.scopes || [],
+          collectionId: collection.id,
+          collectionName: collection.name,
+          description: variable.description || ''
+        });
+      });
+    });
+
+    console.log(`   Parsed ${variables.size} variables from source file`);
+    return variables;
+  } catch (e) {
+    console.log(`⚠️  Error parsing source file: ${e.message}`);
+    return new Map();
+  }
+}
+
+/**
+ * Detect token renames by comparing Variable IDs between old and new source
+ * @param {Map} oldSource - Variables from old source file
+ * @param {Map} newSource - Variables from new source file
+ * @returns {Object} - { renames, actuallyRemoved, actuallyAdded }
+ */
+function detectRenames(oldSource, newSource) {
+  const renames = [];
+  const actuallyRemoved = [];
+  const actuallyAdded = [];
+
+  // Find renames and true removals
+  for (const [id, oldVar] of oldSource) {
+    const newVar = newSource.get(id);
+    if (!newVar) {
+      // Variable ID doesn't exist in new → truly removed
+      actuallyRemoved.push({
+        variableId: id,
+        name: oldVar.name,
+        resolvedType: oldVar.resolvedType,
+        collectionName: oldVar.collectionName,
+        category: categorizeTokenFromSource(oldVar)
+      });
+    } else if (oldVar.name !== newVar.name) {
+      // Same ID, different name → renamed
+      renames.push({
+        variableId: id,
+        oldName: oldVar.name,
+        newName: newVar.name,
+        resolvedType: oldVar.resolvedType,
+        collectionName: oldVar.collectionName,
+        category: categorizeTokenFromSource(oldVar),
+        confidence: 1.0 // 100% confidence because same Variable ID
+      });
+    }
+  }
+
+  // Find true additions (new Variable IDs)
+  for (const [id, newVar] of newSource) {
+    if (!oldSource.has(id)) {
+      actuallyAdded.push({
+        variableId: id,
+        name: newVar.name,
+        resolvedType: newVar.resolvedType,
+        collectionName: newVar.collectionName,
+        category: categorizeTokenFromSource(newVar)
+      });
+    }
+  }
+
+  return { renames, actuallyRemoved, actuallyAdded };
+}
+
+// =============================================================================
+// TOKEN CATEGORIZATION
+// =============================================================================
+
+/**
+ * Token category definitions for grouping changes
+ */
+const TOKEN_CATEGORIES = {
+  colors: {
+    icon: '🎨',
+    label: 'Colors',
+    match: (token) => {
+      if (token.resolvedType === 'COLOR') return true;
+      if (token.$type === 'color') return true;
+      return false;
+    }
+  },
+  typography: {
+    icon: '📝',
+    label: 'Typography',
+    match: (token) => {
+      const typographyTypes = ['fontSize', 'lineHeight', 'letterSpacing', 'fontWeight', 'fontFamily'];
+      if (typographyTypes.includes(token.$type)) return true;
+      // Check scopes from source
+      const scopes = token.scopes || [];
+      if (scopes.some(s => ['FONT_SIZE', 'LINE_HEIGHT', 'LETTER_SPACING', 'FONT_WEIGHT', 'FONT_FAMILY'].includes(s))) return true;
+      return false;
+    }
+  },
+  spacing: {
+    icon: '📏',
+    label: 'Spacing',
+    match: (token) => {
+      const name = (token.name || '').toLowerCase();
+      if (token.$type === 'dimension' && /space|gap|inline|stack|inset|margin|padding/i.test(name)) return true;
+      // Check scopes
+      const scopes = token.scopes || [];
+      if (scopes.includes('GAP')) return true;
+      // Check collection name
+      if ((token.collectionName || '').toLowerCase().includes('space')) return true;
+      return false;
+    }
+  },
+  sizing: {
+    icon: '📐',
+    label: 'Sizing',
+    match: (token) => {
+      const name = (token.name || '').toLowerCase();
+      if (token.$type === 'dimension' && !/space|gap|inline|stack|inset|margin|padding/i.test(name)) return true;
+      // Check scopes
+      const scopes = token.scopes || [];
+      if (scopes.some(s => ['CORNER_RADIUS', 'WIDTH_HEIGHT', 'STROKE_FLOAT'].includes(s))) return true;
+      // Check collection name
+      if ((token.collectionName || '').toLowerCase().includes('size')) return true;
+      return false;
+    }
+  },
+  effects: {
+    icon: '✨',
+    label: 'Effects',
+    match: (token) => {
+      if (token.$type === 'shadow') return true;
+      const name = (token.name || '').toLowerCase();
+      if (/shadow|effect|elevation|blur/i.test(name)) return true;
+      return false;
+    }
+  }
+};
+
+/**
+ * Categorize a token from source file metadata
+ */
+function categorizeTokenFromSource(sourceVar) {
+  // Create a token-like object for matching
+  const token = {
+    name: sourceVar.name,
+    resolvedType: sourceVar.resolvedType,
+    scopes: sourceVar.scopes || [],
+    collectionName: sourceVar.collectionName
+  };
+
+  for (const [category, config] of Object.entries(TOKEN_CATEGORIES)) {
+    if (config.match(token)) return category;
+  }
+  return 'other';
+}
+
+/**
+ * Categorize a token from dist comparison
+ */
+function categorizeTokenFromDist(tokenName, value) {
+  const name = tokenName.toLowerCase();
+
+  // Color detection by value
+  if (typeof value === 'string' && (value.startsWith('#') || value.startsWith('rgb'))) {
+    return 'colors';
+  }
+
+  // Name-based detection
+  if (/color|bg|background|foreground|fill|stroke|text-color|surface|accent/i.test(name)) {
+    return 'colors';
+  }
+  if (/font-?size|line-?height|letter-?spacing|font-?weight|font-?family|typography/i.test(name)) {
+    return 'typography';
+  }
+  if (/space|gap|inline|stack|inset|margin|padding/i.test(name)) {
+    return 'spacing';
+  }
+  if (/shadow|effect|elevation|blur/i.test(name)) {
+    return 'effects';
+  }
+  if (/size|width|height|radius|border-radius/i.test(name)) {
+    return 'sizing';
+  }
+
+  return 'other';
+}
+
+// =============================================================================
+// LAYER DETECTION
+// =============================================================================
+
+/**
+ * Detect token layer from collection name
+ */
+function detectLayer(collectionName) {
+  if (!collectionName) return 'unknown';
+
+  const normalized = collectionName.replace(/^_/, '').toLowerCase();
+
+  // Primitives (Layer 0)
+  if (/primitive|fontprimitive|colorprimitive|sizeprimitive|spaceprimitive/i.test(normalized)) {
+    return 'primitive';
+  }
+
+  // Mapping (Layer 1)
+  if (/brandtokenmapping|brandcolormapping|density/i.test(normalized)) {
+    return 'mapping';
+  }
+
+  // Semantic (Layer 2)
+  if (/breakpointmode|colormode/i.test(normalized)) {
+    return 'semantic';
+  }
+
+  // Component (Layer 3) - detected from token path
+  return 'semantic'; // Default for unknown
+}
+
+// =============================================================================
 // FILE DISCOVERY
 // =============================================================================
 
@@ -728,6 +978,8 @@ function parseArgs() {
   const options = {
     oldDir: null,
     newDir: null,
+    sourceOld: null,
+    sourceNew: null,
     output: null
   };
 
@@ -736,6 +988,10 @@ function parseArgs() {
       options.oldDir = args[++i];
     } else if (args[i] === '--new' && args[i + 1]) {
       options.newDir = args[++i];
+    } else if (args[i] === '--source-old' && args[i + 1]) {
+      options.sourceOld = args[++i];
+    } else if (args[i] === '--source-new' && args[i + 1]) {
+      options.sourceNew = args[++i];
     } else if (args[i] === '--output' && args[i + 1]) {
       options.output = args[++i];
     }
@@ -749,33 +1005,124 @@ function main() {
 
   if (!options.oldDir || !options.newDir) {
     console.log(`
-Usage: node scripts/tokens/compare-builds.js --old <old-dist> --new <new-dist> [--output <file.json>]
+Usage: node scripts/tokens/compare-builds.js --old <old-dist> --new <new-dist> [options]
 
 Options:
-  --old     Path to old dist directory (baseline)
-  --new     Path to new dist directory (current)
-  --output  Path to output JSON file (optional, defaults to stdout)
+  --old         Path to old dist directory (baseline)
+  --new         Path to new dist directory (current)
+  --source-old  Path to old Figma source JSON (for rename detection)
+  --source-new  Path to new Figma source JSON (for rename detection)
+  --output      Path to output JSON file (optional, defaults to stdout)
 
 Example:
-  node scripts/tokens/compare-builds.js --old dist-old/ --new dist/ --output diff.json
+  node scripts/tokens/compare-builds.js \\
+    --old dist-old/ \\
+    --new dist/ \\
+    --source-old source-old.json \\
+    --source-new source-new.json \\
+    --output diff.json
 `);
     process.exit(1);
   }
 
+  // Run dist comparison
   const results = compareDistBuilds(options.oldDir, options.newDir);
+
+  // Run source-based rename detection if source files provided
+  if (options.sourceOld && options.sourceNew) {
+    console.log(`\n🔄 Detecting renames from source files...`);
+    console.log(`   Old: ${options.sourceOld}`);
+    console.log(`   New: ${options.sourceNew}`);
+
+    const oldSource = parseSourceFile(options.sourceOld);
+    const newSource = parseSourceFile(options.sourceNew);
+
+    if (oldSource.size > 0 && newSource.size > 0) {
+      const renameResults = detectRenames(oldSource, newSource);
+
+      // Add rename detection results
+      results.renames = renameResults.renames;
+      results.sourceBasedChanges = {
+        actuallyRemoved: renameResults.actuallyRemoved,
+        actuallyAdded: renameResults.actuallyAdded
+      };
+      results.summary.uniqueTokensRenamed = renameResults.renames.length;
+
+      // Adjust removed count - subtract renames from removed (they're not truly removed)
+      // Note: This is approximate since dist-based and source-based detection may differ
+      const renamedNormalizedNames = new Set(
+        renameResults.renames.map(r => normalizeTokenName(r.oldName))
+      );
+
+      console.log(`\n   ✅ Rename detection complete:`);
+      console.log(`      🔄 Renamed: ${renameResults.renames.length}`);
+      console.log(`      🔴 Actually removed: ${renameResults.actuallyRemoved.length}`);
+      console.log(`      🟢 Actually added: ${renameResults.actuallyAdded.length}`);
+    } else {
+      console.log(`   ⚠️  Could not perform rename detection (empty source files)`);
+      results.renames = [];
+      results.summary.uniqueTokensRenamed = 0;
+    }
+  } else {
+    results.renames = [];
+    results.summary.uniqueTokensRenamed = 0;
+  }
+
+  // Add category groupings
+  results.byCategory = groupByCategory(results);
 
   const output = JSON.stringify(results, null, 2);
 
   if (options.output) {
     fs.writeFileSync(options.output, output, 'utf-8');
-    console.log(`📄 Results written to: ${options.output}`);
+    console.log(`\n📄 Results written to: ${options.output}`);
   } else {
     console.log(output);
   }
+}
+
+/**
+ * Group token changes by category
+ */
+function groupByCategory(results) {
+  const categories = {
+    colors: { added: [], modified: [], removed: [] },
+    typography: { added: [], modified: [], removed: [] },
+    spacing: { added: [], modified: [], removed: [] },
+    sizing: { added: [], modified: [], removed: [] },
+    effects: { added: [], modified: [], removed: [] },
+    other: { added: [], modified: [], removed: [] }
+  };
+
+  // Group from byUniqueToken
+  if (results.byUniqueToken) {
+    for (const token of results.byUniqueToken.added || []) {
+      const cat = categorizeTokenFromDist(token.displayName, token.value);
+      categories[cat].added.push(token);
+    }
+    for (const token of results.byUniqueToken.modified || []) {
+      const cat = categorizeTokenFromDist(token.displayName, token.oldValue);
+      categories[cat].modified.push(token);
+    }
+    for (const token of results.byUniqueToken.removed || []) {
+      const cat = categorizeTokenFromDist(token.displayName, token.value);
+      categories[cat].removed.push(token);
+    }
+  }
+
+  return categories;
 }
 
 if (require.main === module) {
   main();
 }
 
-module.exports = { compareDistBuilds, platformParsers };
+module.exports = {
+  compareDistBuilds,
+  platformParsers,
+  parseSourceFile,
+  detectRenames,
+  categorizeTokenFromDist,
+  categorizeTokenFromSource,
+  TOKEN_CATEGORIES
+};

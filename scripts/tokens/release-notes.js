@@ -34,6 +34,17 @@ const IMPACT_LABELS = {
 
 const PLATFORM_ORDER = ['css', 'scss', 'js', 'swift', 'kotlin', 'json'];
 
+const CATEGORY_CONFIG = {
+  colors: { icon: '🎨', label: 'Colors' },
+  typography: { icon: '📝', label: 'Typography' },
+  spacing: { icon: '📏', label: 'Spacing' },
+  sizing: { icon: '📐', label: 'Sizing' },
+  effects: { icon: '✨', label: 'Effects' },
+  other: { icon: '📦', label: 'Other' }
+};
+
+const CATEGORY_ORDER = ['colors', 'typography', 'spacing', 'sizing', 'effects', 'other'];
+
 const DIST_DIR = path.join(__dirname, '../../packages/tokens/dist');
 
 // =============================================================================
@@ -212,9 +223,13 @@ ${commitSha ? `**Commit**: \`${commitSha}\`` : ''}
   const uniqueRemoved = summary.uniqueTokensRemoved ?? summary.tokensRemoved;
   const uniqueModified = summary.uniqueTokensModified ?? summary.tokensModified;
   const uniqueAdded = summary.uniqueTokensAdded ?? summary.tokensAdded;
+  const uniqueRenamed = summary.uniqueTokensRenamed ?? 0;
 
   if (uniqueRemoved > 0) {
     stats.push(`🔴 **${uniqueRemoved} Removed**`);
+  }
+  if (uniqueRenamed > 0) {
+    stats.push(`🔄 **${uniqueRenamed} Renamed**`);
   }
   if (uniqueModified > 0) {
     stats.push(`🟡 **${uniqueModified} Modified**`);
@@ -353,6 +368,237 @@ function generateUnifiedTokenChanges(diff, options = {}) {
   }
 
   md += '---\n\n';
+
+  return md;
+}
+
+// =============================================================================
+// LAYER 2b: RENAMED TOKENS
+// =============================================================================
+
+/**
+ * Generate renamed tokens section - shows tokens that were renamed (detected via Figma Variable ID)
+ */
+function generateRenamesSection(diff, options = {}) {
+  if (!diff || !diff.renames || diff.renames.length === 0) return '';
+
+  const { maxTokens = 20 } = options;
+  const renames = diff.renames;
+
+  let md = '## 🔄 Renamed Tokens\n\n';
+  md += '> ✅ Auto-detected via Figma Variable ID (100% confidence)\n\n';
+  md += '| Old Name | → | New Name | Category |\n';
+  md += '|----------|:---:|----------|----------|\n';
+
+  const displayRenames = renames.slice(0, maxTokens);
+  for (const rename of displayRenames) {
+    const catConfig = CATEGORY_CONFIG[rename.category] || CATEGORY_CONFIG.other;
+    md += `| \`${truncate(rename.oldName, 35)}\` | → | \`${truncate(rename.newName, 35)}\` | ${catConfig.icon} |\n`;
+  }
+
+  if (renames.length > maxTokens) {
+    md += `| ... | | *${renames.length - maxTokens} more* | |\n`;
+  }
+
+  // Migration help
+  md += '\n<details>\n<summary>📋 Migration Commands</summary>\n\n';
+  md += '```bash\n# Find & Replace suggestions:\n';
+  for (const rename of renames.slice(0, 5)) {
+    // Extract last part of path for simpler token name
+    const oldSimple = rename.oldName.split('/').pop();
+    const newSimple = rename.newName.split('/').pop();
+    md += `# ${oldSimple} → ${newSimple}\n`;
+  }
+  if (renames.length > 5) {
+    md += `# ... and ${renames.length - 5} more\n`;
+  }
+  md += '```\n\n</details>\n\n';
+
+  md += '---\n\n';
+  return md;
+}
+
+// =============================================================================
+// LAYER 2c: CATEGORIZED CHANGES
+// =============================================================================
+
+/**
+ * Generate categorized changes section - groups changes by token category
+ */
+function generateCategorizedChangesSection(diff, options = {}) {
+  if (!diff || !diff.byCategory) return '';
+
+  const { maxTokensPerCategory = 10 } = options;
+  let md = '## 📊 Changes by Category\n\n';
+  let hasChanges = false;
+
+  for (const category of CATEGORY_ORDER) {
+    const catData = diff.byCategory[category];
+    if (!catData) continue;
+
+    const modified = catData.modified || [];
+    const added = catData.added || [];
+    const removed = catData.removed || [];
+    const total = modified.length + added.length + removed.length;
+
+    if (total === 0) continue;
+    hasChanges = true;
+
+    const config = CATEGORY_CONFIG[category];
+    md += `<details>\n<summary>${config.icon} <b>${config.label}</b> (${total} changes)</summary>\n\n`;
+
+    // Modified
+    if (modified.length > 0) {
+      md += `**Modified (${modified.length}):**\n\n`;
+      md += '| Token | Old | New |\n|-------|-----|-----|\n';
+      for (const token of modified.slice(0, maxTokensPerCategory)) {
+        md += `| \`${truncate(token.displayName, 30)}\` | \`${truncate(token.oldValue, 15)}\` | \`${truncate(token.newValue, 15)}\` |\n`;
+      }
+      if (modified.length > maxTokensPerCategory) {
+        md += `| ... | *${modified.length - maxTokensPerCategory} more* | |\n`;
+      }
+      md += '\n';
+    }
+
+    // Added
+    if (added.length > 0) {
+      md += `**Added (${added.length}):**\n\n`;
+      md += '| Token | Value |\n|-------|-------|\n';
+      for (const token of added.slice(0, maxTokensPerCategory)) {
+        md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.value, 20)}\` |\n`;
+      }
+      if (added.length > maxTokensPerCategory) {
+        md += `| ... | *${added.length - maxTokensPerCategory} more* |\n`;
+      }
+      md += '\n';
+    }
+
+    // Removed
+    if (removed.length > 0) {
+      md += `**Removed (${removed.length}):**\n\n`;
+      md += '| Token | Previous Value |\n|-------|----------------|\n';
+      for (const token of removed.slice(0, maxTokensPerCategory)) {
+        md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.value, 20)}\` |\n`;
+      }
+      if (removed.length > maxTokensPerCategory) {
+        md += `| ... | *${removed.length - maxTokensPerCategory} more* |\n`;
+      }
+      md += '\n';
+    }
+
+    md += '</details>\n\n';
+  }
+
+  if (!hasChanges) return '';
+
+  md += '---\n\n';
+  return md;
+}
+
+// =============================================================================
+// LAYER 2d: AFFECTED COMPONENTS
+// =============================================================================
+
+/**
+ * Generate affected components section - shows which components have token changes
+ */
+function generateAffectedComponentsSection(diff, options = {}) {
+  if (!diff || !diff.byComponent) return '';
+
+  const components = Object.entries(diff.byComponent);
+  if (components.length === 0) return '';
+
+  const { maxComponents = 10 } = options;
+
+  let md = '## 🧩 Affected Components\n\n';
+
+  const displayComponents = components.slice(0, maxComponents);
+  for (const [componentName, changes] of displayComponents) {
+    const changeCount = changes.length;
+    const types = new Set(changes.map(c => c.changeType));
+    const icons = [];
+    if (types.has('removed')) icons.push('🔴');
+    if (types.has('modified')) icons.push('🟡');
+    if (types.has('added')) icons.push('🟢');
+
+    md += `- **${componentName}** (${changeCount} changes) ${icons.join(' ')}\n`;
+  }
+
+  if (components.length > maxComponents) {
+    md += `- *... and ${components.length - maxComponents} more components*\n`;
+  }
+
+  md += '\n---\n\n';
+  return md;
+}
+
+// =============================================================================
+// LAYER 5b: DYNAMIC REVIEW CHECKLIST
+// =============================================================================
+
+/**
+ * Generate dynamic review checklist based on what actually changed
+ */
+function generateDynamicChecklist(diff, options = {}) {
+  if (!diff) return '';
+
+  let md = '## ✅ Review Checklist\n\n';
+
+  const hasRenames = diff.renames?.length > 0;
+  const hasBreaking = diff.summary?.uniqueTokensRemoved > 0;
+  const hasModified = diff.summary?.uniqueTokensModified > 0;
+  const hasAdded = diff.summary?.uniqueTokensAdded > 0;
+
+  // Determine what categories changed
+  const changedCategories = new Set();
+  if (diff.byCategory) {
+    for (const [cat, data] of Object.entries(diff.byCategory)) {
+      if ((data.modified?.length || 0) + (data.added?.length || 0) + (data.removed?.length || 0) > 0) {
+        changedCategories.add(cat);
+      }
+    }
+  }
+
+  // Breaking changes section
+  if (hasBreaking || hasRenames) {
+    md += '### ⚠️ Required Actions\n\n';
+    if (hasBreaking) {
+      md += '- [ ] Migration plan created for removed tokens\n';
+      md += '- [ ] Affected codebases identified and updated\n';
+    }
+    if (hasRenames) {
+      md += '- [ ] Renamed tokens updated in codebase (find & replace)\n';
+      md += '- [ ] Build verification passed after renames\n';
+    }
+    md += '\n';
+  }
+
+  // Visual review section
+  if (hasModified || hasAdded) {
+    md += '### 👁️ Visual Review\n\n';
+    if (changedCategories.has('colors')) {
+      md += '- [ ] Color changes verified in **Light** mode\n';
+      md += '- [ ] Color changes verified in **Dark** mode\n';
+    }
+    if (changedCategories.has('typography')) {
+      md += '- [ ] Typography changes reviewed across breakpoints\n';
+    }
+    if (changedCategories.has('spacing') || changedCategories.has('sizing')) {
+      md += '- [ ] Layout changes verified (spacing/sizing)\n';
+    }
+    if (changedCategories.has('effects')) {
+      md += '- [ ] Shadow/effect changes reviewed\n';
+    }
+    md += '- [ ] Visual regression tests passed\n';
+    md += '\n';
+  }
+
+  // General checklist
+  md += '### 📋 General\n\n';
+  md += '- [ ] Changes reviewed with design team\n';
+  md += '- [ ] Documentation updated if needed\n';
+  md += '- [ ] No unintended side effects observed\n';
+  md += '\n---\n\n';
 
   return md;
 }
@@ -616,16 +862,28 @@ function generatePostMergeInfo() {
 // =============================================================================
 
 /**
- * Generate PR Comment format (compact)
+ * Generate PR Comment format (compact, optimized structure)
  */
 function generatePRComment(diff, options = {}) {
   let md = '';
 
+  // 1. Executive Summary (always)
   md += generateExecutiveSummary(diff, options);
-  md += generateUnifiedTokenChanges(diff, { maxTokensPerSection: 10 });
-  md += generateReviewChecklist(diff);
+
+  // 2. Renamed Tokens (if any - high priority)
+  md += generateRenamesSection(diff, { maxTokens: 10 });
+
+  // 3. Categorized Changes (grouped by type)
+  md += generateCategorizedChangesSection(diff, { maxTokensPerCategory: 8 });
+
+  // 4. Affected Components
+  md += generateAffectedComponentsSection(diff, { maxComponents: 8 });
+
+  // 5. Dynamic Review Checklist
+  md += generateDynamicChecklist(diff);
+
+  // 6. Technical Details (collapsible)
   md += generateTechnicalDetails(diff, options);
-  md += generatePostMergeInfo();
 
   // Footer
   const repo = process.env.GITHUB_REPOSITORY || 'UXWizard25/vv-token-test-v3';
@@ -663,6 +921,7 @@ function generateConsoleOutput(diff) {
   const uniqueAdded = summary.uniqueTokensAdded ?? summary.tokensAdded;
   const uniqueModified = summary.uniqueTokensModified ?? summary.tokensModified;
   const uniqueRemoved = summary.uniqueTokensRemoved ?? summary.tokensRemoved;
+  const uniqueRenamed = summary.uniqueTokensRenamed ?? 0;
 
   let output = '\n';
   output += '═══════════════════════════════════════════════════════════\n';
@@ -677,13 +936,28 @@ function generateConsoleOutput(diff) {
   output += '  Unique Token Changes:\n';
   output += `    🔴 Removed:  ${uniqueRemoved} tokens\n`;
   output += `    🟡 Modified: ${uniqueModified} tokens\n`;
-  output += `    🟢 Added:    ${uniqueAdded} tokens\n\n`;
+  output += `    🟢 Added:    ${uniqueAdded} tokens\n`;
+  output += `    🔄 Renamed:  ${uniqueRenamed} tokens\n\n`;
 
   // Files
   output += '  Files:\n';
   output += `    📁 Added:    ${summary.filesAdded}\n`;
   output += `    📝 Modified: ${summary.filesModified}\n`;
   output += `    🗑️  Removed:  ${summary.filesRemoved}\n\n`;
+
+  // Renames (if any)
+  if (diff.renames && diff.renames.length > 0) {
+    output += '  Renamed Tokens:\n';
+    for (const rename of diff.renames.slice(0, 5)) {
+      const oldSimple = rename.oldName.split('/').pop();
+      const newSimple = rename.newName.split('/').pop();
+      output += `    🔄 ${oldSimple} → ${newSimple}\n`;
+    }
+    if (diff.renames.length > 5) {
+      output += `    ... and ${diff.renames.length - 5} more\n`;
+    }
+    output += '\n';
+  }
 
   // Platform breakdown
   output += '  By Platform:\n';
@@ -734,13 +1008,29 @@ function generateGitHubRelease(diff, options = {}) {
     md += '\n';
   }
 
+  // Renamed tokens (if any)
+  if (diff?.renames?.length > 0) {
+    md += '### 🔄 Renamed Tokens\n\n';
+    md += '> ✅ Auto-detected via Figma Variable ID\n\n';
+    md += '| Old Name | → | New Name |\n';
+    md += '|----------|:---:|----------|\n';
+    for (const rename of diff.renames.slice(0, 8)) {
+      md += `| \`${truncate(rename.oldName, 30)}\` | → | \`${truncate(rename.newName, 30)}\` |\n`;
+    }
+    if (diff.renames.length > 8) {
+      md += `| ... | | *${diff.renames.length - 8} more* |\n`;
+    }
+    md += '\n';
+  }
+
   // Summary table
   if (diff?.summary) {
     const s = diff.summary;
     const uniqueRemoved = s.uniqueTokensRemoved ?? s.tokensRemoved ?? 0;
     const uniqueModified = s.uniqueTokensModified ?? s.tokensModified ?? 0;
     const uniqueAdded = s.uniqueTokensAdded ?? s.tokensAdded ?? 0;
-    const total = uniqueRemoved + uniqueModified + uniqueAdded;
+    const uniqueRenamed = s.uniqueTokensRenamed ?? 0;
+    const total = uniqueRemoved + uniqueModified + uniqueAdded + uniqueRenamed;
 
     if (total > 0) {
       md += '### 📊 Changes Summary\n\n';
@@ -748,6 +1038,9 @@ function generateGitHubRelease(diff, options = {}) {
       md += '|------|------:|--------|\n';
       if (uniqueRemoved > 0) {
         md += `| 🔴 Removed | ${uniqueRemoved} | ⚠️ Breaking |\n`;
+      }
+      if (uniqueRenamed > 0) {
+        md += `| 🔄 Renamed | ${uniqueRenamed} | Migration needed |\n`;
       }
       if (uniqueModified > 0) {
         md += `| 🟡 Modified | ${uniqueModified} | Visual changes |\n`;
@@ -759,42 +1052,51 @@ function generateGitHubRelease(diff, options = {}) {
     }
   }
 
-  // Token changes (collapsible)
-  if (diff?.byUniqueToken) {
-    const { added, modified, removed } = diff.byUniqueToken;
-    const hasChanges = added.length > 0 || modified.length > 0 || removed.length > 0;
+  // Categorized changes (collapsible)
+  if (diff?.byCategory) {
+    let hasChanges = false;
+    for (const cat of CATEGORY_ORDER) {
+      const catData = diff.byCategory[cat];
+      if (catData && ((catData.modified?.length || 0) + (catData.added?.length || 0) + (catData.removed?.length || 0) > 0)) {
+        hasChanges = true;
+        break;
+      }
+    }
 
     if (hasChanges) {
       md += '<details>\n';
-      md += '<summary>📝 <b>View All Token Changes</b></summary>\n\n';
+      md += '<summary>📝 <b>View Changes by Category</b></summary>\n\n';
 
-      // Modified tokens
-      if (modified.length > 0) {
-        md += `#### 🟡 Modified (${modified.length})\n\n`;
-        md += '| Token | Change |\n';
-        md += '|-------|--------|\n';
-        for (const token of modified.slice(0, 15)) {
-          const change = formatValueChange(token.oldValue, token.newValue);
-          md += `| \`${truncate(token.displayName, 30)}\` | ${change} |\n`;
-        }
-        if (modified.length > 15) {
-          md += `| ... | *${modified.length - 15} more* |\n`;
-        }
-        md += '\n';
-      }
+      for (const category of CATEGORY_ORDER) {
+        const catData = diff.byCategory[category];
+        if (!catData) continue;
 
-      // Added tokens
-      if (added.length > 0) {
-        md += `#### 🟢 Added (${added.length})\n\n`;
-        md += '| Token | Value |\n';
-        md += '|-------|-------|\n';
-        for (const token of added.slice(0, 10)) {
-          md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.value, 30)}\` |\n`;
+        const modified = catData.modified || [];
+        const added = catData.added || [];
+        const removed = catData.removed || [];
+        const total = modified.length + added.length + removed.length;
+        if (total === 0) continue;
+
+        const config = CATEGORY_CONFIG[category];
+        md += `#### ${config.icon} ${config.label} (${total})\n\n`;
+
+        if (modified.length > 0) {
+          md += '**Modified:**\n';
+          for (const token of modified.slice(0, 5)) {
+            md += `- \`${truncate(token.displayName, 35)}\`: ${truncate(token.oldValue, 12)} → ${truncate(token.newValue, 12)}\n`;
+          }
+          if (modified.length > 5) md += `- *... and ${modified.length - 5} more*\n`;
+          md += '\n';
         }
-        if (added.length > 10) {
-          md += `| ... | *${added.length - 10} more* |\n`;
+
+        if (added.length > 0) {
+          md += '**Added:**\n';
+          for (const token of added.slice(0, 5)) {
+            md += `- \`${truncate(token.displayName, 35)}\`\n`;
+          }
+          if (added.length > 5) md += `- *... and ${added.length - 5} more*\n`;
+          md += '\n';
         }
-        md += '\n';
       }
 
       md += '</details>\n\n';
