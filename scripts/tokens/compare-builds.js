@@ -1314,11 +1314,21 @@ function compareDistBuilds(oldDir, newDir) {
   results.summary.uniqueTokensModified = uniqueTokensModified.size;
   results.summary.uniqueTokensRemoved = uniqueTokensRemoved.size;
 
+  // Helper: Get preferred display name (CSS format preferred for consistency)
+  const getDisplayName = (platforms, fallback) => {
+    // Prefer CSS, then SCSS, then first available
+    const cssToken = platforms.find(p => p.key === 'css');
+    if (cssToken) return cssToken.tokenName;
+    const scssToken = platforms.find(p => p.key === 'scss');
+    if (scssToken) return scssToken.tokenName;
+    return platforms[0]?.tokenName || fallback;
+  };
+
   // Convert token details Maps to arrays for byUniqueToken
   for (const [normalized, details] of tokenDetailsAdded) {
     results.byUniqueToken.added.push({
       normalizedName: normalized,
-      displayName: details.platforms[0]?.tokenName || normalized,
+      displayName: getDisplayName(details.platforms, normalized),
       value: details.value,
       layer: details.layer,
       platforms: details.platforms
@@ -1333,7 +1343,7 @@ function compareDistBuilds(oldDir, newDir) {
 
     results.byUniqueToken.modified.push({
       normalizedName: normalized,
-      displayName: details.platforms[0]?.tokenName || normalized,
+      displayName: getDisplayName(details.platforms, normalized),
       oldValue: details.oldValue,
       newValue: details.newValue,
       layer: details.layer,
@@ -1345,7 +1355,7 @@ function compareDistBuilds(oldDir, newDir) {
   for (const [normalized, details] of tokenDetailsRemoved) {
     results.byUniqueToken.removed.push({
       normalizedName: normalized,
-      displayName: details.platforms[0]?.tokenName || normalized,
+      displayName: getDisplayName(details.platforms, normalized),
       value: details.value,
       layer: details.layer,
       platforms: details.platforms

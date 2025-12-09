@@ -250,7 +250,7 @@ function formatValueChange(oldValue, newValue) {
   }
 
   // Fallback: show truncated old → new
-  return `\`${truncate(oldValue, 25)}\` → \`${truncate(newValue, 25)}\``;
+  return `\`${truncate(oldValue, 35)}\` → \`${truncate(newValue, 35)}\``;
 }
 
 /**
@@ -334,12 +334,12 @@ function generatePlatformNamesTable(groupedTokens) {
 
   for (const entry of groupedTokens) {
     const p = entry.platforms;
-    md += `| \`${truncate(entry.displayName, 20)}\` `;
-    md += `| \`${truncate(p.css || '-', 18)}\` `;
-    md += `| \`${truncate(p.scss || '-', 18)}\` `;
-    md += `| \`${truncate(p.js || p.json || '-', 16)}\` `;
-    md += `| \`${truncate(p.swift || '-', 18)}\` `;
-    md += `| \`${truncate(p.kotlin || '-', 18)}\` |\n`;
+    md += `| \`${entry.displayName}\` `;
+    md += `| \`${p.css || '-'}\` `;
+    md += `| \`${p.scss || '-'}\` `;
+    md += `| \`${p.js || p.json || '-'}\` `;
+    md += `| \`${p.swift || '-'}\` `;
+    md += `| \`${p.kotlin || '-'}\` |\n`;
   }
 
   md += '</details>\n';
@@ -492,7 +492,7 @@ function generateUnifiedTokenChanges(diff, options = {}) {
 
     const displayTokens = removed.slice(0, maxTokensPerSection);
     for (const token of displayTokens) {
-      md += `| \`${truncate(token.displayName, 40)}\` | \`${truncate(token.value, 30)}\` |\n`;
+      md += `| \`${token.displayName}\` | \`${token.value}\` |\n`;
     }
 
     if (removed.length > maxTokensPerSection) {
@@ -516,7 +516,7 @@ function generateUnifiedTokenChanges(diff, options = {}) {
     const displayTokens = modified.slice(0, maxTokensPerSection);
     for (const token of displayTokens) {
       const changeDisplay = formatValueChange(token.oldValue, token.newValue);
-      md += `| \`${truncate(token.displayName, 35)}\` | ${changeDisplay} |\n`;
+      md += `| \`${token.displayName}\` | ${changeDisplay} |\n`;
     }
 
     if (modified.length > maxTokensPerSection) {
@@ -539,7 +539,7 @@ function generateUnifiedTokenChanges(diff, options = {}) {
 
     const displayTokens = added.slice(0, maxTokensPerSection);
     for (const token of displayTokens) {
-      md += `| \`${truncate(token.displayName, 40)}\` | \`${truncate(token.value, 30)}\` |\n`;
+      md += `| \`${token.displayName}\` | \`${token.value}\` |\n`;
     }
 
     if (added.length > maxTokensPerSection) {
@@ -563,21 +563,69 @@ function generateUnifiedTokenChanges(diff, options = {}) {
 // =============================================================================
 
 /**
+ * Generate platform names table for renamed tokens (collapsible)
+ */
+function generateRenamePlatformTable(renames, diff) {
+  if (!renames || renames.length === 0) return '';
+
+  // Use platform info from rename objects if available
+  const platformNames = [];
+  for (const rename of renames) {
+    // If rename has platforms array, use it directly
+    if (rename.platforms && rename.platforms.length > 1) {
+      const p = {};
+      for (const platform of rename.platforms) {
+        // Use newName from platform-specific rename info
+        p[platform.key] = platform.newName || platform.tokenName;
+      }
+      platformNames.push({
+        oldName: rename.oldName,
+        newName: rename.newName,
+        platforms: p
+      });
+    }
+  }
+
+  if (platformNames.length === 0) return '';
+
+  let md = '\n<details>\n<summary>🔤 Platform-specific names</summary>\n\n';
+  md += '| Old Name | New Name | CSS | JS | Swift | Kotlin |\n';
+  md += '|----------|----------|-----|-------|-------|--------|\n';
+
+  for (const entry of platformNames) {
+    const p = entry.platforms;
+    md += `| \`${entry.oldName}\` `;
+    md += `| \`${entry.newName}\` `;
+    md += `| \`${p.css || '-'}\` `;
+    md += `| \`${p.js || p.json || '-'}\` `;
+    md += `| \`${p.swift || '-'}\` `;
+    md += `| \`${p.kotlin || '-'}\` |\n`;
+  }
+
+  md += '\n</details>\n';
+  return md;
+}
+
+/**
  * Generate breaking changes section - shows ONLY breaking changes
  * Breaking = Removed OR Renamed in consumption layer (semantic + component)
  * Internal (primitive) changes are shown in Safe Changes section
+ *
+ * Structure: Split by layer (Semantic, Component, Typography, Effects)
+ * No table limits for breaking changes - all must be visible!
  */
 function generateBreakingChangesSection(diff, options = {}) {
-  const { maxTokens = 15 } = options;
-
   // Collect removed tokens - only consumption layer
   const allRemovedTokens = diff?.byUniqueToken?.removed || [];
   const breakingRemovedTokens = allRemovedTokens.filter(t => CONSUMPTION_LAYERS.includes(t.layer));
 
+  // Split removed by layer
+  const removedSemantic = breakingRemovedTokens.filter(t => t.layer === 'semantic');
+  const removedComponent = breakingRemovedTokens.filter(t => t.layer === 'component');
+
   // Collect removed combined tokens (Typography + Effects styles)
   const removedTypography = diff?.styleChanges?.typography?.removed || [];
   const removedEffects = diff?.styleChanges?.effects?.removed || [];
-  const totalRemovedStyles = removedTypography.length + removedEffects.length;
 
   // Collect breaking renames - only consumption layer
   const variableRenames = diff?.renames || [];
@@ -585,114 +633,142 @@ function generateBreakingChangesSection(diff, options = {}) {
   const breakingVariableRenames = variableRenames.filter(r => CONSUMPTION_LAYERS.includes(r.layer));
   const breakingStyleRenames = styleRenames.filter(r => CONSUMPTION_LAYERS.includes(r.layer));
 
+  // Split renames by layer
+  const renamesSemantic = breakingVariableRenames.filter(r => r.layer === 'semantic');
+  const renamesComponent = breakingVariableRenames.filter(r => r.layer === 'component');
+
   const totalBreakingRenames = breakingVariableRenames.length + breakingStyleRenames.length;
-  const hasBreakingChanges = breakingRemovedTokens.length > 0 || totalRemovedStyles > 0 || totalBreakingRenames > 0;
+  const hasBreakingChanges = breakingRemovedTokens.length > 0 ||
+    removedTypography.length > 0 || removedEffects.length > 0 || totalBreakingRenames > 0;
 
   if (!hasBreakingChanges) return '';
 
-  let md = '';
+  let md = '## 🔴 Breaking Changes\n\n';
+  md += '> ⚠️ **These changes require code updates**\n\n';
 
-  // === Breaking Changes Section (Removed + Renamed in Consumption Layer) ===
-  if (hasBreakingChanges) {
-    md += '## 🔴 Breaking Changes\n\n';
-    md += '> ⚠️ **These changes require code updates**\n\n';
+  // === REMOVED TOKENS BY LAYER ===
+  if (breakingRemovedTokens.length > 0) {
+    md += `### ➖ Removed Tokens (${breakingRemovedTokens.length})\n\n`;
 
-    // --- Removed Tokens (Consumption Layer Only) ---
-    if (breakingRemovedTokens.length > 0) {
-      md += `### ➖ Removed Tokens (${breakingRemovedTokens.length})\n\n`;
-      md += '| Token | Previous Value | Layer | Category |\n';
-      md += '|-------|----------------|-------|----------|\n';
-
-      for (const token of breakingRemovedTokens.slice(0, maxTokens)) {
+    // Semantic Layer
+    if (removedSemantic.length > 0) {
+      md += `#### 🎯 Semantic (${removedSemantic.length})\n\n`;
+      md += '| Token | Previous Value | Category |\n';
+      md += '|-------|----------------|----------|\n';
+      for (const token of removedSemantic) {
         const cat = CATEGORY_CONFIG[categorizeTokenForDisplay(token.displayName, token.value)] || CATEGORY_CONFIG.other;
-        const layerConfig = LAYER_CONFIG[token.layer] || LAYER_CONFIG.semantic;
-        md += `| \`${truncate(token.displayName, 32)}\` | \`${truncate(token.value, 18)}\` | ${layerConfig.icon} | ${cat.icon} |\n`;
-      }
-
-      if (breakingRemovedTokens.length > maxTokens) {
-        md += `| ... | *${breakingRemovedTokens.length - maxTokens} more* | | |\n`;
+        md += `| \`${token.displayName}\` | \`${token.value}\` | ${cat.icon} ${cat.label} |\n`;
       }
       md += '\n';
     }
 
-    // --- Removed Combined Tokens (Typography + Effects Styles) ---
-    if (totalRemovedStyles > 0) {
-      md += `### 🗑️ Removed Styles (${totalRemovedStyles})\n\n`;
-      md += '> Combined tokens (Typography/Effects) that were removed\n\n';
-      md += '| Style Name | Type |\n';
-      md += '|------------|------|\n';
-
-      for (const style of removedTypography.slice(0, maxTokens)) {
-        md += `| \`${truncate(style.name, 40)}\` | 📝 Typography |\n`;
-      }
-      for (const style of removedEffects.slice(0, maxTokens)) {
-        md += `| \`${truncate(style.name, 40)}\` | ✨ Effect |\n`;
-      }
-
-      if (totalRemovedStyles > maxTokens) {
-        md += `| ... | *${totalRemovedStyles - maxTokens} more* |\n`;
+    // Component Layer
+    if (removedComponent.length > 0) {
+      md += `#### 🧩 Component (${removedComponent.length})\n\n`;
+      md += '| Token | Previous Value | Category |\n';
+      md += '|-------|----------------|----------|\n';
+      for (const token of removedComponent) {
+        const cat = CATEGORY_CONFIG[categorizeTokenForDisplay(token.displayName, token.value)] || CATEGORY_CONFIG.other;
+        md += `| \`${token.displayName}\` | \`${token.value}\` | ${cat.icon} ${cat.label} |\n`;
       }
       md += '\n';
     }
-
-    // --- Breaking Renames ---
-    if (totalBreakingRenames > 0) {
-      md += `### 🔄 Renamed Tokens (${totalBreakingRenames})\n\n`;
-      md += '> Auto-detected via Figma ID (100% confidence)\n\n';
-
-      // Variable renames (semantic + component layer)
-      if (breakingVariableRenames.length > 0) {
-        md += '| Old Name | → | New Name | Layer | Category |\n';
-        md += '|----------|:---:|----------|-------|----------|\n';
-
-        for (const rename of breakingVariableRenames.slice(0, maxTokens)) {
-          const catConfig = CATEGORY_CONFIG[rename.category] || CATEGORY_CONFIG.other;
-          const layerConfig = LAYER_CONFIG[rename.layer] || LAYER_CONFIG.semantic;
-          md += `| \`${truncate(rename.oldName, 28)}\` | → | \`${truncate(rename.newName, 28)}\` | ${layerConfig.icon} | ${catConfig.icon} |\n`;
-        }
-
-        if (breakingVariableRenames.length > maxTokens) {
-          md += `| ... | | *${breakingVariableRenames.length - maxTokens} more* | | |\n`;
-        }
-        md += '\n';
-      }
-
-      // Style renames (Typography + Effects)
-      if (breakingStyleRenames.length > 0) {
-        md += '**Styles:**\n\n';
-        md += '| Old Name | → | New Name | Type |\n';
-        md += '|----------|:---:|----------|------|\n';
-
-        for (const rename of breakingStyleRenames.slice(0, maxTokens)) {
-          const typeIcon = rename.type === 'typography' ? '📝' : '✨';
-          md += `| \`${truncate(rename.oldName, 30)}\` | → | \`${truncate(rename.newName, 30)}\` | ${typeIcon} |\n`;
-        }
-
-        if (breakingStyleRenames.length > maxTokens) {
-          md += `| ... | | *${breakingStyleRenames.length - maxTokens} more* | |\n`;
-        }
-        md += '\n';
-      }
-    }
-
-    // Migration help for all breaking changes
-    const allBreakingRenames = [...breakingVariableRenames, ...breakingStyleRenames];
-    if (allBreakingRenames.length > 0) {
-      md += '<details>\n<summary>📋 Migration Commands</summary>\n\n';
-      md += '```bash\n# Find & Replace suggestions:\n';
-      for (const rename of allBreakingRenames.slice(0, 8)) {
-        const oldSimple = rename.oldName.split('/').pop();
-        const newSimple = rename.newName.split('/').pop();
-        md += `# ${oldSimple} → ${newSimple}\n`;
-      }
-      if (allBreakingRenames.length > 8) {
-        md += `# ... and ${allBreakingRenames.length - 8} more\n`;
-      }
-      md += '```\n\n</details>\n\n';
-    }
-
-    md += '---\n\n';
   }
+
+  // === REMOVED TYPOGRAPHY STYLES ===
+  if (removedTypography.length > 0) {
+    md += `#### 📝 Typography Styles (${removedTypography.length})\n\n`;
+    md += '| Style Name |\n';
+    md += '|------------|\n';
+    for (const style of removedTypography) {
+      md += `| \`${style.name}\` |\n`;
+    }
+    md += '\n';
+  }
+
+  // === REMOVED EFFECTS ===
+  if (removedEffects.length > 0) {
+    md += `#### ✨ Effects (${removedEffects.length})\n\n`;
+    md += '| Style Name |\n';
+    md += '|------------|\n';
+    for (const style of removedEffects) {
+      md += `| \`${style.name}\` |\n`;
+    }
+    md += '\n';
+  }
+
+  // === RENAMED TOKENS BY LAYER ===
+  if (totalBreakingRenames > 0) {
+    md += `### 🔄 Renamed Tokens (${totalBreakingRenames})\n\n`;
+
+    // Semantic Layer Renames
+    if (renamesSemantic.length > 0) {
+      md += `#### 🎯 Semantic (${renamesSemantic.length})\n\n`;
+      md += '| Old Name | → | New Name | Category |\n';
+      md += '|----------|:-:|----------|----------|\n';
+      for (const rename of renamesSemantic) {
+        const catConfig = CATEGORY_CONFIG[rename.category] || CATEGORY_CONFIG.other;
+        md += `| \`${rename.oldName}\` | → | \`${rename.newName}\` | ${catConfig.icon} |\n`;
+      }
+      md += generateRenamePlatformTable(renamesSemantic, diff);
+      md += '\n';
+    }
+
+    // Component Layer Renames
+    if (renamesComponent.length > 0) {
+      md += `#### 🧩 Component (${renamesComponent.length})\n\n`;
+      md += '| Old Name | → | New Name | Category |\n';
+      md += '|----------|:-:|----------|----------|\n';
+      for (const rename of renamesComponent) {
+        const catConfig = CATEGORY_CONFIG[rename.category] || CATEGORY_CONFIG.other;
+        md += `| \`${rename.oldName}\` | → | \`${rename.newName}\` | ${catConfig.icon} |\n`;
+      }
+      md += generateRenamePlatformTable(renamesComponent, diff);
+      md += '\n';
+    }
+
+    // Style Renames (Typography + Effects)
+    if (breakingStyleRenames.length > 0) {
+      const typoRenames = breakingStyleRenames.filter(r => r.type === 'typography');
+      const effectRenames = breakingStyleRenames.filter(r => r.type === 'effects');
+
+      if (typoRenames.length > 0) {
+        md += `#### 📝 Typography Styles (${typoRenames.length})\n\n`;
+        md += '| Old Name | → | New Name |\n';
+        md += '|----------|:-:|----------|\n';
+        for (const rename of typoRenames) {
+          md += `| \`${rename.oldName}\` | → | \`${rename.newName}\` |\n`;
+        }
+        md += '\n';
+      }
+
+      if (effectRenames.length > 0) {
+        md += `#### ✨ Effects (${effectRenames.length})\n\n`;
+        md += '| Old Name | → | New Name |\n';
+        md += '|----------|:-:|----------|\n';
+        for (const rename of effectRenames) {
+          md += `| \`${rename.oldName}\` | → | \`${rename.newName}\` |\n`;
+        }
+        md += '\n';
+      }
+    }
+  }
+
+  // Migration help for all breaking changes
+  const allBreakingRenames = [...breakingVariableRenames, ...breakingStyleRenames];
+  if (allBreakingRenames.length > 0) {
+    md += '<details>\n<summary>📋 Migration Commands</summary>\n\n';
+    md += '```bash\n# Find & Replace suggestions:\n';
+    for (const rename of allBreakingRenames.slice(0, 15)) {
+      md += `# ${rename.oldName} → ${rename.newName}\n`;
+    }
+    if (allBreakingRenames.length > 15) {
+      md += `# ... and ${allBreakingRenames.length - 15} more\n`;
+    }
+    md += '```\n\n</details>\n\n';
+  }
+
+  md += '---\n\n';
 
   return md;
 }
@@ -708,6 +784,7 @@ const KNOWN_BREAKPOINTS = ['xs', 'sm', 'md', 'lg'];
 
 /**
  * Generate a color matrix table for a single token
+ * Shows actual values with change arrows, compact delta summary below
  * Rows: modes (light/dark), Columns: brands
  */
 function generateColorMatrix(token) {
@@ -733,15 +810,23 @@ function generateColorMatrix(token) {
   // If we only have modes (no brand differentiation)
   if (brandList.length === 0 && modeList.length > 1) {
     let md = `**\`${token.displayName}\`**\n\n`;
-    md += '| Mode | Change | ΔE |\n';
-    md += '|------|--------|----|\n';
+    md += '| Mode | Change |\n';
+    md += '|------|--------|\n';
+
+    const deltaInfos = [];
     for (const mode of modeList) {
       const ctx = contexts[mode] || contexts[`/${mode}`];
       if (ctx) {
         const deltaE = calculateDeltaE(ctx.old, ctx.new);
-        const diffInfo = deltaE ? `${deltaE.icon} ${deltaE.deltaE}` : '–';
-        md += `| ${mode} | \`${truncate(ctx.old, 9)}\` → \`${truncate(ctx.new, 9)}\` | ${diffInfo} |\n`;
+        if (deltaE) deltaInfos.push({ mode, ...deltaE });
+        md += `| ${mode} | \`${ctx.old}\` → \`${ctx.new}\` |\n`;
       }
+    }
+
+    // Compact delta summary
+    if (deltaInfos.length > 0) {
+      const deltaStr = deltaInfos.map(d => `${d.mode}: ${d.icon} ΔE ${d.deltaE}`).join(' · ');
+      md += `\n> ${deltaStr}\n`;
     }
     return md + '\n';
   }
@@ -752,17 +837,33 @@ function generateColorMatrix(token) {
     md += '| | ' + brandList.map(b => b.charAt(0).toUpperCase() + b.slice(1)).join(' | ') + ' |\n';
     md += '|---' + brandList.map(() => '|---').join('') + '|\n';
 
+    const deltaInfos = [];
+
     for (const mode of modeList) {
-      const modeLabel = mode === 'light' ? '🌞 Light' : '🌙 Dark';
+      const modeLabel = mode === 'light' ? '☀️' : '🌙';
       const cells = brandList.map(brand => {
         const key = `${brand}/${mode}`;
         const ctx = contexts[key];
         if (!ctx) return '–';
+
         const deltaE = calculateDeltaE(ctx.old, ctx.new);
-        return deltaE ? `${deltaE.icon} ΔE=${deltaE.deltaE}` : '–';
+        if (deltaE) {
+          deltaInfos.push({ brand, mode, ...deltaE });
+        }
+        // Show values with icon prefix
+        return `${deltaE?.icon || '🟡'} \`${ctx.old}\` → \`${ctx.new}\``;
       });
-      md += `| ${modeLabel} | ${cells.join(' | ')} |\n`;
+      md += `| ${modeLabel} ${mode} | ${cells.join(' | ')} |\n`;
     }
+
+    // Compact delta summary line
+    if (deltaInfos.length > 0) {
+      const deltaStr = deltaInfos
+        .map(d => `${d.brand}/${d.mode}: ΔE ${d.deltaE} (${d.perception})`)
+        .join(' · ');
+      md += `\n> 📊 ${deltaStr}\n`;
+    }
+
     return md + '\n';
   }
 
@@ -771,6 +872,7 @@ function generateColorMatrix(token) {
 
 /**
  * Generate a breakpoint matrix table for a single token (typography/sizing/spacing)
+ * Shows actual values with change arrows, compact diff summary below
  * Rows: breakpoints (xs/sm/md/lg), Columns: brands
  */
 function generateBreakpointMatrix(token) {
@@ -792,18 +894,29 @@ function generateBreakpointMatrix(token) {
   const brandList = KNOWN_BRANDS.filter(b => brands.has(b));
   const bpList = KNOWN_BREAKPOINTS.filter(bp => breakpoints.has(bp));
 
+  // Breakpoint labels with icons
+  const bpLabels = { xs: '📱', sm: '📱', md: '💻', lg: '🖥️' };
+
   // If we only have breakpoints (no brand differentiation)
   if (brandList.length === 0 && bpList.length > 1) {
     let md = `**\`${token.displayName}\`**\n\n`;
-    md += '| BP | Change | Diff |\n';
-    md += '|----|--------|------|\n';
+    md += '| BP | Change |\n';
+    md += '|----|--------|\n';
+
+    const diffInfos = [];
     for (const bp of bpList) {
       const ctx = contexts[bp] || contexts[`/${bp}`];
       if (ctx) {
         const dimDiff = calculateDimensionDiff(ctx.old, ctx.new);
-        const diffInfo = dimDiff ? `${dimDiff.icon} ${dimDiff.display}` : '–';
-        md += `| ${bp} | \`${ctx.old}\` → \`${ctx.new}\` | ${diffInfo} |\n`;
+        if (dimDiff) diffInfos.push({ bp, ...dimDiff });
+        md += `| ${bpLabels[bp] || ''} ${bp} | \`${ctx.old}\` → \`${ctx.new}\` |\n`;
       }
+    }
+
+    // Compact diff summary
+    if (diffInfos.length > 0) {
+      const diffStr = diffInfos.map(d => `${d.bp}: ${d.icon} ${d.display}`).join(' · ');
+      md += `\n> ${diffStr}\n`;
     }
     return md + '\n';
   }
@@ -814,16 +927,32 @@ function generateBreakpointMatrix(token) {
     md += '| | ' + brandList.map(b => b.charAt(0).toUpperCase() + b.slice(1)).join(' | ') + ' |\n';
     md += '|---' + brandList.map(() => '|---').join('') + '|\n';
 
+    const diffInfos = [];
+
     for (const bp of bpList) {
       const cells = brandList.map(brand => {
         const key = `${brand}/${bp}`;
         const ctx = contexts[key];
         if (!ctx) return '–';
+
         const dimDiff = calculateDimensionDiff(ctx.old, ctx.new);
-        return dimDiff ? `${dimDiff.icon} ${dimDiff.display}` : '–';
+        if (dimDiff) {
+          diffInfos.push({ brand, bp, ...dimDiff, old: ctx.old, new: ctx.new });
+        }
+        // Show values with icon prefix
+        return `${dimDiff?.icon || '🟡'} \`${ctx.old}\` → \`${ctx.new}\``;
       });
-      md += `| ${bp} | ${cells.join(' | ')} |\n`;
+      md += `| ${bpLabels[bp] || ''} ${bp} | ${cells.join(' | ')} |\n`;
     }
+
+    // Compact diff summary line
+    if (diffInfos.length > 0) {
+      const diffStr = diffInfos
+        .map(d => `${d.brand}/${d.bp}: ${d.display}`)
+        .join(' · ');
+      md += `\n> 📊 ${diffStr}\n`;
+    }
+
     return md + '\n';
   }
 
@@ -836,13 +965,13 @@ function generateBreakpointMatrix(token) {
 function generateSimpleColorRow(token) {
   const deltaE = calculateDeltaE(token.oldValue, token.newValue);
   const diffInfo = deltaE ? `${deltaE.icon} ΔE=${deltaE.deltaE} (${deltaE.perception})` : '';
-  return `| \`${truncate(token.displayName, 28)}\` | \`${truncate(token.oldValue, 9)}\` → \`${truncate(token.newValue, 9)}\` | ${diffInfo} |\n`;
+  return `| \`${token.displayName}\` | \`${token.oldValue}\` → \`${token.newValue}\` | ${diffInfo} |\n`;
 }
 
 function generateSimpleDimensionRow(token) {
   const dimDiff = calculateDimensionDiff(token.oldValue, token.newValue);
   const diffDisplay = dimDiff ? `${dimDiff.icon} ${dimDiff.display}` : '';
-  return `| \`${truncate(token.displayName, 30)}\` | \`${token.oldValue}\` → \`${token.newValue}\` | ${diffDisplay} |\n`;
+  return `| \`${token.displayName}\` | \`${token.oldValue}\` → \`${token.newValue}\` | ${diffDisplay} |\n`;
 }
 
 /**
@@ -996,7 +1125,7 @@ function generateVisualChangesSection(diff, options = {}) {
 
     const allEffects = [...byCategory.effects.matrix, ...byCategory.effects.simple];
     for (const token of allEffects.slice(0, maxTokens)) {
-      md += `| \`${truncate(token.displayName, 32)}\` | \`${truncate(token.oldValue, 20)}\` → \`${truncate(token.newValue, 20)}\` |\n`;
+      md += `| \`${token.displayName}\` | \`${token.oldValue}\` → \`${token.newValue}\` |\n`;
     }
     if (allEffects.length > maxTokens) {
       md += `| ... | *${allEffects.length - maxTokens} more* |\n`;
@@ -1011,7 +1140,7 @@ function generateVisualChangesSection(diff, options = {}) {
     md += '|-------|--------|\n';
 
     for (const token of byCategory.other.simple.slice(0, maxTokens)) {
-      md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.oldValue, 15)}\` → \`${truncate(token.newValue, 15)}\` |\n`;
+      md += `| \`${token.displayName}\` | \`${token.oldValue}\` → \`${token.newValue}\` |\n`;
     }
     md += '\n</details>\n\n';
   }
@@ -1079,7 +1208,7 @@ function generateSafeChangesSection(diff, options = {}) {
       md += '|-------|-------|\n';
 
       for (const token of tokens.slice(0, maxTokens)) {
-        md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.value, 25)}\` |\n`;
+        md += `| \`${token.displayName}\` | \`${token.value}\` |\n`;
       }
 
       if (tokens.length > maxTokens) {
@@ -1102,7 +1231,7 @@ function generateSafeChangesSection(diff, options = {}) {
       md += '|-------|----------------|\n';
 
       for (const token of internalRemovedTokens.slice(0, maxTokens)) {
-        md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.value, 25)}\` |\n`;
+        md += `| \`${token.displayName}\` | \`${token.value}\` |\n`;
       }
 
       if (internalRemovedTokens.length > maxTokens) {
@@ -1117,7 +1246,7 @@ function generateSafeChangesSection(diff, options = {}) {
       md += '|----------|:---:|----------|\n';
 
       for (const rename of nonBreakingRenames.slice(0, maxTokens)) {
-        md += `| \`${truncate(rename.oldName, 28)}\` | → | \`${truncate(rename.newName, 28)}\` |\n`;
+        md += `| \`${rename.oldName}\` | → | \`${rename.newName}\` |\n`;
       }
 
       if (nonBreakingRenames.length > maxTokens) {
@@ -1193,10 +1322,10 @@ function generateStyleChangesSection(diff, options = {}) {
 
       for (const style of typography.modified.slice(0, maxTokens)) {
         const propChanges = (style.changedProperties || [])
-          .map(p => `${p.property}: ${truncate(String(p.oldValue), 10)} → ${truncate(String(p.newValue), 10)}`)
+          .map(p => `${p.property}: ${p.oldValue} → ${p.newValue}`)
           .join(', ');
         const renamed = style.wasRenamed ? ' 🔄' : '';
-        md += `| \`${truncate(style.name, 25)}\`${renamed} | ${truncate(propChanges, 50)} |\n`;
+        md += `| \`${style.name}\`${renamed} | ${propChanges} |\n`;
       }
       md += '\n';
     }
@@ -1204,16 +1333,16 @@ function generateStyleChangesSection(diff, options = {}) {
     // Added
     if (typography.added.length > 0) {
       md += `**Added (${typography.added.length}):** `;
-      md += typography.added.slice(0, 5).map(s => `\`${truncate(s.name, 20)}\``).join(', ');
-      if (typography.added.length > 5) md += `, +${typography.added.length - 5} more`;
+      md += typography.added.slice(0, 10).map(s => `\`${s.name}\``).join(', ');
+      if (typography.added.length > 10) md += `, +${typography.added.length - 10} more`;
       md += '\n\n';
     }
 
     // Removed
     if (typography.removed.length > 0) {
       md += `**Removed (${typography.removed.length}):** `;
-      md += typography.removed.slice(0, 5).map(s => `\`${truncate(s.name, 20)}\``).join(', ');
-      if (typography.removed.length > 5) md += `, +${typography.removed.length - 5} more`;
+      md += typography.removed.slice(0, 10).map(s => `\`${s.name}\``).join(', ');
+      if (typography.removed.length > 10) md += `, +${typography.removed.length - 10} more`;
       md += '\n\n';
     }
 
@@ -1235,7 +1364,7 @@ function generateStyleChangesSection(diff, options = {}) {
           .map(p => p.property)
           .join(', ');
         const renamed = style.wasRenamed ? ' 🔄' : '';
-        md += `| \`${truncate(style.name, 25)}\`${renamed} | ${truncate(propChanges, 50)} |\n`;
+        md += `| \`${style.name}\`${renamed} | ${propChanges} |\n`;
       }
       md += '\n';
     }
@@ -1243,16 +1372,16 @@ function generateStyleChangesSection(diff, options = {}) {
     // Added
     if (effects.added.length > 0) {
       md += `**Added (${effects.added.length}):** `;
-      md += effects.added.slice(0, 5).map(s => `\`${truncate(s.name, 20)}\``).join(', ');
-      if (effects.added.length > 5) md += `, +${effects.added.length - 5} more`;
+      md += effects.added.slice(0, 10).map(s => `\`${s.name}\``).join(', ');
+      if (effects.added.length > 10) md += `, +${effects.added.length - 10} more`;
       md += '\n\n';
     }
 
     // Removed
     if (effects.removed.length > 0) {
       md += `**Removed (${effects.removed.length}):** `;
-      md += effects.removed.slice(0, 5).map(s => `\`${truncate(s.name, 20)}\``).join(', ');
-      if (effects.removed.length > 5) md += `, +${effects.removed.length - 5} more`;
+      md += effects.removed.slice(0, 10).map(s => `\`${s.name}\``).join(', ');
+      if (effects.removed.length > 10) md += `, +${effects.removed.length - 10} more`;
       md += '\n\n';
     }
 
@@ -1308,7 +1437,7 @@ function generateCategorizedChangesSection(diff, options = {}) {
       md += `**Modified (${modified.length}):**\n\n`;
       md += '| Token | Old | New |\n|-------|-----|-----|\n';
       for (const token of modified.slice(0, maxTokensPerCategory)) {
-        md += `| \`${truncate(token.displayName, 30)}\` | \`${truncate(token.oldValue, 15)}\` | \`${truncate(token.newValue, 15)}\` |\n`;
+        md += `| \`${token.displayName}\` | \`${token.oldValue}\` | \`${token.newValue}\` |\n`;
       }
       if (modified.length > maxTokensPerCategory) {
         md += `| ... | *${modified.length - maxTokensPerCategory} more* | |\n`;
@@ -1321,7 +1450,7 @@ function generateCategorizedChangesSection(diff, options = {}) {
       md += `**Added (${added.length}):**\n\n`;
       md += '| Token | Value |\n|-------|-------|\n';
       for (const token of added.slice(0, maxTokensPerCategory)) {
-        md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.value, 20)}\` |\n`;
+        md += `| \`${token.displayName}\` | \`${token.value}\` |\n`;
       }
       if (added.length > maxTokensPerCategory) {
         md += `| ... | *${added.length - maxTokensPerCategory} more* |\n`;
@@ -1371,8 +1500,8 @@ function generateSourceChangesSection(diff, options = {}) {
     md += '|-------|--------|----------|\n';
     for (const token of modified.slice(0, maxTokens)) {
       const cat = CATEGORY_CONFIG[categorizeTokenForDisplay(token.displayName, token.oldValue)] || CATEGORY_CONFIG.other;
-      const changeDisplay = `\`${truncate(token.oldValue, 12)}\` → \`${truncate(token.newValue, 12)}\``;
-      md += `| \`${truncate(token.displayName, 28)}\` | ${changeDisplay} | ${cat.icon} |\n`;
+      const changeDisplay = `\`${token.oldValue}\` → \`${token.newValue}\``;
+      md += `| \`${token.displayName}\` | ${changeDisplay} | ${cat.icon} |\n`;
     }
     if (modified.length > maxTokens) {
       md += `| ... | *${modified.length - maxTokens} more* | |\n`;
@@ -1387,7 +1516,7 @@ function generateSourceChangesSection(diff, options = {}) {
     md += '|-------|-------|----------|\n';
     for (const token of added.slice(0, maxTokens)) {
       const cat = CATEGORY_CONFIG[categorizeTokenForDisplay(token.displayName, token.value)] || CATEGORY_CONFIG.other;
-      md += `| \`${truncate(token.displayName, 28)}\` | \`${truncate(token.value, 18)}\` | ${cat.icon} |\n`;
+      md += `| \`${token.displayName}\` | \`${token.value}\` | ${cat.icon} |\n`;
     }
     if (added.length > maxTokens) {
       md += `| ... | *${added.length - maxTokens} more* | |\n`;
@@ -1402,7 +1531,7 @@ function generateSourceChangesSection(diff, options = {}) {
     md += '|-------|----------------|----------|\n';
     for (const token of removed.slice(0, maxTokens)) {
       const cat = CATEGORY_CONFIG[categorizeTokenForDisplay(token.displayName, token.value)] || CATEGORY_CONFIG.other;
-      md += `| \`${truncate(token.displayName, 28)}\` | \`${truncate(token.value, 18)}\` | ${cat.icon} |\n`;
+      md += `| \`${token.displayName}\` | \`${token.value}\` | ${cat.icon} |\n`;
     }
     if (removed.length > maxTokens) {
       md += `| ... | *${removed.length - maxTokens} more* | |\n`;
@@ -1565,7 +1694,7 @@ function generatePlatformDetails(diff, options = {}) {
       for (const file of removedFiles) {
         for (const token of file.tokens.slice(0, 5)) {
           if (count >= maxTokensPerSection) break;
-          md += `| \`${truncate(token.name, 35)}\` | \`${truncate(token.value, 25)}\` | \`${truncate(path.basename(file.file), 30)}\` |\n`;
+          md += `| \`${token.name}\` | \`${token.value}\` | \`${path.basename(file.file)}\` |\n`;
           count++;
         }
         if (file.tokens.length > 5 && count < maxTokensPerSection) {
@@ -1577,7 +1706,7 @@ function generatePlatformDetails(diff, options = {}) {
         if (!file.changes?.removed) continue;
         for (const token of file.changes.removed.slice(0, 3)) {
           if (count >= maxTokensPerSection) break;
-          md += `| \`${truncate(token.name, 35)}\` | \`${truncate(token.value, 25)}\` | \`${truncate(path.basename(file.file), 30)}\` |\n`;
+          md += `| \`${token.name}\` | \`${token.value}\` | \`${path.basename(file.file)}\` |\n`;
           count++;
         }
       }
@@ -1602,7 +1731,7 @@ function generatePlatformDetails(diff, options = {}) {
       for (const file of allModified) {
         for (const token of file.changes.modified) {
           if (count >= maxTokensPerSection) break;
-          md += `| \`${truncate(token.name, 30)}\` | \`${truncate(token.oldValue, 18)}\` | \`${truncate(token.newValue, 18)}\` | \`${truncate(path.basename(file.file), 25)}\` |\n`;
+          md += `| \`${token.name}\` | \`${token.oldValue}\` | \`${token.newValue}\` | \`${path.basename(file.file)}\` |\n`;
           count++;
         }
         if (count >= maxTokensPerSection) break;
@@ -1628,7 +1757,7 @@ function generatePlatformDetails(diff, options = {}) {
       for (const file of addedFiles) {
         for (const token of file.tokens.slice(0, 5)) {
           if (count >= maxTokensPerSection) break;
-          md += `| \`${truncate(token.name, 35)}\` | \`${truncate(token.value, 25)}\` | \`${truncate(path.basename(file.file), 30)}\` |\n`;
+          md += `| \`${token.name}\` | \`${token.value}\` | \`${path.basename(file.file)}\` |\n`;
           count++;
         }
       }
@@ -1637,7 +1766,7 @@ function generatePlatformDetails(diff, options = {}) {
         if (!file.changes?.added) continue;
         for (const token of file.changes.added.slice(0, 3)) {
           if (count >= maxTokensPerSection) break;
-          md += `| \`${truncate(token.name, 35)}\` | \`${truncate(token.value, 25)}\` | \`${truncate(path.basename(file.file), 30)}\` |\n`;
+          md += `| \`${token.name}\` | \`${token.value}\` | \`${path.basename(file.file)}\` |\n`;
           count++;
         }
       }
@@ -1922,7 +2051,7 @@ function generateGitHubRelease(diff, options = {}) {
     md += '| Removed Token | Previous Value |\n';
     md += '|---------------|----------------|\n';
     for (const token of removed) {
-      md += `| \`${truncate(token.displayName, 35)}\` | \`${truncate(token.value, 25)}\` |\n`;
+      md += `| \`${token.displayName}\` | \`${token.value}\` |\n`;
     }
     if (diff.byUniqueToken.removed.length > 5) {
       md += `| ... | *${diff.byUniqueToken.removed.length - 5} more* |\n`;
@@ -1933,14 +2062,13 @@ function generateGitHubRelease(diff, options = {}) {
   // Renamed tokens (if any)
   if (diff?.renames?.length > 0) {
     md += '### 🔄 Renamed Tokens\n\n';
-    md += '> ✅ Auto-detected via Figma Variable ID\n\n';
     md += '| Old Name | → | New Name |\n';
     md += '|----------|:---:|----------|\n';
-    for (const rename of diff.renames.slice(0, 8)) {
-      md += `| \`${truncate(rename.oldName, 30)}\` | → | \`${truncate(rename.newName, 30)}\` |\n`;
+    for (const rename of diff.renames.slice(0, 10)) {
+      md += `| \`${rename.oldName}\` | → | \`${rename.newName}\` |\n`;
     }
-    if (diff.renames.length > 8) {
-      md += `| ... | | *${diff.renames.length - 8} more* |\n`;
+    if (diff.renames.length > 10) {
+      md += `| ... | | *${diff.renames.length - 10} more* |\n`;
     }
     md += '\n';
   }
@@ -2004,19 +2132,19 @@ function generateGitHubRelease(diff, options = {}) {
 
         if (modified.length > 0) {
           md += '**Modified:**\n';
-          for (const token of modified.slice(0, 5)) {
-            md += `- \`${truncate(token.displayName, 35)}\`: ${truncate(token.oldValue, 12)} → ${truncate(token.newValue, 12)}\n`;
+          for (const token of modified.slice(0, 8)) {
+            md += `- \`${token.displayName}\`: ${token.oldValue} → ${token.newValue}\n`;
           }
-          if (modified.length > 5) md += `- *... and ${modified.length - 5} more*\n`;
+          if (modified.length > 8) md += `- *... and ${modified.length - 8} more*\n`;
           md += '\n';
         }
 
         if (added.length > 0) {
           md += '**Added:**\n';
-          for (const token of added.slice(0, 5)) {
-            md += `- \`${truncate(token.displayName, 35)}\`\n`;
+          for (const token of added.slice(0, 8)) {
+            md += `- \`${token.displayName}\`\n`;
           }
-          if (added.length > 5) md += `- *... and ${added.length - 5} more*\n`;
+          if (added.length > 8) md += `- *... and ${added.length - 8} more*\n`;
           md += '\n';
         }
       }

@@ -645,6 +645,79 @@ The root `package.json` version is bumped, and all workspace packages inherit vi
 | `scripts/tokens/compare-builds.js` | Diff analysis and impact level calculation |
 | `scripts/tokens/release-notes.js` | Release notes generation from diff |
 
+### Release Notes Format
+
+The `release-notes.js` script generates human-readable PR comments and release notes with structured sections:
+
+#### Report Structure
+
+| Section | Content | Display |
+|---------|---------|---------|
+| **🔴 Breaking Changes** | Removed tokens (Layer 2-3) | Grouped by layer, platform tables for renames |
+| **🟡 Visual Changes** | Modified tokens | Matrix display with Delta E / % change |
+| **🟢 Safe Changes** | Added tokens + internal changes | Collapsible lists |
+| **⚙️ Technical Details** | File lists, build stats | Collapsible details |
+
+#### Matrix Display for Multi-Context Tokens
+
+Tokens that vary by brand/mode/breakpoint are displayed in a matrix format:
+
+**Color Matrix (Brand × Mode):**
+```markdown
+**`--text-color-primary`**
+
+| | Bild | Sportbild |
+|---|---|---|
+| ☀️ light | 🟡 `#232629` → `#1a1c1e` | 🟡 `#232629` → `#1a1c1e` |
+| 🌙 dark | 🟡 `#f2f4f5` → `#ffffff` | – |
+
+> 📊 bild/light: ΔE 4.9 (subtil) · bild/dark: ΔE 4 (subtil)
+```
+
+**Breakpoint Matrix (Brand × Breakpoint):**
+```markdown
+**`--grid-space-resp-base`**
+
+| | Bild | Sportbild |
+|---|---|---|
+| 📱 xs | 🟠 `12px` → `16px` | 🟠 `12px` → `16px` |
+| 📱 sm | 🟡 `16px` → `20px` | – |
+| 💻 md | 🟡 `20px` → `24px` | 🟡 `20px` → `24px` |
+| 🖥️ lg | 🟠 `24px` → `32px` | – |
+
+> 📊 bild/xs: +33% · bild/sm: +25% · bild/md: +20% · bild/lg: +33%
+```
+
+#### Visual Diff Indicators
+
+**Color Changes (Delta E):**
+
+| Icon | ΔE Range | Perception |
+|------|----------|------------|
+| ⚪ | < 1 | nicht sichtbar |
+| 🟢 | 1-2 | kaum sichtbar |
+| 🟡 | 2-5 | subtil |
+| 🟠 | 5-10 | deutlich |
+| 🔴 | > 10 | stark |
+
+**Dimension Changes (%):**
+
+| Icon | Change | Severity |
+|------|--------|----------|
+| ⚪ | 0% | keine Änderung |
+| 🟢 | ≤10% | minimal |
+| 🟡 | ≤25% | moderat |
+| 🟠 | ≤50% | signifikant |
+| 🔴 | >50% | stark |
+
+#### Breakpoint Icons
+
+| Icon | Breakpoint | Device |
+|------|------------|--------|
+| 📱 | xs, sm | Mobile |
+| 💻 | md | Tablet |
+| 🖥️ | lg | Desktop |
+
 ---
 
 ### Key Files
@@ -791,6 +864,9 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 | Change version bump logic | `.github/workflows/publish-on-merge.yml` → "Determine Version Bump Type" step |
 | Modify token diff analysis | `scripts/tokens/compare-builds.js` → `calculateImpactLevel()` |
 | Change release notes format | `scripts/tokens/release-notes.js` |
+| Modify color matrix display | `scripts/tokens/release-notes.js` → `generateColorMatrix()` |
+| Modify breakpoint matrix display | `scripts/tokens/release-notes.js` → `generateBreakpointMatrix()` |
+| Change visual diff indicators | `scripts/tokens/release-notes.js` → `calculateDeltaE()`, `calculateDimensionDiff()` |
 
 ---
 

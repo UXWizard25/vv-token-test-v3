@@ -374,6 +374,16 @@ npm run clean              # Remove all dist/ and tokens/
 | `publish-on-merge.yml` | Merge to main (tokens/components src) | npm publish (tokens, components, react, vue) + GitHub Release |
 | `publish-icons-on-merge.yml` | Merge to main (icons src) | npm publish + GitHub Release |
 
+### Release Notes Features
+
+PR comments and release notes include:
+- **🔴 Breaking Changes**: Removed tokens grouped by layer
+- **🟡 Visual Changes**: Matrix display with ΔE (colors) and % change (dimensions)
+- **🟢 Safe Changes**: Added tokens and internal changes
+- **Visual Indicators**: ⚪🟢🟡🟠🔴 for change severity
+
+📖 See [.github/workflows/README.md](./.github/workflows/README.md) for detailed documentation.
+
 ---
 
 ## 📚 Storybook

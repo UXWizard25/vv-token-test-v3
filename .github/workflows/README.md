@@ -297,6 +297,46 @@ All packages are published with synchronized versions:
 | `scripts/tokens/compare-builds.js` | Compares current vs baseline tokens, calculates impact level |
 | `scripts/tokens/release-notes.js` | Generates human-readable release notes from diff |
 
+#### 📋 Release Notes Format
+
+The release notes include structured sections with visual diff information:
+
+| Section | Content |
+|---------|---------|
+| 🔴 Breaking Changes | Removed tokens grouped by layer |
+| 🟡 Visual Changes | Modified tokens with matrix display |
+| 🟢 Safe Changes | Added tokens and internal changes |
+| ⚙️ Technical Details | File lists and build stats |
+
+**Matrix Display for Multi-Context Tokens:**
+
+Color tokens (brand × mode):
+```
+| | Bild | Sportbild |
+|---|---|---|
+| ☀️ light | 🟡 `#232629` → `#1a1c1e` | – |
+| 🌙 dark | 🟠 `#f2f4f5` → `#ffffff` | – |
+
+> 📊 bild/light: ΔE 4.9 (subtil)
+```
+
+Spacing tokens (brand × breakpoint):
+```
+| | Bild | Sportbild |
+|---|---|---|
+| 📱 xs | 🟠 `12px` → `16px` | – |
+| 💻 md | 🟡 `20px` → `24px` | – |
+
+> 📊 bild/xs: +33% · bild/md: +20%
+```
+
+**Visual Indicators:**
+- ⚪ keine Änderung / ΔE < 1
+- 🟢 minimal (≤10% / ΔE 1-2)
+- 🟡 moderat (≤25% / ΔE 2-5)
+- 🟠 signifikant (≤50% / ΔE 5-10)
+- 🔴 stark (>50% / ΔE > 10)
+
 #### 🔒 Permissions
 
 The workflow requires:
