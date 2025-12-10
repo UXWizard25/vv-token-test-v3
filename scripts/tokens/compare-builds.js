@@ -515,22 +515,29 @@ function detectRenames(oldSource, newSource) {
         isBreaking: oldVar.isBreaking
       });
     } else if (oldVar.name !== newVar.name) {
-      // Same ID, different name → renamed
-      renames.push({
-        variableId: id,
-        oldName: oldVar.name,
-        newName: newVar.name,
-        // Converted token names (from Figma path to dot notation)
-        oldTokenName: figmaPathToTokenName(oldVar.name),
-        newTokenName: figmaPathToTokenName(newVar.name),
-        resolvedType: oldVar.resolvedType,
-        collectionName: oldVar.collectionName,
-        category: categorizeTokenFromSource(oldVar),
-        layer: oldVar.layer,
-        isBreaking: oldVar.isBreaking,
-        tokenType: 'variable',
-        confidence: 1.0 // 100% confidence because same Variable ID
-      });
+      // Same ID, different name → check if it's a real rename or just casing normalization
+      const oldTokenName = figmaPathToTokenName(oldVar.name);
+      const newTokenName = figmaPathToTokenName(newVar.name);
+
+      // Only add if normalized names are actually different
+      // This filters out "phantom renames" like sectionSpaceLG → sectionSpaceLg
+      // which both normalize to section.space.lg (identical CSS output)
+      if (oldTokenName !== newTokenName) {
+        renames.push({
+          variableId: id,
+          oldName: oldVar.name,
+          newName: newVar.name,
+          oldTokenName,
+          newTokenName,
+          resolvedType: oldVar.resolvedType,
+          collectionName: oldVar.collectionName,
+          category: categorizeTokenFromSource(oldVar),
+          layer: oldVar.layer,
+          isBreaking: oldVar.isBreaking,
+          tokenType: 'variable',
+          confidence: 1.0 // 100% confidence because same Variable ID
+        });
+      }
     }
   }
 
@@ -571,21 +578,27 @@ function detectRenames(oldSource, newSource) {
         properties: oldStyle.properties
       });
     } else if (oldStyle.name !== newStyle.name) {
-      // Same ID, different name → renamed (ALWAYS breaking in consumption layer)
-      styleRenames.push({
-        styleId: id,
-        oldName: oldStyle.name,
-        newName: newStyle.name,
-        // Converted token names (from Figma path to dot notation)
-        oldTokenName: figmaPathToTokenName(oldStyle.name),
-        newTokenName: figmaPathToTokenName(newStyle.name),
-        type: oldStyle.type,
-        layer: oldStyle.layer,
-        isBreaking: oldStyle.isBreaking, // Typography/Effects are always semantic or component
-        tokenType: oldStyle.type,
-        category: oldStyle.type === 'typography' ? 'typography' : 'effects',
-        confidence: 1.0
-      });
+      // Same ID, different name → check if it's a real rename or just casing normalization
+      const oldTokenName = figmaPathToTokenName(oldStyle.name);
+      const newTokenName = figmaPathToTokenName(newStyle.name);
+
+      // Only add if normalized names are actually different
+      // This filters out "phantom renames" where casing differs but output is identical
+      if (oldTokenName !== newTokenName) {
+        styleRenames.push({
+          styleId: id,
+          oldName: oldStyle.name,
+          newName: newStyle.name,
+          oldTokenName,
+          newTokenName,
+          type: oldStyle.type,
+          layer: oldStyle.layer,
+          isBreaking: oldStyle.isBreaking, // Typography/Effects are always semantic or component
+          tokenType: oldStyle.type,
+          category: oldStyle.type === 'typography' ? 'typography' : 'effects',
+          confidence: 1.0
+        });
+      }
 
       // Also check if properties changed
       const propChanges = compareStyleProperties(oldStyle, newStyle);
