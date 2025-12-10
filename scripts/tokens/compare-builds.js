@@ -321,7 +321,7 @@ function toDotNotation(tokenName) {
 
   // Then convert separators to dots
   result = result
-    .replace(/[-_/]+/g, '.');  // Replace -, _, and / with .
+    .replace(/[-_]+/g, '.');  // Replace - and _ with .
 
   return result;
 }
