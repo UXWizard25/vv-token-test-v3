@@ -1675,10 +1675,11 @@ function getComponentTokenMap(componentsDir = DEFAULT_COMPONENTS_DIR) {
   }
 
   try {
-    cachedComponentMap = scanComponentTokenReferences(componentsDir);
+    // Use silent mode to avoid console output in PR comments
+    cachedComponentMap = scanComponentTokenReferences(componentsDir, { silent: true });
     return cachedComponentMap;
   } catch (error) {
-    console.log(`   ⚠️  Error scanning components: ${error.message}`);
+    // Only log errors in non-silent contexts
     return {};
   }
 }

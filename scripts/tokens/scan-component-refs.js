@@ -97,13 +97,17 @@ function findComponentCSSFiles(componentsDir) {
  * Scan all component CSS files and build token reference map
  *
  * @param {string} componentsDir - Path to components source directory
+ * @param {Object} options - { silent: boolean }
  * @returns {Object} - { componentName: { tokens: string[], file: string } }
  */
-function scanComponentTokenReferences(componentsDir = DEFAULT_COMPONENTS_DIR) {
+function scanComponentTokenReferences(componentsDir = DEFAULT_COMPONENTS_DIR, options = {}) {
+  const { silent = false } = options;
+  const log = silent ? () => {} : console.log.bind(console);
+
   const componentMap = {};
   const cssFiles = findComponentCSSFiles(componentsDir);
 
-  console.log(`🔍 Scanning ${cssFiles.length} Stencil components in ${componentsDir}...\n`);
+  log(`🔍 Scanning ${cssFiles.length} Stencil components in ${componentsDir}...\n`);
 
   for (const { componentName, cssPath } of cssFiles) {
     try {
@@ -116,9 +120,11 @@ function scanComponentTokenReferences(componentsDir = DEFAULT_COMPONENTS_DIR) {
         file: path.relative(componentsDir, cssPath)
       };
 
-      console.log(`   ✅ ${componentName}: ${tokens.length} tokens`);
+      log(`   ✅ ${componentName}: ${tokens.length} tokens`);
     } catch (error) {
-      console.warn(`   ⚠️  Error reading ${cssPath}: ${error.message}`);
+      if (!silent) {
+        console.warn(`   ⚠️  Error reading ${cssPath}: ${error.message}`);
+      }
     }
   }
 
@@ -127,10 +133,10 @@ function scanComponentTokenReferences(componentsDir = DEFAULT_COMPONENTS_DIR) {
   const totalTokenRefs = Object.values(componentMap).reduce((sum, c) => sum + c.tokenCount, 0);
   const uniqueTokens = new Set(Object.values(componentMap).flatMap(c => c.tokens));
 
-  console.log(`\n📊 Summary:`);
-  console.log(`   Components scanned: ${totalComponents}`);
-  console.log(`   Total token references: ${totalTokenRefs}`);
-  console.log(`   Unique tokens: ${uniqueTokens.size}`);
+  log(`\n📊 Summary:`);
+  log(`   Components scanned: ${totalComponents}`);
+  log(`   Total token references: ${totalTokenRefs}`);
+  log(`   Unique tokens: ${uniqueTokens.size}`);
 
   return componentMap;
 }
@@ -198,7 +204,8 @@ function findAffectedComponents(diff, componentMap) {
     // Renamed variables (old name is breaking)
     for (const rename of grouped.breaking.renamed?.variables || []) {
       const oldName = rename.oldTokenName || rename.oldName || '';
-      const newName = rename.newTokenName || rename.newName || '';
+      // Prefer CSS format (newName) over dot notation (newTokenName)
+      const newName = rename.newName || rename.newTokenName || '';
       const normalized = normalizeTokenName(oldName);
       if (normalized) {
         breakingTokens.set(normalized, {
