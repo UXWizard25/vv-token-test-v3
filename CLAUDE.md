@@ -644,6 +644,7 @@ The root `package.json` version is bumped, and all workspace packages inherit vi
 | `.github/workflows/build-tokens.yml` | Token build and artifact upload |
 | `scripts/tokens/compare-builds.js` | Diff analysis and impact level calculation |
 | `scripts/tokens/release-notes.js` | Release notes generation from diff |
+| `scripts/tokens/scan-component-refs.js` | Stencil component token reference scanner |
 
 ### Release Notes Format
 
@@ -656,6 +657,7 @@ The `release-notes.js` script generates human-readable PR comments and release n
 | **🔴 Breaking Changes** | Removed tokens (Layer 2-3) | Grouped by layer, platform tables for renames |
 | **🟡 Visual Changes** | Modified tokens | Matrix display with Delta E / % change |
 | **🟢 Safe Changes** | Added tokens + internal changes | Collapsible lists |
+| **🧩 Affected Stencil Components** | Components using changed tokens | Table + collapsible details |
 | **⚙️ Technical Details** | File lists, build stats | Collapsible details |
 
 #### Matrix Display for Multi-Context Tokens
@@ -717,6 +719,48 @@ Tokens that vary by brand/mode/breakpoint are displayed in a matrix format:
 | 📱 | xs, sm | Mobile |
 | 💻 | md | Tablet |
 | 🖥️ | lg | Desktop |
+
+#### Affected Stencil Components Section
+
+The PR comment includes an **Affected Stencil Components** section that shows which components from the Stencil library are impacted by token changes.
+
+**How it works:**
+
+1. **Scan Phase**: `scan-component-refs.js` scans all `packages/components/src/ds-*/ds-*.css` files
+2. **Extract**: Extracts all `var(--token-name)` CSS custom property references
+3. **Match**: Compares changed tokens (breaking + visual) against component references
+4. **Report**: Shows which components use tokens that changed
+
+**Example Output:**
+
+```markdown
+## 🧩 Affected Stencil Components
+
+| Component | Impact | Changed Tokens |
+|-----------|--------|----------------|
+| **ds-button** | 🔴 2 breaking | `--button-primary-bg`, `--button-border-color` |
+| **ds-card** | 🟡 3 visual | `--shadow-soft-md`, `--surface-color-primary`, +1 more |
+
+<details>
+<summary>📋 Full token list per component</summary>
+
+### ds-button
+- 🔴 `--button-primary-bg` — **removed**
+- 🔴 `--button-border-color` — **renamed** to `--button-outline-border-color`
+
+### ds-card
+- 🟡 `--shadow-soft-md` — `0 2px 8px...` → `0 4px 12px...`
+- 🟡 `--surface-color-primary` — `#FFFFFF` → `#FAFAFA`
+</details>
+```
+
+**When no components affected:**
+
+```markdown
+## 🧩 Affected Stencil Components
+
+> ✅ None of the 2 scanned Stencil components reference the changed tokens
+```
 
 ---
 
@@ -867,6 +911,8 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 | Modify color matrix display | `scripts/tokens/release-notes.js` → `generateColorMatrix()` |
 | Modify breakpoint matrix display | `scripts/tokens/release-notes.js` → `generateBreakpointMatrix()` |
 | Change visual diff indicators | `scripts/tokens/release-notes.js` → `calculateDeltaE()`, `calculateDimensionDiff()` |
+| Modify affected components detection | `scripts/tokens/scan-component-refs.js` → `findAffectedComponents()` |
+| Change component scan directory | `scripts/tokens/scan-component-refs.js` → `DEFAULT_COMPONENTS_DIR` |
 
 ---
 
