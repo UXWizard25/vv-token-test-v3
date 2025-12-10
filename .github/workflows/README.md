@@ -296,6 +296,7 @@ All packages are published with synchronized versions:
 |--------|---------|
 | `scripts/tokens/compare-builds.js` | Compares current vs baseline tokens, calculates impact level |
 | `scripts/tokens/release-notes.js` | Generates human-readable release notes from diff |
+| `scripts/tokens/scan-component-refs.js` | Scans Stencil components for token references |
 
 #### 📋 Release Notes Format
 
@@ -306,6 +307,7 @@ The release notes include structured sections with visual diff information:
 | 🔴 Breaking Changes | Removed tokens grouped by layer |
 | 🟡 Visual Changes | Modified tokens with matrix display |
 | 🟢 Safe Changes | Added tokens and internal changes |
+| 🧩 Affected Stencil Components | Components using changed tokens |
 | ⚙️ Technical Details | File lists and build stats |
 
 **Matrix Display for Multi-Context Tokens:**
@@ -336,6 +338,20 @@ Spacing tokens (brand × breakpoint):
 - 🟡 moderat (≤25% / ΔE 2-5)
 - 🟠 signifikant (≤50% / ΔE 5-10)
 - 🔴 stark (>50% / ΔE > 10)
+
+**Affected Stencil Components:**
+
+The PR comment includes an analysis of which Stencil components are affected by token changes:
+- Scans `packages/components/src/ds-*/ds-*.css` for `var(--token)` references
+- Matches changed tokens against component CSS
+- Shows breaking vs visual impact per component
+
+```
+| Component | Impact | Changed Tokens |
+|-----------|--------|----------------|
+| ds-button | 🔴 2 breaking | `--button-primary-bg`, +1 more |
+| ds-card | 🟡 3 visual | `--shadow-soft-md`, +2 more |
+```
 
 #### 🔒 Permissions
 
