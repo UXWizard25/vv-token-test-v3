@@ -13,6 +13,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
+const { toDotNotation } = require('./compare-builds');
 
 // =============================================================================
 // CONSTANTS
@@ -55,6 +56,24 @@ const LAYER_CONFIG = {
 const CONSUMPTION_LAYERS = ['semantic', 'component'];
 
 const DIST_DIR = path.join(__dirname, '../../packages/tokens/dist');
+
+// =============================================================================
+// TOKEN NAME UTILITIES
+// =============================================================================
+
+/**
+ * Get the display name for a token in release notes
+ * Prefers canonicalName (dot notation) for platform-agnostic display,
+ * falls back to displayName (CSS format) for backwards compatibility.
+ *
+ * @param {Object} token - Token object with canonicalName and/or displayName
+ * @returns {string} - The name to display
+ */
+function getTokenName(token) {
+  if (!token) return '';
+  // Prefer canonical dot notation, fallback to CSS displayName
+  return token.canonicalName || token.displayName || token.name || token.oldName || '';
+}
 
 // =============================================================================
 // VISUAL DIFF UTILITIES
@@ -183,22 +202,6 @@ function calculateDimensionDiff(oldValue, newValue) {
   return { percent: rounded, display: `${sign}${rounded}%`, icon };
 }
 
-/**
- * Detect if a value is a color
- */
-function isColorValue(value) {
-  if (!value || typeof value !== 'string') return false;
-  return value.startsWith('#') || value.startsWith('rgb');
-}
-
-/**
- * Detect if a value is a dimension (px, rem, em, etc.)
- */
-function isDimensionValue(value) {
-  if (!value || typeof value !== 'string') return false;
-  return /^-?\d+(\.\d+)?(px|rem|em|%|pt|vw|vh)?$/i.test(value.trim());
-}
-
 // =============================================================================
 // UTILITIES
 // =============================================================================
@@ -314,6 +317,7 @@ function getPlatformNamesGroupedByToken(tokens) {
 
     results.push({
       displayName: token.displayName,
+      canonicalName: token.canonicalName,
       platforms: platformMap
     });
   }
@@ -334,7 +338,7 @@ function generatePlatformNamesTable(groupedTokens) {
 
   for (const entry of groupedTokens) {
     const p = entry.platforms;
-    md += `| \`${entry.displayName}\` `;
+    md += `| \`${entry.canonicalName || entry.displayName}\` `;
     md += `| \`${p.css || '-'}\` `;
     md += `| \`${p.scss || '-'}\` `;
     md += `| \`${p.js || p.json || '-'}\` `;
@@ -349,6 +353,44 @@ function generatePlatformNamesTable(groupedTokens) {
 // =============================================================================
 // LAYER 1: EXECUTIVE SUMMARY
 // =============================================================================
+
+/**
+ * Generate a preview string showing first few token names
+ */
+function generatePreview(tokens, max = 2) {
+  if (!tokens || tokens.length === 0) return '';
+  const names = tokens.slice(0, max).map(t => `\`${getTokenName(t)}\``);
+  if (tokens.length > max) {
+    return names.join(', ') + `, ...`;
+  }
+  return names.join(', ');
+}
+
+/**
+ * Generate type breakdown string (e.g., "Variables (5), Typography (2)")
+ */
+function generateTypeBreakdown(counts) {
+  const parts = [];
+  if (counts.variables > 0) parts.push(`Variables (${counts.variables})`);
+  if (counts.typography > 0) parts.push(`Typography (${counts.typography})`);
+  if (counts.effects > 0) parts.push(`Effects (${counts.effects})`);
+  return parts.join(', ') || '–';
+}
+
+/**
+ * Generate category breakdown string for visual changes
+ */
+function generateCategoryBreakdown(grouped) {
+  const parts = [];
+  if (grouped.visual.colors.length > 0) parts.push(`Colors (${grouped.visual.colors.length})`);
+  if (grouped.visual.spacing.length > 0) parts.push(`Spacing (${grouped.visual.spacing.length})`);
+  if (grouped.visual.sizing.length > 0) parts.push(`Sizing (${grouped.visual.sizing.length})`);
+  const typoCount = grouped.visual.typography.variables.length + grouped.visual.typography.styles.length;
+  if (typoCount > 0) parts.push(`Typography (${typoCount})`);
+  const effectsCount = grouped.visual.effects.variables.length + grouped.visual.effects.styles.length;
+  if (effectsCount > 0) parts.push(`Effects (${effectsCount})`);
+  return parts.join(', ') || '–';
+}
 
 function generateExecutiveSummary(diff, options = {}) {
   const { commitSha = '', buildSuccess = true, successfulBuilds = 0, totalBuilds = 0, noBaseline = false } = options;
@@ -370,64 +412,96 @@ ${commitSha ? `**Commit**: \`${commitSha}\`` : ''}
 
   let md = `## ${impactEmoji} Token Update\n\n`;
 
-  // Collect counts
-  const uniqueModified = summary.uniqueTokensModified ?? summary.tokensModified ?? 0;
-  const uniqueAdded = summary.uniqueTokensAdded ?? summary.tokensAdded ?? 0;
-  const uniqueStylesRenamed = summary.uniqueStylesRenamed ?? 0;
+  // Use pre-grouped results if available, otherwise fall back to old logic
+  const grouped = diff.grouped;
 
-  // Calculate removed counts by layer (consumption vs primitive)
-  const removedTokens = diff?.byUniqueToken?.removed || [];
-  const breakingRemoved = removedTokens.filter(t => CONSUMPTION_LAYERS.includes(t.layer)).length;
-  const internalRemoved = removedTokens.filter(t => !CONSUMPTION_LAYERS.includes(t.layer)).length;
+  if (grouped) {
+    // New optimized summary using pre-grouped data
+    const { counts } = grouped;
+    const hasChanges = counts.breakingRemoved > 0 || counts.breakingRenamed > 0 ||
+                       counts.visualModified > 0 || counts.safeAdded > 0 || counts.internalChanges > 0;
 
-  // Calculate renamed counts by layer (consumption vs primitive)
-  const variableRenames = diff?.renames || [];
-  const breakingRenames = variableRenames.filter(r => CONSUMPTION_LAYERS.includes(r.layer)).length;
-  const internalRenames = variableRenames.filter(r => !CONSUMPTION_LAYERS.includes(r.layer)).length;
-  const totalRenames = variableRenames.length + uniqueStylesRenamed;
+    if (hasChanges) {
+      md += '### 📊 Summary\n\n';
+      md += '| Impact | Type | Count | Preview |\n';
+      md += '|--------|------|------:|--------|\n';
 
-  // Summary table with Impact classification
-  const hasChanges = uniqueAdded > 0 || uniqueModified > 0 || removedTokens.length > 0 || totalRenames > 0;
+      // Breaking: Removed
+      if (counts.breakingRemoved > 0) {
+        const removedCounts = {
+          variables: grouped.breaking.removed.variables.length,
+          typography: grouped.breaking.removed.typography.length,
+          effects: grouped.breaking.removed.effects.length
+        };
+        const allRemoved = [
+          ...grouped.breaking.removed.variables,
+          ...grouped.breaking.removed.typography,
+          ...grouped.breaking.removed.effects
+        ];
+        md += `| 🔴 Breaking | Removed | ${counts.breakingRemoved} | ${generatePreview(allRemoved)} |\n`;
+      }
 
-  if (hasChanges) {
-    md += '### 📊 Summary\n\n';
-    md += '| Change Type | Count | Impact |\n';
-    md += '|-------------|------:|--------|\n';
+      // Breaking: Renamed
+      if (counts.breakingRenamed > 0) {
+        const renamedCounts = {
+          variables: grouped.breaking.renamed.variables.length,
+          typography: grouped.breaking.renamed.typography.length,
+          effects: grouped.breaking.renamed.effects.length
+        };
+        md += `| 🔴 Breaking | Renamed | ${counts.breakingRenamed} | ${generateTypeBreakdown(renamedCounts)} |\n`;
+      }
 
-    // Order: Safe (Added, Internal) -> Visual (Modified) -> Breaking (Removed consumption, Renamed breaking)
-    if (uniqueAdded > 0) {
-      md += `| ➕ Added | ${uniqueAdded} | 🟢 Safe |\n`;
-    }
-    if (uniqueModified > 0) {
-      md += `| ✏️ Modified | ${uniqueModified} | 🟡 Visual |\n`;
-    }
-    if (breakingRemoved > 0) {
-      md += `| ➖ Removed (breaking) | ${breakingRemoved} | 🔴 Breaking |\n`;
-    }
-    if (internalRemoved > 0) {
-      md += `| ➖ Removed (internal) | ${internalRemoved} | 🟢 Safe |\n`;
-    }
-    if (breakingRenames > 0) {
-      md += `| 🔄 Renamed (breaking) | ${breakingRenames} | 🔴 Breaking |\n`;
-    }
-    if (internalRenames > 0) {
-      md += `| 🔄 Renamed (internal) | ${internalRenames} | 🟢 Safe |\n`;
-    }
+      // Visual: Modified
+      if (counts.visualModified > 0) {
+        md += `| 🟡 Visual | Modified | ${counts.visualModified} | ${generateCategoryBreakdown(grouped)} |\n`;
+      }
 
-    md += '\n';
+      // Safe: Added
+      if (counts.safeAdded > 0) {
+        const addedCounts = {
+          variables: grouped.safe.added.variables.length,
+          typography: grouped.safe.added.typography.length,
+          effects: grouped.safe.added.effects.length
+        };
+        md += `| 🟢 Safe | Added | ${counts.safeAdded} | ${generateTypeBreakdown(addedCounts)} |\n`;
+      }
 
-    // Overall risk indicator - only consumption layer changes are breaking
-    const hasBreaking = breakingRemoved > 0 || breakingRenames > 0;
-    const hasVisual = uniqueModified > 0;
-    if (hasBreaking) {
-      md += '**Overall Risk:** 🔴 Breaking Changes Detected\n\n';
-    } else if (hasVisual) {
-      md += '**Overall Risk:** 🟡 Visual Changes\n\n';
+      // Internal: Cleanup
+      if (counts.internalChanges > 0) {
+        md += `| ⚙️ Internal | Cleanup | ${counts.internalChanges} | Primitive layer only |\n`;
+      }
+
+      md += '\n';
+
+      // Overall risk indicator
+      if (counts.breakingRemoved > 0 || counts.breakingRenamed > 0) {
+        md += '**Overall Risk:** 🔴 Breaking Changes Detected\n\n';
+      } else if (counts.visualModified > 0) {
+        md += '**Overall Risk:** 🟡 Visual Changes\n\n';
+      } else {
+        md += '**Overall Risk:** 🟢 Safe (Additions Only)\n\n';
+      }
     } else {
-      md += '**Overall Risk:** 🟢 Safe (Additions Only)\n\n';
+      md += '⚪ **No token changes detected**\n\n';
     }
   } else {
-    md += '⚪ **No token changes detected**\n\n';
+    // Fallback to old logic if grouped is not available
+    const uniqueModified = summary.uniqueTokensModified ?? summary.tokensModified ?? 0;
+    const uniqueAdded = summary.uniqueTokensAdded ?? summary.tokensAdded ?? 0;
+    const uniqueRemoved = summary.uniqueTokensRemoved ?? summary.tokensRemoved ?? 0;
+    const hasChanges = uniqueAdded > 0 || uniqueModified > 0 || uniqueRemoved > 0;
+
+    if (hasChanges) {
+      md += '### 📊 Summary\n\n';
+      md += '| Type | Count |\n';
+      md += '|------|------:|\n';
+      if (uniqueRemoved > 0) md += `| 🔴 Removed | ${uniqueRemoved} |\n`;
+      if (uniqueModified > 0) md += `| 🟡 Modified | ${uniqueModified} |\n`;
+      if (uniqueAdded > 0) md += `| 🟢 Added | ${uniqueAdded} |\n`;
+      md += '\n';
+    } else {
+      md += '⚪ **No token changes detected**\n\n';
+    }
   }
 
   // Warning if no baseline available
@@ -438,25 +512,24 @@ ${commitSha ? `**Commit**: \`${commitSha}\`` : ''}
     md += '> - Source-Datei wurde in main gelöscht\n\n';
   }
 
-  // Build status
+  // Build status line
+  const statusParts = [];
   if (totalBuilds > 0) {
-    md += `**Build:** ${buildSuccess ? '✅' : '❌'} (${successfulBuilds}/${totalBuilds})`;
-    if (commitSha) md += ` | **Commit:** \`${commitSha}\``;
-    md += '\n';
+    statusParts.push(`**Build:** ${buildSuccess ? '✅' : '❌'} ${successfulBuilds}/${totalBuilds}`);
   }
 
   // Affected brands
   const brands = Object.keys(diff.byBrand || {});
   if (brands.length > 0) {
-    md += `**Brands:** ${brands.map(b => b.charAt(0).toUpperCase() + b.slice(1)).join(', ')}\n`;
+    statusParts.push(`**Brands:** ${brands.map(b => b.charAt(0).toUpperCase() + b.slice(1)).join(', ')}`);
   }
 
-  // Affected components
-  const components = Object.keys(diff.byComponent || {});
-  if (components.length > 0) {
-    const displayComponents = components.slice(0, 5);
-    const more = components.length > 5 ? ` +${components.length - 5} more` : '';
-    md += `**Components:** ${displayComponents.join(', ')}${more}\n`;
+  if (statusParts.length > 0) {
+    md += statusParts.join(' · ') + '\n';
+  }
+
+  if (commitSha) {
+    md += `**Commit:** \`${commitSha}\`\n`;
   }
 
   md += '\n---\n\n';
@@ -492,7 +565,7 @@ function generateUnifiedTokenChanges(diff, options = {}) {
 
     const displayTokens = removed.slice(0, maxTokensPerSection);
     for (const token of displayTokens) {
-      md += `| \`${token.displayName}\` | \`${token.value}\` |\n`;
+      md += `| \`${getTokenName(token)}\` | \`${token.value}\` |\n`;
     }
 
     if (removed.length > maxTokensPerSection) {
@@ -516,7 +589,7 @@ function generateUnifiedTokenChanges(diff, options = {}) {
     const displayTokens = modified.slice(0, maxTokensPerSection);
     for (const token of displayTokens) {
       const changeDisplay = formatValueChange(token.oldValue, token.newValue);
-      md += `| \`${token.displayName}\` | ${changeDisplay} |\n`;
+      md += `| \`${getTokenName(token)}\` | ${changeDisplay} |\n`;
     }
 
     if (modified.length > maxTokensPerSection) {
@@ -539,7 +612,7 @@ function generateUnifiedTokenChanges(diff, options = {}) {
 
     const displayTokens = added.slice(0, maxTokensPerSection);
     for (const token of displayTokens) {
-      md += `| \`${token.displayName}\` | \`${token.value}\` |\n`;
+      md += `| \`${getTokenName(token)}\` | \`${token.value}\` |\n`;
     }
 
     if (added.length > maxTokensPerSection) {
@@ -607,169 +680,147 @@ function generateRenamePlatformTable(renames, diff) {
 }
 
 /**
- * Generate breaking changes section - shows ONLY breaking changes
+ * Generate Breaking Changes section
+ * Uses pre-grouped data from compare-builds.js for efficiency
  * Breaking = Removed OR Renamed in consumption layer (semantic + component)
- * Internal (primitive) changes are shown in Safe Changes section
  *
- * Structure: Split by layer (Semantic, Component, Typography, Effects)
- * No table limits for breaking changes - all must be visible!
+ * Optimized structure:
+ * - Removed: Variables + Typography + Effects (no value column - tokens have multiple values)
+ * - Renamed: Variables + Typography + Effects with migration help
  */
 function generateBreakingChangesSection(diff, options = {}) {
-  // Collect removed tokens - only consumption layer
+  const grouped = diff?.grouped;
+
+  // Use pre-grouped data if available
+  if (grouped) {
+    const { breaking } = grouped;
+    const totalRemoved = breaking.removed.variables.length +
+                         breaking.removed.typography.length +
+                         breaking.removed.effects.length;
+    const totalRenamed = breaking.renamed.variables.length +
+                         breaking.renamed.typography.length +
+                         breaking.renamed.effects.length;
+
+    if (totalRemoved === 0 && totalRenamed === 0) return '';
+
+    let md = '## 🔴 Breaking Changes\n\n';
+
+    // === REMOVED SECTION ===
+    if (totalRemoved > 0) {
+      // Count by type for header
+      const typeCounts = [];
+      if (breaking.removed.variables.length > 0) typeCounts.push(`${breaking.removed.variables.length} Variables`);
+      if (breaking.removed.typography.length > 0) typeCounts.push(`${breaking.removed.typography.length} Typography`);
+      if (breaking.removed.effects.length > 0) typeCounts.push(`${breaking.removed.effects.length} Effects`);
+
+      md += `### Removed (${typeCounts.join(', ')})\n\n`;
+      md += '| Token | Layer | Category |\n';
+      md += '|-------|-------|----------|\n';
+
+      // Variables
+      for (const token of breaking.removed.variables) {
+        const layer = LAYER_CONFIG[token.layer] || LAYER_CONFIG.semantic;
+        const cat = CATEGORY_CONFIG[token.category] || CATEGORY_CONFIG.other;
+        md += `| \`${getTokenName(token)}\` | ${layer.icon} ${layer.label} | ${cat.icon} ${cat.label} |\n`;
+      }
+
+      // Typography styles
+      for (const style of breaking.removed.typography) {
+        md += `| \`${style.name}\` | 🎯 Semantic | 📝 Typography |\n`;
+      }
+
+      // Effect styles
+      for (const style of breaking.removed.effects) {
+        md += `| \`${style.name}\` | 🎯 Semantic | ✨ Effects |\n`;
+      }
+
+      md += '\n';
+    }
+
+    // === RENAMED SECTION ===
+    if (totalRenamed > 0) {
+      // Count by type for header
+      const typeCounts = [];
+      if (breaking.renamed.variables.length > 0) typeCounts.push(`${breaking.renamed.variables.length} Variables`);
+      if (breaking.renamed.typography.length > 0) typeCounts.push(`${breaking.renamed.typography.length} Typography`);
+      if (breaking.renamed.effects.length > 0) typeCounts.push(`${breaking.renamed.effects.length} Effects`);
+
+      md += `### Renamed (${typeCounts.join(', ')})\n\n`;
+      md += '| Old Name | → | New Name | Type |\n';
+      md += '|----------|:-:|----------|------|\n';
+
+      // Variables
+      for (const rename of breaking.renamed.variables) {
+        md += `| \`${toDotNotation(rename.oldName)}\` | → | \`${toDotNotation(rename.newName)}\` | 🎨 Variable |\n`;
+      }
+
+      // Typography styles
+      for (const rename of breaking.renamed.typography) {
+        md += `| \`${toDotNotation(rename.oldName)}\` | → | \`${toDotNotation(rename.newName)}\` | 📝 Typography |\n`;
+      }
+
+      // Effect styles
+      for (const rename of breaking.renamed.effects) {
+        md += `| \`${toDotNotation(rename.oldName)}\` | → | \`${toDotNotation(rename.newName)}\` | ✨ Effect |\n`;
+      }
+
+      md += '\n';
+
+      // Migration commands
+      const allRenames = [
+        ...breaking.renamed.variables,
+        ...breaking.renamed.typography,
+        ...breaking.renamed.effects
+      ];
+
+      md += '<details>\n<summary>📋 Migration Commands</summary>\n\n';
+      md += '```bash\n# Find & Replace:\n';
+      for (const rename of allRenames.slice(0, 15)) {
+        md += `${toDotNotation(rename.oldName)} → ${toDotNotation(rename.newName)}\n`;
+      }
+      if (allRenames.length > 15) {
+        md += `# ... and ${allRenames.length - 15} more\n`;
+      }
+      md += '```\n\n</details>\n\n';
+    }
+
+    md += '---\n\n';
+    return md;
+  }
+
+  // Fallback to old logic if grouped is not available
   const allRemovedTokens = diff?.byUniqueToken?.removed || [];
   const breakingRemovedTokens = allRemovedTokens.filter(t => CONSUMPTION_LAYERS.includes(t.layer));
-
-  // Split removed by layer
-  const removedSemantic = breakingRemovedTokens.filter(t => t.layer === 'semantic');
-  const removedComponent = breakingRemovedTokens.filter(t => t.layer === 'component');
-
-  // Collect removed combined tokens (Typography + Effects styles)
-  const removedTypography = diff?.styleChanges?.typography?.removed || [];
-  const removedEffects = diff?.styleChanges?.effects?.removed || [];
-
-  // Collect breaking renames - only consumption layer
   const variableRenames = diff?.renames || [];
-  const styleRenames = diff?.styleRenames || [];
   const breakingVariableRenames = variableRenames.filter(r => CONSUMPTION_LAYERS.includes(r.layer));
-  const breakingStyleRenames = styleRenames.filter(r => CONSUMPTION_LAYERS.includes(r.layer));
 
-  // Split renames by layer
-  const renamesSemantic = breakingVariableRenames.filter(r => r.layer === 'semantic');
-  const renamesComponent = breakingVariableRenames.filter(r => r.layer === 'component');
-
-  const totalBreakingRenames = breakingVariableRenames.length + breakingStyleRenames.length;
-  const hasBreakingChanges = breakingRemovedTokens.length > 0 ||
-    removedTypography.length > 0 || removedEffects.length > 0 || totalBreakingRenames > 0;
-
-  if (!hasBreakingChanges) return '';
+  if (breakingRemovedTokens.length === 0 && breakingVariableRenames.length === 0) return '';
 
   let md = '## 🔴 Breaking Changes\n\n';
-  md += '> ⚠️ **These changes require code updates**\n\n';
 
-  // === REMOVED TOKENS BY LAYER ===
   if (breakingRemovedTokens.length > 0) {
-    md += `### ➖ Removed Tokens (${breakingRemovedTokens.length})\n\n`;
-
-    // Semantic Layer
-    if (removedSemantic.length > 0) {
-      md += `#### 🎯 Semantic (${removedSemantic.length})\n\n`;
-      md += '| Token | Previous Value | Category |\n';
-      md += '|-------|----------------|----------|\n';
-      for (const token of removedSemantic) {
-        const cat = CATEGORY_CONFIG[categorizeTokenForDisplay(token.displayName, token.value)] || CATEGORY_CONFIG.other;
-        md += `| \`${token.displayName}\` | \`${token.value}\` | ${cat.icon} ${cat.label} |\n`;
-      }
-      md += '\n';
-    }
-
-    // Component Layer
-    if (removedComponent.length > 0) {
-      md += `#### 🧩 Component (${removedComponent.length})\n\n`;
-      md += '| Token | Previous Value | Category |\n';
-      md += '|-------|----------------|----------|\n';
-      for (const token of removedComponent) {
-        const cat = CATEGORY_CONFIG[categorizeTokenForDisplay(token.displayName, token.value)] || CATEGORY_CONFIG.other;
-        md += `| \`${token.displayName}\` | \`${token.value}\` | ${cat.icon} ${cat.label} |\n`;
-      }
-      md += '\n';
-    }
-  }
-
-  // === REMOVED TYPOGRAPHY STYLES ===
-  if (removedTypography.length > 0) {
-    md += `#### 📝 Typography Styles (${removedTypography.length})\n\n`;
-    md += '| Style Name |\n';
-    md += '|------------|\n';
-    for (const style of removedTypography) {
-      md += `| \`${style.name}\` |\n`;
+    md += `### Removed (${breakingRemovedTokens.length})\n\n`;
+    md += '| Token | Layer | Category |\n';
+    md += '|-------|-------|----------|\n';
+    for (const token of breakingRemovedTokens) {
+      const layer = LAYER_CONFIG[token.layer] || LAYER_CONFIG.semantic;
+      const cat = CATEGORY_CONFIG[token.category] || CATEGORY_CONFIG.other;
+      md += `| \`${getTokenName(token)}\` | ${layer.icon} ${layer.label} | ${cat.icon} ${cat.label} |\n`;
     }
     md += '\n';
   }
 
-  // === REMOVED EFFECTS ===
-  if (removedEffects.length > 0) {
-    md += `#### ✨ Effects (${removedEffects.length})\n\n`;
-    md += '| Style Name |\n';
-    md += '|------------|\n';
-    for (const style of removedEffects) {
-      md += `| \`${style.name}\` |\n`;
+  if (breakingVariableRenames.length > 0) {
+    md += `### Renamed (${breakingVariableRenames.length})\n\n`;
+    md += '| Old Name | → | New Name |\n';
+    md += '|----------|:-:|----------|\n';
+    for (const rename of breakingVariableRenames) {
+      md += `| \`${toDotNotation(rename.oldName)}\` | → | \`${toDotNotation(rename.newName)}\` |\n`;
     }
     md += '\n';
-  }
-
-  // === RENAMED TOKENS BY LAYER ===
-  if (totalBreakingRenames > 0) {
-    md += `### 🔄 Renamed Tokens (${totalBreakingRenames})\n\n`;
-
-    // Semantic Layer Renames
-    if (renamesSemantic.length > 0) {
-      md += `#### 🎯 Semantic (${renamesSemantic.length})\n\n`;
-      md += '| Old Name | → | New Name | Category |\n';
-      md += '|----------|:-:|----------|----------|\n';
-      for (const rename of renamesSemantic) {
-        const catConfig = CATEGORY_CONFIG[rename.category] || CATEGORY_CONFIG.other;
-        md += `| \`${rename.oldName}\` | → | \`${rename.newName}\` | ${catConfig.icon} |\n`;
-      }
-      md += generateRenamePlatformTable(renamesSemantic, diff);
-      md += '\n';
-    }
-
-    // Component Layer Renames
-    if (renamesComponent.length > 0) {
-      md += `#### 🧩 Component (${renamesComponent.length})\n\n`;
-      md += '| Old Name | → | New Name | Category |\n';
-      md += '|----------|:-:|----------|----------|\n';
-      for (const rename of renamesComponent) {
-        const catConfig = CATEGORY_CONFIG[rename.category] || CATEGORY_CONFIG.other;
-        md += `| \`${rename.oldName}\` | → | \`${rename.newName}\` | ${catConfig.icon} |\n`;
-      }
-      md += generateRenamePlatformTable(renamesComponent, diff);
-      md += '\n';
-    }
-
-    // Style Renames (Typography + Effects)
-    if (breakingStyleRenames.length > 0) {
-      const typoRenames = breakingStyleRenames.filter(r => r.type === 'typography');
-      const effectRenames = breakingStyleRenames.filter(r => r.type === 'effects');
-
-      if (typoRenames.length > 0) {
-        md += `#### 📝 Typography Styles (${typoRenames.length})\n\n`;
-        md += '| Old Name | → | New Name |\n';
-        md += '|----------|:-:|----------|\n';
-        for (const rename of typoRenames) {
-          md += `| \`${rename.oldName}\` | → | \`${rename.newName}\` |\n`;
-        }
-        md += '\n';
-      }
-
-      if (effectRenames.length > 0) {
-        md += `#### ✨ Effects (${effectRenames.length})\n\n`;
-        md += '| Old Name | → | New Name |\n';
-        md += '|----------|:-:|----------|\n';
-        for (const rename of effectRenames) {
-          md += `| \`${rename.oldName}\` | → | \`${rename.newName}\` |\n`;
-        }
-        md += '\n';
-      }
-    }
-  }
-
-  // Migration help for all breaking changes
-  const allBreakingRenames = [...breakingVariableRenames, ...breakingStyleRenames];
-  if (allBreakingRenames.length > 0) {
-    md += '<details>\n<summary>📋 Migration Commands</summary>\n\n';
-    md += '```bash\n# Find & Replace suggestions:\n';
-    for (const rename of allBreakingRenames.slice(0, 15)) {
-      md += `# ${rename.oldName} → ${rename.newName}\n`;
-    }
-    if (allBreakingRenames.length > 15) {
-      md += `# ... and ${allBreakingRenames.length - 15} more\n`;
-    }
-    md += '```\n\n</details>\n\n';
   }
 
   md += '---\n\n';
-
   return md;
 }
 
@@ -783,8 +834,28 @@ const KNOWN_MODES = ['light', 'dark'];
 const KNOWN_BREAKPOINTS = ['xs', 'sm', 'md', 'lg'];
 
 /**
+ * Format a color change with inline delta
+ * Output: `#232629`→`#1a1c1e` 🟡4.9
+ */
+function formatColorChangeInline(oldVal, newVal) {
+  const deltaE = calculateDeltaE(oldVal, newVal);
+  const deltaStr = deltaE ? ` ${deltaE.icon}${deltaE.deltaE}` : '';
+  return `\`${oldVal}\`→\`${newVal}\`${deltaStr}`;
+}
+
+/**
+ * Format a dimension change with inline delta
+ * Output: `8px`→`12px` 🟠+50%
+ */
+function formatDimensionChangeInline(oldVal, newVal) {
+  const dimDiff = calculateDimensionDiff(oldVal, newVal);
+  const diffStr = dimDiff ? ` ${dimDiff.icon}${dimDiff.display}` : '';
+  return `\`${oldVal}\`→\`${newVal}\`${diffStr}`;
+}
+
+/**
  * Generate a color matrix table for a single token
- * Shows actual values with change arrows, compact delta summary below
+ * Shows actual values with inline delta (no separate summary line)
  * Rows: modes (light/dark), Columns: brands
  */
 function generateColorMatrix(token) {
@@ -809,59 +880,41 @@ function generateColorMatrix(token) {
 
   // If we only have modes (no brand differentiation)
   if (brandList.length === 0 && modeList.length > 1) {
-    let md = `**\`${token.displayName}\`**\n\n`;
+    let md = `**\`${getTokenName(token)}\`**\n\n`;
     md += '| Mode | Change |\n';
     md += '|------|--------|\n';
 
-    const deltaInfos = [];
     for (const mode of modeList) {
       const ctx = contexts[mode] || contexts[`/${mode}`];
       if (ctx) {
-        const deltaE = calculateDeltaE(ctx.old, ctx.new);
-        if (deltaE) deltaInfos.push({ mode, ...deltaE });
-        md += `| ${mode} | \`${ctx.old}\` → \`${ctx.new}\` |\n`;
+        const modeLabel = mode === 'light' ? '☀️' : '🌙';
+        md += `| ${modeLabel} ${mode} | ${formatColorChangeInline(ctx.old, ctx.new)} |\n`;
       }
-    }
-
-    // Compact delta summary
-    if (deltaInfos.length > 0) {
-      const deltaStr = deltaInfos.map(d => `${d.mode}: ${d.icon} ΔE ${d.deltaE}`).join(' · ');
-      md += `\n> ${deltaStr}\n`;
     }
     return md + '\n';
   }
 
   // Full matrix: brands × modes
   if (brandList.length > 0 && modeList.length > 0) {
-    let md = `**\`${token.displayName}\`**\n\n`;
-    md += '| | ' + brandList.map(b => b.charAt(0).toUpperCase() + b.slice(1)).join(' | ') + ' |\n';
-    md += '|---' + brandList.map(() => '|---').join('') + '|\n';
+    let md = `**\`${getTokenName(token)}\`**\n\n`;
+    md += '| Brand | ' + modeList.map(m => m === 'light' ? '☀️ Light' : '🌙 Dark').join(' | ') + ' |\n';
+    md += '|---' + modeList.map(() => '|---').join('') + '|\n';
 
-    const deltaInfos = [];
-
-    for (const mode of modeList) {
-      const modeLabel = mode === 'light' ? '☀️' : '🌙';
-      const cells = brandList.map(brand => {
+    // Rows are now brands, columns are modes (more compact when brands differ)
+    for (const brand of brandList) {
+      const cells = modeList.map(mode => {
         const key = `${brand}/${mode}`;
         const ctx = contexts[key];
         if (!ctx) return '–';
-
-        const deltaE = calculateDeltaE(ctx.old, ctx.new);
-        if (deltaE) {
-          deltaInfos.push({ brand, mode, ...deltaE });
-        }
-        // Show values with icon prefix
-        return `${deltaE?.icon || '🟡'} \`${ctx.old}\` → \`${ctx.new}\``;
+        return formatColorChangeInline(ctx.old, ctx.new);
       });
-      md += `| ${modeLabel} ${mode} | ${cells.join(' | ')} |\n`;
-    }
 
-    // Compact delta summary line
-    if (deltaInfos.length > 0) {
-      const deltaStr = deltaInfos
-        .map(d => `${d.brand}/${d.mode}: ΔE ${d.deltaE} (${d.perception})`)
-        .join(' · ');
-      md += `\n> 📊 ${deltaStr}\n`;
+      // Only show row if at least one cell has a change
+      const hasChange = cells.some(c => c !== '–');
+      if (hasChange) {
+        const brandLabel = brand.charAt(0).toUpperCase() + brand.slice(1);
+        md += `| ${brandLabel} | ${cells.join(' | ')} |\n`;
+      }
     }
 
     return md + '\n';
@@ -899,35 +952,31 @@ function generateBreakpointMatrix(token) {
 
   // If we only have breakpoints (no brand differentiation)
   if (brandList.length === 0 && bpList.length > 1) {
-    let md = `**\`${token.displayName}\`**\n\n`;
+    let md = `**\`${getTokenName(token)}\`**\n\n`;
     md += '| BP | Change |\n';
     md += '|----|--------|\n';
 
-    const diffInfos = [];
+    let hasChanges = false;
     for (const bp of bpList) {
       const ctx = contexts[bp] || contexts[`/${bp}`];
       if (ctx) {
-        const dimDiff = calculateDimensionDiff(ctx.old, ctx.new);
-        if (dimDiff) diffInfos.push({ bp, ...dimDiff });
-        md += `| ${bpLabels[bp] || ''} ${bp} | \`${ctx.old}\` → \`${ctx.new}\` |\n`;
+        hasChanges = true;
+        // Inline delta format
+        md += `| ${bpLabels[bp] || ''} ${bp} | ${formatDimensionChangeInline(ctx.old, ctx.new)} |\n`;
       }
     }
 
-    // Compact diff summary
-    if (diffInfos.length > 0) {
-      const diffStr = diffInfos.map(d => `${d.bp}: ${d.icon} ${d.display}`).join(' · ');
-      md += `\n> ${diffStr}\n`;
-    }
+    if (!hasChanges) return null;
     return md + '\n';
   }
 
-  // Full matrix: brands × breakpoints
+  // Full matrix: brands × breakpoints (supports bild, sportbild, advertorial)
   if (brandList.length > 0 && bpList.length > 1) {
-    let md = `**\`${token.displayName}\`**\n\n`;
+    let md = `**\`${getTokenName(token)}\`**\n\n`;
     md += '| | ' + brandList.map(b => b.charAt(0).toUpperCase() + b.slice(1)).join(' | ') + ' |\n';
     md += '|---' + brandList.map(() => '|---').join('') + '|\n';
 
-    const diffInfos = [];
+    let rowsWithChanges = 0;
 
     for (const bp of bpList) {
       const cells = brandList.map(brand => {
@@ -935,24 +984,19 @@ function generateBreakpointMatrix(token) {
         const ctx = contexts[key];
         if (!ctx) return '–';
 
-        const dimDiff = calculateDimensionDiff(ctx.old, ctx.new);
-        if (dimDiff) {
-          diffInfos.push({ brand, bp, ...dimDiff, old: ctx.old, new: ctx.new });
-        }
-        // Show values with icon prefix
-        return `${dimDiff?.icon || '🟡'} \`${ctx.old}\` → \`${ctx.new}\``;
+        // Inline delta format: `12px`→`16px` 🟠+33%
+        return formatDimensionChangeInline(ctx.old, ctx.new);
       });
-      md += `| ${bpLabels[bp] || ''} ${bp} | ${cells.join(' | ')} |\n`;
+
+      // Only add row if at least one cell has a change
+      const hasChange = cells.some(c => c !== '–');
+      if (hasChange) {
+        md += `| ${bpLabels[bp] || ''} ${bp} | ${cells.join(' | ')} |\n`;
+        rowsWithChanges++;
+      }
     }
 
-    // Compact diff summary line
-    if (diffInfos.length > 0) {
-      const diffStr = diffInfos
-        .map(d => `${d.brand}/${d.bp}: ${d.display}`)
-        .join(' · ');
-      md += `\n> 📊 ${diffStr}\n`;
-    }
-
+    if (rowsWithChanges === 0) return null;
     return md + '\n';
   }
 
@@ -961,17 +1005,14 @@ function generateBreakpointMatrix(token) {
 
 /**
  * Generate simple row for token without multiple contexts
+ * Uses inline delta format for consistency
  */
 function generateSimpleColorRow(token) {
-  const deltaE = calculateDeltaE(token.oldValue, token.newValue);
-  const diffInfo = deltaE ? `${deltaE.icon} ΔE=${deltaE.deltaE} (${deltaE.perception})` : '';
-  return `| \`${token.displayName}\` | \`${token.oldValue}\` → \`${token.newValue}\` | ${diffInfo} |\n`;
+  return `| \`${getTokenName(token)}\` | ${formatColorChangeInline(token.oldValue, token.newValue)} |\n`;
 }
 
 function generateSimpleDimensionRow(token) {
-  const dimDiff = calculateDimensionDiff(token.oldValue, token.newValue);
-  const diffDisplay = dimDiff ? `${dimDiff.icon} ${dimDiff.display}` : '';
-  return `| \`${token.displayName}\` | \`${token.oldValue}\` → \`${token.newValue}\` | ${diffDisplay} |\n`;
+  return `| \`${getTokenName(token)}\` | ${formatDimensionChangeInline(token.oldValue, token.newValue)} |\n`;
 }
 
 /**
@@ -982,8 +1023,10 @@ function generateSimpleDimensionRow(token) {
 function generateVisualChangesSection(diff, options = {}) {
   const { maxTokens = 12 } = options;
 
-  // Get modified tokens (only atomic value changes, no combined tokens)
-  const modifiedTokens = diff?.byUniqueToken?.modified || [];
+  // Get modified tokens (only consumption layer - semantic + component)
+  // Primitive layer modifications are shown in Internal Changes
+  const allModified = diff?.byUniqueToken?.modified || [];
+  const modifiedTokens = allModified.filter(t => CONSUMPTION_LAYERS.includes(t.layer));
   if (modifiedTokens.length === 0) return '';
 
   // Separate tokens with multiple contexts from simple tokens
@@ -997,7 +1040,7 @@ function generateVisualChangesSection(diff, options = {}) {
   };
 
   for (const token of modifiedTokens) {
-    const category = categorizeTokenForDisplay(token.displayName, token.oldValue);
+    const category = token.category || 'other';
     const hasMultiple = token.hasMultipleContexts && Object.keys(token.valuesByContext || {}).length > 1;
 
     if (category === 'other') {
@@ -1027,15 +1070,15 @@ function generateVisualChangesSection(diff, options = {}) {
       }
     }
 
-    // Simple tokens in table
+    // Simple tokens in table (2-column with inline delta)
     if (byCategory.colors.simple.length > 0) {
-      md += '| Token | Change | Visual Diff |\n';
-      md += '|-------|--------|-------------|\n';
+      md += '| Token | Change |\n';
+      md += '|-------|--------|\n';
       for (const token of byCategory.colors.simple.slice(0, maxTokens)) {
         md += generateSimpleColorRow(token);
       }
       if (byCategory.colors.simple.length > maxTokens) {
-        md += `| ... | *${byCategory.colors.simple.length - maxTokens} more* | |\n`;
+        md += `| ... | *${byCategory.colors.simple.length - maxTokens} more* |\n`;
       }
       md += '\n';
     }
@@ -1054,13 +1097,13 @@ function generateVisualChangesSection(diff, options = {}) {
     }
 
     if (byCategory.typography.simple.length > 0) {
-      md += '| Token | Change | Diff |\n';
-      md += '|-------|--------|------|\n';
+      md += '| Token | Change |\n';
+      md += '|-------|--------|\n';
       for (const token of byCategory.typography.simple.slice(0, maxTokens)) {
         md += generateSimpleDimensionRow(token);
       }
       if (byCategory.typography.simple.length > maxTokens) {
-        md += `| ... | *${byCategory.typography.simple.length - maxTokens} more* | |\n`;
+        md += `| ... | *${byCategory.typography.simple.length - maxTokens} more* |\n`;
       }
       md += '\n';
     }
@@ -1079,13 +1122,13 @@ function generateVisualChangesSection(diff, options = {}) {
     }
 
     if (byCategory.spacing.simple.length > 0) {
-      md += '| Token | Change | Diff |\n';
-      md += '|-------|--------|------|\n';
+      md += '| Token | Change |\n';
+      md += '|-------|--------|\n';
       for (const token of byCategory.spacing.simple.slice(0, maxTokens)) {
         md += generateSimpleDimensionRow(token);
       }
       if (byCategory.spacing.simple.length > maxTokens) {
-        md += `| ... | *${byCategory.spacing.simple.length - maxTokens} more* | |\n`;
+        md += `| ... | *${byCategory.spacing.simple.length - maxTokens} more* |\n`;
       }
       md += '\n';
     }
@@ -1104,13 +1147,13 @@ function generateVisualChangesSection(diff, options = {}) {
     }
 
     if (byCategory.sizing.simple.length > 0) {
-      md += '| Token | Change | Diff |\n';
-      md += '|-------|--------|------|\n';
+      md += '| Token | Change |\n';
+      md += '|-------|--------|\n';
       for (const token of byCategory.sizing.simple.slice(0, maxTokens)) {
         md += generateSimpleDimensionRow(token);
       }
       if (byCategory.sizing.simple.length > maxTokens) {
-        md += `| ... | *${byCategory.sizing.simple.length - maxTokens} more* | |\n`;
+        md += `| ... | *${byCategory.sizing.simple.length - maxTokens} more* |\n`;
       }
       md += '\n';
     }
@@ -1125,7 +1168,7 @@ function generateVisualChangesSection(diff, options = {}) {
 
     const allEffects = [...byCategory.effects.matrix, ...byCategory.effects.simple];
     for (const token of allEffects.slice(0, maxTokens)) {
-      md += `| \`${token.displayName}\` | \`${token.oldValue}\` → \`${token.newValue}\` |\n`;
+      md += `| \`${getTokenName(token)}\` | \`${token.oldValue}\` → \`${token.newValue}\` |\n`;
     }
     if (allEffects.length > maxTokens) {
       md += `| ... | *${allEffects.length - maxTokens} more* |\n`;
@@ -1140,7 +1183,7 @@ function generateVisualChangesSection(diff, options = {}) {
     md += '|-------|--------|\n';
 
     for (const token of byCategory.other.simple.slice(0, maxTokens)) {
-      md += `| \`${token.displayName}\` | \`${token.oldValue}\` → \`${token.newValue}\` |\n`;
+      md += `| \`${getTokenName(token)}\` | \`${token.oldValue}\` → \`${token.newValue}\` |\n`;
     }
     md += '\n</details>\n\n';
   }
@@ -1155,32 +1198,47 @@ function generateVisualChangesSection(diff, options = {}) {
 
 /**
  * Generate safe changes section - combines added tokens and internal (primitive) changes
+ * Includes Combined Tokens (Typography Styles, Effects Styles)
  */
 function generateSafeChangesSection(diff, options = {}) {
   const { maxTokens = 10 } = options;
 
-  // Get added tokens
-  const addedTokens = diff?.byUniqueToken?.added || [];
+  // Use pre-grouped data if available, otherwise fallback
+  const grouped = diff?.grouped?.safe;
 
-  // Get internal changes (from breaking changes section data)
+  // Get added tokens (variables)
+  const addedTokens = grouped?.added?.variables || diff?.byUniqueToken?.added || [];
+
+  // Get added combined tokens
+  const addedTypography = grouped?.added?.typography || [];
+  const addedEffects = grouped?.added?.effects || [];
+
+  // Get internal changes (primitive layer - no consumer impact)
   const allRemovedTokens = diff?.byUniqueToken?.removed || [];
-  const internalRemovedTokens = allRemovedTokens.filter(t => !CONSUMPTION_LAYERS.includes(t.layer));
+  const internalRemovedTokens = grouped?.internal?.removed ||
+    allRemovedTokens.filter(t => !CONSUMPTION_LAYERS.includes(t.layer));
+
+  // Get internal modified tokens (primitive layer modifications)
+  const allModifiedTokens = diff?.byUniqueToken?.modified || [];
+  const internalModifiedTokens = grouped?.internal?.modified ||
+    allModifiedTokens.filter(t => !CONSUMPTION_LAYERS.includes(t.layer));
 
   const variableRenames = diff?.renames || [];
   const nonBreakingRenames = variableRenames.filter(r => !CONSUMPTION_LAYERS.includes(r.layer));
 
-  const hasAdded = addedTokens.length > 0;
-  const hasInternal = internalRemovedTokens.length > 0 || nonBreakingRenames.length > 0;
+  const totalAdded = addedTokens.length + addedTypography.length + addedEffects.length;
+  const hasAdded = totalAdded > 0;
+  const hasInternal = internalRemovedTokens.length > 0 || internalModifiedTokens.length > 0 || nonBreakingRenames.length > 0;
 
   if (!hasAdded && !hasInternal) return '';
 
   let md = '## 🟢 Safe Changes\n\n';
 
-  // Added Tokens grouped by category
+  // Added Tokens section
   if (hasAdded) {
-    md += `### ➕ Added Tokens (${addedTokens.length})\n\n`;
+    md += `### ➕ Added Tokens (${totalAdded})\n\n`;
 
-    // Group by category
+    // Group variable tokens by category
     const byCategory = {
       colors: [],
       typography: [],
@@ -1191,7 +1249,7 @@ function generateSafeChangesSection(diff, options = {}) {
     };
 
     for (const token of addedTokens) {
-      const category = categorizeTokenForDisplay(token.displayName, token.value);
+      const category = token.category || 'other';
       if (byCategory[category]) {
         byCategory[category].push(token);
       } else {
@@ -1199,6 +1257,7 @@ function generateSafeChangesSection(diff, options = {}) {
       }
     }
 
+    // Variable tokens by category
     for (const [category, tokens] of Object.entries(byCategory)) {
       if (tokens.length === 0) continue;
 
@@ -1208,7 +1267,7 @@ function generateSafeChangesSection(diff, options = {}) {
       md += '|-------|-------|\n';
 
       for (const token of tokens.slice(0, maxTokens)) {
-        md += `| \`${token.displayName}\` | \`${token.value}\` |\n`;
+        md += `| \`${getTokenName(token)}\` | \`${token.value}\` |\n`;
       }
 
       if (tokens.length > maxTokens) {
@@ -1217,13 +1276,66 @@ function generateSafeChangesSection(diff, options = {}) {
 
       md += '\n</details>\n\n';
     }
+
+    // Added Typography Styles (Combined Tokens)
+    if (addedTypography.length > 0) {
+      md += `<details>\n<summary>📝 Typography Styles (${addedTypography.length})</summary>\n\n`;
+      md += '| Style Name | Properties |\n';
+      md += '|------------|------------|\n';
+
+      for (const style of addedTypography.slice(0, maxTokens)) {
+        const styleName = style.newName || style.name || 'Unknown';
+        const props = style.properties ? Object.keys(style.properties).join(', ') : '–';
+        md += `| \`${styleName}\` | ${props} |\n`;
+      }
+
+      if (addedTypography.length > maxTokens) {
+        md += `| ... | *${addedTypography.length - maxTokens} more* |\n`;
+      }
+
+      md += '\n</details>\n\n';
+    }
+
+    // Added Effects Styles (Combined Tokens)
+    if (addedEffects.length > 0) {
+      md += `<details>\n<summary>✨ Effects Styles (${addedEffects.length})</summary>\n\n`;
+      md += '| Style Name | Type |\n';
+      md += '|------------|------|\n';
+
+      for (const style of addedEffects.slice(0, maxTokens)) {
+        const styleName = style.newName || style.name || 'Unknown';
+        const effectType = style.effectType || '–';
+        md += `| \`${styleName}\` | ${effectType} |\n`;
+      }
+
+      if (addedEffects.length > maxTokens) {
+        md += `| ... | *${addedEffects.length - maxTokens} more* |\n`;
+      }
+
+      md += '\n</details>\n\n';
+    }
   }
 
   // Internal Changes (Primitive Layer)
   if (hasInternal) {
-    const totalInternal = internalRemovedTokens.length + nonBreakingRenames.length;
+    const totalInternal = internalRemovedTokens.length + internalModifiedTokens.length + nonBreakingRenames.length;
     md += `### 🔧 Internal Changes (${totalInternal})\n\n`;
-    md += '<details>\n<summary>Primitive layer cleanup (no consumer impact)</summary>\n\n';
+    md += '<details>\n<summary>Primitive layer changes (no consumer impact)</summary>\n\n';
+
+    if (internalModifiedTokens.length > 0) {
+      md += `**Modified (${internalModifiedTokens.length}):**\n\n`;
+      md += '| Token | Change |\n';
+      md += '|-------|--------|\n';
+
+      for (const token of internalModifiedTokens.slice(0, maxTokens)) {
+        md += `| \`${getTokenName(token)}\` | ${formatDimensionChangeInline(token.oldValue, token.newValue)} |\n`;
+      }
+
+      if (internalModifiedTokens.length > maxTokens) {
+        md += `| ... | *${internalModifiedTokens.length - maxTokens} more* |\n`;
+      }
+      md += '\n';
+    }
 
     if (internalRemovedTokens.length > 0) {
       md += `**Removed (${internalRemovedTokens.length}):**\n\n`;
@@ -1231,7 +1343,7 @@ function generateSafeChangesSection(diff, options = {}) {
       md += '|-------|----------------|\n';
 
       for (const token of internalRemovedTokens.slice(0, maxTokens)) {
-        md += `| \`${token.displayName}\` | \`${token.value}\` |\n`;
+        md += `| \`${getTokenName(token)}\` | \`${token.value}\` |\n`;
       }
 
       if (internalRemovedTokens.length > maxTokens) {
@@ -1260,37 +1372,6 @@ function generateSafeChangesSection(diff, options = {}) {
 
   md += '---\n\n';
   return md;
-}
-
-/**
- * Helper to categorize token for display (used for removed tokens)
- */
-function categorizeTokenForDisplay(tokenName, value) {
-  const name = (tokenName || '').toLowerCase();
-
-  // Color detection by value
-  if (typeof value === 'string' && (value.startsWith('#') || value.startsWith('rgb'))) {
-    return 'colors';
-  }
-
-  // Name-based detection
-  if (/color|bg|background|foreground|fill|stroke|text-color|surface|accent/i.test(name)) {
-    return 'colors';
-  }
-  if (/font-?size|line-?height|letter-?spacing|font-?weight|font-?family|typography/i.test(name)) {
-    return 'typography';
-  }
-  if (/space|gap|inline|stack|inset|margin|padding/i.test(name)) {
-    return 'spacing';
-  }
-  if (/shadow|effect|elevation|blur/i.test(name)) {
-    return 'effects';
-  }
-  if (/size|width|height|radius|border-radius/i.test(name)) {
-    return 'sizing';
-  }
-
-  return 'other';
 }
 
 /**
@@ -1392,157 +1473,6 @@ function generateStyleChangesSection(diff, options = {}) {
   return md;
 }
 
-// =============================================================================
-// LAYER 2c: CATEGORIZED CHANGES (Consumption Layer Only)
-// =============================================================================
-
-/**
- * Filter tokens to only include consumption layer (semantic + component)
- */
-function filterConsumptionLayer(tokens) {
-  if (!tokens) return [];
-  return tokens.filter(t => CONSUMPTION_LAYERS.includes(t.layer) || !t.layer);
-}
-
-/**
- * Generate categorized changes section - groups changes by token category
- * Only shows consumption layer tokens (semantic + component), not primitives
- */
-function generateCategorizedChangesSection(diff, options = {}) {
-  if (!diff || !diff.byCategory) return '';
-
-  const { maxTokensPerCategory = 10 } = options;
-  let md = '## 📊 Changes by Category\n\n';
-  md += '> 🎯 Showing Modified & Added tokens (Removed tokens are in Breaking Changes above)\n\n';
-  let hasChanges = false;
-
-  for (const category of CATEGORY_ORDER) {
-    const catData = diff.byCategory[category];
-    if (!catData) continue;
-
-    // Filter to only consumption layer tokens
-    // Note: Removed tokens are shown in Breaking Changes section, not here
-    const modified = filterConsumptionLayer(catData.modified || []);
-    const added = filterConsumptionLayer(catData.added || []);
-    const total = modified.length + added.length;
-
-    if (total === 0) continue;
-    hasChanges = true;
-
-    const config = CATEGORY_CONFIG[category];
-    md += `<details>\n<summary>${config.icon} <b>${config.label}</b> (${total} changes)</summary>\n\n`;
-
-    // Modified
-    if (modified.length > 0) {
-      md += `**Modified (${modified.length}):**\n\n`;
-      md += '| Token | Old | New |\n|-------|-----|-----|\n';
-      for (const token of modified.slice(0, maxTokensPerCategory)) {
-        md += `| \`${token.displayName}\` | \`${token.oldValue}\` | \`${token.newValue}\` |\n`;
-      }
-      if (modified.length > maxTokensPerCategory) {
-        md += `| ... | *${modified.length - maxTokensPerCategory} more* | |\n`;
-      }
-      md += '\n';
-    }
-
-    // Added
-    if (added.length > 0) {
-      md += `**Added (${added.length}):**\n\n`;
-      md += '| Token | Value |\n|-------|-------|\n';
-      for (const token of added.slice(0, maxTokensPerCategory)) {
-        md += `| \`${token.displayName}\` | \`${token.value}\` |\n`;
-      }
-      if (added.length > maxTokensPerCategory) {
-        md += `| ... | *${added.length - maxTokensPerCategory} more* |\n`;
-      }
-      md += '\n';
-    }
-
-    md += '</details>\n\n';
-  }
-
-  if (!hasChanges) return '';
-
-  md += '---\n\n';
-  return md;
-}
-
-// =============================================================================
-// LAYER 2e: SOURCE CHANGES (Primitives)
-// =============================================================================
-
-/**
- * Generate source changes section for primitive tokens
- * Shows low-level token changes that affect semantic/component layers
- */
-function generateSourceChangesSection(diff, options = {}) {
-  if (!diff || !diff.byLayer || !diff.byLayer.primitive) return '';
-
-  const { maxTokens = 10 } = options;
-  const primitives = diff.byLayer.primitive;
-
-  const modified = primitives.modified || [];
-  const added = primitives.added || [];
-  const removed = primitives.removed || [];
-  const total = modified.length + added.length + removed.length;
-
-  if (total === 0) return '';
-
-  let md = '## ⚙️ Source Changes\n\n';
-  md += '<details>\n';
-  md += `<summary>Primitive Token Updates (${total} changes)</summary>\n\n`;
-  md += '> ℹ️ Low-level tokens that may affect semantic/component values\n\n';
-
-  // Modified primitives
-  if (modified.length > 0) {
-    md += `**Modified (${modified.length}):**\n\n`;
-    md += '| Token | Change | Category |\n';
-    md += '|-------|--------|----------|\n';
-    for (const token of modified.slice(0, maxTokens)) {
-      const cat = CATEGORY_CONFIG[categorizeTokenForDisplay(token.displayName, token.oldValue)] || CATEGORY_CONFIG.other;
-      const changeDisplay = `\`${token.oldValue}\` → \`${token.newValue}\``;
-      md += `| \`${token.displayName}\` | ${changeDisplay} | ${cat.icon} |\n`;
-    }
-    if (modified.length > maxTokens) {
-      md += `| ... | *${modified.length - maxTokens} more* | |\n`;
-    }
-    md += '\n';
-  }
-
-  // Added primitives
-  if (added.length > 0) {
-    md += `**Added (${added.length}):**\n\n`;
-    md += '| Token | Value | Category |\n';
-    md += '|-------|-------|----------|\n';
-    for (const token of added.slice(0, maxTokens)) {
-      const cat = CATEGORY_CONFIG[categorizeTokenForDisplay(token.displayName, token.value)] || CATEGORY_CONFIG.other;
-      md += `| \`${token.displayName}\` | \`${token.value}\` | ${cat.icon} |\n`;
-    }
-    if (added.length > maxTokens) {
-      md += `| ... | *${added.length - maxTokens} more* | |\n`;
-    }
-    md += '\n';
-  }
-
-  // Removed primitives
-  if (removed.length > 0) {
-    md += `**Removed (${removed.length}):**\n\n`;
-    md += '| Token | Previous Value | Category |\n';
-    md += '|-------|----------------|----------|\n';
-    for (const token of removed.slice(0, maxTokens)) {
-      const cat = CATEGORY_CONFIG[categorizeTokenForDisplay(token.displayName, token.value)] || CATEGORY_CONFIG.other;
-      md += `| \`${token.displayName}\` | \`${token.value}\` | ${cat.icon} |\n`;
-    }
-    if (removed.length > maxTokens) {
-      md += `| ... | *${removed.length - maxTokens} more* | |\n`;
-    }
-    md += '\n';
-  }
-
-  md += '</details>\n\n';
-  md += '---\n\n';
-  return md;
-}
 // =============================================================================
 // LAYER 2d: AFFECTED COMPONENTS
 // =============================================================================
@@ -1652,139 +1582,6 @@ function generateDynamicChecklist(diff, options = {}) {
 }
 
 // =============================================================================
-// LAYER 3: PLATFORM DETAILS
-// =============================================================================
-
-function generatePlatformDetails(diff, options = {}) {
-  if (!diff || !diff.platforms) return '';
-
-  const { maxTokensPerSection = 15 } = options;
-
-  let md = '## 📝 Platform Details\n\n';
-
-  for (const platformKey of PLATFORM_ORDER) {
-    const platform = diff.platforms[platformKey];
-    if (!platform) continue;
-
-    const totalChanges = platform.tokensAdded + platform.tokensModified + platform.tokensRemoved;
-    if (totalChanges === 0 && platform.changes.length === 0) {
-      continue;
-    }
-
-    // Platform header as collapsible section
-    md += `<details>\n`;
-    md += `<summary>${platform.icon} <b>${platform.name}</b> — `;
-    md += `+${platform.tokensAdded} / ~${platform.tokensModified} / -${platform.tokensRemoved} tokens`;
-    md += `</summary>\n\n`;
-
-    // Group changes by type
-    const removedFiles = platform.changes.filter(c => c.type === 'removed');
-    const modifiedFiles = platform.changes.filter(c => c.type === 'modified');
-    const addedFiles = platform.changes.filter(c => c.type === 'added');
-
-    // Breaking changes (removed)
-    const hasRemovedTokens = removedFiles.length > 0 || modifiedFiles.some(f => f.changes?.removed?.length > 0);
-    if (hasRemovedTokens) {
-      md += '#### 🔴 Breaking Changes (Removed)\n\n';
-      md += '| Token | Previous Value | File |\n';
-      md += '|-------|----------------|------|\n';
-
-      let count = 0;
-
-      for (const file of removedFiles) {
-        for (const token of file.tokens.slice(0, 5)) {
-          if (count >= maxTokensPerSection) break;
-          md += `| \`${token.name}\` | \`${token.value}\` | \`${path.basename(file.file)}\` |\n`;
-          count++;
-        }
-        if (file.tokens.length > 5 && count < maxTokensPerSection) {
-          md += `| ... | *${file.tokens.length - 5} more in file* | |\n`;
-        }
-      }
-
-      for (const file of modifiedFiles) {
-        if (!file.changes?.removed) continue;
-        for (const token of file.changes.removed.slice(0, 3)) {
-          if (count >= maxTokensPerSection) break;
-          md += `| \`${token.name}\` | \`${token.value}\` | \`${path.basename(file.file)}\` |\n`;
-          count++;
-        }
-      }
-
-      if (count >= maxTokensPerSection) {
-        const totalRemoved = removedFiles.reduce((sum, f) => sum + f.tokens.length, 0) +
-          modifiedFiles.reduce((sum, f) => sum + (f.changes?.removed?.length || 0), 0);
-        md += `| ... | *${totalRemoved - count} more* | |\n`;
-      }
-
-      md += '\n';
-    }
-
-    // Modified tokens
-    const allModified = modifiedFiles.filter(f => f.changes?.modified?.length > 0);
-    if (allModified.length > 0) {
-      md += '#### 🟡 Modified\n\n';
-      md += '| Token | Old | New | File |\n';
-      md += '|-------|-----|-----|------|\n';
-
-      let count = 0;
-      for (const file of allModified) {
-        for (const token of file.changes.modified) {
-          if (count >= maxTokensPerSection) break;
-          md += `| \`${token.name}\` | \`${token.oldValue}\` | \`${token.newValue}\` | \`${path.basename(file.file)}\` |\n`;
-          count++;
-        }
-        if (count >= maxTokensPerSection) break;
-      }
-
-      if (count >= maxTokensPerSection) {
-        const totalModified = allModified.reduce((sum, f) => sum + f.changes.modified.length, 0);
-        md += `| ... | | *${totalModified - count} more* | |\n`;
-      }
-
-      md += '\n';
-    }
-
-    // Added tokens
-    const hasAddedTokens = addedFiles.length > 0 || modifiedFiles.some(f => f.changes?.added?.length > 0);
-    if (hasAddedTokens) {
-      md += '#### 🟢 Added\n\n';
-      md += '| Token | Value | File |\n';
-      md += '|-------|-------|------|\n';
-
-      let count = 0;
-
-      for (const file of addedFiles) {
-        for (const token of file.tokens.slice(0, 5)) {
-          if (count >= maxTokensPerSection) break;
-          md += `| \`${token.name}\` | \`${token.value}\` | \`${path.basename(file.file)}\` |\n`;
-          count++;
-        }
-      }
-
-      for (const file of modifiedFiles) {
-        if (!file.changes?.added) continue;
-        for (const token of file.changes.added.slice(0, 3)) {
-          if (count >= maxTokensPerSection) break;
-          md += `| \`${token.name}\` | \`${token.value}\` | \`${path.basename(file.file)}\` |\n`;
-          count++;
-        }
-      }
-
-      if (count >= maxTokensPerSection) {
-        md += `| ... | *more tokens* | |\n`;
-      }
-
-      md += '\n';
-    }
-
-    md += '</details>\n\n';
-  }
-
-  return md;
-}
-
-// =============================================================================
 // LAYER 4: TECHNICAL DETAILS
 // =============================================================================
 
@@ -1794,63 +1591,29 @@ function generateTechnicalDetails(diff, options = {}) {
 
   let md = '## ⚙️ Technical Details\n\n';
 
-  // Changed files by platform
-  md += '<details>\n';
-  md += '<summary>📁 <b>All Changed Files</b></summary>\n\n';
-
-  if (diff && diff.platforms) {
-    for (const platformKey of PLATFORM_ORDER) {
-      const platform = diff.platforms[platformKey];
-      if (!platform || platform.changes.length === 0) continue;
-
-      md += `#### ${platform.icon} ${platform.name}\n\n`;
-
-      const files = platform.changes.map(c => c.file).slice(0, 15);
-      for (const file of files) {
-        md += `- \`${file}\`\n`;
-      }
-
-      if (platform.changes.length > 15) {
-        md += `- *... and ${platform.changes.length - 15} more files*\n`;
-      }
-
-      md += '\n';
-    }
-  }
-
-  md += '</details>\n\n';
-
-  // Statistics
-  md += '<details>\n';
-  md += '<summary>📊 <b>Build Statistics</b></summary>\n\n';
-
+  // Compact statistics only (no file list - all platforms change together)
   if (diff && diff.summary) {
     const s = diff.summary;
     const uniqueAdded = s.uniqueTokensAdded ?? s.tokensAdded;
     const uniqueModified = s.uniqueTokensModified ?? s.tokensModified;
     const uniqueRemoved = s.uniqueTokensRemoved ?? s.tokensRemoved;
+    const filesChanged = s.filesAdded + s.filesModified + s.filesRemoved;
+    const totalUnique = uniqueAdded + uniqueModified + uniqueRemoved;
+    const platformOccurrences = s.tokensAdded + s.tokensModified + s.tokensRemoved;
 
-    md += '```\n';
-    md += `Files Changed:  ${s.filesAdded + s.filesModified + s.filesRemoved}\n`;
-    md += `  - Added:      ${s.filesAdded}\n`;
-    md += `  - Modified:   ${s.filesModified}\n`;
-    md += `  - Removed:    ${s.filesRemoved}\n`;
-    md += `\n`;
-    md += `Unique Tokens Changed: ${uniqueAdded + uniqueModified + uniqueRemoved}\n`;
-    md += `  - Added:      ${uniqueAdded}\n`;
-    md += `  - Modified:   ${uniqueModified}\n`;
-    md += `  - Removed:    ${uniqueRemoved}\n`;
-    md += `\n`;
-    md += `Platform Occurrences: ${s.tokensAdded + s.tokensModified + s.tokensRemoved}\n`;
-    md += `  - Added:      ${s.tokensAdded}\n`;
-    md += `  - Modified:   ${s.tokensModified}\n`;
-    md += `  - Removed:    ${s.tokensRemoved}\n`;
-    md += `\n`;
-    md += `Impact Level:   ${s.impactLevel}\n`;
-    md += '```\n\n';
+    // Compact one-line summary
+    md += `**Stats:** ${filesChanged} files · ${totalUnique} unique tokens · ${platformOccurrences} platform occurrences · Impact: **${s.impactLevel}**\n\n`;
+
+    // Detailed breakdown in collapsible
+    md += '<details>\n';
+    md += '<summary>📊 Detailed Statistics</summary>\n\n';
+    md += `| Metric | +Added | ~Modified | -Removed | Total |\n`;
+    md += `|--------|--------|-----------|----------|-------|\n`;
+    md += `| Unique Tokens | ${uniqueAdded} | ${uniqueModified} | ${uniqueRemoved} | ${totalUnique} |\n`;
+    md += `| Platform Occurrences | ${s.tokensAdded} | ${s.tokensModified} | ${s.tokensRemoved} | ${platformOccurrences} |\n`;
+    md += `| Files | ${s.filesAdded} | ${s.filesModified} | ${s.filesRemoved} | ${filesChanged} |\n`;
+    md += '\n</details>\n\n';
   }
-
-  md += '</details>\n\n';
 
   // Downloads
   if (runId) {
@@ -2028,148 +1791,260 @@ function generateConsoleOutput(diff) {
 }
 
 /**
- * Generate GitHub Release format (summary-first, consumer-focused)
+ * Generate GitHub Release format (optimized, similar structure to PR comment)
  */
 function generateGitHubRelease(diff, options = {}) {
   const { version = 'latest', packageSize = '', successfulBuilds = 0, totalBuilds = 0 } = options;
   const repo = process.env.GITHUB_REPOSITORY || 'UXWizard25/vv-token-test-v3';
 
-  let md = `## 🎨 Design Tokens v${version}\n\n`;
+  let md = `## 🎨 Design System v${version}\n\n`;
 
-  // Installation
+  // Installation - All 4 packages
   md += '### 📦 Installation\n\n';
   md += '```bash\n';
-  md += `npm install @marioschmidt/design-system-tokens@${version}\n`;
+  md += '# Design Tokens (CSS, JS, iOS, Android)\n';
+  md += `npm install @marioschmidt/design-system-tokens@${version}\n\n`;
+  md += '# Web Components (Stencil)\n';
+  md += `npm install @marioschmidt/design-system-components@${version}\n\n`;
+  md += '# React / Vue Wrappers\n';
+  md += `npm install @marioschmidt/design-system-react@${version}\n`;
+  md += `npm install @marioschmidt/design-system-vue@${version}\n`;
   md += '```\n\n';
 
-  // Breaking changes first (if any)
-  if (diff?.byUniqueToken?.removed?.length > 0) {
-    md += '### ⚠️ Breaking Changes\n\n';
-    md += `**${diff.byUniqueToken.removed.length} token(s) removed** - Migration may be required\n\n`;
+  // Get grouped data
+  const grouped = diff?.grouped || {};
+  const breakingRemoved = grouped?.breaking?.removed || {};
+  const breakingRenamed = grouped?.breaking?.renamed || {};
 
-    const removed = diff.byUniqueToken.removed.slice(0, 5);
-    md += '| Removed Token | Previous Value |\n';
-    md += '|---------------|----------------|\n';
-    for (const token of removed) {
-      md += `| \`${token.displayName}\` | \`${token.value}\` |\n`;
-    }
-    if (diff.byUniqueToken.removed.length > 5) {
-      md += `| ... | *${diff.byUniqueToken.removed.length - 5} more* |\n`;
-    }
-    md += '\n';
-  }
+  // Count removed by type
+  const removedVars = breakingRemoved?.variables?.length || 0;
+  const removedTypo = breakingRemoved?.typography?.length || 0;
+  const removedEffects = breakingRemoved?.effects?.length || 0;
+  const totalRemoved = removedVars + removedTypo + removedEffects;
 
-  // Renamed tokens (if any)
-  if (diff?.renames?.length > 0) {
-    md += '### 🔄 Renamed Tokens\n\n';
-    md += '| Old Name | → | New Name |\n';
-    md += '|----------|:---:|----------|\n';
-    for (const rename of diff.renames.slice(0, 10)) {
-      md += `| \`${rename.oldName}\` | → | \`${rename.newName}\` |\n`;
-    }
-    if (diff.renames.length > 10) {
-      md += `| ... | | *${diff.renames.length - 10} more* |\n`;
-    }
-    md += '\n';
-  }
+  // Count renamed by type
+  const renamedVars = breakingRenamed?.variables?.length || 0;
+  const renamedTypo = breakingRenamed?.typography?.length || 0;
+  const renamedEffects = breakingRenamed?.effects?.length || 0;
+  const totalRenamed = renamedVars + renamedTypo + renamedEffects;
 
-  // Summary table
-  if (diff?.summary) {
-    const s = diff.summary;
-    const uniqueRemoved = s.uniqueTokensRemoved ?? s.tokensRemoved ?? 0;
-    const uniqueModified = s.uniqueTokensModified ?? s.tokensModified ?? 0;
-    const uniqueAdded = s.uniqueTokensAdded ?? s.tokensAdded ?? 0;
-    const uniqueRenamed = s.uniqueTokensRenamed ?? 0;
-    const total = uniqueRemoved + uniqueModified + uniqueAdded + uniqueRenamed;
+  const hasBreaking = totalRemoved > 0 || totalRenamed > 0;
 
-    if (total > 0) {
-      md += '### 📊 Changes Summary\n\n';
-      md += '| Type | Count | Impact |\n';
-      md += '|------|------:|--------|\n';
-      if (uniqueRemoved > 0) {
-        md += `| 🔴 Removed | ${uniqueRemoved} | ⚠️ Breaking |\n`;
+  // Breaking Changes Section
+  if (hasBreaking) {
+    md += '---\n\n';
+    md += '## 🔴 Breaking Changes\n\n';
+
+    // Removed tokens
+    if (totalRemoved > 0) {
+      const typeParts = [];
+      if (removedVars > 0) typeParts.push(`${removedVars} Variables`);
+      if (removedTypo > 0) typeParts.push(`${removedTypo} Typography`);
+      if (removedEffects > 0) typeParts.push(`${removedEffects} Effects`);
+
+      md += `### Removed (${typeParts.join(', ')})\n\n`;
+      md += '| Token | Layer | Category |\n';
+      md += '|-------|-------|----------|\n';
+
+      // Combine all removed tokens
+      const allRemoved = [
+        ...(breakingRemoved?.variables || []),
+        ...(breakingRemoved?.typography || []),
+        ...(breakingRemoved?.effects || [])
+      ];
+
+      for (const token of allRemoved.slice(0, 10)) {
+        const layerIcon = LAYER_CONFIG[token.layer]?.icon || '📦';
+        const layerLabel = LAYER_CONFIG[token.layer]?.label || token.layer;
+        const catIcon = CATEGORY_CONFIG[token.category]?.icon || '📦';
+        const catLabel = CATEGORY_CONFIG[token.category]?.label || token.category;
+        md += `| \`${getTokenName(token)}\` | ${layerIcon} ${layerLabel} | ${catIcon} ${catLabel} |\n`;
       }
-      if (uniqueRenamed > 0) {
-        md += `| 🔄 Renamed | ${uniqueRenamed} | Migration needed |\n`;
-      }
-      if (uniqueModified > 0) {
-        md += `| 🟡 Modified | ${uniqueModified} | Visual changes |\n`;
-      }
-      if (uniqueAdded > 0) {
-        md += `| 🟢 Added | ${uniqueAdded} | New features |\n`;
+      if (allRemoved.length > 10) {
+        md += `| ... | | *${allRemoved.length - 10} more* |\n`;
       }
       md += '\n';
     }
-  }
 
-  // Categorized changes (collapsible)
-  if (diff?.byCategory) {
-    let hasChanges = false;
-    for (const cat of CATEGORY_ORDER) {
-      const catData = diff.byCategory[cat];
-      if (catData && ((catData.modified?.length || 0) + (catData.added?.length || 0) + (catData.removed?.length || 0) > 0)) {
-        hasChanges = true;
-        break;
+    // Renamed tokens
+    if (totalRenamed > 0) {
+      const typeParts = [];
+      if (renamedVars > 0) typeParts.push(`${renamedVars} Variables`);
+      if (renamedTypo > 0) typeParts.push(`${renamedTypo} Typography`);
+      if (renamedEffects > 0) typeParts.push(`${renamedEffects} Effects`);
+
+      md += `### Renamed (${typeParts.join(', ')})\n\n`;
+      md += '| Old Name | → | New Name | Type |\n';
+      md += '|----------|:-:|----------|------|\n';
+
+      // Combine all renames
+      const allRenames = [
+        ...(breakingRenamed?.variables || []).map(r => ({ ...r, type: '🎨 Variable' })),
+        ...(breakingRenamed?.typography || []).map(r => ({ ...r, type: '📝 Typography' })),
+        ...(breakingRenamed?.effects || []).map(r => ({ ...r, type: '✨ Effects' }))
+      ];
+
+      for (const rename of allRenames.slice(0, 10)) {
+        md += `| \`${toDotNotation(rename.oldName)}\` | → | \`${toDotNotation(rename.newName)}\` | ${rename.type} |\n`;
       }
-    }
+      if (allRenames.length > 10) {
+        md += `| ... | | | *${allRenames.length - 10} more* |\n`;
+      }
+      md += '\n';
 
-    if (hasChanges) {
+      // Migration commands (collapsible)
       md += '<details>\n';
-      md += '<summary>📝 <b>View Changes by Category</b></summary>\n\n';
-
-      for (const category of CATEGORY_ORDER) {
-        const catData = diff.byCategory[category];
-        if (!catData) continue;
-
-        const modified = catData.modified || [];
-        const added = catData.added || [];
-        const removed = catData.removed || [];
-        const total = modified.length + added.length + removed.length;
-        if (total === 0) continue;
-
-        const config = CATEGORY_CONFIG[category];
-        md += `#### ${config.icon} ${config.label} (${total})\n\n`;
-
-        if (modified.length > 0) {
-          md += '**Modified:**\n';
-          for (const token of modified.slice(0, 8)) {
-            md += `- \`${token.displayName}\`: ${token.oldValue} → ${token.newValue}\n`;
-          }
-          if (modified.length > 8) md += `- *... and ${modified.length - 8} more*\n`;
-          md += '\n';
-        }
-
-        if (added.length > 0) {
-          md += '**Added:**\n';
-          for (const token of added.slice(0, 8)) {
-            md += `- \`${token.displayName}\`\n`;
-          }
-          if (added.length > 8) md += `- *... and ${added.length - 8} more*\n`;
-          md += '\n';
-        }
+      md += '<summary>📋 Migration Commands</summary>\n\n';
+      md += '```bash\n';
+      md += '# Find & Replace:\n';
+      for (const rename of allRenames.slice(0, 15)) {
+        md += `${toDotNotation(rename.oldName)} → ${toDotNotation(rename.newName)}\n`;
       }
-
+      if (allRenames.length > 15) {
+        md += `# ... and ${allRenames.length - 15} more\n`;
+      }
+      md += '```\n\n';
       md += '</details>\n\n';
     }
   }
 
-  // Build info
-  md += '### 📋 Build Info\n\n';
+  // Visual Changes Section
+  const modifiedTokens = diff?.byUniqueToken?.modified?.filter(t => CONSUMPTION_LAYERS.includes(t.layer)) || [];
+  if (modifiedTokens.length > 0) {
+    md += '---\n\n';
+    md += '## 🟡 Visual Changes\n\n';
+
+    // Group by category
+    const byCategory = {};
+    for (const token of modifiedTokens) {
+      const cat = token.category || 'other';
+      if (!byCategory[cat]) byCategory[cat] = [];
+      byCategory[cat].push(token);
+    }
+
+    // Summary table
+    md += '| Category | Tokens | Examples |\n';
+    md += '|----------|-------:|----------|\n';
+
+    for (const category of CATEGORY_ORDER) {
+      const tokens = byCategory[category];
+      if (!tokens || tokens.length === 0) continue;
+
+      const config = CATEGORY_CONFIG[category];
+      const examples = tokens.slice(0, 2).map(t => `\`${getTokenName(t)}\``).join(', ');
+      const more = tokens.length > 2 ? ', ...' : '';
+      md += `| ${config.icon} ${config.label} | ${tokens.length} | ${examples}${more} |\n`;
+    }
+    md += '\n';
+
+    // Collapsible details
+    md += '<details>\n';
+    md += '<summary>📝 View All Modified Tokens</summary>\n\n';
+
+    for (const category of CATEGORY_ORDER) {
+      const tokens = byCategory[category];
+      if (!tokens || tokens.length === 0) continue;
+
+      const config = CATEGORY_CONFIG[category];
+      md += `**${config.icon} ${config.label}:**\n`;
+      for (const token of tokens.slice(0, 8)) {
+        md += `- \`${getTokenName(token)}\`: \`${token.oldValue}\` → \`${token.newValue}\`\n`;
+      }
+      if (tokens.length > 8) {
+        md += `- *... and ${tokens.length - 8} more*\n`;
+      }
+      md += '\n';
+    }
+
+    md += '</details>\n\n';
+  }
+
+  // New Features Section
+  const addedTokens = diff?.byUniqueToken?.added || [];
+  const addedTypography = grouped?.added?.typography || [];
+  const addedEffects = grouped?.added?.effects || [];
+  const totalAdded = addedTokens.length + addedTypography.length + addedEffects.length;
+
+  if (totalAdded > 0) {
+    md += '---\n\n';
+    md += '## 🟢 New Features\n\n';
+
+    // Group added tokens by category
+    const addedByCategory = {};
+    for (const token of addedTokens) {
+      const cat = token.category || 'other';
+      if (!addedByCategory[cat]) addedByCategory[cat] = 0;
+      addedByCategory[cat]++;
+    }
+
+    // Summary table
+    md += '| Category | Count |\n';
+    md += '|----------|------:|\n';
+
+    for (const category of CATEGORY_ORDER) {
+      const count = addedByCategory[category] || 0;
+      if (count === 0) continue;
+      const config = CATEGORY_CONFIG[category];
+      md += `| ${config.icon} ${config.label} | ${count} |\n`;
+    }
+
+    if (addedTypography.length > 0) {
+      md += `| 📝 Typography Styles | ${addedTypography.length} |\n`;
+    }
+    if (addedEffects.length > 0) {
+      md += `| ✨ Effects Styles | ${addedEffects.length} |\n`;
+    }
+    md += '\n';
+
+    // Collapsible details
+    md += '<details>\n';
+    md += '<summary>📝 View All Added Tokens</summary>\n\n';
+
+    for (const category of CATEGORY_ORDER) {
+      const tokens = addedTokens.filter(t => (t.category || 'other') === category);
+      if (tokens.length === 0) continue;
+
+      const config = CATEGORY_CONFIG[category];
+      const names = tokens.slice(0, 5).map(t => `\`${getTokenName(t)}\``).join(', ');
+      const more = tokens.length > 5 ? `, ... (+${tokens.length - 5} more)` : '';
+      md += `**${config.icon} ${config.label}:** ${names}${more}\n\n`;
+    }
+
+    if (addedTypography.length > 0) {
+      const names = addedTypography.slice(0, 3).map(t => `\`${toDotNotation(t.newName || t.name)}\``).join(', ');
+      const more = addedTypography.length > 3 ? `, ... (+${addedTypography.length - 3} more)` : '';
+      md += `**📝 Typography Styles:** ${names}${more}\n\n`;
+    }
+
+    if (addedEffects.length > 0) {
+      const names = addedEffects.slice(0, 3).map(t => `\`${toDotNotation(t.newName || t.name)}\``).join(', ');
+      const more = addedEffects.length > 3 ? `, ... (+${addedEffects.length - 3} more)` : '';
+      md += `**✨ Effects Styles:** ${names}${more}\n\n`;
+    }
+
+    md += '</details>\n\n';
+  }
+
+  // Build Info Section
+  md += '---\n\n';
+  md += '## 📋 Build Info\n\n';
+  md += '| Metric | Value |\n';
+  md += '|--------|-------|\n';
   if (successfulBuilds > 0 && totalBuilds > 0) {
-    md += `- **Build Status:** ✅ ${successfulBuilds}/${totalBuilds} successful\n`;
+    md += `| Build Status | ✅ ${successfulBuilds}/${totalBuilds} successful |\n`;
   }
   if (packageSize) {
-    md += `- **Package Size:** ${packageSize}\n`;
+    md += `| Package Size | ${packageSize} |\n`;
   }
-  md += '- **Formats:** CSS, SCSS, JavaScript, Swift, Android Compose, JSON\n';
-  md += '- **Brands:** BILD, SportBILD, Advertorial\n';
-  md += '- **Modes:** Light/Dark, Responsive Breakpoints\n';
+  md += '| Platforms | CSS, SCSS, JS, Swift, Kotlin, JSON |\n';
+  md += '| Brands | BILD, SportBILD, Advertorial |\n';
   md += '\n';
 
   // Links
   md += '### 🔗 Links\n\n';
   md += `- [📖 Documentation](https://github.com/${repo}#readme)\n`;
-  md += `- [📦 npm Package](https://www.npmjs.com/package/@marioschmidt/design-system-tokens)\n`;
+  md += `- [📦 Tokens on npm](https://www.npmjs.com/package/@marioschmidt/design-system-tokens)\n`;
+  md += `- [📦 Components on npm](https://www.npmjs.com/package/@marioschmidt/design-system-components)\n`;
   md += `- [🐛 Report Issue](https://github.com/${repo}/issues)\n`;
 
   return md;

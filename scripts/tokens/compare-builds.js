@@ -14,6 +14,22 @@ const fs = require('fs');
 const path = require('path');
 
 // =============================================================================
+// CACHING FOR PERFORMANCE
+// =============================================================================
+
+// Cache Maps for expensive operations
+const normalizedNameCache = new Map();
+const categoryCache = new Map();
+
+/**
+ * Clear caches (useful for testing or between runs)
+ */
+function clearCaches() {
+  normalizedNameCache.clear();
+  categoryCache.clear();
+}
+
+// =============================================================================
 // PLATFORM PARSERS
 // =============================================================================
 
@@ -246,10 +262,68 @@ function flattenJsonTokens(obj, prefix, tokens) {
  *   SCSS:  $button-tertiary-label-color   → buttontertiarylabelcolor
  */
 function normalizeTokenName(name) {
-  return name
+  // Check cache first
+  if (normalizedNameCache.has(name)) {
+    return normalizedNameCache.get(name);
+  }
+
+  const normalized = name
     .toLowerCase()
     .replace(/^[-$.]/, '')     // Remove leading prefixes (-, $, .)
-    .replace(/[^a-z0-9]/g, '') // Remove all non-alphanumeric
+    .replace(/[^a-z0-9]/g, ''); // Remove all non-alphanumeric
+
+  // Cache and return
+  normalizedNameCache.set(name, normalized);
+  return normalized;
+}
+
+/**
+ * Convert platform-specific token name to canonical dot notation
+ *
+ * This provides a platform-agnostic representation following W3C DTCG conventions.
+ *
+ * Examples:
+ *   CSS var:   --button-primary-bg      → button.primary.bg
+ *   CSS class: .display-1               → display.1
+ *   CSS class: .shadow-soft-md          → shadow.soft.md
+ *   SCSS:      $button-primary-bg       → button.primary.bg
+ *   JS:        buttonPrimaryBg          → button.primary.bg
+ *   Swift:     ButtonPrimaryBg          → button.primary.bg
+ *   Kotlin:    button_primary_bg        → button.primary.bg
+ */
+function toDotNotation(tokenName) {
+  if (!tokenName) return tokenName;
+
+  let result = tokenName;
+
+  // Remove platform prefixes
+  if (result.startsWith('--')) {
+    // CSS variable: --token-name
+    result = result.slice(2);
+  } else if (result.startsWith('.')) {
+    // CSS class: .class-name
+    result = result.slice(1);
+  } else if (result.startsWith('$')) {
+    // SCSS variable: $token-name
+    result = result.slice(1);
+  }
+
+  // Handle different naming conventions
+  // 1. kebab-case (CSS/SCSS): button-primary-bg → button.primary.bg
+  // 2. snake_case (Kotlin/XML): button_primary_bg → button.primary.bg
+  // 3. camelCase (JS): buttonPrimaryBg → button.primary.bg
+  // 4. PascalCase (Swift): ButtonPrimaryBg → button.primary.bg
+
+  // First, normalize camelCase/PascalCase to kebab-case
+  result = result
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')  // camelCase splits
+    .toLowerCase();
+
+  // Then convert separators to dots
+  result = result
+    .replace(/[-_]+/g, '.');  // Replace - and _ with .
+
+  return result;
 }
 
 // =============================================================================
@@ -678,31 +752,42 @@ function categorizeTokenFromSource(sourceVar) {
  * Categorize a token from dist comparison
  */
 function categorizeTokenFromDist(tokenName, value) {
+  // Build cache key from name + value type indicator
+  const valueIndicator = typeof value === 'string' && (value.startsWith('#') || value.startsWith('rgb')) ? 'color' : '';
+  const cacheKey = `${tokenName}|${valueIndicator}`;
+
+  // Check cache first
+  if (categoryCache.has(cacheKey)) {
+    return categoryCache.get(cacheKey);
+  }
+
   const name = tokenName.toLowerCase();
+  let category = 'other';
 
   // Color detection by value
-  if (typeof value === 'string' && (value.startsWith('#') || value.startsWith('rgb'))) {
-    return 'colors';
+  if (valueIndicator === 'color') {
+    category = 'colors';
   }
-
   // Name-based detection
-  if (/color|bg|background|foreground|fill|stroke|text-color|surface|accent/i.test(name)) {
-    return 'colors';
+  else if (/color|bg|background|foreground|fill|stroke|text-color|surface|accent/i.test(name)) {
+    category = 'colors';
   }
-  if (/font-?size|line-?height|letter-?spacing|font-?weight|font-?family|typography/i.test(name)) {
-    return 'typography';
+  else if (/font-?size|line-?height|letter-?spacing|font-?weight|font-?family|typography/i.test(name)) {
+    category = 'typography';
   }
-  if (/space|gap|inline|stack|inset|margin|padding/i.test(name)) {
-    return 'spacing';
+  else if (/space|gap|inline|stack|inset|margin|padding/i.test(name)) {
+    category = 'spacing';
   }
-  if (/shadow|effect|elevation|blur/i.test(name)) {
-    return 'effects';
+  else if (/shadow|effect|elevation|blur/i.test(name)) {
+    category = 'effects';
   }
-  if (/size|width|height|radius|border-radius/i.test(name)) {
-    return 'sizing';
+  else if (/size|width|height|radius|border-radius/i.test(name)) {
+    category = 'sizing';
   }
 
-  return 'other';
+  // Cache and return
+  categoryCache.set(cacheKey, category);
+  return category;
 }
 
 // =============================================================================
@@ -951,21 +1036,55 @@ function extractFileMetadata(filePath) {
     if (parts[compIndex + 1]) {
       metadata.component = parts[compIndex + 1];
     }
+    // Components have mixed categories - need name-based detection
+    metadata.category = null;
   } else if (parts.includes('semantic')) {
     metadata.layer = 'semantic';
     metadata.tokenLayer = 'semantic';
+    // Extract category from semantic subfolder path
+    // Patterns: /semantic/color/, /semantic/typography/, /semantic/effects/
+    const semanticIndex = parts.indexOf('semantic');
+    const subFolder = parts[semanticIndex + 1]?.toLowerCase();
+    if (subFolder === 'color' || subFolder === 'colormode') {
+      metadata.category = 'colors';
+    } else if (subFolder === 'typography') {
+      metadata.category = 'typography';
+    } else if (subFolder === 'effects') {
+      metadata.category = 'effects';
+    } else if (subFolder === 'breakpoints' || subFolder === 'breakpointmode') {
+      // Breakpoints contain mixed spacing/sizing - need name-based detection
+      metadata.category = null;
+    } else if (subFolder === 'density') {
+      // Density contains mixed spacing/sizing - need name-based detection
+      metadata.category = null;
+    }
   } else if (parts.includes('shared')) {
     metadata.layer = 'shared';
     metadata.tokenLayer = 'primitive';
+    // Shared/primitives - check filename for category hint
+    if (fileNameLower.includes('color')) {
+      metadata.category = 'colors';
+    } else if (fileNameLower.includes('space')) {
+      metadata.category = 'spacing';
+    } else if (fileNameLower.includes('size')) {
+      metadata.category = 'sizing';
+    } else if (fileNameLower.includes('font') || fileNameLower.includes('typography')) {
+      metadata.category = 'typography';
+    } else {
+      metadata.category = null;
+    }
   } else if (parts.includes('overrides')) {
     metadata.layer = 'overrides';
     metadata.tokenLayer = 'semantic';
+    metadata.category = null; // Overrides need name-based detection
   } else if (parts.includes('bundles')) {
     metadata.layer = 'bundles';
     metadata.tokenLayer = 'bundle'; // Skip in layer grouping
+    metadata.category = null; // Bundles are mixed
   } else {
     // Default based on path detection
     metadata.tokenLayer = detectLayerFromPath(filePath);
+    metadata.category = null;
   }
 
   return metadata;
@@ -1184,8 +1303,9 @@ function compareDistBuilds(oldDir, newDir) {
 
     const platformInfo = { key: platform, name: platformData.name, icon: platformData.icon };
 
-    // Get token layer from file metadata
+    // Get token layer and category from file metadata
     const tokenLayer = diff.metadata.tokenLayer || 'semantic';
+    const pathCategory = diff.metadata.category; // null if needs name-based detection
 
     if (diff.type === 'added') {
       results.summary.filesAdded++;
@@ -1197,7 +1317,12 @@ function compareDistBuilds(oldDir, newDir) {
         const normalized = normalizeTokenName(token.name);
         uniqueTokensAdded.add(normalized);
         if (!tokenDetailsAdded.has(normalized)) {
-          tokenDetailsAdded.set(normalized, { value: token.value, layer: tokenLayer, platforms: [] });
+          tokenDetailsAdded.set(normalized, {
+            value: token.value,
+            layer: tokenLayer,
+            pathCategory, // from file path, null if mixed
+            platforms: []
+          });
         }
         tokenDetailsAdded.get(normalized).platforms.push({
           ...platformInfo, tokenName: token.name, file: diff.file, layer: tokenLayer
@@ -1213,7 +1338,12 @@ function compareDistBuilds(oldDir, newDir) {
         const normalized = normalizeTokenName(token.name);
         uniqueTokensRemoved.add(normalized);
         if (!tokenDetailsRemoved.has(normalized)) {
-          tokenDetailsRemoved.set(normalized, { value: token.value, layer: tokenLayer, platforms: [] });
+          tokenDetailsRemoved.set(normalized, {
+            value: token.value,
+            layer: tokenLayer,
+            pathCategory, // from file path, null if mixed
+            platforms: []
+          });
         }
         tokenDetailsRemoved.get(normalized).platforms.push({
           ...platformInfo, tokenName: token.name, file: diff.file, layer: tokenLayer
@@ -1233,7 +1363,12 @@ function compareDistBuilds(oldDir, newDir) {
         const normalized = normalizeTokenName(token.name);
         uniqueTokensAdded.add(normalized);
         if (!tokenDetailsAdded.has(normalized)) {
-          tokenDetailsAdded.set(normalized, { value: token.value, layer: tokenLayer, platforms: [] });
+          tokenDetailsAdded.set(normalized, {
+            value: token.value,
+            layer: tokenLayer,
+            pathCategory,
+            platforms: []
+          });
         }
         tokenDetailsAdded.get(normalized).platforms.push({
           ...platformInfo, tokenName: token.name, file: diff.file, layer: tokenLayer
@@ -1247,6 +1382,7 @@ function compareDistBuilds(oldDir, newDir) {
             oldValue: token.oldValue,
             newValue: token.newValue,
             layer: tokenLayer,
+            pathCategory,
             platforms: [],
             valuesByContext: new Map() // brand/mode/breakpoint/density → { old, new }
           });
@@ -1281,7 +1417,12 @@ function compareDistBuilds(oldDir, newDir) {
         const normalized = normalizeTokenName(token.name);
         uniqueTokensRemoved.add(normalized);
         if (!tokenDetailsRemoved.has(normalized)) {
-          tokenDetailsRemoved.set(normalized, { value: token.value, layer: tokenLayer, platforms: [] });
+          tokenDetailsRemoved.set(normalized, {
+            value: token.value,
+            layer: tokenLayer,
+            pathCategory,
+            platforms: []
+          });
         }
         tokenDetailsRemoved.get(normalized).platforms.push({
           ...platformInfo, tokenName: token.name, file: diff.file, layer: tokenLayer
@@ -1325,12 +1466,17 @@ function compareDistBuilds(oldDir, newDir) {
   };
 
   // Convert token details Maps to arrays for byUniqueToken
+  // Use path-based category when available, fallback to name-based detection
   for (const [normalized, details] of tokenDetailsAdded) {
+    const displayName = getDisplayName(details.platforms, normalized);
+    const category = details.pathCategory || categorizeTokenFromDist(displayName, details.value);
     results.byUniqueToken.added.push({
       normalizedName: normalized,
-      displayName: getDisplayName(details.platforms, normalized),
+      displayName,
+      canonicalName: toDotNotation(displayName),  // Platform-agnostic dot notation
       value: details.value,
       layer: details.layer,
+      category,
       platforms: details.platforms
     });
   }
@@ -1341,23 +1487,31 @@ function compareDistBuilds(oldDir, newDir) {
       valuesByContext[key] = value;
     }
 
+    const displayName = getDisplayName(details.platforms, normalized);
+    const category = details.pathCategory || categorizeTokenFromDist(displayName, details.newValue);
     results.byUniqueToken.modified.push({
       normalizedName: normalized,
-      displayName: getDisplayName(details.platforms, normalized),
+      displayName,
+      canonicalName: toDotNotation(displayName),  // Platform-agnostic dot notation
       oldValue: details.oldValue,
       newValue: details.newValue,
       layer: details.layer,
+      category,
       platforms: details.platforms,
       valuesByContext: valuesByContext, // brand/mode/breakpoint context → { old, new }
       hasMultipleContexts: details.valuesByContext.size > 1
     });
   }
   for (const [normalized, details] of tokenDetailsRemoved) {
+    const displayName = getDisplayName(details.platforms, normalized);
+    const category = details.pathCategory || categorizeTokenFromDist(displayName, details.value);
     results.byUniqueToken.removed.push({
       normalizedName: normalized,
-      displayName: getDisplayName(details.platforms, normalized),
+      displayName,
+      canonicalName: toDotNotation(displayName),  // Platform-agnostic dot notation
       value: details.value,
       layer: details.layer,
+      category,
       platforms: details.platforms
     });
   }
@@ -1536,6 +1690,9 @@ Example:
   // Add layer groupings
   results.byLayer = groupByLayer(results);
 
+  // Add pre-grouped results for optimized release notes
+  results.grouped = createGroupedResults(results);
+
   const output = JSON.stringify(results, null, 2);
 
   if (options.output) {
@@ -1613,6 +1770,211 @@ function groupByLayer(results) {
   return layers;
 }
 
+/**
+ * Create pre-grouped results for optimized release notes generation.
+ * Groups tokens by impact level (breaking/visual/safe) to eliminate redundant filtering.
+ *
+ * Structure:
+ * - breaking: Consumption layer removed + renamed (variables + combined styles)
+ * - visual: Modified tokens grouped by category with context data
+ * - safe: Added tokens + internal (primitive layer) changes
+ */
+function createGroupedResults(results) {
+  const grouped = {
+    // Breaking changes (consumption layer only)
+    breaking: {
+      removed: {
+        variables: [],    // Removed CSS variables (semantic + component layer)
+        typography: [],   // Removed typography styles
+        effects: []       // Removed effect styles
+      },
+      renamed: {
+        variables: [],    // Renamed CSS variables
+        typography: [],   // Renamed typography styles
+        effects: []       // Renamed effect styles
+      }
+    },
+    // Visual changes (modified tokens with diffs)
+    visual: {
+      colors: [],         // Modified color tokens with valuesByContext
+      spacing: [],        // Modified spacing tokens with valuesByContext
+      sizing: [],         // Modified sizing tokens
+      typography: {
+        variables: [],    // Modified typography variables (font-size, etc.)
+        styles: []        // Modified combined typography styles
+      },
+      effects: {
+        variables: [],    // Modified effect variables
+        styles: []        // Modified combined effect styles
+      }
+    },
+    // Safe changes (additions + internal)
+    safe: {
+      added: {
+        variables: [],    // New CSS variables
+        typography: [],   // New typography styles
+        effects: []       // New effect styles
+      },
+      internal: {
+        modified: [],     // Primitive layer modifications
+        removed: []       // Primitive layer removals
+      }
+    },
+    // Summary counts for quick access
+    counts: {
+      breakingRemoved: 0,
+      breakingRenamed: 0,
+      visualModified: 0,
+      safeAdded: 0,
+      internalChanges: 0
+    }
+  };
+
+  // --- BREAKING: Removed tokens (consumption layer only) ---
+  if (results.byUniqueToken?.removed) {
+    for (const token of results.byUniqueToken.removed) {
+      if (CONSUMPTION_LAYERS.includes(token.layer)) {
+        grouped.breaking.removed.variables.push(token);
+      } else {
+        grouped.safe.internal.removed.push(token);
+      }
+    }
+  }
+
+  // --- BREAKING: Removed combined styles ---
+  if (results.styleChanges) {
+    // Typography removed
+    for (const style of results.styleChanges.typography?.removed || []) {
+      if (CONSUMPTION_LAYERS.includes(style.layer || 'semantic')) {
+        grouped.breaking.removed.typography.push(style);
+      }
+    }
+    // Effects removed
+    for (const style of results.styleChanges.effects?.removed || []) {
+      if (CONSUMPTION_LAYERS.includes(style.layer || 'semantic')) {
+        grouped.breaking.removed.effects.push(style);
+      }
+    }
+  }
+
+  // --- BREAKING: Renamed variables ---
+  if (results.renames) {
+    for (const rename of results.renames) {
+      if (CONSUMPTION_LAYERS.includes(rename.layer)) {
+        grouped.breaking.renamed.variables.push(rename);
+      }
+    }
+  }
+
+  // --- BREAKING: Renamed styles ---
+  if (results.styleRenames) {
+    for (const rename of results.styleRenames) {
+      if (CONSUMPTION_LAYERS.includes(rename.layer || 'semantic')) {
+        if (rename.type === 'typography') {
+          grouped.breaking.renamed.typography.push(rename);
+        } else if (rename.type === 'effect') {
+          grouped.breaking.renamed.effects.push(rename);
+        }
+      }
+    }
+  }
+
+  // --- VISUAL: Modified tokens by category ---
+  if (results.byUniqueToken?.modified) {
+    for (const token of results.byUniqueToken.modified) {
+      const category = categorizeTokenFromDist(token.displayName, token.oldValue);
+
+      switch (category) {
+        case 'colors':
+          grouped.visual.colors.push(token);
+          break;
+        case 'spacing':
+          grouped.visual.spacing.push(token);
+          break;
+        case 'sizing':
+          grouped.visual.sizing.push(token);
+          break;
+        case 'typography':
+          grouped.visual.typography.variables.push(token);
+          break;
+        case 'effects':
+          grouped.visual.effects.variables.push(token);
+          break;
+        default:
+          // Check if it's primitive layer
+          if (!CONSUMPTION_LAYERS.includes(token.layer)) {
+            grouped.safe.internal.modified.push(token);
+          } else {
+            // Default to sizing for consumption layer
+            grouped.visual.sizing.push(token);
+          }
+      }
+    }
+  }
+
+  // --- VISUAL: Modified combined styles ---
+  if (results.styleChanges) {
+    // Typography modified
+    for (const style of results.styleChanges.typography?.modified || []) {
+      grouped.visual.typography.styles.push(style);
+    }
+    // Effects modified
+    for (const style of results.styleChanges.effects?.modified || []) {
+      grouped.visual.effects.styles.push(style);
+    }
+  }
+
+  // --- SAFE: Added tokens ---
+  if (results.byUniqueToken?.added) {
+    for (const token of results.byUniqueToken.added) {
+      grouped.safe.added.variables.push(token);
+    }
+  }
+
+  // --- SAFE: Added combined styles ---
+  if (results.styleChanges) {
+    // Typography added
+    for (const style of results.styleChanges.typography?.added || []) {
+      grouped.safe.added.typography.push(style);
+    }
+    // Effects added
+    for (const style of results.styleChanges.effects?.added || []) {
+      grouped.safe.added.effects.push(style);
+    }
+  }
+
+  // --- Calculate counts ---
+  grouped.counts.breakingRemoved =
+    grouped.breaking.removed.variables.length +
+    grouped.breaking.removed.typography.length +
+    grouped.breaking.removed.effects.length;
+
+  grouped.counts.breakingRenamed =
+    grouped.breaking.renamed.variables.length +
+    grouped.breaking.renamed.typography.length +
+    grouped.breaking.renamed.effects.length;
+
+  grouped.counts.visualModified =
+    grouped.visual.colors.length +
+    grouped.visual.spacing.length +
+    grouped.visual.sizing.length +
+    grouped.visual.typography.variables.length +
+    grouped.visual.typography.styles.length +
+    grouped.visual.effects.variables.length +
+    grouped.visual.effects.styles.length;
+
+  grouped.counts.safeAdded =
+    grouped.safe.added.variables.length +
+    grouped.safe.added.typography.length +
+    grouped.safe.added.effects.length;
+
+  grouped.counts.internalChanges =
+    grouped.safe.internal.modified.length +
+    grouped.safe.internal.removed.length;
+
+  return grouped;
+}
+
 if (require.main === module) {
   main();
 }
@@ -1626,7 +1988,12 @@ module.exports = {
   categorizeTokenFromDist,
   categorizeTokenFromSource,
   detectLayerFromPath,
+  extractFileMetadata,
+  toDotNotation,
   groupByLayer,
+  groupByCategory,
+  createGroupedResults,
+  clearCaches,
   TOKEN_CATEGORIES,
   TOKEN_LAYERS,
   CONSUMPTION_LAYERS
