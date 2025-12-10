@@ -1314,18 +1314,31 @@ function generateSafeChangesSection(diff, options = {}) {
   const addedTypography = grouped?.added?.typography || [];
   const addedEffects = grouped?.added?.effects || [];
 
+  // Get renames first (needed to filter removed tokens)
+  const variableRenames = diff?.renames || [];
+  const nonBreakingRenames = variableRenames.filter(r => !CONSUMPTION_LAYERS.includes(r.layer));
+
+  // Create a Set of renamed old token names (to filter from removed)
+  // A renamed token should NOT also appear as removed
+  const renamedOldNames = new Set(
+    nonBreakingRenames.map(r => getOldTokenName(r).toLowerCase())
+  );
+
   // Get internal changes (primitive layer - no consumer impact)
   const allRemovedTokens = diff?.byUniqueToken?.removed || [];
-  const internalRemovedTokens = grouped?.internal?.removed ||
+  const internalRemovedTokensRaw = grouped?.internal?.removed ||
     allRemovedTokens.filter(t => !CONSUMPTION_LAYERS.includes(t.layer));
+
+  // Filter out tokens that were renamed (not truly removed)
+  const internalRemovedTokens = internalRemovedTokensRaw.filter(t => {
+    const tokenName = getTokenName(t).toLowerCase();
+    return !renamedOldNames.has(tokenName);
+  });
 
   // Get internal modified tokens (primitive layer modifications)
   const allModifiedTokens = diff?.byUniqueToken?.modified || [];
   const internalModifiedTokens = grouped?.internal?.modified ||
     allModifiedTokens.filter(t => !CONSUMPTION_LAYERS.includes(t.layer));
-
-  const variableRenames = diff?.renames || [];
-  const nonBreakingRenames = variableRenames.filter(r => !CONSUMPTION_LAYERS.includes(r.layer));
 
   const totalAdded = addedTokens.length + addedTypography.length + addedEffects.length;
   const hasAdded = totalAdded > 0;

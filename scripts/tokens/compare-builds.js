@@ -1857,9 +1857,42 @@ function createGroupedResults(results) {
     }
   };
 
+  // --- First, collect all renamed token names to filter from removed ---
+  // A renamed token should NOT also appear as removed
+  const renamedOldTokenNames = new Set();
+  if (results.renames) {
+    for (const rename of results.renames) {
+      // Use the converted token name (dot notation) for matching
+      const oldTokenName = figmaPathToTokenName(rename.oldName);
+      if (oldTokenName) {
+        renamedOldTokenNames.add(oldTokenName.toLowerCase());
+      }
+    }
+  }
+
+  const renamedOldStyleNames = new Set();
+  if (results.styleRenames) {
+    for (const rename of results.styleRenames) {
+      const oldTokenName = figmaPathToTokenName(rename.oldName);
+      if (oldTokenName) {
+        renamedOldStyleNames.add(oldTokenName.toLowerCase());
+      }
+    }
+  }
+
   // --- BREAKING: Removed tokens (consumption layer only) ---
+  // Filter out tokens that were renamed (they have the same ID, just new name)
   if (results.byUniqueToken?.removed) {
     for (const token of results.byUniqueToken.removed) {
+      // Check if this token was actually renamed
+      const tokenName = toDotNotation(token.displayName || token.normalizedName);
+      const wasRenamed = tokenName && renamedOldTokenNames.has(tokenName.toLowerCase());
+
+      if (wasRenamed) {
+        // Skip - this token was renamed, not removed
+        continue;
+      }
+
       if (CONSUMPTION_LAYERS.includes(token.layer)) {
         grouped.breaking.removed.variables.push(token);
       } else {
@@ -1869,15 +1902,26 @@ function createGroupedResults(results) {
   }
 
   // --- BREAKING: Removed combined styles ---
+  // Filter out styles that were renamed
   if (results.styleChanges) {
     // Typography removed
     for (const style of results.styleChanges.typography?.removed || []) {
+      const styleName = figmaPathToTokenName(style.name);
+      const wasRenamed = styleName && renamedOldStyleNames.has(styleName.toLowerCase());
+
+      if (wasRenamed) continue;
+
       if (CONSUMPTION_LAYERS.includes(style.layer || 'semantic')) {
         grouped.breaking.removed.typography.push(style);
       }
     }
     // Effects removed
     for (const style of results.styleChanges.effects?.removed || []) {
+      const styleName = figmaPathToTokenName(style.name);
+      const wasRenamed = styleName && renamedOldStyleNames.has(styleName.toLowerCase());
+
+      if (wasRenamed) continue;
+
       if (CONSUMPTION_LAYERS.includes(style.layer || 'semantic')) {
         grouped.breaking.removed.effects.push(style);
       }
