@@ -1818,148 +1818,260 @@ function generateConsoleOutput(diff) {
 }
 
 /**
- * Generate GitHub Release format (summary-first, consumer-focused)
+ * Generate GitHub Release format (optimized, similar structure to PR comment)
  */
 function generateGitHubRelease(diff, options = {}) {
   const { version = 'latest', packageSize = '', successfulBuilds = 0, totalBuilds = 0 } = options;
   const repo = process.env.GITHUB_REPOSITORY || 'UXWizard25/vv-token-test-v3';
 
-  let md = `## 🎨 Design Tokens v${version}\n\n`;
+  let md = `## 🎨 Design System v${version}\n\n`;
 
-  // Installation
+  // Installation - All 4 packages
   md += '### 📦 Installation\n\n';
   md += '```bash\n';
-  md += `npm install @marioschmidt/design-system-tokens@${version}\n`;
+  md += '# Design Tokens (CSS, JS, iOS, Android)\n';
+  md += `npm install @marioschmidt/design-system-tokens@${version}\n\n`;
+  md += '# Web Components (Stencil)\n';
+  md += `npm install @marioschmidt/design-system-components@${version}\n\n`;
+  md += '# React / Vue Wrappers\n';
+  md += `npm install @marioschmidt/design-system-react@${version}\n`;
+  md += `npm install @marioschmidt/design-system-vue@${version}\n`;
   md += '```\n\n';
 
-  // Breaking changes first (if any)
-  if (diff?.byUniqueToken?.removed?.length > 0) {
-    md += '### ⚠️ Breaking Changes\n\n';
-    md += `**${diff.byUniqueToken.removed.length} token(s) removed** - Migration may be required\n\n`;
+  // Get grouped data
+  const grouped = diff?.grouped || {};
+  const breakingRemoved = grouped?.breaking?.removed || {};
+  const breakingRenamed = grouped?.breaking?.renamed || {};
 
-    const removed = diff.byUniqueToken.removed.slice(0, 5);
-    md += '| Removed Token | Previous Value |\n';
-    md += '|---------------|----------------|\n';
-    for (const token of removed) {
-      md += `| \`${token.displayName}\` | \`${token.value}\` |\n`;
-    }
-    if (diff.byUniqueToken.removed.length > 5) {
-      md += `| ... | *${diff.byUniqueToken.removed.length - 5} more* |\n`;
-    }
-    md += '\n';
-  }
+  // Count removed by type
+  const removedVars = breakingRemoved?.variables?.length || 0;
+  const removedTypo = breakingRemoved?.typography?.length || 0;
+  const removedEffects = breakingRemoved?.effects?.length || 0;
+  const totalRemoved = removedVars + removedTypo + removedEffects;
 
-  // Renamed tokens (if any)
-  if (diff?.renames?.length > 0) {
-    md += '### 🔄 Renamed Tokens\n\n';
-    md += '| Old Name | → | New Name |\n';
-    md += '|----------|:---:|----------|\n';
-    for (const rename of diff.renames.slice(0, 10)) {
-      md += `| \`${rename.oldName}\` | → | \`${rename.newName}\` |\n`;
-    }
-    if (diff.renames.length > 10) {
-      md += `| ... | | *${diff.renames.length - 10} more* |\n`;
-    }
-    md += '\n';
-  }
+  // Count renamed by type
+  const renamedVars = breakingRenamed?.variables?.length || 0;
+  const renamedTypo = breakingRenamed?.typography?.length || 0;
+  const renamedEffects = breakingRenamed?.effects?.length || 0;
+  const totalRenamed = renamedVars + renamedTypo + renamedEffects;
 
-  // Summary table
-  if (diff?.summary) {
-    const s = diff.summary;
-    const uniqueRemoved = s.uniqueTokensRemoved ?? s.tokensRemoved ?? 0;
-    const uniqueModified = s.uniqueTokensModified ?? s.tokensModified ?? 0;
-    const uniqueAdded = s.uniqueTokensAdded ?? s.tokensAdded ?? 0;
-    const uniqueRenamed = s.uniqueTokensRenamed ?? 0;
-    const total = uniqueRemoved + uniqueModified + uniqueAdded + uniqueRenamed;
+  const hasBreaking = totalRemoved > 0 || totalRenamed > 0;
 
-    if (total > 0) {
-      md += '### 📊 Changes Summary\n\n';
-      md += '| Type | Count | Impact |\n';
-      md += '|------|------:|--------|\n';
-      if (uniqueRemoved > 0) {
-        md += `| 🔴 Removed | ${uniqueRemoved} | ⚠️ Breaking |\n`;
+  // Breaking Changes Section
+  if (hasBreaking) {
+    md += '---\n\n';
+    md += '## 🔴 Breaking Changes\n\n';
+
+    // Removed tokens
+    if (totalRemoved > 0) {
+      const typeParts = [];
+      if (removedVars > 0) typeParts.push(`${removedVars} Variables`);
+      if (removedTypo > 0) typeParts.push(`${removedTypo} Typography`);
+      if (removedEffects > 0) typeParts.push(`${removedEffects} Effects`);
+
+      md += `### Removed (${typeParts.join(', ')})\n\n`;
+      md += '| Token | Layer | Category |\n';
+      md += '|-------|-------|----------|\n';
+
+      // Combine all removed tokens
+      const allRemoved = [
+        ...(breakingRemoved?.variables || []),
+        ...(breakingRemoved?.typography || []),
+        ...(breakingRemoved?.effects || [])
+      ];
+
+      for (const token of allRemoved.slice(0, 10)) {
+        const layerIcon = LAYER_CONFIG[token.layer]?.icon || '📦';
+        const layerLabel = LAYER_CONFIG[token.layer]?.label || token.layer;
+        const catIcon = CATEGORY_CONFIG[token.category]?.icon || '📦';
+        const catLabel = CATEGORY_CONFIG[token.category]?.label || token.category;
+        md += `| \`${token.displayName}\` | ${layerIcon} ${layerLabel} | ${catIcon} ${catLabel} |\n`;
       }
-      if (uniqueRenamed > 0) {
-        md += `| 🔄 Renamed | ${uniqueRenamed} | Migration needed |\n`;
-      }
-      if (uniqueModified > 0) {
-        md += `| 🟡 Modified | ${uniqueModified} | Visual changes |\n`;
-      }
-      if (uniqueAdded > 0) {
-        md += `| 🟢 Added | ${uniqueAdded} | New features |\n`;
+      if (allRemoved.length > 10) {
+        md += `| ... | | *${allRemoved.length - 10} more* |\n`;
       }
       md += '\n';
     }
-  }
 
-  // Categorized changes (collapsible)
-  if (diff?.byCategory) {
-    let hasChanges = false;
-    for (const cat of CATEGORY_ORDER) {
-      const catData = diff.byCategory[cat];
-      if (catData && ((catData.modified?.length || 0) + (catData.added?.length || 0) + (catData.removed?.length || 0) > 0)) {
-        hasChanges = true;
-        break;
+    // Renamed tokens
+    if (totalRenamed > 0) {
+      const typeParts = [];
+      if (renamedVars > 0) typeParts.push(`${renamedVars} Variables`);
+      if (renamedTypo > 0) typeParts.push(`${renamedTypo} Typography`);
+      if (renamedEffects > 0) typeParts.push(`${renamedEffects} Effects`);
+
+      md += `### Renamed (${typeParts.join(', ')})\n\n`;
+      md += '| Old Name | → | New Name | Type |\n';
+      md += '|----------|:-:|----------|------|\n';
+
+      // Combine all renames
+      const allRenames = [
+        ...(breakingRenamed?.variables || []).map(r => ({ ...r, type: '🎨 Variable' })),
+        ...(breakingRenamed?.typography || []).map(r => ({ ...r, type: '📝 Typography' })),
+        ...(breakingRenamed?.effects || []).map(r => ({ ...r, type: '✨ Effects' }))
+      ];
+
+      for (const rename of allRenames.slice(0, 10)) {
+        md += `| \`${rename.oldName}\` | → | \`${rename.newName}\` | ${rename.type} |\n`;
       }
-    }
+      if (allRenames.length > 10) {
+        md += `| ... | | | *${allRenames.length - 10} more* |\n`;
+      }
+      md += '\n';
 
-    if (hasChanges) {
+      // Migration commands (collapsible)
       md += '<details>\n';
-      md += '<summary>📝 <b>View Changes by Category</b></summary>\n\n';
-
-      for (const category of CATEGORY_ORDER) {
-        const catData = diff.byCategory[category];
-        if (!catData) continue;
-
-        const modified = catData.modified || [];
-        const added = catData.added || [];
-        const removed = catData.removed || [];
-        const total = modified.length + added.length + removed.length;
-        if (total === 0) continue;
-
-        const config = CATEGORY_CONFIG[category];
-        md += `#### ${config.icon} ${config.label} (${total})\n\n`;
-
-        if (modified.length > 0) {
-          md += '**Modified:**\n';
-          for (const token of modified.slice(0, 8)) {
-            md += `- \`${token.displayName}\`: ${token.oldValue} → ${token.newValue}\n`;
-          }
-          if (modified.length > 8) md += `- *... and ${modified.length - 8} more*\n`;
-          md += '\n';
-        }
-
-        if (added.length > 0) {
-          md += '**Added:**\n';
-          for (const token of added.slice(0, 8)) {
-            md += `- \`${token.displayName}\`\n`;
-          }
-          if (added.length > 8) md += `- *... and ${added.length - 8} more*\n`;
-          md += '\n';
-        }
+      md += '<summary>📋 Migration Commands</summary>\n\n';
+      md += '```bash\n';
+      md += '# Find & Replace:\n';
+      for (const rename of allRenames.slice(0, 15)) {
+        md += `${rename.oldName} → ${rename.newName}\n`;
       }
-
+      if (allRenames.length > 15) {
+        md += `# ... and ${allRenames.length - 15} more\n`;
+      }
+      md += '```\n\n';
       md += '</details>\n\n';
     }
   }
 
-  // Build info
-  md += '### 📋 Build Info\n\n';
+  // Visual Changes Section
+  const modifiedTokens = diff?.byUniqueToken?.modified?.filter(t => CONSUMPTION_LAYERS.includes(t.layer)) || [];
+  if (modifiedTokens.length > 0) {
+    md += '---\n\n';
+    md += '## 🟡 Visual Changes\n\n';
+
+    // Group by category
+    const byCategory = {};
+    for (const token of modifiedTokens) {
+      const cat = token.category || 'other';
+      if (!byCategory[cat]) byCategory[cat] = [];
+      byCategory[cat].push(token);
+    }
+
+    // Summary table
+    md += '| Category | Tokens | Examples |\n';
+    md += '|----------|-------:|----------|\n';
+
+    for (const category of CATEGORY_ORDER) {
+      const tokens = byCategory[category];
+      if (!tokens || tokens.length === 0) continue;
+
+      const config = CATEGORY_CONFIG[category];
+      const examples = tokens.slice(0, 2).map(t => `\`${t.displayName}\``).join(', ');
+      const more = tokens.length > 2 ? ', ...' : '';
+      md += `| ${config.icon} ${config.label} | ${tokens.length} | ${examples}${more} |\n`;
+    }
+    md += '\n';
+
+    // Collapsible details
+    md += '<details>\n';
+    md += '<summary>📝 View All Modified Tokens</summary>\n\n';
+
+    for (const category of CATEGORY_ORDER) {
+      const tokens = byCategory[category];
+      if (!tokens || tokens.length === 0) continue;
+
+      const config = CATEGORY_CONFIG[category];
+      md += `**${config.icon} ${config.label}:**\n`;
+      for (const token of tokens.slice(0, 8)) {
+        md += `- \`${token.displayName}\`: \`${token.oldValue}\` → \`${token.newValue}\`\n`;
+      }
+      if (tokens.length > 8) {
+        md += `- *... and ${tokens.length - 8} more*\n`;
+      }
+      md += '\n';
+    }
+
+    md += '</details>\n\n';
+  }
+
+  // New Features Section
+  const addedTokens = diff?.byUniqueToken?.added || [];
+  const addedTypography = grouped?.added?.typography || [];
+  const addedEffects = grouped?.added?.effects || [];
+  const totalAdded = addedTokens.length + addedTypography.length + addedEffects.length;
+
+  if (totalAdded > 0) {
+    md += '---\n\n';
+    md += '## 🟢 New Features\n\n';
+
+    // Group added tokens by category
+    const addedByCategory = {};
+    for (const token of addedTokens) {
+      const cat = token.category || 'other';
+      if (!addedByCategory[cat]) addedByCategory[cat] = 0;
+      addedByCategory[cat]++;
+    }
+
+    // Summary table
+    md += '| Category | Count |\n';
+    md += '|----------|------:|\n';
+
+    for (const category of CATEGORY_ORDER) {
+      const count = addedByCategory[category] || 0;
+      if (count === 0) continue;
+      const config = CATEGORY_CONFIG[category];
+      md += `| ${config.icon} ${config.label} | ${count} |\n`;
+    }
+
+    if (addedTypography.length > 0) {
+      md += `| 📝 Typography Styles | ${addedTypography.length} |\n`;
+    }
+    if (addedEffects.length > 0) {
+      md += `| ✨ Effects Styles | ${addedEffects.length} |\n`;
+    }
+    md += '\n';
+
+    // Collapsible details
+    md += '<details>\n';
+    md += '<summary>📝 View All Added Tokens</summary>\n\n';
+
+    for (const category of CATEGORY_ORDER) {
+      const tokens = addedTokens.filter(t => (t.category || 'other') === category);
+      if (tokens.length === 0) continue;
+
+      const config = CATEGORY_CONFIG[category];
+      const names = tokens.slice(0, 5).map(t => `\`${t.displayName}\``).join(', ');
+      const more = tokens.length > 5 ? `, ... (+${tokens.length - 5} more)` : '';
+      md += `**${config.icon} ${config.label}:** ${names}${more}\n\n`;
+    }
+
+    if (addedTypography.length > 0) {
+      const names = addedTypography.slice(0, 3).map(t => `\`${t.newName || t.name}\``).join(', ');
+      const more = addedTypography.length > 3 ? `, ... (+${addedTypography.length - 3} more)` : '';
+      md += `**📝 Typography Styles:** ${names}${more}\n\n`;
+    }
+
+    if (addedEffects.length > 0) {
+      const names = addedEffects.slice(0, 3).map(t => `\`${t.newName || t.name}\``).join(', ');
+      const more = addedEffects.length > 3 ? `, ... (+${addedEffects.length - 3} more)` : '';
+      md += `**✨ Effects Styles:** ${names}${more}\n\n`;
+    }
+
+    md += '</details>\n\n';
+  }
+
+  // Build Info Section
+  md += '---\n\n';
+  md += '## 📋 Build Info\n\n';
+  md += '| Metric | Value |\n';
+  md += '|--------|-------|\n';
   if (successfulBuilds > 0 && totalBuilds > 0) {
-    md += `- **Build Status:** ✅ ${successfulBuilds}/${totalBuilds} successful\n`;
+    md += `| Build Status | ✅ ${successfulBuilds}/${totalBuilds} successful |\n`;
   }
   if (packageSize) {
-    md += `- **Package Size:** ${packageSize}\n`;
+    md += `| Package Size | ${packageSize} |\n`;
   }
-  md += '- **Formats:** CSS, SCSS, JavaScript, Swift, Android Compose, JSON\n';
-  md += '- **Brands:** BILD, SportBILD, Advertorial\n';
-  md += '- **Modes:** Light/Dark, Responsive Breakpoints\n';
+  md += '| Platforms | CSS, SCSS, JS, Swift, Kotlin, JSON |\n';
+  md += '| Brands | BILD, SportBILD, Advertorial |\n';
   md += '\n';
 
   // Links
   md += '### 🔗 Links\n\n';
   md += `- [📖 Documentation](https://github.com/${repo}#readme)\n`;
-  md += `- [📦 npm Package](https://www.npmjs.com/package/@marioschmidt/design-system-tokens)\n`;
+  md += `- [📦 Tokens on npm](https://www.npmjs.com/package/@marioschmidt/design-system-tokens)\n`;
+  md += `- [📦 Components on npm](https://www.npmjs.com/package/@marioschmidt/design-system-components)\n`;
   md += `- [🐛 Report Issue](https://github.com/${repo}/issues)\n`;
 
   return md;
