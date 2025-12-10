@@ -14,6 +14,11 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 const { toDotNotation, figmaPathToTokenName } = require('./compare-builds');
+const {
+  scanComponentTokenReferences,
+  findAffectedComponents,
+  DEFAULT_COMPONENTS_DIR
+} = require('./scan-component-refs');
 
 // =============================================================================
 // CONSTANTS
@@ -1647,40 +1652,165 @@ function generateStyleChangesSection(diff, options = {}) {
 }
 
 // =============================================================================
-// LAYER 2d: AFFECTED COMPONENTS
+// LAYER 2d: AFFECTED STENCIL COMPONENTS
 // =============================================================================
 
+// Cache for component token map (avoid rescanning during same run)
+let cachedComponentMap = null;
+
 /**
- * Generate affected components section - shows which components have token changes
+ * Get component token map (with caching)
+ * @param {string} componentsDir - Path to Stencil components source
+ * @returns {Object} - Component token reference map
+ */
+function getComponentTokenMap(componentsDir = DEFAULT_COMPONENTS_DIR) {
+  if (cachedComponentMap) {
+    return cachedComponentMap;
+  }
+
+  // Check if components directory exists
+  if (!fs.existsSync(componentsDir)) {
+    console.log(`   ⚠️  Components directory not found: ${componentsDir}`);
+    return {};
+  }
+
+  try {
+    cachedComponentMap = scanComponentTokenReferences(componentsDir);
+    return cachedComponentMap;
+  } catch (error) {
+    console.log(`   ⚠️  Error scanning components: ${error.message}`);
+    return {};
+  }
+}
+
+/**
+ * Generate affected Stencil components section
+ * Scans component CSS files to find which use changed tokens
+ *
+ * @param {Object} diff - Diff object from compare-builds.js
+ * @param {Object} options - { maxComponents, componentsDir }
+ * @returns {string} - Markdown section
  */
 function generateAffectedComponentsSection(diff, options = {}) {
-  if (!diff || !diff.byComponent) return '';
+  if (!diff) return '';
 
-  const components = Object.entries(diff.byComponent);
-  if (components.length === 0) return '';
+  const { maxComponents = 10, componentsDir = DEFAULT_COMPONENTS_DIR } = options;
 
-  const { maxComponents = 10 } = options;
+  // Get component token map
+  const componentMap = getComponentTokenMap(componentsDir);
 
-  let md = '## 🧩 Affected Components\n\n';
-
-  const displayComponents = components.slice(0, maxComponents);
-  for (const [componentName, changes] of displayComponents) {
-    const changeCount = changes.length;
-    const types = new Set(changes.map(c => c.changeType));
-    const icons = [];
-    if (types.has('removed')) icons.push('🔴');
-    if (types.has('modified')) icons.push('🟡');
-    if (types.has('added')) icons.push('🟢');
-
-    md += `- **${componentName}** (${changeCount} changes) ${icons.join(' ')}\n`;
+  if (Object.keys(componentMap).length === 0) {
+    // No components found, return empty section
+    return '';
   }
 
-  if (components.length > maxComponents) {
-    md += `- *... and ${components.length - maxComponents} more components*\n`;
+  // Find affected components
+  const affected = findAffectedComponents(diff, componentMap);
+
+  if (affected.summary.total === 0) {
+    // No components affected by token changes
+    return '';
   }
 
-  md += '\n---\n\n';
+  let md = '## 🧩 Affected Stencil Components\n\n';
+  md += '> Components in the Stencil library that reference changed tokens\n\n';
+
+  // Summary table
+  md += '| Component | Impact | Changed Tokens |\n';
+  md += '|-----------|--------|----------------|\n';
+
+  // Sort: breaking first, then by total count
+  const sortedComponents = Object.entries(affected.components)
+    .sort((a, b) => {
+      // Breaking first
+      if (a[1].breakingCount > 0 && b[1].breakingCount === 0) return -1;
+      if (a[1].breakingCount === 0 && b[1].breakingCount > 0) return 1;
+      // Then by total count
+      return b[1].totalCount - a[1].totalCount;
+    });
+
+  const displayComponents = sortedComponents.slice(0, maxComponents);
+
+  for (const [componentName, data] of displayComponents) {
+    // Impact indicator
+    let impact = '';
+    if (data.breakingCount > 0) {
+      impact = `🔴 ${data.breakingCount} breaking`;
+      if (data.visualCount > 0) {
+        impact += `, 🟡 ${data.visualCount} visual`;
+      }
+    } else {
+      impact = `🟡 ${data.visualCount} visual`;
+    }
+
+    // Token preview (first 2-3 tokens)
+    const allTokens = [...data.breaking, ...data.visual];
+    const tokenPreview = allTokens
+      .slice(0, 2)
+      .map(t => `\`${t.cssToken}\``)
+      .join(', ');
+    const moreCount = allTokens.length - 2;
+    const tokenDisplay = moreCount > 0
+      ? `${tokenPreview}, +${moreCount} more`
+      : tokenPreview;
+
+    md += `| **${componentName}** | ${impact} | ${tokenDisplay} |\n`;
+  }
+
+  if (sortedComponents.length > maxComponents) {
+    const remaining = sortedComponents.length - maxComponents;
+    md += `| *... ${remaining} more* | | |\n`;
+  }
+
+  md += '\n';
+
+  // Detailed breakdown (collapsible)
+  if (sortedComponents.length > 0) {
+    md += '<details>\n<summary>📋 Full token list per component</summary>\n\n';
+
+    for (const [componentName, data] of sortedComponents) {
+      md += `### ${componentName}\n\n`;
+
+      // Breaking changes
+      if (data.breaking.length > 0) {
+        for (const change of data.breaking) {
+          if (change.type === 'removed') {
+            md += `- 🔴 \`${change.cssToken}\` — **removed**\n`;
+          } else if (change.type === 'renamed') {
+            md += `- 🔴 \`${change.cssToken}\` — **renamed** to \`${change.newName}\`\n`;
+          } else {
+            md += `- 🔴 \`${change.cssToken}\` — **${change.type}**\n`;
+          }
+        }
+      }
+
+      // Visual changes
+      if (data.visual.length > 0) {
+        for (const change of data.visual) {
+          const oldVal = truncateValue(change.oldValue);
+          const newVal = truncateValue(change.newValue);
+          md += `- 🟡 \`${change.cssToken}\` — \`${oldVal}\` → \`${newVal}\`\n`;
+        }
+      }
+
+      md += '\n';
+    }
+
+    md += '</details>\n\n';
+  }
+
+  md += '---\n\n';
   return md;
+}
+
+/**
+ * Truncate a token value for display
+ */
+function truncateValue(value) {
+  if (!value) return '?';
+  const str = String(value);
+  if (str.length <= 20) return str;
+  return str.substring(0, 17) + '...';
 }
 
 // =============================================================================
