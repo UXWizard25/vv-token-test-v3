@@ -94,6 +94,53 @@ function getNewTokenName(rename) {
 }
 
 // =============================================================================
+// PLATFORM NAME TRANSFORMS
+// =============================================================================
+
+/**
+ * Convert canonical dot notation to kebab-case (CSS/SCSS)
+ * Matches style-dictionary.config.js nameTransformers.kebab
+ *
+ * @example
+ * toKebabCase('button.primary.bg') → 'button-primary-bg'
+ * toKebabCase('space.1.x') → 'space-1-x'
+ */
+function toKebabCase(dotNotation) {
+  if (!dotNotation) return '';
+  return dotNotation
+    .replace(/\./g, '-')           // dots to hyphens
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')  // camelCase splits
+    .replace(/([a-zA-Z])(\d)/g, '$1-$2')     // letter→number: red50 → red-50
+    .replace(/(\d)([a-zA-Z])/g, '$1-$2')     // number→letter: 1x → 1-x
+    .toLowerCase()
+    .replace(/-+/g, '-')           // collapse multiple hyphens
+    .replace(/^-|-$/g, '');        // trim leading/trailing hyphens
+}
+
+/**
+ * Convert canonical dot notation to camelCase (JS/JSON/Swift/Kotlin)
+ * Matches style-dictionary.config.js nameTransformers.camel
+ *
+ * @example
+ * toCamelCase('button.primary.bg') → 'buttonPrimaryBg'
+ * toCamelCase('space.1.x') → 'space1x'
+ */
+function toCamelCasePlatform(dotNotation) {
+  if (!dotNotation) return '';
+  // First convert to kebab, then to camel (matches build system flow)
+  const kebab = toKebabCase(dotNotation);
+  // Keep letters after numbers lowercase (e.g., 1-x → 1x, not 1X)
+  let result = kebab.replace(/(\d)-([a-z])/g, '$1$2');
+  // Uppercase letters after hyphens (standard camelCase)
+  result = result.replace(/-([a-z0-9])/g, (_, letter) => letter.toUpperCase());
+  // Prefix with underscore if starts with a number (invalid JS identifier)
+  if (/^[0-9]/.test(result)) {
+    result = '_' + result;
+  }
+  return result;
+}
+
+// =============================================================================
 // ALIAS DETECTION UTILITIES
 // =============================================================================
 
@@ -385,23 +432,28 @@ function getPlatformNamesGroupedByToken(tokens) {
 
 /**
  * Generate horizontal platform names table
- * Format: | Token | 🌐 CSS | 📜 SCSS | 💛 JS | 🍎 Swift | 🤖 Android |
+ * Platform-specific naming conventions:
+ * - CSS: --kebab-case
+ * - SCSS: $kebab-case
+ * - JS/JSON/Swift/Kotlin: camelCase
  */
 function generatePlatformNamesTable(groupedTokens) {
   if (groupedTokens.length === 0) return '';
 
   let md = '\n<details>\n<summary>Platform-specific names</summary>\n\n';
-  md += '| Token | 🌐 CSS | 📜 SCSS | 💛 JS | 🍎 Swift | 🤖 Android |\n';
-  md += '|-------|--------|--------|-------|----------|------------|\n';
+  md += '| Token | CSS | SCSS | JS / JSON / Native |\n';
+  md += '|-------|-----|------|--------------------|\n';
 
   for (const entry of groupedTokens) {
     const p = entry.platforms;
+    // Get platform-specific names (with correct prefixes from dist)
+    const cssName = p.css || '-';
+    const scssName = p.scss || '-';
+    const jsName = p.js || p.json || p.swift || p.kotlin || '-';
     md += `| \`${entry.canonicalName || entry.displayName}\` `;
-    md += `| \`${p.css || '-'}\` `;
-    md += `| \`${p.scss || '-'}\` `;
-    md += `| \`${p.js || p.json || '-'}\` `;
-    md += `| \`${p.swift || '-'}\` `;
-    md += `| \`${p.kotlin || '-'}\` |\n`;
+    md += `| \`${cssName}\` `;
+    md += `| \`${scssName}\` `;
+    md += `| \`${jsName}\` |\n`;
   }
 
   md += '</details>\n';
@@ -722,6 +774,10 @@ function generateUnifiedTokenChanges(diff, options = {}) {
 
 /**
  * Generate platform names table for renamed tokens (collapsible)
+ * Platform-specific naming conventions:
+ * - CSS: --kebab-case
+ * - SCSS: $kebab-case
+ * - JS/JSON/Swift/Kotlin: camelCase
  */
 function generateRenamePlatformTable(renames, diff) {
   if (!renames || renames.length === 0) return '';
@@ -747,17 +803,20 @@ function generateRenamePlatformTable(renames, diff) {
   if (platformNames.length === 0) return '';
 
   let md = '\n<details>\n<summary>🔤 Platform-specific names</summary>\n\n';
-  md += '| Old Name | New Name | CSS | JS | Swift | Kotlin |\n';
-  md += '|----------|----------|-----|-------|-------|--------|\n';
+  md += '| Old Name | New Name | CSS | SCSS | JS / JSON / Native |\n';
+  md += '|----------|----------|-----|------|--------------------|\n';
 
   for (const entry of platformNames) {
     const p = entry.platforms;
+    // Get platform-specific names (with correct prefixes from dist)
+    const cssName = p.css || '-';
+    const scssName = p.scss || '-';
+    const jsName = p.js || p.json || p.swift || p.kotlin || '-';
     md += `| \`${entry.oldName}\` `;
     md += `| \`${entry.newName}\` `;
-    md += `| \`${p.css || '-'}\` `;
-    md += `| \`${p.js || p.json || '-'}\` `;
-    md += `| \`${p.swift || '-'}\` `;
-    md += `| \`${p.kotlin || '-'}\` |\n`;
+    md += `| \`${cssName}\` `;
+    md += `| \`${scssName}\` `;
+    md += `| \`${jsName}\` |\n`;
   }
 
   md += '\n</details>\n';
@@ -860,26 +919,29 @@ function generateBreakingChangesSection(diff, options = {}) {
 
       md += '<details>\n<summary>📋 Migration Guide (Platform-Specific Names)</summary>\n\n';
 
-      // Generate matrix with token names per platform
-      md += '| Token (Canonical) | CSS | JavaScript | Swift/Kotlin |\n';
-      md += '|-------------------|-----|------------|---------------|\n';
+      // Platform-specific naming conventions:
+      // - CSS: --kebab-case
+      // - SCSS: $kebab-case
+      // - JS/JSON/Swift/Kotlin: camelCase
+      md += '| | CSS | SCSS | JS / JSON / Native |\n';
+      md += '|---|---|---|---|\n';
 
       for (const rename of allRenames.slice(0, 20)) {
         const oldToken = getOldTokenName(rename);
         const newToken = getNewTokenName(rename);
         // Convert canonical dot notation to platform-specific formats
-        const cssOld = `--${oldToken.replace(/\./g, '-')}`;
-        const cssNew = `--${newToken.replace(/\./g, '-')}`;
-        const jsOld = oldToken.replace(/\./g, '').replace(/-([a-z])/g, (_, c) => c.toUpperCase()).replace(/^([A-Z])/, c => c.toLowerCase());
-        const jsNew = newToken.replace(/\./g, '').replace(/-([a-z])/g, (_, c) => c.toUpperCase()).replace(/^([A-Z])/, c => c.toLowerCase());
-        // For Swift/Kotlin, same as JS but more readable format
-        const nativeNew = jsNew;
+        const kebabOld = toKebabCase(oldToken);
+        const kebabNew = toKebabCase(newToken);
+        const jsOld = toCamelCasePlatform(oldToken);
+        const jsNew = toCamelCasePlatform(newToken);
 
-        md += `| \`${oldToken}\` → \`${newToken}\` | \`${cssOld}\` → \`${cssNew}\` | \`${jsOld}\` → \`${jsNew}\` | \`${nativeNew}\` |\n`;
+        md += `| **Old** | \`--${kebabOld}\` | \`$${kebabOld}\` | \`${jsOld}\` |\n`;
+        md += `| **New** | \`--${kebabNew}\` | \`$${kebabNew}\` | \`${jsNew}\` |\n`;
+        md += `| | | | |\n`;
       }
 
       if (allRenames.length > 20) {
-        md += `| ... | | | *${allRenames.length - 20} more* |\n`;
+        md += `| | | *...${allRenames.length - 20} more* | |\n`;
       }
 
       md += '\n</details>\n\n';
@@ -2002,25 +2064,30 @@ function generateGitHubRelease(diff, options = {}) {
       md += '\n';
 
       // Migration Matrix - platform-specific token names
+      // Platform-specific naming conventions:
+      // - CSS: --kebab-case
+      // - SCSS: $kebab-case
+      // - JS/JSON/Swift/Kotlin: camelCase
       md += '<details>\n';
       md += '<summary>📋 Migration Guide (Platform-Specific Names)</summary>\n\n';
-      md += '| Token (Canonical) | CSS | JavaScript | Swift/Kotlin |\n';
-      md += '|-------------------|-----|------------|---------------|\n';
+      md += '| | CSS | SCSS | JS / JSON / Native |\n';
+      md += '|---|---|---|---|\n';
 
       for (const rename of allRenames.slice(0, 20)) {
         const oldToken = getOldTokenName(rename);
         const newToken = getNewTokenName(rename);
-        const cssOld = `--${oldToken.replace(/\./g, '-')}`;
-        const cssNew = `--${newToken.replace(/\./g, '-')}`;
-        const jsOld = oldToken.replace(/\./g, '').replace(/-([a-z])/g, (_, c) => c.toUpperCase()).replace(/^([A-Z])/, c => c.toLowerCase());
-        const jsNew = newToken.replace(/\./g, '').replace(/-([a-z])/g, (_, c) => c.toUpperCase()).replace(/^([A-Z])/, c => c.toLowerCase());
-        const nativeNew = jsNew;
+        const kebabOld = toKebabCase(oldToken);
+        const kebabNew = toKebabCase(newToken);
+        const jsOld = toCamelCasePlatform(oldToken);
+        const jsNew = toCamelCasePlatform(newToken);
 
-        md += `| \`${oldToken}\` → \`${newToken}\` | \`${cssOld}\` → \`${cssNew}\` | \`${jsOld}\` → \`${jsNew}\` | \`${nativeNew}\` |\n`;
+        md += `| **Old** | \`--${kebabOld}\` | \`$${kebabOld}\` | \`${jsOld}\` |\n`;
+        md += `| **New** | \`--${kebabNew}\` | \`$${kebabNew}\` | \`${jsNew}\` |\n`;
+        md += `| | | | |\n`;
       }
 
       if (allRenames.length > 20) {
-        md += `| ... | | | *${allRenames.length - 20} more* |\n`;
+        md += `| | | *...${allRenames.length - 20} more* | |\n`;
       }
 
       md += '\n</details>\n\n';
