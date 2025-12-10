@@ -214,16 +214,28 @@ jobs:
             UNIQUE_MODIFIED=$(cat dist-diff.json | jq -r '.summary.uniqueTokensModified // 0')
             UNIQUE_REMOVED=$(cat dist-diff.json | jq -r '.summary.uniqueTokensRemoved // 0')
 
+            # Unique counts (for Build Summary)
+            UNIQUE_RENAMED=$(cat dist-diff.json | jq -r '.summary.uniqueTokensRenamed // 0')
+            BREAKING_REMOVED=$(cat dist-diff.json | jq -r '.grouped.counts.breakingRemoved // 0')
+            BREAKING_RENAMED=$(cat dist-diff.json | jq -r '.grouped.counts.breakingRenamed // 0')
+
             echo "added=$ADDED" >> $GITHUB_OUTPUT
             echo "modified=$MODIFIED" >> $GITHUB_OUTPUT
             echo "deleted=$DELETED" >> $GITHUB_OUTPUT
             echo "impact=$IMPACT" >> $GITHUB_OUTPUT
             echo "files_changed=$FILES_CHANGED" >> $GITHUB_OUTPUT
+            echo "unique_added=$UNIQUE_ADDED" >> $GITHUB_OUTPUT
+            echo "unique_modified=$UNIQUE_MODIFIED" >> $GITHUB_OUTPUT
+            echo "unique_removed=$UNIQUE_REMOVED" >> $GITHUB_OUTPUT
+            echo "unique_renamed=$UNIQUE_RENAMED" >> $GITHUB_OUTPUT
+            echo "breaking_removed=$BREAKING_REMOVED" >> $GITHUB_OUTPUT
+            echo "breaking_renamed=$BREAKING_RENAMED" >> $GITHUB_OUTPUT
 
             echo ""
             echo "📊 Diff Summary:"
             echo "   Platform occurrences: +$ADDED | ~$MODIFIED | -$DELETED"
-            echo "   Unique tokens: +$UNIQUE_ADDED | ~$UNIQUE_MODIFIED | -$UNIQUE_REMOVED"
+            echo "   Unique tokens: +$UNIQUE_ADDED | ~$UNIQUE_MODIFIED | -$UNIQUE_REMOVED | ↔$UNIQUE_RENAMED"
+            echo "   Breaking: $BREAKING_REMOVED removed, $BREAKING_RENAMED renamed"
             echo "   Files changed: $FILES_CHANGED"
             echo "   Impact level: $IMPACT"
           else
@@ -340,27 +352,51 @@ jobs:
       # 11. Build Summary erstellen
       - name: Create Build Summary
         run: |
-          echo "## 🎨 Design Token Build Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-
           IMPACT="${{ steps.diff.outputs.impact }}"
+          UNIQUE_ADDED="${{ steps.diff.outputs.unique_added }}"
+          UNIQUE_MODIFIED="${{ steps.diff.outputs.unique_modified }}"
+          UNIQUE_REMOVED="${{ steps.diff.outputs.unique_removed }}"
+          UNIQUE_RENAMED="${{ steps.diff.outputs.unique_renamed }}"
+          BREAKING_REMOVED="${{ steps.diff.outputs.breaking_removed }}"
+          BREAKING_RENAMED="${{ steps.diff.outputs.breaking_renamed }}"
+
+          # Header with impact level
           if [ "$IMPACT" == "breaking" ]; then
-            echo "### 🔴 Breaking Changes Detected!" >> $GITHUB_STEP_SUMMARY
+            echo "## 🎨 Design Tokens · 🔴 Breaking" >> $GITHUB_STEP_SUMMARY
           elif [ "$IMPACT" == "moderate" ]; then
-            echo "### 🟡 Moderate Update" >> $GITHUB_STEP_SUMMARY
+            echo "## 🎨 Design Tokens · 🟡 Visual Changes" >> $GITHUB_STEP_SUMMARY
           else
-            echo "### 🟢 Minor Update" >> $GITHUB_STEP_SUMMARY
+            echo "## 🎨 Design Tokens · 🟢 Minor" >> $GITHUB_STEP_SUMMARY
           fi
-
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Token Changes:**" >> $GITHUB_STEP_SUMMARY
-          echo "- Added: ${{ steps.diff.outputs.added }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Modified: ${{ steps.diff.outputs.modified }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Deleted: ${{ steps.diff.outputs.deleted }}" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Build Status:** ✅ ${{ steps.build.outputs.successful_builds }}/${{ steps.build.outputs.total_builds }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
+          # Token counts table (unique tokens)
+          if [ "$UNIQUE_RENAMED" != "0" ] && [ -n "$UNIQUE_RENAMED" ]; then
+            echo "| Added | Modified | Removed | Renamed |" >> $GITHUB_STEP_SUMMARY
+            echo "|-------|----------|---------|---------|" >> $GITHUB_STEP_SUMMARY
+            echo "| $UNIQUE_ADDED | $UNIQUE_MODIFIED | $UNIQUE_REMOVED | $UNIQUE_RENAMED |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "| Added | Modified | Removed |" >> $GITHUB_STEP_SUMMARY
+            echo "|-------|----------|---------|" >> $GITHUB_STEP_SUMMARY
+            echo "| $UNIQUE_ADDED | $UNIQUE_MODIFIED | $UNIQUE_REMOVED |" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Breaking changes detail (if any)
+          if [ "$IMPACT" == "breaking" ]; then
+            echo "⚠️ **Breaking:** $BREAKING_REMOVED removed, $BREAKING_RENAMED renamed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ No breaking changes" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Build status
+          echo "**Build:** ✅ ${{ steps.build.outputs.successful_builds }}/${{ steps.build.outputs.total_builds }} platforms" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # PR info
           if [ "${{ steps.check_pr.outputs.exists }}" == "true" ]; then
             echo "**Pull Request:** Updated PR #${{ steps.check_pr.outputs.pr_number }}" >> $GITHUB_STEP_SUMMARY
           else
@@ -369,9 +405,16 @@ jobs:
 
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📝 Next Steps" >> $GITHUB_STEP_SUMMARY
-          echo "1. Review the Pull Request" >> $GITHUB_STEP_SUMMARY
-          echo "2. Check the token changes" >> $GITHUB_STEP_SUMMARY
-          echo "3. Merge the PR to publish package" >> $GITHUB_STEP_SUMMARY
+
+          # Context-aware next steps
+          if [ "$IMPACT" == "breaking" ]; then
+            echo "1. ⚠️ Review breaking changes in PR" >> $GITHUB_STEP_SUMMARY
+            echo "2. Check renamed tokens for migration" >> $GITHUB_STEP_SUMMARY
+            echo "3. Merge to publish" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "1. Review the Pull Request" >> $GITHUB_STEP_SUMMARY
+            echo "2. Merge to publish" >> $GITHUB_STEP_SUMMARY
+          fi
 
       # 12. Bei Fehler benachrichtigen
       - name: Notify on Failure
