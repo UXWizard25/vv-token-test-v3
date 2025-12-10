@@ -294,8 +294,17 @@ All packages are published with synchronized versions:
 
 | Script | Purpose |
 |--------|---------|
-| `scripts/tokens/compare-builds.js` | Compares current vs baseline tokens, calculates impact level |
+| `scripts/tokens/compare-builds.js` | Compares current vs baseline tokens, calculates impact level, detects renames |
 | `scripts/tokens/release-notes.js` | Generates human-readable release notes from diff |
+
+**Rename Detection:**
+
+Token renames are detected by comparing Figma Variable IDs. "Phantom renames" (where Figma casing differs but platform output is identical) are automatically filtered:
+
+| Figma Change | Normalized | Status |
+|--------------|------------|--------|
+| `sectionSpaceLG` → `sectionSpaceLg` | `section.space.lg` | Filtered |
+| `buttonPrimary` → `buttonAccent` | Different | Shown |
 
 #### 📋 Release Notes Format
 

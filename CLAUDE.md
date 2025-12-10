@@ -607,6 +607,26 @@ The `compare-builds.js` script calculates impact level by analyzing token change
 
 **Note:** Breaking changes bump `minor` (not `major`) because we're still in 0.x/1.x development phase. For true semver, `breaking` would bump `major`.
 
+### Rename Detection
+
+The `compare-builds.js` script detects token renames by comparing Figma Variable IDs. Same ID with different name = renamed token.
+
+**Phantom Rename Filtering:**
+
+Figma may have casing differences (e.g., `sectionSpaceLG` vs `sectionSpaceLg`) that produce identical platform output. These "phantom renames" are filtered out by comparing normalized token names:
+
+| Figma Old | Figma New | Normalized | Status |
+|-----------|-----------|------------|--------|
+| `sectionSpaceLG` | `sectionSpaceLg` | `section.space.lg` | Filtered (identical) |
+| `space1X` | `space1x` | `space.1.x` | Filtered (identical) |
+| `buttonPrimary` | `buttonAccent` | Different | Shown as rename |
+
+**Platform Consistency:**
+
+All platforms produce identical output for phantom renames because:
+- CSS/SCSS use `nameTransformers.kebab` (normalizes casing)
+- JS/Swift/Kotlin use `nameTransformers.camel` (which first converts to kebab, then to camelCase)
+
 ### Race Condition Prevention
 
 The workflow uses a concurrency group to prevent race conditions:
@@ -892,6 +912,8 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 | Modify CI/CD publish workflow | `.github/workflows/publish-on-merge.yml` |
 | Change version bump logic | `.github/workflows/publish-on-merge.yml` → "Determine Version Bump Type" step |
 | Modify token diff analysis | `scripts/tokens/compare-builds.js` → `calculateImpactLevel()` |
+| Modify rename detection | `scripts/tokens/compare-builds.js` → `detectRenames()` |
+| Change phantom rename filtering | `scripts/tokens/compare-builds.js` → `detectRenames()` (compares `figmaPathToTokenName()` output) |
 | Change release notes format | `scripts/tokens/release-notes.js` |
 | Modify color matrix display | `scripts/tokens/release-notes.js` → `generateColorMatrix()` |
 | Modify breakpoint matrix display | `scripts/tokens/release-notes.js` → `generateBreakpointMatrix()` |
