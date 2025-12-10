@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2025-12-08T16:41:06.782Z",
+  "lastModified": "2025-12-10T15:51:29.905Z",
   "figmaFileKey": "unknown",
-  "figmaFileName": "BILD Design System",
+  "figmaFileName": "variables refactor",
   "collections": [
     {
       "id": "VariableCollectionId:470:1450",
@@ -993,11 +993,11 @@
         },
         {
           "id": "VariableID:2857:872",
-          "name": "BILD/TextLabels/BILDOrange",
+          "name": "BILD/TextLabels/colorOrange67",
           "description": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
           "resolvedType": "STRING",
           "valuesByMode": {
-            "539:2": "BILDOrange"
+            "539:2": "colorOrange67"
           },
           "scopes": [
             "TEXT_CONTENT"
@@ -1007,11 +1007,11 @@
         },
         {
           "id": "VariableID:2857:873",
-          "name": "BILD/TextLabels/BILDRed053",
+          "name": "BILD/TextLabels/colorBildRed53",
           "description": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
           "resolvedType": "STRING",
           "valuesByMode": {
-            "539:2": "BILDRed053"
+            "539:2": "colorBildRed53"
           },
           "scopes": [
             "TEXT_CONTENT"
@@ -1021,11 +1021,11 @@
         },
         {
           "id": "VariableID:2857:874",
-          "name": "BILD/TextLabels/BILDRed035",
+          "name": "BILD/TextLabels/colorBildRed35",
           "description": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
           "resolvedType": "STRING",
           "valuesByMode": {
-            "539:2": "BILDRed035"
+            "539:2": "colorBildRed35"
           },
           "scopes": [
             "TEXT_CONTENT"
@@ -1035,11 +1035,11 @@
         },
         {
           "id": "VariableID:2857:875",
-          "name": "BILD/TextLabels/BILDGreen093",
+          "name": "BILD/TextLabels/colorGreen93",
           "description": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
           "resolvedType": "STRING",
           "valuesByMode": {
-            "539:2": "BILDGreen093"
+            "539:2": "colorGreen93"
           },
           "scopes": [
             "TEXT_CONTENT"
@@ -1049,11 +1049,11 @@
         },
         {
           "id": "VariableID:2857:876",
-          "name": "BILD/TextLabels/BILDGreen070",
+          "name": "BILD/TextLabels/colorGreen70",
           "description": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
           "resolvedType": "STRING",
           "valuesByMode": {
-            "539:2": "BILDGreen070"
+            "539:2": "colorGreen70"
           },
           "scopes": [
             "TEXT_CONTENT"
@@ -1063,11 +1063,11 @@
         },
         {
           "id": "VariableID:2857:877",
-          "name": "BILD/TextLabels/BILDGreen063",
+          "name": "BILD/TextLabels/colorGreen63",
           "description": "This is a variable used only for documentation purposes in the design system Figma Foundations pages.",
           "resolvedType": "STRING",
           "valuesByMode": {
-            "539:2": "BILDGreen063"
+            "539:2": "colorGreen63"
           },
           "scopes": [
             "TEXT_CONTENT"
@@ -2001,8 +2001,6 @@
         "VariableID:8750:1693",
         "VariableID:8750:1694",
         "VariableID:8786:2988",
-        "VariableID:8871:15630",
-        "VariableID:8871:17185",
         "VariableID:8947:12500",
         "VariableID:9226:2048",
         "VariableID:9228:1432",
@@ -2129,7 +2127,18 @@
         "VariableID:19706:124726",
         "VariableID:19709:71129",
         "VariableID:19709:71141",
-        "VariableID:19881:148841"
+        "VariableID:19881:148841",
+        "VariableID:21341:6796",
+        "VariableID:21341:6797",
+        "VariableID:21341:6798",
+        "VariableID:21341:6799",
+        "VariableID:21341:6800",
+        "VariableID:21341:28662",
+        "VariableID:21341:28664",
+        "VariableID:21358:891614",
+        "VariableID:21411:891635",
+        "VariableID:21412:75342",
+        "VariableID:21432:895113"
       ],
       "variables": [
         {
@@ -2198,7 +2207,7 @@
         {
           "id": "VariableID:588:1984",
           "name": "Semantic/Surface/surfaceColorPrimary",
-          "description": "Primary surface color used for main backgrounds and large layout areas (e.g., page background, primary containers). Behavior: Dynamic — adapts between light and dark surface tokens to maintain legibility and hierarchy.",
+          "description": "Primary surface color used for main backgrounds and large layout areas (e.g., page background, primary containers). Behavior: Dynamic — adapts between light and dark surface tokens to maintain legibility and hierarchy. L:100 D:Bild:015-SpoBi:010",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
@@ -2268,11 +2277,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2683"
+              "id": "VariableID:3599:1619"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2552:18742"
+              "id": "VariableID:3599:1619"
             }
           },
           "scopes": [
@@ -2335,7 +2344,7 @@
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:18215:583"
+              "id": "VariableID:18215:584"
             }
           },
           "scopes": [
@@ -2347,7 +2356,7 @@
         {
           "id": "VariableID:1954:19186",
           "name": "Semantic/Border/borderColorMediumContrast",
-          "description": "Medium-emphasis border color for standard outlines, input fields, or separators that require visible yet non-dominant contrast. Behavior: Dynamic - adjusts to maintain legibility in Light and Dark themes.",
+          "description": "Medium-emphasis border color for standard outlines, input fields, or separators that require visible yet non-dominant contrast. Behavior: Dynamic - adjusts to maintain legibility in Light and Dark themes. L:085 D:045",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
@@ -2412,7 +2421,7 @@
         {
           "id": "VariableID:2068:3673",
           "name": "Semantic/Core/coreColorTertiary",
-          "description": "Represents tertiary brand accents. This variable changes across Light and Dark Mode.",
+          "description": "Represents tertiary brand accents. This variable changes across Light and Dark Mode. L:015 D:100",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
@@ -2514,7 +2523,7 @@
             }
           },
           "scopes": [
-            "ALL_SCOPES"
+            "ALL_FILLS"
           ],
           "hiddenFromPublishing": true,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -2527,11 +2536,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2682"
+              "id": "VariableID:21412:75342"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2682"
+              "id": "VariableID:21412:75342"
             }
           },
           "scopes": [
@@ -2548,11 +2557,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:588:1977"
+              "id": "VariableID:9598:13708"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2881:1765"
+              "id": "VariableID:9598:13708"
             }
           },
           "scopes": [
@@ -2564,7 +2573,7 @@
         {
           "id": "VariableID:3269:3503",
           "name": "Semantic/Label/labelColorPrimary",
-          "description": "Primary label color used for labels, badges, or tag text on light backgrounds. Ensures strong readability and visual hierarchy. Behavior: Dynamic — dark neutral in Light mode, light neutral in Dark mode.",
+          "description": "Primary label color used for labels, badges, or tag text on light backgrounds. Ensures strong readability and visual hierarchy. Behavior: Dynamic — dark neutral in Light mode, light neutral in Dark mode. L: 015 D:093",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
@@ -2590,11 +2599,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:588:1978"
+              "id": "VariableID:588:1984"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2068:3674"
+              "id": "VariableID:9756:1625"
             }
           },
           "scopes": [
@@ -2611,11 +2620,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2881:1765"
+              "id": "VariableID:9756:1625"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2552:18733"
+              "id": "VariableID:21341:28664"
             }
           },
           "scopes": [
@@ -2632,11 +2641,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:588:1977"
+              "id": "VariableID:3269:3503"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:588:1978"
+              "id": "VariableID:3269:3503"
             }
           },
           "scopes": [
@@ -2732,7 +2741,7 @@
         {
           "id": "VariableID:3599:1619",
           "name": "Semantic/Label/labelColorSecondary",
-          "description": "Secondary label tone used for less prominent text such as secondary badges or supporting labels. Behavior: Dynamic — adapts between mid-grays for Light and Dark surfaces.",
+          "description": "Secondary label tone used for less prominent text such as secondary badges or supporting labels. Behavior: Dynamic — adapts between mid-grays for Light and Dark surfaces. L:035 D:085",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
@@ -2775,7 +2784,7 @@
         {
           "id": "VariableID:3746:1628",
           "name": "Semantic/Label/labelColorDisabled",
-          "description": "Disabled label tone indicating inactive or unavailable states in UI elements. Behavior: Dynamic — lighter gray in Light mode, darker neutral in Dark mode.",
+          "description": "Disabled label tone indicating inactive or unavailable states in UI elements. Behavior: Dynamic — lighter gray in Light mode, darker neutral in Dark mode. L:085 D:035",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
@@ -2823,11 +2832,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:588:1978"
+              "id": "VariableID:19358:163830"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:588:1978"
+              "id": "VariableID:19358:163830"
             }
           },
           "scopes": [
@@ -2845,11 +2854,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2683"
+              "id": "VariableID:3599:1619"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2552:18742"
+              "id": "VariableID:3269:3503"
             }
           },
           "scopes": [
@@ -2866,11 +2875,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2682"
+              "id": "VariableID:1954:19186"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2683"
+              "id": "VariableID:1954:19186"
             }
           },
           "scopes": [
@@ -2887,11 +2896,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2683"
+              "id": "VariableID:9598:13708"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:588:1978"
+              "id": "VariableID:9598:13708"
             }
           },
           "scopes": [
@@ -2908,11 +2917,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2682"
+              "id": "VariableID:7532:4296"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:3746:1642"
+              "id": "VariableID:7532:4296"
             }
           },
           "scopes": [
@@ -2925,16 +2934,16 @@
         {
           "id": "VariableID:3752:3402",
           "name": "Component/Button/Secondary/buttonSecondaryLabelColor",
-          "description": "",
+          "description": "Referencing labelColorSecondary L:035 D:085",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2683"
+              "id": "VariableID:3599:1619"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2881:1765"
+              "id": "VariableID:3599:1619"
             }
           },
           "scopes": [
@@ -2951,11 +2960,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2881:1765"
+              "id": "VariableID:21411:891635"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2683"
+              "id": "VariableID:21411:891635"
             }
           },
           "scopes": [
@@ -2995,11 +3004,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:9697:16953"
+              "id": "VariableID:18119:28"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:9697:16953"
+              "id": "VariableID:18119:28"
             }
           },
           "scopes": [
@@ -3039,11 +3048,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2682"
+              "id": "VariableID:1954:19186"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2552:18733"
+              "id": "VariableID:1954:19186"
             }
           },
           "scopes": [
@@ -3060,11 +3069,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2683"
+              "id": "VariableID:21341:6800"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2881:1765"
+              "id": "VariableID:21341:6800"
             }
           },
           "scopes": [
@@ -3148,7 +3157,7 @@
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2682"
+              "id": "VariableID:588:1981"
             }
           },
           "scopes": [
@@ -3208,11 +3217,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2881:1765"
+              "id": "VariableID:9756:1625"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2068:3674"
+              "id": "VariableID:9756:1625"
             }
           },
           "scopes": [
@@ -3250,11 +3259,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2068:3674"
+              "id": "VariableID:3269:3503"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2552:18742"
+              "id": "VariableID:3269:3503"
             }
           },
           "scopes": [
@@ -3393,7 +3402,7 @@
         {
           "id": "VariableID:4978:2986",
           "name": "Semantic/Surface/surfaceColorSecondary",
-          "description": "Used for secondary surface layers such as cards, panels, or nested containers that need to differentiate themselves from the primary surface.  Behavior: Dynamic — adapts brightness level based on mode for appropriate depth contrast.",
+          "description": "Used for secondary surface layers such as cards, panels, or nested containers that need to differentiate themselves from the primary surface.  Behavior: Dynamic — adapts brightness level based on mode for appropriate depth contrast. L:096 D:020",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
@@ -3612,7 +3621,7 @@
         {
           "id": "VariableID:7532:4296",
           "name": "Semantic/Surface/surfaceColorQuartenary",
-          "description": "HIghtest elevation surface color, typically used for grouping or background accents to differentiate themselves from all previous surface color options. Uses corresponding light/dark tones for consistent layering.",
+          "description": "HIghtest elevation surface color, typically used for grouping or background accents to differentiate themselves from all previous surface color options. Uses corresponding light/dark tones for consistent layering. L:085 D:035",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
@@ -3635,7 +3644,7 @@
         {
           "id": "VariableID:7531:63134",
           "name": "Semantic/Label/labelColorPrimaryConstant",
-          "description": "Used when primary label color should remain unchanged across modes in static UI areas. Behavior: Constant — identical tone in both Light and Dark mode.",
+          "description": "Used when primary label color should remain unchanged across modes in static UI areas. Behavior: Constant — identical tone in both Light and Dark mode. L&D: 015",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
@@ -3682,11 +3691,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2682"
+              "id": "VariableID:7532:4296"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:8969:49793"
+              "id": "VariableID:4978:2986"
             }
           },
           "scopes": [
@@ -3698,7 +3707,7 @@
         {
           "id": "VariableID:8704:13961",
           "name": "Semantic/Label/labelColorPrimaryInverseConstant",
-          "description": "Fixed inverse label tone applied where white or bright text must always appear, regardless of theme. Behavior: Constant — remains bright neutral in both Light and Dark mode.",
+          "description": "Fixed inverse label tone applied where white or bright text must always appear, regardless of theme. Behavior: Constant — remains bright neutral in both Light and Dark mode. L&D:093",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
@@ -3724,11 +3733,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2580:18750"
+              "id": "VariableID:21358:891614"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2682"
+              "id": "VariableID:21358:891614"
             }
           },
           "scopes": [
@@ -3749,7 +3758,7 @@
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:14215:155422"
+              "id": "VariableID:14215:155421"
             }
           },
           "scopes": [
@@ -3787,11 +3796,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2881:1765"
+              "id": "VariableID:21411:891635"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2683"
+              "id": "VariableID:21411:891635"
             }
           },
           "scopes": [
@@ -3808,11 +3817,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:588:1977"
+              "id": "VariableID:3269:3503"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:588:1978"
+              "id": "VariableID:3269:3503"
             }
           },
           "scopes": [
@@ -3845,48 +3854,6 @@
           "variableCollectionId": "VariableCollectionId:588:1979"
         },
         {
-          "id": "VariableID:8871:15630",
-          "name": "Component/Button/buttonLiveTickerLoadNewSurfaceColor",
-          "description": "",
-          "resolvedType": "COLOR",
-          "valuesByMode": {
-            "588:0": {
-              "type": "VARIABLE_ALIAS",
-              "id": "VariableID:588:1984"
-            },
-            "592:1": {
-              "type": "VARIABLE_ALIAS",
-              "id": "VariableID:588:1984"
-            }
-          },
-          "scopes": [
-            "ALL_SCOPES"
-          ],
-          "hiddenFromPublishing": true,
-          "variableCollectionId": "VariableCollectionId:588:1979"
-        },
-        {
-          "id": "VariableID:8871:17185",
-          "name": "Component/Button/buttonLiveTickerLoadNewLabelColor",
-          "description": "",
-          "resolvedType": "COLOR",
-          "valuesByMode": {
-            "588:0": {
-              "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2552:18733"
-            },
-            "592:1": {
-              "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2552:18742"
-            }
-          },
-          "scopes": [
-            "ALL_SCOPES"
-          ],
-          "hiddenFromPublishing": true,
-          "variableCollectionId": "VariableCollectionId:588:1979"
-        },
-        {
           "id": "VariableID:8947:12500",
           "name": "Component/Card/cardSurfaceBgColor",
           "description": "",
@@ -3915,11 +3882,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2683"
+              "id": "VariableID:21341:6800"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2552:18733"
+              "id": "VariableID:21341:6799"
             }
           },
           "scopes": [
@@ -3940,7 +3907,7 @@
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2552:18733"
+              "id": "VariableID:13150:34412"
             }
           },
           "scopes": [
@@ -3972,8 +3939,8 @@
         },
         {
           "id": "VariableID:9598:13708",
-          "name": "Semantic/Border/borderColorHighContrast",
-          "description": "High-emphasis border color for clear delineation between surfaces (e.g., focus rings, high-contrast UI zones). Behavior: Dynamic — light surfaces use a darker neutral, dark surfaces a light neutral tone.",
+          "name": "Semantic/Border/borderColorExtraHighContrast",
+          "description": "High-emphasis border color for clear delineation between surfaces (e.g., focus rings, high-contrast UI zones). Behavior: Dynamic — light surfaces use a darker neutral, dark surfaces a light neutral tone. L:015 D:100",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
@@ -4001,11 +3968,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2552:18733"
+              "id": "VariableID:21341:6799"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2682"
+              "id": "VariableID:21341:6799"
             }
           },
           "scopes": [
@@ -4043,11 +4010,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2068:3674"
+              "id": "VariableID:21341:6798"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2068:3674"
+              "id": "VariableID:21341:6798"
             }
           },
           "scopes": [
@@ -4064,11 +4031,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2683"
+              "id": "VariableID:21341:6797"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2683"
+              "id": "VariableID:21341:6797"
             }
           },
           "scopes": [
@@ -4079,17 +4046,17 @@
         },
         {
           "id": "VariableID:9617:96731",
-          "name": "Component/InputField/inputFieldBgColorDarkHighContrast",
+          "name": "Component/InputField/inputFieldBgColorDarkHighContrastConst",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2881:1765"
+              "id": "VariableID:21341:6796"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2881:1765"
+              "id": "VariableID:21341:6796"
             }
           },
           "scopes": [
@@ -4101,7 +4068,7 @@
         {
           "id": "VariableID:9618:21019",
           "name": "Semantic/Label/labelColorTertiary",
-          "description": "Tertiary label tone for subtle, low-emphasis UI text such as placeholder text or tertiary badges. Behavior: Constant — identical tone across both modes for stable hierarchy.",
+          "description": "Tertiary label tone for subtle, low-emphasis UI text such as placeholder text or tertiary badges. Behavior: Constant — identical tone across both modes for stable hierarchy. L&D:060",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
@@ -4196,7 +4163,7 @@
         {
           "id": "VariableID:9694:16562",
           "name": "Semantic/Border/borderColorLowContrastConstant",
-          "description": "Applies to UI elements that must visually remain the same regardless of theme (e.g., brand containers, static illustrations). Identical tone across Light and Dark mode.",
+          "description": "Applies to UI elements that must visually remain the same regardless of theme (e.g., brand containers, static illustrations). Identical tone across Light and Dark mode. L&D: 093",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
@@ -4263,7 +4230,7 @@
         {
           "id": "VariableID:9756:1625",
           "name": "Semantic/Surface/surfaceColorTertiary",
-          "description": "Tertiary background layer for inner containers, grouped content, or subtle elevation steps  that need to differentiate themselves from the primary and secondary surfaces. Behavior: Dynamic — switches between light and dark tertiary tones.",
+          "description": "Tertiary background layer for inner containers, grouped content, or subtle elevation steps  that need to differentiate themselves from the primary and secondary surfaces. Behavior: Dynamic — switches between light and dark tertiary tones. L:093 D:025",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
@@ -4291,11 +4258,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2881:1765"
+              "id": "VariableID:9756:1625"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2683"
+              "id": "VariableID:7532:4296"
             }
           },
           "scopes": [
@@ -4312,11 +4279,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2683"
+              "id": "VariableID:5511:2499"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2881:1765"
+              "id": "VariableID:5511:2499"
             }
           },
           "scopes": [
@@ -4333,11 +4300,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2683"
+              "id": "VariableID:2102:8677"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:588:1978"
+              "id": "VariableID:17135:11267"
             }
           },
           "scopes": [
@@ -4354,11 +4321,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2682"
+              "id": "VariableID:1954:19186"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:3912:4271"
+              "id": "VariableID:1954:19186"
             }
           },
           "scopes": [
@@ -4417,11 +4384,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2682"
+              "id": "VariableID:7532:4296"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2552:18733"
+              "id": "VariableID:19568:251966"
             }
           },
           "scopes": [
@@ -4487,7 +4454,7 @@
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2552:18742"
+              "id": "VariableID:3269:3503"
             }
           },
           "scopes": [
@@ -4542,11 +4509,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:16279:318946"
+              "id": "VariableID:2496:18725"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:16279:318946"
+              "id": "VariableID:2496:18725"
             }
           },
           "scopes": [
@@ -4565,11 +4532,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:3810:3107"
+              "id": "VariableID:539:2239"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:3810:3107"
+              "id": "VariableID:539:2239"
             }
           },
           "scopes": [
@@ -4708,7 +4675,10 @@
           "description": "Defines the end stops for primary surface gradients, creating visual depth or elevation. Used next to sliders buttons and slider container edges for fading out content. Behavior: Dynamic — light gradients in Light mode, dark gradients in Dark mode.",
           "resolvedType": "COLOR",
           "valuesByMode": {
-            "588:0": "rgba(255, 255, 255, 0)",
+            "588:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:21160:123382"
+            },
             "592:1": "rgba(35, 38, 41, 0)"
           },
           "scopes": [
@@ -4744,11 +4714,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2682"
+              "id": "VariableID:1954:19186"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2683"
+              "id": "VariableID:1954:19186"
             }
           },
           "scopes": [
@@ -5050,11 +5020,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:3936:1911"
+              "id": "VariableID:2552:18742"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:3936:1911"
+              "id": "VariableID:2068:3674"
             }
           },
           "scopes": [
@@ -5073,11 +5043,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:3853:2806"
+              "id": "VariableID:2881:1765"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:3853:2806"
+              "id": "VariableID:736:2683"
             }
           },
           "scopes": [
@@ -5154,7 +5124,7 @@
         {
           "id": "VariableID:16279:318946",
           "name": "Semantic/Attention/attentionColorSuccessPrimary",
-          "description": "Primary success color used to indicate positive states, confirmations, or completed actions (e.g., success banners, icons, or badges). Remains the same across modes to ensure recognizability and consistency.",
+          "description": "Primary success color used to indicate positive states, confirmations, or completed actions (e.g., success banners, icons, or badges). Remains the same across modes to ensure recognizability and consistency. L&D:070",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
@@ -5175,7 +5145,7 @@
         {
           "id": "VariableID:16353:426",
           "name": "Semantic/Label/labelColorPrimaryInverse",
-          "description": "Inverse version of the primary label color, used on dark or colored backgrounds. Behavior: Dynamic — switches between light and dark.",
+          "description": "Inverse version of the primary label color, used on dark or colored backgrounds. Behavior: Dynamic — switches between light and dark. L:093 D:015",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
@@ -5307,11 +5277,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2683"
+              "id": "VariableID:3599:1619"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:588:1978"
+              "id": "VariableID:3599:1619"
             }
           },
           "scopes": [
@@ -5439,11 +5409,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2552:18733"
+              "id": "VariableID:21341:28664"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:2552:18733"
+              "id": "VariableID:21341:28664"
             }
           },
           "scopes": [
@@ -5703,7 +5673,7 @@
         {
           "id": "VariableID:18119:28",
           "name": "Semantic/Attention/attentionColorSuccessSecondary",
-          "description": "Secondary success tone used for secondary states. Maintains the same color in both Light and Dark mode for clarity.",
+          "description": "Secondary success tone used for secondary states. Maintains the same color in both Light and Dark mode for clarity. L&D: green40",
           "resolvedType": "COLOR",
           "valuesByMode": {
             "588:0": {
@@ -5857,11 +5827,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:736:2682"
+              "id": "VariableID:7532:4296"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:3746:1642"
+              "id": "VariableID:7532:4296"
             }
           },
           "scopes": [
@@ -6007,11 +5977,11 @@
           "valuesByMode": {
             "588:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:16279:318946"
+              "id": "VariableID:2496:18725"
             },
             "592:1": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:16279:318946"
+              "id": "VariableID:2496:18725"
             }
           },
           "scopes": [
@@ -6566,6 +6536,251 @@
           },
           "scopes": [
             "TEXT_FILL"
+          ],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:588:1979"
+        },
+        {
+          "id": "VariableID:21341:6796",
+          "name": "Semantic/Surface/surfaceColorTertiaryConst",
+          "description": "Tertiary background layer for inner containers, grouped content, or subtle elevation steps  that need to differentiate themselves from the primary and secondary surfaces. Behavior: Dynamic — switches between light and dark tertiary tones. L:093 D:025",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "588:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:18215:576"
+            },
+            "592:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:18215:576"
+            }
+          },
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL",
+            "EFFECT_COLOR"
+          ],
+          "hiddenFromPublishing": false,
+          "variableCollectionId": "VariableCollectionId:588:1979"
+        },
+        {
+          "id": "VariableID:21341:6797",
+          "name": "Semantic/Surface/surfaceColorQuartenaryInverseConst",
+          "description": "Inverse of the quartenary surface, used for background reversals in mixed-layout areas. Behavior: Dynamic — inverts between dark and light tones depending on mode.",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "588:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:18215:579"
+            },
+            "592:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:18215:579"
+            }
+          },
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "hiddenFromPublishing": false,
+          "variableCollectionId": "VariableCollectionId:588:1979"
+        },
+        {
+          "id": "VariableID:21341:6798",
+          "name": "Semantic/Surface/surfaceColorTertiaryInverseConst",
+          "description": "Inverse tertiary background, applied when Light and Dark surfaces are reversed (e.g., dark-on-light cards). Behavior: Dynamic — swaps values between modes for contrast preservation.",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "588:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:18215:577"
+            },
+            "592:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:18215:577"
+            }
+          },
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL",
+            "EFFECT_COLOR"
+          ],
+          "hiddenFromPublishing": false,
+          "variableCollectionId": "VariableCollectionId:588:1979"
+        },
+        {
+          "id": "VariableID:21341:6799",
+          "name": "Semantic/Border/borderColorMediumContrastInverse",
+          "description": "Medium-emphasis border color for standard outlines, input fields, or separators that require visible yet non-dominant contrast. Behavior: Dynamic - adjusts to maintain legibility in Light and Dark themes. L:085 D:045",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "588:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:3912:4271"
+            },
+            "592:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:736:2682"
+            }
+          },
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL",
+            "STROKE_COLOR"
+          ],
+          "hiddenFromPublishing": false,
+          "variableCollectionId": "VariableCollectionId:588:1979"
+        },
+        {
+          "id": "VariableID:21341:6800",
+          "name": "Semantic/Border/borderColorHighContrast",
+          "description": "High-emphasis border color for clear delineation between surfaces (e.g., focus rings, high-contrast UI zones). Behavior: Dynamic — light surfaces use a darker neutral, dark surfaces a light neutral tone. L:015 D:100",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "588:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:736:2683"
+            },
+            "592:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:2881:1765"
+            }
+          },
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL",
+            "STROKE_COLOR"
+          ],
+          "hiddenFromPublishing": false,
+          "variableCollectionId": "VariableCollectionId:588:1979"
+        },
+        {
+          "id": "VariableID:21341:28662",
+          "name": "Semantic/Surface/surfaceColorQuartenaryConstant",
+          "description": "HIghtest elevation surface color, typically used for grouping or background accents to differentiate themselves from all previous surface color options. Uses corresponding light/dark tones for consistent layering. L:085 D:035",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "588:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:18215:578"
+            },
+            "592:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:18215:578"
+            }
+          },
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL",
+            "EFFECT_COLOR"
+          ],
+          "hiddenFromPublishing": false,
+          "variableCollectionId": "VariableCollectionId:588:1979"
+        },
+        {
+          "id": "VariableID:21341:28664",
+          "name": "Semantic/Surface/surfaceColorQuintenary",
+          "description": "",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "588:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:2552:18733"
+            },
+            "592:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:2552:18733"
+            }
+          },
+          "scopes": [
+            "ALL_FILLS"
+          ],
+          "hiddenFromPublishing": false,
+          "variableCollectionId": "VariableCollectionId:588:1979"
+        },
+        {
+          "id": "VariableID:21358:891614",
+          "name": "Semantic/State/colorPrimaryHover",
+          "description": "Used to represent the active or pressed state of primary actions such as tabs or links. Behavior: Constant - identical value across modes for consistent interaction feedback.",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "588:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:21358:891615"
+            },
+            "592:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:21358:891615"
+            }
+          },
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "hiddenFromPublishing": false,
+          "variableCollectionId": "VariableCollectionId:588:1979"
+        },
+        {
+          "id": "VariableID:21411:891635",
+          "name": "Semantic/Surface/surfaceColorTertiaryNeutral",
+          "description": "Tertiary background layer for inner containers, grouped content, or subtle elevation steps  that need to differentiate themselves from the primary and secondary surfaces. Behavior: Dynamic — switches between light and dark tertiary tones. L:093 D:025 This neutral version of the tertiary surface color does not use blues associated with the SpoBi brand.",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "588:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:21408:3"
+            },
+            "592:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:21408:2"
+            }
+          },
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL",
+            "EFFECT_COLOR"
+          ],
+          "hiddenFromPublishing": false,
+          "variableCollectionId": "VariableCollectionId:588:1979"
+        },
+        {
+          "id": "VariableID:21412:75342",
+          "name": "Semantic/Border/borderColorMediumContrastConst",
+          "description": "Medium-emphasis border color for standard outlines, input fields, or separators that require visible yet non-dominant contrast. Behavior: Dynamic - adjusts to maintain legibility in Light and Dark themes. L:085 D:045",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "588:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:736:2682"
+            },
+            "592:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:736:2682"
+            }
+          },
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL",
+            "STROKE_COLOR"
+          ],
+          "hiddenFromPublishing": false,
+          "variableCollectionId": "VariableCollectionId:588:1979"
+        },
+        {
+          "id": "VariableID:21432:895113",
+          "name": "Component/Chip/chipLabelColorActive",
+          "description": "",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "588:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:14215:155421"
+            },
+            "592:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:21432:895114"
+            }
+          },
+          "scopes": [
+            "ALL_SCOPES"
           ],
           "hiddenFromPublishing": true,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -8797,7 +9012,7 @@
         },
         {
           "id": "VariableID:7030:2386",
-          "name": "Semantic/Layout/Section/sectionSpaceLG",
+          "name": "Semantic/Layout/Section/sectionSpaceLg",
           "description": "72-72-96-96 – Use for vertical spacing between sections in a layout",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -8886,7 +9101,7 @@
         },
         {
           "id": "VariableID:7067:5",
-          "name": "Semantic/Layout/Section/sectionSpaceSM",
+          "name": "Semantic/Layout/Section/sectionSpaceSm",
           "description": "24-24-36-36 – Use for vertical spacing between subsections in a layout",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9640,7 +9855,7 @@
         },
         {
           "id": "VariableID:7506:5589",
-          "name": "Semantic/Layout/Grid/Constant/gridSpaceConstLG",
+          "name": "Semantic/Layout/Grid/Constant/gridSpaceConstLg",
           "description": "16-16-16-16 – use for fixed side paddings and gutters",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9786,7 +10001,7 @@
         },
         {
           "id": "VariableID:7539:63140",
-          "name": "Semantic/Layout/Grid/Constant/gridSpaceConstSM",
+          "name": "Semantic/Layout/Grid/Constant/gridSpaceConstSm",
           "description": "12-12-12-12 – use for fixed side paddings and gutters",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -14770,7 +14985,7 @@
         },
         {
           "id": "VariableID:16051:28",
-          "name": "Semantic/Space/Inline/Responsive/inlineSpaceRespSM",
+          "name": "Semantic/Space/Inline/Responsive/inlineSpaceRespSm",
           "description": "8-8-12-16 – use for horizontal (left/right) padding of UI elements that scales across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -14799,7 +15014,7 @@
         },
         {
           "id": "VariableID:16051:6708",
-          "name": "Semantic/Space/Inline/Responsive/inlineSpaceRespMD",
+          "name": "Semantic/Space/Inline/Responsive/inlineSpaceRespMd",
           "description": "12-12-16-24 use for horizontal (left/right) padding of UI elements that scales across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -14828,7 +15043,7 @@
         },
         {
           "id": "VariableID:16051:6709",
-          "name": "Semantic/Space/Inline/Responsive/inlineSpaceRespLG",
+          "name": "Semantic/Space/Inline/Responsive/inlineSpaceRespLg",
           "description": "16-16-24-32 – use for horizontal (left/right) padding of UI elements that scales across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -14857,7 +15072,7 @@
         },
         {
           "id": "VariableID:16051:6710",
-          "name": "Semantic/Space/Inline/Responsive/inlineSpaceResp2XL",
+          "name": "Semantic/Space/Inline/Responsive/inlineSpaceResp2Xl",
           "description": "32-32-48-64 – use for horizontal (left/right) padding of UI elements that scales across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -14886,7 +15101,7 @@
         },
         {
           "id": "VariableID:16051:6711",
-          "name": "Semantic/Space/Stack/Responsive/stackSpaceRespMD",
+          "name": "Semantic/Space/Stack/Responsive/stackSpaceRespMd",
           "description": "12-12-16-24 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -14915,7 +15130,7 @@
         },
         {
           "id": "VariableID:16051:6712",
-          "name": "Semantic/Space/Stack/Responsive/stackSpaceRespLG",
+          "name": "Semantic/Space/Stack/Responsive/stackSpaceRespLg",
           "description": "16-16-24-32 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -14944,7 +15159,7 @@
         },
         {
           "id": "VariableID:16051:6713",
-          "name": "Semantic/Space/Stack/Responsive/stackSpaceResp2XL",
+          "name": "Semantic/Space/Stack/Responsive/stackSpaceResp2Xl",
           "description": "32-32-48-64 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -14973,7 +15188,7 @@
         },
         {
           "id": "VariableID:16051:6714",
-          "name": "Semantic/Space/Stack/Responsive/stackSpaceRespSM",
+          "name": "Semantic/Space/Stack/Responsive/stackSpaceRespSm",
           "description": "8-8-12-16 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15002,7 +15217,7 @@
         },
         {
           "id": "VariableID:16051:6715",
-          "name": "Semantic/Space/Gap/Responsive/gapSpaceRespXS",
+          "name": "Semantic/Space/Gap/Responsive/gapSpaceRespXs",
           "description": "4-4-6-8 – Use for gaps between items inside of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15031,7 +15246,7 @@
         },
         {
           "id": "VariableID:16051:6716",
-          "name": "Semantic/Space/Gap/Responsive/gapSpaceRespLG",
+          "name": "Semantic/Space/Gap/Responsive/gapSpaceRespLg",
           "description": "16-16-24-32 – Use for gaps between items inside of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15060,7 +15275,7 @@
         },
         {
           "id": "VariableID:16051:6717",
-          "name": "Semantic/Space/Gap/Responsive/gapSpaceRespXL",
+          "name": "Semantic/Space/Gap/Responsive/gapSpaceRespXl",
           "description": "24-24-32-48 – Use for gaps between items inside of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15089,7 +15304,7 @@
         },
         {
           "id": "VariableID:16051:6718",
-          "name": "Semantic/Space/Gap/Responsive/gapSpaceResp2XL",
+          "name": "Semantic/Space/Gap/Responsive/gapSpaceResp2Xl",
           "description": "32-32-48-64 – Use for gaps between items inside of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15118,7 +15333,7 @@
         },
         {
           "id": "VariableID:16051:6719",
-          "name": "Semantic/Space/Gap/Responsive/gapSpaceRespMD",
+          "name": "Semantic/Space/Gap/Responsive/gapSpaceRespMd",
           "description": "12-12-16-24 – Use for gaps between items inside of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15147,7 +15362,7 @@
         },
         {
           "id": "VariableID:16051:6720",
-          "name": "Semantic/Space/Gap/Responsive/gapSpaceRespSM",
+          "name": "Semantic/Space/Gap/Responsive/gapSpaceRespSm",
           "description": "8-8-12-16 – Use for gaps between items inside of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15251,7 +15466,7 @@
         },
         {
           "id": "VariableID:16088:163209",
-          "name": "Semantic/Space/Inline/Constant/inlineSpaceConstSM",
+          "name": "Semantic/Space/Inline/Constant/inlineSpaceConstSm",
           "description": "8-8-8-8 – Use for fixed horizontal (left/right) padding of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15280,7 +15495,7 @@
         },
         {
           "id": "VariableID:16088:163210",
-          "name": "Semantic/Space/Inline/Constant/inlineSpaceConstMD",
+          "name": "Semantic/Space/Inline/Constant/inlineSpaceConstMd",
           "description": "12-12-12-12 – Use for fixed horizontal (left/right) padding of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15309,7 +15524,7 @@
         },
         {
           "id": "VariableID:16088:163211",
-          "name": "Semantic/Space/Inline/Constant/inlineSpaceConstLG",
+          "name": "Semantic/Space/Inline/Constant/inlineSpaceConstLg",
           "description": "16-16-16-16 – Use for fixed horizontal (left/right) padding of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15338,7 +15553,7 @@
         },
         {
           "id": "VariableID:16088:163212",
-          "name": "Semantic/Space/Inline/Constant/inlineSpaceConst2XL",
+          "name": "Semantic/Space/Inline/Constant/inlineSpaceConst2Xl",
           "description": "32-32-32-32 – Use for fixed horizontal (left/right) padding of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15367,7 +15582,7 @@
         },
         {
           "id": "VariableID:16120:163554",
-          "name": "Semantic/Space/Stack/Constant/stackSpaceConstSM",
+          "name": "Semantic/Space/Stack/Constant/stackSpaceConstSm",
           "description": "8-8-8-8 – Use for fixed vertical (top/bottom) padding of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15396,7 +15611,7 @@
         },
         {
           "id": "VariableID:16120:163555",
-          "name": "Semantic/Space/Stack/Constant/stackSpaceConstMD",
+          "name": "Semantic/Space/Stack/Constant/stackSpaceConstMd",
           "description": "12-12-12-12 – Use for fixed vertical (top/bottom) padding of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15425,7 +15640,7 @@
         },
         {
           "id": "VariableID:16120:163556",
-          "name": "Semantic/Space/Stack/Constant/stackSpaceConstLG",
+          "name": "Semantic/Space/Stack/Constant/stackSpaceConstLg",
           "description": "16-16-16-16 – Use for fixed vertical (top/bottom) padding of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15454,7 +15669,7 @@
         },
         {
           "id": "VariableID:16120:163557",
-          "name": "Semantic/Space/Stack/Constant/stackSpaceConst2XL",
+          "name": "Semantic/Space/Stack/Constant/stackSpaceConst2Xl",
           "description": "32-32-32-32 – Use for fixed vertical (top/bottom) padding of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15483,7 +15698,7 @@
         },
         {
           "id": "VariableID:16125:174186",
-          "name": "Semantic/Space/Gap/Responsive/gapSpaceResp2XS",
+          "name": "Semantic/Space/Gap/Responsive/gapSpaceResp2Xs",
           "description": "2-2-4-6 – Use for gaps between items inside of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15512,7 +15727,7 @@
         },
         {
           "id": "VariableID:16125:174187",
-          "name": "Semantic/Space/Gap/Responsive/gapSpaceResp3XL",
+          "name": "Semantic/Space/Gap/Responsive/gapSpaceResp3Xl",
           "description": "48-48-72-96 – Use for gaps between items inside of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15587,7 +15802,7 @@
         },
         {
           "id": "VariableID:16152:3739",
-          "name": "Semantic/Space/Gap/Constant/gapSpaceConst2XS",
+          "name": "Semantic/Space/Gap/Constant/gapSpaceConst2Xs",
           "description": "2-2-2-2 – Use for fixed gaps between items inside of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15616,7 +15831,7 @@
         },
         {
           "id": "VariableID:16152:3740",
-          "name": "Semantic/Space/Gap/Constant/gapSpaceConstXS",
+          "name": "Semantic/Space/Gap/Constant/gapSpaceConstXs",
           "description": "4-4-4-4 – Use for fixed gaps between items inside of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15645,7 +15860,7 @@
         },
         {
           "id": "VariableID:16152:3741",
-          "name": "Semantic/Space/Gap/Constant/gapSpaceConstSM",
+          "name": "Semantic/Space/Gap/Constant/gapSpaceConstSm",
           "description": "8-8-8-8 – Use for fixed gaps between items inside of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15674,7 +15889,7 @@
         },
         {
           "id": "VariableID:16152:3742",
-          "name": "Semantic/Space/Gap/Constant/gapSpaceConstMD",
+          "name": "Semantic/Space/Gap/Constant/gapSpaceConstMd",
           "description": "12-12-12-12 – Use for fixed gaps between items inside of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15703,7 +15918,7 @@
         },
         {
           "id": "VariableID:16152:3743",
-          "name": "Semantic/Space/Gap/Constant/gapSpaceConstLG",
+          "name": "Semantic/Space/Gap/Constant/gapSpaceConstLg",
           "description": "16-16-16-16 – Use for fixed gaps between items inside of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15732,7 +15947,7 @@
         },
         {
           "id": "VariableID:16152:3744",
-          "name": "Semantic/Space/Gap/Constant/gapSpaceConstXL",
+          "name": "Semantic/Space/Gap/Constant/gapSpaceConstXl",
           "description": "24-24-24-24 – Use for fixed gaps between items inside of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15761,7 +15976,7 @@
         },
         {
           "id": "VariableID:16152:3745",
-          "name": "Semantic/Space/Gap/Constant/gapSpaceConst2XL",
+          "name": "Semantic/Space/Gap/Constant/gapSpaceConst2Xl",
           "description": "32-32-32-32 – Use for fixed gaps between items inside of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15790,7 +16005,7 @@
         },
         {
           "id": "VariableID:16152:3746",
-          "name": "Semantic/Space/Gap/Constant/gapSpaceConst3XL",
+          "name": "Semantic/Space/Gap/Constant/gapSpaceConst3Xl",
           "description": "48-48-48-48 – Use for fixed gaps between items inside of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15848,7 +16063,7 @@
         },
         {
           "id": "VariableID:16165:2968",
-          "name": "Semantic/Size/Constant/sizeConst3XS",
+          "name": "Semantic/Size/Constant/sizeConst3Xs",
           "description": "16-16-16-16 – Use for setting fixed height and width of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15877,7 +16092,7 @@
         },
         {
           "id": "VariableID:16165:5457",
-          "name": "Semantic/Size/Constant/sizeConst2XS",
+          "name": "Semantic/Size/Constant/sizeConst2Xs",
           "description": "24-24-24-24 – Use for setting fixed height and width of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15906,7 +16121,7 @@
         },
         {
           "id": "VariableID:16165:5458",
-          "name": "Semantic/Size/Constant/sizeConstXS",
+          "name": "Semantic/Size/Constant/sizeConstXs",
           "description": "32-32-32-32 – Use for setting fixed height and width of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15935,7 +16150,7 @@
         },
         {
           "id": "VariableID:16165:5460",
-          "name": "Semantic/Size/Constant/sizeConstSM",
+          "name": "Semantic/Size/Constant/sizeConstSm",
           "description": "40-40-40-40 – Use for setting fixed height and width of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15964,7 +16179,7 @@
         },
         {
           "id": "VariableID:16165:5461",
-          "name": "Semantic/Size/Constant/sizeConstMD",
+          "name": "Semantic/Size/Constant/sizeConstMd",
           "description": "48-48-48-48 Use for setting fixed height and width of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -15993,7 +16208,7 @@
         },
         {
           "id": "VariableID:16165:5462",
-          "name": "Semantic/Size/Constant/sizeConstLG",
+          "name": "Semantic/Size/Constant/sizeConstLg",
           "description": "56-56-56-56 – Use for setting fixed height and width of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -16022,7 +16237,7 @@
         },
         {
           "id": "VariableID:16165:5463",
-          "name": "Semantic/Size/Constant/sizeConstXL",
+          "name": "Semantic/Size/Constant/sizeConstXl",
           "description": "64-64-64-64 – Use for setting fixed height and width of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -16051,7 +16266,7 @@
         },
         {
           "id": "VariableID:16165:5464",
-          "name": "Semantic/Size/Constant/sizeConst3XL",
+          "name": "Semantic/Size/Constant/sizeConst3Xl",
           "description": "96-96-96-96 – Use for setting fixed height and width of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -16080,7 +16295,7 @@
         },
         {
           "id": "VariableID:16165:5465",
-          "name": "Semantic/Size/Constant/sizeConst4XL",
+          "name": "Semantic/Size/Constant/sizeConst4Xl",
           "description": "148-148-148-148 – Use for setting fixed height and width of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -16109,7 +16324,7 @@
         },
         {
           "id": "VariableID:16165:5477",
-          "name": "Semantic/Size/Constant/sizeConst2XL",
+          "name": "Semantic/Size/Constant/sizeConst2Xl",
           "description": "72-72-72-72 – Use for setting fixed height and width of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -16138,7 +16353,7 @@
         },
         {
           "id": "VariableID:16165:13185",
-          "name": "Semantic/Size/Responsive/sizeResp3XS",
+          "name": "Semantic/Size/Responsive/sizeResp3Xs",
           "description": "16-16-16-24 – Use for setting height and width of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -16167,7 +16382,7 @@
         },
         {
           "id": "VariableID:16165:13186",
-          "name": "Semantic/Size/Responsive/sizeResp2XS",
+          "name": "Semantic/Size/Responsive/sizeResp2Xs",
           "description": "24-24-32-32 – Use for setting height and width of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -16196,7 +16411,7 @@
         },
         {
           "id": "VariableID:16165:13187",
-          "name": "Semantic/Size/Responsive/sizeRespXS",
+          "name": "Semantic/Size/Responsive/sizeRespXs",
           "description": "32-32-40-48 – Use for setting height and width of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -16225,7 +16440,7 @@
         },
         {
           "id": "VariableID:16165:13188",
-          "name": "Semantic/Size/Responsive/sizeRespSM",
+          "name": "Semantic/Size/Responsive/sizeRespSm",
           "description": "40-40-48-56 – Use for setting height and width of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -16254,7 +16469,7 @@
         },
         {
           "id": "VariableID:16165:13189",
-          "name": "Semantic/Size/Responsive/sizeRespMD",
+          "name": "Semantic/Size/Responsive/sizeRespMd",
           "description": "48-48-64-72 – Use for setting height and width of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -16283,7 +16498,7 @@
         },
         {
           "id": "VariableID:16165:13190",
-          "name": "Semantic/Size/Responsive/sizeRespLG",
+          "name": "Semantic/Size/Responsive/sizeRespLg",
           "description": "56-56-72-92 – Use for setting height and width of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -16312,7 +16527,7 @@
         },
         {
           "id": "VariableID:16165:13191",
-          "name": "Semantic/Size/Responsive/sizeRespXL",
+          "name": "Semantic/Size/Responsive/sizeRespXl",
           "description": "64-64-80-96 – Use for setting height and width of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -16341,7 +16556,7 @@
         },
         {
           "id": "VariableID:16165:13192",
-          "name": "Semantic/Size/Responsive/sizeResp2XL",
+          "name": "Semantic/Size/Responsive/sizeResp2Xl",
           "description": "72-72-92-100 – Use for setting height and width of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -16370,7 +16585,7 @@
         },
         {
           "id": "VariableID:16165:13193",
-          "name": "Semantic/Size/Responsive/sizeResp3XL",
+          "name": "Semantic/Size/Responsive/sizeResp3Xl",
           "description": "96-96-120-148 – Use for setting height and width of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -16399,7 +16614,7 @@
         },
         {
           "id": "VariableID:16165:13194",
-          "name": "Semantic/Size/Responsive/sizeResp4XL",
+          "name": "Semantic/Size/Responsive/sizeResp4Xl",
           "description": "148-148-160-180 – Use for setting height and width of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -16675,7 +16890,7 @@
         },
         {
           "id": "VariableID:16272:167803",
-          "name": "Semantic/Space/Inline/Constant/inlineSpaceConstXL",
+          "name": "Semantic/Space/Inline/Constant/inlineSpaceConstXl",
           "description": "24-24-24-24 – Use for fixed horizontal (left/right) padding of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -16704,7 +16919,7 @@
         },
         {
           "id": "VariableID:16272:167804",
-          "name": "Semantic/Space/Inline/Responsive/inlineSpaceRespXL",
+          "name": "Semantic/Space/Inline/Responsive/inlineSpaceRespXl",
           "description": "24-24-32-40 – use for horizontal (left/right) padding of UI elements that scales across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -16733,7 +16948,7 @@
         },
         {
           "id": "VariableID:16272:167805",
-          "name": "Semantic/Space/Stack/Responsive/stackSpaceRespXL",
+          "name": "Semantic/Space/Stack/Responsive/stackSpaceRespXl",
           "description": "24-24-32-40 – use for vertical (top/bottom) padding of UI elements that scales across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -16762,7 +16977,7 @@
         },
         {
           "id": "VariableID:16272:167806",
-          "name": "Semantic/Space/Stack/Constant/stackSpaceConstXL",
+          "name": "Semantic/Space/Stack/Constant/stackSpaceConstXl",
           "description": "24-24-24-24 – Use for fixed vertical (top/bottom) padding of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -17030,7 +17245,7 @@
         },
         {
           "id": "VariableID:16687:30290",
-          "name": "Semantic/Size/Responsive/sizeResp4XS",
+          "name": "Semantic/Size/Responsive/sizeResp4Xs",
           "description": "12-12-14-16 – Use for setting height and width of UI elements that scale across breakpoints",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -17236,7 +17451,7 @@
         },
         {
           "id": "VariableID:17036:22921",
-          "name": "Semantic/Space/Inline/Constant/inlineSpaceConstXS",
+          "name": "Semantic/Space/Inline/Constant/inlineSpaceConstXs",
           "description": "6-6-6-6 – Use for fixed horizontal (left/right) padding of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -17265,7 +17480,7 @@
         },
         {
           "id": "VariableID:17036:22922",
-          "name": "Semantic/Space/Stack/Constant/stackSpaceConstXS",
+          "name": "Semantic/Space/Stack/Constant/stackSpaceConstXs",
           "description": "6-6-6-6 – Use for fixed vertical (top/bottom) padding of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -17294,7 +17509,7 @@
         },
         {
           "id": "VariableID:17036:22923",
-          "name": "Semantic/Space/Stack/Constant/stackSpaceConst3XS",
+          "name": "Semantic/Space/Stack/Constant/stackSpaceConst3Xs",
           "description": "2-2-2-2 – Use for fixed vertical (top/bottom) padding of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -17323,7 +17538,7 @@
         },
         {
           "id": "VariableID:17036:22924",
-          "name": "Semantic/Space/Inline/Constant/inlineSpaceConst3XS",
+          "name": "Semantic/Space/Inline/Constant/inlineSpaceConst3Xs",
           "description": "2-2-2-2 – Use for fixed horizontal (left/right) padding of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -18766,7 +18981,7 @@
         },
         {
           "id": "VariableID:18174:13486",
-          "name": "Semantic/Typography/FontWeight/Headline/headline1FontWeightST",
+          "name": "Semantic/Typography/FontWeight/Headline/headline1FontWeightSt",
           "description": "This variable is a string type variable for controlling not only headline font weight but also the italic style for Sport Bild headlines.",
           "resolvedType": "STRING",
           "valuesByMode": {
@@ -19868,7 +20083,7 @@
         },
         {
           "id": "VariableID:19039:47262",
-          "name": "Semantic/Space/Inline/Constant/inlineSpaceConst2XS",
+          "name": "Semantic/Space/Inline/Constant/inlineSpaceConst2Xs",
           "description": "4-4-4-4 – Use for fixed horizontal (left/right) padding of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -19897,7 +20112,7 @@
         },
         {
           "id": "VariableID:19039:47263",
-          "name": "Semantic/Space/Stack/Constant/stackSpaceConst2XS",
+          "name": "Semantic/Space/Stack/Constant/stackSpaceConst2Xs",
           "description": "4-4-4-4 – Use for fixed vertical (top/bottom) padding of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -20149,7 +20364,7 @@
         },
         {
           "id": "VariableID:19306:22973",
-          "name": "Semantic/Visibility/VariantSwitch/changeOnLG",
+          "name": "Semantic/Visibility/VariantSwitch/changeOnLg",
           "description": "",
           "resolvedType": "STRING",
           "valuesByMode": {
@@ -20166,7 +20381,7 @@
         },
         {
           "id": "VariableID:19306:22974",
-          "name": "Semantic/Visibility/VariantSwitch/changeOnMD",
+          "name": "Semantic/Visibility/VariantSwitch/changeOnMd",
           "description": "This variable is used for controlling size changes across device sizes on some components such as the vertical newsticker cards and the search results cards. Both have cards that change layouts at different breakpoints.",
           "resolvedType": "STRING",
           "valuesByMode": {
@@ -20251,7 +20466,7 @@
         },
         {
           "id": "VariableID:19706:121704",
-          "name": "Semantic/Size/Constant/sizeConst4XS",
+          "name": "Semantic/Size/Constant/sizeConst4Xs",
           "description": "8-8-8-8 – Use for setting fixed height and width of UI elements",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -25938,7 +26153,11 @@
         "VariableID:19221:66799",
         "VariableID:19221:66800",
         "VariableID:20360:22977",
-        "VariableID:21076:41637"
+        "VariableID:21076:41637",
+        "VariableID:21358:891615",
+        "VariableID:21408:2",
+        "VariableID:21408:3",
+        "VariableID:21432:895114"
       ],
       "variables": [
         {
@@ -27248,6 +27467,84 @@
             "18212:1": {
               "type": "VARIABLE_ALIAS",
               "id": "VariableID:18489:25069"
+            }
+          },
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "hiddenFromPublishing": false,
+          "variableCollectionId": "VariableCollectionId:18212:14495"
+        },
+        {
+          "id": "VariableID:21358:891615",
+          "name": "Global/State/colorPrimaryHoverLight",
+          "description": "Bild: 046 ; SpoBi: 098",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "18212:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:2580:18750"
+            },
+            "18212:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:16107:28"
+            }
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:18212:14495"
+        },
+        {
+          "id": "VariableID:21408:2",
+          "name": "Global/Surface/surfaceColorTertiaryNeutralDark",
+          "description": "Bild&SpoBi: 025 ; Used on surfaces that remain constant across brands.",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "18212:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:2068:3674"
+            },
+            "18212:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:2068:3674"
+            }
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:18212:14495"
+        },
+        {
+          "id": "VariableID:21408:3",
+          "name": "Global/Surface/surfaceColorTertiaryNeutralLight",
+          "description": "Bild&SpoBi: 093 ; Used for surfaces that remain constant across brands.",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "18212:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:2881:1765"
+            },
+            "18212:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:2881:1765"
+            }
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:18212:14495"
+        },
+        {
+          "id": "VariableID:21432:895114",
+          "name": "Component/Chip/chipLabelColorActiveDark",
+          "description": "",
+          "resolvedType": "COLOR",
+          "valuesByMode": {
+            "18212:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:588:1977"
+            },
+            "18212:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:2881:1765"
             }
           },
           "scopes": [
