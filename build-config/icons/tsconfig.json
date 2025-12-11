@@ -21,6 +21,6 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false
   },
-  "include": ["../../packages/icons/dist/react-src/**/*.tsx"],
+  "include": ["../../packages/icons/dist/react-src/**/*.tsx", "../../packages/icons/dist/react-src/**/*.ts"],
   "exclude": ["node_modules"]
 }
