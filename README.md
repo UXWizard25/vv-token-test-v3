@@ -51,9 +51,9 @@ Both pipelines use the **CodeBridge Figma Plugin** for automated exports.
 |---------|-------------|---------------|
 | **@marioschmidt/design-system-tokens** | Multi-platform design tokens (CSS, JS, iOS, Android) | [📖 README](./packages/tokens/README.md) |
 | **@marioschmidt/design-system-icons** | Multi-platform icon assets (React, iOS, Android, Flutter) | [📖 README](./packages/icons/README.md) |
-| **@marioschmidt/design-system-components** | Stencil Web Components | [📖 README](./packages/components/README.md) |
-| **@marioschmidt/design-system-react** | React wrapper components | [📖 README](./packages/react/README.md) |
-| **@marioschmidt/design-system-vue** | Vue 3 wrapper components | [📖 README](./packages/vue/README.md) |
+| **@marioschmidt/design-system-components** | Stencil Web Components | [📖 README](./packages/components/core/README.md) |
+| **@marioschmidt/design-system-react** | React wrapper components | [📖 README](./packages/components/react/README.md) |
+| **@marioschmidt/design-system-vue** | Vue 3 wrapper components | [📖 README](./packages/components/vue/README.md) |
 
 ### 📚 Platform Documentation
 
@@ -114,7 +114,10 @@ Both pipelines use the **CodeBridge Figma Plugin** for automated exports.
 │  │       └── android/           │       └── ios/                             │
 │  │                              │                                            │
 │  └── components/                                                             │
-│      └── dist/                  ← Stencil Web Components                     │
+│      ├── core/                                                               │
+│      │   └── dist/              ← Stencil Web Components                     │
+│      ├── react/                 ← React wrappers                             │
+│      └── vue/                   ← Vue 3 wrappers                             │
 │                                                                              │
 └──────────────┬───────────────────────────────────┬───────────────────────────┘
                │                                   │
@@ -277,26 +280,27 @@ vv-token-test-v3/
 │   │   ├── README.md
 │   │   └── package.json
 │   │
-│   ├── components/                # @marioschmidt/design-system-components
-│   │   ├── src/                   # Stencil components (ds-button, ds-card)
-│   │   │   ├── ds-button/
-│   │   │   └── ds-card/
-│   │   ├── docs/                  # Storybook MDX pages (intro, colors, typography, etc.)
-│   │   ├── dist/                  # Built Stencil output
-│   │   ├── README.md
-│   │   └── package.json
-│   │
-│   ├── react/                     # @marioschmidt/design-system-react
-│   │   ├── src/                   # Auto-generated React wrappers
-│   │   ├── dist/                  # Built output
-│   │   ├── README.md
-│   │   └── package.json
-│   │
-│   └── vue/                       # @marioschmidt/design-system-vue
-│       ├── src/                   # Auto-generated Vue wrappers
-│       ├── dist/                  # Built output
-│       ├── README.md
-│       └── package.json
+│   └── components/                # Component packages (core + framework wrappers)
+│       ├── core/                  # @marioschmidt/design-system-components
+│       │   ├── src/               # Stencil components (ds-button, ds-card)
+│       │   │   ├── ds-button/
+│       │   │   └── ds-card/
+│       │   ├── docs/              # Storybook MDX pages (intro, colors, typography, etc.)
+│       │   ├── dist/              # Built Stencil output
+│       │   ├── README.md
+│       │   └── package.json
+│       │
+│       ├── react/                 # @marioschmidt/design-system-react
+│       │   ├── src/               # Auto-generated React wrappers
+│       │   ├── dist/              # Built output
+│       │   ├── README.md
+│       │   └── package.json
+│       │
+│       └── vue/                   # @marioschmidt/design-system-vue
+│           ├── src/               # Auto-generated Vue wrappers
+│           ├── dist/              # Built output
+│           ├── README.md
+│           └── package.json
 │
 ├── 🔧 scripts/
 │   ├── tokens/                    # Token build scripts
@@ -417,7 +421,7 @@ npm run build:storybook    # Build static site
 - Configuration changes (`build-config/`)
 - Workflow adjustments (`.github/workflows/`)
 - Documentation updates
-- Stencil component development (`packages/components/src/`)
+- Stencil component development (`packages/components/core/src/`)
 
 ### ❌ Not Allowed
 

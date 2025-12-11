@@ -10,18 +10,18 @@ on:
       - 'claude/**'
     paths:
       - 'packages/tokens/src/**'
-      - 'packages/components/src/**'
-      - 'packages/react/src/**'
-      - 'packages/vue/src/**'
+      - 'packages/components/core/src/**'
+      - 'packages/components/react/src/**'
+      - 'packages/components/vue/src/**'
       - 'scripts/tokens/**'
       - 'scripts/fix-vue-imports.js'
       - 'build-config/tokens/**'
       - 'build-config/stencil/**'
       - 'package.json'
       - 'packages/tokens/package.json'
-      - 'packages/components/package.json'
-      - 'packages/react/package.json'
-      - 'packages/vue/package.json'
+      - 'packages/components/core/package.json'
+      - 'packages/components/react/package.json'
+      - 'packages/components/vue/package.json'
 
   # Manueller Trigger über GitHub UI
   workflow_dispatch:
@@ -111,9 +111,9 @@ jobs:
           path: |
             packages/tokens/dist/
             packages/tokens/.tokens/
-            packages/components/dist/
-            packages/react/dist/
-            packages/vue/dist/
+            packages/components/core/dist/
+            packages/components/react/dist/
+            packages/components/vue/dist/
             build-output.log
           retention-days: 30
 
@@ -155,7 +155,7 @@ jobs:
           echo "- **SCSS Files:** $(find packages/tokens/dist -name '*.scss' 2>/dev/null | wc -l)" >> $GITHUB_STEP_SUMMARY
           echo "- **JavaScript Files:** $(find packages/tokens/dist -name '*.js' 2>/dev/null | wc -l)" >> $GITHUB_STEP_SUMMARY
           echo "- **JSON Files:** $(find packages/tokens/dist -name '*.json' 2>/dev/null | wc -l)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Stencil Components:** $(find packages/components/dist -type f 2>/dev/null | wc -l) files" >> $GITHUB_STEP_SUMMARY
+          echo "- **Stencil Components:** $(find packages/components/core/dist -type f 2>/dev/null | wc -l) files" >> $GITHUB_STEP_SUMMARY
 
       # 8. Comment PR with Artifacts (if this is a PR)
       - name: Comment PR with Build Artifacts
@@ -166,10 +166,10 @@ jobs:
             const fs = require('fs');
 
             // Get file statistics
-            const totalFiles = parseInt(require('child_process').execSync('find packages/tokens/dist packages/components/dist -type f 2>/dev/null | wc -l').toString().trim());
+            const totalFiles = parseInt(require('child_process').execSync('find packages/tokens/dist packages/components/core/dist -type f 2>/dev/null | wc -l').toString().trim());
             const cssFiles = parseInt(require('child_process').execSync('find packages/tokens/dist -name "*.css" 2>/dev/null | wc -l').toString().trim());
             const scssFiles = parseInt(require('child_process').execSync('find packages/tokens/dist -name "*.scss" 2>/dev/null | wc -l').toString().trim());
-            const jsFiles = parseInt(require('child_process').execSync('find packages/tokens/dist packages/components/dist -name "*.js" 2>/dev/null | wc -l').toString().trim());
+            const jsFiles = parseInt(require('child_process').execSync('find packages/tokens/dist packages/components/core/dist -name "*.js" 2>/dev/null | wc -l').toString().trim());
             const jsonFiles = parseInt(require('child_process').execSync('find packages/tokens/dist -name "*.json" 2>/dev/null | wc -l').toString().trim());
 
             const comment = `## 🎨 Design Tokens Build erfolgreich!
@@ -191,7 +191,7 @@ jobs:
             - \`packages/tokens/dist/json/\` - JSON Data
             - \`packages/tokens/dist/ios/\` - Swift Classes
             - \`packages/tokens/dist/android/\` - Android XML
-            - \`packages/components/dist/\` - **Stencil Web Components** (ESM, Custom Elements)
+            - \`packages/components/core/dist/\` - **Stencil Web Components** (ESM, Custom Elements)
             <!-- Flutter Dart output currently disabled (FLUTTER_ENABLED = false in build.js) -->
 
             <details>
@@ -256,7 +256,7 @@ jobs:
           mkdir -p release-build
           cp -r artifacts/packages/tokens/dist/* release-build/
           mkdir -p release-build/stencil
-          cp -r artifacts/packages/components/dist/* release-build/stencil/
+          cp -r artifacts/packages/components/core/dist/* release-build/stencil/
           cd release-build
           zip -r ../design-tokens-${{ github.ref_name }}.zip .
           cd ..

@@ -1,12 +1,14 @@
 # 🧩 BILD Design System Components
 
-> **Part of the [BILD Design Ops Pipeline](../../README.md)** | [Token Documentation](../tokens/README.md) | [Icon Documentation](../icons/README.md)
+> **Part of the [BILD Design Ops Pipeline](../../../README.md)** | [Token Documentation](../../tokens/README.md) | [Icon Documentation](../../icons/README.md)
 
 Stencil-based Web Components for the BILD Design System. Components consume design tokens via CSS Custom Properties and work in any framework.
 
 **Framework-specific wrappers available:**
 - [React Wrappers](../react/README.md) - `@marioschmidt/design-system-react`
 - [Vue 3 Wrappers](../vue/README.md) - `@marioschmidt/design-system-vue`
+
+These wrappers are co-located in the same `packages/components/` directory as they are tightly coupled to the core Stencil components.
 
 [![npm version](https://img.shields.io/npm/v/@marioschmidt/design-system-components.svg)](https://www.npmjs.com/package/@marioschmidt/design-system-components)
 [![Build Status](https://github.com/UXWizard25/vv-token-test-v3/workflows/Build%20Design%20Tokens/badge.svg)](https://github.com/UXWizard25/vv-token-test-v3/actions)
@@ -264,33 +266,42 @@ Light DOM                          Shadow DOM
 
 ```
 packages/components/
-├── src/                          # Stencil component source
-│   ├── ds-button/
-│   │   ├── ds-button.tsx         # Component logic
-│   │   ├── ds-button.css         # Component styles (uses tokens)
-│   │   └── ds-button.stories.ts  # Storybook stories
-│   ├── ds-card/
-│   │   ├── ds-card.tsx
-│   │   ├── ds-card.css
-│   │   └── ds-card.stories.ts
-│   └── components.d.ts           # Generated type definitions
+├── core/                         # This package (@marioschmidt/design-system-components)
+│   ├── src/                      # Stencil component source
+│   │   ├── ds-button/
+│   │   │   ├── ds-button.tsx     # Component logic
+│   │   │   ├── ds-button.css     # Component styles (uses tokens)
+│   │   │   └── ds-button.stories.ts  # Storybook stories
+│   │   ├── ds-card/
+│   │   │   └── ...
+│   │   └── components.d.ts       # Generated type definitions
+│   │
+│   ├── docs/                     # Storybook MDX documentation (mostly auto-generated)
+│   │   ├── intro.mdx             # Introduction & overview (manual)
+│   │   ├── colors.mdx            # Color tokens (auto-generated)
+│   │   ├── typography.mdx        # Typography tokens (auto-generated)
+│   │   ├── spacing.mdx           # Spacing & density (auto-generated)
+│   │   └── effects.mdx           # Shadows & effects (auto-generated)
+│   │
+│   ├── dist/                     # Built output (gitignored)
+│   │   ├── esm/                  # ES Modules
+│   │   ├── cjs/                  # CommonJS
+│   │   ├── components/           # Custom Elements (auto-define)
+│   │   ├── loader/               # Lazy loader
+│   │   └── types/                # TypeScript definitions
+│   │
+│   ├── package.json
+│   └── README.md
 │
-├── docs/                         # Storybook MDX documentation (mostly auto-generated)
-│   ├── intro.mdx                 # Introduction & overview (manual)
-│   ├── colors.mdx                # Color tokens (auto-generated)
-│   ├── typography.mdx            # Typography tokens (auto-generated)
-│   ├── spacing.mdx               # Spacing & density (auto-generated)
-│   └── effects.mdx               # Shadows & effects (auto-generated)
+├── react/                        # @marioschmidt/design-system-react
+│   ├── src/                      # Auto-generated React wrappers
+│   ├── dist/                     # Built output
+│   └── README.md
 │
-├── dist/                         # Built output (gitignored)
-│   ├── esm/                      # ES Modules
-│   ├── cjs/                      # CommonJS
-│   ├── components/               # Custom Elements (auto-define)
-│   ├── loader/                   # Lazy loader
-│   └── types/                    # TypeScript definitions
-│
-├── package.json
-└── README.md
+└── vue/                          # @marioschmidt/design-system-vue
+    ├── src/                      # Auto-generated Vue wrappers
+    ├── dist/                     # Built output
+    └── README.md
 ```
 
 ---
@@ -325,7 +336,7 @@ npm run clean
 
 1. **Create component directory:**
    ```
-   packages/components/src/ds-{name}/
+   packages/components/core/src/ds-{name}/
    ├── ds-{name}.tsx
    ├── ds-{name}.css
    └── ds-{name}.stories.ts
@@ -439,12 +450,12 @@ export const Primary: StoryObj = {
 
 | Document | Description |
 |----------|-------------|
-| [📖 Main README](../../README.md) | Project overview |
+| [📖 Main README](../../../README.md) | Project overview |
 | [📖 React Wrappers](../react/README.md) | React wrapper components |
 | [📖 Vue Wrappers](../vue/README.md) | Vue 3 wrapper components |
-| [📖 Tokens README](../tokens/README.md) | Design tokens documentation |
-| [📖 Icons README](../icons/README.md) | Icon library documentation |
-| [📖 CSS Documentation](../tokens/docs/css.md) | CSS Custom Properties & Shadow DOM |
+| [📖 Tokens README](../../tokens/README.md) | Design tokens documentation |
+| [📖 Icons README](../../icons/README.md) | Icon library documentation |
+| [📖 CSS Documentation](../../tokens/docs/css.md) | CSS Custom Properties & Shadow DOM |
 
 ---
 

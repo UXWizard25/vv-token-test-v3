@@ -8,7 +8,9 @@ This repository uses **npm workspaces** to manage multiple packages:
 |---------|----------|---------------|
 | `packages/tokens` | `@marioschmidt/design-system-tokens` | `npm run build:tokens` |
 | `packages/icons` | `@marioschmidt/design-system-icons` | `npm run build:icons` |
-| `packages/components` | `@marioschmidt/design-system-components` | `npm run build:components` |
+| `packages/components/core` | `@marioschmidt/design-system-components` | `npm run build:components` |
+| `packages/components/react` | `@marioschmidt/design-system-react` | `npm run build:react` |
+| `packages/components/vue` | `@marioschmidt/design-system-vue` | `npm run build:vue` |
 
 ---
 
@@ -342,7 +344,7 @@ Spacing tokens (brand × breakpoint):
 **Affected Stencil Components:**
 
 The PR comment includes an analysis of which Stencil components are affected by token changes:
-- Scans `packages/components/src/ds-*/ds-*.css` for `var(--token)` references
+- Scans `packages/components/core/src/ds-*/ds-*.css` for `var(--token)` references
 - Matches changed tokens against component CSS
 - Shows breaking vs visual impact per component
 

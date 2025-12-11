@@ -1,6 +1,6 @@
 # 🎨 BILD Design System - Token Pipeline
 
-> **Part of the [BILD Design Ops Pipeline](../../README.md)** | [Icon Documentation](../icons/README.md) | [Component Documentation](../components/README.md)
+> **Part of the [BILD Design Ops Pipeline](../../README.md)** | [Icon Documentation](../icons/README.md) | [Component Documentation](../components/core/README.md)
 
 Multi-platform design token transformation pipeline powered by **Style Dictionary v4** with **Figma-scoped semantic type detection**.
 
@@ -158,7 +158,9 @@ This package is part of the npm workspaces monorepo:
 |---------|----------|----------|
 | Tokens | `@marioschmidt/design-system-tokens` | `packages/tokens/` |
 | Icons | `@marioschmidt/design-system-icons` | `packages/icons/` |
-| Components | `@marioschmidt/design-system-components` | `packages/components/` |
+| Components | `@marioschmidt/design-system-components` | `packages/components/core/` |
+| React | `@marioschmidt/design-system-react` | `packages/components/react/` |
+| Vue | `@marioschmidt/design-system-vue` | `packages/components/vue/` |
 
 ## Token Type Mapping
 
@@ -853,7 +855,9 @@ grep "Space2x" dist/ios/shared/Spaceprimitive.swift
 | [📖 docs/android.md](./docs/android.md) | Android Jetpack Compose (Dual-Axis) |
 | [📖 docs/ios.md](./docs/ios.md) | iOS SwiftUI (Dual-Axis) |
 | [📖 Icons README](../icons/README.md) | Icon pipeline documentation |
-| [📖 Components README](../components/README.md) | Stencil Web Components |
+| [📖 Components README](../components/core/README.md) | Stencil Web Components |
+| [📖 React README](../components/react/README.md) | React wrapper components |
+| [📖 Vue README](../components/vue/README.md) | Vue 3 wrapper components |
 | [Style Dictionary](https://styledictionary.com/) | Build tool documentation |
 
 ---

@@ -1,6 +1,6 @@
 # 🖼️ BILD Design System Icons
 
-> **Part of the [BILD Design Ops Pipeline](../../README.md)** | [Token Documentation](../tokens/README.md) | [Component Documentation](../components/README.md)
+> **Part of the [BILD Design Ops Pipeline](../../README.md)** | [Token Documentation](../tokens/README.md) | [Component Documentation](../components/core/README.md)
 
 Multi-platform icon transformation pipeline for the BILD Design System.
 
@@ -198,7 +198,9 @@ This package is part of the npm workspaces monorepo:
 |---------|----------|----------|
 | Tokens | `@marioschmidt/design-system-tokens` | `packages/tokens/` |
 | Icons | `@marioschmidt/design-system-icons` | `packages/icons/` |
-| Components | `@marioschmidt/design-system-components` | `packages/components/` |
+| Components | `@marioschmidt/design-system-components` | `packages/components/core/` |
+| React | `@marioschmidt/design-system-react` | `packages/components/react/` |
+| Vue | `@marioschmidt/design-system-vue` | `packages/components/vue/` |
 
 ```
 src/icons/
@@ -481,7 +483,7 @@ import addSvg from '@marioschmidt/design-system-icons/svg/add.svg';
 |----------|-------------|
 | [📖 Main README](../../README.md) | Project overview |
 | [📖 Tokens README](../tokens/README.md) | Token pipeline documentation |
-| [📖 Components README](../components/README.md) | Stencil Web Components |
+| [📖 Components README](../components/core/README.md) | Stencil Web Components |
 
 ---
 

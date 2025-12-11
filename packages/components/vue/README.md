@@ -1,6 +1,6 @@
 # Vue 3 Wrappers for BILD Design System
 
-> **Part of the [BILD Design Ops Pipeline](../../README.md)** | [Components](../components/README.md) | [React](../react/README.md)
+> **Part of the [BILD Design Ops Pipeline](../../../README.md)** | [Components](../core/README.md) | [React](../react/README.md)
 
 Vue 3 wrapper components for the BILD Design System, auto-generated from Stencil Web Components using `@stencil/vue-output-target`.
 
@@ -233,9 +233,9 @@ export default defineConfig({
 
 | Package | Description |
 |---------|-------------|
-| [@marioschmidt/design-system-components](../components/README.md) | Core Stencil Web Components |
+| [@marioschmidt/design-system-components](../core/README.md) | Core Stencil Web Components |
 | [@marioschmidt/design-system-react](../react/README.md) | React wrapper components |
-| [@marioschmidt/design-system-tokens](../tokens/README.md) | Design tokens (CSS, JS, iOS, Android) |
+| [@marioschmidt/design-system-tokens](../../tokens/README.md) | Design tokens (CSS, JS, iOS, Android) |
 
 ---
 

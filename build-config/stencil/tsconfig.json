@@ -20,16 +20,16 @@
     "jsxFragmentFactory": "Fragment",
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["../../packages/components/src/*"]
+      "@components/*": ["../../packages/components/core/src/*"]
     }
   },
   "include": [
-    "../../packages/components/src/**/*.ts",
-    "../../packages/components/src/**/*.tsx"
+    "../../packages/components/core/src/**/*.ts",
+    "../../packages/components/core/src/**/*.tsx"
   ],
   "exclude": [
     "node_modules",
-    "../../packages/components/src/**/*.stories.ts",
-    "../../packages/components/src/**/*.stories.tsx"
+    "../../packages/components/core/src/**/*.stories.ts",
+    "../../packages/components/core/src/**/*.stories.tsx"
   ]
 }

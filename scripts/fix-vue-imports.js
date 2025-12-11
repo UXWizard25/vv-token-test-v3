@@ -15,7 +15,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const VUE_COMPONENTS_FILE = path.join(__dirname, '../packages/vue/src/components.ts');
+const VUE_COMPONENTS_FILE = path.join(__dirname, '../packages/components/vue/src/components.ts');
 
 function fixVueImports() {
   console.log('🔧 Fixing Vue JSX import path...');

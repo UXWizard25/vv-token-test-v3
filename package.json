@@ -4,7 +4,9 @@
   "private": true,
   "description": "BILD Design System - Monorepo for design tokens, icons, and web components",
   "workspaces": [
-    "packages/*"
+    "packages/tokens",
+    "packages/icons",
+    "packages/components/*"
   ],
   "scripts": {
     "preprocess": "node scripts/tokens/preprocess.js",

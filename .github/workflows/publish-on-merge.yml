@@ -7,7 +7,7 @@ on:
       - main
     paths:
       - 'packages/tokens/src/**'
-      - 'packages/components/src/**'
+      - 'packages/components/core/src/**'
 
 permissions:
   contents: write
@@ -242,17 +242,17 @@ jobs:
           # Sync all other packages to same version
           echo "📦 Syncing all packages to version $NEW_VERSION..."
 
-          cd packages/components
+          cd packages/components/core
           npm version $NEW_VERSION --no-git-tag-version --allow-same-version
-          cd ../..
+          cd ../../..
 
-          cd packages/react
+          cd packages/components/react
           npm version $NEW_VERSION --no-git-tag-version --allow-same-version
-          cd ../..
+          cd ../../..
 
-          cd packages/vue
+          cd packages/components/vue
           npm version $NEW_VERSION --no-git-tag-version --allow-same-version
-          cd ../..
+          cd ../../..
 
           echo "✅ All 4 packages at version $NEW_VERSION"
 

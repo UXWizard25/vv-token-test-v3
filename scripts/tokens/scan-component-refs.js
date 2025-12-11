@@ -10,7 +10,7 @@
  *   node scripts/tokens/scan-component-refs.js [--components-dir <path>] [--output <path>]
  *
  * Example:
- *   node scripts/tokens/scan-component-refs.js --components-dir packages/components/src --output component-tokens.json
+ *   node scripts/tokens/scan-component-refs.js --components-dir packages/components/core/src --output component-tokens.json
  */
 
 const fs = require('fs');
@@ -20,7 +20,7 @@ const path = require('path');
 // CONSTANTS
 // =============================================================================
 
-const DEFAULT_COMPONENTS_DIR = path.join(__dirname, '../../packages/components/src');
+const DEFAULT_COMPONENTS_DIR = path.join(__dirname, '../../packages/components/core/src');
 
 // =============================================================================
 // SCANNER FUNCTIONS
@@ -403,7 +403,7 @@ Usage:
   node scan-component-refs.js [options]
 
 Options:
-  --components-dir <path>  Path to Stencil components source (default: packages/components/src)
+  --components-dir <path>  Path to Stencil components source (default: packages/components/core/src)
   --output <path>          Output JSON file for component token map
   --diff-file <path>       Diff JSON file to find affected components
   --help, -h               Show this help message

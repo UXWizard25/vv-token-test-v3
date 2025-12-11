@@ -6,9 +6,10 @@ pnpm-lock.yaml
 
 # Build outputs (per package)
 packages/*/dist/
+packages/components/*/dist/
 
 # Stencil loader (build artifact)
-packages/components/loader/
+packages/components/core/loader/
 
 # Style Dictionary intermediate files
 packages/tokens/.tokens/
