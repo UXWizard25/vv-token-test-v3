@@ -56,7 +56,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm ci
-          npm install svgo@^3.2.0 @svgr/core@^8.1.0 svg2vectordrawable@^2.9.1 fantasticon@^3.0.0 typescript@^5.3.0 @types/react@^18.2.0
+          npm install svgo@^3.2.0 @svgr/core@^8.1.0 svg2vectordrawable@^2.9.1 typescript@^5.3.0 @types/react@^18.2.0
 
       # ========================================
       # Baseline (from main)
@@ -120,32 +120,6 @@ jobs:
         if: steps.compare.outputs.has_changes == '1' || !steps.compare.outputs.has_changes
         run: |
           node scripts/icons/generate-icon-release-notes.js
-
-      # ========================================
-      # Commit Generated Files
-      # ========================================
-
-      - name: Commit codepoint registry
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          # Only commit the codepoint registry (for Flutter stability)
-          # packages/icons/dist/ is NOT committed - builds happen during npm publish
-          git add packages/icons/src/.codepoints.json
-
-          # Check if there are changes to commit
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "chore(icons): update codepoint registry
-
-          Added: ${{ steps.compare.outputs.added || 0 }}
-          Removed: ${{ steps.compare.outputs.removed || 0 }}
-          Modified: ${{ steps.compare.outputs.modified || 0 }}"
-
-            git push
-          fi
 
       # ========================================
       # Create/Update PR

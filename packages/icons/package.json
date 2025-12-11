@@ -24,7 +24,6 @@
     },
     "./svg/*": "./dist/svg/*",
     "./android/*": "./dist/android/*",
-    "./flutter/*": "./dist/flutter/*",
     "./ios/*": "./dist/ios/*",
     "./package.json": "./package.json"
   },
@@ -41,7 +40,6 @@
     "svg",
     "react-icons",
     "android-icons",
-    "flutter-icons",
     "ios-icons",
     "bild"
   ],

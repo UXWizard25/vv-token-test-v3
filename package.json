@@ -53,7 +53,6 @@
     "@svgr/core": "^8.1.0",
     "@types/react": "^19.2.7",
     "@vitejs/plugin-react": "^5.1.1",
-    "fantasticon": "^3.0.0",
     "glob": "^10.3.10",
     "lit": "^3.3.1",
     "nodemon": "^3.0.1",

@@ -23,7 +23,6 @@ Multi-platform icon transformation pipeline for the BILD Design System.
 - [♿ Accessibility](#-accessibility)
 - [🎨 Theming](#-theming)
 - [🔄 CI/CD Workflows](#-cicd-workflows)
-- [🔢 Codepoint Stability (Flutter)](#-codepoint-stability-flutter)
 - [🆘 Troubleshooting](#-troubleshooting)
 - [📚 Dependencies](#-dependencies)
 - [🔗 Related](#-related)
@@ -34,14 +33,13 @@ Multi-platform icon transformation pipeline for the BILD Design System.
 
 ## 🎯 Overview
 
-This pipeline transforms SVG icons from Figma into optimized, production-ready assets for 5 platforms:
+This pipeline transforms SVG icons from Figma into optimized, production-ready assets for 4 platforms:
 
 | Platform | Output | Format | Status |
 |----------|--------|--------|--------|
 | **🌐 Web** | `dist/icons/svg/` | Optimized SVG | ✅ Production |
 | **⚛️ React** | `dist/icons/react/` | ESM JavaScript + TypeScript Declarations | ✅ Production |
 | **🤖 Android** | `dist/icons/android/` | Vector Drawable XML | ✅ Production |
-| **💙 Flutter** | `dist/icons/flutter/` | TTF Font + Dart Class | ✅ Production |
 | **🍎 iOS** | `dist/icons/ios/` | Asset Catalog + Swift | ✅ Production |
 
 ---
@@ -93,10 +91,10 @@ This pipeline transforms SVG icons from Figma into optimized, production-ready a
 │  │  ┌─────────────────────────────────────────────────────┐ │ │
 │  │  │ React: TSX → TypeScript Compilation → ESM + d.ts    │ │ │
 │  │  └─────────────────────────────────────────────────────┘ │ │
-│  │  ┌──────────┐  ┌──────────┐  ┌──────────┐               │ │
-│  │  │ Android  │  │ Flutter  │  │   iOS    │               │ │
-│  │  │   XML    │  │ TTF+Dart │  │ xcassets │               │ │
-│  │  └──────────┘  └──────────┘  └──────────┘               │ │
+│  │  ┌──────────┐  ┌──────────┐                              │ │
+│  │  │ Android  │  │   iOS    │                              │ │
+│  │  │   XML    │  │ xcassets │                              │ │
+│  │  └──────────┘  └──────────┘                              │ │
 │  └───────────────────────────────────────────────────────────┘ │
 └───────────────────────────────┬─────────────────────────────────┘
                                 │
@@ -108,7 +106,6 @@ This pipeline transforms SVG icons from Figma into optimized, production-ready a
 │  ├── react-src/     ← TSX Source (intermediate)                │
 │  ├── react/         ← Compiled ESM + .d.ts + .js.map           │
 │  ├── android/       ← Vector Drawables + attrs                 │
-│  ├── flutter/       ← TTF font + Dart class                    │
 │  └── ios/           ← Asset Catalog + Swift extension          │
 └───────────────────────────────┬─────────────────────────────────┘
                                 │
@@ -165,22 +162,6 @@ import { Add, Menu, Search } from '@marioschmidt/design-system-icons';
 
 Icons automatically use `?attr/colorOnSurface` for Material theming.
 
-### 💙 Flutter
-
-```dart
-import 'package:bild_design_system_icons/icons.dart';
-
-// Static access
-Icon(BildIcons.add)
-Icon(BildIcons.menu, size: 32)
-
-// Dynamic access by name
-Icon(BildIcons.byName('add'))
-
-// List all available icons
-BildIcons.names.forEach((name) => print(name));
-```
-
 ### 🍎 iOS (SwiftUI)
 
 ```swift
@@ -224,8 +205,7 @@ This package is part of the npm workspaces monorepo:
 src/icons/
 ├── icon-add.svg           ← Source SVGs from Figma
 ├── icon-menu.svg
-├── icon-search.svg
-└── .codepoints.json       ← Flutter codepoint registry (auto-managed)
+└── icon-search.svg
 
 scripts/icons/
 ├── build-icons.js         ← Main orchestrator
@@ -233,7 +213,6 @@ scripts/icons/
 ├── generate-react.js      ← React TSX generation → react-src/
 ├── compile-react.js       ← TypeScript compilation → react/
 ├── generate-android.js    ← Android XML generation
-├── generate-flutter.js    ← Flutter font generation
 ├── generate-ios.js        ← iOS asset generation
 ├── compare-icon-builds.js ← Diff detection for PRs
 └── generate-icon-release-notes.js
@@ -252,9 +231,6 @@ packages/icons/dist/        ← Generated output (gitignored)
 ├── android/
 │   ├── drawable/          ← ic_*.xml files
 │   └── values/            ← attrs_icons.xml
-├── flutter/
-│   ├── fonts/             ← BildIcons.ttf
-│   └── lib/               ← icons.dart
 └── ios/
     ├── Assets.xcassets/   ← Xcode asset catalog
     └── Sources/           ← BildIcons.swift
@@ -272,7 +248,6 @@ npm run build:icons
 npm run build:icons:svg      # Only SVGO optimization
 npm run build:icons:react    # Only React components
 npm run build:icons:android  # Only Android drawables
-npm run build:icons:flutter  # Only Flutter font
 npm run build:icons:ios      # Only iOS assets
 
 # Clean build output
@@ -332,7 +307,6 @@ npm run clean:icons
 | SVG | `icon-add.svg` | `add.svg` |
 | React | `icon-add.svg` | `Add.js` + `Add.d.ts` |
 | Android | `icon-add.svg` | `ic_add.xml` |
-| Flutter | `icon-add.svg` | `BildIcons.add` |
 | iOS | `icon-add.svg` | `BildIcon.add` |
 
 ---
@@ -429,7 +403,6 @@ All icons use `currentColor` and inherit the parent's text color:
 |----------|-----------|
 | 🌐 Web/React | CSS `color` property |
 | 🤖 Android | `?attr/colorOnSurface` or `app:tint` |
-| 💙 Flutter | `IconTheme` or `color` parameter |
 | 🍎 iOS | `.foregroundColor()` modifier |
 
 ---
@@ -452,27 +425,6 @@ All icons use `currentColor` and inherit the parent's text color:
 
 ---
 
-## 🔢 Codepoint Stability (Flutter)
-
-Flutter icons use a TTF font with stable codepoints. The `.codepoints.json` registry ensures:
-
-- ✅ Existing icons keep their codepoint forever
-- ✅ New icons get the next available codepoint
-- ✅ No breaking changes between versions
-
-```json
-{
-  "nextCodepoint": "e007",
-  "icons": {
-    "add": "e001",
-    "arrow-left": "e002",
-    "arrow-right": "e003"
-  }
-}
-```
-
----
-
 ## 🆘 Troubleshooting
 
 ### Build fails with "No SVG files found"
@@ -486,10 +438,6 @@ Flutter icons use a TTF font with stable codepoints. The `.codepoints.json` regi
 ### Android icons are wrong color
 - Icons use `?attr/colorOnSurface` by default
 - Override with `app:tint="@color/your_color"`
-
-### Flutter font not generating
-- Ensure `fantasticon` is installed
-- Check `dist/icons/flutter/fonts/` for TTF file
 
 ### iOS assets not showing
 - Verify `Assets.xcassets` structure
@@ -506,7 +454,6 @@ Build-time only (not shipped with package):
 | svgo | ^3.2.0 | SVG optimization |
 | @svgr/core | ^8.1.0 | React component generation |
 | svg2vectordrawable | ^2.9.1 | Android conversion |
-| fantasticon | ^3.0.0 | Flutter font generation |
 | typescript | ^5.3.0 | React TypeScript compilation |
 | @types/react | ^18.2.0 | React type definitions |
 
@@ -574,8 +521,7 @@ MIT License - See [LICENSE](./LICENSE) file.
 
 | Feature | Status |
 |---------|--------|
-| 5 Platforms | ✅ |
+| 4 Platforms | ✅ |
 | TypeScript Support | ✅ |
 | Accessibility | ✅ |
 | Security Validation | ✅ |
-| Stable Codepoints | ✅ |

@@ -36,7 +36,6 @@ const PLATFORMS = [
   { name: 'svg', dir: 'svg', extension: '.svg', displayName: 'SVG' },
   { name: 'react', dir: 'react', extension: '.tsx', displayName: 'React' },
   { name: 'android', dir: 'android/drawable', extension: '.xml', displayName: 'Android' },
-  { name: 'flutter', dir: 'flutter/lib', extension: '.dart', displayName: 'Flutter' },
   { name: 'ios', dir: 'ios/Assets.xcassets/Icons', extension: '.imageset', displayName: 'iOS', isDir: true },
 ];
 

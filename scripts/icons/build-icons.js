@@ -7,15 +7,13 @@
  * 1. SVG Optimization (SVGO)
  * 2. React Component Generation (SVGR)
  * 3. Android Vector Drawable Generation
- * 4. Flutter Icon Font Generation
- * 5. iOS Asset Generation
+ * 4. iOS Asset Generation
  *
  * Usage:
  *   npm run build:icons          # Build all platforms
  *   npm run build:icons:svg      # Only SVG optimization
  *   npm run build:icons:react    # Only React components
  *   npm run build:icons:android  # Only Android drawables
- *   npm run build:icons:flutter  # Only Flutter font
  *   npm run build:icons:ios      # Only iOS assets
  */
 
@@ -76,12 +74,6 @@ const buildSteps = [
     name: 'Android Vector Drawables',
     script: './generate-android.js',
     output: 'android',
-    required: false,
-  },
-  {
-    name: 'Flutter Icon Font',
-    script: './generate-flutter.js',
-    output: 'flutter',
     required: false,
   },
   {

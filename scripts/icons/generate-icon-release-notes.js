@@ -32,7 +32,6 @@ const PLATFORM_EMOJIS = {
   svg: '\uD83C\uDF10',      // 🌐
   react: '\u269B\uFE0F',    // ⚛️
   android: '\uD83E\uDD16',  // 🤖
-  flutter: '\uD83D\uDC26',  // 🐦
   ios: '\uD83C\uDF4E',      // 🍎
 };
 
@@ -150,11 +149,6 @@ function generatePRDescription(diff) {
     lines.push(`<ImageView`);
     lines.push(`    android:src="@drawable/ic_${exampleIcon.replace(/-/g, '_')}"`);
     lines.push(`    app:tint="?attr/colorOnSurface" />`);
-    lines.push('```\n');
-
-    lines.push('**Flutter:**');
-    lines.push('```dart');
-    lines.push(`Icon(BildIcons.${camelCase})`);
     lines.push('```\n');
 
     lines.push('**iOS (SwiftUI):**');
