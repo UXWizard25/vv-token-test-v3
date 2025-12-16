@@ -15,9 +15,10 @@ This repository uses **npm workspaces** to manage multiple packages:
 | Icons (React) | `@marioschmidt/design-system-icons-react` | `packages/icons/react/` | `npm run build:icons` |
 | Icons (Android) | `de.bild.design:icons` | `packages/icons/android/` | `npm run build:icons` |
 | Icons (iOS) | `BildIcons` (SPM) | `packages/icons/ios/` | `npm run build:icons` |
-| Components | `@marioschmidt/design-system-components` | `packages/components/` | `npm run build:components` |
-| React | `@marioschmidt/design-system-react` | `packages/react/` | `npm run build:react` |
-| Vue | `@marioschmidt/design-system-vue` | `packages/vue/` | `npm run build:vue` |
+| Components | `@marioschmidt/design-system-components` | `packages/components/core/` | `npm run build:components` |
+| React | `@marioschmidt/design-system-react` | `packages/components/react/` | `npm run build:react` |
+| Vue | `@marioschmidt/design-system-vue` | `packages/components/vue/` | `npm run build:vue` |
+| Docs (private) | `@bild/docs` | `apps/docs/` | `npm run build:storybook` |
 
 ---
 
@@ -978,7 +979,7 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 | Modify Storybook UI themes | `build-config/storybook/manager.ts` |
 | Change dark mode sync behavior | `build-config/storybook/preview-body.html` |
 | Add static files to Storybook | `build-config/storybook/main.ts` → `staticDirs` |
-| Add/modify styleguide documentation | `packages/components/docs/*.mdx` (auto-generated) or `scripts/tokens/generate-docs.js` |
+| Add/modify styleguide documentation | `apps/docs/stories/foundations/*.mdx` (auto-generated) or `scripts/tokens/generate-docs.js` |
 | Change styleguide stories pattern | `build-config/storybook/main.ts` → `stories` glob |
 | Modify auto-generated docs structure | `scripts/tokens/generate-docs.js` → `generateColorsDocs()`, `generateTypographyDocs()`, etc. |
 | Change token source for docs | Token JSON files in `packages/tokens/.tokens/` |
@@ -1426,34 +1427,41 @@ import { JSX } from '@marioschmidt/design-system-components';
 
 ## Storybook Integration
 
-Storybook 8.x is configured for developing and documenting Web Components with full design token support.
+Storybook 10.x is configured for developing and documenting Web Components with full design token support.
 
 ### Project Structure
 
 ```
+apps/
+  docs/                           # @bild/docs package (private)
+    package.json                  # Isolated Storybook dependencies
+    stories/
+      foundations/                # Styleguide documentation (auto-generated)
+        intro.mdx                 # Introduction & overview (manual)
+        colors.mdx                # Color tokens & palettes (auto-generated)
+        typography.mdx            # Font families & text styles (auto-generated)
+        spacing.mdx               # Spacing scale & density (auto-generated)
+        effects.mdx               # Shadows & effects (auto-generated)
+
 build-config/
-  storybook/
-    main.ts                 # Storybook configuration
-    preview.ts              # Decorators, globalTypes, parameters
-    manager.ts              # Custom BILD UI themes (light/dark)
-    preview-head.html       # CSS imports, initial data attributes
-    preview-body.html       # Dark mode sync script
+  storybook/                      # Configuration (separate from app)
+    main.ts                       # Storybook configuration
+    preview.ts                    # Decorators, globalTypes, parameters
+    manager.ts                    # Custom BILD UI themes (light/dark)
+    preview-head.html             # CSS imports, initial data attributes
+    preview-body.html             # Dark mode sync script
+    themes.ts                     # Custom BILD light/dark themes
 
-packages/components/
-  docs/                     # Styleguide documentation (auto-generated)
-    intro.mdx               # Introduction & overview (manual)
-    colors.mdx              # Color tokens & palettes (auto-generated)
-    typography.mdx          # Font families & text styles (auto-generated)
-    spacing.mdx             # Spacing scale & density (auto-generated)
-    effects.mdx             # Shadows & effects (auto-generated)
-
-src/components/
-  ds-button/
-    ds-button.stories.ts    # Story file (co-located with component)
+packages/components/core/
+  src/
+    ds-button/
+      ds-button.stories.ts        # Story file (co-located with component)
 
 scripts/tokens/
-  generate-docs.js          # Documentation generator script
+  generate-docs.js                # Documentation generator script
 ```
+
+> **Architecture Note:** Storybook dependencies are isolated in `apps/docs/package.json` while configuration stays in `build-config/storybook/` for consistency with other build tools (tokens, icons, stencil).
 
 ### Configuration Files
 
@@ -1519,7 +1527,8 @@ The architecture ensures all controls work on both Stories AND Docs pages:
 | Path | Mapped To | Purpose |
 |------|-----------|---------|
 | `packages/tokens/dist/css` | `/css` | Design token CSS bundles |
-| `packages/components/dist` | `/stencil` | Built Stencil components |
+| `packages/components/core/dist` | `/stencil` | Built Stencil components |
+| `packages/tokens/dist/json` | `/json` | Token JSON files for live preview |
 
 ### Writing Stories
 
@@ -1591,7 +1600,7 @@ const bildDarkTheme = create({
 
 ### Styleguide Documentation
 
-The `packages/components/docs/` directory contains MDX documentation pages for the design system foundations. **Most pages are auto-generated** from token JSON files.
+The `apps/docs/stories/foundations/` directory contains MDX documentation pages for the design system foundations. **Most pages are auto-generated** from token JSON files.
 
 | Page | File | Generated | Source |
 |------|------|-----------|--------|
@@ -1658,7 +1667,7 @@ npm run build:docs
 | MDX parsing error (acorn/FunctionDeclaration) | Wrong MDX format or imports | Use `@storybook/blocks` import, avoid TSX components in MDX |
 | "No matching indexer found" for MDX | Wrong file extension | Use `.mdx` for docs-only pages, `.stories.ts` for component stories |
 | Markdown tables showing as raw text | MDX doesn't render markdown tables | Use HTML `<table>` elements with inline CSS instead |
-| Styleguide pages not appearing | Stories glob pattern wrong | Check `main.ts` → `stories` includes `src/docs/**/*.mdx` |
+| Styleguide pages not appearing | Stories glob pattern wrong | Check `main.ts` → `stories` includes `apps/docs/stories/**/*.mdx` |
 | React wrapper import error | Package not built | Run `npm run build:react` after `npm run build:components` |
 | Vue wrapper import error | Package not built | Run `npm run build:vue` after `npm run build:components` |
 | Vue JSX type error | Incorrect import path in generated code | Run `npm run build:vue` (includes fix-vue-imports.js) |
