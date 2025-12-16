@@ -38,7 +38,7 @@ The BILD Design Ops Pipeline transforms design assets from Figma into production
 | Pipeline | Input | Output | Platforms |
 |----------|-------|--------|-----------|
 | **🎨 Token Pipeline** | Figma Variables | Design Tokens | Web (CSS, SCSS, JS), iOS, Android |
-| **🖼️ Icon Pipeline** | Figma Icons (SVG) | Multi-format Icons | React, iOS, Android, Flutter |
+| **🖼️ Icon Pipeline** | Figma Icons (SVG) | Multi-format Icons | React, iOS, Android |
 | **🧩 Component Pipeline** | Stencil Source | Web Components | All browsers (Shadow DOM) |
 
 Both pipelines use the **CodeBridge Figma Plugin** for automated exports.
@@ -99,7 +99,6 @@ Both pipelines use the **CodeBridge Figma Plugin** for automated exports.
 │  • preprocess.js            │    │  • optimize-svg.js          │
 │  • build.js                 │    │  • generate-react.js        │
 │  • bundles.js               │    │  • generate-android.js      │
-│                             │    │  • generate-flutter.js      │
 │                             │    │  • generate-ios.js          │
 └──────────────┬──────────────┘    └──────────────┬──────────────┘
                │                                  │
