@@ -552,6 +552,78 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 
 ---
 
+## Icon Pipeline
+
+The design system includes a **multi-platform icon pipeline** that generates optimized icons for SVG, React, Android, and iOS from a single source.
+
+### Icon Package Structure
+
+```
+packages/icons/
+├── src/                    # Source SVGs (input)
+├── svg/                    # @marioschmidt/design-system-icons (npm)
+│   └── dist/               # Optimized SVGs
+├── react/                  # @marioschmidt/design-system-icons-react (npm)
+│   └── dist/               # React components (TSX → JS)
+├── android/                # de.bild.design:icons (Maven)
+│   └── src/main/
+│       ├── res/drawable/   # Vector Drawables (XML)
+│       └── kotlin/         # BildIcons.kt (Compose)
+└── ios/                    # BildIcons (Swift Package Manager)
+    └── Sources/BildIcons/
+        ├── BildIcon.swift  # Enum + convenience APIs
+        └── Resources/      # Asset Catalog (.xcassets)
+```
+
+### Build Scripts
+
+| Script | Location | Purpose |
+|--------|----------|---------|
+| `build-icons.js` | `scripts/icons/` | Main orchestrator |
+| `optimize-svg.js` | `scripts/icons/` | SVGO optimization |
+| `generate-react.js` | `scripts/icons/` | SVGR → TSX components |
+| `compile-react.js` | `scripts/icons/` | TSX → JS compilation |
+| `generate-android.js` | `scripts/icons/` | Vector Drawables + Kotlin |
+| `generate-ios.js` | `scripts/icons/` | Asset Catalog + Swift |
+
+### SVGO Configuration
+
+Located in `build-config/icons/svgo.config.js`:
+
+| Feature | Purpose |
+|---------|---------|
+| `currentColor` conversion | Enables CSS color inheritance |
+| `removeViewBox: false` | Preserves scalability |
+| `prefixIds` | Prefixes IDs with icon name to prevent DOM collisions |
+| `cleanupIds` | Preserves prefixed IDs (no minification) |
+
+**ID Prefixing:** SVGs with internal IDs (e.g., `clipPath`, `linearGradient`) get prefixed to avoid DOM collisions:
+```
+Before: <clipPath id="a">
+After:  <clipPath id="podcast-spotify-clip0_17587_6927">
+```
+
+### Platform-Specific Features
+
+| Platform | Convenience API | Size Presets |
+|----------|-----------------|--------------|
+| **React** | `<IconAdd color="red" size={32} />` | Via props |
+| **iOS** | `.icon()`, `.button()`, `.accessibleIcon()` | `BildIcon.Size.xs/sm/md/lg/xl` |
+| **Android** | `BildIcon()`, `BildIconButton()` | `BildIconSize.XS/SM/MD/LG/XL` |
+
+### CI/CD Triggers
+
+The `publish-icons-on-merge.yml` workflow triggers on:
+
+```yaml
+paths:
+  - 'packages/icons/src/**'      # Source SVGs
+  - 'build-config/icons/**'      # SVGO config, build settings
+  - 'scripts/icons/**'           # Build scripts
+```
+
+---
+
 ## CI/CD & Automated Versioning
 
 ### Workflow Overview
@@ -559,7 +631,8 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 | Workflow | Trigger | Purpose |
 |----------|---------|---------|
 | `build-tokens.yml` | Push to main/develop/claude/** | Build tokens, upload artifacts |
-| `publish-on-merge.yml` | Push to main | Build, version bump, publish to npm |
+| `publish-on-merge.yml` | Push to main + token/component paths | Build, version bump, publish to npm |
+| `publish-icons-on-merge.yml` | Push to main + icon paths | Build icons, version bump, publish to npm |
 | `auto-pr-from-figma.yml` | Push to figma-tokens | Create PR with release notes |
 
 ### Impact-Based Semantic Versioning
@@ -918,6 +991,12 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 | Change visual diff indicators | `scripts/tokens/release-notes.js` → `calculateDeltaE()`, `calculateDimensionDiff()` |
 | Modify affected components detection | `scripts/tokens/scan-component-refs.js` → `findAffectedComponents()` |
 | Change component scan directory | `scripts/tokens/scan-component-refs.js` → `DEFAULT_COMPONENTS_DIR` |
+| Modify icon SVGO optimization | `build-config/icons/svgo.config.js` |
+| Change icon ID prefixing | `build-config/icons/svgo.config.js` → `prefixIds` plugin |
+| Modify React icon generation | `scripts/icons/generate-react.js` |
+| Modify iOS icon generation | `scripts/icons/generate-ios.js` |
+| Modify Android icon generation | `scripts/icons/generate-android.js` |
+| Change icon CI/CD triggers | `.github/workflows/publish-icons-on-merge.yml` → `paths` |
 
 ---
 

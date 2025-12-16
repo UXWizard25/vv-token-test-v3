@@ -50,6 +50,26 @@ document.querySelector('img').src = addIcon;
 
 ---
 
+## Optimization
+
+All SVGs are optimized with SVGO:
+
+- **currentColor**: Fills/strokes use `currentColor` for CSS theming
+- **Preserved viewBox**: Icons scale correctly at any size
+- **Prefixed IDs**: Internal IDs (clipPath, gradients) are prefixed with icon name to prevent DOM collisions
+
+```xml
+<!-- Before optimization -->
+<clipPath id="a">...</clipPath>
+
+<!-- After optimization -->
+<clipPath id="podcast-spotify-clip0_17587_6927">...</clipPath>
+```
+
+This ensures multiple icons can be rendered on the same page without conflicts.
+
+---
+
 ## Theming
 
 All icons use `currentColor` for fills and strokes, allowing easy color customization via CSS:
