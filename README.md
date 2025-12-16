@@ -50,10 +50,13 @@ Both pipelines use the **CodeBridge Figma Plugin** for automated exports.
 | Package | Description | Documentation |
 |---------|-------------|---------------|
 | **@marioschmidt/design-system-tokens** | Multi-platform design tokens (CSS, JS, iOS, Android) | [📖 README](./packages/tokens/README.md) |
-| **@marioschmidt/design-system-icons** | Multi-platform icon assets (React, iOS, Android, Flutter) | [📖 README](./packages/icons/README.md) |
-| **@marioschmidt/design-system-components** | Stencil Web Components | [📖 README](./packages/components/core/README.md) |
-| **@marioschmidt/design-system-react** | React wrapper components | [📖 README](./packages/components/react/README.md) |
-| **@marioschmidt/design-system-vue** | Vue 3 wrapper components | [📖 README](./packages/components/vue/README.md) |
+| **@marioschmidt/design-system-icons** | Optimized SVG icons | [📖 README](./packages/icons/svg/README.md) |
+| **@marioschmidt/design-system-icons-react** | React icon components with TypeScript | [📖 README](./packages/icons/react/README.md) |
+| **de.bild.design:icons** | Android Vector Drawables (Maven) | [📖 README](./packages/icons/android/README.md) |
+| **BildIcons** | iOS Swift Package (SPM) | [📖 README](./packages/icons/ios/README.md) |
+| **@marioschmidt/design-system-components** | Stencil Web Components | [📖 README](./packages/components/README.md) |
+| **@marioschmidt/design-system-react** | React wrapper components | [📖 README](./packages/react/README.md) |
+| **@marioschmidt/design-system-vue** | Vue 3 wrapper components | [📖 README](./packages/vue/README.md) |
 
 ### 📚 Platform Documentation
 
@@ -106,34 +109,27 @@ Both pipelines use the **CodeBridge Figma Plugin** for automated exports.
 │                                                                              │
 │  packages/                                                                   │
 │  ├── tokens/                    ├── icons/                                   │
-│  │   └── dist/                  │   └── dist/                                │
-│  │       ├── css/               │       ├── svg/                             │
-│  │       ├── scss/              │       ├── react/                           │
-│  │       ├── js/                │       ├── android/                         │
-│  │       ├── ios/               │       ├── flutter/                         │
-│  │       └── android/           │       └── ios/                             │
-│  │                              │                                            │
-│  └── components/                                                             │
-│      ├── core/                                                               │
-│      │   └── dist/              ← Stencil Web Components                     │
-│      ├── react/                 ← React wrappers                             │
-│      └── vue/                   ← Vue 3 wrappers                             │
+│  │   └── dist/                  │   ├── svg/dist/        (npm: SVG)          │
+│  │       ├── css/               │   ├── react/dist/      (npm: React)        │
+│  │       ├── scss/              │   ├── android/src/     (Maven)             │
+│  │       ├── js/                │   └── ios/Sources/     (SPM)               │
+│  │       ├── ios/               │                                            │
+│  │       └── android/           ├── components/          (Stencil)           │
+│  │                              ├── react/               (React wrappers)    │
+│  │                              └── vue/                 (Vue wrappers)      │
 │                                                                              │
-└──────────────┬───────────────────────────────────┬───────────────────────────┘
+└──────────────────────────────────────────────────────────────────────────────┘
                │                                   │
-               │  npm publish                      │  npm publish
-               │                                   │
+               │  Distribution                     │
                ▼                                   ▼
 ┌─────────────────────────────┐    ┌─────────────────────────────┐
-│  📦 @marioschmidt/          │    │  📦 @marioschmidt/          │
-│     design-system-tokens    │    │     design-system-icons     │
+│  📦 npm                     │    │  📦 ICONS                   │
+│  @marioschmidt/             │    │  npm: design-system-icons   │
+│    design-system-tokens     │    │       design-system-icons-  │
+│    design-system-components │    │       react                 │
+│    design-system-react      │    │  Maven: de.bild.design:icons│
+│    design-system-vue        │    │  SPM: BildIcons             │
 └─────────────────────────────┘    └─────────────────────────────┘
-                              │
-                              ▼
-               ┌─────────────────────────────┐
-               │  📦 @marioschmidt/          │
-               │     design-system-components│
-               └─────────────────────────────┘
 ```
 
 ### 🎨 Token Architecture (4 Layers)
@@ -180,8 +176,9 @@ Separates color selection from content selection for flexible theming:
 # Design Tokens
 npm install @marioschmidt/design-system-tokens
 
-# Icons
-npm install @marioschmidt/design-system-icons
+# Icons (choose your platform)
+npm install @marioschmidt/design-system-icons        # SVG only
+npm install @marioschmidt/design-system-icons-react  # React components
 
 # Web Components (Vanilla JS)
 npm install @marioschmidt/design-system-components
@@ -216,9 +213,9 @@ console.log(theme.spacing.gridSpaceRespBase); // "12px"
 
 ```tsx
 // React Icons
-import { Add, Search } from '@marioschmidt/design-system-icons';
+import { IconAdd, IconSearch } from '@marioschmidt/design-system-icons-react';
 
-<Add size={24} aria-label="Add item" />
+<IconAdd size={24} aria-label="Add item" />
 ```
 
 ```html
@@ -274,33 +271,34 @@ vv-token-test-v3/
 │   │   ├── README.md
 │   │   └── package.json
 │   │
-│   ├── icons/                     # @marioschmidt/design-system-icons
+│   ├── icons/                     # Icon packages (multi-platform)
 │   │   ├── src/                   # Figma SVG export + .codepoints.json
-│   │   ├── dist/                  # Built outputs (svg, react, ios, android, flutter)
-│   │   ├── README.md
-│   │   └── package.json
+│   │   ├── svg/                   # @marioschmidt/design-system-icons
+│   │   │   └── dist/              # Optimized SVG files
+│   │   ├── react/                 # @marioschmidt/design-system-icons-react
+│   │   │   └── dist/              # React components + TypeScript
+│   │   ├── android/               # de.bild.design:icons (Maven)
+│   │   │   └── src/main/res/      # Vector Drawables
+│   │   ├── ios/                   # BildIcons (Swift Package Manager)
+│   │   │   └── Sources/BildIcons/ # Asset Catalog + Swift enum
+│   │   └── README.md
 │   │
-│   └── components/                # Component packages (core + framework wrappers)
-│       ├── core/                  # @marioschmidt/design-system-components
-│       │   ├── src/               # Stencil components (ds-button, ds-card)
-│       │   │   ├── ds-button/
-│       │   │   └── ds-card/
-│       │   ├── docs/              # Storybook MDX pages (intro, colors, typography, etc.)
-│       │   ├── dist/              # Built Stencil output
-│       │   ├── README.md
-│       │   └── package.json
-│       │
-│       ├── react/                 # @marioschmidt/design-system-react
-│       │   ├── src/               # Auto-generated React wrappers
-│       │   ├── dist/              # Built output
-│       │   ├── README.md
-│       │   └── package.json
-│       │
-│       └── vue/                   # @marioschmidt/design-system-vue
-│           ├── src/               # Auto-generated Vue wrappers
-│           ├── dist/              # Built output
-│           ├── README.md
-│           └── package.json
+│   └── components/                # @marioschmidt/design-system-components
+│       ├── src/                   # Stencil components (ds-button, ds-card)
+│       │   ├── ds-button/
+│       │   └── ds-card/
+│       ├── docs/                  # Storybook MDX pages (intro, colors, typography, etc.)
+│       ├── dist/                  # Built Stencil output
+│       └── README.md
+│
+├── 📦 packages/ (continued)
+│   ├── react/                     # @marioschmidt/design-system-react
+│   │   ├── lib/                   # Auto-generated React wrappers
+│   │   └── dist/                  # Built output
+│   │
+│   └── vue/                       # @marioschmidt/design-system-vue
+│       ├── lib/                   # Auto-generated Vue wrappers
+│       └── dist/                  # Built output
 │
 ├── 🔧 scripts/
 │   ├── tokens/                    # Token build scripts
@@ -309,11 +307,11 @@ vv-token-test-v3/
 │   │   └── bundles.js             # CSS bundle generation
 │   └── icons/                     # Icon build scripts
 │       ├── build-icons.js         # Main orchestrator
+│       ├── paths.js               # Centralized path configuration
 │       ├── optimize-svg.js        # SVGO optimization
 │       ├── generate-react.js      # React TSX generation
 │       ├── generate-android.js    # Android Vector Drawables
-│       ├── generate-flutter.js    # Flutter TTF + Dart
-│       └── generate-ios.js        # iOS Asset Catalog
+│       └── generate-ios.js        # iOS Asset Catalog + Swift
 │
 ├── ⚙️ build-config/
 │   ├── tokens/                    # style-dictionary.config.js
@@ -356,7 +354,9 @@ npm run storybook          # Storybook (port 6006)
 
 # Publishing (via workspace)
 npm run publish:tokens
-npm run publish:icons
+npm run publish:icons           # SVG package
+npm run publish:icons:react     # React package
+npm run publish:icons:all       # Both icon npm packages
 npm run publish:components
 npm run publish:react
 npm run publish:vue
@@ -376,7 +376,7 @@ npm run clean              # Remove all dist/ and tokens/
 | `auto-pr-from-figma.yml` | Push to `figma-tokens` | Create/update PR with release notes |
 | `auto-pr-from-figma-icons.yml` | Push to `figma-icons` | Create/update PR with release notes |
 | `publish-on-merge.yml` | Merge to main (tokens/components src) | npm publish (tokens, components, react, vue) + GitHub Release |
-| `publish-icons-on-merge.yml` | Merge to main (icons src) | npm publish + GitHub Release |
+| `publish-icons-on-merge.yml` | Merge to main (icons src) | npm publish (SVG + React) + GitHub Release |
 
 ### Release Notes Features
 
