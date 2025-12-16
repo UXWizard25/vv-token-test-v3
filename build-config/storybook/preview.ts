@@ -1,7 +1,7 @@
-import type { Preview } from '@storybook/web-components';
+import type { Preview } from '@storybook/web-components-vite';
 import { html } from 'lit';
-import { addons } from '@storybook/preview-api';
-import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
+import { addons } from 'storybook/preview-api';
+import { DARK_MODE_EVENT_NAME } from '@vueless/storybook-dark-mode';
 import { bildLightTheme, bildDarkTheme } from './themes';
 import { DocsContainer } from './DocsContainer';
 

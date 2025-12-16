@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { DocsContainer as BaseContainer, type DocsContainerProps } from '@storybook/blocks';
-import { addons } from '@storybook/preview-api';
-import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
+import { DocsContainer as BaseContainer, type DocsContainerProps } from '@storybook/addon-docs/blocks';
+import { addons } from 'storybook/preview-api';
+import { DARK_MODE_EVENT_NAME } from '@vueless/storybook-dark-mode';
 import { bildLightTheme, bildDarkTheme } from './themes';
 
 // Get channel outside component to ensure it's available immediately
