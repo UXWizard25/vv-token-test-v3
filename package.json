@@ -51,17 +51,17 @@
     "@svgr/core": "^8.1.0",
     "@types/react": "^19.2.7",
     "@vitejs/plugin-react": "^5.1.1",
+    "@vueless/storybook-dark-mode": "^10.0.4",
     "glob": "^10.3.10",
     "lit": "^3.3.1",
     "nodemon": "^3.0.1",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "storybook": "^10.1.9",
-    "@vueless/storybook-dark-mode": "^10.0.4",
     "style-dictionary": "^4.2.0",
     "svg2vectordrawable": "^2.9.1",
     "svgo": "^4.0.0",
     "typescript": "^5.9.3",
-    "vite": "^5.4.21"
+    "vite": "^7.3.0"
   }
 }
