@@ -12,6 +12,7 @@ Multi-platform icon transformation pipeline for the BILD Design System.
 ## 📋 Table of Contents
 
 - [🎯 Overview](#-overview)
+- [📦 Package Structure](#-package-structure)
 - [🏗️ Architecture](#️-architecture)
 - [📦 Installation](#-installation)
 - [🚀 Usage](#-usage)
@@ -33,14 +34,37 @@ Multi-platform icon transformation pipeline for the BILD Design System.
 
 ## 🎯 Overview
 
-This pipeline transforms SVG icons from Figma into optimized, production-ready assets for 4 platforms:
+This pipeline transforms SVG icons from Figma into optimized, production-ready assets for 4 platforms, each distributed as a separate package:
 
-| Platform | Output | Format | Status |
-|----------|--------|--------|--------|
-| **🌐 Web** | `dist/icons/svg/` | Optimized SVG | ✅ Production |
-| **⚛️ React** | `dist/icons/react/` | ESM JavaScript + TypeScript Declarations | ✅ Production |
-| **🤖 Android** | `dist/icons/android/` | Vector Drawable XML | ✅ Production |
-| **🍎 iOS** | `dist/icons/ios/` | Asset Catalog + Swift | ✅ Production |
+| Platform | Package | Distribution | Status |
+|----------|---------|--------------|--------|
+| **🌐 Web (SVG)** | `@marioschmidt/design-system-icons` | npm | ✅ Production |
+| **⚛️ React** | `@marioschmidt/design-system-icons-react` | npm | ✅ Production |
+| **🤖 Android** | `de.bild.design:icons` | GitHub Packages (Maven) | ✅ Production |
+| **🍎 iOS** | `BildIcons` | Swift Package Manager | ✅ Production |
+
+---
+
+## 📦 Package Structure
+
+The icons are organized into platform-specific packages for optimal tree-shaking and platform-native distribution:
+
+```
+packages/icons/
+├── src/                    ← Source SVGs from Figma
+├── svg/                    ← @marioschmidt/design-system-icons (npm)
+│   ├── package.json
+│   └── dist/               → Optimized SVG files
+├── react/                  ← @marioschmidt/design-system-icons-react (npm)
+│   ├── package.json
+│   └── dist/               → React components + TypeScript
+├── android/                ← de.bild.design:icons (GitHub Packages)
+│   ├── build.gradle.kts
+│   └── src/main/res/       → Vector Drawables + attrs
+└── ios/                    ← BildIcons (Swift Package Manager)
+    ├── Package.swift
+    └── Sources/BildIcons/  → Asset Catalog + Swift enum
+```
 
 ---
 
@@ -100,19 +124,24 @@ This pipeline transforms SVG icons from Figma into optimized, production-ready a
                                 │
                                 ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│  📤 OUTPUT: dist/icons/                                         │
+│  📤 OUTPUT: packages/icons/                                     │
 │                                                                 │
-│  ├── svg/           ← Optimized SVGs                           │
-│  ├── react/         ← Compiled ESM + .d.ts + .js.map           │
-│  ├── android/       ← Vector Drawables + attrs                 │
-│  └── ios/           ← Asset Catalog + Swift extension          │
+│  ├── svg/dist/      ← Optimized SVGs (@marioschmidt/...icons)  │
+│  ├── react/dist/    ← ESM + .d.ts (@marioschmidt/...icons-react)│
+│  ├── android/src/   ← Vector Drawables (de.bild.design:icons)  │
+│  └── ios/Sources/   ← Asset Catalog (BildIcons via SPM)        │
 └───────────────────────────────┬─────────────────────────────────┘
                                 │
-                                │  npm publish
+                                │  Platform Distribution
                                 │
                                 ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│  📦 @marioschmidt/design-system-icons                           │
+│  📦 PACKAGES                                                    │
+│                                                                 │
+│  npm:    @marioschmidt/design-system-icons (SVG)               │
+│          @marioschmidt/design-system-icons-react (React)       │
+│  Maven:  de.bild.design:icons (Android → GitHub Packages)      │
+│  SPM:    BildIcons (iOS → Git tags)                            │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -120,8 +149,48 @@ This pipeline transforms SVG icons from Figma into optimized, production-ready a
 
 ## 📦 Installation
 
+### 🌐 Web (SVG only)
+
 ```bash
 npm install @marioschmidt/design-system-icons
+```
+
+### ⚛️ React Components
+
+```bash
+npm install @marioschmidt/design-system-icons-react
+```
+
+### 🤖 Android (Gradle)
+
+```kotlin
+// settings.gradle.kts
+dependencyResolutionManagement {
+    repositories {
+        maven {
+            url = uri("https://maven.pkg.github.com/UXWizard25/vv-token-test-v3")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USER")
+                password = project.findProperty("gpr.token") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
+
+// build.gradle.kts
+dependencies {
+    implementation("de.bild.design:icons:1.0.0")
+}
+```
+
+### 🍎 iOS (Swift Package Manager)
+
+```swift
+// Package.swift or Xcode: File → Add Package Dependencies
+.package(url: "https://github.com/UXWizard25/vv-token-test-v3.git", from: "1.0.0")
+
+// Target dependency
+.target(name: "YourApp", dependencies: ["BildIcons"])
 ```
 
 ---
@@ -131,22 +200,32 @@ npm install @marioschmidt/design-system-icons
 ### ⚛️ React
 
 ```tsx
-import { Add, Menu, Search } from '@marioschmidt/design-system-icons';
+import { IconAdd, IconMenu, IconSearch } from '@marioschmidt/design-system-icons-react';
 
 // Default (decorative icon - hidden from screen readers)
-<Add />
+<IconAdd />
 
 // With size
-<Add size={32} />
+<IconAdd size={32} />
 
 // Accessible (visible to screen readers)
-<Add aria-label="Add new item" />
+<IconAdd aria-label="Add new item" />
 
 // With tooltip
-<Add title="Add new item" aria-label="Add" />
+<IconAdd title="Add new item" aria-label="Add" />
 
 // Custom styling
-<Add className="text-primary" style={{ color: 'red' }} />
+<IconAdd className="text-primary" style={{ color: 'red' }} />
+```
+
+### 🌐 SVG (Direct Import)
+
+```javascript
+// ES Module import
+import addIcon from '@marioschmidt/design-system-icons/add.svg';
+
+// Or use direct path
+<img src="node_modules/@marioschmidt/design-system-icons/add.svg" alt="Add" />
 ```
 
 ### 🤖 Android
@@ -164,7 +243,7 @@ Icons automatically use `?attr/colorOnSurface` for Material theming.
 ### 🍎 iOS (SwiftUI)
 
 ```swift
-import BildDesignSystemIcons
+import BildIcons
 
 // Using enum
 BildIcon.add.image
@@ -180,12 +259,6 @@ ForEach(BildIcon.allCases, id: \.self) { icon in
 }
 ```
 
-### 🌐 SVG (Direct)
-
-```html
-<img src="node_modules/@marioschmidt/design-system-icons/dist/icons/svg/add.svg" alt="Add">
-```
-
 ---
 
 ## 📁 File Structure
@@ -197,43 +270,62 @@ This package is part of the npm workspaces monorepo:
 | Package | npm Name | Location |
 |---------|----------|----------|
 | Tokens | `@marioschmidt/design-system-tokens` | `packages/tokens/` |
-| Icons | `@marioschmidt/design-system-icons` | `packages/icons/` |
-| Components | `@marioschmidt/design-system-components` | `packages/components/core/` |
-| React | `@marioschmidt/design-system-react` | `packages/components/react/` |
-| Vue | `@marioschmidt/design-system-vue` | `packages/components/vue/` |
+| Icons (SVG) | `@marioschmidt/design-system-icons` | `packages/icons/svg/` |
+| Icons (React) | `@marioschmidt/design-system-icons-react` | `packages/icons/react/` |
+| Components | `@marioschmidt/design-system-components` | `packages/components/` |
+| React | `@marioschmidt/design-system-react` | `packages/react/` |
+| Vue | `@marioschmidt/design-system-vue` | `packages/vue/` |
 
 ```
-src/icons/
-├── icon-add.svg           ← Source SVGs from Figma
-├── icon-menu.svg
-└── icon-search.svg
+packages/icons/
+├── src/                       ← Source SVGs from Figma
+│   ├── icon-add.svg
+│   ├── icon-menu.svg
+│   └── icon-search.svg
+│
+├── svg/                       ← @marioschmidt/design-system-icons
+│   ├── package.json
+│   └── dist/                  → Optimized SVG files
+│       ├── add.svg
+│       ├── menu.svg
+│       └── ...
+│
+├── react/                     ← @marioschmidt/design-system-icons-react
+│   ├── package.json
+│   ├── .src/                  → Intermediate TSX (gitignored)
+│   └── dist/                  → Compiled ESM JavaScript
+│       ├── IconAdd.js
+│       ├── IconAdd.d.ts
+│       ├── index.js
+│       └── ...
+│
+├── android/                   ← de.bild.design:icons (Maven)
+│   ├── build.gradle.kts
+│   └── src/main/res/
+│       ├── drawable/          → ic_*.xml Vector Drawables
+│       └── values/            → attrs_icons.xml
+│
+└── ios/                       ← BildIcons (Swift Package Manager)
+    ├── Package.swift
+    └── Sources/BildIcons/
+        ├── BildIcon.swift     → Swift enum
+        └── Resources/
+            └── Assets.xcassets/Icons/
 
 scripts/icons/
 ├── build-icons.js         ← Main orchestrator
+├── paths.js               ← Centralized path configuration
 ├── optimize-svg.js        ← SVGO optimization + SVG validation
 ├── generate-react.js      ← React TSX generation (intermediate)
-├── compile-react.js       ← TypeScript compilation → react/ (cleans up intermediate files)
+├── compile-react.js       ← TypeScript compilation → dist/
 ├── generate-android.js    ← Android XML generation
 ├── generate-ios.js        ← iOS asset generation
 ├── compare-icon-builds.js ← Diff detection for PRs
 └── generate-icon-release-notes.js
 
 build-config/icons/
-└── svgo.config.js         ← SVG optimization config
-
-packages/icons/dist/        ← Generated output (gitignored)
-├── svg/                   ← Optimized SVGs
-├── react/                 ← Compiled ESM JavaScript
-│   ├── *.js               ← ESM modules
-│   ├── *.d.ts             ← TypeScript declarations
-│   ├── *.js.map           ← Source maps
-│   └── package.json       ← Module configuration
-├── android/
-│   ├── drawable/          ← ic_*.xml files
-│   └── values/            ← attrs_icons.xml
-└── ios/
-    ├── Assets.xcassets/   ← Xcode asset catalog
-    └── Sources/           ← BildIcons.swift
+├── svgo.config.js         ← SVG optimization config
+└── tsconfig.json          ← TypeScript config for React build
 ```
 
 ---
@@ -461,18 +553,27 @@ Build-time only (not shipped with package):
 
 ## 📦 Package Exports
 
+### SVG Package (`@marioschmidt/design-system-icons`)
+
 ```javascript
-// Main entry (React)
-import { Add } from '@marioschmidt/design-system-icons';
+// Individual SVG file
+import addSvg from '@marioschmidt/design-system-icons/add.svg';
 
-// Platform-specific
-import { Add } from '@marioschmidt/design-system-icons/react';
+// Or via explicit path
+import menuSvg from '@marioschmidt/design-system-icons/menu.svg';
+```
 
-// Individual icon
-import Add from '@marioschmidt/design-system-icons/react/Add';
+### React Package (`@marioschmidt/design-system-icons-react`)
 
-// Raw SVG path
-import addSvg from '@marioschmidt/design-system-icons/svg/add.svg';
+```javascript
+// Named exports from index
+import { IconAdd, IconMenu, IconSearch } from '@marioschmidt/design-system-icons-react';
+
+// Individual component (tree-shakeable)
+import { IconAdd } from '@marioschmidt/design-system-icons-react/IconAdd';
+
+// Default export from individual file
+import IconChevronDown from '@marioschmidt/design-system-icons-react/IconChevronDown';
 ```
 
 ---

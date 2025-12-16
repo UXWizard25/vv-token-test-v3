@@ -11,7 +11,10 @@ This repository uses **npm workspaces** to manage multiple packages:
 | Package | npm Name | Location | Build Command |
 |---------|----------|----------|---------------|
 | Tokens | `@marioschmidt/design-system-tokens` | `packages/tokens/` | `npm run build:tokens` |
-| Icons | `@marioschmidt/design-system-icons` | `packages/icons/` | `npm run build:icons` |
+| Icons (SVG) | `@marioschmidt/design-system-icons` | `packages/icons/svg/` | `npm run build:icons` |
+| Icons (React) | `@marioschmidt/design-system-icons-react` | `packages/icons/react/` | `npm run build:icons` |
+| Icons (Android) | `de.bild.design:icons` | `packages/icons/android/` | `npm run build:icons` |
+| Icons (iOS) | `BildIcons` (SPM) | `packages/icons/ios/` | `npm run build:icons` |
 | Components | `@marioschmidt/design-system-components` | `packages/components/` | `npm run build:components` |
 | React | `@marioschmidt/design-system-react` | `packages/react/` | `npm run build:react` |
 | Vue | `@marioschmidt/design-system-vue` | `packages/vue/` | `npm run build:vue` |
@@ -36,11 +39,13 @@ npm run build:docs      # Generate Storybook foundation docs (Colors, Typography
 npm run clean           # Delete all dist/ and tokens/
 
 # Publishing (via workspace)
-npm run publish:tokens     # npm publish -w @marioschmidt/design-system-tokens
-npm run publish:icons      # npm publish -w @marioschmidt/design-system-icons
-npm run publish:components # npm publish -w @marioschmidt/design-system-components
-npm run publish:react      # npm publish -w @marioschmidt/design-system-react
-npm run publish:vue        # npm publish -w @marioschmidt/design-system-vue
+npm run publish:tokens       # npm publish -w @marioschmidt/design-system-tokens
+npm run publish:icons        # npm publish -w @marioschmidt/design-system-icons (SVG)
+npm run publish:icons:react  # npm publish -w @marioschmidt/design-system-icons-react
+npm run publish:icons:all    # Publish both icon npm packages
+npm run publish:components   # npm publish -w @marioschmidt/design-system-components
+npm run publish:react        # npm publish -w @marioschmidt/design-system-react
+npm run publish:vue          # npm publish -w @marioschmidt/design-system-vue
 ```
 
 **Source of Truth:** `src/design-tokens/bild-design-system-raw-data.json` (Figma Export via CodeBridge Plugin)
