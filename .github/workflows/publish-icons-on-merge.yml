@@ -27,6 +27,8 @@ on:
       - main
     paths:
       - 'packages/icons/src/**'
+      - 'build-config/icons/**'
+      - 'scripts/icons/**'
 
 # Prevent concurrent publishes
 concurrency:
