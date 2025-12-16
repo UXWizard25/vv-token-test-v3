@@ -15,7 +15,7 @@ function getAbsolutePath(value: string): string {
 const config: StorybookConfig = {
   // Stories and documentation location
   stories: [
-    '../../packages/components/core/docs/**/*.mdx',                               // Documentation
+    '../../apps/docs/stories/**/*.mdx',                                    // Foundation documentation
     '../../packages/components/core/src/**/*.stories.@(js|jsx|mjs|ts|tsx)' // Component stories
   ],
 

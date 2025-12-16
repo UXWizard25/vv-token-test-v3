@@ -4,6 +4,7 @@
   "private": true,
   "description": "BILD Design System - Monorepo for design tokens, icons, and web components",
   "workspaces": [
+    "apps/*",
     "packages/tokens",
     "packages/icons/svg",
     "packages/icons/react",
@@ -26,8 +27,8 @@
     "fix:vue-imports": "node scripts/fix-vue-imports.js",
     "build:all": "npm run build:tokens && npm run build:icons && npm run build:components && npm run build:wrappers",
     "dev:stencil": "npm run dev -w @marioschmidt/design-system-components",
-    "storybook": "npm run build:tokens && npm run build:components && storybook dev -p 6006 -c build-config/storybook",
-    "build:storybook": "npm run build:tokens && npm run build:components && storybook build -c build-config/storybook -o dist/storybook",
+    "storybook": "npm run build:tokens && npm run build:components && npm run dev -w @bild/docs",
+    "build:storybook": "npm run build:tokens && npm run build:components && npm run build -w @bild/docs",
     "clean": "npm run clean --workspaces --if-present && rm -rf dist",
     "publish:tokens": "npm publish -w @marioschmidt/design-system-tokens",
     "publish:icons": "npm publish -w @marioschmidt/design-system-icons --access public",
@@ -52,23 +53,13 @@
     "@stencil/core": "^4.38.3",
     "@stencil/react-output-target": "^1.2.0",
     "@stencil/vue-output-target": "^0.11.8",
-    "@storybook/addon-docs": "^10.1.9",
-    "@storybook/addon-themes": "^10.1.9",
-    "@storybook/web-components-vite": "^10.1.9",
     "@svgr/core": "^8.1.0",
     "@types/react": "^19.2.7",
-    "@vitejs/plugin-react": "^5.1.1",
-    "@vueless/storybook-dark-mode": "^10.0.4",
     "glob": "^10.3.10",
-    "lit": "^3.3.1",
     "nodemon": "^3.0.1",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.3",
-    "storybook": "^10.1.9",
     "style-dictionary": "^4.2.0",
     "svg2vectordrawable": "^2.9.1",
     "svgo": "^4.0.0",
-    "typescript": "^5.9.3",
-    "vite": "^7.3.0"
+    "typescript": "^5.9.3"
   }
 }

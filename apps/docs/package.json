@@ -1,0 +1,21 @@
+{
+  "name": "@bild/docs",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BILD Design System - Storybook Documentation",
+  "scripts": {
+    "dev": "storybook dev -p 6006 -c ../../build-config/storybook",
+    "build": "storybook build -c ../../build-config/storybook -o ../../dist/storybook"
+  },
+  "devDependencies": {
+    "@storybook/addon-docs": "^10.1.9",
+    "@storybook/web-components-vite": "^10.1.9",
+    "@vitejs/plugin-react": "^5.1.1",
+    "@vueless/storybook-dark-mode": "^10.0.4",
+    "lit": "^3.3.1",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.3",
+    "storybook": "^10.1.9",
+    "vite": "^7.3.0"
+  }
+}

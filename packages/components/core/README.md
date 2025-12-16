@@ -265,6 +265,17 @@ Light DOM                          Shadow DOM
 ## 📁 Project Structure
 
 ```
+apps/
+└── docs/                         # @bild/docs (Storybook documentation)
+    ├── package.json              # Isolated Storybook dependencies
+    └── stories/
+        └── foundations/          # Auto-generated foundation docs
+            ├── intro.mdx         # Introduction (manual)
+            ├── colors.mdx        # Color tokens (auto-generated)
+            ├── typography.mdx    # Typography (auto-generated)
+            ├── spacing.mdx       # Spacing & density (auto-generated)
+            └── effects.mdx       # Shadows & effects (auto-generated)
+
 packages/components/
 ├── core/                         # This package (@marioschmidt/design-system-components)
 │   ├── src/                      # Stencil component source
@@ -275,13 +286,6 @@ packages/components/
 │   │   ├── ds-card/
 │   │   │   └── ...
 │   │   └── components.d.ts       # Generated type definitions
-│   │
-│   ├── docs/                     # Storybook MDX documentation (mostly auto-generated)
-│   │   ├── intro.mdx             # Introduction & overview (manual)
-│   │   ├── colors.mdx            # Color tokens (auto-generated)
-│   │   ├── typography.mdx        # Typography tokens (auto-generated)
-│   │   ├── spacing.mdx           # Spacing & density (auto-generated)
-│   │   └── effects.mdx           # Shadows & effects (auto-generated)
 │   │
 │   ├── dist/                     # Built output (gitignored)
 │   │   ├── esm/                  # ES Modules

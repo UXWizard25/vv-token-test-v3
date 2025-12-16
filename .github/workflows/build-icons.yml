@@ -73,10 +73,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: |
-          npm ci
-          # Install icon-specific dependencies
-          npm install svgo@^3.2.0 @svgr/core@^8.1.0 svg2vectordrawable@^2.9.1 typescript@^5.3.0 @types/react@^18.2.0
+        run: npm ci
 
       # ========================================
       # Clean (optional)

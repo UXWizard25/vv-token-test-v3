@@ -262,6 +262,17 @@ import { DsButton, DsCard } from '@marioschmidt/design-system-vue';
 ```
 vv-token-test-v3/
 │
+├── 📱 apps/
+│   └── docs/                      # @bild/docs (private, Storybook)
+│       ├── package.json           # Isolated Storybook dependencies
+│       └── stories/
+│           └── foundations/       # Auto-generated foundation docs
+│               ├── intro.mdx      # Introduction (manual)
+│               ├── colors.mdx     # Color tokens (auto-generated)
+│               ├── typography.mdx # Typography (auto-generated)
+│               ├── spacing.mdx    # Spacing (auto-generated)
+│               └── effects.mdx    # Effects (auto-generated)
+│
 ├── 📦 packages/
 │   ├── tokens/                    # @marioschmidt/design-system-tokens
 │   │   ├── src/                   # Figma export (bild-design-system-raw-data.json)
@@ -282,22 +293,19 @@ vv-token-test-v3/
 │   │   │   └── Sources/BildIcons/ # Asset Catalog + Swift enum
 │   │   └── README.md
 │   │
-│   └── components/                # @marioschmidt/design-system-components
-│       ├── src/                   # Stencil components (ds-button, ds-card)
-│       │   ├── ds-button/
-│       │   └── ds-card/
-│       ├── docs/                  # Storybook MDX pages (intro, colors, typography, etc.)
-│       ├── dist/                  # Built Stencil output
-│       └── README.md
-│
-├── 📦 packages/ (continued)
-│   ├── react/                     # @marioschmidt/design-system-react
-│   │   ├── lib/                   # Auto-generated React wrappers
-│   │   └── dist/                  # Built output
-│   │
-│   └── vue/                       # @marioschmidt/design-system-vue
-│       ├── lib/                   # Auto-generated Vue wrappers
-│       └── dist/                  # Built output
+│   └── components/
+│       ├── core/                  # @marioschmidt/design-system-components
+│       │   ├── src/               # Stencil components (ds-button, ds-card)
+│       │   ├── dist/              # Built Stencil output
+│       │   └── README.md
+│       │
+│       ├── react/                 # @marioschmidt/design-system-react
+│       │   ├── lib/               # Auto-generated React wrappers
+│       │   └── dist/              # Built output
+│       │
+│       └── vue/                   # @marioschmidt/design-system-vue
+│           ├── lib/               # Auto-generated Vue wrappers
+│           └── dist/              # Built output
 │
 ├── 🔧 scripts/
 │   ├── tokens/                    # Token build scripts

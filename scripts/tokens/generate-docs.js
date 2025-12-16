@@ -14,7 +14,7 @@ const fs = require('fs');
 const path = require('path');
 
 const TOKENS_DIR = path.join(__dirname, '../../packages/tokens/.tokens');
-const DOCS_DIR = path.join(__dirname, '../../packages/components/core/docs');
+const DOCS_DIR = path.join(__dirname, '../../apps/docs/stories/foundations');
 
 /**
  * Convert camelCase token name to kebab-case CSS variable name
