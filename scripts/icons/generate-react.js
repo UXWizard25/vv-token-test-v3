@@ -143,12 +143,18 @@ function generateComponentTemplate(componentName, svgContent) {
 
   return `import * as React from 'react';
 
-export interface ${componentName}Props extends React.SVGProps<SVGSVGElement> {
+export interface ${componentName}Props extends Omit<React.SVGProps<SVGSVGElement>, 'color'> {
   /**
    * Icon size (width and height)
    * @default 24
    */
   size?: number | string;
+  /**
+   * Icon color. Accepts any valid CSS color value.
+   * @default 'currentColor'
+   * @example 'red', '#DD0000', 'var(--primary-color)'
+   */
+  color?: string;
   /**
    * Accessible label for screen readers.
    * If provided, aria-hidden will be set to false.
@@ -169,6 +175,7 @@ const ${componentName} = React.forwardRef<SVGSVGElement, ${componentName}Props>(
   (
     {
       size = 24,
+      color = 'currentColor',
       'aria-label': ariaLabel,
       'aria-hidden': ariaHidden = true,
       title,
@@ -185,7 +192,7 @@ const ${componentName} = React.forwardRef<SVGSVGElement, ${componentName}Props>(
         viewBox="${viewBox}"
         width={size}
         height={size}
-        fill="currentColor"
+        fill={color}
         role="img"
         aria-hidden={isDecorative ? true : undefined}
         aria-label={ariaLabel || undefined}

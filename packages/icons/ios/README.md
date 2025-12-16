@@ -37,7 +37,7 @@ targets: [
 
 ## Usage
 
-### SwiftUI
+### SwiftUI (Recommended)
 
 ```swift
 import BildIcons
@@ -45,20 +45,41 @@ import BildIcons
 struct ContentView: View {
     var body: some View {
         VStack {
-            // Using the enum
-            BildIcon.add.image
-                .foregroundColor(.primary)
+            // Simple usage with convenience method
+            BildIcon.add.icon()
 
-            // With custom size
-            BildIcon.menu.image
-                .font(.system(size: 32))
+            // Custom size and color
+            BildIcon.menu.icon(size: 32, color: .blue)
 
-            // With frame
-            BildIcon.search.image
-                .frame(width: 48, height: 48)
+            // Preset sizes (.xs, .sm, .md, .lg, .xl)
+            BildIcon.search.icon(size: .lg, color: .red)
+
+            // Icon button
+            BildIcon.close.button {
+                dismiss()
+            }
+
+            // Accessible icon with label
+            BildIcon.add.accessibleIcon(label: "Add item")
+
+            // Decorative icon (hidden from screen readers)
+            BildIcon.star.decorativeIcon()
         }
     }
 }
+```
+
+### Raw Image Access
+
+For more control, use the raw `Image`:
+
+```swift
+import BildIcons
+
+BildIcon.add.image
+    .resizable()
+    .frame(width: 24, height: 24)
+    .foregroundColor(.primary)
 ```
 
 ### Iterate All Icons
@@ -100,10 +121,10 @@ imageView.tintColor = .label
 ### BildIcon Enum
 
 ```swift
-public enum BildIcon: String, CaseIterable {
+public enum BildIcon: String, CaseIterable, Sendable {
     case add = "add"
-    case menu = "menu"
-    case search = "search"
+    case arrowLeft = "arrowLeft"
+    case _2LigaLogo = "_2LigaLogo"  // Numbers use underscore prefix
     // ... all icons
 
     /// SwiftUI Image for this icon
@@ -112,6 +133,37 @@ public enum BildIcon: String, CaseIterable {
     /// Human-readable name for debugging
     public var displayName: String
 }
+```
+
+### Convenience Methods
+
+```swift
+public extension BildIcon {
+    /// Icon with custom size and color
+    func icon(size: CGFloat = 24, color: Color = .primary) -> some View
+
+    /// Icon with preset size (.xs, .sm, .md, .lg, .xl)
+    func icon(size: Size, color: Color = .primary) -> some View
+
+    /// Icon button with action
+    func button(size: CGFloat = 24, color: Color = .primary, action: () -> Void) -> some View
+
+    /// Accessible icon with screen reader label
+    func accessibleIcon(label: String, size: CGFloat = 24, color: Color = .primary) -> some View
+
+    /// Decorative icon hidden from screen readers
+    func decorativeIcon(size: CGFloat = 24, color: Color = .primary) -> some View
+}
+```
+
+### Size Presets
+
+```swift
+BildIcon.Size.xs   // 16pt
+BildIcon.Size.sm   // 20pt
+BildIcon.Size.md   // 24pt (default)
+BildIcon.Size.lg   // 32pt
+BildIcon.Size.xl   // 48pt
 ```
 
 ---

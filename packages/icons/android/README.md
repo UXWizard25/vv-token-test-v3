@@ -63,29 +63,55 @@ The token needs the `read:packages` scope.
 
 ### Jetpack Compose (Recommended)
 
-Use the type-safe `BildIcons` object with PascalCase naming (following Material Icons convention):
+Use the convenience `BildIcon()` composable for consistent sizing and accessibility:
+
+```kotlin
+import de.bild.design.icons.*
+
+// Simple usage
+BildIcon(BildIcons.Add, contentDescription = "Add item")
+
+// Custom size and color
+BildIcon(
+    icon = BildIcons.ArrowLeft,
+    contentDescription = "Go back",
+    size = 32.dp,
+    tint = MaterialTheme.colorScheme.primary
+)
+
+// Preset sizes (XS, SM, MD, LG, XL)
+BildIcon(
+    icon = BildIcons.Menu,
+    contentDescription = "Menu",
+    size = BildIconSize.LG
+)
+
+// Decorative icon (null for contentDescription)
+BildIcon(BildIcons.Star, contentDescription = null)
+
+// Icon button
+BildIconButton(
+    icon = BildIcons.Close,
+    contentDescription = "Close dialog",
+    onClick = { dismiss() }
+)
+
+// Icons starting with numbers use underscore prefix
+BildIcon(BildIcons._2LigaLogo, contentDescription = "2. Liga")
+```
+
+### Direct ImageVector Access
+
+For custom composables, use `BildIcons` directly:
 
 ```kotlin
 import androidx.compose.material3.Icon
 import de.bild.design.icons.BildIcons
 
-// Simple usage
 Icon(
     imageVector = BildIcons.Add,
-    contentDescription = "Add"
-)
-
-// With custom tint
-Icon(
-    imageVector = BildIcons.ArrowLeft,
-    contentDescription = "Go back",
-    tint = MaterialTheme.colorScheme.primary
-)
-
-// Icons starting with numbers use underscore prefix
-Icon(
-    imageVector = BildIcons._2LigaLogo,
-    contentDescription = "2. Liga"
+    contentDescription = "Add",
+    tint = Color.Red
 )
 ```
 
@@ -124,6 +150,50 @@ Icon(
     contentDescription = "Add",
     tint = Color.Red
 )
+```
+
+---
+
+## API Reference
+
+### BildIcon Composable
+
+```kotlin
+@Composable
+fun BildIcon(
+    icon: ImageVector,
+    contentDescription: String?,  // null for decorative icons
+    modifier: Modifier = Modifier,
+    size: Dp = BildIconSize.MD,
+    tint: Color = LocalContentColor.current
+)
+```
+
+### BildIconButton Composable
+
+```kotlin
+@Composable
+fun BildIconButton(
+    icon: ImageVector,
+    contentDescription: String,  // required for buttons
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    size: Dp = BildIconSize.MD,
+    tint: Color = LocalContentColor.current,
+    enabled: Boolean = true
+)
+```
+
+### Size Presets
+
+```kotlin
+object BildIconSize {
+    val XS: Dp = 16.dp
+    val SM: Dp = 20.dp
+    val MD: Dp = 24.dp  // default
+    val LG: Dp = 32.dp
+    val XL: Dp = 48.dp
+}
 ```
 
 ---

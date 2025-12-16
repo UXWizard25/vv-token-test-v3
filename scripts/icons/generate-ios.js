@@ -213,21 +213,28 @@ function generateSwiftExtension(icons) {
 
 import SwiftUI
 
+// MARK: - BildIcon Enum
+
 /// BILD Design System Icon names
 ///
 /// Usage:
 /// \`\`\`swift
-/// Image(BildIcon.add.rawValue)
-///     .foregroundColor(.primary)
+/// // Simple usage with convenience method
+/// BildIcon.add.icon()
 ///
-/// // Or with the convenience extension:
-/// BildIcon.add.image
+/// // With custom size and color
+/// BildIcon.arrowLeft.icon(size: 32, color: .blue)
+///
+/// // Using the raw Image for more control
+/// BildIcon.menu.image
+///     .resizable()
+///     .frame(width: 24, height: 24)
 ///     .foregroundColor(.primary)
 /// \`\`\`
-public enum BildIcon: String, CaseIterable {
+public enum BildIcon: String, CaseIterable, Sendable {
 ${iconCases}
 
-    /// The image for this icon
+    /// The image for this icon (use for custom configurations)
     public var image: Image {
         Image(rawValue, bundle: .module)
     }
@@ -240,23 +247,171 @@ ${iconPreviewCases}
     }
 }
 
+// MARK: - Convenience Modifiers
+
+public extension BildIcon {
+    /// Standard icon sizes following SF Symbols conventions
+    enum Size: CGFloat, Sendable {
+        /// Extra small icon (16pt)
+        case xs = 16
+        /// Small icon (20pt)
+        case sm = 20
+        /// Medium icon (24pt) - Default
+        case md = 24
+        /// Large icon (32pt)
+        case lg = 32
+        /// Extra large icon (48pt)
+        case xl = 48
+    }
+
+    /// Creates an icon view with specified size and color
+    ///
+    /// - Parameters:
+    ///   - size: The icon size in points (default: 24)
+    ///   - color: The icon color (default: .primary)
+    /// - Returns: A configured icon view
+    ///
+    /// Example:
+    /// \`\`\`swift
+    /// BildIcon.add.icon(size: 32, color: .blue)
+    /// \`\`\`
+    @ViewBuilder
+    func icon(size: CGFloat = 24, color: Color = .primary) -> some View {
+        image
+            .resizable()
+            .renderingMode(.template)
+            .frame(width: size, height: size)
+            .foregroundColor(color)
+    }
+
+    /// Creates an icon view with a preset size
+    ///
+    /// - Parameters:
+    ///   - size: The preset size (.xs, .sm, .md, .lg, .xl)
+    ///   - color: The icon color (default: .primary)
+    /// - Returns: A configured icon view
+    ///
+    /// Example:
+    /// \`\`\`swift
+    /// BildIcon.menu.icon(size: .lg, color: .red)
+    /// \`\`\`
+    @ViewBuilder
+    func icon(size: Size, color: Color = .primary) -> some View {
+        icon(size: size.rawValue, color: color)
+    }
+}
+
+// MARK: - Button Convenience
+
+public extension BildIcon {
+    /// Creates a button with this icon
+    ///
+    /// - Parameters:
+    ///   - size: The icon size in points (default: 24)
+    ///   - color: The icon color (default: .primary)
+    ///   - action: The action to perform when tapped
+    /// - Returns: A button with the icon
+    ///
+    /// Example:
+    /// \`\`\`swift
+    /// BildIcon.close.button {
+    ///     dismiss()
+    /// }
+    /// \`\`\`
+    func button(
+        size: CGFloat = 24,
+        color: Color = .primary,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            icon(size: size, color: color)
+        }
+    }
+}
+
+// MARK: - Accessibility
+
+public extension BildIcon {
+    /// Creates an accessible icon with a label for screen readers
+    ///
+    /// - Parameters:
+    ///   - label: The accessibility label for screen readers
+    ///   - size: The icon size in points (default: 24)
+    ///   - color: The icon color (default: .primary)
+    /// - Returns: An accessible icon view
+    ///
+    /// Example:
+    /// \`\`\`swift
+    /// BildIcon.add.accessibleIcon(label: "Add item")
+    /// \`\`\`
+    @ViewBuilder
+    func accessibleIcon(
+        label: String,
+        size: CGFloat = 24,
+        color: Color = .primary
+    ) -> some View {
+        icon(size: size, color: color)
+            .accessibilityLabel(label)
+    }
+
+    /// Creates a decorative icon hidden from screen readers
+    ///
+    /// Use for icons that are purely decorative and don't convey meaning.
+    ///
+    /// - Parameters:
+    ///   - size: The icon size in points (default: 24)
+    ///   - color: The icon color (default: .primary)
+    /// - Returns: A decorative icon view hidden from accessibility
+    @ViewBuilder
+    func decorativeIcon(size: CGFloat = 24, color: Color = .primary) -> some View {
+        icon(size: size, color: color)
+            .accessibilityHidden(true)
+    }
+}
+
 #if DEBUG
+// MARK: - Previews
+
 /// Preview provider for all icons
 struct BildIconPreviews: PreviewProvider {
     static var previews: some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 60))], spacing: 16) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], spacing: 16) {
                 ForEach(BildIcon.allCases, id: \\.self) { icon in
-                    VStack {
-                        icon.image
-                            .font(.title)
+                    VStack(spacing: 8) {
+                        icon.icon(size: .md)
                         Text(icon.displayName)
                             .font(.caption2)
+                            .lineLimit(1)
                     }
+                    .frame(width: 80)
                 }
             }
             .padding()
         }
+        .previewDisplayName("All Icons")
+    }
+}
+
+/// Preview for icon sizes
+struct BildIconSizePreviews: PreviewProvider {
+    static var previews: some View {
+        VStack(spacing: 24) {
+            HStack(spacing: 24) {
+                BildIcon.add.icon(size: .xs)
+                BildIcon.add.icon(size: .sm)
+                BildIcon.add.icon(size: .md)
+                BildIcon.add.icon(size: .lg)
+                BildIcon.add.icon(size: .xl)
+            }
+            HStack(spacing: 24) {
+                BildIcon.add.icon(size: .md, color: .red)
+                BildIcon.add.icon(size: .md, color: .blue)
+                BildIcon.add.icon(size: .md, color: .green)
+            }
+        }
+        .padding()
+        .previewDisplayName("Icon Sizes & Colors")
     }
 }
 #endif

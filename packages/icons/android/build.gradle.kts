@@ -78,6 +78,10 @@ android {
 dependencies {
     // Jetpack Compose UI (required for ImageVector)
     implementation("androidx.compose.ui:ui:1.6.0")
+    // Material 3 (required for Icon, IconButton, LocalContentColor)
+    implementation("androidx.compose.material3:material3:1.2.0")
+    // Foundation (required for layout modifiers)
+    implementation("androidx.compose.foundation:foundation:1.6.0")
 }
 
 publishing {

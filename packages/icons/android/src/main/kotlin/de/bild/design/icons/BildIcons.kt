@@ -1,14 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Generated at: 2025-12-16T12:43:48.468Z
+// Generated at: 2025-12-16T12:58:07.033Z
 //
 // BILD Design System Icons - Jetpack Compose Extension
 // To regenerate, run: npm run build:icons:android
 
 package de.bild.design.icons
 
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 
 /**
  * BILD Design System Icons for Jetpack Compose
@@ -18,16 +27,24 @@ import androidx.compose.ui.res.vectorResource
  *
  * Usage:
  * ```kotlin
- * Icon(
- *     imageVector = BildIcons.Add,
- *     contentDescription = "Add item"
+ * // Simple usage with convenience function
+ * BildIcon(BildIcons.Add, contentDescription = "Add item")
+ *
+ * // With custom size and color
+ * BildIcon(
+ *     icon = BildIcons.ArrowLeft,
+ *     contentDescription = "Go back",
+ *     size = 32.dp,
+ *     tint = MaterialTheme.colorScheme.primary
  * )
  *
- * // With tint
+ * // Decorative icon (no content description)
+ * BildIcon(BildIcons.Decoration, contentDescription = null)
+ *
+ * // Direct ImageVector usage for custom composables
  * Icon(
- *     imageVector = BildIcons.ArrowLeft,
- *     contentDescription = "Go back",
- *     tint = MaterialTheme.colorScheme.primary
+ *     imageVector = BildIcons.Menu,
+ *     contentDescription = "Menu"
  * )
  * ```
  */
@@ -1830,4 +1847,115 @@ object BildIcons {
         Wrestling,
         ZoomIn
         )
+}
+
+// ============================================================================
+// CONVENIENCE COMPOSABLE
+// ============================================================================
+
+/**
+ * Standard icon sizes following Material Design guidelines
+ */
+object BildIconSize {
+    /** Extra small icon (16dp) */
+    val XS: Dp = 16.dp
+    /** Small icon (20dp) */
+    val SM: Dp = 20.dp
+    /** Medium icon (24dp) - Default */
+    val MD: Dp = 24.dp
+    /** Large icon (32dp) */
+    val LG: Dp = 32.dp
+    /** Extra large icon (48dp) */
+    val XL: Dp = 48.dp
+}
+
+/**
+ * BILD Design System Icon composable with convenience parameters.
+ *
+ * This is the recommended way to use icons in your Compose UI.
+ * It provides consistent sizing, coloring, and accessibility handling.
+ *
+ * @param icon The icon to display from [BildIcons]
+ * @param contentDescription Text for accessibility. Pass null for decorative icons.
+ * @param modifier Modifier to be applied to the icon
+ * @param size Icon size (default: 24.dp)
+ * @param tint Icon color (default: LocalContentColor)
+ *
+ * Example:
+ * ```kotlin
+ * // Semantic icon (has meaning)
+ * BildIcon(BildIcons.Add, contentDescription = "Add item")
+ *
+ * // Decorative icon (purely visual)
+ * BildIcon(BildIcons.Star, contentDescription = null)
+ *
+ * // With custom styling
+ * BildIcon(
+ *     icon = BildIcons.Heart,
+ *     contentDescription = "Favorite",
+ *     size = BildIconSize.LG,
+ *     tint = Color.Red
+ * )
+ * ```
+ */
+@Composable
+fun BildIcon(
+    icon: ImageVector,
+    contentDescription: String?,
+    modifier: Modifier = Modifier,
+    size: Dp = BildIconSize.MD,
+    tint: Color = LocalContentColor.current
+) {
+    Icon(
+        imageVector = icon,
+        contentDescription = contentDescription,
+        modifier = modifier.size(size),
+        tint = tint
+    )
+}
+
+/**
+ * BILD Design System Icon button convenience composable.
+ *
+ * Wraps an icon in a clickable IconButton with proper accessibility.
+ *
+ * @param icon The icon to display from [BildIcons]
+ * @param contentDescription Text for accessibility (required for buttons)
+ * @param onClick Action to perform when clicked
+ * @param modifier Modifier to be applied to the button
+ * @param size Icon size (default: 24.dp)
+ * @param tint Icon color (default: LocalContentColor)
+ * @param enabled Whether the button is enabled
+ *
+ * Example:
+ * ```kotlin
+ * BildIconButton(
+ *     icon = BildIcons.Close,
+ *     contentDescription = "Close dialog",
+ *     onClick = { onDismiss() }
+ * )
+ * ```
+ */
+@Composable
+fun BildIconButton(
+    icon: ImageVector,
+    contentDescription: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    size: Dp = BildIconSize.MD,
+    tint: Color = LocalContentColor.current,
+    enabled: Boolean = true
+) {
+    androidx.compose.material3.IconButton(
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled
+    ) {
+        BildIcon(
+            icon = icon,
+            contentDescription = contentDescription,
+            size = size,
+            tint = tint
+        )
+    }
 }
