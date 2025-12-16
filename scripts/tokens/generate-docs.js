@@ -229,7 +229,7 @@ ${generateColorCards(tokens)}
   }
 
   // Final MDX content
-  const mdxContent = `import { Meta } from '@storybook/blocks';
+  const mdxContent = `import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Foundations/Colors" />
 
@@ -555,7 +555,7 @@ ${fontRows}
   }
 
   // Final MDX content
-  const mdxContent = `import { Meta } from '@storybook/blocks';
+  const mdxContent = `import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Foundations/Typography" />
 
@@ -862,7 +862,7 @@ ${tokenRows}
   }
 
   // Final MDX content
-  const mdxContent = `import { Meta } from '@storybook/blocks';
+  const mdxContent = `import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Foundations/Spacing" />
 
@@ -1149,7 +1149,7 @@ ${tokenRows}
   }
 
   // Final MDX content
-  const mdxContent = `import { Meta } from '@storybook/blocks';
+  const mdxContent = `import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Foundations/Effects" />
 

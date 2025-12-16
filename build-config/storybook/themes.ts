@@ -1,4 +1,4 @@
-import { create } from '@storybook/theming';
+import { create } from 'storybook/theming';
 
 /**
  * BILD Design System - Custom Storybook UI Themes
