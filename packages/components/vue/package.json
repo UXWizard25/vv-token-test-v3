@@ -20,7 +20,7 @@
     "@marioschmidt/design-system-components": "^1.0.0"
   },
   "devDependencies": {
-    "vue": "^3.3.0",
+    "vue": "^3.5.26",
     "typescript": "^5.0.0"
   },
   "keywords": [

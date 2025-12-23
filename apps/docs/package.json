@@ -8,8 +8,8 @@
     "build": "storybook build -c ../../build-config/storybook -o ../../dist/storybook"
   },
   "devDependencies": {
-    "@storybook/addon-docs": "^10.1.9",
-    "@storybook/web-components-vite": "^10.1.9",
+    "@storybook/addon-docs": "^10.1.10",
+    "@storybook/web-components-vite": "^10.1.10",
     "@vitejs/plugin-react": "^5.1.1",
     "@vueless/storybook-dark-mode": "^10.0.4",
     "lit": "^3.3.1",
