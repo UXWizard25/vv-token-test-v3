@@ -463,6 +463,10 @@ Tokens reference each other through aliases. Here's how a button color token res
 theme.colors.textColorPrimary     // any DesignColorScheme
 theme.sizing.gridSpaceRespBase    // any DesignSizingScheme
 theme.effects.shadowSoftMd        // any DesignEffectsScheme
+
+// Density-aware spacing (auto-resolved by SizeClass × DensityMode)
+theme.stackSpaceRespMd            // Responsive: varies by SizeClass
+theme.stackSpaceConstLg           // Constant: same across all SizeClasses
 ```
 
 ### Android (Jetpack Compose)
@@ -481,6 +485,10 @@ DesignSystemTheme(
     DesignSystemTheme.sizing.gridSpaceRespBase  // DesignSizingScheme
     DesignSystemTheme.typography.headline1      // DesignTypographyScheme
     DesignSystemTheme.effects.shadowSoftMd      // DesignEffectsScheme (brand-independent)
+
+    // Density-aware spacing (auto-resolved by WindowSizeClass × DensityMode)
+    DesignSystemTheme.stackSpaceRespMd          // Responsive: varies by WindowSizeClass
+    DesignSystemTheme.stackSpaceConstLg         // Constant: same across all WindowSizeClasses
 
     // Component tokens via current()
     ButtonTokens.Colors.current().buttonPrimaryBgColorIdle
@@ -536,12 +544,15 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 | `DesignSizingScheme` | 180+ sizing tokens | `BildSizingCompact`, `BildSizingRegular` | `BildSizingCompact`, `BildSizingMedium`, `BildSizingExpanded` |
 | `DesignTypographyScheme` | 30+ text styles | `BildTypographyCompact`, `BildTypographyRegular` | `BildTypographyCompact`, `BildTypographyMedium`, `BildTypographyExpanded` |
 | `DesignEffectsScheme` | 8 shadow tokens | `EffectsLight`, `EffectsDark` | Same (brand-independent) |
+| `DesignDensityScheme` | 28 density tokens | `DensityDefault`, `DensityDense`, `DensitySpacious` | Same (brand-independent) |
 
 **Note on Size Classes:**
 - **iOS:** Uses Apple's 2-class system (compact/regular)
 - **Android:** Uses Material 3 WindowSizeClass with 3 values (Compact/Medium/Expanded)
 
 **Note on Effects:** Effects/shadows are **brand-independent** and only depend on light/dark mode. Both iOS and Android share the same `EffectsLight`/`EffectsDark` implementations across all brands.
+
+**Note on Density:** Density tokens are **brand-independent** and **internal**. Consumers should use the BreakpointMode resolver properties (`stackSpaceRespMd`, `stackSpaceConstLg`) which automatically resolve density based on `WindowSizeClass`/`SizeClass` × `Density` mode.
 
 **Benefit:** Code can work with `any DesignColorScheme` without knowing the specific brand.
 

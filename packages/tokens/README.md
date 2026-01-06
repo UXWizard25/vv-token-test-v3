@@ -349,8 +349,46 @@ Both iOS and Android implement identical unified protocols/interfaces for polymo
 | `DesignSizingScheme` | All sizing tokens | 180+ values | `CGFloat` | `Dp` |
 | `DesignTypographyScheme` | All text styles | 37 styles | `TextStyle` | `DesignTextStyle` |
 | `DesignEffectsScheme` | Shadow tokens (brand-independent) | 8 shadows | `ShadowStyle` | `ShadowStyle` |
+| `DesignDensityScheme` | Density spacing tokens (brand-independent, internal) | 28 tokens | `CGFloat` | `Dp` |
 
 > **Note:** Full iOS/Android architecture parity. Both platforms provide `theme.colors`, `theme.sizing`, `theme.typography`, and `theme.effects` accessors with polymorphic brand switching at runtime.
+
+#### Density-Aware Spacing (Consumer API)
+
+Density tokens are **internal** and resolved automatically via BreakpointMode properties:
+
+```kotlin
+// Android - Use BreakpointMode token names (NOT densitySpacing directly)
+@Composable
+fun MyLayout() {
+    val respSpacing = DesignSystemTheme.stackSpaceRespMd   // Responsive: varies by WindowSizeClass × Density
+    val constSpacing = DesignSystemTheme.stackSpaceConstLg // Constant: same across all WindowSizeClasses
+
+    Column(verticalArrangement = Arrangement.spacedBy(respSpacing)) {
+        // Content
+    }
+}
+```
+
+```swift
+// iOS - Use BreakpointMode token names (NOT densitySpacing directly)
+struct MyLayout: View {
+    @Environment(\.designSystemTheme) var theme
+
+    var body: some View {
+        VStack(spacing: theme.stackSpaceRespMd) {   // Responsive: varies by SizeClass × Density
+            // Or constant: theme.stackSpaceConstLg  // Same across all SizeClasses
+        }
+    }
+}
+```
+
+| Token Type | Example | Behavior |
+|------------|---------|----------|
+| Responsive | `stackSpaceRespMd` | Varies by WindowSizeClass/SizeClass × Density mode |
+| Constant | `stackSpaceConstLg` | Same value across all WindowSizeClasses, varies by Density only |
+
+> **Note:** The `densitySpacing` property is internal. Always use the semantic token names (`stackSpaceRespMd`, `stackSpaceConstLg`, etc.) which automatically resolve based on the current `sizeClass` and `density` mode.
 
 #### Component Token Accessors
 

@@ -127,6 +127,7 @@ All brands implement common interfaces for polymorphic access:
 | `DesignSizingScheme` | All sizing tokens | `BildSizingCompact`, `BildSizingMedium`, `BildSizingExpanded`, `SportbildSizing*`, `AdvertorialSizing*` |
 | `DesignTypographyScheme` | All text styles | `BildTypographyCompact`, `BildTypographyMedium`, `BildTypographyExpanded`, `SportbildTypography*`, `AdvertorialTypography*` |
 | `DesignEffectsScheme` | All shadow tokens | `EffectsLight`, `EffectsDark` (brand-independent, shared) |
+| `DesignDensityScheme` | Density spacing tokens (internal) | `DensityDefault`, `DensityDense`, `DensitySpacious` (brand-independent, shared) |
 
 ```kotlin
 // Polymorphic access - works with any brand
@@ -236,6 +237,11 @@ fun SemanticExample() {
     // Effects/Shadows - brand-independent, only Light/Dark
     val cardShadow = DesignSystemTheme.effects.shadowSoftMd
     Box(modifier = Modifier.then(cardShadow.toModifier())) { ... }
+
+    // Density-Aware Spacing - auto-resolved by WindowSizeClass × Density
+    val respSpacing = DesignSystemTheme.stackSpaceRespMd   // Responsive: varies by WindowSizeClass
+    val constSpacing = DesignSystemTheme.stackSpaceConstLg // Constant: same across all WindowSizeClasses
+    Column(verticalArrangement = Arrangement.spacedBy(respSpacing)) { ... }
 
     // Query theme state
     val isDark = DesignSystemTheme.isDarkTheme
@@ -574,6 +580,23 @@ interface DesignEffectsScheme {
     val shadowHardLg: ShadowStyle
     val shadowHardXl: ShadowStyle
 }
+
+// Internal density scheme (brand-independent, not exposed to consumers)
+// Consumers should use BreakpointMode resolver properties instead
+@Stable
+interface DesignDensityScheme {
+    // Constant spacing (same across all WindowSizeClasses)
+    val densityStackSpaceConst3xs: Dp
+    val densityStackSpaceConst2xs: Dp
+    val densityStackSpaceConstXs: Dp
+    // ... 28 total density tokens
+    // Responsive spacing (varies by WindowSizeClass)
+    val densityXsStackSpaceRespMd: Dp
+    val densitySmStackSpaceRespMd: Dp
+    val densityMdStackSpaceRespMd: Dp
+    val densityLgStackSpaceRespMd: Dp
+    // ...
+}
 ```
 
 ### Composite Types
@@ -617,11 +640,30 @@ object DesignSystemTheme {
     val sizing: DesignSizingScheme         // Current sizing (polymorphic)
     val typography: DesignTypographyScheme // Current typography (polymorphic)
     val effects: DesignEffectsScheme       // Current effects (brand-independent)
-    val density: Density                   // Current density
+    val density: Density                   // Current density mode
     val sizeClass: WindowSizeClass         // Current size class
     val isDarkTheme: Boolean               // Is dark mode active?
     val colorBrand: ColorBrand             // Current color brand
     val contentBrand: ContentBrand         // Current content brand
+
+    // Density-Aware Spacing (Consumer API) - use these, NOT densitySpacing directly
+    // Responsive spacing: varies by WindowSizeClass × Density
+    val stackSpaceRespSm: Dp               // Resolves density token per WindowSizeClass
+    val stackSpaceRespMd: Dp
+    val stackSpaceRespLg: Dp
+    val stackSpaceRespXl: Dp
+    val stackSpaceResp2xl: Dp
+    // Constant spacing: same across all WindowSizeClasses, varies by Density only
+    val stackSpaceConst3xs: Dp
+    val stackSpaceConst2xs: Dp
+    val stackSpaceConstXs: Dp
+    val stackSpaceConstSm: Dp
+    val stackSpaceConstMd: Dp
+    val stackSpaceConstLg: Dp
+    val stackSpaceConstXl: Dp
+    val stackSpaceConst2xl: Dp
+
+    internal val densitySpacing: DesignDensityScheme  // Internal - not for direct use
 }
 ```
 
