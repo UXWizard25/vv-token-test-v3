@@ -3035,12 +3035,38 @@ public struct ${structName}: ${brandPascal}ColorScheme, DesignColorScheme {
 
 /**
  * Format: SwiftUI Sizing Scheme (Protocol + Compact/Regular implementations)
+ * Also handles Density mode (Protocol + Default/Dense/Spacious implementations)
  */
 const swiftuiSizingSchemeFormat = ({ dictionary, options, file }) => {
   const brand = options.brand || 'Bild';
   const brandPascal = toPascalCase(brand);
-  const sizeClass = options.sizeClass || 'compact';
-  const isCompact = sizeClass === 'compact';
+  const modeType = options.modeType || 'sizeclass';
+  const isDensityMode = modeType === 'density';
+
+  // Determine mode name and whether to generate protocol
+  let modeName;
+  let isFirstMode;
+  let protocolName;
+  let unifiedProtocol;
+  let modeDescription;
+
+  if (isDensityMode) {
+    // Density mode: Default, Dense, Spacious
+    modeName = options.mode || 'default';
+    const modePascal = modeName.charAt(0).toUpperCase() + modeName.slice(1);
+    isFirstMode = modeName === 'default';
+    protocolName = `${brandPascal}DensityScheme`;
+    unifiedProtocol = 'DesignDensityScheme';
+    modeDescription = `${modePascal} density`;
+  } else {
+    // Sizeclass mode: Compact, Regular
+    const sizeClass = options.sizeClass || 'compact';
+    modeName = sizeClass;
+    isFirstMode = sizeClass === 'compact';
+    protocolName = `${brandPascal}SizingScheme`;
+    unifiedProtocol = 'DesignSizingScheme';
+    modeDescription = `${isFirstMode ? 'Compact' : 'Regular'} size class`;
+  }
 
   const uniqueNames = generateUniqueNames(dictionary.allTokens, 'camel');
 
@@ -3049,17 +3075,21 @@ const swiftuiSizingSchemeFormat = ({ dictionary, options, file }) => {
     commentStyle: 'line',
     platform: 'ios',
     brand: brandPascal,
-    context: `SizingScheme ${sizeClass}`
+    context: isDensityMode ? `DensityScheme ${modeName}` : `SizingScheme ${modeName}`
   });
 
   output += `import SwiftUI
 
 `;
 
-  // Only generate protocol in compact file
-  if (isCompact) {
-    output += `/// Protocol for type-safe sizing access across Compact/Regular size classes
-public protocol ${brandPascal}SizingScheme: Sendable {
+  // Only generate protocol in first mode file (compact for sizeclass, default for density)
+  if (isFirstMode) {
+    const protocolDescription = isDensityMode
+      ? 'type-safe density access across Default/Dense/Spacious modes'
+      : 'type-safe sizing access across Compact/Regular size classes';
+
+    output += `/// Protocol for ${protocolDescription}
+public protocol ${protocolName}: Sendable {
 `;
 
     dictionary.allTokens.forEach(token => {
@@ -3078,9 +3108,16 @@ public protocol ${brandPascal}SizingScheme: Sendable {
   }
 
   // Generate implementation struct (conforms to both brand-specific and unified protocols)
-  const structName = `${brandPascal}Sizing${isCompact ? 'Compact' : 'Regular'}`;
-  output += `/// ${isCompact ? 'Compact' : 'Regular'} size class implementation
-public struct ${structName}: ${brandPascal}SizingScheme, DesignSizingScheme {
+  let structName;
+  if (isDensityMode) {
+    const modePascal = modeName.charAt(0).toUpperCase() + modeName.slice(1);
+    structName = `${brandPascal}Density${modePascal}`;
+  } else {
+    structName = `${brandPascal}Sizing${isFirstMode ? 'Compact' : 'Regular'}`;
+  }
+
+  output += `/// ${modeDescription} implementation
+public struct ${structName}: ${protocolName}, ${unifiedProtocol} {
     public static let shared = ${structName}()
     private init() {}
 
@@ -3698,14 +3735,20 @@ const composeSpacingFormat = ({ dictionary, options, file }) => {
   let className;
   let interfaceName;
   let generateInterface = false;
+  let useUnifiedInterface = false;
 
   if (modeType === 'sizeclass') {
     className = `${brandPascal}Sizing${modePascal}`;
     interfaceName = `${brandPascal}SizingScheme`;
     // Generate interface only for Compact mode to avoid duplication
     generateInterface = modePascal === 'Compact';
+    useUnifiedInterface = true;
   } else if (modeType === 'density') {
     className = `${brandPascal}Density${modePascal}`;
+    interfaceName = `${brandPascal}DensityScheme`;
+    // Generate interface only for Default mode to avoid duplication
+    generateInterface = modePascal === 'Default';
+    useUnifiedInterface = true;
   } else {
     className = `${brandPascal}Spacing`;
   }
@@ -3722,9 +3765,12 @@ const composeSpacingFormat = ({ dictionary, options, file }) => {
     imports.push('import androidx.compose.ui.unit.sp');
     imports.push('import androidx.compose.ui.unit.TextUnit');
   }
-  // Add import for DesignSizingScheme for sizeclass mode
+  // Add import for unified schemes
   if (modeType === 'sizeclass') {
     imports.push('import com.bild.designsystem.shared.DesignSizingScheme');
+  }
+  if (modeType === 'density') {
+    imports.push('import com.bild.designsystem.shared.DesignDensityScheme');
   }
 
   let output = generateFileHeader({
@@ -3754,15 +3800,23 @@ ${imports.join('\n')}
   // Filter tokens to exclude generic string tokens
   const filteredTokens = dictionary.allTokens.filter(token => !shouldFilterStringToken(token));
 
-  // Generate interface for sizeclass (only for Compact mode)
-  if (generateInterface && modeType === 'sizeclass') {
+  // Generate interface for sizeclass or density (only for first mode: Compact/Default)
+  if (generateInterface && (modeType === 'sizeclass' || modeType === 'density')) {
+    const unifiedScheme = modeType === 'sizeclass' ? 'DesignSizingScheme' : 'DesignDensityScheme';
+    const schemeDescription = modeType === 'sizeclass'
+      ? 'Sizing scheme interface'
+      : 'Density scheme interface';
+    const accessDescription = modeType === 'sizeclass'
+      ? 'sizing tokens across WindowSizeClass variants'
+      : 'density spacing tokens across Default/Dense/Spacious modes';
+
     output += `/**
- * Sizing scheme interface for ${brandPascal}
- * Extends DesignSizingScheme for Dual-Axis theming compatibility
- * Provides type-safe access to sizing tokens across WindowSizeClass variants
+ * ${schemeDescription} for ${brandPascal}
+ * Extends ${unifiedScheme} for Dual-Axis theming compatibility
+ * Provides type-safe access to ${accessDescription}
  */
 @Stable
-interface ${interfaceName} : DesignSizingScheme {
+interface ${interfaceName} : ${unifiedScheme} {
 `;
     filteredTokens.forEach(token => {
       const type = token.$type || token.type;
@@ -3782,16 +3836,16 @@ interface ${interfaceName} : DesignSizingScheme {
       }
       // type === 'dimension' → stays 'Dp'
 
-      output += `    val ${token.name}: ${propType}\n`;
+      output += `    override val ${token.name}: ${propType}\n`;
     });
     output += `}
 
 `;
   }
 
-  // Generate object (implementing interface for sizeclass)
-  const implementsClause = modeType === 'sizeclass' ? ` : ${interfaceName}` : '';
-  const overrideKeyword = modeType === 'sizeclass' ? 'override ' : '';
+  // Generate object (implementing interface for sizeclass or density)
+  const implementsClause = useUnifiedInterface ? ` : ${interfaceName}` : '';
+  const overrideKeyword = useUnifiedInterface ? 'override ' : '';
 
   output += `/**
  * ${className} - Spacing and sizing tokens

@@ -3744,6 +3744,12 @@ async function generateComposeThemeProviders() {
     fs.writeFileSync(designEffectsSchemeFile, designEffectsSchemeContent, 'utf8');
     console.log('     ✅ shared/DesignEffectsScheme.kt (unified interface)');
 
+    // DesignDensityScheme.kt (unified density interface)
+    const designDensitySchemeContent = generateSharedDesignDensitySchemeFile();
+    const designDensitySchemeFile = path.join(sharedDir, 'DesignDensityScheme.kt');
+    fs.writeFileSync(designDensitySchemeFile, designDensitySchemeContent, 'utf8');
+    console.log('     ✅ shared/DesignDensityScheme.kt (unified interface)');
+
     // DesignSystemTheme.kt (central theme provider with Dual-Axis)
     const designSystemThemeContent = generateDesignSystemThemeFile();
     const designSystemThemeFile = path.join(sharedDir, 'DesignSystemTheme.kt');
@@ -4665,6 +4671,84 @@ interface DesignEffectsScheme {
 }
 
 /**
+ * Generates the shared DesignDensityScheme interface
+ * Creates: dist/android/compose/shared/DesignDensityScheme.kt
+ */
+function generateSharedDesignDensitySchemeFile() {
+  let output = generateFileHeader({
+    fileName: 'DesignDensityScheme.kt',
+    commentStyle: 'block',
+    platform: 'android',
+    context: `Unified DesignDensityScheme Interface\nSemantic density tokens for spacing adjustments`
+  });
+
+  return output + `
+package com.bild.designsystem.shared
+
+import androidx.compose.runtime.Stable
+import androidx.compose.ui.unit.Dp
+
+/**
+ * Unified density scheme interface for the BILD Design System
+ *
+ * Semantic density tokens (Global/StackSpace) that vary by density mode.
+ * This interface is implemented by {Brand}DensityDefault, {Brand}DensityDense, {Brand}DensitySpacious.
+ *
+ * Usage:
+ * \`\`\`kotlin
+ * @Composable
+ * fun MyLayout() {
+ *     val spacing = DesignSystemTheme.densitySpacing.densityStackSpaceConstMd
+ *     Column(
+ *         verticalArrangement = Arrangement.spacedBy(spacing)
+ *     ) {
+ *         // Content
+ *     }
+ * }
+ * \`\`\`
+ */
+@Stable
+interface DesignDensityScheme {
+    // Constant spacing (breakpoint-independent)
+    val densityStackSpaceConst3xs: Dp
+    val densityStackSpaceConst2xs: Dp
+    val densityStackSpaceConstXs: Dp
+    val densityStackSpaceConstSm: Dp
+    val densityStackSpaceConstMd: Dp
+    val densityStackSpaceConstLg: Dp
+    val densityStackSpaceConstXl: Dp
+    val densityStackSpaceConst2xl: Dp
+
+    // Responsive spacing (per breakpoint)
+    // XS breakpoint
+    val densityXsStackSpaceRespSm: Dp
+    val densityXsStackSpaceRespMd: Dp
+    val densityXsStackSpaceRespLg: Dp
+    val densityXsStackSpaceRespXl: Dp
+    val densityXsStackSpaceResp2xl: Dp
+    // SM breakpoint
+    val densitySmStackSpaceRespSm: Dp
+    val densitySmStackSpaceRespMd: Dp
+    val densitySmStackSpaceRespLg: Dp
+    val densitySmStackSpaceRespXl: Dp
+    val densitySmStackSpaceResp2xl: Dp
+    // MD breakpoint
+    val densityMdStackSpaceRespSm: Dp
+    val densityMdStackSpaceRespMd: Dp
+    val densityMdStackSpaceRespLg: Dp
+    val densityMdStackSpaceRespXl: Dp
+    val densityMdStackSpaceResp2xl: Dp
+    // LG breakpoint
+    val densityLgStackSpaceRespSm: Dp
+    val densityLgStackSpaceRespMd: Dp
+    val densityLgStackSpaceRespLg: Dp
+    val densityLgStackSpaceRespXl: Dp
+    val densityLgStackSpaceResp2xl: Dp
+}
+`;
+}
+
+/**
  * Generates the central DesignSystemTheme file with Dual-Axis Architecture
  * Creates: dist/android/compose/shared/DesignSystemTheme.kt
  */
@@ -4690,6 +4774,14 @@ import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingExpanded`;
     return `import com.bild.designsystem.${brand}.semantic.${brandPascal}TypographyCompact
 import com.bild.designsystem.${brand}.semantic.${brandPascal}TypographyMedium
 import com.bild.designsystem.${brand}.semantic.${brandPascal}TypographyExpanded`;
+  }).join('\n');
+
+  // Generate density imports for all content brands (Default, Dense, Spacious)
+  const densityImports = CONTENT_BRANDS.map(brand => {
+    const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
+    return `import com.bild.designsystem.${brand}.density.${brandPascal}DensityDefault
+import com.bild.designsystem.${brand}.density.${brandPascal}DensityDense
+import com.bild.designsystem.${brand}.density.${brandPascal}DensitySpacious`;
   }).join('\n');
 
   // Generate color selection cases
@@ -4718,6 +4810,16 @@ import com.bild.designsystem.${brand}.semantic.${brandPascal}TypographyExpanded`
         }`;
   }).join('\n');
 
+  // Generate density spacing selection cases (Default, Dense, Spacious)
+  const densityCases = CONTENT_BRANDS.map(brand => {
+    const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
+    return `        ContentBrand.${brandPascal} -> when (density) {
+            Density.Default -> ${brandPascal}DensityDefault
+            Density.Dense -> ${brandPascal}DensityDense
+            Density.Spacious -> ${brandPascal}DensitySpacious
+        }`;
+  }).join('\n');
+
   let output = generateFileHeader({
     fileName: 'DesignSystemTheme.kt',
     commentStyle: 'block',
@@ -4742,6 +4844,9 @@ ${sizingImports}
 
 // Typography imports (ContentBrand axis)
 ${typographyImports}
+
+// Density imports (ContentBrand axis)
+${densityImports}
 
 // ══════════════════════════════════════════════════════════════════════════════
 // COMPOSITION LOCALS
@@ -4781,6 +4886,12 @@ internal val LocalWindowSizeClass = staticCompositionLocalOf { WindowSizeClass.C
  * CompositionLocal for current density
  */
 internal val LocalDensity = staticCompositionLocalOf { Density.Default }
+
+/**
+ * CompositionLocal for current density spacing scheme
+ * Type: DesignDensityScheme (unified interface)
+ */
+internal val LocalDesignDensitySpacing = staticCompositionLocalOf<DesignDensityScheme> { BildDensityDefault }
 
 /**
  * CompositionLocal for dark theme state
@@ -4860,11 +4971,17 @@ ${typographyCases}
     // Effects are brand-independent, only depend on light/dark mode
     val effects: DesignEffectsScheme = if (darkTheme) EffectsDark else EffectsLight
 
+    // Density spacing (based on ContentBrand and Density)
+    val densitySpacing: DesignDensityScheme = when (contentBrand) {
+${densityCases}
+    }
+
     CompositionLocalProvider(
         LocalDesignColors provides colors,
         LocalDesignSizing provides sizing,
         LocalDesignTypography provides typography,
         LocalDesignEffects provides effects,
+        LocalDesignDensitySpacing provides densitySpacing,
         LocalWindowSizeClass provides sizeClass,
         LocalDensity provides density,
         LocalIsDarkTheme provides darkTheme,
@@ -4935,6 +5052,15 @@ object DesignSystemTheme {
         @Composable
         @ReadOnlyComposable
         get() = LocalDesignEffects.current
+
+    /**
+     * Current density spacing scheme (based on ContentBrand and Density)
+     * Provides semantic density tokens for spacing adjustments
+     */
+    val densitySpacing: DesignDensityScheme
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalDesignDensitySpacing.current
 
     /**
      * Current window size class
@@ -5729,6 +5855,25 @@ public extension View {
   }
   const typographyPropertyDeclarations = typographyProperties.map(prop => `    var ${prop}: TextStyle { get }`).join('\n');
 
+  // Dynamically read density properties from generated iOS files
+  const bildDensityPath = path.join(DIST_DIR, 'ios', 'brands', 'bild', 'density', 'DensityDefault.swift');
+  let densityProperties = [];
+  if (fs.existsSync(bildDensityPath)) {
+    const content = fs.readFileSync(bildDensityPath, 'utf8');
+    // Extract all var declarations with CGFloat type
+    const propsMatch = content.matchAll(/^\s*var\s+(\w+):\s*CGFloat\s*\{\s*get\s*\}/gm);
+    for (const match of propsMatch) {
+      densityProperties.push(match[1]);
+    }
+  }
+  if (densityProperties.length === 0) {
+    densityProperties = [
+      'densityStackSpaceConstXs', 'densityStackSpaceConstSm', 'densityStackSpaceConstMd', 'densityStackSpaceConstLg',
+      'densityXsStackSpaceRespSm', 'densityXsStackSpaceRespMd', 'densityXsStackSpaceRespLg'
+    ];
+  }
+  const densityPropertyDeclarations = densityProperties.map(prop => `    var ${prop}: CGFloat { get }`).join('\n');
+
   const designSystemThemeContent = generateFileHeader({
     fileName: 'DesignSystemTheme.swift',
     commentStyle: 'line',
@@ -5758,6 +5903,12 @@ ${effectsPropertyDeclarations}
 /// Unified typography scheme protocol for all content brands
 public protocol DesignTypographyScheme: Sendable {
 ${typographyPropertyDeclarations}
+}
+
+/// Unified density scheme protocol for all content brands
+/// Semantic density tokens (Global/StackSpace) that vary by density mode
+public protocol DesignDensityScheme: Sendable {
+${densityPropertyDeclarations}
 }
 
 // MARK: - Dual-Axis Theme Provider
@@ -5862,6 +6013,32 @@ public final class DesignSystemTheme: @unchecked Sendable {
             return sizeClass == .compact ? SportbildTypographyCompact.shared : SportbildTypographyRegular.shared
         case .advertorial:
             return sizeClass == .compact ? AdvertorialTypographyCompact.shared : AdvertorialTypographyRegular.shared
+        }
+    }
+
+    // MARK: - Density Spacing Access (based on contentBrand and density)
+
+    /// Current density spacing scheme based on contentBrand and density
+    public var densitySpacing: any DesignDensityScheme {
+        switch contentBrand {
+        case .bild:
+            switch density {
+            case .default: return BildDensityDefault.shared
+            case .dense: return BildDensityDense.shared
+            case .spacious: return BildDensitySpacious.shared
+            }
+        case .sportbild:
+            switch density {
+            case .default: return SportbildDensityDefault.shared
+            case .dense: return SportbildDensityDense.shared
+            case .spacious: return SportbildDensitySpacious.shared
+            }
+        case .advertorial:
+            switch density {
+            case .default: return AdvertorialDensityDefault.shared
+            case .dense: return AdvertorialDensityDense.shared
+            case .spacious: return AdvertorialDensitySpacious.shared
+            }
         }
     }
 }
