@@ -61,6 +61,41 @@ function isComponentToken(tokenPath) {
 }
 
 /**
+ * Checks if a token path represents a semantic (Global) density token
+ */
+function isSemanticDensityToken(tokenPath) {
+  return tokenPath.startsWith('Global/');
+}
+
+/**
+ * Checks if a token path represents a constant density token
+ * These tokens only depend on density mode, not breakpoint
+ */
+function isConstantDensityToken(tokenPath) {
+  return tokenPath.includes('/Constant/');
+}
+
+/**
+ * Checks if a token path represents a responsive density token
+ * These tokens depend on both density mode AND breakpoint
+ */
+function isResponsiveDensityToken(tokenPath) {
+  return tokenPath.includes('/Responsive/');
+}
+
+/**
+ * Extracts breakpoint from responsive density token path
+ * Example: "Global/StackSpace/Responsive/Lg/densityStackSpaceRespSm" → "lg"
+ */
+function getResponsiveDensityBreakpoint(tokenPath) {
+  const match = tokenPath.match(/\/Responsive\/(Xs|Sm|Md|Lg)\//i);
+  if (match) {
+    return match[1].toLowerCase();
+  }
+  return null;
+}
+
+/**
  * Extracts component name from token path
  * Example: "Component/Button/Primary/buttonPrimaryBgColor" → "Button"
  */
