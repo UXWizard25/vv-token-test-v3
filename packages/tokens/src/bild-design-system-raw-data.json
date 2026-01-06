@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2026-01-06T10:46:53.769Z",
+  "lastModified": "2026-01-06T11:54:15.221Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "variables refactor",
   "collections": [
@@ -9022,7 +9022,7 @@
         },
         {
           "id": "VariableID:21991:111337",
-          "name": "Global/StackSpace/Responsive/Xs/densityStackSpaceRespSm",
+          "name": "Global/StackSpace/Responsive/Xs/densityXsStackSpaceRespSm",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9045,7 +9045,7 @@
         },
         {
           "id": "VariableID:21991:111338",
-          "name": "Global/StackSpace/Responsive/Xs/densityStackSpaceRespMd",
+          "name": "Global/StackSpace/Responsive/Xs/densityXsStackSpaceRespMd",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9068,7 +9068,7 @@
         },
         {
           "id": "VariableID:21991:111339",
-          "name": "Global/StackSpace/Responsive/Xs/densityStackSpaceRespLg",
+          "name": "Global/StackSpace/Responsive/Xs/densityXsStackSpaceRespLg",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9091,7 +9091,7 @@
         },
         {
           "id": "VariableID:21991:111340",
-          "name": "Global/StackSpace/Responsive/Xs/densityStackSpaceRespXl",
+          "name": "Global/StackSpace/Responsive/Xs/densityXsStackSpaceRespXl",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9114,7 +9114,7 @@
         },
         {
           "id": "VariableID:21991:111341",
-          "name": "Global/StackSpace/Responsive/Xs/densityStackSpaceResp2Xl",
+          "name": "Global/StackSpace/Responsive/Xs/densityXsStackSpaceResp2Xl",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9137,7 +9137,7 @@
         },
         {
           "id": "VariableID:21991:111347",
-          "name": "Global/StackSpace/Responsive/Sm/densityStackSpaceRespSm",
+          "name": "Global/StackSpace/Responsive/Sm/densitySmStackSpaceRespSm",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9160,7 +9160,7 @@
         },
         {
           "id": "VariableID:21991:111348",
-          "name": "Global/StackSpace/Responsive/Sm/densityStackSpaceRespMd",
+          "name": "Global/StackSpace/Responsive/Sm/densitySmStackSpaceRespMd",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9183,7 +9183,7 @@
         },
         {
           "id": "VariableID:21991:111349",
-          "name": "Global/StackSpace/Responsive/Sm/densityStackSpaceRespLg",
+          "name": "Global/StackSpace/Responsive/Sm/densitySmStackSpaceRespLg",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9206,7 +9206,7 @@
         },
         {
           "id": "VariableID:21991:111350",
-          "name": "Global/StackSpace/Responsive/Sm/densityStackSpaceRespXl",
+          "name": "Global/StackSpace/Responsive/Sm/densitySmStackSpaceRespXl",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9229,7 +9229,7 @@
         },
         {
           "id": "VariableID:21991:111351",
-          "name": "Global/StackSpace/Responsive/Sm/densityStackSpaceResp2Xl",
+          "name": "Global/StackSpace/Responsive/Sm/densitySmStackSpaceResp2Xl",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9252,7 +9252,7 @@
         },
         {
           "id": "VariableID:21991:111352",
-          "name": "Global/StackSpace/Responsive/Md/densityStackSpaceRespSm",
+          "name": "Global/StackSpace/Responsive/Md/densityMdStackSpaceRespSm",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9266,7 +9266,7 @@
         },
         {
           "id": "VariableID:21991:111353",
-          "name": "Global/StackSpace/Responsive/Md/densityStackSpaceRespMd",
+          "name": "Global/StackSpace/Responsive/Md/densityMdStackSpaceRespMd",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9280,7 +9280,7 @@
         },
         {
           "id": "VariableID:21991:111354",
-          "name": "Global/StackSpace/Responsive/Md/densityStackSpaceRespLg",
+          "name": "Global/StackSpace/Responsive/Md/densityMdStackSpaceRespLg",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9294,7 +9294,7 @@
         },
         {
           "id": "VariableID:21991:111355",
-          "name": "Global/StackSpace/Responsive/Md/densityStackSpaceRespXl",
+          "name": "Global/StackSpace/Responsive/Md/densityMdStackSpaceRespXl",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9308,7 +9308,7 @@
         },
         {
           "id": "VariableID:21991:111356",
-          "name": "Global/StackSpace/Responsive/Md/densityStackSpaceResp2Xl",
+          "name": "Global/StackSpace/Responsive/Md/densityMdStackSpaceResp2Xl",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9322,7 +9322,7 @@
         },
         {
           "id": "VariableID:21991:111357",
-          "name": "Global/StackSpace/Responsive/Lg/densityStackSpaceRespSm",
+          "name": "Global/StackSpace/Responsive/Lg/densityLgStackSpaceRespSm",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9336,7 +9336,7 @@
         },
         {
           "id": "VariableID:21991:111358",
-          "name": "Global/StackSpace/Responsive/Lg/densityStackSpaceRespMd",
+          "name": "Global/StackSpace/Responsive/Lg/densityLgStackSpaceRespMd",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9350,7 +9350,7 @@
         },
         {
           "id": "VariableID:21991:111359",
-          "name": "Global/StackSpace/Responsive/Lg/densityStackSpaceRespLg",
+          "name": "Global/StackSpace/Responsive/Lg/densityLgStackSpaceRespLg",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9364,7 +9364,7 @@
         },
         {
           "id": "VariableID:21991:111360",
-          "name": "Global/StackSpace/Responsive/Lg/densityStackSpaceRespXl",
+          "name": "Global/StackSpace/Responsive/Lg/densityLgStackSpaceRespXl",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
@@ -9378,7 +9378,7 @@
         },
         {
           "id": "VariableID:21991:111361",
-          "name": "Global/StackSpace/Responsive/Lg/densityStackSpaceResp2Xl",
+          "name": "Global/StackSpace/Responsive/Lg/densityLgStackSpaceResp2Xl",
           "description": "",
           "resolvedType": "FLOAT",
           "valuesByMode": {
