@@ -72,17 +72,25 @@ This pipeline processes the multi-layer, multi-brand BILD Design System architec
 Tokens use `var()` references to maintain the alias chain from Figma:
 
 ```css
-/* Component → Semantic → Primitive */
+/* Color: Component → Semantic → Primitive */
 --button-primary-bg-color: var(--core-color-primary, #DD0000);
                                 ↓
 --core-color-primary: var(--bildred, #DD0000);
                            ↓
 --bildred: #DD0000;
+
+/* Spacing: BreakpointMode → Density → Primitive */
+--stack-space-resp-md: var(--density-xs-stack-space-resp-md);
+                                ↓
+--density-xs-stack-space-resp-md: var(--space-1-p-5-x, 12px);
+                                       ↓
+--space-1-p-5-x: 12px;
 ```
 
 This enables:
 - **Theme switching** without recompiling (change primitives = change all)
 - **Brand switching** via data attributes
+- **Density switching** via `data-density` attribute (default/dense/spacious)
 - **Fallback values** for robustness
 
 ### Pipeline Flow

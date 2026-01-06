@@ -16,6 +16,7 @@
 - [📦 Bundle Options](#-bundle-options)
 - [🎨 Token Categories](#-token-categories)
 - [📱 Responsive Tokens](#-responsive-tokens)
+- [🎚️ Density Tokens](#️-density-tokens)
 - [🧩 Component Tokens](#-component-tokens)
 - [✍️ Typography & Effects](#️-typography--effects)
 - [💡 Usage Examples](#-usage-examples)
@@ -136,7 +137,7 @@ dist/css/
 │
 ├── bild/                      # Modular files
 │   ├── theme.css             # Semantic colors + Effects (light/dark)
-│   ├── tokens.css            # Responsive breakpoints + Typography
+│   ├── tokens.css            # Breakpoints + Typography + Density
 │   └── components/           # Component-specific tokens
 │       ├── button.css
 │       ├── article.css
@@ -376,6 +377,78 @@ Tokens only appear in media queries when values change:
 }
 
 /* lg inherits from md (no redundant declaration) */
+```
+
+---
+
+## 🎚️ Density Tokens
+
+Density tokens control spacing intensity across three modes: `default`, `dense`, and `spacious`.
+
+### Semantic Density (tokens.css)
+
+Semantic density tokens are included in `tokens.css` and define responsive spacing values:
+
+```css
+/* Constant spacing (no breakpoint dependency) */
+[data-content-brand="bild"][data-density="default"] {
+  --density-stack-space-const-3-xs: var(--space-0-p-25-x, 2px);
+  --density-stack-space-const-sm: var(--space-1-x, 8px);
+  --density-stack-space-const-lg: var(--space-2-x, 16px);
+}
+
+/* Responsive spacing (breakpoint × density) */
+[data-content-brand="bild"][data-density="default"] {
+  --density-xs-stack-space-resp-sm: var(--space-1-x, 8px);
+  --density-xs-stack-space-resp-md: var(--space-1-p-5-x, 12px);
+}
+
+@media (min-width: 600px) {
+  [data-content-brand="bild"][data-density="default"] {
+    --density-md-stack-space-resp-sm: var(--space-1-p-5-x, 12px);
+    --density-md-stack-space-resp-md: var(--space-2-x, 16px);
+  }
+}
+```
+
+### Alias Chain: Breakpoint → Density → Primitive
+
+Responsive breakpoint tokens reference density tokens, which in turn reference primitives:
+
+```css
+/* BreakpointMode → Density → Primitive */
+--stack-space-resp-md: var(--density-xs-stack-space-resp-md);
+                                ↓
+--density-xs-stack-space-resp-md: var(--space-1-p-5-x, 12px);
+                                       ↓
+--space-1-p-5-x: 12px;
+```
+
+This three-level chain enables:
+- **Density switching** via `data-density` attribute without recompilation
+- **Breakpoint switching** via native `@media` queries
+- **Fallback values** for robustness
+
+### Component Density Tokens
+
+Component-specific density tokens (e.g., Button, InputField) are in component files:
+
+```css
+/* Component density tokens */
+[data-content-brand="bild"][data-density="default"] {
+  --density-button-inline-space: var(--space-2-p-5-x, 20px);
+  --density-button-stack-space: var(--space-1-x, 8px);
+}
+
+[data-content-brand="bild"][data-density="dense"] {
+  --density-button-inline-space: var(--space-2-x, 16px);
+  --density-button-stack-space: var(--space-0-p-75-x, 6px);
+}
+
+[data-content-brand="bild"][data-density="spacious"] {
+  --density-button-inline-space: var(--space-3-x, 24px);
+  --density-button-stack-space: var(--space-1-p-5-x, 12px);
+}
 ```
 
 ---

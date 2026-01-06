@@ -184,10 +184,21 @@ SpacePrimitive ─┐                                                        │
                 │                                                        │      etc.)
 SizePrimitive  ─┼────────→ BrandTokenMapping ──┬────→ BreakpointMode ───┘
                 │          (BILD | SportBILD   │      (xs|sm|md|lg)
-FontPrimitive ──┘           | Advertorial)     │
-                                               │      ┌─ grid-space-*
-                           Density ────────────┘      ├─ font-sizes
-                           (default|dense|spacious)   └─ Typography
+FontPrimitive ──┘           | Advertorial)     │            │
+                                               │            │ aliases to
+                           Density ────────────┘            ▼
+                           (default|dense|spacious)   ┌─ stack-space-*
+                                  │                   ├─ grid-space-*
+                                  └──────────────────→├─ font-sizes
+                                                      └─ Typography
+
+Alias Chain (CSS Output):
+─────────────────────────────────────────────────────────────────────────────────
+BreakpointMode tokens reference Density tokens which reference Primitives:
+
+  --stack-space-resp-md ──→ var(--density-xs-stack-space-resp-md)
+                                      │
+                                      └──→ var(--space-1-p-5-x, 12px)
 ```
 
 ### Mode Dependencies (CSS Output - Dual-Axis)
@@ -197,11 +208,37 @@ FontPrimitive ──┘           | Advertorial)     │
 | Primitives | – | `:root { }` |
 | Semantic Colors | BrandColorMapping + ColorMode | `[data-color-brand][data-theme] { }` |
 | Semantic Sizing | BrandTokenMapping + Breakpoint | `[data-content-brand] { } @media (...) { }` |
-| Density | Density mode | `[data-content-brand][data-density] { }` |
+| Semantic Density | Density mode | `[data-content-brand][data-density] { }` |
 | Effects | BrandColorMapping + ColorMode | `[data-color-brand][data-theme] .className { }` |
 | Typography | BrandTokenMapping + Breakpoint | `[data-content-brand] .className { }` |
 | Component Colors | ColorMode | `[data-color-brand][data-theme] { }` |
+| Component Density | Density mode | `[data-content-brand][data-density] { }` |
 | Component Sizing | Breakpoint + Density | `[data-content-brand] { }` |
+
+### Density Token Architecture
+
+Density tokens exist at two levels:
+
+**1. Semantic Density (Global/StackSpace):**
+- Constant tokens: `--density-stack-space-const-{size}` (don't change with breakpoint)
+- Responsive tokens: `--density-{breakpoint}-stack-space-resp-{size}` (per breakpoint values)
+
+**2. Component Density (Button, InputField, IconButton):**
+- `--density-button-*`, `--density-input-field-*`, `--density-icon-button-*`
+
+**Alias Chain:**
+```
+BreakpointMode                    Density                         Primitive
+────────────────────────────────────────────────────────────────────────────
+--stack-space-resp-md ──────────► --density-xs-stack-space-resp-md ──► --space-1-p-5-x
+     [data-content-brand]              [data-density="default"]           :root
+     @media (min-width)
+```
+
+This architecture allows:
+- Density modes (default/dense/spacious) to control spacing values
+- BreakpointMode to reference density tokens with proper `var()` fallbacks
+- @media queries to select the correct density token per breakpoint
 
 ---
 
@@ -954,8 +991,11 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 | Change token values | In Figma (Source of Truth) |
 | Modify output format | `style-dictionary.config.js` |
 | Change alias resolution | `preprocess.js` |
+| Modify density alias endpoints | `preprocess.js` → `getDeepAliasInfo()` with `acceptDensityEndpoint` option |
+| Add semantic density to bundle | `bundles.js` → `buildBrandTokens()` |
 | Add new brand | `preprocess.js`, `build.js`, `bundles.js` |
 | Add new breakpoint | `preprocess.js`, `build.js` |
+| Add new density mode | `preprocess.js`, `build.js`, `bundles.js` |
 | Enable/disable platform | `build.js` (toggle flags) |
 | Modify component token pattern | `style-dictionary.config.js` |
 | Change JS type mapping | `build.js` → `flattenTokens()` function |
@@ -1674,3 +1714,6 @@ npm run build:docs
 | React/Vue components not styled | Missing token CSS | Import `@marioschmidt/design-system-tokens/css/bundles/bild.css` |
 | Vue props not working | Using camelCase in template | Use kebab-case in templates: `card-title` not `cardTitle` |
 | Type definitions missing | Stencil build incomplete | Ensure `npm run build:components` completed successfully |
+| Density tokens not in bundle | `bundles.js` not reading density dir | Check `buildBrandTokens()` includes density directory |
+| BreakpointMode aliases resolve to Primitive | `acceptDensityEndpoint` not set | Check `preprocess.js` → `getDeepAliasInfo()` call for BreakpointMode |
+| Density mode not switching | Missing `data-density` attribute | Add `data-density="default\|dense\|spacious"` to container |
