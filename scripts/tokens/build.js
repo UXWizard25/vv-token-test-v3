@@ -3750,6 +3750,14 @@ async function generateComposeThemeProviders() {
     fs.writeFileSync(designDensitySchemeFile, designDensitySchemeContent, 'utf8');
     console.log('     ✅ shared/DesignDensityScheme.kt (unified interface)');
 
+    // Shared Density objects (brand-independent, like Effects)
+    const densityObjectsAndroid = generateSharedDensityObjectsForAndroid();
+    for (const [mode, content] of Object.entries(densityObjectsAndroid)) {
+      const modePascal = mode.charAt(0).toUpperCase() + mode.slice(1);
+      fs.writeFileSync(path.join(sharedDir, `Density${modePascal}.kt`), content, 'utf8');
+    }
+    console.log('     ✅ shared/DensityDefault.kt, DensityDense.kt, DensitySpacious.kt (brand-independent)');
+
     // DesignSystemTheme.kt (central theme provider with Dual-Axis)
     const designSystemThemeContent = generateDesignSystemThemeFile();
     const designSystemThemeFile = path.join(sharedDir, 'DesignSystemTheme.kt');
@@ -4749,6 +4757,115 @@ interface DesignDensityScheme {
 }
 
 /**
+ * Generates shared Density objects for Android (Kotlin)
+ * Creates: DensityDefault.kt, DensityDense.kt, DensitySpacious.kt in shared/
+ * Density is brand-independent (same values across all brands)
+ */
+function generateSharedDensityObjectsForAndroid() {
+  const densityModes = ['default', 'dense', 'spacious'];
+  const files = {};
+
+  for (const mode of densityModes) {
+    const modePascal = mode.charAt(0).toUpperCase() + mode.slice(1);
+    const tokenFile = path.join(TOKENS_DIR, 'brands', 'bild', 'density', `density-${mode}.json`);
+
+    if (!fs.existsSync(tokenFile)) {
+      console.warn(`     ⚠️ Token file not found: ${tokenFile}`);
+      continue;
+    }
+
+    const tokenData = JSON.parse(fs.readFileSync(tokenFile, 'utf8'));
+    const tokens = flattenTokens(tokenData);
+
+    let output = generateFileHeader({
+      fileName: `Density${modePascal}.kt`,
+      commentStyle: 'block',
+      platform: 'android',
+      context: `Shared Density${modePascal} Object\nBrand-independent semantic density tokens`
+    });
+
+    output += `
+package com.bild.designsystem.shared
+
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+
+/**
+ * ${modePascal} density spacing tokens (brand-independent)
+ *
+ * Semantic density tokens for spacing adjustments.
+ * Same values across all brands (BILD, SportBILD, Advertorial).
+ */
+object Density${modePascal} : DesignDensityScheme {
+`;
+
+    // Generate properties (strip 'px' suffix for Kotlin)
+    for (const [name, value] of Object.entries(tokens)) {
+      const numValue = typeof value === 'string' ? value.replace('px', '') : value;
+      output += `    override val ${name}: Dp = ${numValue}.dp\n`;
+    }
+
+    output += `}\n`;
+    files[mode] = output;
+  }
+
+  return files;
+}
+
+/**
+ * Generates shared Density objects for iOS (Swift)
+ * Creates: DensityDefault.swift, DensityDense.swift, DensitySpacious.swift in shared/
+ * Density is brand-independent (same values across all brands)
+ */
+function generateSharedDensityObjectsForIOS() {
+  const densityModes = ['default', 'dense', 'spacious'];
+  const files = {};
+
+  for (const mode of densityModes) {
+    const modePascal = mode.charAt(0).toUpperCase() + mode.slice(1);
+    const tokenFile = path.join(TOKENS_DIR, 'brands', 'bild', 'density', `density-${mode}.json`);
+
+    if (!fs.existsSync(tokenFile)) {
+      console.warn(`     ⚠️ Token file not found: ${tokenFile}`);
+      continue;
+    }
+
+    const tokenData = JSON.parse(fs.readFileSync(tokenFile, 'utf8'));
+    const tokens = flattenTokens(tokenData);
+
+    let output = generateFileHeader({
+      fileName: `Density${modePascal}.swift`,
+      commentStyle: 'line',
+      platform: 'ios',
+      context: `Shared Density${modePascal} Struct\nBrand-independent semantic density tokens`
+    });
+
+    output += `import SwiftUI
+
+/// ${modePascal} density spacing tokens (brand-independent)
+///
+/// Semantic density tokens for spacing adjustments.
+/// Same values across all brands (BILD, SportBILD, Advertorial).
+public struct Density${modePascal}: DesignDensityScheme {
+    public static let shared = Density${modePascal}()
+    private init() {}
+
+`;
+
+    // Generate properties (strip 'px' suffix for Swift)
+    for (const [name, value] of Object.entries(tokens)) {
+      const numValue = typeof value === 'string' ? value.replace('px', '') : value;
+      output += `    public let ${name}: CGFloat = ${numValue}\n`;
+    }
+
+    output += `}\n`;
+    files[mode] = output;
+  }
+
+  return files;
+}
+
+/**
  * Generates the central DesignSystemTheme file with Dual-Axis Architecture
  * Creates: dist/android/compose/shared/DesignSystemTheme.kt
  */
@@ -4776,13 +4893,11 @@ import com.bild.designsystem.${brand}.semantic.${brandPascal}TypographyMedium
 import com.bild.designsystem.${brand}.semantic.${brandPascal}TypographyExpanded`;
   }).join('\n');
 
-  // Generate density imports for all content brands (Default, Dense, Spacious)
-  const densityImports = CONTENT_BRANDS.map(brand => {
-    const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-    return `import com.bild.designsystem.${brand}.density.${brandPascal}DensityDefault
-import com.bild.designsystem.${brand}.density.${brandPascal}DensityDense
-import com.bild.designsystem.${brand}.density.${brandPascal}DensitySpacious`;
-  }).join('\n');
+  // Density imports (brand-independent, like Effects)
+  const densityImports = `// Density is brand-independent (same values across all brands)
+import com.bild.designsystem.shared.DensityDefault
+import com.bild.designsystem.shared.DensityDense
+import com.bild.designsystem.shared.DensitySpacious`;
 
   // Generate color selection cases
   const colorCases = COLOR_BRANDS.map(brand => {
@@ -4810,15 +4925,13 @@ import com.bild.designsystem.${brand}.density.${brandPascal}DensitySpacious`;
         }`;
   }).join('\n');
 
-  // Generate density spacing selection cases (Default, Dense, Spacious)
-  const densityCases = CONTENT_BRANDS.map(brand => {
-    const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-    return `        ContentBrand.${brandPascal} -> when (density) {
-            Density.Default -> ${brandPascal}DensityDefault
-            Density.Dense -> ${brandPascal}DensityDense
-            Density.Spacious -> ${brandPascal}DensitySpacious
-        }`;
-  }).join('\n');
+  // Density spacing is brand-independent (like Effects)
+  // Simple when on density mode only, no ContentBrand needed
+  const densitySelection = `when (density) {
+        Density.Default -> DensityDefault
+        Density.Dense -> DensityDense
+        Density.Spacious -> DensitySpacious
+    }`;
 
   let output = generateFileHeader({
     fileName: 'DesignSystemTheme.kt',
@@ -4891,7 +5004,7 @@ internal val LocalDensity = staticCompositionLocalOf { Density.Default }
  * CompositionLocal for current density spacing scheme
  * Type: DesignDensityScheme (unified interface)
  */
-internal val LocalDesignDensitySpacing = staticCompositionLocalOf<DesignDensityScheme> { BildDensityDefault }
+internal val LocalDesignDensitySpacing = staticCompositionLocalOf<DesignDensityScheme> { DensityDefault }
 
 /**
  * CompositionLocal for dark theme state
@@ -4971,10 +5084,8 @@ ${typographyCases}
     // Effects are brand-independent, only depend on light/dark mode
     val effects: DesignEffectsScheme = if (darkTheme) EffectsDark else EffectsLight
 
-    // Density spacing (based on ContentBrand and Density)
-    val densitySpacing: DesignDensityScheme = when (contentBrand) {
-${densityCases}
-    }
+    // Density spacing is brand-independent (like Effects), only depends on density mode
+    val densitySpacing: DesignDensityScheme = ${densitySelection}
 
     CompositionLocalProvider(
         LocalDesignColors provides colors,
@@ -5054,7 +5165,7 @@ object DesignSystemTheme {
         get() = LocalDesignEffects.current
 
     /**
-     * Current density spacing scheme (based on ContentBrand and Density)
+     * Current density spacing scheme (brand-independent, based on Density only)
      * Provides semantic density tokens for spacing adjustments
      */
     val densitySpacing: DesignDensityScheme
@@ -6016,29 +6127,14 @@ public final class DesignSystemTheme: @unchecked Sendable {
         }
     }
 
-    // MARK: - Density Spacing Access (based on contentBrand and density)
+    // MARK: - Density Spacing Access (brand-independent)
 
-    /// Current density spacing scheme based on contentBrand and density
+    /// Current density spacing scheme (brand-independent, like Effects)
     public var densitySpacing: any DesignDensityScheme {
-        switch contentBrand {
-        case .bild:
-            switch density {
-            case .default: return BildDensityDefault.shared
-            case .dense: return BildDensityDense.shared
-            case .spacious: return BildDensitySpacious.shared
-            }
-        case .sportbild:
-            switch density {
-            case .default: return SportbildDensityDefault.shared
-            case .dense: return SportbildDensityDense.shared
-            case .spacious: return SportbildDensitySpacious.shared
-            }
-        case .advertorial:
-            switch density {
-            case .default: return AdvertorialDensityDefault.shared
-            case .dense: return AdvertorialDensityDense.shared
-            case .spacious: return AdvertorialDensitySpacious.shared
-            }
+        switch density {
+        case .default: return DensityDefault.shared
+        case .dense: return DensityDense.shared
+        case .spacious: return DensitySpacious.shared
         }
     }
 }
@@ -6084,12 +6180,22 @@ public extension View {
     }
 }
 `;
+
+  // Shared Density objects for iOS (brand-independent, like Effects)
+  const densityObjectsIOS = generateSharedDensityObjectsForIOS();
+  for (const [mode, content] of Object.entries(densityObjectsIOS)) {
+    const modePascal = mode.charAt(0).toUpperCase() + mode.slice(1);
+    fs.writeFileSync(path.join(sharedDir, `Density${modePascal}.swift`), content, 'utf8');
+    successful++;
+  }
+  console.log('     ✅ shared/DensityDefault.swift, DensityDense.swift, DensitySpacious.swift (brand-independent)');
+
   fs.writeFileSync(path.join(sharedDir, 'DesignSystemTheme.swift'), designSystemThemeContent, 'utf8');
   console.log('     ✅ shared/DesignSystemTheme.swift');
   successful++;
 
   console.log(`  📊 Generated ${successful} shared SwiftUI files\n`);
-  return { total: 5, successful };
+  return { total: 8, successful };  // Updated count: 5 + 3 density files
 }
 
 /**
