@@ -89,6 +89,219 @@ function getDocumentationUrl(platform) {
 }
 
 /**
+ * Parses density tokens from generated files and creates resolver metadata.
+ * This enables dynamic, scalable density token resolution without hardcoding.
+ *
+ * Token patterns:
+ * - Constant: density{Category}Const{Size} (e.g., densityStackSpaceConst3xs)
+ * - Responsive: density{Breakpoint}{Category}Resp{Size} (e.g., densitySmStackSpaceRespMd)
+ *
+ * @param {string} platform - 'android' or 'ios'
+ * @returns {Object} Parsed density tokens with resolver metadata
+ */
+function parseDensityTokens(platform = 'android') {
+  const densityDir = path.join(DIST_DIR, platform === 'android' ? 'android/compose/shared' : 'ios/shared');
+  const densityFile = platform === 'android' ? 'DensityDefault.kt' : 'DensityDefault.swift';
+  const densityPath = path.join(densityDir, densityFile);
+
+  if (!fs.existsSync(densityPath)) {
+    console.warn(`Density file not found: ${densityPath}`);
+    return { constant: [], responsive: [], categories: new Set() };
+  }
+
+  const content = fs.readFileSync(densityPath, 'utf8');
+
+  // Extract token names based on platform
+  const tokenRegex = platform === 'android'
+    ? /override val (density\w+):/g
+    : /public let (density\w+):/g;
+
+  const tokens = [];
+  let match;
+  while ((match = tokenRegex.exec(content)) !== null) {
+    tokens.push(match[1]);
+  }
+
+  // Parse tokens into structured data
+  const constant = [];    // { tokenName, category, size, propertyName }
+  const responsive = [];  // { tokenName, breakpoint, category, size, propertyName }
+  const categories = new Set();
+
+  // Pattern for constant tokens: density{Category}Const{Size}
+  const constPattern = /^density(\w+?)Const(\w+)$/;
+  // Pattern for responsive tokens: density{Breakpoint}{Category}Resp{Size}
+  const respPattern = /^density(Xs|Sm|Md|Lg)(\w+?)Resp(\w+)$/;
+
+  for (const token of tokens) {
+    let match;
+
+    if ((match = constPattern.exec(token))) {
+      const category = match[1]; // e.g., "StackSpace"
+      const size = match[2];     // e.g., "3xs", "Md"
+      categories.add(category);
+      constant.push({
+        tokenName: token,
+        category,
+        size,
+        // Property name for consumer API: stackSpaceConst3xs
+        propertyName: category.charAt(0).toLowerCase() + category.slice(1) + 'Const' + size
+      });
+    } else if ((match = respPattern.exec(token))) {
+      const breakpoint = match[1]; // e.g., "Sm", "Md", "Lg"
+      const category = match[2];   // e.g., "StackSpace"
+      const size = match[3];       // e.g., "Sm", "Md"
+      categories.add(category);
+      responsive.push({
+        tokenName: token,
+        breakpoint,
+        category,
+        size,
+        // Property name for consumer API: stackSpaceRespMd
+        propertyName: category.charAt(0).toLowerCase() + category.slice(1) + 'Resp' + size
+      });
+    }
+  }
+
+  return { constant, responsive, categories: Array.from(categories) };
+}
+
+/**
+ * Generates dynamic density resolver code for Android Compose.
+ * Creates properties that resolve density tokens based on WindowSizeClass.
+ *
+ * @returns {string} Kotlin code for density resolvers
+ */
+function generateAndroidDensityResolvers() {
+  const { constant, responsive } = parseDensityTokens('android');
+
+  if (constant.length === 0 && responsive.length === 0) {
+    return '    // No density tokens found - skipping resolver generation';
+  }
+
+  let output = `    // ══════════════════════════════════════════════════════════════════════════════
+    // DYNAMIC DENSITY SPACING (Auto-generated from ${constant.length + responsive.length} tokens)
+    // ══════════════════════════════════════════════════════════════════════════════
+    //
+    // These resolvers are dynamically generated based on density token patterns.
+    // Adding new tokens in Figma will automatically create new resolvers.
+    //
+    // Constant tokens: Same value regardless of screen size
+    // Responsive tokens: Automatically resolved based on WindowSizeClass
+    //   - Compact → SM breakpoint tokens
+    //   - Medium → MD breakpoint tokens
+    //   - Expanded → LG breakpoint tokens
+
+`;
+
+  // Group responsive tokens by category+size to generate unified resolvers
+  const respByProperty = new Map();
+  for (const token of responsive) {
+    if (!respByProperty.has(token.propertyName)) {
+      respByProperty.set(token.propertyName, {});
+    }
+    respByProperty.get(token.propertyName)[token.breakpoint] = token.tokenName;
+  }
+
+  // Generate constant token resolvers
+  if (constant.length > 0) {
+    output += '    // Constant spacing tokens (breakpoint-independent)\n\n';
+    for (const token of constant) {
+      output += `    /** ${token.category} ${token.size} - constant value regardless of screen size */
+    val ${token.propertyName}: Dp
+        @Composable @ReadOnlyComposable get() = densitySpacing.${token.tokenName}
+
+`;
+    }
+  }
+
+  // Generate responsive token resolvers
+  if (respByProperty.size > 0) {
+    output += '    // Responsive spacing tokens (resolved by WindowSizeClass)\n\n';
+    for (const [propertyName, breakpoints] of respByProperty) {
+      // Find a token to extract category info
+      const sampleToken = responsive.find(t => t.propertyName === propertyName);
+
+      output += `    /** ${sampleToken.category} ${sampleToken.size} - automatically resolved for current WindowSizeClass */
+    val ${propertyName}: Dp
+        @Composable @ReadOnlyComposable get() = when (sizeClass) {
+            WindowSizeClass.Compact -> densitySpacing.${breakpoints.Sm || breakpoints.Xs || Object.values(breakpoints)[0]}
+            WindowSizeClass.Medium -> densitySpacing.${breakpoints.Md || breakpoints.Sm || Object.values(breakpoints)[0]}
+            WindowSizeClass.Expanded -> densitySpacing.${breakpoints.Lg || breakpoints.Md || Object.values(breakpoints)[0]}
+        }
+
+`;
+    }
+  }
+
+  return output.trimEnd();
+}
+
+/**
+ * Generates dynamic density resolver code for iOS SwiftUI.
+ * Creates properties that resolve density tokens based on SizeClass.
+ *
+ * @returns {string} Swift code for density resolvers
+ */
+function generateiOSDensityResolvers() {
+  const { constant, responsive } = parseDensityTokens('ios');
+
+  if (constant.length === 0 && responsive.length === 0) {
+    return '    // No density tokens found - skipping resolver generation';
+  }
+
+  let output = `    // MARK: - Dynamic Density Spacing (Auto-generated from ${constant.length + responsive.length} tokens)
+    //
+    // These resolvers are dynamically generated based on density token patterns.
+    // Adding new tokens in Figma will automatically create new resolvers.
+    //
+    // Constant tokens: Same value regardless of screen size
+    // Responsive tokens: Automatically resolved based on SizeClass
+    //   - compact → SM breakpoint tokens
+    //   - regular → LG breakpoint tokens
+
+`;
+
+  // Group responsive tokens by category+size
+  const respByProperty = new Map();
+  for (const token of responsive) {
+    if (!respByProperty.has(token.propertyName)) {
+      respByProperty.set(token.propertyName, {});
+    }
+    respByProperty.get(token.propertyName)[token.breakpoint] = token.tokenName;
+  }
+
+  // Generate constant token resolvers
+  if (constant.length > 0) {
+    output += '    // Constant spacing tokens (breakpoint-independent)\n\n';
+    for (const token of constant) {
+      output += `    /// ${token.category} ${token.size} - constant value regardless of screen size
+    public var ${token.propertyName}: CGFloat { densitySpacing.${token.tokenName} }
+
+`;
+    }
+  }
+
+  // Generate responsive token resolvers
+  if (respByProperty.size > 0) {
+    output += '    // Responsive spacing tokens (resolved by SizeClass)\n\n';
+    for (const [propertyName, breakpoints] of respByProperty) {
+      const sampleToken = responsive.find(t => t.propertyName === propertyName);
+      const smToken = breakpoints.Sm || breakpoints.Xs || Object.values(breakpoints)[0];
+      const lgToken = breakpoints.Lg || breakpoints.Md || Object.values(breakpoints)[0];
+
+      output += `    /// ${sampleToken.category} ${sampleToken.size} - automatically resolved for current SizeClass
+    public var ${propertyName}: CGFloat {
+        sizeClass == .compact ? densitySpacing.${smToken} : densitySpacing.${lgToken}
+    }
+
+`;
+    }
+  }
+
+  return output.trimEnd();
+}
+
+/**
  * Generates a standardized file header for generated token files
  * @param {Object} options - Header options
  * @param {string} options.fileName - Name of the generated file
@@ -5149,82 +5362,7 @@ object DesignSystemTheme {
         @ReadOnlyComposable
         get() = LocalDesignDensitySpacing.current
 
-    // ══════════════════════════════════════════════════════════════════════════════
-    // UNIFIED DENSITY SPACING (All tokens resolved by SizeClass)
-    // ══════════════════════════════════════════════════════════════════════════════
-    //
-    // All density spacing tokens use a consistent API - developers don't need to
-    // know if a token is "constant" or "responsive" internally. Constant tokens
-    // simply have the same value for all breakpoints.
-    //
-    // Usage:
-    //   DesignSystemTheme.stackSpace3xs  // Same value for all screen sizes
-    //   DesignSystemTheme.stackSpaceMd   // Varies by screen size
-    //   DesignSystemTheme.stackSpace2xl  // Varies by screen size
-
-    /** Density spacing 3XS - automatically resolved for current WindowSizeClass */
-    val stackSpace3xs: Dp
-        @Composable @ReadOnlyComposable get() = when (sizeClass) {
-            WindowSizeClass.Compact -> densitySpacing.densityStackSpaceConst3xs
-            WindowSizeClass.Medium -> densitySpacing.densityStackSpaceConst3xs
-            WindowSizeClass.Expanded -> densitySpacing.densityStackSpaceConst3xs
-        }
-
-    /** Density spacing 2XS - automatically resolved for current WindowSizeClass */
-    val stackSpace2xs: Dp
-        @Composable @ReadOnlyComposable get() = when (sizeClass) {
-            WindowSizeClass.Compact -> densitySpacing.densityStackSpaceConst2xs
-            WindowSizeClass.Medium -> densitySpacing.densityStackSpaceConst2xs
-            WindowSizeClass.Expanded -> densitySpacing.densityStackSpaceConst2xs
-        }
-
-    /** Density spacing XS - automatically resolved for current WindowSizeClass */
-    val stackSpaceXs: Dp
-        @Composable @ReadOnlyComposable get() = when (sizeClass) {
-            WindowSizeClass.Compact -> densitySpacing.densityStackSpaceConstXs
-            WindowSizeClass.Medium -> densitySpacing.densityStackSpaceConstXs
-            WindowSizeClass.Expanded -> densitySpacing.densityStackSpaceConstXs
-        }
-
-    /** Density spacing SM - automatically resolved for current WindowSizeClass */
-    val stackSpaceSm: Dp
-        @Composable @ReadOnlyComposable get() = when (sizeClass) {
-            WindowSizeClass.Compact -> densitySpacing.densitySmStackSpaceRespSm
-            WindowSizeClass.Medium -> densitySpacing.densityMdStackSpaceRespSm
-            WindowSizeClass.Expanded -> densitySpacing.densityLgStackSpaceRespSm
-        }
-
-    /** Density spacing MD - automatically resolved for current WindowSizeClass */
-    val stackSpaceMd: Dp
-        @Composable @ReadOnlyComposable get() = when (sizeClass) {
-            WindowSizeClass.Compact -> densitySpacing.densitySmStackSpaceRespMd
-            WindowSizeClass.Medium -> densitySpacing.densityMdStackSpaceRespMd
-            WindowSizeClass.Expanded -> densitySpacing.densityLgStackSpaceRespMd
-        }
-
-    /** Density spacing LG - automatically resolved for current WindowSizeClass */
-    val stackSpaceLg: Dp
-        @Composable @ReadOnlyComposable get() = when (sizeClass) {
-            WindowSizeClass.Compact -> densitySpacing.densitySmStackSpaceRespLg
-            WindowSizeClass.Medium -> densitySpacing.densityMdStackSpaceRespLg
-            WindowSizeClass.Expanded -> densitySpacing.densityLgStackSpaceRespLg
-        }
-
-    /** Density spacing XL - automatically resolved for current WindowSizeClass */
-    val stackSpaceXl: Dp
-        @Composable @ReadOnlyComposable get() = when (sizeClass) {
-            WindowSizeClass.Compact -> densitySpacing.densitySmStackSpaceRespXl
-            WindowSizeClass.Medium -> densitySpacing.densityMdStackSpaceRespXl
-            WindowSizeClass.Expanded -> densitySpacing.densityLgStackSpaceRespXl
-        }
-
-    /** Density spacing 2XL - automatically resolved for current WindowSizeClass */
-    val stackSpace2xl: Dp
-        @Composable @ReadOnlyComposable get() = when (sizeClass) {
-            WindowSizeClass.Compact -> densitySpacing.densitySmStackSpaceResp2xl
-            WindowSizeClass.Medium -> densitySpacing.densityMdStackSpaceResp2xl
-            WindowSizeClass.Expanded -> densitySpacing.densityLgStackSpaceResp2xl
-        }
+${generateAndroidDensityResolvers()}
 
     /**
      * Current window size class
@@ -6199,49 +6337,7 @@ public final class DesignSystemTheme: @unchecked Sendable {
         }
     }
 
-    // MARK: - Unified Density Spacing (All tokens resolved by SizeClass)
-    //
-    // All density spacing tokens use a consistent API - developers don't need to
-    // know if a token is "constant" or "responsive" internally. Constant tokens
-    // simply have the same value for all size classes.
-    //
-    // Usage:
-    //   theme.stackSpace3xs  // Same value for all screen sizes
-    //   theme.stackSpaceMd   // Varies by screen size
-    //   theme.stackSpace2xl  // Varies by screen size
-
-    /// Density spacing 3XS - automatically resolved for current SizeClass
-    public var stackSpace3xs: CGFloat {
-        sizeClass == .compact ? densitySpacing.densityStackSpaceConst3xs : densitySpacing.densityStackSpaceConst3xs
-    }
-    /// Density spacing 2XS - automatically resolved for current SizeClass
-    public var stackSpace2xs: CGFloat {
-        sizeClass == .compact ? densitySpacing.densityStackSpaceConst2xs : densitySpacing.densityStackSpaceConst2xs
-    }
-    /// Density spacing XS - automatically resolved for current SizeClass
-    public var stackSpaceXs: CGFloat {
-        sizeClass == .compact ? densitySpacing.densityStackSpaceConstXs : densitySpacing.densityStackSpaceConstXs
-    }
-    /// Density spacing SM - automatically resolved for current SizeClass
-    public var stackSpaceSm: CGFloat {
-        sizeClass == .compact ? densitySpacing.densitySmStackSpaceRespSm : densitySpacing.densityLgStackSpaceRespSm
-    }
-    /// Density spacing MD - automatically resolved for current SizeClass
-    public var stackSpaceMd: CGFloat {
-        sizeClass == .compact ? densitySpacing.densitySmStackSpaceRespMd : densitySpacing.densityLgStackSpaceRespMd
-    }
-    /// Density spacing LG - automatically resolved for current SizeClass
-    public var stackSpaceLg: CGFloat {
-        sizeClass == .compact ? densitySpacing.densitySmStackSpaceRespLg : densitySpacing.densityLgStackSpaceRespLg
-    }
-    /// Density spacing XL - automatically resolved for current SizeClass
-    public var stackSpaceXl: CGFloat {
-        sizeClass == .compact ? densitySpacing.densitySmStackSpaceRespXl : densitySpacing.densityLgStackSpaceRespXl
-    }
-    /// Density spacing 2XL - automatically resolved for current SizeClass
-    public var stackSpace2xl: CGFloat {
-        sizeClass == .compact ? densitySpacing.densitySmStackSpaceResp2xl : densitySpacing.densityLgStackSpaceResp2xl
-    }
+${generateiOSDensityResolvers()}
 }
 
 // MARK: - Environment Integration
