@@ -72,17 +72,25 @@ This pipeline processes the multi-layer, multi-brand BILD Design System architec
 Tokens use `var()` references to maintain the alias chain from Figma:
 
 ```css
-/* Component → Semantic → Primitive */
+/* Color: Component → Semantic → Primitive */
 --button-primary-bg-color: var(--core-color-primary, #DD0000);
                                 ↓
 --core-color-primary: var(--bildred, #DD0000);
                            ↓
 --bildred: #DD0000;
+
+/* Spacing: BreakpointMode → Density → Primitive */
+--stack-space-resp-md: var(--density-xs-stack-space-resp-md);
+                                ↓
+--density-xs-stack-space-resp-md: var(--space-1-p-5-x, 12px);
+                                       ↓
+--space-1-p-5-x: 12px;
 ```
 
 This enables:
 - **Theme switching** without recompiling (change primitives = change all)
 - **Brand switching** via data attributes
+- **Density switching** via `data-density` attribute (default/dense/spacious)
 - **Fallback values** for robustness
 
 ### Pipeline Flow
@@ -341,8 +349,48 @@ Both iOS and Android implement identical unified protocols/interfaces for polymo
 | `DesignSizingScheme` | All sizing tokens | 180+ values | `CGFloat` | `Dp` |
 | `DesignTypographyScheme` | All text styles | 37 styles | `TextStyle` | `DesignTextStyle` |
 | `DesignEffectsScheme` | Shadow tokens (brand-independent) | 8 shadows | `ShadowStyle` | `ShadowStyle` |
+| `DesignDensityScheme` | Density spacing tokens (brand-independent, internal) | 28 tokens | `CGFloat` | `Dp` |
 
 > **Note:** Full iOS/Android architecture parity. Both platforms provide `theme.colors`, `theme.sizing`, `theme.typography`, and `theme.effects` accessors with polymorphic brand switching at runtime.
+
+#### Density-Aware Spacing (Consumer API)
+
+Density tokens are **internal** and resolved automatically via BreakpointMode properties:
+
+```kotlin
+// Android - Use BreakpointMode token names (NOT densitySpacing directly)
+@Composable
+fun MyLayout() {
+    val respSpacing = DesignSystemTheme.stackSpaceRespMd   // Responsive: varies by WindowSizeClass × Density
+    val constSpacing = DesignSystemTheme.stackSpaceConstLg // Constant: same across all WindowSizeClasses
+
+    Column(verticalArrangement = Arrangement.spacedBy(respSpacing)) {
+        // Content
+    }
+}
+```
+
+```swift
+// iOS - Use BreakpointMode token names (NOT densitySpacing directly)
+struct MyLayout: View {
+    @Environment(\.designSystemTheme) var theme
+
+    var body: some View {
+        VStack(spacing: theme.stackSpaceRespMd) {   // Responsive: varies by SizeClass × Density
+            // Or constant: theme.stackSpaceConstLg  // Same across all SizeClasses
+        }
+    }
+}
+```
+
+| Token Type | Example | Behavior |
+|------------|---------|----------|
+| Responsive | `stackSpaceRespMd` | Varies by WindowSizeClass/SizeClass × Density mode |
+| Constant | `stackSpaceConstLg` | Same value across all WindowSizeClasses, varies by Density only |
+
+> **Note:** The `densitySpacing` property is internal. Always use the semantic token names (`stackSpaceRespMd`, `stackSpaceConstLg`, etc.) which automatically resolve based on the current `sizeClass` and `density` mode.
+
+> **Important - Single Entry Point:** Density-aware spacing tokens (`stackSpaceRespMd`, `stackSpaceConstLg`, etc.) are **NOT** part of `DesignSizingScheme`. They are only accessible via `DesignSystemTheme` resolvers, which perform the `WindowSizeClass × Density` matrix lookup.
 
 #### Component Token Accessors
 

@@ -184,10 +184,21 @@ SpacePrimitive ─┐                                                        │
                 │                                                        │      etc.)
 SizePrimitive  ─┼────────→ BrandTokenMapping ──┬────→ BreakpointMode ───┘
                 │          (BILD | SportBILD   │      (xs|sm|md|lg)
-FontPrimitive ──┘           | Advertorial)     │
-                                               │      ┌─ grid-space-*
-                           Density ────────────┘      ├─ font-sizes
-                           (default|dense|spacious)   └─ Typography
+FontPrimitive ──┘           | Advertorial)     │            │
+                                               │            │ aliases to
+                           Density ────────────┘            ▼
+                           (default|dense|spacious)   ┌─ stack-space-*
+                                  │                   ├─ grid-space-*
+                                  └──────────────────→├─ font-sizes
+                                                      └─ Typography
+
+Alias Chain (CSS Output):
+─────────────────────────────────────────────────────────────────────────────────
+BreakpointMode tokens reference Density tokens which reference Primitives:
+
+  --stack-space-resp-md ──→ var(--density-xs-stack-space-resp-md)
+                                      │
+                                      └──→ var(--space-1-p-5-x, 12px)
 ```
 
 ### Mode Dependencies (CSS Output - Dual-Axis)
@@ -197,11 +208,71 @@ FontPrimitive ──┘           | Advertorial)     │
 | Primitives | – | `:root { }` |
 | Semantic Colors | BrandColorMapping + ColorMode | `[data-color-brand][data-theme] { }` |
 | Semantic Sizing | BrandTokenMapping + Breakpoint | `[data-content-brand] { } @media (...) { }` |
-| Density | Density mode | `[data-content-brand][data-density] { }` |
+| Semantic Density | Density mode | `[data-content-brand][data-density] { }` |
 | Effects | BrandColorMapping + ColorMode | `[data-color-brand][data-theme] .className { }` |
 | Typography | BrandTokenMapping + Breakpoint | `[data-content-brand] .className { }` |
 | Component Colors | ColorMode | `[data-color-brand][data-theme] { }` |
+| Component Density | Density mode | `[data-content-brand][data-density] { }` |
 | Component Sizing | Breakpoint + Density | `[data-content-brand] { }` |
+
+### Density Token Architecture
+
+Density tokens exist at two levels:
+
+**1. Semantic Density (Global/StackSpace):**
+- Constant tokens: `--density-stack-space-const-{size}` (don't change with breakpoint)
+- Responsive tokens: `--density-{breakpoint}-stack-space-resp-{size}` (per breakpoint values)
+
+**2. Component Density (Button, InputField, IconButton):**
+- `--density-button-*`, `--density-input-field-*`, `--density-icon-button-*`
+
+**Alias Chain (CSS):**
+```
+BreakpointMode                    Density                         Primitive
+────────────────────────────────────────────────────────────────────────────
+--stack-space-resp-md ──────────► --density-xs-stack-space-resp-md ──► --space-1-p-5-x
+     [data-content-brand]              [data-density="default"]           :root
+     @media (min-width)
+```
+
+**Native Platforms - Single Entry Point Pattern:**
+
+On iOS and Android, density-matrix tokens (`stackSpaceRespMd`, `stackSpaceConstLg`, etc.) are **NOT** part of `DesignSizingScheme`. Instead, they are only accessible via `DesignSystemTheme` resolvers:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    NATIVE DENSITY TOKEN ACCESS                               │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  ❌ NOT via SizingScheme:                                                   │
+│     theme.sizing.stackSpaceRespMd  // Does NOT exist!                       │
+│                                                                             │
+│  ✅ ONLY via DesignSystemTheme:                                             │
+│     DesignSystemTheme.stackSpaceRespMd   // Android                         │
+│     theme.stackSpaceRespMd               // iOS                             │
+│                                                                             │
+│  Why: The resolver performs WindowSizeClass × Density matrix lookup:        │
+│                                                                             │
+│     when (sizeClass) {                                                      │
+│         Compact -> when (density) {                                         │
+│             Dense -> 8.dp                                                   │
+│             Default -> 12.dp                                                │
+│             Spacious -> 16.dp                                               │
+│         }                                                                   │
+│         Medium -> when (density) { ... }                                    │
+│         Expanded -> when (density) { ... }                                  │
+│     }                                                                       │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+This architecture is enforced by the `nativeTokenFilter` in `build.js`, which excludes density-matrix tokens from `SizingScheme` files.
+
+This architecture allows:
+- Density modes (default/dense/spacious) to control spacing values
+- BreakpointMode to reference density tokens with proper `var()` fallbacks
+- @media queries to select the correct density token per breakpoint (CSS)
+- WindowSizeClass × Density matrix resolution on native platforms
 
 ---
 
@@ -426,6 +497,10 @@ Tokens reference each other through aliases. Here's how a button color token res
 theme.colors.textColorPrimary     // any DesignColorScheme
 theme.sizing.gridSpaceRespBase    // any DesignSizingScheme
 theme.effects.shadowSoftMd        // any DesignEffectsScheme
+
+// Density-aware spacing (auto-resolved by SizeClass × DensityMode)
+theme.stackSpaceRespMd            // Responsive: varies by SizeClass
+theme.stackSpaceConstLg           // Constant: same across all SizeClasses
 ```
 
 ### Android (Jetpack Compose)
@@ -444,6 +519,10 @@ DesignSystemTheme(
     DesignSystemTheme.sizing.gridSpaceRespBase  // DesignSizingScheme
     DesignSystemTheme.typography.headline1      // DesignTypographyScheme
     DesignSystemTheme.effects.shadowSoftMd      // DesignEffectsScheme (brand-independent)
+
+    // Density-aware spacing (auto-resolved by WindowSizeClass × DensityMode)
+    DesignSystemTheme.stackSpaceRespMd          // Responsive: varies by WindowSizeClass
+    DesignSystemTheme.stackSpaceConstLg         // Constant: same across all WindowSizeClasses
 
     // Component tokens via current()
     ButtonTokens.Colors.current().buttonPrimaryBgColorIdle
@@ -499,12 +578,17 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 | `DesignSizingScheme` | 180+ sizing tokens | `BildSizingCompact`, `BildSizingRegular` | `BildSizingCompact`, `BildSizingMedium`, `BildSizingExpanded` |
 | `DesignTypographyScheme` | 30+ text styles | `BildTypographyCompact`, `BildTypographyRegular` | `BildTypographyCompact`, `BildTypographyMedium`, `BildTypographyExpanded` |
 | `DesignEffectsScheme` | 8 shadow tokens | `EffectsLight`, `EffectsDark` | Same (brand-independent) |
+| `DesignDensityScheme` | 28 density tokens | `DensityDefault`, `DensityDense`, `DensitySpacious` | Same (brand-independent) |
 
 **Note on Size Classes:**
 - **iOS:** Uses Apple's 2-class system (compact/regular)
 - **Android:** Uses Material 3 WindowSizeClass with 3 values (Compact/Medium/Expanded)
 
 **Note on Effects:** Effects/shadows are **brand-independent** and only depend on light/dark mode. Both iOS and Android share the same `EffectsLight`/`EffectsDark` implementations across all brands.
+
+**Note on Density:** Density tokens are **brand-independent** and **internal**. Consumers should use the BreakpointMode resolver properties (`stackSpaceRespMd`, `stackSpaceConstLg`) which automatically resolve density based on `WindowSizeClass`/`SizeClass` × `Density` mode.
+
+> **Important:** Density-matrix tokens (`stackSpaceRespMd`, `stackSpaceConstLg`, etc.) are **NOT** part of `DesignSizingScheme`. They are only accessible via `DesignSystemTheme` resolvers. This "Single Entry Point" pattern is enforced by the build pipeline's `nativeTokenFilter`.
 
 **Benefit:** Code can work with `any DesignColorScheme` without knowing the specific brand.
 
@@ -954,8 +1038,12 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 | Change token values | In Figma (Source of Truth) |
 | Modify output format | `style-dictionary.config.js` |
 | Change alias resolution | `preprocess.js` |
+| Modify density alias endpoints | `preprocess.js` → `getDeepAliasInfo()` with `acceptDensityEndpoint` option |
+| Add semantic density to bundle | `bundles.js` → `buildBrandTokens()` |
+| Modify native density token filter | `build.js` → `nativeTokenFilter()` (controls which tokens are in SizingScheme) |
 | Add new brand | `preprocess.js`, `build.js`, `bundles.js` |
 | Add new breakpoint | `preprocess.js`, `build.js` |
+| Add new density mode | `preprocess.js`, `build.js`, `bundles.js` |
 | Enable/disable platform | `build.js` (toggle flags) |
 | Modify component token pattern | `style-dictionary.config.js` |
 | Change JS type mapping | `build.js` → `flattenTokens()` function |
@@ -1674,3 +1762,6 @@ npm run build:docs
 | React/Vue components not styled | Missing token CSS | Import `@marioschmidt/design-system-tokens/css/bundles/bild.css` |
 | Vue props not working | Using camelCase in template | Use kebab-case in templates: `card-title` not `cardTitle` |
 | Type definitions missing | Stencil build incomplete | Ensure `npm run build:components` completed successfully |
+| Density tokens not in bundle | `bundles.js` not reading density dir | Check `buildBrandTokens()` includes density directory |
+| BreakpointMode aliases resolve to Primitive | `acceptDensityEndpoint` not set | Check `preprocess.js` → `getDeepAliasInfo()` call for BreakpointMode |
+| Density mode not switching | Missing `data-density` attribute | Add `data-density="default\|dense\|spacious"` to container |

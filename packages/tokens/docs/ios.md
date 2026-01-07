@@ -126,6 +126,7 @@ All brands conform to common protocols for polymorphic access:
 | `DesignSizingScheme` | All sizing tokens | 180+ values | `BildSizingCompact`, `BildSizingRegular`, `SportbildSizing*`, `AdvertorialSizing*` |
 | `DesignTypographyScheme` | All text styles (TextStyle composites) | 37 styles | `BildTypographyCompact`, `BildTypographyRegular`, `SportbildTypography*`, `AdvertorialTypography*` |
 | `DesignEffectsScheme` | Shadow/Effect tokens | 8 shadows | `EffectsLight`, `EffectsDark` (brand-independent) |
+| `DesignDensityScheme` | Density spacing tokens (internal) | 28 tokens | `DensityDefault`, `DensityDense`, `DensitySpacious` (brand-independent) |
 
 ```swift
 // Polymorphic access - works with any brand
@@ -269,6 +270,12 @@ struct SemanticExample: View {
             // Effects - automatically Light/Dark
             RoundedRectangle(cornerRadius: 8)
                 .shadow(theme.effects.shadowSoftMd)
+
+            // Density-Aware Spacing - auto-resolved by SizeClass × Density
+            VStack(spacing: theme.stackSpaceRespMd) {   // Responsive: varies by SizeClass
+                // Content
+            }
+            .padding(.vertical, theme.stackSpaceConstLg)  // Constant: same across SizeClasses
 
             // Query theme state
             let isDark = theme.isDarkTheme
@@ -586,6 +593,22 @@ public protocol DesignEffectsScheme: Sendable {
     var shadowSoftLg: ShadowStyle { get }
     // ... effect properties
 }
+
+/// Internal density scheme protocol (brand-independent, not exposed to consumers)
+/// Consumers should use BreakpointMode resolver properties instead
+public protocol DesignDensityScheme: Sendable {
+    // Constant spacing (same across all SizeClasses)
+    var densityStackSpaceConst3xs: CGFloat { get }
+    var densityStackSpaceConst2xs: CGFloat { get }
+    var densityStackSpaceConstXs: CGFloat { get }
+    // ... 28 total density tokens
+    // Responsive spacing (varies by SizeClass)
+    var densityXsStackSpaceRespMd: CGFloat { get }
+    var densitySmStackSpaceRespMd: CGFloat { get }
+    var densityMdStackSpaceRespMd: CGFloat { get }
+    var densityLgStackSpaceRespMd: CGFloat { get }
+    // ...
+}
 ```
 
 ### Theme Class
@@ -608,8 +631,29 @@ public final class DesignSystemTheme: @unchecked Sendable {
     public var sizing: any DesignSizingScheme     // Based on contentBrand + sizeClass
     public var typography: any DesignTypographyScheme  // Based on contentBrand + sizeClass
     public var effects: any DesignEffectsScheme   // Based on isDarkTheme (brand-independent)
+
+    // Density-Aware Spacing (Consumer API) - use these, NOT densitySpacing directly
+    // Responsive spacing: varies by SizeClass × Density
+    public var stackSpaceRespSm: CGFloat          // Resolves density token per SizeClass
+    public var stackSpaceRespMd: CGFloat
+    public var stackSpaceRespLg: CGFloat
+    public var stackSpaceRespXl: CGFloat
+    public var stackSpaceResp2xl: CGFloat
+    // Constant spacing: same across all SizeClasses, varies by Density only
+    public var stackSpaceConst3xs: CGFloat
+    public var stackSpaceConst2xs: CGFloat
+    public var stackSpaceConstXs: CGFloat
+    public var stackSpaceConstSm: CGFloat
+    public var stackSpaceConstMd: CGFloat
+    public var stackSpaceConstLg: CGFloat
+    public var stackSpaceConstXl: CGFloat
+    public var stackSpaceConst2xl: CGFloat
+
+    internal var densitySpacing: any DesignDensityScheme  // Internal - not for direct use
 }
 ```
+
+> **Important - Single Entry Point Pattern:** Density-aware spacing tokens (`stackSpaceRespMd`, `stackSpaceConstLg`, etc.) are **NOT** part of `DesignSizingScheme`. They are only accessible via `DesignSystemTheme` resolvers, which perform the `SizeClass × Density` matrix lookup internally. This ensures consistent density behavior across the application.
 
 ### Component Token Pattern
 

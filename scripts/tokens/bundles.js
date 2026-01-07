@@ -343,6 +343,21 @@ async function buildBrandTokens(brand) {
     }
   }
 
+  // 3. Semantic Density tokens (Global/StackSpace - referenced by breakpoint tokens)
+  const densityDir = path.join(brandSourceDir, 'density');
+  if (fs.existsSync(densityDir)) {
+    const densityFiles = await glob(`${densityDir}/*.css`);
+    if (densityFiles.length > 0) {
+      content += '/* === SEMANTIC DENSITY TOKENS === */\n\n';
+      for (const file of densityFiles.sort()) {
+        const fileContent = readAndStripHeader(file);
+        if (fileContent) {
+          content += fileContent + '\n\n';
+        }
+      }
+    }
+  }
+
   const outputPath = path.join(brandOutputDir, 'tokens.css');
   fs.writeFileSync(outputPath, content.trim() + '\n');
 

@@ -865,7 +865,7 @@ const cssVariablesFormat = ({ dictionary, options, file }) => {
       tokens.forEach(token => {
         const uniqueName = uniqueNames.get(token.path.join('.'));
         const comment = token.comment || token.description;
-        if (comment) {
+        if (comment && options.showDescriptions !== false) {
           output += `  /**\n   * ${comment}\n   */\n`;
         }
         // Use $value (transformed) or fallback to value (original)
@@ -920,7 +920,7 @@ const scssVariablesFormat = ({ dictionary, options, file }) => {
       tokens.forEach(token => {
         const uniqueName = uniqueNames.get(token.path.join('.'));
         const comment = token.comment || token.description;
-        if (comment) {
+        if (comment && options.showDescriptions !== false) {
           output += `// ${comment}\n`;
         }
         output += `$${uniqueName}: ${token.$value !== undefined ? token.$value : token.value};\n`;
@@ -972,7 +972,7 @@ const javascriptEs6Format = ({ dictionary, options, file }) => {
       tokens.forEach(token => {
         const uniqueName = uniqueNames.get(token.path.join('.'));
         const comment = token.comment || token.description;
-        if (comment) {
+        if (comment && options.showDescriptions !== false) {
           output += `/** ${comment} */\n`;
         }
         output += `export const ${uniqueName} = "${token.$value !== undefined ? token.$value : token.value}";\n`;
@@ -1163,7 +1163,7 @@ const cssTypographyClassesFormat = ({ dictionary, options }) => {
             className = className.substring(1);
           }
 
-          if (token.comment) {
+          if (token.comment && options.showDescriptions !== false) {
             output += `/* ${token.comment} */\n`;
           }
 
@@ -1246,7 +1246,7 @@ const cssEffectClassesFormat = ({ dictionary, options }) => {
             className = className.substring(1);
           }
 
-          if (token.comment) {
+          if (token.comment && options.showDescriptions !== false) {
             output += `/* ${token.comment} */\n`;
           }
 
@@ -1333,7 +1333,7 @@ const iosSwiftTypographyFormat = ({ dictionary, options }) => {
           const rawName = token.path[token.path.length - 1];
           const propName = nameTransformers.camel(rawName);
 
-          if (token.comment) {
+          if (token.comment && options.showDescriptions !== false) {
             output += `        /** ${token.comment} */\n`;
           }
 
@@ -1404,7 +1404,7 @@ const iosSwiftEffectsFormat = ({ dictionary, options }) => {
         if (token.$type === 'shadow' && Array.isArray(token.$value)) {
           const uniqueName = uniqueNames.get(token.path.join('.'));
 
-          if (token.comment) {
+          if (token.comment && options.showDescriptions !== false) {
             output += `    /** ${token.comment} */\n`;
           }
 
@@ -1485,7 +1485,7 @@ const javascriptEffectsFormat = ({ dictionary, options }) => {
         if (token.$type === 'shadow' && Array.isArray(token.$value)) {
           const uniqueName = uniqueNames.get(token.path.join('.'));
 
-          if (token.comment) {
+          if (token.comment && options.showDescriptions !== false) {
             output += `/** ${token.comment} */\n`;
           }
 
@@ -1556,7 +1556,7 @@ const javascriptTypographyFormat = ({ dictionary, options }) => {
           const uniqueName = uniqueNames.get(token.path.join('.'));
           const style = token.$value;
 
-          if (token.comment) {
+          if (token.comment && options.showDescriptions !== false) {
             output += `/** ${token.comment} */\n`;
           }
 
@@ -1636,7 +1636,7 @@ const scssEffectsFormat = ({ dictionary, options }) => {
         if (token.$type === 'shadow' && Array.isArray(token.$value)) {
           const uniqueName = uniqueNames.get(token.path.join('.'));
 
-          if (token.comment) {
+          if (token.comment && options.showDescriptions !== false) {
             output += `/** ${token.comment} */\n`;
           }
 
@@ -1700,7 +1700,7 @@ const scssTypographyFormat = ({ dictionary, options }) => {
           const uniqueName = uniqueNames.get(token.path.join('.'));
           const style = token.$value;
 
-          if (token.comment) {
+          if (token.comment && options.showDescriptions !== false) {
             output += `/** ${token.comment} */\n`;
           }
 
@@ -1847,7 +1847,7 @@ const cssThemedVariablesFormat = ({ dictionary, options, file }) => {
       tokens.forEach(token => {
         const uniqueName = uniqueNames.get(token.path.join('.'));
         const comment = token.comment || token.description;
-        if (comment) {
+        if (comment && options.showDescriptions !== false) {
           output += `  /**\n   * ${comment}\n   */\n`;
         }
         const finalValue = token.$value !== undefined ? token.$value : token.value;
@@ -2862,7 +2862,7 @@ public enum DesignTokenPrimitives {
       const value = token.$value !== undefined ? token.$value : token.value;
       const comment = token.comment || token.description;
 
-      if (comment) {
+      if (comment && options.showDescriptions !== false) {
         output += `        /// ${comment}\n`;
       }
 
@@ -2915,7 +2915,7 @@ public enum DesignTokenPrimitives {
       const value = token.$value !== undefined ? token.$value : token.value;
       const comment = token.comment || token.description;
 
-      if (comment) {
+      if (comment && options.showDescriptions !== false) {
         output += `        /// ${comment}\n`;
       }
 
@@ -2975,7 +2975,7 @@ public protocol ${brandPascal}ColorScheme: Sendable {
     colorTokens.forEach(token => {
       const name = uniqueNames.get(token.path.join('.')) || token.name;
       const comment = token.comment || token.description;
-      if (comment) {
+      if (comment && options.showDescriptions !== false) {
         output += `    /// ${comment}\n`;
       }
       output += `    var ${name}: Color { get }\n`;
@@ -2985,7 +2985,7 @@ public protocol ${brandPascal}ColorScheme: Sendable {
     opacityTokens.forEach(token => {
       const name = uniqueNames.get(token.path.join('.')) || token.name;
       const comment = token.comment || token.description;
-      if (comment) {
+      if (comment && options.showDescriptions !== false) {
         output += `    /// ${comment}\n`;
       }
       output += `    var ${name}: Double { get }\n`;
@@ -3035,12 +3035,38 @@ public struct ${structName}: ${brandPascal}ColorScheme, DesignColorScheme {
 
 /**
  * Format: SwiftUI Sizing Scheme (Protocol + Compact/Regular implementations)
+ * Also handles Density mode (Protocol + Default/Dense/Spacious implementations)
  */
 const swiftuiSizingSchemeFormat = ({ dictionary, options, file }) => {
   const brand = options.brand || 'Bild';
   const brandPascal = toPascalCase(brand);
-  const sizeClass = options.sizeClass || 'compact';
-  const isCompact = sizeClass === 'compact';
+  const modeType = options.modeType || 'sizeclass';
+  const isDensityMode = modeType === 'density';
+
+  // Determine mode name and whether to generate protocol
+  let modeName;
+  let isFirstMode;
+  let protocolName;
+  let unifiedProtocol;
+  let modeDescription;
+
+  if (isDensityMode) {
+    // Density mode: Default, Dense, Spacious
+    modeName = options.mode || 'default';
+    const modePascal = modeName.charAt(0).toUpperCase() + modeName.slice(1);
+    isFirstMode = modeName === 'default';
+    protocolName = `${brandPascal}DensityScheme`;
+    unifiedProtocol = 'DesignDensityScheme';
+    modeDescription = `${modePascal} density`;
+  } else {
+    // Sizeclass mode: Compact, Regular
+    const sizeClass = options.sizeClass || 'compact';
+    modeName = sizeClass;
+    isFirstMode = sizeClass === 'compact';
+    protocolName = `${brandPascal}SizingScheme`;
+    unifiedProtocol = 'DesignSizingScheme';
+    modeDescription = `${isFirstMode ? 'Compact' : 'Regular'} size class`;
+  }
 
   const uniqueNames = generateUniqueNames(dictionary.allTokens, 'camel');
 
@@ -3049,24 +3075,28 @@ const swiftuiSizingSchemeFormat = ({ dictionary, options, file }) => {
     commentStyle: 'line',
     platform: 'ios',
     brand: brandPascal,
-    context: `SizingScheme ${sizeClass}`
+    context: isDensityMode ? `DensityScheme ${modeName}` : `SizingScheme ${modeName}`
   });
 
   output += `import SwiftUI
 
 `;
 
-  // Only generate protocol in compact file
-  if (isCompact) {
-    output += `/// Protocol for type-safe sizing access across Compact/Regular size classes
-public protocol ${brandPascal}SizingScheme: Sendable {
+  // Only generate protocol in first mode file (compact for sizeclass, default for density)
+  if (isFirstMode) {
+    const protocolDescription = isDensityMode
+      ? 'type-safe density access across Default/Dense/Spacious modes'
+      : 'type-safe sizing access across Compact/Regular size classes';
+
+    output += `/// Protocol for ${protocolDescription}
+public protocol ${protocolName}: Sendable {
 `;
 
     dictionary.allTokens.forEach(token => {
       const name = uniqueNames.get(token.path.join('.')) || token.name;
       const comment = token.comment || token.description;
       const typeInfo = getSwiftTypeInfo(token);
-      if (comment) {
+      if (comment && options.showDescriptions !== false) {
         output += `    /// ${comment}\n`;
       }
       output += `    var ${name}: ${typeInfo.swiftType} { get }\n`;
@@ -3078,9 +3108,16 @@ public protocol ${brandPascal}SizingScheme: Sendable {
   }
 
   // Generate implementation struct (conforms to both brand-specific and unified protocols)
-  const structName = `${brandPascal}Sizing${isCompact ? 'Compact' : 'Regular'}`;
-  output += `/// ${isCompact ? 'Compact' : 'Regular'} size class implementation
-public struct ${structName}: ${brandPascal}SizingScheme, DesignSizingScheme {
+  let structName;
+  if (isDensityMode) {
+    const modePascal = modeName.charAt(0).toUpperCase() + modeName.slice(1);
+    structName = `${brandPascal}Density${modePascal}`;
+  } else {
+    structName = `${brandPascal}Sizing${isFirstMode ? 'Compact' : 'Regular'}`;
+  }
+
+  output += `/// ${modeDescription} implementation
+public struct ${structName}: ${protocolName}, ${unifiedProtocol} {
     public static let shared = ${structName}()
     private init() {}
 
@@ -3132,7 +3169,7 @@ public protocol ${brandPascal}TypographyScheme: DesignTypographyScheme {
     dictionary.allTokens.forEach(token => {
       const name = token.name;
       const comment = token.comment || token.description;
-      if (comment) {
+      if (comment && options.showDescriptions !== false) {
         output += `    /// ${comment}\n`;
       }
       output += `    var ${name}: TextStyle { get }\n`;
@@ -3210,7 +3247,7 @@ public protocol ${brandPascal}EffectsScheme: Sendable {
     dictionary.allTokens.forEach(token => {
       const name = token.name;
       const comment = token.comment || token.description;
-      if (comment) {
+      if (comment && options.showDescriptions !== false) {
         output += `    /// ${comment}\n`;
       }
       output += `    var ${name}: ShadowStyle { get }\n`;
@@ -3698,14 +3735,20 @@ const composeSpacingFormat = ({ dictionary, options, file }) => {
   let className;
   let interfaceName;
   let generateInterface = false;
+  let useUnifiedInterface = false;
 
   if (modeType === 'sizeclass') {
     className = `${brandPascal}Sizing${modePascal}`;
     interfaceName = `${brandPascal}SizingScheme`;
     // Generate interface only for Compact mode to avoid duplication
     generateInterface = modePascal === 'Compact';
+    useUnifiedInterface = true;
   } else if (modeType === 'density') {
     className = `${brandPascal}Density${modePascal}`;
+    interfaceName = `${brandPascal}DensityScheme`;
+    // Generate interface only for Default mode to avoid duplication
+    generateInterface = modePascal === 'Default';
+    useUnifiedInterface = true;
   } else {
     className = `${brandPascal}Spacing`;
   }
@@ -3722,9 +3765,12 @@ const composeSpacingFormat = ({ dictionary, options, file }) => {
     imports.push('import androidx.compose.ui.unit.sp');
     imports.push('import androidx.compose.ui.unit.TextUnit');
   }
-  // Add import for DesignSizingScheme for sizeclass mode
+  // Add import for unified schemes
   if (modeType === 'sizeclass') {
     imports.push('import com.bild.designsystem.shared.DesignSizingScheme');
+  }
+  if (modeType === 'density') {
+    imports.push('import com.bild.designsystem.shared.DesignDensityScheme');
   }
 
   let output = generateFileHeader({
@@ -3754,15 +3800,23 @@ ${imports.join('\n')}
   // Filter tokens to exclude generic string tokens
   const filteredTokens = dictionary.allTokens.filter(token => !shouldFilterStringToken(token));
 
-  // Generate interface for sizeclass (only for Compact mode)
-  if (generateInterface && modeType === 'sizeclass') {
+  // Generate interface for sizeclass or density (only for first mode: Compact/Default)
+  if (generateInterface && (modeType === 'sizeclass' || modeType === 'density')) {
+    const unifiedScheme = modeType === 'sizeclass' ? 'DesignSizingScheme' : 'DesignDensityScheme';
+    const schemeDescription = modeType === 'sizeclass'
+      ? 'Sizing scheme interface'
+      : 'Density scheme interface';
+    const accessDescription = modeType === 'sizeclass'
+      ? 'sizing tokens across WindowSizeClass variants'
+      : 'density spacing tokens across Default/Dense/Spacious modes';
+
     output += `/**
- * Sizing scheme interface for ${brandPascal}
- * Extends DesignSizingScheme for Dual-Axis theming compatibility
- * Provides type-safe access to sizing tokens across WindowSizeClass variants
+ * ${schemeDescription} for ${brandPascal}
+ * Extends ${unifiedScheme} for Dual-Axis theming compatibility
+ * Provides type-safe access to ${accessDescription}
  */
 @Stable
-interface ${interfaceName} : DesignSizingScheme {
+interface ${interfaceName} : ${unifiedScheme} {
 `;
     filteredTokens.forEach(token => {
       const type = token.$type || token.type;
@@ -3782,16 +3836,16 @@ interface ${interfaceName} : DesignSizingScheme {
       }
       // type === 'dimension' → stays 'Dp'
 
-      output += `    val ${token.name}: ${propType}\n`;
+      output += `    override val ${token.name}: ${propType}\n`;
     });
     output += `}
 
 `;
   }
 
-  // Generate object (implementing interface for sizeclass)
-  const implementsClause = modeType === 'sizeclass' ? ` : ${interfaceName}` : '';
-  const overrideKeyword = modeType === 'sizeclass' ? 'override ' : '';
+  // Generate object (implementing interface for sizeclass or density)
+  const implementsClause = useUnifiedInterface ? ` : ${interfaceName}` : '';
+  const overrideKeyword = useUnifiedInterface ? 'override ' : '';
 
   output += `/**
  * ${className} - Spacing and sizing tokens
@@ -4096,7 +4150,7 @@ import com.bild.designsystem.shared.DesignTextCase
 interface ${brandPascal}TypographyScheme : DesignTypographyScheme {
 `;
     tokens.forEach(token => {
-      const comment = token.comment ? `    /** ${token.comment.split('\n')[0]} */\n` : '';
+      const comment = (token.comment && options.showDescriptions !== false) ? `    /** ${token.comment.split('\n')[0]} */\n` : '';
       output += `${comment}    override val ${token.name}: DesignTextStyle\n`;
     });
     output += `}
@@ -4309,7 +4363,7 @@ object ${className} : DesignEffectsScheme {
     const value = token.$value !== undefined ? token.$value : token.value;
     const comment = token.comment || token.description;
 
-    if (comment) {
+    if (comment && options.showDescriptions !== false) {
       output += `    /** ${comment} */\n`;
     }
 
@@ -4388,7 +4442,7 @@ object ${className} {
     const value = token.$value !== undefined ? token.$value : token.value;
     const comment = token.comment || token.description;
 
-    if (comment) {
+    if (comment && options.showDescriptions !== false) {
       output += `    /** ${comment} */\n`;
     }
 
@@ -4406,6 +4460,106 @@ object ${className} {
   output += `}
 `;
 
+  return output;
+};
+
+/**
+ * Format: Shared Density Object for Jetpack Compose
+ * Brand-independent density tokens (like Effects)
+ * Output: DensityDefault, DensityDense, DensitySpacious in shared/
+ */
+const composeSharedDensityFormat = ({ dictionary, options, file }) => {
+  const { packageName, densityMode } = options;
+
+  // Helper to convert value to Compose Dp format
+  const toComposeDp = (value) => {
+    if (value === null || value === undefined) return value;
+    if (typeof value === 'string' && value.endsWith('.dp')) return value;
+    if (typeof value === 'number') return `${value}.dp`;
+    if (typeof value === 'string') {
+      const num = parseFloat(value.replace('px', ''));
+      if (!isNaN(num)) return `${num}.dp`;
+    }
+    return value;
+  };
+
+  let output = generateFileHeader({
+    fileName: file.destination,
+    commentStyle: 'block',
+    platform: 'android',
+    context: `Shared Density${densityMode} Object\nBrand-independent semantic density tokens`
+  });
+
+  output += `package ${packageName}
+
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+
+/**
+ * ${densityMode} density spacing tokens (brand-independent)
+ *
+ * Semantic density tokens for spacing adjustments.
+ * Same values across all brands (BILD, SportBILD, Advertorial).
+ */
+object Density${densityMode} : DesignDensityScheme {
+`;
+
+  dictionary.allTokens.forEach(token => {
+    const name = token.name;
+    const value = toComposeDp(token.$value !== undefined ? token.$value : token.value);
+    output += `    override val ${name}: Dp = ${value}\n`;
+  });
+
+  output += `}
+`;
+  return output;
+};
+
+/**
+ * Format: Shared Density Struct for SwiftUI
+ * Brand-independent density tokens (like Effects)
+ * Output: DensityDefault, DensityDense, DensitySpacious in shared/
+ */
+const swiftuiSharedDensityFormat = ({ dictionary, options, file }) => {
+  const { densityMode } = options;
+
+  // Helper to ensure numeric value for CGFloat
+  const toNumericValue = (value) => {
+    if (typeof value === 'number') return value;
+    if (typeof value === 'string') {
+      const num = parseFloat(value.replace('px', ''));
+      if (!isNaN(num)) return num;
+    }
+    return value;
+  };
+
+  let output = generateFileHeader({
+    fileName: file.destination,
+    commentStyle: 'line',
+    platform: 'ios',
+    context: `Shared Density${densityMode} Struct\nBrand-independent semantic density tokens`
+  });
+
+  output += `import SwiftUI
+
+/// ${densityMode} density spacing tokens (brand-independent)
+///
+/// Semantic density tokens for spacing adjustments.
+/// Same values across all brands (BILD, SportBILD, Advertorial).
+public struct Density${densityMode}: DesignDensityScheme {
+    public static let shared = Density${densityMode}()
+    private init() {}
+
+`;
+
+  dictionary.allTokens.forEach(token => {
+    const name = token.name;
+    const value = toNumericValue(token.$value !== undefined ? token.$value : token.value);
+    output += `    public let ${name}: CGFloat = ${value}\n`;
+  });
+
+  output += `}
+`;
   return output;
 };
 
@@ -4466,6 +4620,7 @@ module.exports = {
     'compose/typography-scheme': composeTypographySchemeFormat,
     'compose/effects': composeEffectsFormat,
     'compose/component-effects': composeComponentEffectsFormat,
+    'compose/shared-density': composeSharedDensityFormat,
 
     // SwiftUI Formats
     'swiftui/enums': swiftuiEnumsFormat,
@@ -4477,6 +4632,7 @@ module.exports = {
     'swiftui/sizing-scheme': swiftuiSizingSchemeFormat,
     'swiftui/typography': swiftuiTypographyFormat,
     'swiftui/effects': swiftuiEffectsFormat,
+    'swiftui/shared-density': swiftuiSharedDensityFormat,
     'swiftui/theme-provider': swiftuiThemeProviderFormat,
     'swiftui/component-tokens': swiftuiComponentTokensFormat,
     'swiftui/design-system-theme': swiftuiDesignSystemThemeFormat
