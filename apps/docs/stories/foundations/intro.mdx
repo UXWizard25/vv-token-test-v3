@@ -5,7 +5,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <style>
   {`
     .intro-container {
-      background: var(--surface-color-primary);
+      background: var(--bg-color-primary);
       color: var(--text-color-primary);
     }
     .intro-table {
@@ -16,14 +16,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
     .intro-table th, .intro-table td {
       padding: 0.75rem;
       text-align: left;
-      border-bottom: 1px solid var(--border-color-low-contrast);
+      border-bottom: 1px solid var(--border-color-no-contrast);
     }
     .intro-table th {
-      background: var(--surface-color-secondary);
+      background: var(--bg-color-secondary);
       font-weight: 600;
     }
     .intro-table code {
-      background: var(--surface-color-tertiary);
+      background: var(--bg-color-tertiary);
       padding: 0.2rem 0.4rem;
       border-radius: 3px;
       font-size: 0.85em;
@@ -33,22 +33,22 @@ import { Meta } from '@storybook/addon-docs/blocks';
       align-items: center;
       gap: 16px;
       padding: 16px;
-      background: var(--surface-color-secondary);
+      background: var(--bg-color-secondary);
       border-radius: 8px;
       margin: 8px 0;
     }
     .brand-swatch-primary {
       width: 48px;
       height: 48px;
-      background: var(--core-color-primary);
+      background: var(--bg-color-brand-solid);
       border-radius: 8px;
     }
     .brand-swatch-tertiary {
       width: 48px;
       height: 48px;
-      background: var(--core-color-tertiary);
+      background: var(--bg-color-tertiary);
       border-radius: 8px;
-      color: var(--text-color-primary-inverse);
+      color: var(--text-color-inverse-high-contrast);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -62,15 +62,15 @@ import { Meta } from '@storybook/addon-docs/blocks';
     }
     .link-card {
       padding: 20px;
-      background: var(--surface-color-secondary);
+      background: var(--bg-color-secondary);
       border-radius: 8px;
       text-decoration: none;
       color: inherit;
       transition: background 0.2s;
-      border: 1px solid var(--border-color-low-contrast);
+      border: 1px solid var(--border-color-no-contrast);
     }
     .link-card:hover {
-      background: var(--surface-color-tertiary);
+      background: var(--bg-color-tertiary);
     }
     .link-card-title {
       font-weight: 600;
@@ -83,9 +83,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
     }
     .hint-box {
       padding: 12px 16px;
-      background: var(--surface-color-tertiary);
+      background: var(--bg-color-tertiary);
       border-radius: 8px;
-      border-left: 4px solid var(--core-color-primary);
+      border-left: 4px solid var(--bg-color-brand-solid);
       margin: 1rem 0;
       font-size: 14px;
     }

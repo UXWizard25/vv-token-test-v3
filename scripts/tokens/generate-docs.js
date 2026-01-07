@@ -258,10 +258,10 @@ ${generateColorCards(tokens)}
     .color-table th, .color-table td {
       padding: 0.75rem;
       text-align: left;
-      border-bottom: 1px solid var(--border-color-low-contrast);
+      border-bottom: 1px solid var(--border-color-no-contrast);
     }
     .color-table th {
-      background: var(--surface-color-secondary);
+      background: var(--bg-color-secondary);
       font-weight: 600;
       color: var(--text-color-primary);
     }
@@ -269,7 +269,7 @@ ${generateColorCards(tokens)}
       color: var(--text-color-primary);
     }
     .color-table code {
-      background: var(--surface-color-tertiary);
+      background: var(--bg-color-tertiary);
       padding: 0.2rem 0.4rem;
       border-radius: 3px;
       font-size: 0.85em;
@@ -279,7 +279,7 @@ ${generateColorCards(tokens)}
       width: 24px;
       height: 24px;
       border-radius: 4px;
-      border: 1px solid var(--border-color-low-contrast);
+      border: 1px solid var(--border-color-no-contrast);
       vertical-align: middle;
       margin-right: 8px;
       position: relative;
@@ -312,8 +312,8 @@ ${generateColorCards(tokens)}
     .color-card {
       border-radius: 8px;
       overflow: hidden;
-      border: 1px solid var(--border-color-low-contrast);
-      background: var(--surface-color-primary);
+      border: 1px solid var(--border-color-no-contrast);
+      background: var(--bg-color-primary);
     }
     .color-card-swatch {
       height: 64px;
@@ -339,7 +339,7 @@ ${generateColorCards(tokens)}
     }
     .color-card-info {
       padding: 12px;
-      background: var(--surface-color-primary);
+      background: var(--bg-color-primary);
     }
     .color-card-name {
       font-weight: 600;
@@ -354,9 +354,9 @@ ${generateColorCards(tokens)}
     }
     .hint-box {
       padding: 12px 16px;
-      background: var(--surface-color-tertiary);
+      background: var(--bg-color-tertiary);
       border-radius: 8px;
-      border-left: 4px solid var(--core-color-primary);
+      border-left: 4px solid var(--bg-color-brand-solid);
       margin: 1rem 0;
       font-size: 14px;
       color: var(--text-color-primary);
@@ -370,7 +370,7 @@ ${generateColorCards(tokens)}
       margin-top: 2rem;
       margin-bottom: 1rem;
       padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--border-color-low-contrast);
+      border-bottom: 1px solid var(--border-color-no-contrast);
     }
   \`}
 </style>
@@ -403,19 +403,19 @@ ${semanticSections}
 /* Using semantic color tokens */
 .my-component {
   color: var(--text-color-primary);
-  background: var(--surface-color-primary);
-  border: 1px solid var(--border-color-low-contrast);
+  background: var(--bg-color-primary);
+  border: 1px solid var(--border-color-no-contrast);
 }
 
 /* Highlight text */
 .highlight {
-  color: var(--text-color-accent);
+  color: var(--text-color-brand);
 }
 
 /* Success state */
 .success-message {
   color: var(--text-color-success-constant);
-  background: var(--surface-color-success);
+  background: var(--bg-color-success-solid);
   border: 1px solid var(--border-color-success);
 }
 \`\`\`
@@ -581,22 +581,22 @@ ${fontRows}
     .typo-table th, .typo-table td {
       padding: 0.75rem;
       text-align: left;
-      border-bottom: 1px solid var(--border-color-low-contrast);
+      border-bottom: 1px solid var(--border-color-no-contrast);
       color: var(--text-color-primary);
     }
     .typo-table th {
-      background: var(--surface-color-secondary);
+      background: var(--bg-color-secondary);
       font-weight: 600;
     }
     .typo-table code {
-      background: var(--surface-color-tertiary);
+      background: var(--bg-color-tertiary);
       padding: 0.2rem 0.4rem;
       border-radius: 3px;
       font-size: 0.85em;
     }
     .font-sample {
       padding: 1.5rem;
-      background: var(--surface-color-secondary);
+      background: var(--bg-color-secondary);
       border-radius: 8px;
       margin: 0.5rem 0 1.5rem;
       color: var(--text-color-primary);
@@ -609,15 +609,15 @@ ${fontRows}
     }
     .font-sample-desc {
       font-size: 12px;
-      color: var(--text-color-muted);
+      color: var(--text-color-tertiary);
       margin-top: 12px;
       line-height: 1.4;
     }
     .hint-box {
       padding: 12px 16px;
-      background: var(--surface-color-tertiary);
+      background: var(--bg-color-tertiary);
       border-radius: 8px;
-      border-left: 4px solid var(--core-color-primary);
+      border-left: 4px solid var(--bg-color-brand-solid);
       margin: 1rem 0;
       font-size: 14px;
       color: var(--text-color-primary);
@@ -631,11 +631,11 @@ ${fontRows}
       margin-top: 2rem;
       margin-bottom: 1rem;
       padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--border-color-low-contrast);
+      border-bottom: 1px solid var(--border-color-no-contrast);
     }
     .weight-sample {
       padding: 12px 16px;
-      background: var(--surface-color-secondary);
+      background: var(--bg-color-secondary);
       border-radius: 8px;
       margin: 8px 0;
       display: flex;
@@ -888,22 +888,22 @@ ${tokenRows}
     .spacing-table th, .spacing-table td {
       padding: 0.75rem;
       text-align: left;
-      border-bottom: 1px solid var(--border-color-low-contrast);
+      border-bottom: 1px solid var(--border-color-no-contrast);
       color: var(--text-color-primary);
     }
     .spacing-table th {
-      background: var(--surface-color-secondary);
+      background: var(--bg-color-secondary);
       font-weight: 600;
     }
     .spacing-table code {
-      background: var(--surface-color-tertiary);
+      background: var(--bg-color-tertiary);
       padding: 0.2rem 0.4rem;
       border-radius: 3px;
       font-size: 0.85em;
     }
     .spacing-bar {
       height: 24px;
-      background: var(--core-color-primary);
+      background: var(--bg-color-brand-solid);
       border-radius: 4px;
       opacity: 0.8;
       min-width: 4px;
@@ -914,7 +914,7 @@ ${tokenRows}
       align-items: center;
       gap: 16px;
       padding: 12px;
-      background: var(--surface-color-secondary);
+      background: var(--bg-color-secondary);
       border-radius: 8px;
       margin: 8px 0;
     }
@@ -932,9 +932,9 @@ ${tokenRows}
     }
     .hint-box {
       padding: 12px 16px;
-      background: var(--surface-color-tertiary);
+      background: var(--bg-color-tertiary);
       border-radius: 8px;
-      border-left: 4px solid var(--core-color-primary);
+      border-left: 4px solid var(--bg-color-brand-solid);
       margin: 1rem 0;
       font-size: 14px;
       color: var(--text-color-primary);
@@ -948,7 +948,7 @@ ${tokenRows}
       margin-top: 2rem;
       margin-bottom: 0.5rem;
       padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--border-color-low-contrast);
+      border-bottom: 1px solid var(--border-color-no-contrast);
     }
     .category-desc {
       font-size: 14px;
@@ -1175,15 +1175,15 @@ ${tokenRows}
     .effects-table th, .effects-table td {
       padding: 0.75rem;
       text-align: left;
-      border-bottom: 1px solid var(--border-color-low-contrast);
+      border-bottom: 1px solid var(--border-color-no-contrast);
       color: var(--text-color-primary);
     }
     .effects-table th {
-      background: var(--surface-color-secondary);
+      background: var(--bg-color-secondary);
       font-weight: 600;
     }
     .effects-table code {
-      background: var(--surface-color-tertiary);
+      background: var(--bg-color-tertiary);
       padding: 0.2rem 0.4rem;
       border-radius: 3px;
       font-size: 0.85em;
@@ -1194,12 +1194,12 @@ ${tokenRows}
       gap: 24px;
       margin: 1rem 0 2rem;
       padding: 24px;
-      background: var(--surface-color-secondary);
+      background: var(--bg-color-secondary);
       border-radius: 12px;
     }
     .shadow-card {
       height: 100px;
-      background: var(--surface-color-primary);
+      background: var(--bg-color-primary);
       border-radius: 8px;
       display: flex;
       flex-direction: column;
@@ -1220,9 +1220,9 @@ ${tokenRows}
     }
     .hint-box {
       padding: 12px 16px;
-      background: var(--surface-color-tertiary);
+      background: var(--bg-color-tertiary);
       border-radius: 8px;
-      border-left: 4px solid var(--core-color-primary);
+      border-left: 4px solid var(--bg-color-brand-solid);
       margin: 1rem 0;
       font-size: 14px;
       color: var(--text-color-primary);
@@ -1236,7 +1236,7 @@ ${tokenRows}
       margin-top: 2rem;
       margin-bottom: 0.5rem;
       padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--border-color-low-contrast);
+      border-bottom: 1px solid var(--border-color-no-contrast);
     }
     .category-desc {
       font-size: 14px;
@@ -1262,15 +1262,9 @@ These CSS classes apply predefined shadow values. The shadows automatically adap
 ${shadowSections}
 ---
 
-## Shadow Tokens
-
-You can also use CSS custom properties directly for more control:
-${shadowTokensTable}
----
-
 ## Usage
 
-### Using CSS Classes
+Shadows are applied using CSS classes. The classes automatically adapt to light/dark mode.
 
 \`\`\`html
 <!-- Apply shadow class directly -->
@@ -1278,42 +1272,31 @@ ${shadowTokensTable}
   Card content
 </div>
 
-<!-- Interactive shadow on hover -->
-<div class="card shadow-soft-sm hover:shadow-soft-md">
-  Hoverable card
+<!-- Combine with other classes -->
+<div class="panel shadow-hard-lg">
+  Elevated panel
 </div>
-\`\`\`
-
-### Using CSS Variables
-
-\`\`\`css
-/* Direct token usage */
-.my-card {
-  box-shadow: var(--shadow-soft-md);
-}
-
-/* Interactive shadow transition */
-.interactive-card {
-  box-shadow: var(--shadow-soft-sm);
-  transition: box-shadow 0.2s ease;
-}
-
-.interactive-card:hover {
-  box-shadow: var(--shadow-soft-md);
-}
 \`\`\`
 
 ### Combining with Other Tokens
 
 \`\`\`css
 .floating-panel {
-  background: var(--surface-color-primary);
-  border: 1px solid var(--border-color-low-contrast);
+  background: var(--bg-color-primary);
+  border: 1px solid var(--border-color-no-contrast);
   border-radius: 8px;
-  box-shadow: var(--shadow-soft-lg);
-  padding: var(--content-gap-lg);
+  padding: var(--gap-space-const-lg);
 }
 \`\`\`
+
+\`\`\`html
+<!-- Then add shadow class in HTML -->
+<div class="floating-panel shadow-soft-lg">
+  Panel content
+</div>
+\`\`\`
+
+> **Note:** Shadows are implemented as CSS classes (e.g., \`.shadow-soft-md\`), not CSS custom properties. This allows the shadow values to automatically adapt to light/dark mode via the \`[data-theme]\` selector.
 `;
 
   return mdxContent;

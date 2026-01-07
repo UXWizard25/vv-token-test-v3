@@ -26,7 +26,7 @@
   /* Ensure Storybook canvas uses design system tokens */
   body {
     font-family: var(--font-family-gotham, system-ui, -apple-system, sans-serif);
-    background-color: var(--surface-color-canvas, #FFFFFF);
+    background-color: var(--bg-color-primary, #FFFFFF);
     color: var(--text-color-primary, #232629);
     margin: 0;
   }
@@ -43,20 +43,20 @@
 
   /* Docs page wrapper - consistent with sidebar */
   .sbdocs-wrapper {
-    background-color: var(--surface-color-canvas, #FFFFFF) !important;
+    background-color: var(--bg-color-primary, #FFFFFF) !important;
   }
 
   /* Docs content area */
   .sbdocs-content {
-    background-color: var(--surface-color-primary, #FFFFFF) !important;
+    background-color: var(--bg-color-primary, #FFFFFF) !important;
     color: var(--text-color-primary, #232629) !important;
   }
 
   /* Docs preview/story containers */
   .docs-story,
   .sbdocs-preview {
-    background-color: var(--surface-color-primary, #FFFFFF) !important;
-    border-color: var(--border-color-low-contrast, #CED4DA) !important;
+    background-color: var(--bg-color-primary, #FFFFFF) !important;
+    border-color: var(--border-color-no-contrast, #CED4DA) !important;
   }
 
   /* MDX content typography */
@@ -73,49 +73,49 @@
   /* Code blocks */
   .sbdocs code,
   .sbdocs pre {
-    background-color: var(--surface-color-tertiary, #E8EAED) !important;
+    background-color: var(--bg-color-tertiary, #E8EAED) !important;
     color: var(--text-color-primary, #232629) !important;
   }
 
   /* Tables */
   .sbdocs table {
-    border-color: var(--border-color-low-contrast, #CED4DA) !important;
+    border-color: var(--border-color-no-contrast, #CED4DA) !important;
   }
 
   .sbdocs th {
-    background-color: var(--surface-color-secondary, #F2F4F5) !important;
+    background-color: var(--bg-color-secondary, #F2F4F5) !important;
   }
 
   .sbdocs td, .sbdocs th {
-    border-color: var(--border-color-low-contrast, #CED4DA) !important;
+    border-color: var(--border-color-no-contrast, #CED4DA) !important;
   }
 
   /* Links */
   .sbdocs a {
-    color: var(--text-color-accent, #DD0000) !important;
+    color: var(--text-color-brand, #DD0000) !important;
   }
 
   /* Horizontal rules */
   .sbdocs hr {
-    border-color: var(--border-color-low-contrast, #CED4DA) !important;
+    border-color: var(--border-color-no-contrast, #CED4DA) !important;
   }
 
   /* Blockquotes */
   .sbdocs blockquote {
-    background-color: var(--surface-color-secondary, #F2F4F5) !important;
-    border-left-color: var(--core-color-primary, #DD0000) !important;
+    background-color: var(--bg-color-secondary, #F2F4F5) !important;
+    border-left-color: var(--bg-color-brand-solid, #DD0000) !important;
     color: var(--text-color-primary, #232629) !important;
   }
 
   /* ArgTypes/Controls tables */
   .docblock-argstable {
-    background-color: var(--surface-color-primary, #FFFFFF) !important;
+    background-color: var(--bg-color-primary, #FFFFFF) !important;
   }
 
   .docblock-argstable th,
   .docblock-argstable td {
-    background-color: var(--surface-color-primary, #FFFFFF) !important;
-    border-color: var(--border-color-low-contrast, #CED4DA) !important;
+    background-color: var(--bg-color-primary, #FFFFFF) !important;
+    border-color: var(--border-color-no-contrast, #CED4DA) !important;
     color: var(--text-color-primary, #232629) !important;
   }
 
@@ -126,7 +126,7 @@
 
   /* Story canvas/preview area */
   .sb-show-main.sb-main-padded {
-    background-color: var(--surface-color-canvas, #FFFFFF) !important;
+    background-color: var(--bg-color-primary, #FFFFFF) !important;
   }
 
   /* Docs story preview wrapper */
@@ -134,12 +134,12 @@
   .sbdocs-preview .sb-story,
   .docs-story > div,
   .docs-story > div > div {
-    background-color: var(--surface-color-primary, #FFFFFF) !important;
+    background-color: var(--bg-color-primary, #FFFFFF) !important;
   }
 
   /* Story source/code container */
   .docblock-source {
-    background-color: var(--surface-color-tertiary, #E8EAED) !important;
+    background-color: var(--bg-color-tertiary, #E8EAED) !important;
   }
 
   .docblock-source pre,
@@ -151,17 +151,17 @@
   /* Table striped rows */
   .sbdocs tr:nth-child(even),
   .docblock-argstable tr:nth-child(even) {
-    background-color: var(--surface-color-secondary, #F2F4F5) !important;
+    background-color: var(--bg-color-secondary, #F2F4F5) !important;
   }
 
   .sbdocs tr:nth-child(odd),
   .docblock-argstable tr:nth-child(odd) {
-    background-color: var(--surface-color-primary, #FFFFFF) !important;
+    background-color: var(--bg-color-primary, #FFFFFF) !important;
   }
 
   /* Controls panel */
   .docblock-argstable-body td {
-    background-color: var(--surface-color-primary, #FFFFFF) !important;
+    background-color: var(--bg-color-primary, #FFFFFF) !important;
     color: var(--text-color-primary, #232629) !important;
   }
 
@@ -169,8 +169,8 @@
   .docblock-argstable input,
   .docblock-argstable select,
   .docblock-argstable textarea {
-    background-color: var(--surface-color-primary, #FFFFFF) !important;
-    border-color: var(--border-color-low-contrast, #CED4DA) !important;
+    background-color: var(--bg-color-primary, #FFFFFF) !important;
+    border-color: var(--border-color-no-contrast, #CED4DA) !important;
     color: var(--text-color-primary, #232629) !important;
   }
 
@@ -188,29 +188,29 @@
 
   /* Addon panel backgrounds */
   [id^="panel-tab-content"] {
-    background-color: var(--surface-color-primary, #FFFFFF) !important;
+    background-color: var(--bg-color-primary, #FFFFFF) !important;
   }
 
   /* ArgsTable header row */
   .docblock-argstable thead tr {
-    background-color: var(--surface-color-secondary, #F2F4F5) !important;
+    background-color: var(--bg-color-secondary, #F2F4F5) !important;
   }
 
   .docblock-argstable thead th {
-    background-color: var(--surface-color-secondary, #F2F4F5) !important;
+    background-color: var(--bg-color-secondary, #F2F4F5) !important;
     color: var(--text-color-secondary, #666B70) !important;
   }
 
   /* Reset button and other small buttons */
   .docblock-argstable button {
-    background-color: var(--surface-color-tertiary, #E8EAED) !important;
+    background-color: var(--bg-color-tertiary, #E8EAED) !important;
     color: var(--text-color-primary, #232629) !important;
-    border-color: var(--border-color-low-contrast, #CED4DA) !important;
+    border-color: var(--border-color-no-contrast, #CED4DA) !important;
   }
 
   /* Type badges/pills */
   .docblock-argstable-body td code {
-    background-color: var(--surface-color-tertiary, #E8EAED) !important;
+    background-color: var(--bg-color-tertiary, #E8EAED) !important;
     color: var(--text-color-primary, #232629) !important;
   }
 
@@ -226,8 +226,8 @@
 
   /* Canvas toolbar */
   .sb-bar {
-    background-color: var(--surface-color-primary, #FFFFFF) !important;
-    border-color: var(--border-color-low-contrast, #CED4DA) !important;
+    background-color: var(--bg-color-primary, #FFFFFF) !important;
+    border-color: var(--border-color-no-contrast, #CED4DA) !important;
   }
 
   .sb-bar button {
@@ -236,13 +236,13 @@
 
   /* Zoom/viewport toolbar */
   [class*="zoom"] {
-    background-color: var(--surface-color-primary, #FFFFFF) !important;
+    background-color: var(--bg-color-primary, #FFFFFF) !important;
   }
 
   /* Empty state messages */
   .sb-nopreview,
   .sb-errordisplay {
-    background-color: var(--surface-color-canvas, #FFFFFF) !important;
+    background-color: var(--bg-color-primary, #FFFFFF) !important;
     color: var(--text-color-primary, #232629) !important;
   }
 
@@ -260,7 +260,7 @@
   .token.number,
   .token.constant,
   .token.symbol {
-    color: var(--core-color-primary, #DD0000) !important;
+    color: var(--bg-color-brand-solid, #DD0000) !important;
   }
 
   .token.selector,
@@ -268,7 +268,7 @@
   .token.string,
   .token.char,
   .token.builtin {
-    color: var(--text-color-accent, #DD0000) !important;
+    color: var(--text-color-brand, #DD0000) !important;
   }
 
   /* ========================================

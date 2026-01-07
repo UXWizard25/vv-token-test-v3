@@ -152,7 +152,7 @@ const preview: Preview = {
     backgrounds: {
       default: 'canvas',
       values: [
-        { name: 'canvas', value: 'var(--surface-color-canvas, #FFFFFF)' },
+        { name: 'canvas', value: 'var(--bg-color-primary, #FFFFFF)' },
         { name: 'light-gray', value: '#F2F4F5' },
         { name: 'dark', value: '#232629' },
       ],

@@ -21,10 +21,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
     .color-table th, .color-table td {
       padding: 0.75rem;
       text-align: left;
-      border-bottom: 1px solid var(--border-color-low-contrast);
+      border-bottom: 1px solid var(--border-color-no-contrast);
     }
     .color-table th {
-      background: var(--surface-color-secondary);
+      background: var(--bg-color-secondary);
       font-weight: 600;
       color: var(--text-color-primary);
     }
@@ -32,7 +32,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
       color: var(--text-color-primary);
     }
     .color-table code {
-      background: var(--surface-color-tertiary);
+      background: var(--bg-color-tertiary);
       padding: 0.2rem 0.4rem;
       border-radius: 3px;
       font-size: 0.85em;
@@ -42,7 +42,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
       width: 24px;
       height: 24px;
       border-radius: 4px;
-      border: 1px solid var(--border-color-low-contrast);
+      border: 1px solid var(--border-color-no-contrast);
       vertical-align: middle;
       margin-right: 8px;
       position: relative;
@@ -75,8 +75,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
     .color-card {
       border-radius: 8px;
       overflow: hidden;
-      border: 1px solid var(--border-color-low-contrast);
-      background: var(--surface-color-primary);
+      border: 1px solid var(--border-color-no-contrast);
+      background: var(--bg-color-primary);
     }
     .color-card-swatch {
       height: 64px;
@@ -102,7 +102,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
     }
     .color-card-info {
       padding: 12px;
-      background: var(--surface-color-primary);
+      background: var(--bg-color-primary);
     }
     .color-card-name {
       font-weight: 600;
@@ -117,9 +117,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
     }
     .hint-box {
       padding: 12px 16px;
-      background: var(--surface-color-tertiary);
+      background: var(--bg-color-tertiary);
       border-radius: 8px;
-      border-left: 4px solid var(--core-color-primary);
+      border-left: 4px solid var(--bg-color-brand-solid);
       margin: 1rem 0;
       font-size: 14px;
       color: var(--text-color-primary);
@@ -133,7 +133,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
       margin-top: 2rem;
       margin-bottom: 1rem;
       padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--border-color-low-contrast);
+      border-bottom: 1px solid var(--border-color-no-contrast);
     }
   `}
 </style>
@@ -1508,19 +1508,19 @@ These are meaning-based tokens from Layer 2 that adapt to light/dark mode.
 /* Using semantic color tokens */
 .my-component {
   color: var(--text-color-primary);
-  background: var(--surface-color-primary);
-  border: 1px solid var(--border-color-low-contrast);
+  background: var(--bg-color-primary);
+  border: 1px solid var(--border-color-no-contrast);
 }
 
 /* Highlight text */
 .highlight {
-  color: var(--text-color-accent);
+  color: var(--text-color-brand);
 }
 
 /* Success state */
 .success-message {
   color: var(--text-color-success-constant);
-  background: var(--surface-color-success);
+  background: var(--bg-color-success-solid);
   border: 1px solid var(--border-color-success);
 }
 ```
