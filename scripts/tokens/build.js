@@ -106,6 +106,24 @@ function loadBreakpointDensityMatrix() {
 }
 
 /**
+ * Loads the Breakpoint × Density matrix for a specific component.
+ * Used to generate component-level Density resolvers with WindowSizeClass × Density.
+ *
+ * @param {string} brand - Brand name (bild, sportbild, advertorial)
+ * @param {string} componentName - Component name (Button, InputField, etc.)
+ * @returns {Object} Matrix with token values per breakpoint × density combination
+ */
+function loadComponentDensityMatrix(brand, componentName) {
+  const matrixPath = path.join(TOKENS_DIR, 'brands', brand, 'components', componentName, 'breakpoint-density-matrix.json');
+
+  if (!fs.existsSync(matrixPath)) {
+    return null;
+  }
+
+  return JSON.parse(fs.readFileSync(matrixPath, 'utf8'));
+}
+
+/**
  * Checks if a token has constant values across all breakpoints
  * (i.e., same value for xs, sm, md, lg)
  *
@@ -2981,13 +2999,25 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
+  // Load component Breakpoint × Density matrix (if available)
+  const componentDensityMatrix = loadComponentDensityMatrix(brand, componentName);
+  const matrixTokenNames = componentDensityMatrix ? Object.keys(componentDensityMatrix) : [];
+
+  // Filter sizing tokens to exclude those that are in the density matrix
+  // (They'll be generated in the Density section with proper Breakpoint × Density resolution)
+  const filteredSizing = {
+    compact: tokenGroups.sizing.compact.filter(t => !matrixTokenNames.includes(t.name)),
+    medium: tokenGroups.sizing.medium.filter(t => !matrixTokenNames.includes(t.name)),
+    expanded: tokenGroups.sizing.expanded.filter(t => !matrixTokenNames.includes(t.name))
+  };
+
   // Determine required imports based on token values (Material 3: Compact, Medium, Expanded)
   const allTokens = [
     ...tokenGroups.colors.light,
     ...tokenGroups.colors.dark,
-    ...tokenGroups.sizing.compact,
-    ...tokenGroups.sizing.medium,
-    ...tokenGroups.sizing.expanded,
+    ...filteredSizing.compact,
+    ...filteredSizing.medium,
+    ...filteredSizing.expanded,
     ...tokenGroups.density.dense,
     ...tokenGroups.density.default,
     ...tokenGroups.density.spacious,
@@ -3005,10 +3035,11 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   const hasDensityTokens = tokenGroups.density.dense.length > 0 ||
       tokenGroups.density.default.length > 0 ||
       tokenGroups.density.spacious.length > 0;
+  const hasMatrixDensityTokens = matrixTokenNames.length > 0;
   const hasColorTokens = tokenGroups.colors.light.length > 0 || tokenGroups.colors.dark.length > 0;
-  const hasSizingTokens = tokenGroups.sizing.compact.length > 0 ||
-      tokenGroups.sizing.medium.length > 0 ||
-      tokenGroups.sizing.expanded.length > 0;
+  const hasSizingTokens = filteredSizing.compact.length > 0 ||
+      filteredSizing.medium.length > 0 ||
+      filteredSizing.expanded.length > 0;
   const hasTypographyTokens = tokenGroups.typography.compact.length > 0 ||
       tokenGroups.typography.medium.length > 0 ||
       tokenGroups.typography.expanded.length > 0;
@@ -3152,10 +3183,11 @@ object ${componentName}Tokens {
   }
 
   // Sizing section with interface and current() accessor (Material 3: Compact, Medium, Expanded)
-  if (tokenGroups.sizing.compact.length > 0 || tokenGroups.sizing.medium.length > 0 || tokenGroups.sizing.expanded.length > 0) {
+  // NOTE: Tokens that are in the density matrix are excluded - they use WindowSizeClass × Density resolution
+  if (filteredSizing.compact.length > 0 || filteredSizing.medium.length > 0 || filteredSizing.expanded.length > 0) {
     // Collect all unique token names for interface
     const sizingTokenNames = new Map();
-    [...tokenGroups.sizing.compact, ...tokenGroups.sizing.medium, ...tokenGroups.sizing.expanded].forEach(t => {
+    [...filteredSizing.compact, ...filteredSizing.medium, ...filteredSizing.expanded].forEach(t => {
       if (!sizingTokenNames.has(t.name)) {
         sizingTokenNames.set(t.name, t.value);
       }
@@ -3201,23 +3233,23 @@ object ${componentName}Tokens {
     output += `        }
 
 `;
-    if (tokenGroups.sizing.compact.length > 0) {
+    if (filteredSizing.compact.length > 0) {
       output += `        object Compact : SizingTokens {\n`;
-      tokenGroups.sizing.compact.forEach(t => {
+      filteredSizing.compact.forEach(t => {
         output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
     }
-    if (tokenGroups.sizing.medium.length > 0) {
+    if (filteredSizing.medium.length > 0) {
       output += `        object Medium : SizingTokens {\n`;
-      tokenGroups.sizing.medium.forEach(t => {
+      filteredSizing.medium.forEach(t => {
         output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
     }
-    if (tokenGroups.sizing.expanded.length > 0) {
+    if (filteredSizing.expanded.length > 0) {
       output += `        object Expanded : SizingTokens {\n`;
-      tokenGroups.sizing.expanded.forEach(t => {
+      filteredSizing.expanded.forEach(t => {
         output += `            override val ${t.name} = ${t.value}\n`;
       });
       output += `        }\n`;
@@ -3225,13 +3257,118 @@ object ${componentName}Tokens {
     output += `    }\n`;
   }
 
-  // Density section with interface and current() helper
-  const hasDensity = tokenGroups.density.dense.length > 0 ||
-      tokenGroups.density.default.length > 0 ||
-      tokenGroups.density.spacious.length > 0;
+  // Density section with WindowSizeClass × Density resolution (if matrix available)
+  // Or fallback to density-only resolution (if no matrix)
+  if (hasMatrixDensityTokens) {
+    // Generate Density section with WindowSizeClass × Density matrix
+    // This provides proper responsive density-aware tokens
+    const matrixTokens = Object.entries(componentDensityMatrix);
 
-  if (hasDensity) {
-    // Collect all unique token names across density modes for interface
+    // Helper to determine Kotlin type from value
+    const getKotlinType = (value) => {
+      if (typeof value === 'string') {
+        if (value.includes('.sp')) return 'TextUnit';
+        if (value.includes('.dp')) return 'Dp';
+        if (value.includes('Color(')) return 'Color';
+        return 'Dp';
+      }
+      return 'Dp';
+    };
+
+    // Helper to format value for Kotlin
+    const formatKotlinValue = (value, tokenName) => {
+      if (typeof value === 'number') {
+        // Check if token name suggests it's a font size or line height
+        if (tokenName.toLowerCase().includes('fontsize') || tokenName.toLowerCase().includes('lineheight')) {
+          return `${value}.sp`;
+        }
+        return `${value}.dp`;
+      }
+      return value;
+    };
+
+    // Collect token info for interface
+    const tokenInfo = new Map();
+    matrixTokens.forEach(([name, data]) => {
+      const sampleValue = data.values.sm?.default ?? data.values.xs?.default ?? 0;
+      const formattedValue = formatKotlinValue(sampleValue, name);
+      tokenInfo.set(name, getKotlinType(formattedValue));
+    });
+
+    output += `
+    // ══════════════════════════════════════════════════════════════
+    // DENSITY (WindowSizeClass × Density Matrix)
+    // ══════════════════════════════════════════════════════════════
+    object Density {
+        /**
+         * Returns density tokens resolved by WindowSizeClass × DensityMode.
+         * Values are pre-resolved from the Breakpoint × Density matrix at build-time.
+         *
+         * Usage:
+         *   val gap = ${componentName}Tokens.Density.current().${matrixTokens[0]?.[0] || 'tokenName'}
+         */
+        @Composable
+        fun current(): DensityTokens {
+            val sizeClass = DesignSystemTheme.sizeClass
+            val density = DesignSystemTheme.density
+            return when (sizeClass) {
+                WindowSizeClass.Compact -> when (density) {
+                    com.bild.designsystem.shared.Density.Dense -> CompactDense
+                    com.bild.designsystem.shared.Density.Default -> CompactDefault
+                    com.bild.designsystem.shared.Density.Spacious -> CompactSpacious
+                }
+                WindowSizeClass.Medium -> when (density) {
+                    com.bild.designsystem.shared.Density.Dense -> MediumDense
+                    com.bild.designsystem.shared.Density.Default -> MediumDefault
+                    com.bild.designsystem.shared.Density.Spacious -> MediumSpacious
+                }
+                WindowSizeClass.Expanded -> when (density) {
+                    com.bild.designsystem.shared.Density.Dense -> ExpandedDense
+                    com.bild.designsystem.shared.Density.Default -> ExpandedDefault
+                    com.bild.designsystem.shared.Density.Spacious -> ExpandedSpacious
+                }
+            }
+        }
+
+        /**
+         * Interface for density tokens (WindowSizeClass × Density resolved)
+         */
+        interface DensityTokens {
+`;
+    tokenInfo.forEach((type, name) => {
+      output += `            val ${name}: ${type}\n`;
+    });
+    output += `        }
+
+`;
+
+    // Android WindowSizeClass mapping: Compact→sm, Medium→md, Expanded→lg
+    const androidBreakpointMap = {
+      Compact: 'sm',
+      Medium: 'md',
+      Expanded: 'lg'
+    };
+    const densityModes = ['Dense', 'Default', 'Spacious'];
+    const densityModeKeys = { Dense: 'dense', Default: 'default', Spacious: 'spacious' };
+
+    // Generate 9 objects (3 WindowSizeClasses × 3 DensityModes)
+    for (const [sizeClassName, breakpointKey] of Object.entries(androidBreakpointMap)) {
+      for (const densityMode of densityModes) {
+        const objectName = `${sizeClassName}${densityMode}`;
+        const densityKey = densityModeKeys[densityMode];
+
+        output += `        object ${objectName} : DensityTokens {\n`;
+        matrixTokens.forEach(([tokenName, tokenData]) => {
+          const value = tokenData.values[breakpointKey]?.[densityKey] ?? tokenData.values.xs?.[densityKey] ?? 0;
+          const formattedValue = formatKotlinValue(value, tokenName);
+          output += `            override val ${tokenName} = ${formattedValue}\n`;
+        });
+        output += `        }\n`;
+      }
+    }
+    output += `    }\n`;
+  } else if (hasDensityTokens) {
+    // Fallback: density-only resolution (no WindowSizeClass dimension)
     const densityTokenNames = new Map();
     [...tokenGroups.density.dense, ...tokenGroups.density.default, ...tokenGroups.density.spacious].forEach(t => {
       if (!densityTokenNames.has(t.name)) {
@@ -3610,9 +3747,20 @@ function generateAggregatedSwiftComponentFile(brand, componentName, tokenGroups)
   const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
+  // Load component Breakpoint × Density matrix (if available)
+  const componentDensityMatrix = loadComponentDensityMatrix(brand, componentName);
+  const matrixTokenNames = componentDensityMatrix ? Object.keys(componentDensityMatrix) : [];
+
+  // Filter sizing tokens to exclude those that are in the density matrix
+  const filteredSizing = {
+    compact: tokenGroups.sizing.compact.filter(t => !matrixTokenNames.includes(t.name)),
+    regular: tokenGroups.sizing.regular.filter(t => !matrixTokenNames.includes(t.name))
+  };
+
   // Check what token groups exist
   const hasColorTokens = tokenGroups.colors.light.length > 0 || tokenGroups.colors.dark.length > 0;
-  const hasSizingTokens = tokenGroups.sizing.compact.length > 0 || tokenGroups.sizing.regular.length > 0;
+  const hasSizingTokens = filteredSizing.compact.length > 0 || filteredSizing.regular.length > 0;
+  const hasMatrixDensityTokens = matrixTokenNames.length > 0;
   const hasDensityTokens = tokenGroups.density.dense.length > 0 ||
       tokenGroups.density.default.length > 0 ||
       tokenGroups.density.spacious.length > 0;
@@ -3696,10 +3844,10 @@ public enum ${componentName}Tokens {
     output += `    }\n`;
   }
 
-  // Sizing section
+  // Sizing section (excluding tokens in density matrix)
   if (hasSizingTokens) {
     const sizingTokenNames = new Map();
-    [...tokenGroups.sizing.compact, ...tokenGroups.sizing.regular].forEach(t => {
+    [...filteredSizing.compact, ...filteredSizing.regular].forEach(t => {
       if (!sizingTokenNames.has(t.name)) {
         sizingTokenNames.set(t.name, { type: t.type, value: t.value });
       }
@@ -3727,25 +3875,25 @@ public enum ${componentName}Tokens {
         public static var regular: Regular { Regular.shared }
 `;
 
-    if (tokenGroups.sizing.compact.length > 0) {
+    if (filteredSizing.compact.length > 0) {
       output += `
         public struct Compact: ${componentName}SizingTokens {
             public static let shared = Compact()
             private init() {}
 `;
-      tokenGroups.sizing.compact.forEach(t => {
+      filteredSizing.compact.forEach(t => {
         output += `            public let ${t.name}: ${t.type} = ${t.value}\n`;
       });
       output += `        }\n`;
     }
 
-    if (tokenGroups.sizing.regular.length > 0) {
+    if (filteredSizing.regular.length > 0) {
       output += `
         public struct Regular: ${componentName}SizingTokens {
             public static let shared = Regular()
             private init() {}
 `;
-      tokenGroups.sizing.regular.forEach(t => {
+      filteredSizing.regular.forEach(t => {
         output += `            public let ${t.name}: ${t.type} = ${t.value}\n`;
       });
       output += `        }\n`;
@@ -3753,8 +3901,84 @@ public enum ${componentName}Tokens {
     output += `    }\n`;
   }
 
-  // Density section
-  if (hasDensityTokens) {
+  // Density section with SizeClass × Density resolution (if matrix available)
+  if (hasMatrixDensityTokens) {
+    // Generate Density section with SizeClass × Density matrix
+    const matrixTokens = Object.entries(componentDensityMatrix);
+
+    // Helper to determine Swift type from value
+    const getSwiftType = (value, tokenName) => {
+      if (typeof value === 'number') {
+        if (tokenName.toLowerCase().includes('fontsize') || tokenName.toLowerCase().includes('lineheight')) {
+          return 'CGFloat';
+        }
+        return 'CGFloat';
+      }
+      return 'CGFloat';
+    };
+
+    // Collect token info for protocol
+    const tokenInfo = new Map();
+    matrixTokens.forEach(([name, data]) => {
+      const sampleValue = data.values.sm?.default ?? data.values.xs?.default ?? 0;
+      tokenInfo.set(name, getSwiftType(sampleValue, name));
+    });
+
+    output += `
+    // MARK: - Density (SizeClass × Density Matrix)
+
+    /// Density tokens protocol (SizeClass × Density resolved)
+    public protocol ${componentName}DensityTokens: Sendable {
+`;
+    tokenInfo.forEach((type, name) => {
+      output += `        var ${name}: ${type} { get }\n`;
+    });
+    output += `    }
+
+    /// Density accessor with SizeClass × Density resolution
+    public enum Density {
+        /// Returns density tokens resolved by SizeClass × DensityMode
+        public static func current(for sizeClass: SizeClass, density: DesignDensity) -> any ${componentName}DensityTokens {
+            switch (sizeClass, density) {
+            case (.compact, .dense): return CompactDense.shared
+            case (.compact, .default): return CompactDefault.shared
+            case (.compact, .spacious): return CompactSpacious.shared
+            case (.regular, .dense): return RegularDense.shared
+            case (.regular, .default): return RegularDefault.shared
+            case (.regular, .spacious): return RegularSpacious.shared
+            }
+        }
+`;
+
+    // iOS SizeClass mapping: compact→sm, regular→lg
+    const iosSizeClassMap = {
+      Compact: 'sm',
+      Regular: 'lg'
+    };
+    const densityModes = ['Dense', 'Default', 'Spacious'];
+    const densityModeKeys = { Dense: 'dense', Default: 'default', Spacious: 'spacious' };
+
+    // Generate 6 structs (2 SizeClasses × 3 DensityModes)
+    for (const [sizeClassName, breakpointKey] of Object.entries(iosSizeClassMap)) {
+      for (const densityMode of densityModes) {
+        const structName = `${sizeClassName}${densityMode}`;
+        const densityKey = densityModeKeys[densityMode];
+
+        output += `
+        public struct ${structName}: ${componentName}DensityTokens {
+            public static let shared = ${structName}()
+            private init() {}
+`;
+        matrixTokens.forEach(([tokenName, tokenData]) => {
+          const value = tokenData.values[breakpointKey]?.[densityKey] ?? tokenData.values.xs?.[densityKey] ?? 0;
+          output += `            public let ${tokenName}: CGFloat = ${value}\n`;
+        });
+        output += `        }\n`;
+      }
+    }
+    output += `    }\n`;
+  } else if (hasDensityTokens) {
+    // Fallback: density-only resolution
     const densityTokenNames = new Map();
     [...tokenGroups.density.dense, ...tokenGroups.density.default, ...tokenGroups.density.spacious].forEach(t => {
       if (!densityTokenNames.has(t.name)) {
@@ -3776,7 +4000,7 @@ public enum ${componentName}Tokens {
     /// Density accessor
     public enum DensityMode {
         /// Returns density tokens for the specified density mode
-        public static func current(for density: Density) -> any ${componentName}DensityTokens {
+        public static func current(for density: DesignDensity) -> any ${componentName}DensityTokens {
             switch density {
             case .dense: return Dense.shared
             case .default: return Default.shared
