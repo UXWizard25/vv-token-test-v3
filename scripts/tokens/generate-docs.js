@@ -58,15 +58,21 @@ function loadTokens(filePath) {
 
 /**
  * Extract tokens from a category object
+ *
+ * IMPORTANT: CSS variable names are derived ONLY from the token name (the leaf key),
+ * NOT from the category hierarchy. Style Dictionary uses only the token name for CSS vars.
+ *
+ * Example: Semantic/Text/Brand/textColorBrand → --text-color-brand (not --brand-text-color-brand)
  */
-function extractTokensFromCategory(category, prefix = '') {
+function extractTokensFromCategory(category) {
   const tokens = [];
 
   for (const [key, value] of Object.entries(category)) {
     if (value && typeof value === 'object') {
       // If it has $value, it's a token
       if (value.$value !== undefined || value.value !== undefined) {
-        const cssVar = `--${toKebabCase(prefix ? `${prefix}-${key}` : key)}`;
+        // Use ONLY the token name (key) - do NOT include category prefixes
+        const cssVar = `--${toKebabCase(key)}`;
         tokens.push({
           name: key,
           displayName: toDisplayName(key),
@@ -76,8 +82,8 @@ function extractTokensFromCategory(category, prefix = '') {
           alias: value.$alias?.token || null
         });
       } else {
-        // It's a nested category, recurse
-        tokens.push(...extractTokensFromCategory(value, key));
+        // It's a nested category, recurse (no prefix accumulation)
+        tokens.push(...extractTokensFromCategory(value));
       }
     }
   }

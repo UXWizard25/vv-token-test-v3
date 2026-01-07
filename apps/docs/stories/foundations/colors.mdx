@@ -946,118 +946,118 @@ These are meaning-based tokens from Layer 2 that adapt to light/dark mode.
   </thead>
   <tbody>
     <tr>
-      <td><code>--brand-text-color-brand</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--brand-text-color-brand)'}}></span></span></td>
+      <td><code>--text-color-brand</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-brand)'}}></span></span></td>
       <td>Applies to text elements requiring fixed brand color usage (e.g., permanent links, brand slogans on constant backgrounds). Behavior: Constant — maintains identical red tone across Light and Dark mode.</td>
     </tr>
     <tr>
-      <td><code>--brand-text-color-brand-light-only</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--brand-text-color-brand-light-only)'}}></span></span></td>
+      <td><code>--text-color-brand-light-only</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-brand-light-only)'}}></span></span></td>
       <td>Accent text color used for links, interactive text, or highlighted key words. Changes from a red in light mode to a white in dark mode.</td>
     </tr>
     <tr>
-      <td><code>--standard-text-color-primary</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--standard-text-color-primary)'}}></span></span></td>
+      <td><code>--text-color-primary</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-primary)'}}></span></span></td>
       <td>Main text color used for body copy and all primary textual content. Ensures optimal readability and contrast on standard surfaces. Behavior: Dynamic — switches between dark text on light backgrounds and light text on dark backgrounds.</td>
     </tr>
     <tr>
-      <td><code>--standard-text-color-secondary</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--standard-text-color-secondary)'}}></span></span></td>
+      <td><code>--text-color-secondary</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-secondary)'}}></span></span></td>
       <td>Muted text tone for subtle information, timestamps, or inactive text elements. Behavior: Dynamic — adjusts between mid-gray in Light mode and lighter gray in Dark mode.</td>
     </tr>
     <tr>
-      <td><code>--standard-text-color-tertiary</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--standard-text-color-tertiary)'}}></span></span></td>
+      <td><code>--text-color-tertiary</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-tertiary)'}}></span></span></td>
       <td>Secondary text color used for supportive information, subtitles, and less prominent text. Behavior: Dynamic — adapts between neutral tones to maintain proper contrast per theme. In 2025 css it is called figure meta.</td>
     </tr>
     <tr>
-      <td><code>--heading-kicker-text-color</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--heading-kicker-text-color)'}}></span></span></td>
+      <td><code>--kicker-text-color</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--kicker-text-color)'}}></span></span></td>
       <td>Used for kicker text and category labels placed directly on standard surface backgrounds. Behavior: Dynamic — adjusts between red for Light and a neutral tone in Dark modes.</td>
     </tr>
     <tr>
-      <td><code>--heading-headline-text-color</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--heading-headline-text-color)'}}></span></span></td>
+      <td><code>--headline-text-color</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--headline-text-color)'}}></span></span></td>
       <td>Primary color for headings and display typography. Ensures clear hierarchy and optimal readability on main surfaces. Adapds it´s color based on the brand mode for brand recognition. Behavior: Dynamic — dark text in Light mode, light text in Dark mode.</td>
     </tr>
     <tr>
-      <td><code>--on-solid-text-color-on-image</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--on-solid-text-color-on-image)'}}></span></span></td>
+      <td><code>--text-color-on-image</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-on-image)'}}></span></span></td>
       <td>Fixed white heading color used on dark or colored backgrounds (e.g., hero sections, banners) that remain constant across modes. Behavior: Constant — remains white in both Light and Dark mode.</td>
     </tr>
     <tr>
-      <td><code>--on-solid-text-color-secondary-on-dark</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--on-solid-text-color-secondary-on-dark)'}}></span></span></td>
+      <td><code>--text-color-secondary-on-dark</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-secondary-on-dark)'}}></span></span></td>
       <td>Fixed inverse label tone applied where white or bright text must always appear, regardless of theme. Behavior: Constant — remains bright neutral in both Light and Dark mode. L&D:093</td>
     </tr>
     <tr>
-      <td><code>--on-solid-text-color-primary-on-light</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--on-solid-text-color-primary-on-light)'}}></span></span></td>
+      <td><code>--text-color-primary-on-light</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-primary-on-light)'}}></span></span></td>
       <td>Used when primary text color must remain fixed regardless of mode (e.g., on light constant backgrounds). Behavior: Constant — same tone across Light and Dark mode.</td>
     </tr>
     <tr>
-      <td><code>--on-solid-kicker-text-color-on-dark</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--on-solid-kicker-text-color-on-dark)'}}></span></span></td>
+      <td><code>--kicker-text-color-on-dark</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--kicker-text-color-on-dark)'}}></span></span></td>
       <td>Applied to kicker or meta text on dark colored backgrounds to maintain high legibility. Behavior: Constant — always uses semi-transparent white for consistent readability.</td>
     </tr>
     <tr>
-      <td><code>--on-solid-kicker-text-color-on-light</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--on-solid-kicker-text-color-on-light)'}}></span></span></td>
+      <td><code>--kicker-text-color-on-light</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--kicker-text-color-on-light)'}}></span></span></td>
       <td>Used for kicker text placed on bright or light colored backgrounds. Ensures balanced contrast without harsh visual dominance. Behavior: Constant — remains semi-transparent black across both modes.</td>
     </tr>
     <tr>
-      <td><code>--on-solid-text-color-primary-on-dark</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--on-solid-text-color-primary-on-dark)'}}></span></span></td>
+      <td><code>--text-color-primary-on-dark</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-primary-on-dark)'}}></span></span></td>
       <td>Used for text displayed on dark surfaces to ensure maximum legibility and contrast. Behavior: Constant — always light neutral to guarantee accessibility on dark backgrounds.</td>
     </tr>
     <tr>
-      <td><code>--interactive-text-color-idle</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--interactive-text-color-idle)'}}></span></span></td>
+      <td><code>--text-color-idle</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-idle)'}}></span></span></td>
       <td>Primary label color used for labels, badges, or tag text on light backgrounds. Ensures strong readability and visual hierarchy. Behavior: Dynamic — dark neutral in Light mode, light neutral in Dark mode. L: 015 D:093</td>
     </tr>
     <tr>
-      <td><code>--interactive-text-color-disabled</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--interactive-text-color-disabled)'}}></span></span></td>
+      <td><code>--text-color-disabled</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-disabled)'}}></span></span></td>
       <td>Disabled label tone indicating inactive or unavailable states in UI elements. Behavior: Dynamic — lighter gray in Light mode, darker neutral in Dark mode. L:085 D:035</td>
     </tr>
     <tr>
-      <td><code>--interactive-text-color-hover</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--interactive-text-color-hover)'}}></span></span></td>
+      <td><code>--text-color-hover</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-hover)'}}></span></span></td>
       <td>Text Color Hover</td>
     </tr>
     <tr>
-      <td><code>--interactive-text-color-active</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--interactive-text-color-active)'}}></span></span></td>
+      <td><code>--text-color-active</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-active)'}}></span></span></td>
       <td>Text Color Active</td>
     </tr>
     <tr>
-      <td><code>--inverse-text-color-primary-inverse</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--inverse-text-color-primary-inverse)'}}></span></span></td>
+      <td><code>--text-color-primary-inverse</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-primary-inverse)'}}></span></span></td>
       <td>Inverse text color used on opposing surfaces (e.g., white text on red or dark backgrounds). Behavior: Dynamic — alternates between light and dark mode.</td>
     </tr>
     <tr>
-      <td><code>--inverse-text-color-secondary-inverse</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--inverse-text-color-secondary-inverse)'}}></span></span></td>
+      <td><code>--text-color-secondary-inverse</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-secondary-inverse)'}}></span></span></td>
       <td>Text Color Secondary Inverse</td>
     </tr>
     <tr>
-      <td><code>--inverse-text-color-inverse-high-contrast</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--inverse-text-color-inverse-high-contrast)'}}></span></span></td>
+      <td><code>--text-color-inverse-high-contrast</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-inverse-high-contrast)'}}></span></span></td>
       <td>Text Color Inverse High Contrast</td>
     </tr>
     <tr>
-      <td><code>--feedback-text-color-success</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--feedback-text-color-success)'}}></span></span></td>
+      <td><code>--text-color-success</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-success)'}}></span></span></td>
       <td>Used for positive or success-related messages (e.g., “Saved”, “Success”, or confirmation text) on success surface colors. Behavior: Constant — green tone remains consistent across both modes.</td>
     </tr>
     <tr>
-      <td><code>--feedback-text-color-error</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--feedback-text-color-error)'}}></span></span></td>
+      <td><code>--text-color-error</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-error)'}}></span></span></td>
       <td>Used for strong warnings, errors, or destructive action labels. Behavior: Constant — red color remains unchanged between Light and Dark mode for visibility and recognition.</td>
     </tr>
     <tr>
-      <td><code>--feedback-text-color-warning</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--feedback-text-color-warning)'}}></span></span></td>
+      <td><code>--text-color-warning</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--text-color-warning)'}}></span></span></td>
       <td>Represents medium attention states, often used in warnings or pending states. Behavior: Constant — same orange tone across Light and Dark mode.</td>
     </tr>
   </tbody>
@@ -1075,188 +1075,188 @@ These are meaning-based tokens from Layer 2 that adapt to light/dark mode.
   </thead>
   <tbody>
     <tr>
-      <td><code>--standard-bg-color-primary</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--standard-bg-color-primary)'}}></span></span></td>
+      <td><code>--bg-color-primary</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-primary)'}}></span></span></td>
       <td>Primary surface color used for main backgrounds and large layout areas (e.g., page background, primary containers). Behavior: Dynamic — adapts between light and dark surface tokens to maintain legibility and hierarchy.</td>
     </tr>
     <tr>
-      <td><code>--standard-bg-color-disabled</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--standard-bg-color-disabled)'}}></span></span></td>
+      <td><code>--bg-color-disabled</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-disabled)'}}></span></span></td>
       <td>Defines the disabled color for primary components (e.g., disabled primary buttons, inputs). Reduces emphasis and contrast to signal inactivity. Behavior: Dynamic - slightly lighter in Light mode and darker in Dark mode to remain visually accessible.</td>
     </tr>
     <tr>
-      <td><code>--standard-bg-color-secondary</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--standard-bg-color-secondary)'}}></span></span></td>
+      <td><code>--bg-color-secondary</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-secondary)'}}></span></span></td>
       <td>Used for secondary surface layers such as cards, panels, or nested containers that need to differentiate themselves from the primary surface. Behavior: Dynamic — adapts brightness level based on mode for appropriate depth contrast.</td>
     </tr>
     <tr>
-      <td><code>--standard-bg-color-primary-const-dark</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--standard-bg-color-primary-const-dark)'}}></span></span></td>
+      <td><code>--bg-color-primary-const-dark</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-primary-const-dark)'}}></span></span></td>
       <td>A fixed dark surface tone used for dark overlays or nested dark sections inside light layouts. Behavior: Constant — identical across Light and Dark mode.</td>
     </tr>
     <tr>
-      <td><code>--standard-bg-color-quaternary</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--standard-bg-color-quaternary)'}}></span></span></td>
+      <td><code>--bg-color-quaternary</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-quaternary)'}}></span></span></td>
       <td>HIghtest elevation surface color, typically used for grouping or background accents to differentiate themselves from all previous surface color options. Uses corresponding light/dark tones for consistent layering.</td>
     </tr>
     <tr>
-      <td><code>--standard-bg-color-tertiary</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--standard-bg-color-tertiary)'}}></span></span></td>
+      <td><code>--bg-color-tertiary</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-tertiary)'}}></span></span></td>
       <td>Tertiary background layer for inner containers, grouped content, or subtle elevation steps that need to differentiate themselves from the primary and secondary surfaces. Behavior: Dynamic — switches between light and dark tertiary tones.</td>
     </tr>
     <tr>
-      <td><code>--standard-bg-color-primary-const-light</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--standard-bg-color-primary-const-light)'}}></span></span></td>
+      <td><code>--bg-color-primary-const-light</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-primary-const-light)'}}></span></span></td>
       <td>Use this on elements that must maintain the white color even in dark mode.</td>
     </tr>
     <tr>
-      <td><code>--standard-bg-color-quintenary</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--standard-bg-color-quintenary)'}}></span></span></td>
+      <td><code>--bg-color-quintenary</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-quintenary)'}}></span></span></td>
       <td>Bg Color Quintenary</td>
     </tr>
     <tr>
-      <td><code>--brand-bg-color-brand-light-only</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--brand-bg-color-brand-light-only)'}}></span></span></td>
+      <td><code>--bg-color-brand-light-only</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-brand-light-only)'}}></span></span></td>
       <td>Primary accent color used to emphasize interactive or highlight elements such as links, selection states, or focus indicators. Adapts in Darkmode to a fully white tone.</td>
     </tr>
     <tr>
-      <td><code>--brand-bg-color-brand-solid</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--brand-bg-color-brand-solid)'}}></span></span></td>
+      <td><code>--bg-color-brand-solid</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-brand-solid)'}}></span></span></td>
       <td>Used for accent highlights that must remain visually consistent across themes (e.g., brand identifiers, logos, or fixed emphasis areas). Color value does not change between Light and Dark mode.</td>
     </tr>
     <tr>
-      <td><code>--brand-bg-color-brand-solid-hover</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--brand-bg-color-brand-solid-hover)'}}></span></span></td>
+      <td><code>--bg-color-brand-solid-hover</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-brand-solid-hover)'}}></span></span></td>
       <td>Bg Color Brand Solid Hover</td>
     </tr>
     <tr>
-      <td><code>--brand-bg-color-brand-solid-active</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--brand-bg-color-brand-solid-active)'}}></span></span></td>
+      <td><code>--bg-color-brand-solid-active</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-brand-solid-active)'}}></span></span></td>
       <td>Bg Color Brand Solid Active</td>
     </tr>
     <tr>
-      <td><code>--brand-bg-color-brand-tint</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--brand-bg-color-brand-tint)'}}></span></span></td>
+      <td><code>--bg-color-brand-tint</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-brand-tint)'}}></span></span></td>
       <td>Bg Color Brand Tint</td>
     </tr>
     <tr>
-      <td><code>--brand-bg-color-brand-tint-hover</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--brand-bg-color-brand-tint-hover)'}}></span></span></td>
+      <td><code>--bg-color-brand-tint-hover</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-brand-tint-hover)'}}></span></span></td>
       <td>Bg Color Brand Tint Hover</td>
     </tr>
     <tr>
-      <td><code>--inverse-bg-color-primary-inverse</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--inverse-bg-color-primary-inverse)'}}></span></span></td>
+      <td><code>--bg-color-primary-inverse</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-primary-inverse)'}}></span></span></td>
       <td>Inverse of the primary surface, used when Light and Dark surfaces are swapped (e.g., inverse cards or elevated sections). Behavior: Dynamic — switches between dark and light values depending on mode.</td>
     </tr>
     <tr>
-      <td><code>--inverse-bg-color-tertiary-inverse</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--inverse-bg-color-tertiary-inverse)'}}></span></span></td>
+      <td><code>--bg-color-tertiary-inverse</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-tertiary-inverse)'}}></span></span></td>
       <td>Inverse tertiary background, applied when Light and Dark surfaces are reversed (e.g., dark-on-light cards). Behavior: Dynamic — swaps values between modes for contrast preservation.</td>
     </tr>
     <tr>
-      <td><code>--inverse-bg-color-quaternary-inverse</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--inverse-bg-color-quaternary-inverse)'}}></span></span></td>
+      <td><code>--bg-color-quaternary-inverse</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-quaternary-inverse)'}}></span></span></td>
       <td>Inverse of the quartenary surface, used for background reversals in mixed-layout areas. Behavior: Dynamic — inverts between dark and light tones depending on mode.</td>
     </tr>
     <tr>
-      <td><code>--inverse-bg-color-secondary-inverse</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--inverse-bg-color-secondary-inverse)'}}></span></span></td>
+      <td><code>--bg-color-secondary-inverse</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-secondary-inverse)'}}></span></span></td>
       <td>Inverse of the primary surface, used when Light and Dark surfaces are swapped (e.g., inverse cards or elevated sections). Behavior: Dynamic — switches between dark and light values depending on mode.</td>
     </tr>
     <tr>
-      <td><code>--inverse-bg-color-quintenary-inverse</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--inverse-bg-color-quintenary-inverse)'}}></span></span></td>
+      <td><code>--bg-color-quintenary-inverse</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-quintenary-inverse)'}}></span></span></td>
       <td>Inverse of the quartenary surface, used for background reversals in mixed-layout areas. Behavior: Dynamic — inverts between dark and light tones depending on mode.</td>
     </tr>
     <tr>
-      <td><code>--success-bg-color-success-tint</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--success-bg-color-success-tint)'}}></span></span></td>
+      <td><code>--bg-color-success-tint</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-success-tint)'}}></span></span></td>
       <td>Success-related background used for positive notifications, confirmation surfaces, or success banners. Behavior: Constant — remains the same across Light and Dark mode to ensure brand alignment.</td>
     </tr>
     <tr>
-      <td><code>--success-bg-color-success-solid</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--success-bg-color-success-solid)'}}></span></span></td>
+      <td><code>--bg-color-success-solid</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-success-solid)'}}></span></span></td>
       <td>Primary success color used to indicate positive states, confirmations, or completed actions (e.g., success banners, icons, or badges). Remains the same across modes to ensure recognizability and consistency. L&D:070</td>
     </tr>
     <tr>
-      <td><code>--success-bg-color-success-solid-hover</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--success-bg-color-success-solid-hover)'}}></span></span></td>
+      <td><code>--bg-color-success-solid-hover</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-success-solid-hover)'}}></span></span></td>
       <td>Secondary success tone used for secondary states. Maintains the same color in both Light and Dark mode for clarity. L&D: green40</td>
     </tr>
     <tr>
-      <td><code>--success-bg-color-success-tint-hover</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--success-bg-color-success-tint-hover)'}}></span></span></td>
+      <td><code>--bg-color-success-tint-hover</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-success-tint-hover)'}}></span></span></td>
       <td>Success-related background used for positive notifications, confirmation surfaces, or success banners. Behavior: Constant — remains the same across Light and Dark mode to ensure brand alignment.</td>
     </tr>
     <tr>
-      <td><code>--success-bg-color-success-solid-active</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--success-bg-color-success-solid-active)'}}></span></span></td>
+      <td><code>--bg-color-success-solid-active</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-success-solid-active)'}}></span></span></td>
       <td>Secondary success tone used for secondary states. Maintains the same color in both Light and Dark mode for clarity. L&D: green40</td>
     </tr>
     <tr>
-      <td><code>--gradient-stops-bg-color-tertiary-gradient-stop</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--gradient-stops-bg-color-tertiary-gradient-stop)'}}></span></span></td>
+      <td><code>--bg-color-tertiary-gradient-stop</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-tertiary-gradient-stop)'}}></span></span></td>
       <td>Represents tertiary-level gradient background. Currently used on skeletons.</td>
     </tr>
     <tr>
-      <td><code>--gradient-stops-bg-color-primary-gradient-stop</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--gradient-stops-bg-color-primary-gradient-stop)'}}></span></span></td>
+      <td><code>--bg-color-primary-gradient-stop</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-primary-gradient-stop)'}}></span></span></td>
       <td>Defines the end stops for primary surface gradients, creating visual depth or elevation. Used next to sliders buttons and slider container edges for fading out content. Behavior: Dynamic — light gradients in Light mode, dark gradients in Dark mode.</td>
     </tr>
     <tr>
-      <td><code>--gradient-stops-bg-color-secondary-gradient-stop</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--gradient-stops-bg-color-secondary-gradient-stop)'}}></span></span></td>
+      <td><code>--bg-color-secondary-gradient-stop</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-secondary-gradient-stop)'}}></span></span></td>
       <td>Used for secondary surface gradients or subtle depth layers across backgrounds. Behavior: Dynamic — adapts to mode brightness for smooth gradient transitions.</td>
     </tr>
     <tr>
-      <td><code>--overlay-overlay-scrim-black-const</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--overlay-overlay-scrim-black-const)'}}></span></span></td>
+      <td><code>--overlay-scrim-black-const</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--overlay-scrim-black-const)'}}></span></span></td>
       <td>A semi-transparent black overlay used to dim background content when modals, drawers, or dialogs are active. Identical opacity and tone in both Light and Dark mode to ensure consistent overlay depth.</td>
     </tr>
     <tr>
-      <td><code>--overlay-overlay-scrim-white-const</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--overlay-overlay-scrim-white-const)'}}></span></span></td>
+      <td><code>--overlay-scrim-white-const</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--overlay-scrim-white-const)'}}></span></span></td>
       <td>A semi-transparent white overlay used to brighten or fade background layers, often applied behind bottom sheets or temporary panels. Behavior: Constant — same opacity level across modes to preserve uniform layering behavior.</td>
     </tr>
     <tr>
-      <td><code>--error-bg-color-error-tint</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--error-bg-color-error-tint)'}}></span></span></td>
+      <td><code>--bg-color-error-tint</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-error-tint)'}}></span></span></td>
       <td>Bg Color Error Tint</td>
     </tr>
     <tr>
-      <td><code>--error-bg-color-error-tint-hover</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--error-bg-color-error-tint-hover)'}}></span></span></td>
+      <td><code>--bg-color-error-tint-hover</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-error-tint-hover)'}}></span></span></td>
       <td>Bg Color Error Tint Hover</td>
     </tr>
     <tr>
-      <td><code>--error-bg-color-error-solid</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--error-bg-color-error-solid)'}}></span></span></td>
+      <td><code>--bg-color-error-solid</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-error-solid)'}}></span></span></td>
       <td>Bg Color Error Solid</td>
     </tr>
     <tr>
-      <td><code>--error-bg-color-error-solid-hover</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--error-bg-color-error-solid-hover)'}}></span></span></td>
+      <td><code>--bg-color-error-solid-hover</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-error-solid-hover)'}}></span></span></td>
       <td>Bg Color Error Solid Hover</td>
     </tr>
     <tr>
-      <td><code>--warning-bg-color-warning-tint</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--warning-bg-color-warning-tint)'}}></span></span></td>
+      <td><code>--bg-color-warning-tint</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-warning-tint)'}}></span></span></td>
       <td>Bg Color Warning Tint</td>
     </tr>
     <tr>
-      <td><code>--warning-bg-color-warning-tint-hover</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--warning-bg-color-warning-tint-hover)'}}></span></span></td>
+      <td><code>--bg-color-warning-tint-hover</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-warning-tint-hover)'}}></span></span></td>
       <td>Bg Color Warning Tint Hover</td>
     </tr>
     <tr>
-      <td><code>--warning-bg-color-warning-solid</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--warning-bg-color-warning-solid)'}}></span></span></td>
+      <td><code>--bg-color-warning-solid</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-warning-solid)'}}></span></span></td>
       <td>Bg Color Warning Solid</td>
     </tr>
     <tr>
-      <td><code>--warning-bg-color-warning-solid-hover</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--warning-bg-color-warning-solid-hover)'}}></span></span></td>
+      <td><code>--bg-color-warning-solid-hover</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--bg-color-warning-solid-hover)'}}></span></span></td>
       <td>Bg Color Warning Solid Hover</td>
     </tr>
   </tbody>
@@ -1274,113 +1274,113 @@ These are meaning-based tokens from Layer 2 that adapt to light/dark mode.
   </thead>
   <tbody>
     <tr>
-      <td><code>--standard-border-color-default</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--standard-border-color-default)'}}></span></span></td>
+      <td><code>--border-color-default</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-default)'}}></span></span></td>
       <td>Medium-emphasis border color for standard outlines, input fields, or separators that require visible yet non-dominant contrast. Behavior: Dynamic - adjusts to maintain legibility in Light and Dark themes. L:085 D:045</td>
     </tr>
     <tr>
-      <td><code>--standard-border-color-subtle</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--standard-border-color-subtle)'}}></span></span></td>
+      <td><code>--border-color-subtle</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-subtle)'}}></span></span></td>
       <td>Used for subtle dividers and low-emphasis borders in neutral areas (e.g., card outlines, input containers). Dynamic - light gray 093 in Light mode, dark gray 035 in Dark mode.</td>
     </tr>
     <tr>
-      <td><code>--standard-border-color-extra-strong</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--standard-border-color-extra-strong)'}}></span></span></td>
+      <td><code>--border-color-extra-strong</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-extra-strong)'}}></span></span></td>
       <td>High-emphasis border color for clear delineation between surfaces (e.g., focus rings, high-contrast UI zones). Behavior: Dynamic — light surfaces use a darker neutral, dark surfaces a light neutral tone. L:015 D:100</td>
     </tr>
     <tr>
-      <td><code>--standard-border-color-strong</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--standard-border-color-strong)'}}></span></span></td>
+      <td><code>--border-color-strong</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-strong)'}}></span></span></td>
       <td>High-emphasis border color for clear delineation between surfaces (e.g., focus rings, high-contrast UI zones). Behavior: Dynamic — light surfaces use a darker neutral, dark surfaces a light neutral tone. L:015 D:100</td>
     </tr>
     <tr>
-      <td><code>--on-solid-border-color-subtle-on-dark</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--on-solid-border-color-subtle-on-dark)'}}></span></span></td>
+      <td><code>--border-color-subtle-on-dark</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-subtle-on-dark)'}}></span></span></td>
       <td>Applies to UI elements that must visually remain the same regardless of theme (e.g., brand containers, static illustrations). Identical tone across Light and Dark mode. L&D: 093</td>
     </tr>
     <tr>
-      <td><code>--on-solid-border-color-default-on-dark</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--on-solid-border-color-default-on-dark)'}}></span></span></td>
+      <td><code>--border-color-default-on-dark</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-default-on-dark)'}}></span></span></td>
       <td>Medium-emphasis border color for standard outlines, input fields, or separators that require visible yet non-dominant contrast. Behavior: Dynamic - adjusts to maintain legibility in Light and Dark themes. L:085 D:045</td>
     </tr>
     <tr>
-      <td><code>--on-solid-border-color-subtle-on-light</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--on-solid-border-color-subtle-on-light)'}}></span></span></td>
+      <td><code>--border-color-subtle-on-light</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-subtle-on-light)'}}></span></span></td>
       <td>Applies to UI elements that must visually remain the same regardless of theme (e.g., brand containers, static illustrations). Identical tone across Light and Dark mode. L&D: 093</td>
     </tr>
     <tr>
-      <td><code>--on-solid-border-color-default-on-light</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--on-solid-border-color-default-on-light)'}}></span></span></td>
+      <td><code>--border-color-default-on-light</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-default-on-light)'}}></span></span></td>
       <td>Medium-emphasis border color for standard outlines, input fields, or separators that require visible yet non-dominant contrast. Behavior: Dynamic - adjusts to maintain legibility in Light and Dark themes. L:085 D:045</td>
     </tr>
     <tr>
-      <td><code>--feedback-border-color-success</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--feedback-border-color-success)'}}></span></span></td>
+      <td><code>--border-color-success</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-success)'}}></span></span></td>
       <td>Used for success states and validation borders (e.g., input success outlines or confirmation frames). Behavior: Constant — same success tone across modes for consistent feedback semantics.</td>
     </tr>
     <tr>
-      <td><code>--feedback-border-color-error</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--feedback-border-color-error)'}}></span></span></td>
+      <td><code>--border-color-error</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-error)'}}></span></span></td>
       <td>Defines border color for warning and error-related components, typically used for input validation or caution zones. Behavior: Constant — retains the same red warning tone in both Light and Dark modes.</td>
     </tr>
     <tr>
-      <td><code>--feedback-border-color-warning</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--feedback-border-color-warning)'}}></span></span></td>
+      <td><code>--border-color-warning</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-warning)'}}></span></span></td>
       <td>Border Color Warning</td>
     </tr>
     <tr>
-      <td><code>--feedback-border-color-info</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--feedback-border-color-info)'}}></span></span></td>
+      <td><code>--border-color-info</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-info)'}}></span></span></td>
       <td>Border Color Info</td>
     </tr>
     <tr>
-      <td><code>--interactive-border-color-disabled</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--interactive-border-color-disabled)'}}></span></span></td>
+      <td><code>--border-color-disabled</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-disabled)'}}></span></span></td>
       <td>Applied to disabled states of primary elements (e.g., buttons, inputs) to visually reduce emphasis and indicate inactivity.</td>
     </tr>
     <tr>
-      <td><code>--interactive-border-color-focus</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--interactive-border-color-focus)'}}></span></span></td>
+      <td><code>--border-color-focus</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-focus)'}}></span></span></td>
       <td>Border Color Focus</td>
     </tr>
     <tr>
-      <td><code>--interactive-border-color-active</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--interactive-border-color-active)'}}></span></span></td>
+      <td><code>--border-color-active</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-active)'}}></span></span></td>
       <td>Border Color Active</td>
     </tr>
     <tr>
-      <td><code>--interactive-border-color-idle</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--interactive-border-color-idle)'}}></span></span></td>
+      <td><code>--border-color-idle</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-idle)'}}></span></span></td>
       <td>High-emphasis border color for clear delineation between surfaces (e.g., focus rings, high-contrast UI zones). Behavior: Dynamic — light surfaces use a darker neutral, dark surfaces a light neutral tone. L:015 D:100</td>
     </tr>
     <tr>
-      <td><code>--inverse-border-color-default-inverse</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--inverse-border-color-default-inverse)'}}></span></span></td>
+      <td><code>--border-color-default-inverse</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-default-inverse)'}}></span></span></td>
       <td>Border Color Default Inverse</td>
     </tr>
     <tr>
-      <td><code>--inverse-border-color-subtle-inverse</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--inverse-border-color-subtle-inverse)'}}></span></span></td>
+      <td><code>--border-color-subtle-inverse</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-subtle-inverse)'}}></span></span></td>
       <td>Border Color Subtle Inverse</td>
     </tr>
     <tr>
-      <td><code>--brand-border-color-brand</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--brand-border-color-brand)'}}></span></span></td>
+      <td><code>--border-color-brand</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-brand)'}}></span></span></td>
       <td>Border Color Brand</td>
     </tr>
     <tr>
-      <td><code>--brand-border-color-brand-light-only</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--brand-border-color-brand-light-only)'}}></span></span></td>
+      <td><code>--border-color-brand-light-only</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-brand-light-only)'}}></span></span></td>
       <td>Border Color Brand Light Only</td>
     </tr>
     <tr>
-      <td><code>--brand-border-color-brand-const</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--brand-border-color-brand-const)'}}></span></span></td>
+      <td><code>--border-color-brand-const</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-brand-const)'}}></span></span></td>
       <td>Border Color Brand Const</td>
     </tr>
     <tr>
-      <td><code>--utilities-border-color-no-contrast</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--utilities-border-color-no-contrast)'}}></span></span></td>
+      <td><code>--border-color-no-contrast</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--border-color-no-contrast)'}}></span></span></td>
       <td>Border Color No Contrast</td>
     </tr>
   </tbody>
@@ -1398,103 +1398,103 @@ These are meaning-based tokens from Layer 2 that adapt to light/dark mode.
   </thead>
   <tbody>
     <tr>
-      <td><code>--interactive-icon-color-idle</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--interactive-icon-color-idle)'}}></span></span></td>
+      <td><code>--icon-color-idle</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-idle)'}}></span></span></td>
       <td>Primary icon color on primary surfaces.</td>
     </tr>
     <tr>
-      <td><code>--interactive-icon-color-disabled</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--interactive-icon-color-disabled)'}}></span></span></td>
+      <td><code>--icon-color-disabled</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-disabled)'}}></span></span></td>
       <td>Disabled label tone indicating inactive or unavailable states in UI elements. Behavior: Dynamic — lighter gray in Light mode, darker neutral in Dark mode. L:085 D:035</td>
     </tr>
     <tr>
-      <td><code>--interactive-icon-color-hover</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--interactive-icon-color-hover)'}}></span></span></td>
+      <td><code>--icon-color-hover</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-hover)'}}></span></span></td>
       <td>Icon Color Hover</td>
     </tr>
     <tr>
-      <td><code>--interactive-icon-color-active</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--interactive-icon-color-active)'}}></span></span></td>
+      <td><code>--icon-color-active</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-active)'}}></span></span></td>
       <td>Icon Color Active</td>
     </tr>
     <tr>
-      <td><code>--on-solid-icon-color-secondary-on-light</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--on-solid-icon-color-secondary-on-light)'}}></span></span></td>
+      <td><code>--icon-color-secondary-on-light</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-secondary-on-light)'}}></span></span></td>
       <td>Used for icons that must remain visually consistent regardless of mode (e.g., icons that are on surfaces that don't change color). Identical tone in both Light and Dark mode.</td>
     </tr>
     <tr>
-      <td><code>--on-solid-icon-color-primary-on-dark</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--on-solid-icon-color-primary-on-dark)'}}></span></span></td>
+      <td><code>--icon-color-primary-on-dark</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-primary-on-dark)'}}></span></span></td>
       <td>Used for text displayed on dark surfaces to ensure maximum legibility and contrast. Behavior: Constant — always light neutral to guarantee accessibility on dark backgrounds.</td>
     </tr>
     <tr>
-      <td><code>--on-solid-icon-color-secondary-on-dark</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--on-solid-icon-color-secondary-on-dark)'}}></span></span></td>
+      <td><code>--icon-color-secondary-on-dark</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-secondary-on-dark)'}}></span></span></td>
       <td>Fixed inverse label tone applied where white or bright text must always appear, regardless of theme. Behavior: Constant — remains bright neutral in both Light and Dark mode. L&D:093</td>
     </tr>
     <tr>
-      <td><code>--on-solid-icon-color-primary-on-light</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--on-solid-icon-color-primary-on-light)'}}></span></span></td>
+      <td><code>--icon-color-primary-on-light</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-primary-on-light)'}}></span></span></td>
       <td>Used when primary text color must remain fixed regardless of mode (e.g., on light constant backgrounds). Behavior: Constant — same tone across Light and Dark mode.</td>
     </tr>
     <tr>
-      <td><code>--on-solid-icon-color-const-on-image</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--on-solid-icon-color-const-on-image)'}}></span></span></td>
+      <td><code>--icon-color-const-on-image</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-const-on-image)'}}></span></span></td>
       <td>Fixed white heading color used on dark or colored backgrounds (e.g., hero sections, banners) that remain constant across modes. Behavior: Constant — remains white in both Light and Dark mode.</td>
     </tr>
     <tr>
-      <td><code>--feedback-icon-color-success</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--feedback-icon-color-success)'}}></span></span></td>
+      <td><code>--icon-color-success</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-success)'}}></span></span></td>
       <td>Represents success or confirmation icons (e.g., checkmarks, completion indicators). Behavior: Constant - same success green tone across Light and Dark mode.</td>
     </tr>
     <tr>
-      <td><code>--feedback-icon-color-error</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--feedback-icon-color-error)'}}></span></span></td>
+      <td><code>--icon-color-error</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-error)'}}></span></span></td>
       <td>Used for strong warnings, errors, or destructive action labels. Behavior: Constant — red color remains unchanged between Light and Dark mode for visibility and recognition.</td>
     </tr>
     <tr>
-      <td><code>--feedback-icon-color-warning</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--feedback-icon-color-warning)'}}></span></span></td>
+      <td><code>--icon-color-warning</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-warning)'}}></span></span></td>
       <td>Represents medium attention states, often used in warnings or pending states. Behavior: Constant — same orange tone across Light and Dark mode.</td>
     </tr>
     <tr>
-      <td><code>--brand-icon-color-brand</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--brand-icon-color-brand)'}}></span></span></td>
+      <td><code>--icon-color-brand</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-brand)'}}></span></span></td>
       <td>Applies to text elements requiring fixed brand color usage (e.g., permanent links, brand slogans on constant backgrounds). Behavior: Constant — maintains identical red tone across Light and Dark mode.</td>
     </tr>
     <tr>
-      <td><code>--brand-icon-color-brand-light-only</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--brand-icon-color-brand-light-only)'}}></span></span></td>
+      <td><code>--icon-color-brand-light-only</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-brand-light-only)'}}></span></span></td>
       <td>Accent text color used for links, interactive text, or highlighted key words. Changes from a red in light mode to a white in dark mode.</td>
     </tr>
     <tr>
-      <td><code>--standard-icon-color-primary</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--standard-icon-color-primary)'}}></span></span></td>
+      <td><code>--icon-color-primary</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-primary)'}}></span></span></td>
       <td>Main text color used for body copy and all primary textual content. Ensures optimal readability and contrast on standard surfaces. Behavior: Dynamic — switches between dark text on light backgrounds and light text on dark backgrounds.</td>
     </tr>
     <tr>
-      <td><code>--standard-icon-color-secondary</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--standard-icon-color-secondary)'}}></span></span></td>
+      <td><code>--icon-color-secondary</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-secondary)'}}></span></span></td>
       <td>Muted text tone for subtle information, timestamps, or inactive text elements. Behavior: Dynamic — adjusts between mid-gray in Light mode and lighter gray in Dark mode.</td>
     </tr>
     <tr>
-      <td><code>--standard-icon-color-tertiary</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--standard-icon-color-tertiary)'}}></span></span></td>
+      <td><code>--icon-color-tertiary</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-tertiary)'}}></span></span></td>
       <td>Secondary text color used for supportive information, subtitles, and less prominent text. Behavior: Dynamic — adapts between neutral tones to maintain proper contrast per theme. In 2025 css it is called figure meta.</td>
     </tr>
     <tr>
-      <td><code>--inverse-icon-color-primary-inverse</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--inverse-icon-color-primary-inverse)'}}></span></span></td>
+      <td><code>--icon-color-primary-inverse</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-primary-inverse)'}}></span></span></td>
       <td>Inverse text color used on opposing surfaces (e.g., white text on red or dark backgrounds). Behavior: Dynamic — alternates between light and dark mode.</td>
     </tr>
     <tr>
-      <td><code>--inverse-icon-color-secondary-inverse</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--inverse-icon-color-secondary-inverse)'}}></span></span></td>
+      <td><code>--icon-color-secondary-inverse</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-secondary-inverse)'}}></span></span></td>
       <td>Icon Color Secondary Inverse</td>
     </tr>
     <tr>
-      <td><code>--inverse-icon-color-inverse-high-contrast</code></td>
-      <td><span className="color-swatch"><span style={{background: 'var(--inverse-icon-color-inverse-high-contrast)'}}></span></span></td>
+      <td><code>--icon-color-inverse-high-contrast</code></td>
+      <td><span className="color-swatch"><span style={{background: 'var(--icon-color-inverse-high-contrast)'}}></span></span></td>
       <td>Icon Color Inverse High Contrast</td>
     </tr>
   </tbody>
