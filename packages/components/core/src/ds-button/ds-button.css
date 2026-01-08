@@ -1,6 +1,18 @@
+/* =============================================================================
+   DS-BUTTON Component Styles
+
+   Token-based styling for all button variants and states.
+   All values reference design system tokens for consistency across brands,
+   themes, and density modes.
+   ============================================================================= */
+
 :host {
   display: inline-block;
 }
+
+/* =============================================================================
+   BASE STYLES
+   ============================================================================= */
 
 .ds-button {
   display: inline-flex;
@@ -8,55 +20,189 @@
   justify-content: center;
   cursor: pointer;
   border: none;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  background: transparent;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
 
-  /* Token-based styling */
-  padding: var(--button-stack-space, 6px) var(--button-inline-space, 16px);
-  border-radius: var(--button-border-radius, 4px);
+  /* Spacing (reference density tokens automatically) */
+  padding: var(--button-stack-space) var(--button-inline-space);
+  min-height: var(--button-height-size);
+  gap: var(--button-content-gap-space);
+
+  /* Sizing */
+  border-radius: var(--button-border-radius);
+
+  /* Typography (from composite .button-label token) */
   font-family: var(--button-label-font-family);
-  font-weight: var(--font-weight-bold, 700);
-  font-size: var(--button-label-font-size, 15px);
-  line-height: var(--button-label-line-height, 15px);
-}
-
-/* Primary Variant */
-.ds-button--primary {
-  background-color: var(--button-primary-brand-bg-color-idle, #DD0000);
-  color: var(--button-primary-label-color, #FFFFFF);
-}
-
-.ds-button--primary:hover:not(:disabled) {
-  background-color: var(--button-primary-brand-bg-color-hover, #B80000);
-}
-
-/* Secondary Variant */
-.ds-button--secondary {
-  background-color: var(--button-secondary-bg-color-idle, #E9ECEF);
-  color: var(--button-secondary-label-color, #4B525A);
-}
-
-.ds-button--secondary:hover:not(:disabled) {
-  background-color: var(--button-secondary-bg-color-hover, #CED4DA);
-}
-
-/* Tertiary Variant */
-.ds-button--tertiary {
-  background-color: transparent;
-  color: var(--button-tertiary-label-color, #4B525A);
-  border: 1px solid var(--button-tertiary-border-color-idle, #CED4DA);
-}
-
-.ds-button--tertiary:hover:not(:disabled) {
-  border-color: var(--button-tertiary-border-color-hover, #4B525A);
-}
-
-/* Disabled State */
-.ds-button--disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--button-label-font-size);
+  line-height: var(--button-label-line-height);
+  letter-spacing: var(--letter-space-0-p-5);
+  text-transform: uppercase;
 }
 
 .ds-button__label {
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: inherit;
+}
+
+/* =============================================================================
+   PRIMARY BRAND VARIANT
+   Main call-to-action with brand color (BILD red, SportBILD blue)
+   ============================================================================= */
+
+.ds-button--primary-brand {
+  background-color: var(--button-primary-brand-bg-color-idle);
+  color: var(--button-primary-brand-label-color);
+}
+
+.ds-button--primary-brand:hover:not(:disabled) {
+  background-color: var(--button-primary-brand-bg-color-hover);
+}
+
+.ds-button--primary-brand:active:not(:disabled) {
+  background-color: var(--button-primary-brand-bg-color-active);
+}
+
+/* =============================================================================
+   PRIMARY NEUTRAL VARIANT
+   Primary action with neutral/dark background
+   ============================================================================= */
+
+.ds-button--primary-neutral {
+  background-color: var(--button-primary-neutral-bg-color-idle);
+  color: var(--button-primary-neutral-label-color);
+}
+
+.ds-button--primary-neutral:hover:not(:disabled) {
+  background-color: var(--button-primary-neutral-bg-color-hover);
+}
+
+.ds-button--primary-neutral:active:not(:disabled) {
+  background-color: var(--button-primary-neutral-bg-color-active);
+}
+
+/* =============================================================================
+   PRIMARY SUCCESS VARIANT
+   Positive/confirmation action with success color
+   ============================================================================= */
+
+.ds-button--primary-success {
+  background-color: var(--button-primary-success-bg-color-idle);
+  color: var(--button-primary-success-label-color);
+}
+
+.ds-button--primary-success:hover:not(:disabled) {
+  background-color: var(--button-primary-success-bg-color-hover);
+}
+
+.ds-button--primary-success:active:not(:disabled) {
+  background-color: var(--button-primary-success-bg-color-active);
+}
+
+/* =============================================================================
+   SECONDARY VARIANT
+   Secondary action with neutral gray background
+   ============================================================================= */
+
+.ds-button--secondary {
+  background-color: var(--button-secondary-bg-color-idle);
+  color: var(--button-secondary-label-color);
+}
+
+.ds-button--secondary:hover:not(:disabled) {
+  background-color: var(--button-secondary-bg-color-hover);
+}
+
+.ds-button--secondary:active:not(:disabled) {
+  background-color: var(--button-secondary-bg-color-active);
+}
+
+/* =============================================================================
+   TERTIARY NEUTRAL VARIANT
+   Low-emphasis outlined style with neutral border
+   ============================================================================= */
+
+.ds-button--tertiary-neutral {
+  background-color: transparent;
+  color: var(--button-tertiary-neutral-label-color);
+  border: var(--button-border-width-size) solid var(--button-tertiary-neutral-border-color-idle);
+}
+
+.ds-button--tertiary-neutral:hover:not(:disabled) {
+  background-color: var(--button-tertiary-neutral-bg-color-hover);
+  border-color: var(--button-tertiary-neutral-border-color-hover);
+}
+
+.ds-button--tertiary-neutral:active:not(:disabled) {
+  background-color: var(--button-tertiary-neutral-bg-color-active);
+}
+
+/* =============================================================================
+   TERTIARY SUCCESS VARIANT
+   Low-emphasis outlined style with success color
+   ============================================================================= */
+
+.ds-button--tertiary-success {
+  background-color: transparent;
+  color: var(--button-tertiary-success-label-color);
+  border: var(--button-border-width-size) solid var(--button-tertiary-success-border-color);
+}
+
+.ds-button--tertiary-success:hover:not(:disabled) {
+  background-color: var(--button-tertiary-success-bg-color-hover);
+}
+
+/* =============================================================================
+   GHOST VARIANT
+   Text-only button without background or border
+   ============================================================================= */
+
+.ds-button--ghost {
+  background-color: transparent;
+  color: var(--button-ghost-label-color);
+}
+
+.ds-button--ghost:hover:not(:disabled) {
+  background-color: var(--button-ghost-bg-color-hover);
+}
+
+.ds-button--ghost:active:not(:disabled) {
+  background-color: var(--button-ghost-bg-color-active);
+}
+
+/* =============================================================================
+   DISABLED STATE
+   Applies to all variants when disabled
+   ============================================================================= */
+
+.ds-button--disabled,
+.ds-button:disabled {
+  cursor: not-allowed;
+  background-color: var(--button-disabled-bg-color);
+  color: var(--button-disabled-label-color);
+  border-color: var(--button-disabled-border-color);
+}
+
+/* Override any variant-specific hover/active for disabled */
+.ds-button--disabled:hover,
+.ds-button--disabled:active,
+.ds-button:disabled:hover,
+.ds-button:disabled:active {
+  background-color: var(--button-disabled-bg-color);
+  color: var(--button-disabled-label-color);
+  border-color: var(--button-disabled-border-color);
+}
+
+/* =============================================================================
+   FOCUS STATE
+   Keyboard navigation accessibility
+   ============================================================================= */
+
+.ds-button:focus-visible {
+  outline: 2px solid var(--core-color-primary);
+  outline-offset: 2px;
 }

@@ -3,21 +3,34 @@ import { html } from 'lit';
 
 /**
  * The Button component is the primary interactive element in the design system.
- * It supports three variants (primary, secondary, tertiary) and adapts to
- * brand theming via CSS Custom Properties.
+ * It supports seven variants across three categories and adapts to brand theming,
+ * color modes, and density settings via CSS Custom Properties.
  *
- * ## Features
- * - **Primary**: Main call-to-action, brand-colored background
- * - **Secondary**: Secondary actions, neutral background
- * - **Tertiary**: Low-emphasis actions, outlined style
+ * ## Variants
  *
- * ## Design Tokens Used
- * - `--button-primary-brand-bg-color-idle/hover`
- * - `--button-secondary-bg-color-idle/hover`
- * - `--button-tertiary-border-color-idle/hover`
- * - `--button-stack-space`, `--button-inline-space`
- * - `--button-border-radius`
- * - `--button-label-font-size`, `--button-label-line-height`
+ * **Primary (filled background):**
+ * - `primary-brand` - Main CTA with brand color (BILD red, SportBILD blue)
+ * - `primary-neutral` - Primary action with neutral/dark background
+ * - `primary-success` - Confirmation/positive action with success color
+ *
+ * **Secondary:**
+ * - `secondary` - Secondary actions with neutral gray background
+ *
+ * **Tertiary (outlined):**
+ * - `tertiary-neutral` - Low-emphasis outlined style
+ * - `tertiary-success` - Outlined with success color
+ *
+ * **Ghost:**
+ * - `ghost` - Text-only, no background or border
+ *
+ * ## States
+ * All variants support: idle, hover, active/pressed, and disabled states.
+ *
+ * ## Theming
+ * Use the Storybook toolbar to switch:
+ * - **Color Brand** - BILD / SportBILD (changes colors)
+ * - **Theme** - Light / Dark (sun/moon toggle)
+ * - **Density** - Default / Dense / Spacious (changes spacing)
  */
 const meta: Meta = {
   title: 'Components/Button',
@@ -26,11 +39,19 @@ const meta: Meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'tertiary'],
+      options: [
+        'primary-brand',
+        'primary-neutral',
+        'primary-success',
+        'secondary',
+        'tertiary-neutral',
+        'tertiary-success',
+        'ghost',
+      ],
       description: 'Visual style variant of the button',
       table: {
-        type: { summary: 'primary | secondary | tertiary' },
-        defaultValue: { summary: 'primary' },
+        type: { summary: 'ButtonVariant' },
+        defaultValue: { summary: 'primary-brand' },
       },
     },
     disabled: {
@@ -50,8 +71,8 @@ const meta: Meta = {
     },
   },
   args: {
-    label: 'Button',
-    variant: 'primary',
+    label: 'Label',
+    variant: 'primary-brand',
     disabled: false,
   },
   render: (args) => html`
@@ -64,73 +85,210 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
+/* =============================================================================
+   INDIVIDUAL VARIANT STORIES
+   ============================================================================= */
+
 /**
- * Primary button - the main call-to-action.
+ * Primary Brand - the main call-to-action.
  * Uses brand color for background (BILD red, SportBILD blue).
  */
-export const Primary: Story = {
+export const PrimaryBrand: Story = {
   args: {
-    variant: 'primary',
-    label: 'Primary Button',
+    variant: 'primary-brand',
+    label: 'Label',
   },
 };
 
 /**
- * Secondary button - for secondary actions.
- * Uses neutral background color.
+ * Primary Neutral - primary action with neutral/dark background.
+ */
+export const PrimaryNeutral: Story = {
+  args: {
+    variant: 'primary-neutral',
+    label: 'Label',
+  },
+};
+
+/**
+ * Primary Success - confirmation or positive action.
+ * Uses success/green color.
+ */
+export const PrimarySuccess: Story = {
+  args: {
+    variant: 'primary-success',
+    label: 'Label',
+  },
+};
+
+/**
+ * Secondary - for secondary actions.
+ * Uses neutral gray background.
  */
 export const Secondary: Story = {
   args: {
     variant: 'secondary',
-    label: 'Secondary Button',
+    label: 'Label',
   },
 };
 
 /**
- * Tertiary button - for low-emphasis actions.
- * Outlined style with transparent background.
+ * Tertiary Neutral - low-emphasis outlined style.
  */
-export const Tertiary: Story = {
+export const TertiaryNeutral: Story = {
   args: {
-    variant: 'tertiary',
-    label: 'Tertiary Button',
+    variant: 'tertiary-neutral',
+    label: 'Label',
   },
 };
 
 /**
- * Disabled state - applies to all variants.
- * Reduces opacity and prevents interaction.
+ * Tertiary Success - outlined with success color.
  */
-export const Disabled: Story = {
+export const TertiarySuccess: Story = {
   args: {
-    variant: 'primary',
-    label: 'Disabled',
-    disabled: true,
+    variant: 'tertiary-success',
+    label: 'Label',
   },
 };
 
 /**
- * All variants side by side for comparison.
+ * Ghost - text-only button without background or border.
+ */
+export const Ghost: Story = {
+  args: {
+    variant: 'ghost',
+    label: 'Label',
+  },
+};
+
+/* =============================================================================
+   OVERVIEW STORIES
+   ============================================================================= */
+
+/**
+ * All seven button variants displayed side by side for comparison.
  */
 export const AllVariants: Story = {
   render: () => html`
     <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
-      <ds-button variant="primary">Primary</ds-button>
-      <ds-button variant="secondary">Secondary</ds-button>
-      <ds-button variant="tertiary">Tertiary</ds-button>
+      <ds-button variant="primary-brand">Label</ds-button>
+      <ds-button variant="primary-neutral">Label</ds-button>
+      <ds-button variant="primary-success">Label</ds-button>
+      <ds-button variant="secondary">Label</ds-button>
+      <ds-button variant="tertiary-neutral">Label</ds-button>
+      <ds-button variant="tertiary-success">Label</ds-button>
+      <ds-button variant="ghost">Label</ds-button>
     </div>
   `,
 };
 
 /**
- * Disabled states for all variants.
+ * All variants in disabled state.
  */
 export const AllDisabled: Story = {
   render: () => html`
     <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
-      <ds-button variant="primary" disabled>Primary</ds-button>
-      <ds-button variant="secondary" disabled>Secondary</ds-button>
-      <ds-button variant="tertiary" disabled>Tertiary</ds-button>
+      <ds-button variant="primary-brand" disabled>Label</ds-button>
+      <ds-button variant="primary-neutral" disabled>Label</ds-button>
+      <ds-button variant="primary-success" disabled>Label</ds-button>
+      <ds-button variant="secondary" disabled>Label</ds-button>
+      <ds-button variant="tertiary-neutral" disabled>Label</ds-button>
+      <ds-button variant="tertiary-success" disabled>Label</ds-button>
+      <ds-button variant="ghost" disabled>Label</ds-button>
+    </div>
+  `,
+};
+
+/**
+ * Complete state matrix showing all variants across all states.
+ * States shown: default, hover (simulated), pressed (simulated), disabled.
+ *
+ * Note: Hover and pressed states are indicated by labels. To see actual
+ * hover/pressed styling, interact with the buttons directly.
+ */
+export const StateMatrix: Story = {
+  render: () => html`
+    <style>
+      .state-matrix {
+        display: grid;
+        grid-template-columns: 140px repeat(4, 1fr);
+        gap: 12px;
+        align-items: center;
+      }
+      .state-matrix__header {
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-color-secondary, #6c757d);
+        text-align: center;
+      }
+      .state-matrix__label {
+        font-size: 13px;
+        color: var(--text-color-primary, #232629);
+      }
+      .state-matrix__cell {
+        display: flex;
+        justify-content: center;
+      }
+    </style>
+    <div class="state-matrix">
+      <!-- Header Row -->
+      <div></div>
+      <div class="state-matrix__header">Default</div>
+      <div class="state-matrix__header">Hover</div>
+      <div class="state-matrix__header">Pressed</div>
+      <div class="state-matrix__header">Disabled</div>
+
+      <!-- Primary Neutral -->
+      <div class="state-matrix__label">Primary neutral</div>
+      <div class="state-matrix__cell"><ds-button variant="primary-neutral">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="primary-neutral">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="primary-neutral">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="primary-neutral" disabled>Label</ds-button></div>
+
+      <!-- Primary Brand -->
+      <div class="state-matrix__label">Primary brand</div>
+      <div class="state-matrix__cell"><ds-button variant="primary-brand">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="primary-brand">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="primary-brand">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="primary-brand" disabled>Label</ds-button></div>
+
+      <!-- Primary Success -->
+      <div class="state-matrix__label">Primary success</div>
+      <div class="state-matrix__cell"><ds-button variant="primary-success">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="primary-success">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="primary-success">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="primary-success" disabled>Label</ds-button></div>
+
+      <!-- Secondary -->
+      <div class="state-matrix__label">Secondary</div>
+      <div class="state-matrix__cell"><ds-button variant="secondary">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="secondary">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="secondary">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="secondary" disabled>Label</ds-button></div>
+
+      <!-- Tertiary Neutral -->
+      <div class="state-matrix__label">Tertiary neutral</div>
+      <div class="state-matrix__cell"><ds-button variant="tertiary-neutral">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="tertiary-neutral">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="tertiary-neutral">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="tertiary-neutral" disabled>Label</ds-button></div>
+
+      <!-- Tertiary Success -->
+      <div class="state-matrix__label">Tertiary success</div>
+      <div class="state-matrix__cell"><ds-button variant="tertiary-success">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="tertiary-success">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="tertiary-success">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="tertiary-success" disabled>Label</ds-button></div>
+
+      <!-- Ghost -->
+      <div class="state-matrix__label">Ghost</div>
+      <div class="state-matrix__cell"><ds-button variant="ghost">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="ghost">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="ghost">Label</ds-button></div>
+      <div class="state-matrix__cell"><ds-button variant="ghost" disabled>Label</ds-button></div>
     </div>
   `,
 };

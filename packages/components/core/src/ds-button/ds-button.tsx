@@ -1,5 +1,21 @@
 import { Component, Prop, h } from '@stencil/core';
 
+/**
+ * Button variants matching the design system specification.
+ * - Primary variants: Filled background (brand, neutral, success)
+ * - Secondary: Neutral filled background
+ * - Tertiary variants: Outlined style (neutral, success)
+ * - Ghost: Text only, no background/border
+ */
+export type ButtonVariant =
+  | 'primary-brand'
+  | 'primary-neutral'
+  | 'primary-success'
+  | 'secondary'
+  | 'tertiary-neutral'
+  | 'tertiary-success'
+  | 'ghost';
+
 @Component({
   tag: 'ds-button',
   styleUrl: 'ds-button.css',
@@ -7,12 +23,14 @@ import { Component, Prop, h } from '@stencil/core';
 })
 export class DsButton {
   /**
-   * Button variant: primary, secondary, or tertiary
+   * Button variant determining visual style.
+   * @default 'primary-brand'
    */
-  @Prop() variant: 'primary' | 'secondary' | 'tertiary' = 'primary';
+  @Prop() variant: ButtonVariant = 'primary-brand';
 
   /**
-   * Disabled state
+   * Disables the button interaction and applies disabled styling.
+   * @default false
    */
   @Prop() disabled: boolean = false;
 
