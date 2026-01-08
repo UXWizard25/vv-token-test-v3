@@ -90,6 +90,17 @@ type Story = StoryObj;
    ============================================================================= */
 
 /**
+ * Default button story - Primary Brand variant.
+ * Uses brand color for background (BILD red, SportBILD blue).
+ */
+export const Primary: Story = {
+  args: {
+    variant: 'primary-brand',
+    label: 'Label',
+  },
+};
+
+/**
  * Primary Brand - the main call-to-action.
  * Uses brand color for background (BILD red, SportBILD blue).
  */
