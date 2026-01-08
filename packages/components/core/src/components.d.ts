@@ -10,10 +10,19 @@ export { ButtonVariant } from "./ds-button/ds-button";
 export namespace Components {
     interface DsButton {
         /**
-          * Disables the button interaction and applies disabled styling.
+          * Disables the button.
           * @default false
          */
         "disabled": boolean;
+        /**
+          * Icon name to display (optional).
+         */
+        "icon"?: string;
+        /**
+          * Icon position: 'start' or 'end'.
+          * @default 'start'
+         */
+        "iconPosition": 'start' | 'end';
         /**
           * Button variant determining visual style.
           * @default 'primary-brand'
@@ -33,34 +42,14 @@ export namespace Components {
     }
     interface DsIcon {
         /**
-          * Base path for loading icon SVG files.
+          * Base path for icon SVG files.
           * @default '/icons'
          */
         "basePath": string;
         /**
-          * Color of the icon. Accepts any valid CSS color value. Icons use currentColor by default, inheriting from parent.
-          * @default 'currentColor'
-         */
-        "color": string;
-        /**
-          * Accessible label for screen readers. If provided, icon is treated as semantic (not decorative).
-         */
-        "label"?: string;
-        /**
-          * Enable lazy loading with IntersectionObserver. Icon will only load when visible in viewport.
-          * @default false
-         */
-        "lazy": boolean;
-        /**
-          * Name of the icon to display (without .svg extension). Must match a file in the icons directory.
-          * @example "add", "arrow-left", "close"
+          * Name of the icon (without .svg extension).
          */
         "name": string;
-        /**
-          * Size of the icon in pixels.
-          * @default 24
-         */
-        "size": number;
     }
 }
 declare global {
@@ -91,10 +80,19 @@ declare global {
 declare namespace LocalJSX {
     interface DsButton {
         /**
-          * Disables the button interaction and applies disabled styling.
+          * Disables the button.
           * @default false
          */
         "disabled"?: boolean;
+        /**
+          * Icon name to display (optional).
+         */
+        "icon"?: string;
+        /**
+          * Icon position: 'start' or 'end'.
+          * @default 'start'
+         */
+        "iconPosition"?: 'start' | 'end';
         /**
           * Button variant determining visual style.
           * @default 'primary-brand'
@@ -114,34 +112,14 @@ declare namespace LocalJSX {
     }
     interface DsIcon {
         /**
-          * Base path for loading icon SVG files.
+          * Base path for icon SVG files.
           * @default '/icons'
          */
         "basePath"?: string;
         /**
-          * Color of the icon. Accepts any valid CSS color value. Icons use currentColor by default, inheriting from parent.
-          * @default 'currentColor'
-         */
-        "color"?: string;
-        /**
-          * Accessible label for screen readers. If provided, icon is treated as semantic (not decorative).
-         */
-        "label"?: string;
-        /**
-          * Enable lazy loading with IntersectionObserver. Icon will only load when visible in viewport.
-          * @default false
-         */
-        "lazy"?: boolean;
-        /**
-          * Name of the icon to display (without .svg extension). Must match a file in the icons directory.
-          * @example "add", "arrow-left", "close"
+          * Name of the icon (without .svg extension).
          */
         "name": string;
-        /**
-          * Size of the icon in pixels.
-          * @default 24
-         */
-        "size"?: number;
     }
     interface IntrinsicElements {
         "ds-button": DsButton;

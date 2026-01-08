@@ -12,7 +12,9 @@ import { defineCustomElement as defineDsIcon } from '@marioschmidt/design-system
 
 export const DsButton: StencilVueComponent<JSX.DsButton> = /*@__PURE__*/ defineContainer<JSX.DsButton>('ds-button', defineDsButton, [
   'variant',
-  'disabled'
+  'disabled',
+  'icon',
+  'iconPosition'
 ]);
 
 
@@ -24,10 +26,6 @@ export const DsCard: StencilVueComponent<JSX.DsCard> = /*@__PURE__*/ defineConta
 
 export const DsIcon: StencilVueComponent<JSX.DsIcon> = /*@__PURE__*/ defineContainer<JSX.DsIcon>('ds-icon', defineDsIcon, [
   'name',
-  'size',
-  'color',
-  'basePath',
-  'lazy',
-  'label'
+  'basePath'
 ]);
 

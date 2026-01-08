@@ -1,12 +1,5 @@
 import { Component, Prop, h } from '@stencil/core';
 
-/**
- * Button variants matching the design system specification.
- * - Primary variants: Filled background (brand, neutral, success)
- * - Secondary: Neutral filled background
- * - Tertiary variants: Outlined style (neutral, success)
- * - Ghost: Text only, no background/border
- */
 export type ButtonVariant =
   | 'primary-brand'
   | 'primary-neutral'
@@ -24,17 +17,27 @@ export type ButtonVariant =
 export class DsButton {
   /**
    * Button variant determining visual style.
-   * @default 'primary-brand'
    */
   @Prop() variant: ButtonVariant = 'primary-brand';
 
   /**
-   * Disables the button interaction and applies disabled styling.
-   * @default false
+   * Disables the button.
    */
   @Prop() disabled: boolean = false;
 
+  /**
+   * Icon name to display (optional).
+   */
+  @Prop() icon?: string;
+
+  /**
+   * Icon position: 'start' or 'end'.
+   */
+  @Prop() iconPosition: 'start' | 'end' = 'start';
+
   render() {
+    const iconEl = this.icon ? <ds-icon name={this.icon}></ds-icon> : null;
+
     return (
       <button
         class={{
@@ -44,11 +47,11 @@ export class DsButton {
         }}
         disabled={this.disabled}
       >
-        <slot name="icon-start"></slot>
+        {this.iconPosition === 'start' && iconEl}
         <span class="ds-button__label">
           <slot></slot>
         </span>
-        <slot name="icon-end"></slot>
+        {this.iconPosition === 'end' && iconEl}
       </button>
     );
   }

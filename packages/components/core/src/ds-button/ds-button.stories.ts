@@ -39,44 +39,22 @@ const meta: Meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: [
-        'primary-brand',
-        'primary-neutral',
-        'primary-success',
-        'secondary',
-        'tertiary-neutral',
-        'tertiary-success',
-        'ghost',
-      ],
-      description: 'Visual style variant of the button',
-      table: {
-        type: { summary: 'ButtonVariant' },
-        defaultValue: { summary: 'primary-brand' },
-      },
+      options: ['primary-brand', 'primary-neutral', 'primary-success', 'secondary', 'tertiary-neutral', 'tertiary-success', 'ghost'],
     },
-    disabled: {
-      control: 'boolean',
-      description: 'Disables the button interaction',
-      table: {
-        type: { summary: 'boolean' },
-        defaultValue: { summary: 'false' },
-      },
-    },
-    label: {
-      control: 'text',
-      description: 'Button text content (slot)',
-      table: {
-        type: { summary: 'string' },
-      },
-    },
+    disabled: { control: 'boolean' },
+    icon: { control: 'select', options: ['', 'add', 'arrow-right', 'download', 'edit', 'close'] },
+    iconPosition: { control: 'select', options: ['start', 'end'] },
+    label: { control: 'text' },
   },
   args: {
     label: 'Label',
     variant: 'primary-brand',
     disabled: false,
+    icon: '',
+    iconPosition: 'start',
   },
   render: (args) => html`
-    <ds-button variant=${args.variant} ?disabled=${args.disabled}>
+    <ds-button variant=${args.variant} ?disabled=${args.disabled} icon=${args.icon} icon-position=${args.iconPosition}>
       ${args.label}
     </ds-button>
   `,
@@ -190,6 +168,17 @@ export const AllVariants: Story = {
       <ds-button variant="tertiary-neutral">Label</ds-button>
       <ds-button variant="tertiary-success">Label</ds-button>
       <ds-button variant="ghost">Label</ds-button>
+    </div>
+  `,
+};
+
+export const WithIcons: Story = {
+  render: () => html`
+    <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
+      <ds-button variant="primary-brand" icon="add">Add Item</ds-button>
+      <ds-button variant="primary-neutral" icon="download">Download</ds-button>
+      <ds-button variant="secondary" icon="arrow-right" icon-position="end">Next</ds-button>
+      <ds-button variant="tertiary-neutral" icon="edit">Edit</ds-button>
     </div>
   `,
 };
