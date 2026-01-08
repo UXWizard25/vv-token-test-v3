@@ -15,6 +15,7 @@ export class DsIcon {
 
   /**
    * Base path for icon SVG files.
+   * @default '/icons'
    */
   @Prop() basePath: string = '/icons';
 
@@ -45,9 +46,11 @@ export class DsIcon {
         const svg = await response.text();
         iconCache.set(url, svg);
         this.svgContent = svg;
+      } else {
+        console.warn(`[ds-icon] Failed to load icon "${this.name}" from ${url}: ${response.status}`);
       }
-    } catch {
-      // Silent fail
+    } catch (error) {
+      console.warn(`[ds-icon] Error loading icon "${this.name}" from ${url}:`, error);
     }
   }
 

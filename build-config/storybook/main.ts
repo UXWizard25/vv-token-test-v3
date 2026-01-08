@@ -32,21 +32,22 @@ const config: StorybookConfig = {
   },
 
   // Static directories for CSS bundles, Stencil components, icons, and JSON tokens
+  // Using resolve() to ensure paths are absolute for Vite compatibility
   staticDirs: [
     {
-      from: '../../packages/tokens/dist/css',
+      from: resolve(__dirname, '../../packages/tokens/dist/css'),
       to: '/css',
     },
     {
-      from: '../../packages/components/core/dist',
+      from: resolve(__dirname, '../../packages/components/core/dist'),
       to: '/stencil',
     },
     {
-      from: '../../packages/tokens/dist/json',
+      from: resolve(__dirname, '../../packages/tokens/dist/json'),
       to: '/json',
     },
     {
-      from: '../../packages/icons/svg/dist',
+      from: resolve(__dirname, '../../packages/icons/svg/dist'),
       to: '/icons',
     },
   ],
