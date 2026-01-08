@@ -103,22 +103,78 @@
     <div class="section">
       <h2>Buttons</h2>
 
-      <h3>Primary</h3>
+      <h3>Primary Variants</h3>
       <div class="demo-row">
-        <ds-button variant="primary">Primary Button</ds-button>
-        <ds-button variant="primary" disabled>Disabled</ds-button>
+        <ds-button variant="primary-brand">Primary Brand</ds-button>
+        <ds-button variant="primary-neutral">Primary Neutral</ds-button>
+        <ds-button variant="primary-success">Primary Success</ds-button>
       </div>
 
-      <h3>Secondary</h3>
+      <h3>Secondary & Tertiary</h3>
       <div class="demo-row">
-        <ds-button variant="secondary">Secondary Button</ds-button>
+        <ds-button variant="secondary">Secondary</ds-button>
+        <ds-button variant="tertiary-neutral">Tertiary Neutral</ds-button>
+        <ds-button variant="tertiary-success">Tertiary Success</ds-button>
+        <ds-button variant="ghost">Ghost</ds-button>
+      </div>
+
+      <h3>Buttons with Icons</h3>
+      <div class="demo-row">
+        <ds-button variant="primary-brand">
+          <ds-icon slot="icon-start" name="add"></ds-icon>
+          Add Item
+        </ds-button>
+        <ds-button variant="primary-neutral">
+          <ds-icon slot="icon-start" name="download"></ds-icon>
+          Download
+        </ds-button>
+        <ds-button variant="secondary">
+          Next
+          <ds-icon slot="icon-end" name="arrow-right"></ds-icon>
+        </ds-button>
+        <ds-button variant="tertiary-neutral">
+          <ds-icon slot="icon-start" name="edit"></ds-icon>
+          Edit
+        </ds-button>
+      </div>
+
+      <h3>Disabled</h3>
+      <div class="demo-row">
+        <ds-button variant="primary-brand" disabled>Disabled</ds-button>
         <ds-button variant="secondary" disabled>Disabled</ds-button>
       </div>
+    </div>
 
-      <h3>Tertiary</h3>
+    <div class="section">
+      <h2>Icons</h2>
       <div class="demo-row">
-        <ds-button variant="tertiary">Tertiary Button</ds-button>
-        <ds-button variant="tertiary" disabled>Disabled</ds-button>
+        <ds-icon name="add" size="24"></ds-icon>
+        <ds-icon name="arrow-right" size="24"></ds-icon>
+        <ds-icon name="checkmark" size="24"></ds-icon>
+        <ds-icon name="close" size="24"></ds-icon>
+        <ds-icon name="download" size="24"></ds-icon>
+        <ds-icon name="edit" size="24"></ds-icon>
+        <ds-icon name="heart" size="24"></ds-icon>
+        <ds-icon name="home" size="24"></ds-icon>
+        <ds-icon name="search" size="24"></ds-icon>
+        <ds-icon name="settings" size="24"></ds-icon>
+        <ds-icon name="star" size="24"></ds-icon>
+      </div>
+
+      <h3>Different Sizes</h3>
+      <div class="demo-row">
+        <ds-icon name="star" size="16"></ds-icon>
+        <ds-icon name="star" size="20"></ds-icon>
+        <ds-icon name="star" size="24"></ds-icon>
+        <ds-icon name="star" size="32"></ds-icon>
+        <ds-icon name="star" size="48"></ds-icon>
+      </div>
+
+      <h3>Custom Colors</h3>
+      <div class="demo-row">
+        <ds-icon name="heart" size="32" color="#DD0000"></ds-icon>
+        <ds-icon name="star" size="32" color="#FFD700"></ds-icon>
+        <ds-icon name="checkmark" size="32" color="#00A651"></ds-icon>
       </div>
     </div>
 

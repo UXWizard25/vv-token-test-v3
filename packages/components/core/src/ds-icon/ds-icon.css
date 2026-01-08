@@ -1,0 +1,75 @@
+/* =============================================================================
+   DS-ICON Component Styles
+
+   Token-based styling for the icon component.
+   Icons inherit color from parent by default (currentColor).
+   ============================================================================= */
+
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =============================================================================
+   BASE STYLES
+   ============================================================================= */
+
+.ds-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-size, 24px);
+  height: var(--icon-size, 24px);
+  color: var(--icon-color, currentColor);
+  flex-shrink: 0;
+}
+
+/* =============================================================================
+   SVG CONTAINER
+   ============================================================================= */
+
+.ds-icon__svg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Target the SVG element inside the container */
+.ds-icon__svg svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* =============================================================================
+   LOADING STATE
+   ============================================================================= */
+
+.ds-icon--loading {
+  opacity: 0.5;
+}
+
+/* =============================================================================
+   ERROR STATE
+   ============================================================================= */
+
+.ds-icon--error {
+  opacity: 0.3;
+}
+
+.ds-icon__error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.ds-icon__error svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}

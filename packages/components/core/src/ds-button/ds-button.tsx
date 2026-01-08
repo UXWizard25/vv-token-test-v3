@@ -44,9 +44,11 @@ export class DsButton {
         }}
         disabled={this.disabled}
       >
+        <slot name="icon-start"></slot>
         <span class="ds-button__label">
           <slot></slot>
         </span>
+        <slot name="icon-end"></slot>
       </button>
     );
   }

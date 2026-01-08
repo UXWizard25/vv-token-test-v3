@@ -9,6 +9,7 @@
 
 import { DsButton as DsButtonElement, defineCustomElement as defineDsButton } from "@marioschmidt/design-system-components/dist/components/ds-button.js";
 import { DsCard as DsCardElement, defineCustomElement as defineDsCard } from "@marioschmidt/design-system-components/dist/components/ds-card.js";
+import { DsIcon as DsIconElement, defineCustomElement as defineDsIcon } from "@marioschmidt/design-system-components/dist/components/ds-icon.js";
 import type { StencilReactComponent } from '@stencil/react-output-target/runtime';
 import { createComponent } from '@stencil/react-output-target/runtime';
 import React from 'react';
@@ -33,4 +34,15 @@ export const DsCard: StencilReactComponent<DsCardElement, DsCardEvents> = /*@__P
     react: React,
     events: {} as DsCardEvents,
     defineCustomElement: defineDsCard
+});
+
+export type DsIconEvents = NonNullable<unknown>;
+
+export const DsIcon: StencilReactComponent<DsIconElement, DsIconEvents> = /*@__PURE__*/ createComponent<DsIconElement, DsIconEvents>({
+    tagName: 'ds-icon',
+    elementClass: DsIconElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: {} as DsIconEvents,
+    defineCustomElement: defineDsIcon
 });

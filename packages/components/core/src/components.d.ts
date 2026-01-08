@@ -5,18 +5,20 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { ButtonVariant } from "./ds-button/ds-button";
+export { ButtonVariant } from "./ds-button/ds-button";
 export namespace Components {
     interface DsButton {
         /**
-          * Disabled state
+          * Disables the button interaction and applies disabled styling.
           * @default false
          */
         "disabled": boolean;
         /**
-          * Button variant: primary, secondary, or tertiary
-          * @default 'primary'
+          * Button variant determining visual style.
+          * @default 'primary-brand'
          */
-        "variant": 'primary' | 'secondary' | 'tertiary';
+        "variant": ButtonVariant;
     }
     interface DsCard {
         /**
@@ -28,6 +30,37 @@ export namespace Components {
           * @default 'primary'
          */
         "surface": 'primary' | 'secondary';
+    }
+    interface DsIcon {
+        /**
+          * Base path for loading icon SVG files.
+          * @default '/icons'
+         */
+        "basePath": string;
+        /**
+          * Color of the icon. Accepts any valid CSS color value. Icons use currentColor by default, inheriting from parent.
+          * @default 'currentColor'
+         */
+        "color": string;
+        /**
+          * Accessible label for screen readers. If provided, icon is treated as semantic (not decorative).
+         */
+        "label"?: string;
+        /**
+          * Enable lazy loading with IntersectionObserver. Icon will only load when visible in viewport.
+          * @default false
+         */
+        "lazy": boolean;
+        /**
+          * Name of the icon to display (without .svg extension). Must match a file in the icons directory.
+          * @example "add", "arrow-left", "close"
+         */
+        "name": string;
+        /**
+          * Size of the icon in pixels.
+          * @default 24
+         */
+        "size": number;
     }
 }
 declare global {
@@ -43,23 +76,30 @@ declare global {
         prototype: HTMLDsCardElement;
         new (): HTMLDsCardElement;
     };
+    interface HTMLDsIconElement extends Components.DsIcon, HTMLStencilElement {
+    }
+    var HTMLDsIconElement: {
+        prototype: HTMLDsIconElement;
+        new (): HTMLDsIconElement;
+    };
     interface HTMLElementTagNameMap {
         "ds-button": HTMLDsButtonElement;
         "ds-card": HTMLDsCardElement;
+        "ds-icon": HTMLDsIconElement;
     }
 }
 declare namespace LocalJSX {
     interface DsButton {
         /**
-          * Disabled state
+          * Disables the button interaction and applies disabled styling.
           * @default false
          */
         "disabled"?: boolean;
         /**
-          * Button variant: primary, secondary, or tertiary
-          * @default 'primary'
+          * Button variant determining visual style.
+          * @default 'primary-brand'
          */
-        "variant"?: 'primary' | 'secondary' | 'tertiary';
+        "variant"?: ButtonVariant;
     }
     interface DsCard {
         /**
@@ -72,9 +112,41 @@ declare namespace LocalJSX {
          */
         "surface"?: 'primary' | 'secondary';
     }
+    interface DsIcon {
+        /**
+          * Base path for loading icon SVG files.
+          * @default '/icons'
+         */
+        "basePath"?: string;
+        /**
+          * Color of the icon. Accepts any valid CSS color value. Icons use currentColor by default, inheriting from parent.
+          * @default 'currentColor'
+         */
+        "color"?: string;
+        /**
+          * Accessible label for screen readers. If provided, icon is treated as semantic (not decorative).
+         */
+        "label"?: string;
+        /**
+          * Enable lazy loading with IntersectionObserver. Icon will only load when visible in viewport.
+          * @default false
+         */
+        "lazy"?: boolean;
+        /**
+          * Name of the icon to display (without .svg extension). Must match a file in the icons directory.
+          * @example "add", "arrow-left", "close"
+         */
+        "name": string;
+        /**
+          * Size of the icon in pixels.
+          * @default 24
+         */
+        "size"?: number;
+    }
     interface IntrinsicElements {
         "ds-button": DsButton;
         "ds-card": DsCard;
+        "ds-icon": DsIcon;
     }
 }
 export { LocalJSX as JSX };
@@ -83,6 +155,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "ds-button": LocalJSX.DsButton & JSXBase.HTMLAttributes<HTMLDsButtonElement>;
             "ds-card": LocalJSX.DsCard & JSXBase.HTMLAttributes<HTMLDsCardElement>;
+            "ds-icon": LocalJSX.DsIcon & JSXBase.HTMLAttributes<HTMLDsIconElement>;
         }
     }
 }

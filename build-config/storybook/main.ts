@@ -31,7 +31,7 @@ const config: StorybookConfig = {
     options: {},
   },
 
-  // Static directories for CSS bundles, Stencil components, and JSON tokens
+  // Static directories for CSS bundles, Stencil components, icons, and JSON tokens
   staticDirs: [
     {
       from: '../../packages/tokens/dist/css',
@@ -44,6 +44,10 @@ const config: StorybookConfig = {
     {
       from: '../../packages/tokens/dist/json',
       to: '/json',
+    },
+    {
+      from: '../../packages/icons/svg/dist',
+      to: '/icons',
     },
   ],
 

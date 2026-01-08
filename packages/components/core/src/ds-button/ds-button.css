@@ -50,6 +50,22 @@
 }
 
 /* =============================================================================
+   ICON SLOTS
+   Styling for slotted icons (icon-start and icon-end)
+   ============================================================================= */
+
+::slotted(ds-icon) {
+  --icon-size: var(--button-icon-size, 20px);
+  flex-shrink: 0;
+}
+
+/* Inherit icon color from button label color */
+::slotted(ds-icon[slot="icon-start"]),
+::slotted(ds-icon[slot="icon-end"]) {
+  color: inherit;
+}
+
+/* =============================================================================
    PRIMARY BRAND VARIANT
    Main call-to-action with brand color (BILD red, SportBILD blue)
    ============================================================================= */

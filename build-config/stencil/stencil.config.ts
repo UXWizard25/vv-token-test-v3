@@ -24,6 +24,7 @@ export const config: Config = {
       serviceWorker: null,
       copy: [
         { src: '../../../tokens/dist/css', dest: 'css' },
+        { src: '../../../icons/svg/dist', dest: 'icons' },
       ],
     },
     {
