@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
+import { ICON_NAMES } from '../icons';
 
 /**
  * The Button component is the primary interactive element in the design system.
@@ -42,7 +43,7 @@ const meta: Meta = {
       options: ['primary-brand', 'primary-neutral', 'primary-success', 'secondary', 'tertiary-neutral', 'tertiary-success', 'ghost'],
     },
     disabled: { control: 'boolean' },
-    icon: { control: 'select', options: ['', 'add', 'arrow-right', 'download', 'edit', 'close'] },
+    icon: { control: 'select', options: ['', ...ICON_NAMES] },
     iconPosition: { control: 'select', options: ['start', 'end'] },
     label: { control: 'text' },
   },

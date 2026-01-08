@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
+import { ICON_NAMES } from '../icons';
 
 const meta: Meta = {
   title: 'Components/Icon',
@@ -8,7 +9,7 @@ const meta: Meta = {
   argTypes: {
     name: {
       control: 'select',
-      options: ['add', 'arrow-right', 'checkmark', 'close', 'download', 'edit', 'heart', 'home', 'search', 'star'],
+      options: ICON_NAMES,
     },
   },
   args: {
@@ -22,14 +23,17 @@ type Story = StoryObj;
 
 export const Default: Story = {};
 
-export const CommonIcons: Story = {
+/**
+ * All available icons in the design system.
+ */
+export const AllIcons: Story = {
   render: () => html`
-    <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-      ${['add', 'arrow-right', 'checkmark', 'close', 'download', 'edit', 'heart', 'home', 'search', 'star', 'menu', 'settings'].map(
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 16px;">
+      ${ICON_NAMES.map(
         (name) => html`
-          <div style="text-align: center;">
+          <div style="text-align: center; padding: 8px;">
             <ds-icon name=${name}></ds-icon>
-            <div style="font-size: 11px; margin-top: 4px;">${name}</div>
+            <div style="font-size: 10px; margin-top: 4px; word-break: break-all; color: var(--text-color-secondary, #666);">${name}</div>
           </div>
         `
       )}
