@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2026-01-08T13:18:39.577Z",
+  "lastModified": "2026-01-08T13:44:11.275Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -2463,8 +2463,7 @@
         "VariableID:21945:510389",
         "VariableID:21979:330760",
         "VariableID:21979:330761",
-        "VariableID:22102:25099",
-        "VariableID:22109:181"
+        "VariableID:22102:25099"
       ],
       "variables": [
         {
@@ -7259,21 +7258,6 @@
           },
           "scopes": [
             "TEXT_FILL"
-          ],
-          "hiddenFromPublishing": false,
-          "variableCollectionId": "VariableCollectionId:588:1979"
-        },
-        {
-          "id": "VariableID:22109:181",
-          "name": "felipeTest",
-          "description": "",
-          "resolvedType": "COLOR",
-          "valuesByMode": {
-            "588:0": "#FB3131",
-            "592:1": "#812D2D"
-          },
-          "scopes": [
-            "ALL_SCOPES"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
