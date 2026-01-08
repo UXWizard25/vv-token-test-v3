@@ -52,17 +52,13 @@
 /* =============================================================================
    ICON SLOTS
    Styling for slotted icons (icon-start and icon-end)
+   Icons use --icon-size token (24px) and inherit label color from button
    ============================================================================= */
 
 ::slotted(ds-icon) {
-  --icon-size: var(--button-icon-size, 20px);
-  flex-shrink: 0;
-}
-
-/* Inherit icon color from button label color */
-::slotted(ds-icon[slot="icon-start"]),
-::slotted(ds-icon[slot="icon-end"]) {
+  --icon-size: var(--icon-size, 24px);
   color: inherit;
+  flex-shrink: 0;
 }
 
 /* =============================================================================
