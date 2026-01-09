@@ -2,7 +2,6 @@ import type { StorybookConfig } from '@storybook/web-components-vite';
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import react from '@vitejs/plugin-react';
-import { readFileSync, existsSync } from 'fs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -82,33 +81,11 @@ const config: StorybookConfig = {
     const stencilPath = resolve(__dirname, '../../packages/components/core/dist');
     const jsonPath = resolve(__dirname, '../../packages/tokens/dist/json');
 
-    // Custom plugin to serve icons from /icons path
-    const serveIconsPlugin = {
-      name: 'serve-icons',
-      configureServer(server: any) {
-        server.middlewares.use((req: any, res: any, next: any) => {
-          if (req.url?.startsWith('/icons/')) {
-            const iconName = req.url.replace('/icons/', '');
-            const iconPath = resolve(iconsPath, iconName);
-
-            if (existsSync(iconPath)) {
-              const content = readFileSync(iconPath, 'utf-8');
-              res.setHeader('Content-Type', 'image/svg+xml');
-              res.end(content);
-              return;
-            }
-          }
-          next();
-        });
-      },
-    };
-
     return {
       ...config,
       // Add React plugin for DocsContainer.tsx
       plugins: [
         fixMdxImportsPlugin,
-        serveIconsPlugin,
         ...(config.plugins ?? []),
         react(),
       ],

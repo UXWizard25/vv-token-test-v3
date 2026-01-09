@@ -34,14 +34,17 @@ export class DsIcon {
     if (!this.name) return;
 
     const url = `${this.basePath}/${this.name}.svg`;
+    console.log(`[ds-icon] Loading icon: ${this.name}, URL: ${url}, Full URL: ${new URL(url, window.location.href).href}`);
 
     if (iconCache.has(url)) {
       this.svgContent = iconCache.get(url)!;
+      console.log(`[ds-icon] Found in cache: ${this.name}`);
       return;
     }
 
     try {
       const response = await fetch(url);
+      console.log(`[ds-icon] Fetch response: ${response.status} ${response.statusText} for ${url}`);
       if (response.ok) {
         const svg = await response.text();
         iconCache.set(url, svg);
