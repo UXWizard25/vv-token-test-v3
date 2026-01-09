@@ -1,6 +1,6 @@
 {
   "name": "@marioschmidt/design-system-icons-react",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "BILD Design System Icons - React Components",
   "type": "module",
   "main": "./dist/index.js",
