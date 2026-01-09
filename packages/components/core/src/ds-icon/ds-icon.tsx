@@ -2,6 +2,13 @@ import { Component, Prop, State, Watch, h } from '@stencil/core';
 
 const iconCache = new Map<string, string>();
 
+// Type declaration for global icons base path (set by Storybook or other hosts)
+declare global {
+  interface Window {
+    __ICONS_BASE_PATH__?: string;
+  }
+}
+
 @Component({
   tag: 'ds-icon',
   styleUrl: 'ds-icon.css',
@@ -15,9 +22,10 @@ export class DsIcon {
 
   /**
    * Base path for icon SVG files.
+   * If not set, will check for window.__ICONS_BASE_PATH__ (set by Storybook for GitHub Pages).
    * @default '/icons'
    */
-  @Prop() basePath: string = '/icons';
+  @Prop() basePath?: string;
 
   @State() svgContent: string = '';
 
@@ -30,10 +38,25 @@ export class DsIcon {
     this.loadIcon();
   }
 
+  /**
+   * Get the effective base path for icons.
+   * Priority: 1. explicit basePath prop, 2. window.__ICONS_BASE_PATH__, 3. '/icons'
+   */
+  private getEffectiveBasePath(): string {
+    if (this.basePath) {
+      return this.basePath;
+    }
+    if (typeof window !== 'undefined' && window.__ICONS_BASE_PATH__) {
+      return window.__ICONS_BASE_PATH__;
+    }
+    return '/icons';
+  }
+
   private async loadIcon() {
     if (!this.name) return;
 
-    const url = `${this.basePath}/${this.name}.svg`;
+    const effectiveBasePath = this.getEffectiveBasePath();
+    const url = `${effectiveBasePath}/${this.name}.svg`;
     console.log(`[ds-icon] Loading icon: ${this.name}, URL: ${url}, Full URL: ${new URL(url, window.location.href).href}`);
 
     if (iconCache.has(url)) {

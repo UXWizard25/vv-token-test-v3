@@ -42,10 +42,10 @@ export namespace Components {
     }
     interface DsIcon {
         /**
-          * Base path for icon SVG files.
+          * Base path for icon SVG files. If not set, will check for window.__ICONS_BASE_PATH__ (set by Storybook for GitHub Pages).
           * @default '/icons'
          */
-        "basePath": string;
+        "basePath"?: string;
         /**
           * Name of the icon (without .svg extension).
          */
@@ -112,7 +112,7 @@ declare namespace LocalJSX {
     }
     interface DsIcon {
         /**
-          * Base path for icon SVG files.
+          * Base path for icon SVG files. If not set, will check for window.__ICONS_BASE_PATH__ (set by Storybook for GitHub Pages).
           * @default '/icons'
          */
         "basePath"?: string;

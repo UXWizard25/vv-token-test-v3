@@ -21,6 +21,13 @@ function initializeGlobalAttributes() {
     document.documentElement.setAttribute('data-content-brand', 'bild');
     document.documentElement.setAttribute('data-density', 'default');
   }
+
+  // Set icons base path for GitHub Pages and other subpath deployments
+  // import.meta.env.BASE_URL is provided by Vite based on the 'base' config
+  if (typeof window !== 'undefined') {
+    const baseUrl = import.meta.env?.BASE_URL || '/';
+    (window as Window & { __ICONS_BASE_PATH__?: string }).__ICONS_BASE_PATH__ = `${baseUrl}icons`;
+  }
 }
 
 // Initialize on load
