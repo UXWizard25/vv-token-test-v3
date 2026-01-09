@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// Generated at: 2026-01-09T13:19:14.438Z
+// Generated at: 2026-01-09T14:19:07.102Z
 //
 // BILD Design System Icons - Swift Extension
 // To regenerate, run: npm run build:icons:ios
