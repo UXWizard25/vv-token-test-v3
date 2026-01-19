@@ -29,7 +29,7 @@ Native platforms (iOS/Android) have dedicated packages for platform-native distr
 | Platform | Package | Registry | Auth Required | Installation |
 |----------|---------|----------|---------------|--------------|
 | **Web** | `@marioschmidt/design-system-tokens` | npm | ❌ No | `npm install @marioschmidt/design-system-tokens` |
-| **iOS** | `BildDesignTokens` | GitHub (SPM) | ❌ No (public repo) | Xcode → Add Package → `https://github.com/UXWizard25/vv-token-test-v3.git` |
+| **iOS** | `BildDesignTokens` | GitHub (SPM) | ❌ No (public repo) | Xcode → Add Package → `https://github.com/UXWizard25/bild-design-system.git` |
 | **Android** | `de.bild.design:tokens` | GitHub Packages | ✅ Yes (GitHub Token) | See `packages/tokens-android/README.md` |
 
 > **Note:** GitHub Packages (Maven) always requires authentication, even for public repositories. Android developers need a GitHub Personal Access Token with `read:packages` scope.

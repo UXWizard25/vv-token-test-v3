@@ -5,7 +5,7 @@
 Multi-platform icon transformation pipeline for the BILD Design System.
 
 [![npm version](https://img.shields.io/npm/v/@marioschmidt/design-system-icons.svg)](https://www.npmjs.com/package/@marioschmidt/design-system-icons)
-[![Build Status](https://github.com/UXWizard25/vv-token-test-v3/workflows/Build%20Icons/badge.svg)](https://github.com/UXWizard25/vv-token-test-v3/actions)
+[![Build Status](https://github.com/UXWizard25/bild-design-system/workflows/Build%20Icons/badge.svg)](https://github.com/UXWizard25/bild-design-system/actions)
 
 ---
 
@@ -168,7 +168,7 @@ npm install @marioschmidt/design-system-icons-react
 dependencyResolutionManagement {
     repositories {
         maven {
-            url = uri("https://maven.pkg.github.com/UXWizard25/vv-token-test-v3")
+            url = uri("https://maven.pkg.github.com/UXWizard25/bild-design-system")
             credentials {
                 username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USER")
                 password = project.findProperty("gpr.token") ?: System.getenv("GITHUB_TOKEN")
@@ -187,7 +187,7 @@ dependencies {
 
 ```swift
 // Package.swift or Xcode: File → Add Package Dependencies
-.package(url: "https://github.com/UXWizard25/vv-token-test-v3.git", from: "1.0.0")
+.package(url: "https://github.com/UXWizard25/bild-design-system.git", from: "1.0.0")
 
 // Target dependency
 .target(name: "YourApp", dependencies: ["BildIcons"])

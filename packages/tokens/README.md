@@ -5,7 +5,7 @@
 Multi-platform design token transformation pipeline powered by **Style Dictionary v4** with **Figma-scoped semantic type detection**.
 
 [![npm version](https://img.shields.io/npm/v/@marioschmidt/design-system-tokens.svg)](https://www.npmjs.com/package/@marioschmidt/design-system-tokens)
-[![Build Status](https://github.com/UXWizard25/vv-token-test-v3/workflows/Build%20Design%20Tokens/badge.svg)](https://github.com/UXWizard25/vv-token-test-v3/actions)
+[![Build Status](https://github.com/UXWizard25/bild-design-system/workflows/Build%20Design%20Tokens/badge.svg)](https://github.com/UXWizard25/bild-design-system/actions)
 
 ---
 
@@ -148,7 +148,7 @@ npm install @marioschmidt/design-system-tokens
 In Xcode: **File → Add Package Dependencies**
 
 ```
-URL: https://github.com/UXWizard25/vv-token-test-v3.git
+URL: https://github.com/UXWizard25/bild-design-system.git
 Product: BildDesignTokens
 ```
 

@@ -11,7 +11,7 @@ Stencil-based Web Components for the BILD Design System. Components consume desi
 These wrappers are co-located in the same `packages/components/` directory as they are tightly coupled to the core Stencil components.
 
 [![npm version](https://img.shields.io/npm/v/@marioschmidt/design-system-components.svg)](https://www.npmjs.com/package/@marioschmidt/design-system-components)
-[![Build Status](https://github.com/UXWizard25/vv-token-test-v3/workflows/Build%20Design%20Tokens/badge.svg)](https://github.com/UXWizard25/vv-token-test-v3/actions)
+[![Build Status](https://github.com/UXWizard25/bild-design-system/workflows/Build%20Design%20Tokens/badge.svg)](https://github.com/UXWizard25/bild-design-system/actions)
 
 ---
 

@@ -26,7 +26,7 @@
  *
  * Installation:
  *   Xcode: File > Add Package Dependencies
- *   URL: https://github.com/UXWizard25/vv-token-test-v3.git
+ *   URL: https://github.com/UXWizard25/bild-design-system.git
  *   Product: BildDesignTokens
  */
 

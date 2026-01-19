@@ -15,7 +15,7 @@ export const bildLightTheme = create({
 
   // Brand
   brandTitle: 'BILD Design System',
-  brandUrl: 'https://github.com/UXWizard25/vv-token-test-v3',
+  brandUrl: 'https://github.com/UXWizard25/bild-design-system',
 
   // Colors - based on BILD color primitives
   colorPrimary: '#DD0000', // --color-bild-red-50
@@ -52,7 +52,7 @@ export const bildDarkTheme = create({
 
   // Brand
   brandTitle: 'BILD Design System',
-  brandUrl: 'https://github.com/UXWizard25/vv-token-test-v3',
+  brandUrl: 'https://github.com/UXWizard25/bild-design-system',
 
   // Colors - based on BILD color primitives
   colorPrimary: '#DD0000', // --color-bild-red-50

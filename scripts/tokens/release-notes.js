@@ -1897,7 +1897,7 @@ function generateDynamicChecklist(diff, options = {}) {
 
 function generateTechnicalDetails(diff, options = {}) {
   const { runId = '' } = options;
-  const repo = process.env.GITHUB_REPOSITORY || 'UXWizard25/vv-token-test-v3';
+  const repo = process.env.GITHUB_REPOSITORY || 'UXWizard25/bild-design-system';
 
   let md = '## ⚙️ Technical Details\n\n';
 
@@ -2010,7 +2010,7 @@ function generatePRComment(diff, options = {}) {
   md += generateTechnicalDetails(diff, options);
 
   // Footer
-  const repo = process.env.GITHUB_REPOSITORY || 'UXWizard25/vv-token-test-v3';
+  const repo = process.env.GITHUB_REPOSITORY || 'UXWizard25/bild-design-system';
   md += `---\n\n`;
   md += `**Questions?** [Documentation](https://github.com/${repo}#readme) | [Create Issue](https://github.com/${repo}/issues)\n`;
 
@@ -2103,7 +2103,7 @@ function generateConsoleOutput(diff) {
  */
 function generateGitHubRelease(diff, options = {}) {
   const { version = 'latest', packageSize = '', successfulBuilds = 0, totalBuilds = 0 } = options;
-  const repo = process.env.GITHUB_REPOSITORY || 'UXWizard25/vv-token-test-v3';
+  const repo = process.env.GITHUB_REPOSITORY || 'UXWizard25/bild-design-system';
 
   let md = `## 🎨 Design System v${version}\n\n`;
 

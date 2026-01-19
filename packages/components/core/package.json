@@ -45,10 +45,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/UXWizard25/vv-token-test-v3.git",
+    "url": "git+https://github.com/UXWizard25/bild-design-system.git",
     "directory": "packages/components/core"
   },
-  "homepage": "https://github.com/UXWizard25/vv-token-test-v3#readme",
+  "homepage": "https://github.com/UXWizard25/bild-design-system#readme",
   "publishConfig": {
     "access": "public"
   },

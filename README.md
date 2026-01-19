@@ -6,8 +6,8 @@
 
 A comprehensive design operations pipeline for the BILD Design System. Transforms Figma exports into production-ready assets across multiple platforms using the **CodeBridge Plugin**.
 
-[![Build Tokens](https://github.com/UXWizard25/vv-token-test-v3/workflows/Build%20Design%20Tokens/badge.svg)](https://github.com/UXWizard25/vv-token-test-v3/actions)
-[![Build Icons](https://github.com/UXWizard25/vv-token-test-v3/workflows/Build%20Icons/badge.svg)](https://github.com/UXWizard25/vv-token-test-v3/actions)
+[![Build Tokens](https://github.com/UXWizard25/bild-design-system/workflows/Build%20Design%20Tokens/badge.svg)](https://github.com/UXWizard25/bild-design-system/actions)
+[![Build Icons](https://github.com/UXWizard25/bild-design-system/workflows/Build%20Icons/badge.svg)](https://github.com/UXWizard25/bild-design-system/actions)
 [![npm tokens](https://img.shields.io/npm/v/@marioschmidt/design-system-tokens.svg?label=tokens)](https://www.npmjs.com/package/@marioschmidt/design-system-tokens)
 [![npm icons](https://img.shields.io/npm/v/@marioschmidt/design-system-icons.svg?label=icons)](https://www.npmjs.com/package/@marioschmidt/design-system-icons)
 [![npm components](https://img.shields.io/npm/v/@marioschmidt/design-system-components.svg?label=components)](https://www.npmjs.com/package/@marioschmidt/design-system-components)
@@ -214,7 +214,7 @@ npm install @marioschmidt/design-system-vue
 In Xcode: **File → Add Package Dependencies**
 
 ```
-URL: https://github.com/UXWizard25/vv-token-test-v3.git
+URL: https://github.com/UXWizard25/bild-design-system.git
 Product: BildDesignTokens
 ```
 
@@ -230,7 +230,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven {
-            url = uri("https://maven.pkg.github.com/UXWizard25/vv-token-test-v3")
+            url = uri("https://maven.pkg.github.com/UXWizard25/bild-design-system")
             credentials {
                 username = properties["gpr.user"]?.toString() ?: ""
                 password = properties["gpr.token"]?.toString() ?: ""
@@ -326,7 +326,7 @@ import { DsButton, DsCard } from '@marioschmidt/design-system-vue';
 ## 📁 Project Structure
 
 ```
-vv-token-test-v3/
+bild-design-system/
 │
 ├── 📱 apps/
 │   └── docs/                      # @bild/docs (private, Storybook)

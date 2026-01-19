@@ -49,11 +49,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/UXWizard25/vv-token-test-v3.git",
+    "url": "git+https://github.com/UXWizard25/bild-design-system.git",
     "directory": "packages/icons/react"
   },
-  "homepage": "https://github.com/UXWizard25/vv-token-test-v3/tree/main/packages/icons/react#readme",
+  "homepage": "https://github.com/UXWizard25/bild-design-system/tree/main/packages/icons/react#readme",
   "bugs": {
-    "url": "https://github.com/UXWizard25/vv-token-test-v3/issues"
+    "url": "https://github.com/UXWizard25/bild-design-system/issues"
   }
 }

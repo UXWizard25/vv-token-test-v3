@@ -16,7 +16,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven {
-            url = uri("https://maven.pkg.github.com/UXWizard25/vv-token-test-v3")
+            url = uri("https://maven.pkg.github.com/UXWizard25/bild-design-system")
             credentials {
                 username = project.findProperty("gpr.user") as String?
                     ?: System.getenv("GITHUB_USER")
