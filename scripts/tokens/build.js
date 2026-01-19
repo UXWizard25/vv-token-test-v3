@@ -736,6 +736,11 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
         })(),
         files: [{
           destination: (() => {
+            // Extract brand from path for prefixing semantic token files
+            const brandMatch = buildPath.match(/\/brands\/([^/]+)/);
+            const brand = brandMatch ? brandMatch[1] : '';
+            const brandPascal = brand ? brand.charAt(0).toUpperCase() + brand.slice(1) : '';
+
             // For breakpoint tokens, use sizeclass naming
             if (cssOptions.modeType === 'breakpoint' && cssOptions.mode) {
               const sizeClass = getSizeClassName(cssOptions.mode);
@@ -745,7 +750,8 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
                 const componentName = componentMatch ? componentMatch[1] : '';
                 return `${componentName}Sizing${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}.swift`;
               }
-              return `Sizing${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}.swift`;
+              // Brand-prefix for semantic sizing files
+              return `${brandPascal}Sizing${sizeClass.charAt(0).toUpperCase() + sizeClass.slice(1)}.swift`;
             }
             // For color mode tokens
             if (cssOptions.modeType === 'theme' && cssOptions.mode) {
@@ -756,7 +762,8 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
                 const componentName = componentMatch ? componentMatch[1] : '';
                 return `${componentName}Colors${modeName}.swift`;
               }
-              return `Colors${modeName}.swift`;
+              // Brand-prefix for semantic color files
+              return `${brandPascal}Colors${modeName}.swift`;
             }
             // For density tokens
             if (cssOptions.modeType === 'density' && cssOptions.mode) {
@@ -767,7 +774,8 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
                 const componentName = componentMatch ? componentMatch[1] : '';
                 return `${componentName}Density${modeName}.swift`;
               }
-              return `Density${modeName}.swift`;
+              // Brand-prefix for semantic density files
+              return `${brandPascal}Density${modeName}.swift`;
             }
             // Default: PascalCase filename
             return `${fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}.swift`;
@@ -944,13 +952,13 @@ function createTypographyConfig(brand, breakpoint) {
       },
 
       // iOS: Only compact (sm) and regular (lg) with SwiftUI format
-      // Output to semantic/typography/ with sizeclass in filename
+      // Output to semantic/typography/ with brand-prefixed sizeclass in filename
       ...(isNativeBreakpoint(breakpoint, 'ios') ? {
         ios: {
           transformGroup: 'custom/ios-swift',
           buildPath: `${IOS_DIST_DIR}/brands/${brand}/semantic/typography/`,
           files: [{
-            destination: `TypographySizeclass${getSizeClassName(breakpoint, 'ios').charAt(0).toUpperCase() + getSizeClassName(breakpoint, 'ios').slice(1)}.swift`,
+            destination: `${brandName}TypographySizeclass${getSizeClassName(breakpoint, 'ios').charAt(0).toUpperCase() + getSizeClassName(breakpoint, 'ios').slice(1)}.swift`,
             format: 'swiftui/typography',
             options: {
               brand: brandName,
@@ -1024,12 +1032,12 @@ function createEffectConfig(brand, colorMode) {
         files: [{ destination: `${fileName}.json`, format: 'json', options: { outputReferences: false } }]
       },
 
-      // iOS: SwiftUI Effects format
+      // iOS: SwiftUI Effects format (brand-prefixed)
       ios: {
         transformGroup: 'custom/ios-swift',
         buildPath: `${IOS_DIST_DIR}/brands/${brand}/semantic/effects/`,
         files: [{
-          destination: `${fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}.swift`,
+          destination: `${brandName}${fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}.swift`,
           format: 'swiftui/effects',
           options: {
             brand: brandName,
@@ -3615,8 +3623,9 @@ async function aggregateSwiftUIComponents() {
     for (const componentName of componentDirs) {
       totalComponents++;
       const componentDir = path.join(brandComponentsDir, componentName);
+      // Filter out aggregated token files (now brand-prefixed: BildButtonTokens.swift, SportbildButtonTokens.swift, etc.)
       const swiftFiles = fs.readdirSync(componentDir)
-        .filter(f => f.endsWith('.swift') && !f.endsWith('Tokens.swift'))
+        .filter(f => f.endsWith('.swift') && !f.match(/^[A-Z][a-z]+[A-Z].*Tokens\.swift$/))
         .sort();
 
       if (swiftFiles.length === 0) continue;
@@ -3673,11 +3682,13 @@ async function aggregateSwiftUIComponents() {
           tokenGroups
         );
 
-        // Write aggregated file
-        const outputPath = path.join(componentDir, `${componentName}Tokens.swift`);
+        // Write aggregated file with brand-prefixed filename
+        const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
+        const tokenFileName = `${brandPascal}${componentName}Tokens.swift`;
+        const outputPath = path.join(componentDir, tokenFileName);
         fs.writeFileSync(outputPath, aggregatedContent, 'utf8');
 
-        console.log(`     ✅ ${brand}/${componentName}Tokens.swift`);
+        console.log(`     ✅ ${brand}/${tokenFileName}`);
         successfulComponents++;
 
       } catch (error) {
@@ -3762,8 +3773,11 @@ function generateAggregatedSwiftComponentFile(brand, componentName, tokenGroups)
   const hasTypographyTokens = tokenGroups.typography.compact.length > 0 || tokenGroups.typography.regular.length > 0;
   const hasEffectsTokens = tokenGroups.effects && (tokenGroups.effects.light.length > 0 || tokenGroups.effects.dark.length > 0);
 
+  // Use brand-prefixed names to avoid SPM filename/type collisions
+  const tokenClassName = `${brandPascal}${componentName}Tokens`;
+
   let output = generateFileHeader({
-    fileName: `${componentName}Tokens.swift`,
+    fileName: `${tokenClassName}.swift`,
     commentStyle: 'line',
     platform: 'ios',
     brand: brandPascal,
@@ -3773,13 +3787,13 @@ function generateAggregatedSwiftComponentFile(brand, componentName, tokenGroups)
   output += `
 import SwiftUI
 
-/// ${componentName} Design Tokens
+/// ${brandPascal} ${componentName} Design Tokens
 ///
 /// Usage:
-///   ${componentName}Tokens.Colors.light.primaryBgIdle
-///   ${componentName}Tokens.Sizing.compact.height
-///   ${componentName}Tokens.Density.current(for: theme.density).contentGap
-public enum ${componentName}Tokens {
+///   ${tokenClassName}.Colors.light.primaryBgIdle
+///   ${tokenClassName}.Sizing.compact.height
+///   ${tokenClassName}.Density.current(for: theme.density).contentGap
+public enum ${tokenClassName} {
 `;
 
   // Colors section
@@ -3791,11 +3805,14 @@ public enum ${componentName}Tokens {
       }
     });
 
+    // Brand-prefixed protocol name
+    const colorProtocolName = `${brandPascal}${componentName}ColorTokens`;
+
     output += `
     // MARK: - Colors
 
     /// Color tokens protocol
-    public protocol ${componentName}ColorTokens: Sendable {
+    public protocol ${colorProtocolName}: Sendable {
 `;
     colorTokenNames.forEach((info, name) => {
       output += `        var ${name}: ${info.type} { get }\n`;
@@ -3805,7 +3822,7 @@ public enum ${componentName}Tokens {
     /// Color scheme accessor
     public enum Colors {
         /// Returns color tokens for the specified theme mode
-        public static func current(isDark: Bool) -> any ${componentName}ColorTokens {
+        public static func current(isDark: Bool) -> any ${colorProtocolName} {
             isDark ? Dark.shared : Light.shared
         }
 
@@ -3815,7 +3832,7 @@ public enum ${componentName}Tokens {
 
     if (tokenGroups.colors.light.length > 0) {
       output += `
-        public struct Light: ${componentName}ColorTokens {
+        public struct Light: ${colorProtocolName} {
             public static let shared = Light()
             private init() {}
 `;
@@ -3827,7 +3844,7 @@ public enum ${componentName}Tokens {
 
     if (tokenGroups.colors.dark.length > 0) {
       output += `
-        public struct Dark: ${componentName}ColorTokens {
+        public struct Dark: ${colorProtocolName} {
             public static let shared = Dark()
             private init() {}
 `;
@@ -3848,11 +3865,14 @@ public enum ${componentName}Tokens {
       }
     });
 
+    // Brand-prefixed protocol name
+    const sizingProtocolName = `${brandPascal}${componentName}SizingTokens`;
+
     output += `
     // MARK: - Sizing
 
     /// Sizing tokens protocol
-    public protocol ${componentName}SizingTokens: Sendable {
+    public protocol ${sizingProtocolName}: Sendable {
 `;
     sizingTokenNames.forEach((info, name) => {
       output += `        var ${name}: ${info.type} { get }\n`;
@@ -3862,7 +3882,7 @@ public enum ${componentName}Tokens {
     /// Size class accessor
     public enum Sizing {
         /// Returns sizing tokens for the specified size class
-        public static func current(for sizeClass: SizeClass) -> any ${componentName}SizingTokens {
+        public static func current(for sizeClass: SizeClass) -> any ${sizingProtocolName} {
             sizeClass == .compact ? Compact.shared : Regular.shared
         }
 
@@ -3872,7 +3892,7 @@ public enum ${componentName}Tokens {
 
     if (filteredSizing.compact.length > 0) {
       output += `
-        public struct Compact: ${componentName}SizingTokens {
+        public struct Compact: ${sizingProtocolName} {
             public static let shared = Compact()
             private init() {}
 `;
@@ -3884,7 +3904,7 @@ public enum ${componentName}Tokens {
 
     if (filteredSizing.regular.length > 0) {
       output += `
-        public struct Regular: ${componentName}SizingTokens {
+        public struct Regular: ${sizingProtocolName} {
             public static let shared = Regular()
             private init() {}
 `;
@@ -3919,11 +3939,14 @@ public enum ${componentName}Tokens {
       tokenInfo.set(name, getSwiftType(sampleValue, name));
     });
 
+    // Brand-prefixed protocol name
+    const densityProtocolName = `${brandPascal}${componentName}DensityTokens`;
+
     output += `
     // MARK: - Density (SizeClass × Density Matrix)
 
     /// Density tokens protocol (SizeClass × Density resolved)
-    public protocol ${componentName}DensityTokens: Sendable {
+    public protocol ${densityProtocolName}: Sendable {
 `;
     tokenInfo.forEach((type, name) => {
       output += `        var ${name}: ${type} { get }\n`;
@@ -3933,7 +3956,7 @@ public enum ${componentName}Tokens {
     /// Density accessor with SizeClass × Density resolution
     public enum Density {
         /// Returns density tokens resolved by SizeClass × DensityMode
-        public static func current(for sizeClass: SizeClass, density: DesignDensity) -> any ${componentName}DensityTokens {
+        public static func current(for sizeClass: SizeClass, density: DesignDensity) -> any ${densityProtocolName} {
             switch (sizeClass, density) {
             case (.compact, .dense): return CompactDense.shared
             case (.compact, .default): return CompactDefault.shared
@@ -3960,7 +3983,7 @@ public enum ${componentName}Tokens {
         const densityKey = densityModeKeys[densityMode];
 
         output += `
-        public struct ${structName}: ${componentName}DensityTokens {
+        public struct ${structName}: ${densityProtocolName} {
             public static let shared = ${structName}()
             private init() {}
 `;
@@ -3981,11 +4004,14 @@ public enum ${componentName}Tokens {
       }
     });
 
+    // Brand-prefixed protocol name
+    const densityFallbackProtocolName = `${brandPascal}${componentName}DensityTokens`;
+
     output += `
     // MARK: - Density
 
     /// Density tokens protocol
-    public protocol ${componentName}DensityTokens: Sendable {
+    public protocol ${densityFallbackProtocolName}: Sendable {
 `;
     densityTokenNames.forEach((info, name) => {
       output += `        var ${name}: ${info.type} { get }\n`;
@@ -3995,7 +4021,7 @@ public enum ${componentName}Tokens {
     /// Density accessor
     public enum DensityMode {
         /// Returns density tokens for the specified density mode
-        public static func current(for density: DesignDensity) -> any ${componentName}DensityTokens {
+        public static func current(for density: DesignDensity) -> any ${densityFallbackProtocolName} {
             switch density {
             case .dense: return Dense.shared
             case .default: return Default.shared
@@ -4010,7 +4036,7 @@ public enum ${componentName}Tokens {
 
     if (tokenGroups.density.dense.length > 0) {
       output += `
-        public struct Dense: ${componentName}DensityTokens {
+        public struct Dense: ${densityFallbackProtocolName} {
             public static let shared = Dense()
             private init() {}
 `;
@@ -4022,7 +4048,7 @@ public enum ${componentName}Tokens {
 
     if (tokenGroups.density.default.length > 0) {
       output += `
-        public struct Default: ${componentName}DensityTokens {
+        public struct Default: ${densityFallbackProtocolName} {
             public static let shared = Default()
             private init() {}
 `;
@@ -4034,7 +4060,7 @@ public enum ${componentName}Tokens {
 
     if (tokenGroups.density.spacious.length > 0) {
       output += `
-        public struct Spacious: ${componentName}DensityTokens {
+        public struct Spacious: ${densityFallbackProtocolName} {
             public static let shared = Spacious()
             private init() {}
 `;
@@ -4055,11 +4081,14 @@ public enum ${componentName}Tokens {
       }
     });
 
+    // Brand-prefixed protocol name
+    const typographyProtocolName = `${brandPascal}${componentName}TypographyTokens`;
+
     output += `
     // MARK: - Typography
 
     /// Typography tokens protocol
-    public protocol ${componentName}TypographyTokens: Sendable {
+    public protocol ${typographyProtocolName}: Sendable {
 `;
     typographyTokenNames.forEach((info, name) => {
       output += `        var ${name}: ${info.type} { get }\n`;
@@ -4069,7 +4098,7 @@ public enum ${componentName}Tokens {
     /// Typography accessor
     public enum Typography {
         /// Returns typography tokens for the specified size class
-        public static func current(for sizeClass: SizeClass) -> any ${componentName}TypographyTokens {
+        public static func current(for sizeClass: SizeClass) -> any ${typographyProtocolName} {
             sizeClass == .compact ? Compact.shared : Regular.shared
         }
 
@@ -4079,7 +4108,7 @@ public enum ${componentName}Tokens {
 
     if (tokenGroups.typography.compact.length > 0) {
       output += `
-        public struct Compact: ${componentName}TypographyTokens {
+        public struct Compact: ${typographyProtocolName} {
             public static let shared = Compact()
             private init() {}
 `;
@@ -4091,7 +4120,7 @@ public enum ${componentName}Tokens {
 
     if (tokenGroups.typography.regular.length > 0) {
       output += `
-        public struct Regular: ${componentName}TypographyTokens {
+        public struct Regular: ${typographyProtocolName} {
             public static let shared = Regular()
             private init() {}
 `;
@@ -4112,11 +4141,14 @@ public enum ${componentName}Tokens {
       }
     });
 
+    // Brand-prefixed protocol name
+    const effectsProtocolName = `${brandPascal}${componentName}EffectsTokens`;
+
     output += `
     // MARK: - Effects
 
     /// Effects tokens protocol
-    public protocol ${componentName}EffectsTokens: Sendable {
+    public protocol ${effectsProtocolName}: Sendable {
 `;
     effectsTokenNames.forEach((info, name) => {
       output += `        var ${name}: ${info.type} { get }\n`;
@@ -4126,7 +4158,7 @@ public enum ${componentName}Tokens {
     /// Effects accessor
     public enum Effects {
         /// Returns effects tokens for the specified theme mode
-        public static func current(isDark: Bool) -> any ${componentName}EffectsTokens {
+        public static func current(isDark: Bool) -> any ${effectsProtocolName} {
             isDark ? Dark.shared : Light.shared
         }
 
@@ -4136,7 +4168,7 @@ public enum ${componentName}Tokens {
 
     if (tokenGroups.effects.light.length > 0) {
       output += `
-        public struct Light: ${componentName}EffectsTokens {
+        public struct Light: ${effectsProtocolName} {
             public static let shared = Light()
             private init() {}
 `;
@@ -4148,7 +4180,7 @@ public enum ${componentName}Tokens {
 
     if (tokenGroups.effects.dark.length > 0) {
       output += `
-        public struct Dark: ${componentName}EffectsTokens {
+        public struct Dark: ${effectsProtocolName} {
             public static let shared = Dark()
             private init() {}
 `;
@@ -4197,11 +4229,13 @@ async function cleanupSwiftUIIndividualComponentFiles() {
 
     for (const componentName of componentDirs) {
       const componentDir = path.join(brandComponentsDir, componentName);
+      // Filter out aggregated token files (brand-prefixed: BildButtonTokens.swift, etc.)
       const swiftFiles = fs.readdirSync(componentDir)
-        .filter(f => f.endsWith('.swift') && !f.endsWith('Tokens.swift'));
+        .filter(f => f.endsWith('.swift') && !f.match(/^[A-Z][a-z]+[A-Z].*Tokens\.swift$/));
 
-      // Only delete individual files if aggregated file exists
-      const aggregatedFile = path.join(componentDir, `${componentName}Tokens.swift`);
+      // Only delete individual files if aggregated file exists (brand-prefixed)
+      const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
+      const aggregatedFile = path.join(componentDir, `${brandPascal}${componentName}Tokens.swift`);
       if (fs.existsSync(aggregatedFile)) {
         for (const file of swiftFiles) {
           fs.unlinkSync(path.join(componentDir, file));
@@ -6377,8 +6411,8 @@ public extension View {
   successful++;
 
   // Generate DesignSystemTheme.swift with dual-axis architecture
-  // Dynamically read color properties from generated iOS files
-  const bildColorsPath = path.join(IOS_DIST_DIR, 'brands', 'bild', 'semantic', 'color', 'ColorsLight.swift');
+  // Dynamically read color properties from generated iOS files (now brand-prefixed)
+  const bildColorsPath = path.join(IOS_DIST_DIR, 'brands', 'bild', 'semantic', 'color', 'BildColorsLight.swift');
   let colorProperties = [];
   if (fs.existsSync(bildColorsPath)) {
     const content = fs.readFileSync(bildColorsPath, 'utf8');
@@ -6394,9 +6428,9 @@ public extension View {
   }
   const colorPropertyDeclarations = colorProperties.map(prop => `    var ${prop}: Color { get }`).join('\n');
 
-  // Dynamically read sizing properties with their types
+  // Dynamically read sizing properties with their types (now brand-prefixed)
   // Supported types: CGFloat, String, Bool, Int
-  const bildSizingPath = path.join(IOS_DIST_DIR, 'brands', 'bild', 'semantic', 'sizeclass', 'SizingCompact.swift');
+  const bildSizingPath = path.join(IOS_DIST_DIR, 'brands', 'bild', 'semantic', 'sizeclass', 'BildSizingCompact.swift');
   let sizingProperties = [];
   if (fs.existsSync(bildSizingPath)) {
     const content = fs.readFileSync(bildSizingPath, 'utf8');
@@ -6416,8 +6450,8 @@ public extension View {
   }
   const sizingPropertyDeclarations = sizingProperties.map(prop => `    var ${prop.name}: ${prop.type} { get }`).join('\n');
 
-  // Dynamically read effects properties
-  const bildEffectsPath = path.join(IOS_DIST_DIR, 'brands', 'bild', 'semantic', 'effects', 'EffectsLight.swift');
+  // Dynamically read effects properties (now brand-prefixed)
+  const bildEffectsPath = path.join(IOS_DIST_DIR, 'brands', 'bild', 'semantic', 'effects', 'BildEffectsLight.swift');
   let effectsProperties = [];
   if (fs.existsSync(bildEffectsPath)) {
     const content = fs.readFileSync(bildEffectsPath, 'utf8');
@@ -6432,8 +6466,8 @@ public extension View {
   }
   const effectsPropertyDeclarations = effectsProperties.map(prop => `    var ${prop}: ShadowStyle { get }`).join('\n');
 
-  // Dynamically read typography properties from generated iOS files
-  const bildTypographyPath = path.join(IOS_DIST_DIR, 'brands', 'bild', 'semantic', 'typography', 'TypographySizeclassCompact.swift');
+  // Dynamically read typography properties from generated iOS files (now brand-prefixed)
+  const bildTypographyPath = path.join(IOS_DIST_DIR, 'brands', 'bild', 'semantic', 'typography', 'BildTypographySizeclassCompact.swift');
   let typographyProperties = [];
   if (fs.existsSync(bildTypographyPath)) {
     const content = fs.readFileSync(bildTypographyPath, 'utf8');
