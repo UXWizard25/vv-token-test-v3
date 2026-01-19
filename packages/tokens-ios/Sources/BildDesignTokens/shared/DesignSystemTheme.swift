@@ -363,34 +363,34 @@ public protocol DesignTypographyScheme: Sendable {
 /// Unified density scheme protocol for all content brands
 /// Semantic density tokens (Global/StackSpace) that vary by density mode
 public protocol DesignDensityScheme: Sendable {
-    var densityStackSpaceConst3Xs: CGFloat { get }
-    var densityStackSpaceConst2Xs: CGFloat { get }
+    var densityStackSpaceConst3xs: CGFloat { get }
+    var densityStackSpaceConst2xs: CGFloat { get }
     var densityStackSpaceConstXs: CGFloat { get }
     var densityStackSpaceConstSm: CGFloat { get }
     var densityStackSpaceConstMd: CGFloat { get }
     var densityStackSpaceConstLg: CGFloat { get }
     var densityStackSpaceConstXl: CGFloat { get }
-    var densityStackSpaceConst2Xl: CGFloat { get }
+    var densityStackSpaceConst2xl: CGFloat { get }
     var densityXsStackSpaceRespSm: CGFloat { get }
     var densityXsStackSpaceRespMd: CGFloat { get }
     var densityXsStackSpaceRespLg: CGFloat { get }
     var densityXsStackSpaceRespXl: CGFloat { get }
-    var densityXsStackSpaceResp2Xl: CGFloat { get }
+    var densityXsStackSpaceResp2xl: CGFloat { get }
     var densitySmStackSpaceRespSm: CGFloat { get }
     var densitySmStackSpaceRespMd: CGFloat { get }
     var densitySmStackSpaceRespLg: CGFloat { get }
     var densitySmStackSpaceRespXl: CGFloat { get }
-    var densitySmStackSpaceResp2Xl: CGFloat { get }
+    var densitySmStackSpaceResp2xl: CGFloat { get }
     var densityMdStackSpaceRespSm: CGFloat { get }
     var densityMdStackSpaceRespMd: CGFloat { get }
     var densityMdStackSpaceRespLg: CGFloat { get }
     var densityMdStackSpaceRespXl: CGFloat { get }
-    var densityMdStackSpaceResp2Xl: CGFloat { get }
+    var densityMdStackSpaceResp2xl: CGFloat { get }
     var densityLgStackSpaceRespSm: CGFloat { get }
     var densityLgStackSpaceRespMd: CGFloat { get }
     var densityLgStackSpaceRespLg: CGFloat { get }
     var densityLgStackSpaceRespXl: CGFloat { get }
-    var densityLgStackSpaceResp2Xl: CGFloat { get }
+    var densityLgStackSpaceResp2xl: CGFloat { get }
 }
 
 // MARK: - Dual-Axis Theme Provider

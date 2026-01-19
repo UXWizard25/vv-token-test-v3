@@ -6517,7 +6517,8 @@ public extension View {
     console.warn('No density tokens found in source JSON for iOS protocol');
   }
 
-  const densityPropertyDeclarations = densityProperties.map(prop => `    var ${prop}: CGFloat { get }`).join('\n');
+  // Apply toCamelCase to match Style Dictionary's naming (e.g., 3Xs → 3xs)
+  const densityPropertyDeclarations = densityProperties.map(prop => `    var ${toCamelCase(prop)}: CGFloat { get }`).join('\n');
 
   const designSystemThemeContent = generateFileHeader({
     fileName: 'DesignSystemTheme.swift',
