@@ -47,16 +47,30 @@ Both pipelines use the **CodeBridge Figma Plugin** for automated exports.
 
 ## 📦 Packages
 
-| Package | Description | Documentation |
-|---------|-------------|---------------|
-| **@marioschmidt/design-system-tokens** | Multi-platform design tokens (CSS, JS, iOS, Android) | [📖 README](./packages/tokens/README.md) |
-| **@marioschmidt/design-system-icons** | Optimized SVG icons | [📖 README](./packages/icons/svg/README.md) |
-| **@marioschmidt/design-system-icons-react** | React icon components with TypeScript | [📖 README](./packages/icons/react/README.md) |
-| **de.bild.design:icons** | Android Vector Drawables (Maven) | [📖 README](./packages/icons/android/README.md) |
-| **BildIcons** | iOS Swift Package (SPM) | [📖 README](./packages/icons/ios/README.md) |
-| **@marioschmidt/design-system-components** | Stencil Web Components | [📖 README](./packages/components/README.md) |
-| **@marioschmidt/design-system-react** | React wrapper components | [📖 README](./packages/react/README.md) |
-| **@marioschmidt/design-system-vue** | Vue 3 wrapper components | [📖 README](./packages/vue/README.md) |
+### Design Tokens
+
+| Package | Registry | Description | Documentation |
+|---------|----------|-------------|---------------|
+| **@marioschmidt/design-system-tokens** | npm | Web tokens (CSS, JS, SCSS, JSON) | [📖 README](./packages/tokens/README.md) |
+| **BildDesignTokens** | SPM (GitHub) | iOS/macOS SwiftUI tokens | [📖 README](./packages/tokens-ios/README.md) |
+| **de.bild.design:tokens** | Maven (GitHub Packages) | Android Jetpack Compose tokens | [📖 README](./packages/tokens-android/README.md) |
+
+### Icons
+
+| Package | Registry | Description | Documentation |
+|---------|----------|-------------|---------------|
+| **@marioschmidt/design-system-icons** | npm | Optimized SVG icons | [📖 README](./packages/icons/svg/README.md) |
+| **@marioschmidt/design-system-icons-react** | npm | React icon components | [📖 README](./packages/icons/react/README.md) |
+| **de.bild.design:icons** | Maven | Android Vector Drawables | [📖 README](./packages/icons/android/README.md) |
+| **BildIcons** | SPM | iOS Swift Package | [📖 README](./packages/icons/ios/README.md) |
+
+### Components
+
+| Package | Registry | Description | Documentation |
+|---------|----------|-------------|---------------|
+| **@marioschmidt/design-system-components** | npm | Stencil Web Components | [📖 README](./packages/components/core/README.md) |
+| **@marioschmidt/design-system-react** | npm | React wrapper components | [📖 README](./packages/components/react/README.md) |
+| **@marioschmidt/design-system-vue** | npm | Vue 3 wrapper components | [📖 README](./packages/components/vue/README.md) |
 
 ### 📚 Platform Documentation
 
@@ -111,23 +125,27 @@ Both pipelines use the **CodeBridge Figma Plugin** for automated exports.
 │  │   └── dist/                  │   ├── svg/dist/        (npm: SVG)          │
 │  │       ├── css/               │   ├── react/dist/      (npm: React)        │
 │  │       ├── scss/              │   ├── android/src/     (Maven)             │
-│  │       ├── js/                │   └── ios/Sources/     (SPM)               │
-│  │       ├── ios/               │                                            │
-│  │       └── android/           ├── components/          (Stencil)           │
-│  │                              ├── react/               (React wrappers)    │
-│  │                              └── vue/                 (Vue wrappers)      │
+│  │       └── js/                │   └── ios/Sources/     (SPM)               │
+│  │                              │                                            │
+│  ├── tokens-ios/                ├── components/          (Stencil)           │
+│  │   └── Sources/   (SPM)       ├── react/               (React wrappers)    │
+│  ├── tokens-android/            └── vue/                 (Vue wrappers)      │
+│  │   └── src/kotlin/ (Maven)                                                 │
 │                                                                              │
 └──────────────────────────────────────────────────────────────────────────────┘
                │                                   │
                │  Distribution                     │
                ▼                                   ▼
 ┌─────────────────────────────┐    ┌─────────────────────────────┐
-│  📦 npm                     │    │  📦 ICONS                   │
-│  @marioschmidt/             │    │  npm: design-system-icons   │
-│    design-system-tokens     │    │       design-system-icons-  │
-│    design-system-components │    │       react                 │
-│    design-system-react      │    │  Maven: de.bild.design:icons│
-│    design-system-vue        │    │  SPM: BildIcons             │
+│  📦 TOKENS                  │    │  📦 ICONS                   │
+│  npm: design-system-tokens  │    │  npm: design-system-icons   │
+│  SPM: BildDesignTokens      │    │       design-system-icons-  │
+│  Maven: de.bild.design:     │    │       react                 │
+│         tokens              │    │  Maven: de.bild.design:icons│
+│                             │    │  SPM: BildIcons             │
+│  📦 COMPONENTS              │    │                             │
+│  npm: design-system-        │    │                             │
+│       components/react/vue  │    │                             │
 └─────────────────────────────┘    └─────────────────────────────┘
 ```
 
@@ -171,6 +189,8 @@ Separates color selection from content selection for flexible theming:
 
 ### Installation
 
+#### Web (npm)
+
 ```bash
 # Design Tokens
 npm install @marioschmidt/design-system-tokens
@@ -188,6 +208,52 @@ npm install @marioschmidt/design-system-react
 # Vue 3 Wrappers
 npm install @marioschmidt/design-system-vue
 ```
+
+#### iOS (Swift Package Manager)
+
+In Xcode: **File → Add Package Dependencies**
+
+```
+URL: https://github.com/UXWizard25/vv-token-test-v3.git
+Product: BildDesignTokens
+```
+
+> ✅ No authentication required (public repository)
+
+#### Android (GitHub Packages Maven)
+
+1. Add repository to `settings.gradle.kts`:
+
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url = uri("https://maven.pkg.github.com/UXWizard25/vv-token-test-v3")
+            credentials {
+                username = properties["gpr.user"]?.toString() ?: ""
+                password = properties["gpr.token"]?.toString() ?: ""
+            }
+        }
+    }
+}
+```
+
+2. Add dependency to `build.gradle.kts`:
+
+```kotlin
+implementation("de.bild.design:tokens:1.0.0")
+```
+
+3. Configure credentials in `~/.gradle/gradle.properties`:
+
+```properties
+gpr.user=YOUR_GITHUB_USERNAME
+gpr.token=YOUR_GITHUB_TOKEN  # needs read:packages scope
+```
+
+> ⚠️ GitHub Packages requires authentication even for public repos
 
 ### Usage Examples
 
@@ -274,12 +340,22 @@ vv-token-test-v3/
 │               └── effects.mdx    # Effects (auto-generated)
 │
 ├── 📦 packages/
-│   ├── tokens/                    # @marioschmidt/design-system-tokens
+│   ├── tokens/                    # @marioschmidt/design-system-tokens (npm)
 │   │   ├── src/                   # Figma export (bild-design-system-raw-data.json)
 │   │   ├── docs/                  # Platform guides (css, js, ios, android)
-│   │   ├── dist/                  # Built outputs (css, scss, js, ios, android)
+│   │   ├── dist/                  # Built outputs (css, scss, js, json)
 │   │   ├── README.md
 │   │   └── package.json
+│   │
+│   ├── tokens-ios/                # BildDesignTokens (Swift Package Manager)
+│   │   ├── Package.swift          # SPM manifest
+│   │   ├── Sources/               # Generated Swift files (169 files)
+│   │   └── README.md
+│   │
+│   ├── tokens-android/            # de.bild.design:tokens (Maven/GitHub Packages)
+│   │   ├── build.gradle.kts       # Gradle build with Maven publishing
+│   │   ├── src/main/kotlin/       # Generated Kotlin files (182 files)
+│   │   └── README.md
 │   │
 │   ├── icons/                     # Icon packages (multi-platform)
 │   │   ├── src/                   # Figma SVG export + .codepoints.json

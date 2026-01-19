@@ -137,9 +137,33 @@ This enables:
 
 ## Installation
 
+### Web (npm)
+
 ```bash
 npm install @marioschmidt/design-system-tokens
 ```
+
+### iOS (Swift Package Manager)
+
+In Xcode: **File → Add Package Dependencies**
+
+```
+URL: https://github.com/UXWizard25/vv-token-test-v3.git
+Product: BildDesignTokens
+```
+
+> ✅ No authentication required (public repository)
+
+### Android (GitHub Packages Maven)
+
+See [packages/tokens-android/README.md](../tokens-android/README.md) for detailed setup instructions.
+
+```kotlin
+// build.gradle.kts
+implementation("de.bild.design:tokens:1.0.0")
+```
+
+> ⚠️ GitHub Packages requires authentication (GitHub Personal Access Token with `read:packages` scope)
 
 ## Quick Start
 
@@ -160,15 +184,17 @@ npm run dev:stencil       # Dev server with hot reload (port 3333)
 
 ### Monorepo Structure
 
-This package is part of the npm workspaces monorepo:
+This package is part of the monorepo with platform-specific token packages:
 
-| Package | npm Name | Location |
-|---------|----------|----------|
-| Tokens | `@marioschmidt/design-system-tokens` | `packages/tokens/` |
-| Icons | `@marioschmidt/design-system-icons` | `packages/icons/` |
-| Components | `@marioschmidt/design-system-components` | `packages/components/core/` |
-| React | `@marioschmidt/design-system-react` | `packages/components/react/` |
-| Vue | `@marioschmidt/design-system-vue` | `packages/components/vue/` |
+| Package | Package Name | Location |
+|---------|--------------|----------|
+| Tokens (Web) | `@marioschmidt/design-system-tokens` (npm) | `packages/tokens/` |
+| Tokens (iOS) | `BildDesignTokens` (SPM) | `packages/tokens-ios/` |
+| Tokens (Android) | `de.bild.design:tokens` (Maven) | `packages/tokens-android/` |
+| Icons | `@marioschmidt/design-system-icons` (npm) | `packages/icons/` |
+| Components | `@marioschmidt/design-system-components` (npm) | `packages/components/core/` |
+| React | `@marioschmidt/design-system-react` (npm) | `packages/components/react/` |
+| Vue | `@marioschmidt/design-system-vue` (npm) | `packages/components/vue/` |
 
 ## Token Type Mapping
 
@@ -687,23 +713,20 @@ const BOOLEAN_TOKENS_ENABLED = false; // Excludes visibility tokens
 
 ## 📁 Output Structure
 
-Token output is located in `packages/tokens/dist/`:
+Token outputs are distributed across three packages for platform-native distribution:
+
+### Web Package (`packages/tokens/dist/`)
 
 ```
 packages/tokens/dist/
 ├── css/
 │   ├── shared/                      # Primitives
 │   ├── bundles/                     # Convenience bundles (Quick Start)
-│   └── brands/
-│       └── bild/
-│           ├── density/
-│           ├── components/          # ~300 component files
-│           └── semantic/
-│               ├── breakpoints/
-│               ├── color/
-│               ├── typography/
-│               └── effects/
-├── scss/                            # Same structure
+│   └── {brand}/
+│       ├── density/
+│       ├── components/              # ~48 component files
+│       └── semantic/
+├── scss/                            # Same structure as css/
 ├── js/                              # Optimized ESM output
 │   ├── index.js                     # Main entry point
 │   ├── types.d.ts                   # TypeScript definitions
@@ -711,30 +734,55 @@ packages/tokens/dist/
 │   ├── brands/{brand}/              # Brand tokens (colors, spacing, typography)
 │   ├── themes/                      # Pre-built themes + createTheme()
 │   └── react/                       # ThemeProvider, useTheme, useBreakpoint
-├── json/                            # Same structure
-├── ios/                             # Swift Classes
-├── android/
-│   └── compose/                     # Jetpack Compose (Kotlin)
-│       ├── shared/
-│       │   ├── DesignTokenPrimitives.kt   # All primitives consolidated
-│       │   ├── Density.kt                 # Dense/Default/Spacious enum
-│       │   ├── WindowSizeClass.kt         # Material 3: Compact/Medium/Expanded enum
-│       │   ├── Brand.kt                   # Bild/Sportbild/Advertorial enum
-│       │   └── DesignSystemTheme.kt       # Multi-brand theme provider
-│       └── brands/{brand}/
-│           ├── components/{Component}/
-│           │   └── {Component}Tokens.kt   # Aggregated with current() accessors
-│           ├── semantic/
-│           │   ├── {Brand}SemanticTokens.kt   # Aggregated Light/Dark + Compact/Medium/Expanded
-│           │   ├── color/
-│           │   │   ├── ColorsLight.kt     # BildColorScheme interface + BildLightColors
-│           │   │   └── ColorsDark.kt      # BildDarkColors object
-│           │   └── sizeclass/
-│           │       ├── SizingCompact.kt   # BildSizingScheme interface + BildSizingCompact
-│           │       ├── SizingMedium.kt    # BildSizingMedium object (Material 3)
-│           │       └── SizingExpanded.kt  # BildSizingExpanded object
-│           └── theme/
-│               └── {Brand}Theme.kt        # CompositionLocal Theme Provider
+└── json/                            # Same structure
+```
+
+### iOS Package (`packages/tokens-ios/`)
+
+> **Distribution:** Swift Package Manager (SPM) - `BildDesignTokens`
+
+```
+packages/tokens-ios/
+├── Package.swift                    # SPM manifest
+├── README.md                        # Installation & usage docs
+└── Sources/BildDesignTokens/        # 169 Swift files
+    ├── shared/                      # Primitives, protocols, theme provider
+    └── brands/{brand}/
+        ├── semantic/                # Colors, sizing, typography
+        └── components/              # Component tokens
+```
+
+### Android Package (`packages/tokens-android/`)
+
+> **Distribution:** Maven via GitHub Packages - `de.bild.design:tokens`
+
+```
+packages/tokens-android/
+├── build.gradle.kts                 # Gradle build with Maven publishing
+├── settings.gradle.kts
+├── README.md                        # Installation & usage docs
+└── src/main/kotlin/                 # 182 Kotlin files
+    └── de/bild/design/tokens/
+        ├── shared/
+        │   ├── DesignTokenPrimitives.kt   # All primitives consolidated
+        │   ├── Density.kt                 # Dense/Default/Spacious enum
+        │   ├── WindowSizeClass.kt         # Material 3: Compact/Medium/Expanded
+        │   ├── Brand.kt                   # Bild/Sportbild/Advertorial enum
+        │   └── DesignSystemTheme.kt       # Multi-brand theme provider
+        └── brands/{brand}/
+            ├── components/{Component}/
+            │   └── {Component}Tokens.kt   # Aggregated with current() accessors
+            ├── semantic/
+            │   ├── {Brand}SemanticTokens.kt
+            │   ├── color/
+            │   │   ├── ColorsLight.kt     # BildColorScheme interface
+            │   │   └── ColorsDark.kt      # BildDarkColors object
+            │   └── sizeclass/
+            │       ├── SizingCompact.kt   # BildSizingScheme interface
+            │       ├── SizingMedium.kt    # Material 3 Medium
+            │       └── SizingExpanded.kt  # Material 3 Expanded
+            └── theme/
+                └── {Brand}Theme.kt        # CompositionLocal Theme Provider
 ```
 
 ### Compose File Organization

@@ -8,17 +8,31 @@
 
 This repository uses **npm workspaces** to manage multiple packages:
 
-| Package | npm Name | Location | Build Command |
-|---------|----------|----------|---------------|
-| Tokens | `@marioschmidt/design-system-tokens` | `packages/tokens/` | `npm run build:tokens` |
-| Icons (SVG) | `@marioschmidt/design-system-icons` | `packages/icons/svg/` | `npm run build:icons` |
-| Icons (React) | `@marioschmidt/design-system-icons-react` | `packages/icons/react/` | `npm run build:icons` |
-| Icons (Android) | `de.bild.design:icons` | `packages/icons/android/` | `npm run build:icons` |
+| Package | Package Name | Location | Build Command |
+|---------|--------------|----------|---------------|
+| Tokens (Web) | `@marioschmidt/design-system-tokens` (npm) | `packages/tokens/` | `npm run build:tokens` |
+| Tokens (iOS) | `BildDesignTokens` (SPM) | `packages/tokens-ios/` | `npm run build:tokens` |
+| Tokens (Android) | `de.bild.design:tokens` (Maven) | `packages/tokens-android/` | `npm run build:tokens` |
+| Icons (SVG) | `@marioschmidt/design-system-icons` (npm) | `packages/icons/svg/` | `npm run build:icons` |
+| Icons (React) | `@marioschmidt/design-system-icons-react` (npm) | `packages/icons/react/` | `npm run build:icons` |
+| Icons (Android) | `de.bild.design:icons` (Maven) | `packages/icons/android/` | `npm run build:icons` |
 | Icons (iOS) | `BildIcons` (SPM) | `packages/icons/ios/` | `npm run build:icons` |
-| Components | `@marioschmidt/design-system-components` | `packages/components/core/` | `npm run build:components` |
-| React | `@marioschmidt/design-system-react` | `packages/components/react/` | `npm run build:react` |
-| Vue | `@marioschmidt/design-system-vue` | `packages/components/vue/` | `npm run build:vue` |
+| Components | `@marioschmidt/design-system-components` (npm) | `packages/components/core/` | `npm run build:components` |
+| React | `@marioschmidt/design-system-react` (npm) | `packages/components/react/` | `npm run build:react` |
+| Vue | `@marioschmidt/design-system-vue` (npm) | `packages/components/vue/` | `npm run build:vue` |
 | Docs (private) | `@bild/docs` | `apps/docs/` | `npm run build:storybook` |
+
+### Native Token Distribution
+
+Native platforms (iOS/Android) have dedicated packages for platform-native distribution:
+
+| Platform | Package | Registry | Auth Required | Installation |
+|----------|---------|----------|---------------|--------------|
+| **Web** | `@marioschmidt/design-system-tokens` | npm | ❌ No | `npm install @marioschmidt/design-system-tokens` |
+| **iOS** | `BildDesignTokens` | GitHub (SPM) | ❌ No (public repo) | Xcode → Add Package → `https://github.com/UXWizard25/vv-token-test-v3.git` |
+| **Android** | `de.bild.design:tokens` | GitHub Packages | ✅ Yes (GitHub Token) | See `packages/tokens-android/README.md` |
+
+> **Note:** GitHub Packages (Maven) always requires authentication, even for public repositories. Android developers need a GitHub Personal Access Token with `read:packages` scope.
 
 ---
 
@@ -40,18 +54,22 @@ npm run build:docs      # Generate Storybook foundation docs (Colors, Typography
 npm run clean           # Delete all dist/ and tokens/
 
 # Publishing (via workspace)
-npm run publish:tokens       # npm publish -w @marioschmidt/design-system-tokens
-npm run publish:icons        # npm publish -w @marioschmidt/design-system-icons (SVG)
-npm run publish:icons:react  # npm publish -w @marioschmidt/design-system-icons-react
-npm run publish:icons:all    # Publish both icon npm packages
-npm run publish:components   # npm publish -w @marioschmidt/design-system-components
-npm run publish:react        # npm publish -w @marioschmidt/design-system-react
-npm run publish:vue          # npm publish -w @marioschmidt/design-system-vue
+npm run publish:tokens         # npm publish -w @marioschmidt/design-system-tokens
+npm run publish:tokens:android # gradle publish (GitHub Packages Maven)
+npm run publish:icons          # npm publish -w @marioschmidt/design-system-icons (SVG)
+npm run publish:icons:react    # npm publish -w @marioschmidt/design-system-icons-react
+npm run publish:icons:all      # Publish both icon npm packages
+npm run publish:components     # npm publish -w @marioschmidt/design-system-components
+npm run publish:react          # npm publish -w @marioschmidt/design-system-react
+npm run publish:vue            # npm publish -w @marioschmidt/design-system-vue
 ```
 
-**Source of Truth:** `src/design-tokens/bild-design-system-raw-data.json` (Figma Export via CodeBridge Plugin)
+**Source of Truth:** `packages/tokens/src/bild-design-system-raw-data.json` (Figma Export via CodeBridge Plugin)
 
-**Platform Documentation:** `packages/tokens/README.md`, `packages/tokens/docs/css.md`, `packages/tokens/docs/js.md`, `packages/tokens/docs/android.md`, `packages/tokens/docs/ios.md`
+**Platform Documentation:**
+- Web: `packages/tokens/docs/css.md`, `packages/tokens/docs/js.md`
+- iOS: `packages/tokens-ios/README.md`, `packages/tokens/docs/ios.md`
+- Android: `packages/tokens-android/README.md`, `packages/tokens/docs/android.md`
 
 ---
 
@@ -606,7 +624,7 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 │              │                                                              │
 │              │ CodeBridge Plugin Export                                     │
 │              ▼                                                              │
-│  src/design-tokens/bild-design-system-raw-data.json (~1MB)                  │
+│  packages/tokens/src/bild-design-system-raw-data.json (~1MB)                │
 │              │                                                              │
 │              │ preprocess.js                                                │
 │              │ • Parse Figma JSON structure                                 │
@@ -623,14 +641,14 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 │              │ • Custom format functions                                    │
 │              │ • Native theme provider generation                           │
 │              ▼                                                              │
-│  packages/tokens/dist/ (Platform outputs)                                   │
-│  ├── css/, scss/, js/, json/                                                │
-│  ├── ios/ (Swift)                                                           │
-│  └── android/compose/ (Kotlin)                                              │
-│              │                                                              │
-│              │ bundles.js                                                   │
-│              ▼                                                              │
-│  packages/tokens/dist/css/bundles/ (Convenience CSS bundles per brand)      │
+│  PLATFORM OUTPUTS:                                                          │
+│  ├── packages/tokens/dist/           (Web: npm package)                     │
+│  │   ├── css/, scss/, js/, json/                                            │
+│  │   └── bundles/                    (Convenience CSS bundles)              │
+│  ├── packages/tokens-ios/Sources/    (iOS: SPM package)                     │
+│  │   └── BildDesignTokens/           (169 Swift files)                      │
+│  └── packages/tokens-android/src/    (Android: Maven package)               │
+│      └── main/kotlin/                (182 Kotlin files)                     │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
