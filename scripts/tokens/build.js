@@ -19,6 +19,10 @@ const customConfig = require('../../build-config/tokens/style-dictionary.config.
 const TOKENS_DIR = path.join(__dirname, '../../packages/tokens/.tokens');
 const DIST_DIR = path.join(__dirname, '../../packages/tokens/dist');
 
+// Native platform output directories (separate packages for SPM/Maven distribution)
+const IOS_DIST_DIR = path.join(__dirname, '../../packages/tokens-ios/Sources/BildDesignTokens');
+const ANDROID_DIST_DIR = path.join(__dirname, '../../packages/tokens-android/src/main/kotlin/de/bild/design/tokens');
+
 // Brands and breakpoints
 const BRANDS = ['bild', 'sportbild', 'advertorial'];
 const COLOR_BRANDS = ['bild', 'sportbild'];  // Brands with their own color tokens
@@ -512,7 +516,7 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
           if (cssOptions.modeType === 'breakpoint' && iosPath.includes('/breakpoints')) {
             iosPath = iosPath.replace('/breakpoints', '/sizeclass');
           }
-          return `${DIST_DIR}/ios/${iosPath}/`;
+          return `${IOS_DIST_DIR}/${iosPath}/`;
         })(),
         files: [{
           destination: (() => {
@@ -610,7 +614,7 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
           if (cssOptions.modeType === 'breakpoint' && composePath.includes('/breakpoints')) {
             composePath = composePath.replace('/breakpoints', '/sizeclass');
           }
-          return `${DIST_DIR}/android/compose/${composePath}/`;
+          return `${ANDROID_DIST_DIR}/${composePath}/`;
         })(),
         files: [{
           destination: (() => {
@@ -728,7 +732,7 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
           if (cssOptions.modeType === 'breakpoint' && swiftuiPath.includes('/breakpoints')) {
             swiftuiPath = swiftuiPath.replace('/breakpoints', '/sizeclass');
           }
-          return `${DIST_DIR}/ios/${swiftuiPath}/`;
+          return `${IOS_DIST_DIR}/${swiftuiPath}/`;
         })(),
         files: [{
           destination: (() => {
@@ -944,7 +948,7 @@ function createTypographyConfig(brand, breakpoint) {
       ...(isNativeBreakpoint(breakpoint, 'ios') ? {
         ios: {
           transformGroup: 'custom/ios-swift',
-          buildPath: `${DIST_DIR}/ios/brands/${brand}/semantic/typography/`,
+          buildPath: `${IOS_DIST_DIR}/brands/${brand}/semantic/typography/`,
           files: [{
             destination: `TypographySizeclass${getSizeClassName(breakpoint, 'ios').charAt(0).toUpperCase() + getSizeClassName(breakpoint, 'ios').slice(1)}.swift`,
             format: 'swiftui/typography',
@@ -963,7 +967,7 @@ function createTypographyConfig(brand, breakpoint) {
       ...(COMPOSE_ENABLED && isNativeBreakpoint(breakpoint, 'android') ? {
         compose: {
           transforms: ['attribute/cti', 'name/custom/compose'],
-          buildPath: `${DIST_DIR}/android/compose/brands/${brand}/semantic/typography/`,
+          buildPath: `${ANDROID_DIST_DIR}/brands/${brand}/semantic/typography/`,
           files: [{
             destination: `Typography${getSizeClassName(breakpoint, 'android').charAt(0).toUpperCase() + getSizeClassName(breakpoint, 'android').slice(1)}.kt`,
             format: 'compose/typography-scheme',
@@ -1023,7 +1027,7 @@ function createEffectConfig(brand, colorMode) {
       // iOS: SwiftUI Effects format
       ios: {
         transformGroup: 'custom/ios-swift',
-        buildPath: `${DIST_DIR}/ios/brands/${brand}/semantic/effects/`,
+        buildPath: `${IOS_DIST_DIR}/brands/${brand}/semantic/effects/`,
         files: [{
           destination: `${fileName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}.swift`,
           format: 'swiftui/effects',
@@ -1055,7 +1059,7 @@ function createEffectConfig(brand, colorMode) {
       ...(COMPOSE_ENABLED ? {
         compose: {
           transforms: ['attribute/cti'],
-          buildPath: `${DIST_DIR}/android/compose/shared/`,
+          buildPath: `${ANDROID_DIST_DIR}/shared/`,
           files: [{
             destination: `Effects${colorMode === 'light' ? 'Light' : 'Dark'}.kt`,
             format: 'compose/effects',
@@ -1093,7 +1097,7 @@ function createSharedDensityConfig(densityMode) {
       ...(COMPOSE_ENABLED ? {
         compose: {
           transformGroup: 'custom/compose',
-          buildPath: `${DIST_DIR}/android/compose/shared/`,
+          buildPath: `${ANDROID_DIST_DIR}/shared/`,
           files: [{
             destination: `Density${modePascal}.kt`,
             format: 'compose/shared-density',
@@ -1110,7 +1114,7 @@ function createSharedDensityConfig(densityMode) {
       ...(SWIFTUI_ENABLED ? {
         swiftui: {
           transformGroup: 'custom/ios-swift',
-          buildPath: `${DIST_DIR}/ios/shared/`,
+          buildPath: `${IOS_DIST_DIR}/shared/`,
           files: [{
             destination: `Density${modePascal}.swift`,
             format: 'swiftui/shared-density',
@@ -1226,7 +1230,7 @@ async function buildConsolidatedSwiftUIPrimitives() {
     platforms: {
       swiftui: {
         transformGroup: 'custom/ios-swift',
-        buildPath: `${DIST_DIR}/ios/shared/`,
+        buildPath: `${IOS_DIST_DIR}/shared/`,
         files: [{
           destination: 'DesignTokenPrimitives.swift',
           format: 'swiftui/primitives',
@@ -1458,7 +1462,7 @@ function createComponentTypographyConfig(sourceFile, brand, componentName, fileN
       ...(breakpoint && isNativeBreakpoint(breakpoint) ? {
         ios: {
           transformGroup: 'custom/ios-swift',
-          buildPath: `${DIST_DIR}/ios/brands/${brand}/components/${componentName}/`,
+          buildPath: `${IOS_DIST_DIR}/brands/${brand}/components/${componentName}/`,
           files: [{
             destination: `${componentName}TypographySizing${getSizeClassName(breakpoint).charAt(0).toUpperCase() + getSizeClassName(breakpoint).slice(1)}.swift`,
             format: 'swiftui/typography',
@@ -1476,7 +1480,7 @@ function createComponentTypographyConfig(sourceFile, brand, componentName, fileN
       ...(COMPOSE_ENABLED && breakpoint && isNativeBreakpoint(breakpoint, 'android') ? {
         compose: {
           transforms: ['attribute/cti'],
-          buildPath: `${DIST_DIR}/android/compose/brands/${brand}/components/${componentName}/`,
+          buildPath: `${ANDROID_DIST_DIR}/brands/${brand}/components/${componentName}/`,
           files: [{
             destination: `${componentName}Typography${getSizeClassName(breakpoint, 'android').charAt(0).toUpperCase() + getSizeClassName(breakpoint, 'android').slice(1)}.kt`,
             format: 'compose/typography',
@@ -1542,7 +1546,7 @@ function createComponentEffectsConfig(sourceFile, brand, componentName, fileName
       },
       ios: {
         transformGroup: 'custom/ios-swift',
-        buildPath: `${DIST_DIR}/ios/brands/${brand}/components/${componentName}/`,
+        buildPath: `${IOS_DIST_DIR}/brands/${brand}/components/${componentName}/`,
         files: [{
           destination: `${componentName}Effects${colorMode ? colorMode.charAt(0).toUpperCase() + colorMode.slice(1) : ''}.swift`,
           format: 'swiftui/effects',
@@ -1559,7 +1563,7 @@ function createComponentEffectsConfig(sourceFile, brand, componentName, fileName
       ...(COMPOSE_ENABLED ? {
         compose: {
           transforms: ['attribute/cti'],
-          buildPath: `${DIST_DIR}/android/compose/brands/${brand}/components/${componentName}/`,
+          buildPath: `${ANDROID_DIST_DIR}/brands/${brand}/components/${componentName}/`,
           files: [{
             destination: `${componentName}Effects${colorMode ? colorMode.charAt(0).toUpperCase() + colorMode.slice(1) : ''}.kt`,
             format: 'compose/component-effects',
@@ -2819,7 +2823,7 @@ async function aggregateComposeComponents() {
   let totalComponents = 0;
   let successfulComponents = 0;
 
-  const composeDir = path.join(DIST_DIR, 'android', 'compose', 'brands');
+  const composeDir = path.join(ANDROID_DIST_DIR, 'brands');
 
   if (!fs.existsSync(composeDir)) {
     console.log('  ⚠️  No Compose output found, skipping aggregation');
@@ -3590,7 +3594,7 @@ async function aggregateSwiftUIComponents() {
   let totalComponents = 0;
   let successfulComponents = 0;
 
-  const iosDir = path.join(DIST_DIR, 'ios', 'brands');
+  const iosDir = path.join(IOS_DIST_DIR, 'brands');
 
   if (!fs.existsSync(iosDir)) {
     console.log('  ⚠️  No iOS output found, skipping aggregation');
@@ -4174,7 +4178,7 @@ async function cleanupSwiftUIIndividualComponentFiles() {
 
   let cleaned = 0;
 
-  const iosDir = path.join(DIST_DIR, 'ios', 'brands');
+  const iosDir = path.join(IOS_DIST_DIR, 'brands');
 
   if (!fs.existsSync(iosDir)) {
     return { cleaned: 0 };
@@ -4225,8 +4229,8 @@ async function generateComposeThemeProviders() {
   let totalThemes = 0;
   let successfulThemes = 0;
 
-  const composeDir = path.join(DIST_DIR, 'android', 'compose', 'brands');
-  const sharedDir = path.join(DIST_DIR, 'android', 'compose', 'shared');
+  const composeDir = path.join(ANDROID_DIST_DIR, 'brands');
+  const sharedDir = path.join(ANDROID_DIST_DIR, 'shared');
 
   if (!fs.existsSync(composeDir)) {
     console.log('  ⚠️  No Compose output found, skipping theme generation');
@@ -4765,7 +4769,7 @@ ${brandEntries}
  */
 function generateDesignColorSchemeFile() {
   // Read color properties from existing BildColorScheme to ensure consistency
-  const bildColorsPath = path.join(DIST_DIR, 'android', 'compose', 'brands', 'bild', 'semantic', 'color', 'ColorsLight.kt');
+  const bildColorsPath = path.join(ANDROID_DIST_DIR, 'brands', 'bild', 'semantic', 'color', 'ColorsLight.kt');
   let colorProperties = [];
 
   if (fs.existsSync(bildColorsPath)) {
@@ -4842,7 +4846,7 @@ ${propertyDeclarations}
  */
 function generateDesignSizingSchemeFile() {
   // Read sizing properties from existing BildSizingScheme
-  const bildSizingPath = path.join(DIST_DIR, 'android', 'compose', 'brands', 'bild', 'semantic', 'sizeclass', 'SizingCompact.kt');
+  const bildSizingPath = path.join(ANDROID_DIST_DIR, 'brands', 'bild', 'semantic', 'sizeclass', 'SizingCompact.kt');
   let sizingProperties = [];
 
   if (fs.existsSync(bildSizingPath)) {
@@ -4988,7 +4992,7 @@ data class DesignTextStyle(
  */
 function generateSharedDesignTypographySchemeFile() {
   // Read typography properties from existing BildTypographyScheme
-  const bildTypographyPath = path.join(DIST_DIR, 'android', 'compose', 'brands', 'bild', 'semantic', 'typography', 'TypographyCompact.kt');
+  const bildTypographyPath = path.join(ANDROID_DIST_DIR, 'brands', 'bild', 'semantic', 'typography', 'TypographyCompact.kt');
   let typographyProperties = [];
 
   if (fs.existsSync(bildTypographyPath)) {
@@ -5705,7 +5709,7 @@ async function consolidateComposePrimitives() {
 
   console.log('📦 Consolidating Compose Primitives...');
 
-  const sharedDir = path.join(DIST_DIR, 'android', 'compose', 'shared');
+  const sharedDir = path.join(ANDROID_DIST_DIR, 'shared');
 
   if (!fs.existsSync(sharedDir)) {
     console.log('  ⚠️  No Compose shared directory found');
@@ -5847,7 +5851,7 @@ async function aggregateComposeSemantics() {
   let totalBrands = 0;
   let successfulBrands = 0;
 
-  const composeDir = path.join(DIST_DIR, 'android', 'compose', 'brands');
+  const composeDir = path.join(ANDROID_DIST_DIR, 'brands');
 
   if (!fs.existsSync(composeDir)) {
     console.log('  ⚠️  No Compose brands directory found');
@@ -6018,7 +6022,7 @@ async function cleanupComposeIndividualFiles() {
   let removedCount = 0;
 
   // Clean up primitive files (keep only DesignTokenPrimitives.kt)
-  const sharedDir = path.join(DIST_DIR, 'android', 'compose', 'shared');
+  const sharedDir = path.join(ANDROID_DIST_DIR, 'shared');
   if (fs.existsSync(sharedDir)) {
     const primitiveFiles = ['Colorprimitive.kt', 'Fontprimitive.kt', 'Sizeprimitive.kt', 'Spaceprimitive.kt'];
     for (const fileName of primitiveFiles) {
@@ -6031,7 +6035,7 @@ async function cleanupComposeIndividualFiles() {
   }
 
   // Clean up component individual files (keep only {Component}Tokens.kt)
-  const composeDir = path.join(DIST_DIR, 'android', 'compose', 'brands');
+  const composeDir = path.join(ANDROID_DIST_DIR, 'brands');
   if (fs.existsSync(composeDir)) {
     for (const brand of BRANDS) {
       const componentsDir = path.join(composeDir, brand, 'components');
@@ -6079,7 +6083,7 @@ async function cleanupSwiftUIIndividualPrimitives() {
   let removedCount = 0;
 
   // Clean up individual primitive files (keep only DesignTokenPrimitives.swift)
-  const sharedDir = path.join(DIST_DIR, 'ios', 'shared');
+  const sharedDir = path.join(IOS_DIST_DIR, 'shared');
   if (fs.existsSync(sharedDir)) {
     const primitiveFiles = ['Colorprimitive.swift', 'Fontprimitive.swift', 'Sizeprimitive.swift', 'Spaceprimitive.swift'];
     for (const fileName of primitiveFiles) {
@@ -6110,7 +6114,7 @@ async function generateSwiftUISharedFiles() {
 
   console.log('🍎 Generating SwiftUI Shared Infrastructure...');
 
-  const sharedDir = path.join(DIST_DIR, 'ios', 'shared');
+  const sharedDir = path.join(IOS_DIST_DIR, 'shared');
   if (!fs.existsSync(sharedDir)) {
     fs.mkdirSync(sharedDir, { recursive: true });
   }
@@ -6374,7 +6378,7 @@ public extension View {
 
   // Generate DesignSystemTheme.swift with dual-axis architecture
   // Dynamically read color properties from generated iOS files
-  const bildColorsPath = path.join(DIST_DIR, 'ios', 'brands', 'bild', 'semantic', 'color', 'ColorsLight.swift');
+  const bildColorsPath = path.join(IOS_DIST_DIR, 'brands', 'bild', 'semantic', 'color', 'ColorsLight.swift');
   let colorProperties = [];
   if (fs.existsSync(bildColorsPath)) {
     const content = fs.readFileSync(bildColorsPath, 'utf8');
@@ -6392,7 +6396,7 @@ public extension View {
 
   // Dynamically read sizing properties with their types
   // Supported types: CGFloat, String, Bool, Int
-  const bildSizingPath = path.join(DIST_DIR, 'ios', 'brands', 'bild', 'semantic', 'sizeclass', 'SizingCompact.swift');
+  const bildSizingPath = path.join(IOS_DIST_DIR, 'brands', 'bild', 'semantic', 'sizeclass', 'SizingCompact.swift');
   let sizingProperties = [];
   if (fs.existsSync(bildSizingPath)) {
     const content = fs.readFileSync(bildSizingPath, 'utf8');
@@ -6413,7 +6417,7 @@ public extension View {
   const sizingPropertyDeclarations = sizingProperties.map(prop => `    var ${prop.name}: ${prop.type} { get }`).join('\n');
 
   // Dynamically read effects properties
-  const bildEffectsPath = path.join(DIST_DIR, 'ios', 'brands', 'bild', 'semantic', 'effects', 'EffectsLight.swift');
+  const bildEffectsPath = path.join(IOS_DIST_DIR, 'brands', 'bild', 'semantic', 'effects', 'EffectsLight.swift');
   let effectsProperties = [];
   if (fs.existsSync(bildEffectsPath)) {
     const content = fs.readFileSync(bildEffectsPath, 'utf8');
@@ -6429,7 +6433,7 @@ public extension View {
   const effectsPropertyDeclarations = effectsProperties.map(prop => `    var ${prop}: ShadowStyle { get }`).join('\n');
 
   // Dynamically read typography properties from generated iOS files
-  const bildTypographyPath = path.join(DIST_DIR, 'ios', 'brands', 'bild', 'semantic', 'typography', 'TypographySizeclassCompact.swift');
+  const bildTypographyPath = path.join(IOS_DIST_DIR, 'brands', 'bild', 'semantic', 'typography', 'TypographySizeclassCompact.swift');
   let typographyProperties = [];
   if (fs.existsSync(bildTypographyPath)) {
     const content = fs.readFileSync(bildTypographyPath, 'utf8');
@@ -6702,7 +6706,7 @@ async function generateSwiftUIThemeProviders() {
   let totalThemes = 0;
   let successfulThemes = 0;
 
-  const iosDir = path.join(DIST_DIR, 'ios', 'brands');
+  const iosDir = path.join(IOS_DIST_DIR, 'brands');
 
   if (!fs.existsSync(iosDir)) {
     console.log('  ⚠️  No iOS output found, skipping theme generation');
@@ -8570,25 +8574,27 @@ async function main() {
       console.log(`   ⚠️  docs/js.md nicht gefunden`);
     }
 
-    // Copy docs/android.md to dist/android/compose/README.md
+    // Copy docs/android.md to Android package as USAGE.md (README.md is maintained separately)
     if (COMPOSE_ENABLED) {
       const androidReadmeSrc = path.join(readmeSrcDir, 'android.md');
-      const androidReadmeDest = path.join(DIST_DIR, 'android/compose/README.md');
+      const androidReadmeDest = path.join(ANDROID_DIST_DIR, 'USAGE.md');
       if (fs.existsSync(androidReadmeSrc)) {
+        fs.mkdirSync(path.dirname(androidReadmeDest), { recursive: true });
         fs.copyFileSync(androidReadmeSrc, androidReadmeDest);
-        console.log(`   ✅ docs/android.md → dist/android/compose/README.md`);
+        console.log(`   ✅ docs/android.md → tokens-android/.../USAGE.md`);
       } else {
         console.log(`   ⚠️  docs/android.md nicht gefunden`);
       }
     }
 
-    // Copy docs/ios.md to dist/ios/README.md
+    // Copy docs/ios.md to iOS package as USAGE.md (README.md is maintained separately)
     if (SWIFTUI_ENABLED) {
       const iosReadmeSrc = path.join(readmeSrcDir, 'ios.md');
-      const iosReadmeDest = path.join(DIST_DIR, 'ios/README.md');
+      const iosReadmeDest = path.join(IOS_DIST_DIR, 'USAGE.md');
       if (fs.existsSync(iosReadmeSrc)) {
+        fs.mkdirSync(path.dirname(iosReadmeDest), { recursive: true });
         fs.copyFileSync(iosReadmeSrc, iosReadmeDest);
-        console.log(`   ✅ docs/ios.md → dist/ios/README.md`);
+        console.log(`   ✅ docs/ios.md → tokens-ios/.../USAGE.md`);
       } else {
         console.log(`   ⚠️  docs/ios.md nicht gefunden`);
       }
@@ -8598,14 +8604,20 @@ async function main() {
   }
 
   console.log(`\n📁 Struktur:`);
-  console.log(`   dist/`);
+  console.log(`   packages/tokens/dist/`);
   console.log(`   ├── css/        (CSS with data-attributes)`);
   console.log(`   ├── scss/       (SCSS variables)`);
   console.log(`   ├── js/         (ESM modules)`);
   console.log(`   ├── js.min/     (ESM minified)`);
-  console.log(`   ├── json/       (JSON)`);
-  if (SWIFTUI_ENABLED) console.log(`   ├── ios/        (SwiftUI)`);
-  if (COMPOSE_ENABLED) console.log(`   └── android/    (Jetpack Compose)`);
+  console.log(`   └── json/       (JSON)`);
+  if (SWIFTUI_ENABLED) {
+    console.log(`   packages/tokens-ios/Sources/BildDesignTokens/`);
+    console.log(`   └── (SwiftUI - for SPM distribution)`);
+  }
+  if (COMPOSE_ENABLED) {
+    console.log(`   packages/tokens-android/src/main/kotlin/.../`);
+    console.log(`   └── (Jetpack Compose - for Maven distribution)`);
+  }
   console.log(``);
   console.log(`   JS structure (all variants):`);
   console.log(`   - primitives/          (bundled primitives)`);

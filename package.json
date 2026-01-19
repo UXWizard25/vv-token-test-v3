@@ -31,6 +31,7 @@
     "build:storybook": "npm run build:tokens && npm run build:components && npm run build -w @bild/docs",
     "clean": "npm run clean --workspaces --if-present && rm -rf dist",
     "publish:tokens": "npm publish -w @marioschmidt/design-system-tokens",
+    "publish:tokens:android": "cd packages/tokens-android && ./gradlew publish",
     "publish:icons": "npm publish -w @marioschmidt/design-system-icons --access public",
     "publish:icons:react": "npm publish -w @marioschmidt/design-system-icons-react --access public",
     "publish:icons:all": "npm run publish:icons && npm run publish:icons:react",

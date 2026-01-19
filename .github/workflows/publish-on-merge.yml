@@ -8,6 +8,8 @@ on:
     paths:
       - 'packages/tokens/src/**'
       - 'packages/components/core/src/**'
+      - 'packages/tokens-ios/Package.swift'
+      - 'packages/tokens-android/build.gradle.kts'
 
 permissions:
   contents: write
@@ -367,6 +369,45 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      # 16b. Publish Android Tokens to GitHub Packages (Maven)
+      - name: Setup Java for Android Publishing
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Publish Android Tokens to GitHub Packages
+        run: |
+          echo "📦 Publishing de.bild.design:tokens@${{ steps.version.outputs.new }} to GitHub Packages..."
+          cd packages/tokens-android
+          ./gradlew publish -PVERSION=${{ steps.version.outputs.new }}
+          echo "✅ Android tokens package published successfully!"
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      # 16c. Commit generated native files for SPM/Maven distribution
+      - name: Commit Generated Native Files
+        run: |
+          echo "📝 Committing generated native files..."
+
+          # Add generated iOS files
+          git add packages/tokens-ios/Sources/BildDesignTokens/ || true
+
+          # Add generated Android files
+          git add packages/tokens-android/src/main/kotlin/ || true
+
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "ℹ️ No native file changes to commit"
+          else
+            git commit -m "chore: update generated native tokens for v${{ steps.version.outputs.new }}"
+            git push origin HEAD:main
+            echo "✅ Native files committed and pushed"
+          fi
+        continue-on-error: true
+
       # 17. Release Notes generieren (Diff bereits vorhanden)
       - name: Generate Release Notes
         id: release_notes
@@ -442,11 +483,15 @@ jobs:
         run: |
           echo "## 🚀 Packages Published Successfully!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Packages:**" >> $GITHUB_STEP_SUMMARY
+          echo "**npm Packages:**" >> $GITHUB_STEP_SUMMARY
           echo "- \`@marioschmidt/design-system-tokens\`" >> $GITHUB_STEP_SUMMARY
           echo "- \`@marioschmidt/design-system-components\`" >> $GITHUB_STEP_SUMMARY
           echo "- \`@marioschmidt/design-system-react\`" >> $GITHUB_STEP_SUMMARY
           echo "- \`@marioschmidt/design-system-vue\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Native Packages:**" >> $GITHUB_STEP_SUMMARY
+          echo "- \`BildDesignTokens\` (iOS/SPM via Git tag)" >> $GITHUB_STEP_SUMMARY
+          echo "- \`de.bild.design:tokens\` (Android/Maven)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Previous Version:** \`${{ steps.version.outputs.current }}\`" >> $GITHUB_STEP_SUMMARY
           echo "**New Version:** \`${{ steps.version.outputs.new }}\`" >> $GITHUB_STEP_SUMMARY
