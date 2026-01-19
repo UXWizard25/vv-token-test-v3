@@ -376,11 +376,14 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
       - name: Publish Android Tokens to GitHub Packages
         run: |
           echo "📦 Publishing de.bild.design:tokens@${{ steps.version.outputs.new }} to GitHub Packages..."
           cd packages/tokens-android
-          ./gradlew publish -PVERSION=${{ steps.version.outputs.new }}
+          gradle publish -PVERSION=${{ steps.version.outputs.new }}
           echo "✅ Android tokens package published successfully!"
         env:
           GITHUB_ACTOR: ${{ github.actor }}

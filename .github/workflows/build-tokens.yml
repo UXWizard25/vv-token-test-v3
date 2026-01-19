@@ -111,6 +111,8 @@ jobs:
           path: |
             packages/tokens/dist/
             packages/tokens/.tokens/
+            packages/tokens-ios/Sources/
+            packages/tokens-android/src/main/kotlin/
             packages/components/core/dist/
             packages/components/react/dist/
             packages/components/vue/dist/
@@ -155,6 +157,8 @@ jobs:
           echo "- **SCSS Files:** $(find packages/tokens/dist -name '*.scss' 2>/dev/null | wc -l)" >> $GITHUB_STEP_SUMMARY
           echo "- **JavaScript Files:** $(find packages/tokens/dist -name '*.js' 2>/dev/null | wc -l)" >> $GITHUB_STEP_SUMMARY
           echo "- **JSON Files:** $(find packages/tokens/dist -name '*.json' 2>/dev/null | wc -l)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Swift Files (iOS):** $(find packages/tokens-ios/Sources -name '*.swift' 2>/dev/null | wc -l)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Kotlin Files (Android):** $(find packages/tokens-android/src -name '*.kt' 2>/dev/null | wc -l)" >> $GITHUB_STEP_SUMMARY
           echo "- **Stencil Components:** $(find packages/components/core/dist -type f 2>/dev/null | wc -l) files" >> $GITHUB_STEP_SUMMARY
 
       # 8. Comment PR with Artifacts (if this is a PR)
@@ -189,8 +193,8 @@ jobs:
             - \`packages/tokens/dist/scss/\` - SCSS Variables
             - \`packages/tokens/dist/js/\` - JavaScript ES6
             - \`packages/tokens/dist/json/\` - JSON Data
-            - \`packages/tokens/dist/ios/\` - Swift Classes
-            - \`packages/tokens/dist/android/\` - Android XML
+            - \`packages/tokens-ios/Sources/\` - Swift Classes (SPM Package)
+            - \`packages/tokens-android/src/kotlin/\` - Android Compose (Maven Package)
             - \`packages/components/core/dist/\` - **Stencil Web Components** (ESM, Custom Elements)
             <!-- Flutter Dart output currently disabled (FLUTTER_ENABLED = false in build.js) -->
 
