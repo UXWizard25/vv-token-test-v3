@@ -29,8 +29,8 @@
  */
 
 plugins {
-    id("com.android.library") version "8.2.0"
-    id("org.jetbrains.kotlin.android") version "1.9.22"
+    id("com.android.library") version "8.7.0"
+    id("org.jetbrains.kotlin.android") version "1.9.24"
     id("maven-publish")
 }
 
@@ -54,7 +54,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.8"
+        kotlinCompilerExtensionVersion = "1.5.13"
     }
 
     compileOptions {
