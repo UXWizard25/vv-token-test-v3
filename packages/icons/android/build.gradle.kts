@@ -9,7 +9,7 @@
  *
  * Consumer:
  *   repositories {
- *       maven { url = uri("https://maven.pkg.github.com/UXWizard25/vv-token-test-v3") }
+ *       maven { url = uri("https://maven.pkg.github.com/UXWizard25/bild-design-system") }
  *   }
  *   dependencies {
  *       implementation("de.bild.design:icons:1.0.0")
@@ -98,7 +98,7 @@ publishing {
             pom {
                 name.set("BILD Design System Icons")
                 description.set("Vector drawable icons for Android from the BILD Design System")
-                url.set("https://github.com/UXWizard25/vv-token-test-v3")
+                url.set("https://github.com/UXWizard25/bild-design-system")
 
                 licenses {
                     license {
@@ -115,9 +115,9 @@ publishing {
                 }
 
                 scm {
-                    connection.set("scm:git:git://github.com/UXWizard25/vv-token-test-v3.git")
-                    developerConnection.set("scm:git:ssh://github.com/UXWizard25/vv-token-test-v3.git")
-                    url.set("https://github.com/UXWizard25/vv-token-test-v3")
+                    connection.set("scm:git:git://github.com/UXWizard25/bild-design-system.git")
+                    developerConnection.set("scm:git:ssh://github.com/UXWizard25/bild-design-system.git")
+                    url.set("https://github.com/UXWizard25/bild-design-system")
                 }
             }
         }
@@ -126,7 +126,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/UXWizard25/vv-token-test-v3")
+            url = uri("https://maven.pkg.github.com/UXWizard25/bild-design-system")
             credentials {
                 username = System.getenv("GITHUB_ACTOR") ?: providers.gradleProperty("gpr.user").getOrElse("")
                 password = System.getenv("GITHUB_TOKEN") ?: providers.gradleProperty("gpr.token").getOrElse("")

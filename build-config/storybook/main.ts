@@ -55,9 +55,9 @@ const config: StorybookConfig = {
   // Vite configuration
   viteFinal: async (config, { configType }) => {
     // Set base path for GitHub Pages production builds
-    // In development, base is '/', in production it's '/vv-token-test-v3/'
+    // In development, base is '/', in production it's '/bild-design-system/'
     const isProduction = configType === 'PRODUCTION';
-    const basePath = isProduction ? '/vv-token-test-v3/' : '/';
+    const basePath = isProduction ? '/bild-design-system/' : '/';
     // Custom plugin to fix file:// URLs in MDX imports
     const fixMdxImportsPlugin = {
       name: 'fix-mdx-imports',

@@ -11,7 +11,7 @@
 Add the package to your project via Xcode:
 
 1. **File** → **Add Package Dependencies...**
-2. Enter the repository URL: `https://github.com/UXWizard25/vv-token-test-v3.git`
+2. Enter the repository URL: `https://github.com/UXWizard25/bild-design-system.git`
 3. Select version: **Up to Next Major** from `1.0.0`
 4. Add `BildIcons` to your target
 
@@ -20,7 +20,7 @@ Add the package to your project via Xcode:
 ```swift
 dependencies: [
     .package(
-        url: "https://github.com/UXWizard25/vv-token-test-v3.git",
+        url: "https://github.com/UXWizard25/bild-design-system.git",
         from: "1.0.0"
     )
 ]

@@ -8,7 +8,7 @@ Design tokens for iOS, macOS, tvOS, and watchOS applications using SwiftUI.
 
 1. Open your project in Xcode
 2. Go to **File > Add Package Dependencies**
-3. Enter the repository URL: `https://github.com/UXWizard25/vv-token-test-v3.git`
+3. Enter the repository URL: `https://github.com/UXWizard25/bild-design-system.git`
 4. Select version (e.g., `from: "1.0.0"`)
 5. Choose the product **BildDesignTokens**
 
@@ -17,7 +17,7 @@ Design tokens for iOS, macOS, tvOS, and watchOS applications using SwiftUI.
 ```swift
 dependencies: [
     .package(
-        url: "https://github.com/UXWizard25/vv-token-test-v3.git",
+        url: "https://github.com/UXWizard25/bild-design-system.git",
         from: "1.0.0"
     )
 ],

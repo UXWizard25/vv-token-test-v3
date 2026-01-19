@@ -9,7 +9,7 @@
  *
  * Installation:
  *   1. In Xcode: File > Add Package Dependencies
- *   2. Enter: https://github.com/UXWizard25/vv-token-test-v3
+ *   2. Enter: https://github.com/UXWizard25/bild-design-system
  *   3. Select version (e.g., from: "1.0.0") or branch
  *
  * Usage:
