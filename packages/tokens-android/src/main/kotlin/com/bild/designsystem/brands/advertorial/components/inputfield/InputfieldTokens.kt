@@ -70,7 +70,7 @@ object InputfieldTokens {
             val inputFieldHeightSize: Dp
             val heyInputContainerInlineSpace: Dp
             val inputFieldMessageGapSpace: Dp
-            val inputFieldLabelFontFamily: Dp
+            val inputFieldLabelFontFamily: String
             val inputFieldLabelLineHeight: TextUnit
         }
 

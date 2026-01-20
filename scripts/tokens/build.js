@@ -3256,7 +3256,10 @@ object ${componentName}Tokens {
       let propType = 'Dp';
       if (value.includes('.sp')) propType = 'TextUnit';
       else if (value.includes('Color(')) propType = 'Color';
-      else if (!value.includes('.dp') && !value.includes('.sp')) {
+      else if (value.startsWith('"') || value.startsWith("'")) {
+        // String value (e.g., fontFamily)
+        propType = 'String';
+      } else if (!value.includes('.dp') && !value.includes('.sp')) {
         // Check if it's a pure number (Int)
         const numMatch = value.match(/^(\d+)$/);
         if (numMatch) propType = 'Int';
@@ -5944,7 +5947,7 @@ async function aggregateComposeSemantics() {
       // Collect semantic tokens
       const semanticData = {
         colors: { light: [], dark: [] },
-        sizing: { compact: [], regular: [] }
+        sizing: { compact: [], medium: [], expanded: [] }
       };
 
       // Read color files
@@ -5964,13 +5967,17 @@ async function aggregateComposeSemantics() {
         }
       }
 
-      // Read sizing files
+      // Read sizing files (Android uses Compact/Medium/Expanded)
       const sizingDir = path.join(semanticDir, 'sizeclass');
       if (fs.existsSync(sizingDir)) {
         const sizingFiles = fs.readdirSync(sizingDir).filter(f => f.endsWith('.kt'));
         for (const fileName of sizingFiles) {
           const content = fs.readFileSync(path.join(sizingDir, fileName), 'utf8');
-          const mode = fileName.toLowerCase().includes('regular') ? 'regular' : 'compact';
+          const fileNameLower = fileName.toLowerCase();
+          let mode = 'compact';
+          if (fileNameLower.includes('expanded')) mode = 'expanded';
+          else if (fileNameLower.includes('medium')) mode = 'medium';
+          else if (fileNameLower.includes('compact')) mode = 'compact';
 
           // Match both 'val' and 'override val' declarations
           const valRegex = /^\s*(?:override\s+)?val\s+(\w+)\s*=\s*(.+)$/gm;
@@ -6004,7 +6011,8 @@ import androidx.compose.ui.unit.sp
  *   ${brandPascal}SemanticTokens.Colors.Light.textColorPrimary
  *   ${brandPascal}SemanticTokens.Colors.Dark.textColorPrimary
  *   ${brandPascal}SemanticTokens.Sizing.Compact.headline1FontSize
- *   ${brandPascal}SemanticTokens.Sizing.Regular.headline1FontSize
+ *   ${brandPascal}SemanticTokens.Sizing.Medium.headline1FontSize
+ *   ${brandPascal}SemanticTokens.Sizing.Expanded.headline1FontSize
  */
 object ${brandPascal}SemanticTokens {
 
@@ -6034,8 +6042,8 @@ object ${brandPascal}SemanticTokens {
         output += `    }\n\n`;
       }
 
-      // Add Sizing section
-      if (semanticData.sizing.compact.length > 0 || semanticData.sizing.regular.length > 0) {
+      // Add Sizing section (Android uses Compact/Medium/Expanded)
+      if (semanticData.sizing.compact.length > 0 || semanticData.sizing.medium.length > 0 || semanticData.sizing.expanded.length > 0) {
         output += `    // ══════════════════════════════════════════════════════════════
     // SIZING (WindowSizeClass)
     // ══════════════════════════════════════════════════════════════
@@ -6048,9 +6056,16 @@ object ${brandPascal}SemanticTokens {
           });
           output += `        }\n`;
         }
-        if (semanticData.sizing.regular.length > 0) {
-          output += `        object Regular {\n`;
-          semanticData.sizing.regular.forEach(t => {
+        if (semanticData.sizing.medium.length > 0) {
+          output += `        object Medium {\n`;
+          semanticData.sizing.medium.forEach(t => {
+            output += `            val ${t.name} = ${t.value}\n`;
+          });
+          output += `        }\n`;
+        }
+        if (semanticData.sizing.expanded.length > 0) {
+          output += `        object Expanded {\n`;
+          semanticData.sizing.expanded.forEach(t => {
             output += `            val ${t.name} = ${t.value}\n`;
           });
           output += `        }\n`;

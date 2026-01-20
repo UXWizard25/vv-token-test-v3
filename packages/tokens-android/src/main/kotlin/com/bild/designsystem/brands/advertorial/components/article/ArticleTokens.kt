@@ -80,7 +80,7 @@ object ArticleTokens {
             val articleMetaFontSize: TextUnit
             val articleImageCaptionLineHeight: TextUnit
             val articleImageSourceLineHeight: TextUnit
-            val articleMetaFontFamily: Dp
+            val articleMetaFontFamily: String
         }
 
         object Compact : SizingTokens {

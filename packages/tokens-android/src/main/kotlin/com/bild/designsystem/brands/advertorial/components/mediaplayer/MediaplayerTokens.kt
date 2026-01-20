@@ -65,7 +65,7 @@ object MediaplayerTokens {
             val podcastPlayButtonSize: Dp
             val vidPlayerBottomBarGapSpace: Dp
             val audioPlayerHeaderStackSpace: Dp
-            val videoTimeBadgeFontFamily: Dp
+            val videoTimeBadgeFontFamily: String
             val vidPlayerControlButtonSize: Dp
             val vidPlayerControlButtonIconSizeHover: Dp
             val vidPlayerTimecodeFontSize: TextUnit

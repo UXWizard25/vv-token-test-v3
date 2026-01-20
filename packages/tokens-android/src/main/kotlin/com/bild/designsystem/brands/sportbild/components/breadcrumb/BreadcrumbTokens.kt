@@ -96,7 +96,7 @@ object BreadcrumbTokens {
          */
         interface SizingTokens {
             val breadcrumbFontSize: TextUnit
-            val breadcrumbFontFamily: Dp
+            val breadcrumbFontFamily: String
             val breadcrumbArrowLeftInlineSpace1: Dp
             val breadcrumbArrowRightInlineSpace2: Dp
             val breadcrumbInlineSpace: Dp

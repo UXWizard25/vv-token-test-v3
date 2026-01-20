@@ -63,7 +63,7 @@ object FooterTokens {
         interface SizingTokens {
             val footerFontSize: TextUnit
             val footerLineHeight: TextUnit
-            val footerFontFamily: Dp
+            val footerFontFamily: String
         }
 
         object Compact : SizingTokens {
