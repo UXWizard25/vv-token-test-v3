@@ -22,32 +22,32 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 
 // Color imports (ColorBrand axis)
-import com.bild.designsystem.bild.semantic.BildLightColors
-import com.bild.designsystem.bild.semantic.BildDarkColors
-import com.bild.designsystem.sportbild.semantic.SportbildLightColors
-import com.bild.designsystem.sportbild.semantic.SportbildDarkColors
+import com.bild.designsystem.brands.bild.semantic.BildLightColors
+import com.bild.designsystem.brands.bild.semantic.BildDarkColors
+import com.bild.designsystem.brands.sportbild.semantic.SportbildLightColors
+import com.bild.designsystem.brands.sportbild.semantic.SportbildDarkColors
 
 // Sizing imports (ContentBrand axis)
-import com.bild.designsystem.bild.semantic.BildSizingCompact
-import com.bild.designsystem.bild.semantic.BildSizingMedium
-import com.bild.designsystem.bild.semantic.BildSizingExpanded
-import com.bild.designsystem.sportbild.semantic.SportbildSizingCompact
-import com.bild.designsystem.sportbild.semantic.SportbildSizingMedium
-import com.bild.designsystem.sportbild.semantic.SportbildSizingExpanded
-import com.bild.designsystem.advertorial.semantic.AdvertorialSizingCompact
-import com.bild.designsystem.advertorial.semantic.AdvertorialSizingMedium
-import com.bild.designsystem.advertorial.semantic.AdvertorialSizingExpanded
+import com.bild.designsystem.brands.bild.semantic.BildSizingCompact
+import com.bild.designsystem.brands.bild.semantic.BildSizingMedium
+import com.bild.designsystem.brands.bild.semantic.BildSizingExpanded
+import com.bild.designsystem.brands.sportbild.semantic.SportbildSizingCompact
+import com.bild.designsystem.brands.sportbild.semantic.SportbildSizingMedium
+import com.bild.designsystem.brands.sportbild.semantic.SportbildSizingExpanded
+import com.bild.designsystem.brands.advertorial.semantic.AdvertorialSizingCompact
+import com.bild.designsystem.brands.advertorial.semantic.AdvertorialSizingMedium
+import com.bild.designsystem.brands.advertorial.semantic.AdvertorialSizingExpanded
 
 // Typography imports (ContentBrand axis)
-import com.bild.designsystem.bild.semantic.BildTypographyCompact
-import com.bild.designsystem.bild.semantic.BildTypographyMedium
-import com.bild.designsystem.bild.semantic.BildTypographyExpanded
-import com.bild.designsystem.sportbild.semantic.SportbildTypographyCompact
-import com.bild.designsystem.sportbild.semantic.SportbildTypographyMedium
-import com.bild.designsystem.sportbild.semantic.SportbildTypographyExpanded
-import com.bild.designsystem.advertorial.semantic.AdvertorialTypographyCompact
-import com.bild.designsystem.advertorial.semantic.AdvertorialTypographyMedium
-import com.bild.designsystem.advertorial.semantic.AdvertorialTypographyExpanded
+import com.bild.designsystem.brands.bild.semantic.BildTypographyCompact
+import com.bild.designsystem.brands.bild.semantic.BildTypographyMedium
+import com.bild.designsystem.brands.bild.semantic.BildTypographyExpanded
+import com.bild.designsystem.brands.sportbild.semantic.SportbildTypographyCompact
+import com.bild.designsystem.brands.sportbild.semantic.SportbildTypographyMedium
+import com.bild.designsystem.brands.sportbild.semantic.SportbildTypographyExpanded
+import com.bild.designsystem.brands.advertorial.semantic.AdvertorialTypographyCompact
+import com.bild.designsystem.brands.advertorial.semantic.AdvertorialTypographyMedium
+import com.bild.designsystem.brands.advertorial.semantic.AdvertorialTypographyExpanded
 
 // Density imports (ContentBrand axis)
 // Density is brand-independent (same values across all brands)

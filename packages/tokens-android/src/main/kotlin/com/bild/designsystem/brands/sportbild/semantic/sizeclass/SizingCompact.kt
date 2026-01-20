@@ -11,7 +11,7 @@
  *
  * Documentation: https://github.com/UXWizard25/bild-design-system/blob/main/packages/tokens/docs/android.md
  */
-package com.bild.designsystem.sportbild.semantic
+package com.bild.designsystem.brands.sportbild.semantic
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.unit.Dp

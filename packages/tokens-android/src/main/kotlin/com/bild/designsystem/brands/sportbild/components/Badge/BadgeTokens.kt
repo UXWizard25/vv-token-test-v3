@@ -15,7 +15,7 @@
  * Documentation: https://github.com/UXWizard25/bild-design-system/blob/main/packages/tokens/docs/android.md
  */
 
-package com.bild.designsystem.sportbild.components
+package com.bild.designsystem.brands.sportbild.components
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Composable

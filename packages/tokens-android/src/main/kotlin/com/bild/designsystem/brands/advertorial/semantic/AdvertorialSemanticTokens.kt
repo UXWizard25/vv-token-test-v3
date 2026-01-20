@@ -15,7 +15,7 @@
  * Documentation: https://github.com/UXWizard25/bild-design-system/blob/main/packages/tokens/docs/android.md
  */
 
-package com.bild.designsystem.advertorial.semantic
+package com.bild.designsystem.brands.advertorial.semantic
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp

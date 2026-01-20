@@ -686,9 +686,9 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
               }
               if (cssOptions.brand) {
                 if (buildPath.includes('/components/')) {
-                  return `${basePkg}.${cssOptions.brand}.components`;
+                  return `${basePkg}.brands.${cssOptions.brand}.components`;
                 }
-                return `${basePkg}.${cssOptions.brand}.semantic`;
+                return `${basePkg}.brands.${cssOptions.brand}.semantic`;
               }
               return basePkg;
             })(),
@@ -985,7 +985,7 @@ function createTypographyConfig(brand, breakpoint) {
             destination: `Typography${getSizeClassName(breakpoint, 'android').charAt(0).toUpperCase() + getSizeClassName(breakpoint, 'android').slice(1)}.kt`,
             format: 'compose/typography-scheme',
             options: {
-              packageName: `com.bild.designsystem.${brand}.semantic`,
+              packageName: `com.bild.designsystem.brands.${brand}.semantic`,
               brand: brandName,
               breakpoint,
               sizeClass: getSizeClassName(breakpoint, 'android'),
@@ -1498,7 +1498,7 @@ function createComponentTypographyConfig(sourceFile, brand, componentName, fileN
             destination: `${componentName}Typography${getSizeClassName(breakpoint, 'android').charAt(0).toUpperCase() + getSizeClassName(breakpoint, 'android').slice(1)}.kt`,
             format: 'compose/typography',
             options: {
-              packageName: `com.bild.designsystem.${brand}.components`,
+              packageName: `com.bild.designsystem.brands.${brand}.components`,
               brand: brand,
               mode: getSizeClassName(breakpoint, 'android'),
               componentName,
@@ -3100,7 +3100,7 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   });
 
   output += `
-package com.bild.designsystem.${brand}.components
+package com.bild.designsystem.brands.${brand}.components
 
 ${imports.join('\n')}
 
@@ -4404,9 +4404,9 @@ function generateThemeProviderFile(brand, hasColors = true) {
 
   // For brands without colors, we need to use a shared color scheme (BildColorScheme)
   const colorImports = hasColors
-    ? `import com.bild.designsystem.${brand}.semantic.${brandPascal}ColorScheme
-import com.bild.designsystem.${brand}.semantic.${brandPascal}LightColors
-import com.bild.designsystem.${brand}.semantic.${brandPascal}DarkColors`
+    ? `import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}ColorScheme
+import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}LightColors
+import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}DarkColors`
     : `// ${brandPascal} uses shared color schemes from other brands (e.g., Bild, Sportbild)
 // Import the color scheme you want to use:
 import com.bild.designsystem.bild.semantic.BildColorScheme
@@ -4432,7 +4432,7 @@ import com.bild.designsystem.bild.semantic.BildDarkColors`;
   });
 
   output += `
-package com.bild.designsystem.${brand}.theme`;
+package com.bild.designsystem.brands.${brand}.theme`;
 
   return output + `
 
@@ -4442,9 +4442,9 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 ${colorImports}
-import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingScheme
-import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingCompact
-import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingRegular
+import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}SizingScheme
+import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}SizingCompact
+import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}SizingRegular
 import com.bild.designsystem.shared.Density
 import com.bild.designsystem.shared.WindowSizeClass
 
@@ -5391,24 +5391,24 @@ function generateDesignSystemThemeFile() {
   // Generate color imports for all color brands
   const colorImports = COLOR_BRANDS.map(brand => {
     const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-    return `import com.bild.designsystem.${brand}.semantic.${brandPascal}LightColors
-import com.bild.designsystem.${brand}.semantic.${brandPascal}DarkColors`;
+    return `import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}LightColors
+import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}DarkColors`;
   }).join('\n');
 
   // Generate sizing imports for all content brands (Material 3: Compact, Medium, Expanded)
   const sizingImports = CONTENT_BRANDS.map(brand => {
     const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-    return `import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingCompact
-import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingMedium
-import com.bild.designsystem.${brand}.semantic.${brandPascal}SizingExpanded`;
+    return `import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}SizingCompact
+import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}SizingMedium
+import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}SizingExpanded`;
   }).join('\n');
 
   // Generate typography imports for all content brands (Material 3: Compact, Medium, Expanded)
   const typographyImports = CONTENT_BRANDS.map(brand => {
     const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-    return `import com.bild.designsystem.${brand}.semantic.${brandPascal}TypographyCompact
-import com.bild.designsystem.${brand}.semantic.${brandPascal}TypographyMedium
-import com.bild.designsystem.${brand}.semantic.${brandPascal}TypographyExpanded`;
+    return `import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}TypographyCompact
+import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}TypographyMedium
+import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}TypographyExpanded`;
   }).join('\n');
 
   // Density imports (brand-independent, like Effects)
@@ -5959,7 +5959,7 @@ async function aggregateComposeSemantics() {
       });
 
       output += `
-package com.bild.designsystem.${brand}.semantic
+package com.bild.designsystem.brands.${brand}.semantic
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp

@@ -4438,7 +4438,7 @@ const composeComponentEffectsFormat = ({ dictionary, options, file }) => {
   });
 
   output += `
-package com.bild.designsystem.${brand.toLowerCase()}.components
+package com.bild.designsystem.brands.${brand.toLowerCase()}.components
 
 import androidx.compose.ui.graphics.Color
 import com.bild.designsystem.shared.DropShadow
