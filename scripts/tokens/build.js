@@ -3061,7 +3061,7 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
     ...(tokenGroups.effects?.dark || [])
   ];
 
-  const hasColor = allTokens.some(t => t.value.includes('Color('));
+  const hasColor = allTokens.some(t => t.value.includes('Color(') || t.value.includes('Color.'));
   const hasDp = allTokens.some(t => t.value.includes('.dp'));
   const hasSp = allTokens.some(t => t.value.includes('.sp'));
   const hasFontStyle = allTokens.some(t => t.value.includes('FontStyle.'));

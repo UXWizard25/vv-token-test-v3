@@ -20,6 +20,7 @@ package com.bild.designsystem.brands.bild.components.alert
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Composable
 import com.bild.designsystem.shared.DesignSystemTheme
+import androidx.compose.ui.graphics.Color
 import com.bild.designsystem.shared.ShadowStyle
 import com.bild.designsystem.shared.DropShadow
 
