@@ -1631,6 +1631,8 @@ async function buildComponentTokens() {
 
     const componentNames = fs.readdirSync(componentsDir).filter(name => {
       const componentPath = path.join(componentsDir, name);
+      // Skip hidden and internal directories (., _)
+      if (name.startsWith('.') || name.startsWith('_')) return false;
       return fs.statSync(componentPath).isDirectory();
     });
 
@@ -1832,6 +1834,8 @@ async function optimizeComponentColorCSS() {
     if (!fs.existsSync(componentsDir)) continue;
 
     const componentNames = fs.readdirSync(componentsDir).filter(name => {
+      // Skip hidden and internal directories (., _)
+      if (name.startsWith('.') || name.startsWith('_')) return false;
       return fs.statSync(path.join(componentsDir, name)).isDirectory();
     });
 
@@ -2297,7 +2301,8 @@ async function convertToResponsiveCSS() {
     const componentsDir = path.join(brandDir, 'components');
     if (fs.existsSync(componentsDir)) {
       const componentFolders = fs.readdirSync(componentsDir)
-        .filter(f => fs.statSync(path.join(componentsDir, f)).isDirectory());
+        .filter(f => fs.statSync(path.join(componentsDir, f)).isDirectory())
+        .filter(f => !f.startsWith('.') && !f.startsWith('_'));
 
       for (const component of componentFolders) {
         const componentDir = path.join(componentsDir, component);
@@ -2869,6 +2874,7 @@ async function aggregateComposeComponents() {
 
     const componentDirs = fs.readdirSync(brandComponentsDir, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory())
+      .filter(dirent => !dirent.name.startsWith('.') && !dirent.name.startsWith('_'))
       .map(dirent => dirent.name);
 
     for (const componentDirName of componentDirs) {
@@ -3642,6 +3648,7 @@ async function aggregateSwiftUIComponents() {
 
     const componentDirs = fs.readdirSync(brandComponentsDir, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory())
+      .filter(dirent => !dirent.name.startsWith('.') && !dirent.name.startsWith('_'))
       .map(dirent => dirent.name);
 
     for (const componentName of componentDirs) {
@@ -4249,6 +4256,7 @@ async function cleanupSwiftUIIndividualComponentFiles() {
 
     const componentDirs = fs.readdirSync(brandComponentsDir, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory())
+      .filter(dirent => !dirent.name.startsWith('.') && !dirent.name.startsWith('_'))
       .map(dirent => dirent.name);
 
     for (const componentName of componentDirs) {
@@ -6106,6 +6114,7 @@ async function cleanupComposeIndividualFiles() {
 
       const componentDirs = fs.readdirSync(componentsDir, { withFileTypes: true })
         .filter(d => d.isDirectory())
+        .filter(d => !d.name.startsWith('.') && !d.name.startsWith('_'))
         .map(d => d.name);
 
       for (const componentDirName of componentDirs) {
