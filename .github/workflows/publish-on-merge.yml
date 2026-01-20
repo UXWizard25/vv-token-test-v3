@@ -395,15 +395,24 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Publish Android Tokens to GitHub Packages
+        id: android_publish
         run: |
           echo "📦 Publishing de.bild.design:tokens@${{ steps.version.outputs.new }} to GitHub Packages..."
           cd packages/tokens-android
-          gradle publish -PVERSION=${{ steps.version.outputs.new }}
-          echo "✅ Android tokens package published successfully!"
+
+          # Run gradle publish and capture exit code
+          if gradle publish -PVERSION=${{ steps.version.outputs.new }} --info; then
+            echo "✅ Android tokens package published successfully!"
+            echo "success=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Android tokens package publishing failed!"
+            echo "success=false" >> $GITHUB_OUTPUT
+            # Don't fail the entire workflow, but record the failure
+            echo "::warning::Android package publishing failed. Check logs for details."
+          fi
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        continue-on-error: true
 
       # 16c. Commit generated native files for SPM/Maven distribution
       - name: Commit Generated Native Files
@@ -509,7 +518,11 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Native Packages:**" >> $GITHUB_STEP_SUMMARY
           echo "- \`BildDesignTokens\` (iOS/SPM via Git tag)" >> $GITHUB_STEP_SUMMARY
-          echo "- \`de.bild.design:tokens\` (Android/Maven)" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.android_publish.outputs.success }}" = "true" ]; then
+            echo "- ✅ \`de.bild.design:tokens\` (Android/Maven)" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- ⚠️ \`de.bild.design:tokens\` (Android/Maven) - **Publishing failed**" >> $GITHUB_STEP_SUMMARY
+          fi
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Previous Version:** \`${{ steps.version.outputs.current }}\`" >> $GITHUB_STEP_SUMMARY
           echo "**New Version:** \`${{ steps.version.outputs.new }}\`" >> $GITHUB_STEP_SUMMARY
