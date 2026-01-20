@@ -6099,7 +6099,7 @@ object ${brandPascal}SemanticTokens {
       fs.writeFileSync(aggregatedFile, output, 'utf8');
 
       const totalTokens = semanticData.colors.light.length + semanticData.colors.dark.length +
-                          semanticData.sizing.compact.length + semanticData.sizing.regular.length;
+                          semanticData.sizing.compact.length + semanticData.sizing.medium.length + semanticData.sizing.expanded.length;
       console.log(`     ✅ ${brand}/semantic/${brandPascal}SemanticTokens.kt (${totalTokens} tokens)`);
       successfulBrands++;
 
