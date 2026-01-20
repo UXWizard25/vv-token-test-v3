@@ -688,7 +688,15 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
                 if (buildPath.includes('/components/')) {
                   return `${basePkg}.brands.${cssOptions.brand}.components`;
                 }
-                return `${basePkg}.brands.${cssOptions.brand}.semantic`;
+                // For semantic tokens, include the subdirectory in the package name
+                // File path must match package declaration in Kotlin
+                let subdir = '';
+                if (cssOptions.modeType === 'theme') {
+                  subdir = '.color';  // color tokens go in semantic/color/
+                } else if (cssOptions.modeType === 'breakpoint') {
+                  subdir = '.sizeclass';  // breakpoint tokens go in semantic/sizeclass/
+                }
+                return `${basePkg}.brands.${cssOptions.brand}.semantic${subdir}`;
               }
               return basePkg;
             })(),
@@ -985,7 +993,7 @@ function createTypographyConfig(brand, breakpoint) {
             destination: `Typography${getSizeClassName(breakpoint, 'android').charAt(0).toUpperCase() + getSizeClassName(breakpoint, 'android').slice(1)}.kt`,
             format: 'compose/typography-scheme',
             options: {
-              packageName: `com.bild.designsystem.brands.${brand}.semantic`,
+              packageName: `com.bild.designsystem.brands.${brand}.semantic.typography`,
               brand: brandName,
               breakpoint,
               sizeClass: getSizeClassName(breakpoint, 'android'),
@@ -5389,26 +5397,29 @@ ${interfaceProperties}}
  */
 function generateDesignSystemThemeFile() {
   // Generate color imports for all color brands
+  // Files are in semantic/color/ directory so package includes .color
   const colorImports = COLOR_BRANDS.map(brand => {
     const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-    return `import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}LightColors
-import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}DarkColors`;
+    return `import com.bild.designsystem.brands.${brand}.semantic.color.${brandPascal}LightColors
+import com.bild.designsystem.brands.${brand}.semantic.color.${brandPascal}DarkColors`;
   }).join('\n');
 
   // Generate sizing imports for all content brands (Material 3: Compact, Medium, Expanded)
+  // Files are in semantic/sizeclass/ directory so package includes .sizeclass
   const sizingImports = CONTENT_BRANDS.map(brand => {
     const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-    return `import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}SizingCompact
-import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}SizingMedium
-import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}SizingExpanded`;
+    return `import com.bild.designsystem.brands.${brand}.semantic.sizeclass.${brandPascal}SizingCompact
+import com.bild.designsystem.brands.${brand}.semantic.sizeclass.${brandPascal}SizingMedium
+import com.bild.designsystem.brands.${brand}.semantic.sizeclass.${brandPascal}SizingExpanded`;
   }).join('\n');
 
   // Generate typography imports for all content brands (Material 3: Compact, Medium, Expanded)
+  // Files are in semantic/typography/ directory so package includes .typography
   const typographyImports = CONTENT_BRANDS.map(brand => {
     const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-    return `import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}TypographyCompact
-import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}TypographyMedium
-import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}TypographyExpanded`;
+    return `import com.bild.designsystem.brands.${brand}.semantic.typography.${brandPascal}TypographyCompact
+import com.bild.designsystem.brands.${brand}.semantic.typography.${brandPascal}TypographyMedium
+import com.bild.designsystem.brands.${brand}.semantic.typography.${brandPascal}TypographyExpanded`;
   }).join('\n');
 
   // Density imports (brand-independent, like Effects)

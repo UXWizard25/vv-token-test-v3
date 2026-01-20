@@ -11,7 +11,7 @@
  *
  * Documentation: https://github.com/UXWizard25/bild-design-system/blob/main/packages/tokens/docs/android.md
  */
-package com.bild.designsystem.brands.bild.semantic
+package com.bild.designsystem.brands.bild.semantic.sizeclass
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.unit.Dp
