@@ -21,7 +21,7 @@ const DIST_DIR = path.join(__dirname, '../../packages/tokens/dist');
 
 // Native platform output directories (separate packages for SPM/Maven distribution)
 const IOS_DIST_DIR = path.join(__dirname, '../../packages/tokens-ios/Sources/BildDesignTokens');
-const ANDROID_DIST_DIR = path.join(__dirname, '../../packages/tokens-android/src/main/kotlin/de/bild/design/tokens');
+const ANDROID_DIST_DIR = path.join(__dirname, '../../packages/tokens-android/src/main/kotlin/com/bild/designsystem');
 
 // Brands and breakpoints
 const BRANDS = ['bild', 'sportbild', 'advertorial'];
