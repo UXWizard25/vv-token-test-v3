@@ -44,13 +44,13 @@ interface SportbildTypographyScheme : DesignTypographyScheme {
     override val headline4: DesignTextStyle
     /** This Subheadlines text style is used in articles. They are placed under the headline at the top of an article. Subheadlines can appear in some teasers also. Font size: 24 - 24 - 32 - 36 */
     override val subheadline1: DesignTextStyle
-    /** Kickers are short introductory lines placed above a headline to provide context, category, or emphasis. They support content orientation. Font size: 18 - 18 - 22 - 30 --//*//-- currently css uses kicker0 for the naming of this text style and sequence of font size changes */
+    /** Kickers are short introductory lines placed above a headline to provide context, category, or emphasis. They support content orientation. Font size: 18 - 18 - 22 - 30 - -// * //- - currently css uses kicker0 for the naming of this text style and sequence of font size changes */
     override val kicker1: DesignTextStyle
-    /** Kickers are short introductory lines placed above a headline to provide context, category, or emphasis. They support content orientation. Font size: 18 - 18 - 22 - 24 --//*//-- currently css uses kicker1 for the naming of this text style and sequence of font size changes */
+    /** Kickers are short introductory lines placed above a headline to provide context, category, or emphasis. They support content orientation. Font size: 18 - 18 - 22 - 24 - -// * //- - currently css uses kicker1 for the naming of this text style and sequence of font size changes */
     override val kicker2: DesignTextStyle
-    /** Kickers are short introductory lines placed above a headline to provide context, category, or emphasis. They support content orientation. Font size: 16 - 16 - 18 - 20 --//*//-- currently css uses kicker2 for the naming of this text style and sequence of font size changes */
+    /** Kickers are short introductory lines placed above a headline to provide context, category, or emphasis. They support content orientation. Font size: 16 - 16 - 18 - 20 - -// * //- - currently css uses kicker2 for the naming of this text style and sequence of font size changes */
     override val kicker3: DesignTextStyle
-    /** Kickers are short introductory lines placed above a headline to provide context, category, or emphasis. They support content orientation. Font size: 14 - 14 - 16 - 16 --//*//-- currently css uses kicker3 for the naming of this text style and sequence of font size changes */
+    /** Kickers are short introductory lines placed above a headline to provide context, category, or emphasis. They support content orientation. Font size: 14 - 14 - 16 - 16 - -// * //- - currently css uses kicker3 for the naming of this text style and sequence of font size changes */
     override val kicker4: DesignTextStyle
     /** Title styles are mid-level headings, often used for module names, card headers, or section labels. They balance prominence with readability. Font size: 22 - 22 - 22 - 28 */
     override val title1: DesignTextStyle
@@ -104,7 +104,7 @@ interface SportbildTypographyScheme : DesignTypographyScheme {
     override val label2uppercaseBold: DesignTextStyle
     /** Labels identify interface elements such as form fields, buttons, or navigation items. They ensure clarity and usability in functional contexts. This text style should be chosen when shorter small identifier texts in a small font size is needed where as the footnote text style should be used for longer descriptive texts. This text style's font size value remains constant at 12 across device sizes. */
     override val label3: DesignTextStyle
-    /** Labels identify interface elements such as form fields, buttons, or navigation items. They ensure clarity and usability in functional contexts. This text style should be chosen when shorter small identifier texts in a small font size is needed where as the footnote text style should be used for longer descriptive texts. This text style's font size value remains constant at 12 across device sizes. Current online CSS .nav_btn--type-list & .nav_btn__text // --nav-btn */
+    /** Labels identify interface elements such as form fields, buttons, or navigation items. They ensure clarity and usability in functional contexts. This text style should be chosen when shorter small identifier texts in a small font size is needed where as the footnote text style should be used for longer descriptive texts. This text style's font size value remains constant at 12 across device sizes. Current online CSS .nav_btn- -type-list & .nav_btn__text // - -nav-btn */
     override val label3uppercase: DesignTextStyle
     /** Labels identify interface elements such as form fields, buttons, or navigation items. They ensure clarity and usability in functional contexts. This text style should be chosen when shorter small identifier texts in a small font size is needed where as the footnote text style should be used for longer descriptive texts. This text style's font size value remains constant at 12 across device sizes. */
     override val label3bold: DesignTextStyle

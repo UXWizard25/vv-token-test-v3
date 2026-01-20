@@ -65,10 +65,10 @@ object AvatarTokens {
             val avatarLabelFontSize: TextUnit
             val avatarArticleSize: Dp
             val avatarAuthorPageSize: Dp
-            val avatarFontFamily: Dp
+            val avatarFontFamily: String
             val avatarLabelLineHeight: TextUnit
             val avatarLaneGapSpace: Dp
-            val appAvatarFontFamily: Dp
+            val appAvatarFontFamily: String
         }
 
         object Compact : SizingTokens {

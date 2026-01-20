@@ -68,7 +68,7 @@ object ButtonTokens {
             val buttonContentMinHeightSize: Dp
             val partnerLinkButtonInlineSpace: Dp
             val buttonBorderRadius: Dp
-            val buttonLabelFontFamily: Dp
+            val buttonLabelFontFamily: String
         }
 
         object Compact : SizingTokens {

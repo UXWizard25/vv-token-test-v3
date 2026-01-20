@@ -41,14 +41,14 @@ import androidx.compose.ui.unit.Dp
 @Stable
 interface DesignDensityScheme {
     // Constant spacing (breakpoint-independent)
-    val densityStackSpaceConst3Xs: Dp
-    val densityStackSpaceConst2Xs: Dp
+    val densityStackSpaceConst3xs: Dp
+    val densityStackSpaceConst2xs: Dp
     val densityStackSpaceConstXs: Dp
     val densityStackSpaceConstSm: Dp
     val densityStackSpaceConstMd: Dp
     val densityStackSpaceConstLg: Dp
     val densityStackSpaceConstXl: Dp
-    val densityStackSpaceConst2Xl: Dp
+    val densityStackSpaceConst2xl: Dp
 
     // Responsive spacing (per breakpoint)
     // XS breakpoint
@@ -56,23 +56,23 @@ interface DesignDensityScheme {
     val densityXsStackSpaceRespMd: Dp
     val densityXsStackSpaceRespLg: Dp
     val densityXsStackSpaceRespXl: Dp
-    val densityXsStackSpaceResp2Xl: Dp
+    val densityXsStackSpaceResp2xl: Dp
     // SM breakpoint
     val densitySmStackSpaceRespSm: Dp
     val densitySmStackSpaceRespMd: Dp
     val densitySmStackSpaceRespLg: Dp
     val densitySmStackSpaceRespXl: Dp
-    val densitySmStackSpaceResp2Xl: Dp
+    val densitySmStackSpaceResp2xl: Dp
     // MD breakpoint
     val densityMdStackSpaceRespSm: Dp
     val densityMdStackSpaceRespMd: Dp
     val densityMdStackSpaceRespLg: Dp
     val densityMdStackSpaceRespXl: Dp
-    val densityMdStackSpaceResp2Xl: Dp
+    val densityMdStackSpaceResp2xl: Dp
     // LG breakpoint
     val densityLgStackSpaceRespSm: Dp
     val densityLgStackSpaceRespMd: Dp
     val densityLgStackSpaceRespLg: Dp
     val densityLgStackSpaceRespXl: Dp
-    val densityLgStackSpaceResp2Xl: Dp
+    val densityLgStackSpaceResp2xl: Dp
 }

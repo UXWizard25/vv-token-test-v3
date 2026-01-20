@@ -64,7 +64,7 @@ object LivetickerTokens {
         interface SizingTokens {
             val liveTickerheadlineFontWeight: Int
             val liveTickerHeadlinesFontSize: TextUnit
-            val timeStampFontFamily: Dp
+            val timeStampFontFamily: String
             val liveTickerTimeStampFontSize: TextUnit
             val liveTickerTimeHeadlineStackSpace: Dp
             val liveTickerSliderItemWidthMaxSize: Dp

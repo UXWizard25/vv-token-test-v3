@@ -3256,7 +3256,10 @@ object ${componentName}Tokens {
       let propType = 'Dp';
       if (value.includes('.sp')) propType = 'TextUnit';
       else if (value.includes('Color(')) propType = 'Color';
-      else if (!value.includes('.dp') && !value.includes('.sp')) {
+      else if (value.startsWith('"') || value.startsWith("'")) {
+        // String value (e.g., fontFamily)
+        propType = 'String';
+      } else if (!value.includes('.dp') && !value.includes('.sp')) {
         // Check if it's a pure number (Int)
         const numMatch = value.match(/^(\d+)$/);
         if (numMatch) propType = 'Int';
@@ -5312,6 +5315,17 @@ function generateSharedDesignDensitySchemeFile() {
   const densitySourcePath = path.join(TOKENS_DIR, 'brands', 'bild', 'density', 'density-default.json');
   let interfaceProperties = '';
 
+  // Local camelCase transformer matching Style Dictionary output
+  // Ensures interface names match implementation names (e.g., 3Xs → 3xs)
+  const normalizeName = (str) => {
+    return str
+      .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+      .toLowerCase()
+      .replace(/(\d)[-_\s]+([a-z])/g, '$1$2')
+      .replace(/[-_\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ''))
+      .replace(/^(.)/, (c) => c.toLowerCase());
+  };
+
   if (fs.existsSync(densitySourcePath)) {
     const densityData = JSON.parse(fs.readFileSync(densitySourcePath, 'utf8'));
     const tokens = [];
@@ -5321,8 +5335,8 @@ function generateSharedDesignDensitySchemeFile() {
       for (const [key, value] of Object.entries(obj)) {
         if (value && typeof value === 'object') {
           if (value.$type === 'dimension' || value.type === 'float') {
-            // This is a token - extract the key name
-            tokens.push(key);
+            // This is a token - extract and normalize the key name
+            tokens.push(normalizeName(key));
           } else {
             // Recurse into nested objects
             extractTokens(value, prefix ? `${prefix}.${key}` : key);
@@ -5334,14 +5348,19 @@ function generateSharedDesignDensitySchemeFile() {
     extractTokens(densityData);
 
     // Group tokens by type (constant vs responsive)
-    const constantTokens = tokens.filter(t => t.includes('Const'));
-    const responsiveTokens = tokens.filter(t => !t.includes('Const'));
+    // Note: After normalization, 'Const' becomes 'const' in the middle of camelCase
+    const constantTokens = tokens.filter(t => t.toLowerCase().includes('const'));
+    const responsiveTokens = tokens.filter(t => !t.toLowerCase().includes('const'));
 
-    // Group responsive tokens by breakpoint
-    const breakpoints = ['Xs', 'Sm', 'Md', 'Lg'];
+    // Group responsive tokens by breakpoint (normalized names use lowercase breakpoints)
+    const breakpoints = ['xs', 'sm', 'md', 'lg'];
     const respByBreakpoint = {};
     breakpoints.forEach(bp => {
-      respByBreakpoint[bp] = responsiveTokens.filter(t => t.startsWith(`density${bp}`));
+      // Match tokens that start with 'density' followed by breakpoint (e.g., 'densityXs...')
+      respByBreakpoint[bp] = responsiveTokens.filter(t => {
+        const regex = new RegExp(`^density${bp.charAt(0).toUpperCase() + bp.slice(1)}`, 'i');
+        return regex.test(t);
+      });
     });
 
     // Generate constant properties
@@ -5944,7 +5963,7 @@ async function aggregateComposeSemantics() {
       // Collect semantic tokens
       const semanticData = {
         colors: { light: [], dark: [] },
-        sizing: { compact: [], regular: [] }
+        sizing: { compact: [], medium: [], expanded: [] }
       };
 
       // Read color files
@@ -5964,13 +5983,17 @@ async function aggregateComposeSemantics() {
         }
       }
 
-      // Read sizing files
+      // Read sizing files (Android uses Compact/Medium/Expanded)
       const sizingDir = path.join(semanticDir, 'sizeclass');
       if (fs.existsSync(sizingDir)) {
         const sizingFiles = fs.readdirSync(sizingDir).filter(f => f.endsWith('.kt'));
         for (const fileName of sizingFiles) {
           const content = fs.readFileSync(path.join(sizingDir, fileName), 'utf8');
-          const mode = fileName.toLowerCase().includes('regular') ? 'regular' : 'compact';
+          const fileNameLower = fileName.toLowerCase();
+          let mode = 'compact';
+          if (fileNameLower.includes('expanded')) mode = 'expanded';
+          else if (fileNameLower.includes('medium')) mode = 'medium';
+          else if (fileNameLower.includes('compact')) mode = 'compact';
 
           // Match both 'val' and 'override val' declarations
           const valRegex = /^\s*(?:override\s+)?val\s+(\w+)\s*=\s*(.+)$/gm;
@@ -6004,7 +6027,8 @@ import androidx.compose.ui.unit.sp
  *   ${brandPascal}SemanticTokens.Colors.Light.textColorPrimary
  *   ${brandPascal}SemanticTokens.Colors.Dark.textColorPrimary
  *   ${brandPascal}SemanticTokens.Sizing.Compact.headline1FontSize
- *   ${brandPascal}SemanticTokens.Sizing.Regular.headline1FontSize
+ *   ${brandPascal}SemanticTokens.Sizing.Medium.headline1FontSize
+ *   ${brandPascal}SemanticTokens.Sizing.Expanded.headline1FontSize
  */
 object ${brandPascal}SemanticTokens {
 
@@ -6034,8 +6058,8 @@ object ${brandPascal}SemanticTokens {
         output += `    }\n\n`;
       }
 
-      // Add Sizing section
-      if (semanticData.sizing.compact.length > 0 || semanticData.sizing.regular.length > 0) {
+      // Add Sizing section (Android uses Compact/Medium/Expanded)
+      if (semanticData.sizing.compact.length > 0 || semanticData.sizing.medium.length > 0 || semanticData.sizing.expanded.length > 0) {
         output += `    // ══════════════════════════════════════════════════════════════
     // SIZING (WindowSizeClass)
     // ══════════════════════════════════════════════════════════════
@@ -6048,9 +6072,16 @@ object ${brandPascal}SemanticTokens {
           });
           output += `        }\n`;
         }
-        if (semanticData.sizing.regular.length > 0) {
-          output += `        object Regular {\n`;
-          semanticData.sizing.regular.forEach(t => {
+        if (semanticData.sizing.medium.length > 0) {
+          output += `        object Medium {\n`;
+          semanticData.sizing.medium.forEach(t => {
+            output += `            val ${t.name} = ${t.value}\n`;
+          });
+          output += `        }\n`;
+        }
+        if (semanticData.sizing.expanded.length > 0) {
+          output += `        object Expanded {\n`;
+          semanticData.sizing.expanded.forEach(t => {
             output += `            val ${t.name} = ${t.value}\n`;
           });
           output += `        }\n`;

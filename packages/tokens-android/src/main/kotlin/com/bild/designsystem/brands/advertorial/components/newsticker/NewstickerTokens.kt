@@ -64,7 +64,7 @@ object NewstickerTokens {
         interface SizingTokens {
             val newsTickerTimeFontSize: TextUnit
             val newsTickerTimeFontWeight: Int
-            val newsTickerTimeFontFamily: Dp
+            val newsTickerTimeFontFamily: String
             val newsTickerTimeLineHeight: TextUnit
             val newsTickerContentStackSpace: Dp
             val newsTickerKickerInnerStackSpace: Dp

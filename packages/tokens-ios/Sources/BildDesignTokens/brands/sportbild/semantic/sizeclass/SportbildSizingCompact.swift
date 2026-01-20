@@ -53,9 +53,9 @@ public protocol SportbildSizingScheme: Sendable {
     var canvasWidthSizeApp: CGFloat { get }
     /// Common viewport height size based on the selected mode. Apply this token to the main frame of page layouts to simulate realistic vertical space.
     var canvasHeightSizeApp: CGFloat { get }
-    /// 22 - 22 - 22 - 28 -- html class stage-block-title__text css var --ressort-header-font-size(sm-md-lg)
+    /// 22 - 22 - 22 - 28 - - html class stage-block-title__text css var - -ressort-header-font-size(sm-md-lg)
     var title1fontSize: CGFloat { get }
-    /// 16 - 16 - 18 - 20 - html class stage-block-title__text css var --ressort-header-font-size(sm-md-lg)
+    /// 16 - 16 - 18 - 20 - html class stage-block-title__text css var - -ressort-header-font-size(sm-md-lg)
     var title2fontSize: CGFloat { get }
     /// This variable is used on the font size parameter for the display1 text style. 40 - 40 - 72 - 120
     var display1fontSize: CGFloat { get }
@@ -95,7 +95,7 @@ public protocol SportbildSizingScheme: Sendable {
     var kicker4fontSize: CGFloat { get }
     /// This token controls the subheadline1 font size parameter. 24 - 24 - 32 - 36
     var subheadline1fontSize: CGFloat { get }
-    /// 16 - 16 - 18 - 20 -- This variable is used for controlling the font size of the quote text style.
+    /// 16 - 16 - 18 - 20 - - This variable is used for controlling the font size of the quote text style.
     var quoteFontSize: CGFloat { get }
     /// This variable references the bodyFontFamily variable from the branding collection.
     var bodyFontFamily: String { get }
@@ -136,7 +136,7 @@ public protocol SportbildSizingScheme: Sendable {
     var quoteFontWeight: CGFloat { get }
     var footnoteFontWeightBook: CGFloat { get }
     var footnoteFontWeightBold: CGFloat { get }
-    /// Figma's font line height currently does not allow for multipliers as is used on current website css var(--body-line-height)
+    /// Figma's font line height currently does not allow for multipliers as is used on current website css var(- -body-line-height)
     var bodyLineHeight: CGFloat { get }
     var kicker4lineHeight: CGFloat { get }
     var kicker3lineHeight: CGFloat { get }
@@ -150,7 +150,7 @@ public protocol SportbildSizingScheme: Sendable {
     var display2lineHeight: CGFloat { get }
     var display3lineHeight: CGFloat { get }
     var title1lineHeight: CGFloat { get }
-    /// html class stage-block-title__text css var --ressort-header-font-size(sm-md-lg)
+    /// html class stage-block-title__text css var - -ressort-header-font-size(sm-md-lg)
     var title2lineHeight: CGFloat { get }
     /// This variable is used in the quote text style line height parameter.
     var quoteLineHeight: CGFloat { get }

@@ -280,6 +280,24 @@ const nameTransformers = {
 };
 
 /**
+ * Sanitize comments for use in KDoc/Javadoc
+ * Removes or escapes patterns that could break comment parsing:
+ * - Slash-asterisk and asterisk-slash which can break nested comments
+ * - Other problematic sequences
+ */
+function sanitizeComment(comment) {
+  if (!comment) return comment;
+  return comment
+    // Replace /* and */ with safe alternatives
+    .replace(/\/\*/g, '/ *')
+    .replace(/\*\//g, '* /')
+    // Replace -- sequences that might confuse parsers
+    .replace(/--/g, '- -')
+    // Remove any control characters
+    .replace(/[\x00-\x1F\x7F]/g, '');
+}
+
+/**
  * Generates unique token names by using the minimum number of path segments needed
  * to avoid collisions. Starts with the last segment, adds previous segments as needed.
  *
@@ -875,7 +893,7 @@ const cssVariablesFormat = ({ dictionary, options, file }) => {
         const uniqueName = uniqueNames.get(token.path.join('.'));
         const comment = token.comment || token.description;
         if (comment && options.showDescriptions !== false) {
-          output += `  /**\n   * ${comment}\n   */\n`;
+          output += `  /**\n   * ${sanitizeComment(comment)}\n   */\n`;
         }
         // Use $value (transformed) or fallback to value (original)
         const finalValue = token.$value !== undefined ? token.$value : token.value;
@@ -930,7 +948,7 @@ const scssVariablesFormat = ({ dictionary, options, file }) => {
         const uniqueName = uniqueNames.get(token.path.join('.'));
         const comment = token.comment || token.description;
         if (comment && options.showDescriptions !== false) {
-          output += `// ${comment}\n`;
+          output += `// ${sanitizeComment(comment)}\n`;
         }
         output += `$${uniqueName}: ${token.$value !== undefined ? token.$value : token.value};\n`;
       });
@@ -982,7 +1000,7 @@ const javascriptEs6Format = ({ dictionary, options, file }) => {
         const uniqueName = uniqueNames.get(token.path.join('.'));
         const comment = token.comment || token.description;
         if (comment && options.showDescriptions !== false) {
-          output += `/** ${comment} */\n`;
+          output += `/** ${sanitizeComment(comment)} */\n`;
         }
         output += `export const ${uniqueName} = "${token.$value !== undefined ? token.$value : token.value}";\n`;
       });
@@ -1044,7 +1062,7 @@ const iosSwiftClassFormat = ({ dictionary, options, file }) => {
         const uniqueName = uniqueNames.get(token.path.join('.'));
         const comment = token.comment || token.description;
         if (comment) {
-          output += `    /** ${comment} */\n`;
+          output += `    /** ${sanitizeComment(comment)} */\n`;
         }
 
         let valueOutput;
@@ -1857,7 +1875,7 @@ const cssThemedVariablesFormat = ({ dictionary, options, file }) => {
         const uniqueName = uniqueNames.get(token.path.join('.'));
         const comment = token.comment || token.description;
         if (comment && options.showDescriptions !== false) {
-          output += `  /**\n   * ${comment}\n   */\n`;
+          output += `  /**\n   * ${sanitizeComment(comment)}\n   */\n`;
         }
         const finalValue = token.$value !== undefined ? token.$value : token.value;
         output += `  --${uniqueName}: ${finalValue};\n`;
@@ -1942,7 +1960,7 @@ const cssVariablesWithAliasFormat = ({ dictionary, options, file }) => {
         const uniqueName = uniqueNames.get(token.path.join('.'));
         const comment = token.comment || token.description;
         if (comment && options.showDescriptions !== false) {
-          output += `  /**\n   * ${comment}\n   */\n`;
+          output += `  /**\n   * ${sanitizeComment(comment)}\n   */\n`;
         }
 
         // Use $value (transformed) or fallback to value (original)
@@ -2059,7 +2077,7 @@ const cssThemedVariablesWithAliasFormat = ({ dictionary, options, file }) => {
         const uniqueName = uniqueNames.get(token.path.join('.'));
         const comment = token.comment || token.description;
         if (comment && options.showDescriptions !== false) {
-          output += `  /**\n   * ${comment}\n   */\n`;
+          output += `  /**\n   * ${sanitizeComment(comment)}\n   */\n`;
         }
 
         const finalValue = token.$value !== undefined ? token.$value : token.value;
@@ -2872,7 +2890,7 @@ public enum DesignTokenPrimitives {
       const comment = token.comment || token.description;
 
       if (comment && options.showDescriptions !== false) {
-        output += `        /// ${comment}\n`;
+        output += `        /// ${sanitizeComment(comment)}\n`;
       }
 
       let valueOutput;
@@ -2925,7 +2943,7 @@ public enum DesignTokenPrimitives {
       const comment = token.comment || token.description;
 
       if (comment && options.showDescriptions !== false) {
-        output += `        /// ${comment}\n`;
+        output += `        /// ${sanitizeComment(comment)}\n`;
       }
 
       // Opacity should be Double, not CGFloat
@@ -2985,7 +3003,7 @@ public protocol ${brandPascal}ColorScheme: Sendable {
       const name = uniqueNames.get(token.path.join('.')) || token.name;
       const comment = token.comment || token.description;
       if (comment && options.showDescriptions !== false) {
-        output += `    /// ${comment}\n`;
+        output += `    /// ${sanitizeComment(comment)}\n`;
       }
       output += `    var ${name}: Color { get }\n`;
     });
@@ -2995,7 +3013,7 @@ public protocol ${brandPascal}ColorScheme: Sendable {
       const name = uniqueNames.get(token.path.join('.')) || token.name;
       const comment = token.comment || token.description;
       if (comment && options.showDescriptions !== false) {
-        output += `    /// ${comment}\n`;
+        output += `    /// ${sanitizeComment(comment)}\n`;
       }
       output += `    var ${name}: Double { get }\n`;
     });
@@ -3106,7 +3124,7 @@ public protocol ${protocolName}: Sendable {
       const comment = token.comment || token.description;
       const typeInfo = getSwiftTypeInfo(token);
       if (comment && options.showDescriptions !== false) {
-        output += `    /// ${comment}\n`;
+        output += `    /// ${sanitizeComment(comment)}\n`;
       }
       output += `    var ${name}: ${typeInfo.swiftType} { get }\n`;
     });
@@ -3261,7 +3279,7 @@ public protocol ${brandPascal}EffectsScheme: Sendable {
       const name = token.name;
       const comment = token.comment || token.description;
       if (comment && options.showDescriptions !== false) {
-        output += `    /// ${comment}\n`;
+        output += `    /// ${sanitizeComment(comment)}\n`;
       }
       output += `    var ${name}: ShadowStyle { get }\n`;
     });
@@ -3681,17 +3699,20 @@ import com.bild.designsystem.shared.DesignColorScheme
 `;
 
   // Generate interface (only for Light mode to avoid duplication)
+  // Interface declares ALL color properties - same pattern as Sizing/Density schemes
+  // This enables build.js to extract properties for the unified DesignColorScheme interface
   if (mode.toLowerCase() === 'light') {
     output += `/**
  * Color scheme interface for ${brandPascal}
  * Extends DesignColorScheme for Dual-Axis theming compatibility
- * Allows type-safe access to colors and enables color scheme sharing across brands
+ * Provides type-safe access to all ${tokens.length} color tokens
  */
 @Stable
 interface ${brandPascal}ColorScheme : DesignColorScheme {
 `;
+    // Declare ALL color properties in the interface (consistent with Sizing/Density pattern)
     tokens.forEach(token => {
-      output += `    val ${token.name}: Color\n`;
+      output += `    override val ${token.name}: Color\n`;
     });
     output += `}
 
@@ -4163,7 +4184,7 @@ import com.bild.designsystem.shared.DesignTextCase
 interface ${brandPascal}TypographyScheme : DesignTypographyScheme {
 `;
     tokens.forEach(token => {
-      const comment = (token.comment && options.showDescriptions !== false) ? `    /** ${token.comment.split('\n')[0]} */\n` : '';
+      const comment = (token.comment && options.showDescriptions !== false) ? `    /** ${sanitizeComment(token.comment.split('\n')[0])} */\n` : '';
       output += `${comment}    override val ${token.name}: DesignTextStyle\n`;
     });
     output += `}
@@ -4377,7 +4398,7 @@ object ${className} : DesignEffectsScheme {
     const comment = token.comment || token.description;
 
     if (comment && options.showDescriptions !== false) {
-      output += `    /** ${comment} */\n`;
+      output += `    /** ${sanitizeComment(comment)} */\n`;
     }
 
     if (Array.isArray(value)) {
@@ -4456,7 +4477,7 @@ object ${className} {
     const comment = token.comment || token.description;
 
     if (comment && options.showDescriptions !== false) {
-      output += `    /** ${comment} */\n`;
+      output += `    /** ${sanitizeComment(comment)} */\n`;
     }
 
     if (Array.isArray(value)) {
