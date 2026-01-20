@@ -49,7 +49,7 @@ The token needs `read:packages` scope. Generate at: GitHub → Settings → Deve
 
 ## Usage
 
-### Theme Setup (Dual-Axis Architecture)
+### Theme Setup
 
 ```kotlin
 import com.bild.designsystem.shared.*
@@ -73,250 +73,67 @@ fun MyApp() {
 ```kotlin
 @Composable
 fun MyScreen() {
-    val colors = DesignSystemTheme.colors
-    val sizing = DesignSystemTheme.sizing
-
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .background(colors.bgColorPrimary)
-            .padding(sizing.gridSpaceRespBase)
+            .background(DesignSystemTheme.colors.bgColorPrimary)
+            .padding(DesignSystemTheme.sizing.gridSpaceRespBase)
     ) {
-        // Brand-colored headline
         Text(
-            text = "BILD",
-            color = colors.textColorBrand,
-            fontSize = 32.sp
+            text = "Hello",
+            color = DesignSystemTheme.colors.textColorPrimary
         )
-
-        // Primary text
-        Text(
-            text = "Hello World",
-            color = colors.textColorPrimary
-        )
-
-        // Secondary text
-        Text(
-            text = "Subtitle",
-            color = colors.textColorSecondary
-        )
-
-        // Button with brand color
-        Button(
-            onClick = { },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = colors.bgColorBrandSolid
-            )
-        ) {
-            Text("Click me")
-        }
     }
 }
 ```
 
-## Dual-Axis Architecture
+### Available Brands
 
-The design system uses a **Dual-Axis Architecture** that separates color and content concerns:
+| Axis | Options | Controls |
+|------|---------|----------|
+| **ColorBrand** | `Bild`, `Sportbild` | Colors, Effects |
+| **ContentBrand** | `Bild`, `Sportbild`, `Advertorial` | Sizing, Typography |
 
-| Axis | Controls | Options |
-|------|----------|---------|
-| **ColorBrand** | Colors, Effects | `Bild`, `Sportbild` |
-| **ContentBrand** | Sizing, Typography | `Bild`, `Sportbild`, `Advertorial` |
+### Size Classes (Material 3)
 
-This enables use cases like "Advertorial content with SportBILD colors":
+| Size Class | Width | Devices |
+|------------|-------|---------|
+| `Compact` | < 600dp | Phones |
+| `Medium` | 600-839dp | Foldables, small tablets |
+| `Expanded` | ≥ 840dp | Tablets, desktop |
 
-```kotlin
-DesignSystemTheme(
-    colorBrand = ColorBrand.Sportbild,      // Blue colors
-    contentBrand = ContentBrand.Advertorial  // Advertorial typography
-) {
-    AdvertorialContent()
-}
-```
+### Density Modes
 
-## Available Tokens
+| Mode | Use Case |
+|------|----------|
+| `Density.Default` | Standard UI |
+| `Density.Dense` | Data tables, lists |
+| `Density.Spacious` | Hero sections, marketing |
 
-### Colors (`DesignSystemTheme.colors`)
-
-```kotlin
-// Text Colors
-colors.textColorBrand          // Brand color (BILD Red / SportBILD Blue)
-colors.textColorPrimary        // Primary text
-colors.textColorSecondary      // Secondary text
-colors.textColorTertiary       // Tertiary text
-colors.textColorSuccess        // Success state
-colors.textColorError          // Error state
-colors.textColorWarning        // Warning state
-
-// Background Colors
-colors.bgColorPrimary          // Primary background
-colors.bgColorSecondary        // Secondary background
-colors.bgColorTertiary         // Tertiary background
-colors.bgColorBrandSolid       // Brand color as background
-colors.bgColorBrandTint        // Light tint of brand color
-colors.bgColorSuccessSolid     // Success background
-colors.bgColorSuccessTint      // Success tint
-colors.bgColorErrorSolid       // Error background
-colors.bgColorErrorTint        // Error tint
-
-// Border Colors
-colors.borderColorLowContrast
-colors.borderColorMediumContrast
-colors.borderColorHighContrast
-```
-
-### Sizing (`DesignSystemTheme.sizing`)
+## Token Categories
 
 ```kotlin
-// Grid Spacing (responsive)
-sizing.gridSpaceRespBase
-sizing.gridSpaceRespSm
-sizing.gridSpaceRespMd
-sizing.gridSpaceRespLg
+// Colors
+DesignSystemTheme.colors.textColorPrimary
+DesignSystemTheme.colors.bgColorPrimary
+DesignSystemTheme.colors.textColorBrand
 
-// Page Layout
-sizing.pageInlineSpace
-sizing.sectionSpaceBase
+// Sizing
+DesignSystemTheme.sizing.gridSpaceRespBase
+
+// Typography
+DesignSystemTheme.typography.headline1
+
+// Effects
+DesignSystemTheme.effects.shadowSoftMd
+
+// Density-Aware Spacing
+DesignSystemTheme.stackSpaceRespMd   // Responsive
+DesignSystemTheme.stackSpaceConstLg  // Constant
 ```
 
-### Density-Aware Spacing
+## Documentation
 
-Spacing that adapts to both WindowSizeClass and Density:
-
-```kotlin
-// Responsive (varies by WindowSizeClass AND Density)
-DesignSystemTheme.stackSpaceRespSm   // Small responsive space
-DesignSystemTheme.stackSpaceRespMd   // Medium responsive space
-DesignSystemTheme.stackSpaceRespLg   // Large responsive space
-DesignSystemTheme.stackSpaceRespXl   // Extra large responsive space
-
-// Constant (same across WindowSizeClasses, varies by Density)
-DesignSystemTheme.stackSpaceConstSm  // Small constant space
-DesignSystemTheme.stackSpaceConstMd  // Medium constant space
-DesignSystemTheme.stackSpaceConstLg  // Large constant space
-```
-
-### Typography (`DesignSystemTheme.typography`)
-
-```kotlin
-typography.display1            // Largest display text
-typography.display2
-typography.display3
-typography.headline1           // Headlines
-typography.headline2
-typography.headline3
-typography.headline4
-typography.subheadline1
-typography.body                // Body text
-typography.bodyBold
-typography.kicker1             // Kicker text
-typography.kicker2
-typography.label1              // Labels
-typography.label2
-```
-
-### Effects (`DesignSystemTheme.effects`)
-
-```kotlin
-effects.shadowSoftSm           // Small soft shadow
-effects.shadowSoftMd           // Medium soft shadow
-effects.shadowSoftLg           // Large soft shadow
-effects.shadowHardSm           // Small hard shadow
-effects.shadowHardMd           // Medium hard shadow
-effects.shadowHardLg           // Large hard shadow
-```
-
-## Component Tokens
-
-Component-specific tokens with automatic Light/Dark mode resolution:
-
-```kotlin
-// Button tokens
-val buttonColors = ButtonTokens.Colors.current()
-buttonColors.buttonPrimaryBgColorIdle
-buttonColors.buttonPrimaryBgColorHover
-buttonColors.buttonPrimaryLabelColor
-
-// Alert tokens
-val alertColors = AlertTokens.Colors.current()
-alertColors.alertBgColor
-alertColors.alertTextColor
-```
-
-## Window Size Classes (Material 3)
-
-| Size Class | Width | Devices | Figma Breakpoint |
-|------------|-------|---------|------------------|
-| `Compact` | < 600dp | Phones | xs, sm |
-| `Medium` | 600-839dp | Foldables, small tablets | md |
-| `Expanded` | ≥ 840dp | Tablets, desktop | lg |
-
-## Density Modes
-
-| Mode | Use Case | Effect |
-|------|----------|--------|
-| `Density.Default` | Standard UI | Normal spacing |
-| `Density.Dense` | Data tables, lists | Reduced spacing |
-| `Density.Spacious` | Hero sections, marketing | Increased spacing |
-
-## Complete Example
-
-```kotlin
-@Composable
-fun BildArticleCard(
-    title: String,
-    subtitle: String,
-    onReadMore: () -> Unit
-) {
-    val colors = DesignSystemTheme.colors
-    val sizing = DesignSystemTheme.sizing
-
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = colors.bgColorPrimary
-        )
-    ) {
-        Column(
-            modifier = Modifier.padding(sizing.gridSpaceRespBase),
-            verticalArrangement = Arrangement.spacedBy(
-                DesignSystemTheme.stackSpaceRespSm
-            )
-        ) {
-            // Kicker
-            Text(
-                text = "BREAKING",
-                color = colors.textColorBrand,
-                style = MaterialTheme.typography.labelSmall
-            )
-
-            // Title
-            Text(
-                text = title,
-                color = colors.textColorPrimary,
-                style = MaterialTheme.typography.headlineSmall
-            )
-
-            // Subtitle
-            Text(
-                text = subtitle,
-                color = colors.textColorSecondary,
-                style = MaterialTheme.typography.bodyMedium
-            )
-
-            // Button
-            Button(
-                onClick = onReadMore,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colors.bgColorBrandSolid
-                )
-            ) {
-                Text("Read More")
-            }
-        }
-    }
-}
-```
+For complete API documentation, see [USAGE.md](src/main/kotlin/com/bild/designsystem/USAGE.md).
 
 ## Requirements
 
@@ -330,7 +147,6 @@ fun BildArticleCard(
 |---------|----------|
 | "Could not resolve de.bild.design:tokens" | Check GitHub credentials in `gradle.properties` |
 | "Unresolved reference: DesignSystemTheme" | Run Gradle Sync, Rebuild Project |
-| Tokens not updating | File → Invalidate Caches → Restart |
 
 ## License
 
