@@ -393,6 +393,8 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: 'platforms;android-34 build-tools;34.0.0'
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -403,15 +405,26 @@ jobs:
           echo "📦 Publishing de.bild.design:tokens@${{ steps.version.outputs.new }} to GitHub Packages..."
           cd packages/tokens-android
 
-          # Run gradle publish and capture exit code
-          if gradle publish -PVERSION=${{ steps.version.outputs.new }} --info; then
+          # Debug: Show environment
+          echo "🔍 Debug: ANDROID_HOME=$ANDROID_HOME"
+          echo "🔍 Debug: ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
+          echo "🔍 Debug: Available SDK packages:"
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --list 2>/dev/null | head -20 || echo "Could not list SDK packages"
+
+          # Debug: Show gradle tasks
+          echo "🔍 Debug: Available gradle publish tasks:"
+          gradle tasks --group=publishing 2>/dev/null | grep -i publish || echo "No publish tasks found"
+
+          # Run gradle publish with stacktrace for better error messages
+          echo "🚀 Running: gradle publish -PVERSION=${{ steps.version.outputs.new }}"
+          if gradle publish -PVERSION=${{ steps.version.outputs.new }} --stacktrace; then
             echo "✅ Android tokens package published successfully!"
             echo "success=true" >> $GITHUB_OUTPUT
           else
             echo "❌ Android tokens package publishing failed!"
             echo "success=false" >> $GITHUB_OUTPUT
-            # Don't fail the entire workflow, but record the failure
-            echo "::warning::Android package publishing failed. Check logs for details."
+            echo "::error::Android package publishing failed. See logs above for details."
+            exit 1
           fi
         env:
           GITHUB_ACTOR: ${{ github.actor }}
