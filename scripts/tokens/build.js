@@ -422,13 +422,14 @@ function getSizeClassName(breakpoint, platform = 'ios') {
  *
  * @param {string} attrSelector - The attribute selector, e.g., [data-content-brand="bild"]
  * @param {string} [classSelector] - Optional class selector, e.g., .headline-1
+ * @param {string} [indent=''] - Indentation for the :host line (for @media blocks)
  * @returns {string} Combined selector for both contexts
  */
-function buildDualSelector(attrSelector, classSelector = '') {
+function buildDualSelector(attrSelector, classSelector = '', indent = '') {
   if (classSelector) {
-    return `${attrSelector} ${classSelector},\n:host(${attrSelector}) ${classSelector}`;
+    return `${attrSelector} ${classSelector},\n${indent}:host(${attrSelector}) ${classSelector}`;
   }
-  return `${attrSelector},\n:host(${attrSelector})`;
+  return `${attrSelector},\n${indent}:host(${attrSelector})`;
 }
 
 /**
@@ -2493,6 +2494,7 @@ async function generateResponsiveBreakpointFile(dir, brand, breakpointConfig) {
   // Uses dual selectors for Shadow DOM compatibility
   const attrSelector = `[data-content-brand="${brand}"]`;
   const dualSelector = buildDualSelector(attrSelector);
+  const dualSelectorIndented = buildDualSelector(attrSelector, '', '  '); // For @media blocks
 
   output += `${dualSelector} {\n`;
   if (baseVars && Object.keys(baseVars).length > 0) {
@@ -2514,7 +2516,7 @@ async function generateResponsiveBreakpointFile(dir, brand, breakpointConfig) {
 
       if (Object.keys(changedVars).length > 0) {
         output += `@media (min-width: ${breakpointConfig[bp]}) {\n`;
-        output += `  ${dualSelector} {\n`;
+        output += `  ${dualSelectorIndented} {\n`;
         for (const [varName, value] of Object.entries(changedVars)) {
           output += `    ${varName}: ${value};\n`;
         }
@@ -2591,6 +2593,7 @@ async function generateComponentBreakpointResponsive(dir, componentName, brand, 
   // Uses dual selectors for Shadow DOM compatibility
   const attrSelector = `[data-content-brand="${brand}"]`;
   const dualSelector = buildDualSelector(attrSelector);
+  const dualSelectorIndented = buildDualSelector(attrSelector, '', '  '); // For @media blocks
 
   // Base styles (XS)
   output += `${dualSelector} {\n`;
@@ -2613,7 +2616,7 @@ async function generateComponentBreakpointResponsive(dir, componentName, brand, 
 
       if (Object.keys(changedVars).length > 0) {
         output += `@media (min-width: ${breakpointConfig[bp]}) {\n`;
-        output += `  ${dualSelector} {\n`;
+        output += `  ${dualSelectorIndented} {\n`;
         for (const [varName, value] of Object.entries(changedVars)) {
           output += `    ${varName}: ${value};\n`;
         }

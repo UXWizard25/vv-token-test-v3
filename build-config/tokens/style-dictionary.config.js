@@ -172,6 +172,7 @@ function getBrandAttribute(modeType, filePath = '') {
  *
  * @param {string} attrSelector - The attribute selector, e.g., [data-color-brand="bild"]
  * @param {string} [classSelector] - Optional class selector, e.g., .headline-1
+ * @param {string} [indent=''] - Indentation for the :host line (for @media blocks)
  * @returns {string} Combined selector for both contexts
  *
  * @example
@@ -182,11 +183,11 @@ function getBrandAttribute(modeType, filePath = '') {
  * buildDualSelector('[data-content-brand="bild"]', '.headline-1')
  * // Returns: '[data-content-brand="bild"] .headline-1,\n:host([data-content-brand="bild"]) .headline-1'
  */
-function buildDualSelector(attrSelector, classSelector = '') {
+function buildDualSelector(attrSelector, classSelector = '', indent = '') {
   if (classSelector) {
-    return `${attrSelector} ${classSelector},\n:host(${attrSelector}) ${classSelector}`;
+    return `${attrSelector} ${classSelector},\n${indent}:host(${attrSelector}) ${classSelector}`;
   }
-  return `${attrSelector},\n:host(${attrSelector})`;
+  return `${attrSelector},\n${indent}:host(${attrSelector})`;
 }
 
 /**
