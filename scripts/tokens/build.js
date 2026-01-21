@@ -8809,28 +8809,21 @@ async function generateSCSSCombinedFiles() {
 
   // Generate _colors.scss (combines all brand color maps)
   let colorsOutput = generateSCSSFileHeader('_colors.scss', null, 'Combined color token maps');
-  colorsOutput += `// Combined color maps with theme support\n\n`;
+  colorsOutput += `// Forward all brand color maps\n`;
+  colorsOutput += `// Usage: @use 'colors' to get all color maps\n\n`;
 
-  // Forward all brand color maps
   COLOR_BRANDS.forEach(brand => {
     COLOR_MODES.forEach(mode => {
       colorsOutput += `@forward '${brand}-colors-${mode}';\n`;
     });
   });
 
-  colorsOutput += `\n// Theme maps for easy access\n`;
-  COLOR_BRANDS.forEach(brand => {
-    colorsOutput += `$${brand}-colors: (\n`;
-    colorsOutput += `  light: $${brand}-colors-light,\n`;
-    colorsOutput += `  dark: $${brand}-colors-dark,\n`;
-    colorsOutput += `);\n\n`;
-  });
-
   fs.writeFileSync(path.join(tokensDir, '_colors.scss'), colorsOutput);
 
   // Generate _typography.scss (combines all brand typography maps)
   let typographyOutput = generateSCSSFileHeader('_typography.scss', null, 'Combined typography maps');
-  typographyOutput += `// Combined typography maps\n\n`;
+  typographyOutput += `// Forward all brand typography maps\n`;
+  typographyOutput += `// Usage: @use 'typography' to get all typography maps\n\n`;
 
   BRANDS.forEach(brand => {
     typographyOutput += `@forward '${brand}-typography';\n`;
@@ -8840,7 +8833,8 @@ async function generateSCSSCombinedFiles() {
 
   // Generate _effects.scss (combines all brand effect maps)
   let effectsOutput = generateSCSSFileHeader('_effects.scss', null, 'Combined effect maps');
-  effectsOutput += `// Combined effect maps with theme support\n\n`;
+  effectsOutput += `// Forward all brand effect maps\n`;
+  effectsOutput += `// Usage: @use 'effects' to get all effect maps\n\n`;
 
   COLOR_BRANDS.forEach(brand => {
     COLOR_MODES.forEach(mode => {
@@ -8848,33 +8842,17 @@ async function generateSCSSCombinedFiles() {
     });
   });
 
-  effectsOutput += `\n// Theme maps for easy access\n`;
-  COLOR_BRANDS.forEach(brand => {
-    effectsOutput += `$${brand}-effects: (\n`;
-    effectsOutput += `  light: $${brand}-effects-light,\n`;
-    effectsOutput += `  dark: $${brand}-effects-dark,\n`;
-    effectsOutput += `);\n\n`;
-  });
-
   fs.writeFileSync(path.join(tokensDir, '_effects.scss'), effectsOutput);
 
   // Generate _spacing.scss (combines all brand spacing maps)
   let spacingOutput = generateSCSSFileHeader('_spacing.scss', null, 'Combined spacing maps');
-  spacingOutput += `// Combined spacing maps with density support\n\n`;
+  spacingOutput += `// Forward all brand spacing maps\n`;
+  spacingOutput += `// Usage: @use 'spacing' to get all spacing maps\n\n`;
 
   BRANDS.forEach(brand => {
     DENSITY_MODES.forEach(density => {
       spacingOutput += `@forward '${brand}-spacing-${density}';\n`;
     });
-  });
-
-  spacingOutput += `\n// Density maps for easy access\n`;
-  BRANDS.forEach(brand => {
-    spacingOutput += `$${brand}-spacing: (\n`;
-    DENSITY_MODES.forEach(density => {
-      spacingOutput += `  ${density}: $${brand}-spacing-${density},\n`;
-    });
-    spacingOutput += `);\n\n`;
   });
 
   fs.writeFileSync(path.join(tokensDir, '_spacing.scss'), spacingOutput);
@@ -8959,14 +8937,7 @@ async function generateSCSSMixinsAndFunctions() {
 
 @use 'sass:map';
 @use 'functions' as *;
-
-// Breakpoint configuration
-$breakpoints: (
-  xs: 320px,
-  sm: 390px,
-  md: 600px,
-  lg: 1024px,
-);
+@use 'abstracts/breakpoints' as bp;
 
 /// Breakpoint mixin for responsive styles
 /// @param {String} $name - Breakpoint name (xs, sm, md, lg)
@@ -8974,7 +8945,7 @@ $breakpoints: (
   @if $name == xs {
     @content;
   } @else {
-    $min-width: map.get($breakpoints, $name);
+    $min-width: map.get(bp.$breakpoints, $name);
     @media (min-width: $min-width) {
       @content;
     }
@@ -9208,7 +9179,20 @@ function flattenTokensForSCSS(obj, prefix = '') {
           // This is a token
           const tokenName = toCamelCase(path.length > 0 ? path[path.length - 1] + key.charAt(0).toUpperCase() + key.slice(1) : key);
           const kebabName = toKebabCase(tokenName);
-          const tokenValue = value.$value !== undefined ? value.$value : value.value;
+          let tokenValue = value.$value !== undefined ? value.$value : value.value;
+          const tokenType = value.$type || value.type;
+
+          // Add px unit for dimension types if value is a number
+          if (tokenType === 'dimension' && typeof tokenValue === 'number') {
+            tokenValue = `${tokenValue}px`;
+          } else if (!tokenType && typeof tokenValue === 'number' && !Number.isInteger(tokenValue * 100 / 100)) {
+            // Likely a dimension without explicit type - add px if it looks like a spacing value
+            tokenValue = `${tokenValue}px`;
+          } else if (!tokenType && typeof tokenValue === 'number' && kebabName.includes('space')) {
+            // Spacing tokens should have px units
+            tokenValue = `${tokenValue}px`;
+          }
+
           result.push({ name: kebabName, value: tokenValue });
         } else {
           // Recurse into nested object
