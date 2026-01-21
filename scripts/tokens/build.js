@@ -430,6 +430,39 @@ function buildDualSelector(attrSelector, classSelector = '') {
 }
 
 /**
+ * Checks if a token is internal/hidden and should be excluded from output.
+ * Internal tokens are identified by _, . or ! prefix in path segments (except the first).
+ *
+ * The first segment is excluded from checking because it represents the category
+ * (e.g., "Component", "Semantic", "BILD") which should never be filtered.
+ *
+ * Examples filtered:
+ * - Component/_DSysDoc/token      (internal documentation group)
+ * - Component/Button/_helper      (single hidden token)
+ * - Component/.DSDocsStyles/token (documentation styles)
+ * - Component/!experimental/token (experimental tokens)
+ *
+ * Examples kept:
+ * - Component/Button/buttonPrimaryBg  (normal token)
+ * - Spinner/videoSpinnerSize0_5x      (underscore in name, not prefix)
+ *
+ * @param {object} token - Style Dictionary token with path array
+ * @returns {boolean} - true if token is internal and should be filtered
+ */
+function isInternalToken(token) {
+  if (!token.path || token.path.length < 2) return false;
+
+  // Check all segments except the first (category)
+  for (let i = 1; i < token.path.length; i++) {
+    const segment = token.path[i];
+    if (segment.startsWith('_') || segment.startsWith('.') || segment.startsWith('!')) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
  * Creates platform configuration for standard tokens (Primitives, Brand-specific, etc.)
  * CSS version with data-attributes for runtime theme switching
  *
@@ -440,6 +473,10 @@ function buildDualSelector(attrSelector, classSelector = '') {
 function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
   // Filter to exclude documentation-only tokens and disabled token types
   const tokenFilter = (token) => {
+    // Exclude internal Figma tokens (prefixed with _, . or ! in path segments)
+    if (isInternalToken(token)) {
+      return false;
+    }
     // Exclude TextLabels tokens - these are documentation-only and cause name collisions
     if (token.path && token.path.includes('TextLabels')) {
       return false;
