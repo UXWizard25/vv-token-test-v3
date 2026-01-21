@@ -2793,16 +2793,20 @@ function createManifest(stats) {
           shared: 'css/shared/',
           brands: 'css/brands/{brand}/ (with data-attributes)'
         },
-        scss: {
-          shared: 'scss/shared/',
-          tokens: 'scss/tokens/',
-          abstracts: 'scss/abstracts/',
-          bundles: 'scss/bundles/'
-        },
-        js: {
-          shared: 'js/shared/',
-          brands: 'js/brands/{brand}/'
-        },
+        ...(SCSS_ENABLED ? {
+          scss: {
+            shared: 'scss/shared/',
+            tokens: 'scss/tokens/',
+            abstracts: 'scss/abstracts/',
+            bundles: 'scss/bundles/'
+          }
+        } : {}),
+        ...(JS_ENABLED ? {
+          js: {
+            shared: 'js/shared/',
+            brands: 'js/brands/{brand}/'
+          }
+        } : {}),
         json: {
           shared: 'json/shared/',
           brands: 'json/brands/{brand}/'
