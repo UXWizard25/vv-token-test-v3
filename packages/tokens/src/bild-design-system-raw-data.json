@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2026-01-22T12:44:38.070Z",
+  "lastModified": "2026-01-22T15:23:17.396Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -7748,7 +7748,7 @@
         },
         {
           "id": "VariableID:22365:36",
-          "name": "Semantic/Shadow/Soft/shadowColorSoftKeytXl",
+          "name": "Semantic/Shadow/Soft/shadowColorSoftKeyXl",
           "description": "",
           "resolvedType": "COLOR",
           "valuesByMode": {
@@ -33070,6 +33070,22 @@
             "color": {
               "type": "VARIABLE_ALIAS",
               "id": "VariableID:22365:39"
+            },
+            "spread": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:16056:163623"
+            },
+            "radius": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:4075:56"
+            },
+            "offsetX": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:16056:163623"
+            },
+            "offsetY": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:4075:53"
             }
           },
           "color": {
@@ -33313,7 +33329,7 @@
         {
           "type": "DROP_SHADOW",
           "visible": true,
-          "radius": 8,
+          "radius": 4,
           "boundVariables": {
             "color": {
               "type": "VARIABLE_ALIAS",
@@ -33325,7 +33341,7 @@
             },
             "radius": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:4075:53"
+              "id": "VariableID:4075:55"
             },
             "offsetX": {
               "type": "VARIABLE_ALIAS",
@@ -33353,7 +33369,7 @@
         {
           "type": "DROP_SHADOW",
           "visible": true,
-          "radius": 4,
+          "radius": 8,
           "boundVariables": {
             "color": {
               "type": "VARIABLE_ALIAS",
@@ -33365,7 +33381,7 @@
             },
             "radius": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:4075:55"
+              "id": "VariableID:4075:53"
             },
             "offsetX": {
               "type": "VARIABLE_ALIAS",
@@ -33421,7 +33437,7 @@
             },
             "offsetY": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:4075:54"
+              "id": "VariableID:4075:55"
             }
           },
           "color": {
@@ -33432,7 +33448,7 @@
           },
           "offset": {
             "x": 0,
-            "y": 2
+            "y": 4
           },
           "spread": 0,
           "blendMode": "NORMAL",
