@@ -505,7 +505,8 @@ const sizePxTransform = {
 
     // Only match if type is dimension-related AND value is numeric
     // Includes lineHeight and letterSpacing which also need px units in CSS
-    const isMatchingType = ['spacing', 'size', 'fontSize', 'dimension', 'lineHeight', 'letterSpacing'].includes(type);
+    // Note: fontSize is handled separately by fontSize/rem transform for CSS
+    const isMatchingType = ['spacing', 'size', 'dimension', 'lineHeight', 'letterSpacing'].includes(type);
     const isNumeric = typeof value === 'number';
 
     return isMatchingType && isNumeric;
@@ -544,6 +545,33 @@ const sizeRemTransform = {
       return `${rounded}rem`;
     }
     return value;
+  }
+};
+
+/**
+ * Transform: fontSize to rem (CSS only)
+ * Converts fontSize values from px to rem using 16px base
+ * Only applies to tokens with $type: "fontSize"
+ *
+ * This transform is separate from custom/size/px to allow:
+ * - fontSize: rem (for accessibility/scaling)
+ * - lineHeight, letterSpacing, dimension: px (for precision)
+ */
+const fontSizeRemTransform = {
+  name: 'fontSize/rem',
+  type: 'value',
+  filter: (token) => {
+    const type = token.$type || token.type;
+    const value = token.$value !== undefined ? token.$value : token.value;
+    return type === 'fontSize' && typeof value === 'number';
+  },
+  transform: (token) => {
+    const value = token.$value !== undefined ? token.$value : token.value;
+    // Convert px to rem (16px = 1rem)
+    const remValue = value / 16;
+    // Round to max 4 decimal places, remove trailing zeros
+    const rounded = roundValue(remValue);
+    return `${rounded}rem`;
   }
 };
 
@@ -1171,6 +1199,17 @@ const cssTypographyClassesFormat = ({ dictionary, options }) => {
           // Bundled references (semantic, density, component-breakpoint) don't need fallbacks
           const getValueWithAlias = (property, value, unit = '') => {
             const alias = aliases[property];
+
+            // Helper: Convert px value to rem when unit is 'rem'
+            const formatValue = (val, u) => {
+              if (u === 'rem' && typeof val === 'number') {
+                const remValue = val / 16;
+                const rounded = roundValue(remValue);
+                return `${rounded}rem`;
+              }
+              return u && typeof val === 'number' ? `${val}${u}` : val;
+            };
+
             if (alias?.token) {
               const varName = nameTransformers.kebab(alias.token);
               // Bundled collection types: no fallback needed (defined in same CSS file)
@@ -1178,10 +1217,10 @@ const cssTypographyClassesFormat = ({ dictionary, options }) => {
                 return `var(--${varName})`;
               }
               // Primitive references: include fallback
-              const formattedValue = unit && typeof value === 'number' ? `${value}${unit}` : value;
+              const formattedValue = formatValue(value, unit);
               return `var(--${varName}, ${formattedValue})`;
             }
-            return unit && typeof value === 'number' ? `${value}${unit}` : value;
+            return formatValue(value, unit);
           };
 
           // Use only the last path segment as class name, convert to kebab-case for CSS
@@ -1200,7 +1239,7 @@ const cssTypographyClassesFormat = ({ dictionary, options }) => {
           output += `${dualSelector} {\n`;
           if (style.fontFamily) output += `  font-family: ${getValueWithAlias('fontFamily', style.fontFamily)};\n`;
           if (style.fontWeight) output += `  font-weight: ${getValueWithAlias('fontWeight', style.fontWeight)};\n`;
-          if (style.fontSize) output += `  font-size: ${getValueWithAlias('fontSize', style.fontSize, 'px')};\n`;
+          if (style.fontSize) output += `  font-size: ${getValueWithAlias('fontSize', style.fontSize, 'rem')};\n`;
           if (style.lineHeight) output += `  line-height: ${getValueWithAlias('lineHeight', style.lineHeight, 'px')};\n`;
           if (style.letterSpacing) output += `  letter-spacing: ${getValueWithAlias('letterSpacing', style.letterSpacing, 'px')};\n`;
           if (style.fontStyle && style.fontStyle !== 'null') output += `  font-style: ${style.fontStyle.toLowerCase()};\n`;
@@ -2056,8 +2095,8 @@ const scssOptimizedComponentTokensFormat = ({ dictionary, options }) => {
  * AFTER all other transforms (color conversion, size conversion, etc.)
  */
 const customTransformGroups = {
-  'custom/css': ['name/custom/kebab', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
-  'custom/scss': ['name/custom/kebab', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/css': ['name/custom/kebab', 'color/css', 'custom/size/px', 'fontSize/rem', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/scss': ['name/custom/kebab', 'color/css', 'custom/size/px', 'fontSize/rem', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/js': ['name/custom/js', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/ios-swift': ['name/custom/ios-swift', 'custom/color/UIColor', 'custom/size/ios-points', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/compose': ['name/custom/compose', 'color/custom/compose', 'size/custom/compose', 'custom/opacity', 'custom/fontWeight', 'custom/number']
@@ -4899,6 +4938,7 @@ module.exports = {
     'custom/size/px': sizePxTransform,
     'custom/size/ios-points': sizeIosPointsTransform,
     'size/rem': sizeRemTransform,
+    'fontSize/rem': fontSizeRemTransform,
     'custom/opacity': opacityTransform,
     'custom/fontWeight': fontWeightTransform,
     'custom/number': numberTransform,
