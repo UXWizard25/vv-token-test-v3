@@ -118,6 +118,16 @@ public struct BildDarkColors: BildColorScheme, DesignColorScheme {
     public let iconColorPrimaryInverse: Color = Color(hex: 0x222628)
     public let iconColorSecondaryInverse: Color = Color(hex: 0x565A5F)
     public let iconColorInverseHighContrast: Color = Color(hex: 0x222628)
+    public let shadowColorSoftAmbientSm: Color = Color(hex: 0x000000, alpha: 0.15)
+    public let shadowColorSoftAmbientMd: Color = Color(hex: 0x000000, alpha: 0.10)
+    public let shadowColorSoftAmbientLg: Color = Color(hex: 0x000000, alpha: 0.10)
+    public let shadowColorSoftAmbientXl: Color = Color(hex: 0x000000, alpha: 0.15)
+    public let shadowColorSoftKeytXl: Color = Color(hex: 0x000000, alpha: 0.30)
+    public let shadowColorSoftKeySm: Color = Color(hex: 0x000000, alpha: 0.20)
+    public let shadowColorSoftKeyMd: Color = Color(hex: 0x000000, alpha: 0.20)
+    public let shadowColorSoftKeyLg: Color = Color(hex: 0x000000, alpha: 0.20)
+    public let shadowColorHardKey: Color = Color(hex: 0x000000, alpha: 0.60)
+    public let shadowColorHardAmbient: Color = Color(hex: 0x000000, alpha: 0.30)
     public let layerOpacity05: Double = 0.05
     public let layerOpacity10: Double = 0.1
     public let layerOpacity20: Double = 0.2

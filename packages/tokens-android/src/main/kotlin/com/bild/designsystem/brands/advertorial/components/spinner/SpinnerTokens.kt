@@ -58,23 +58,23 @@ object SpinnerTokens {
         interface SizingTokens {
             val videoSpinnerSize: Dp
             val videoSpinnerStrokeSize: Dp
-            val videoSpinnerSize05x: Dp
+            val videoSpinnerSize0p5x: Dp
         }
 
         object Compact : SizingTokens {
             override val videoSpinnerSize = 40.dp
             override val videoSpinnerStrokeSize = 2.dp
-            override val videoSpinnerSize05x = 20.dp
+            override val videoSpinnerSize0p5x = 20.dp
         }
         object Medium : SizingTokens {
             override val videoSpinnerSize = 80.dp
             override val videoSpinnerStrokeSize = 4.dp
-            override val videoSpinnerSize05x = 40.dp
+            override val videoSpinnerSize0p5x = 40.dp
         }
         object Expanded : SizingTokens {
             override val videoSpinnerSize = 80.dp
             override val videoSpinnerStrokeSize = 4.dp
-            override val videoSpinnerSize05x = 40.dp
+            override val videoSpinnerSize0p5x = 40.dp
         }
     }
 }

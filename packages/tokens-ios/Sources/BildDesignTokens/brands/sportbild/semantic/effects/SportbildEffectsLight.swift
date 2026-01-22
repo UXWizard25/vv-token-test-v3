@@ -37,32 +37,32 @@ public struct SportbildEffectsLight: SportbildEffectsScheme, DesignEffectsScheme
     private init() {}
 
     public let shadowSoftSm = ShadowStyle(shadows: [
-        DropShadow(color: Color(hex: 0x000000, alpha: 0.04), offsetX: 0, offsetY: 1, radius: 4, spread: 0),
-        DropShadow(color: Color(hex: 0x000000, alpha: 0.08), offsetX: 0, offsetY: 2, radius: 6, spread: 0)
+        DropShadow(color: Color(hex: 0x000000, alpha: 0.07), offsetX: 0, offsetY: 2, radius: 6, spread: 0),
+        DropShadow(color: Color(hex: 0x000000, alpha: 0.05), offsetX: 0, offsetY: 1, radius: 4, spread: 0)
     ])
     public let shadowSoftMd = ShadowStyle(shadows: [
-        DropShadow(color: Color(hex: 0x000000, alpha: 0.03), offsetX: 0, offsetY: 2, radius: 16, spread: 0),
-        DropShadow(color: Color(hex: 0x000000, alpha: 0.07), offsetX: 0, offsetY: 4, radius: 12, spread: 0)
+        DropShadow(color: Color(hex: 0x000000, alpha: 0.07), offsetX: 0, offsetY: 4, radius: 12, spread: 0),
+        DropShadow(color: Color(hex: 0x000000, alpha: 0.03), offsetX: 0, offsetY: 2, radius: 16, spread: 0)
     ])
     public let shadowSoftLg = ShadowStyle(shadows: [
-        DropShadow(color: Color(hex: 0x000000, alpha: 0.03), offsetX: 0, offsetY: 8, radius: 24, spread: 0),
-        DropShadow(color: Color(hex: 0x000000, alpha: 0.07), offsetX: 0, offsetY: 8, radius: 16, spread: 0)
+        DropShadow(color: Color(hex: 0x000000, alpha: 0.07), offsetX: 0, offsetY: 8, radius: 16, spread: 0),
+        DropShadow(color: Color(hex: 0x000000, alpha: 0.03), offsetX: 0, offsetY: 8, radius: 24, spread: 0)
     ])
     public let shadowSoftXl = ShadowStyle(shadows: [
-        DropShadow(color: Color(hex: 0x000000, alpha: 0.05), offsetX: 0, offsetY: 0, radius: 64, spread: 0),
-        DropShadow(color: Color(hex: 0x000000, alpha: 0.10), offsetX: 0, offsetY: 16, radius: 32, spread: 0)
+        DropShadow(color: Color(hex: 0x000000, alpha: 0.10), offsetX: 0, offsetY: 16, radius: 32, spread: 0),
+        DropShadow(color: Color(hex: 0x000000, alpha: 0.05), offsetX: 0, offsetY: 0, radius: 64, spread: 0)
     ])
     public let shadowHardSm = ShadowStyle(shadows: [
         DropShadow(color: Color(hex: 0x000000, alpha: 0.20), offsetX: 0, offsetY: 1, radius: 2, spread: 0),
-        DropShadow(color: Color(hex: 0x000000, alpha: 0.10), offsetX: 0, offsetY: 1, radius: 3, spread: 1)
+        DropShadow(color: Color(hex: 0x000000, alpha: 0.10), offsetX: 0, offsetY: 1, radius: 4, spread: 1)
     ])
     public let shadowHardMd = ShadowStyle(shadows: [
-        DropShadow(color: Color(hex: 0x000000, alpha: 0.10), offsetX: 0, offsetY: 4, radius: 8, spread: 0),
-        DropShadow(color: Color(hex: 0x000000, alpha: 0.16), offsetX: 0, offsetY: 2, radius: 4, spread: 0)
+        DropShadow(color: Color(hex: 0x000000, alpha: 0.20), offsetX: 0, offsetY: 2, radius: 8, spread: 0),
+        DropShadow(color: Color(hex: 0x000000, alpha: 0.10), offsetX: 0, offsetY: 2, radius: 4, spread: 0)
     ])
     public let shadowHardLg = ShadowStyle(shadows: [
-        DropShadow(color: Color(hex: 0x000000, alpha: 0.20), offsetX: 0, offsetY: 2, radius: 3, spread: 0),
-        DropShadow(color: Color(hex: 0x000000, alpha: 0.10), offsetX: 0, offsetY: 6, radius: 10, spread: 4)
+        DropShadow(color: Color(hex: 0x000000, alpha: 0.20), offsetX: 0, offsetY: 2, radius: 6, spread: 0),
+        DropShadow(color: Color(hex: 0x000000, alpha: 0.10), offsetX: 0, offsetY: 6, radius: 12, spread: 4)
     ])
     public let shadowHardXl = ShadowStyle(shadows: [
         DropShadow(color: Color(hex: 0x000000, alpha: 0.20), offsetX: 0, offsetY: 4, radius: 4, spread: 0),

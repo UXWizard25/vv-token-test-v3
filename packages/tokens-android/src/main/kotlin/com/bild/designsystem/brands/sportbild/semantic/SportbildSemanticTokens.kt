@@ -140,6 +140,16 @@ object SportbildSemanticTokens {
             val iconColorPrimaryInverse = Color(0xFFD6E1F2)
             val iconColorSecondaryInverse = Color(0xFF8FACDB)
             val iconColorInverseHighContrast = Color(0xFFFFFFFF)
+            val shadowColorSoftAmbientSm = Color(0x0D000000)
+            val shadowColorSoftAmbientMd = Color(0x08000000)
+            val shadowColorSoftAmbientLg = Color(0x08000000)
+            val shadowColorSoftAmbientXl = Color(0x0D000000)
+            val shadowColorSoftKeytXl = Color(0x1A000000)
+            val shadowColorSoftKeySm = Color(0x12000000)
+            val shadowColorSoftKeyMd = Color(0x12000000)
+            val shadowColorSoftKeyLg = Color(0x12000000)
+            val shadowColorHardKey = Color(0x33000000)
+            val shadowColorHardAmbient = Color(0x1A000000)
         }
         object Dark {
             val textColorBrand = Color(0xFF6A91CF)
@@ -244,6 +254,16 @@ object SportbildSemanticTokens {
             val iconColorPrimaryInverse = Color(0xFF222628)
             val iconColorSecondaryInverse = Color(0xFF565A5F)
             val iconColorInverseHighContrast = Color(0xFF222628)
+            val shadowColorSoftAmbientSm = Color(0x26000000)
+            val shadowColorSoftAmbientMd = Color(0x1A000000)
+            val shadowColorSoftAmbientLg = Color(0x1A000000)
+            val shadowColorSoftAmbientXl = Color(0x26000000)
+            val shadowColorSoftKeytXl = Color(0x4D000000)
+            val shadowColorSoftKeySm = Color(0x33000000)
+            val shadowColorSoftKeyMd = Color(0x33000000)
+            val shadowColorSoftKeyLg = Color(0x33000000)
+            val shadowColorHardKey = Color(0x99000000)
+            val shadowColorHardAmbient = Color(0x4D000000)
         }
     }
 

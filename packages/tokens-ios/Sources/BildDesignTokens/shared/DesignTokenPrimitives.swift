@@ -97,6 +97,9 @@ public enum DesignTokenPrimitives {
         public static let colorNeutral20a0: SwiftUI.Color = SwiftUI.Color(hex: 0x2C3133, alpha: 0.00)
         public static let colorNeutral25a0: SwiftUI.Color = SwiftUI.Color(hex: 0x343C41, alpha: 0.00)
         public static let colorNeutral90a0: SwiftUI.Color = SwiftUI.Color(hex: 0xDDE1E2, alpha: 0.00)
+        public static let colorNeutral0a3: SwiftUI.Color = SwiftUI.Color(hex: 0x000000, alpha: 0.03)
+        public static let colorNeutral0a7: SwiftUI.Color = SwiftUI.Color(hex: 0x000000, alpha: 0.07)
+        public static let colorNeutral0a15: SwiftUI.Color = SwiftUI.Color(hex: 0x000000, alpha: 0.15)
         public static let colorPartnerFitbook: SwiftUI.Color = SwiftUI.Color(hex: 0xFF97B7)
         public static let colorPartnerPetbook: SwiftUI.Color = SwiftUI.Color(hex: 0xB9DB91)
         public static let colorPartnerMyhome: SwiftUI.Color = SwiftUI.Color(hex: 0x66CCCC)
@@ -184,6 +187,28 @@ public enum DesignTokenPrimitives {
         public static let stFontWeightBlackItalic: SwiftUI.Font.Weight = .black
         public static let stFontWeightStBookItalic: SwiftUI.Font.Weight = .regular
         public static let stFontWeightLightItalicSt: SwiftUI.Font.Weight = .light
+        public static let fontSize1p25x: CGFloat = CGFloat(10)
+        public static let fontSize1p5x: CGFloat = CGFloat(12)
+        public static let fontSize1p75x: CGFloat = CGFloat(14)
+        public static let fontSize2x: CGFloat = CGFloat(16)
+        public static let fontSize2p25x: CGFloat = CGFloat(18)
+        public static let fontSize2p5x: CGFloat = CGFloat(20)
+        public static let fontSize2p75x: CGFloat = CGFloat(22)
+        public static let fontSize3x: CGFloat = CGFloat(24)
+        public static let fontSize3p5x: CGFloat = CGFloat(28)
+        public static let fontSize3p75x: CGFloat = CGFloat(30)
+        public static let fontSize4x: CGFloat = CGFloat(32)
+        public static let fontSize4p5x: CGFloat = CGFloat(36)
+        public static let fontSize5x: CGFloat = CGFloat(40)
+        public static let fontSize5p25x: CGFloat = CGFloat(42)
+        public static let fontSize6x: CGFloat = CGFloat(48)
+        public static let fontSize8x: CGFloat = CGFloat(64)
+        public static let fontSize9x: CGFloat = CGFloat(72)
+        public static let fontSize10x: CGFloat = CGFloat(80)
+        public static let fontSize12p5x: CGFloat = CGFloat(100)
+        public static let fontSize15x: CGFloat = CGFloat(120)
+        public static let fontSize2p625x: CGFloat = CGFloat(21)
+        public static let fontSize3p25x: CGFloat = CGFloat(26)
     }
 
     // MARK: - Size

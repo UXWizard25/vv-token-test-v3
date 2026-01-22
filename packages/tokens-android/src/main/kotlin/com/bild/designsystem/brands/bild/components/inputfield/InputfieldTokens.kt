@@ -98,53 +98,143 @@ object InputfieldTokens {
          * Interface for sizing tokens
          */
         interface SizingTokens {
-            val inputFieldStackSpace: Dp
-            val inputFieldInlineSpace: Dp
             val inputFieldMiniLabelInlineSpace: Dp
-            val inputFieldLabelFontSize: TextUnit
             val inputFieldImessageInlineSpace: Dp
-            val inputFieldHeightSize: Dp
             val heyInputContainerInlineSpace: Dp
             val inputFieldMessageGapSpace: Dp
             val inputFieldLabelFontFamily: String
-            val inputFieldLabelLineHeight: TextUnit
         }
 
         object Compact : SizingTokens {
-            override val inputFieldStackSpace = 6.dp
-            override val inputFieldInlineSpace = 16.dp
             override val inputFieldMiniLabelInlineSpace = 4.dp
-            override val inputFieldLabelFontSize = 16.sp
             override val inputFieldImessageInlineSpace = 16.dp
-            override val inputFieldHeightSize = 36.dp
             override val heyInputContainerInlineSpace = 8.dp
             override val inputFieldMessageGapSpace = 4.dp
             override val inputFieldLabelFontFamily = "Gotham XNarrow"
-            override val inputFieldLabelLineHeight = 16.sp
         }
         object Medium : SizingTokens {
-            override val inputFieldStackSpace = 6.dp
-            override val inputFieldInlineSpace = 16.dp
             override val inputFieldMiniLabelInlineSpace = 4.dp
-            override val inputFieldLabelFontSize = 16.sp
             override val inputFieldImessageInlineSpace = 16.dp
-            override val inputFieldHeightSize = 36.dp
             override val heyInputContainerInlineSpace = 8.dp
             override val inputFieldMessageGapSpace = 4.dp
             override val inputFieldLabelFontFamily = "Gotham XNarrow"
-            override val inputFieldLabelLineHeight = 16.sp
         }
         object Expanded : SizingTokens {
-            override val inputFieldStackSpace = 6.dp
-            override val inputFieldInlineSpace = 16.dp
             override val inputFieldMiniLabelInlineSpace = 4.dp
-            override val inputFieldLabelFontSize = 16.sp
             override val inputFieldImessageInlineSpace = 16.dp
-            override val inputFieldHeightSize = 36.dp
             override val heyInputContainerInlineSpace = 16.dp
             override val inputFieldMessageGapSpace = 4.dp
             override val inputFieldLabelFontFamily = "Gotham XNarrow"
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // DENSITY (WindowSizeClass × Density Matrix)
+    // ══════════════════════════════════════════════════════════════
+    object Density {
+        /**
+         * Returns density tokens resolved by WindowSizeClass × DensityMode.
+         * Values are pre-resolved from the Breakpoint × Density matrix at build-time.
+         *
+         * Usage:
+         *   val gap = InputfieldTokens.Density.current().inputFieldStackSpace
+         */
+        @Composable
+        fun current(): DensityTokens {
+            val sizeClass = DesignSystemTheme.sizeClass
+            val density = DesignSystemTheme.density
+            return when (sizeClass) {
+                WindowSizeClass.Compact -> when (density) {
+                    com.bild.designsystem.shared.Density.Dense -> CompactDense
+                    com.bild.designsystem.shared.Density.Default -> CompactDefault
+                    com.bild.designsystem.shared.Density.Spacious -> CompactSpacious
+                }
+                WindowSizeClass.Medium -> when (density) {
+                    com.bild.designsystem.shared.Density.Dense -> MediumDense
+                    com.bild.designsystem.shared.Density.Default -> MediumDefault
+                    com.bild.designsystem.shared.Density.Spacious -> MediumSpacious
+                }
+                WindowSizeClass.Expanded -> when (density) {
+                    com.bild.designsystem.shared.Density.Dense -> ExpandedDense
+                    com.bild.designsystem.shared.Density.Default -> ExpandedDefault
+                    com.bild.designsystem.shared.Density.Spacious -> ExpandedSpacious
+                }
+            }
+        }
+
+        /**
+         * Interface for density tokens (WindowSizeClass × Density resolved)
+         */
+        interface DensityTokens {
+            val inputFieldStackSpace: Dp
+            val inputFieldInlineSpace: Dp
+            val inputFieldLabelFontSize: TextUnit
+            val inputFieldHeightSize: Dp
+            val inputFieldLabelLineHeight: TextUnit
+        }
+
+        object CompactDense : DensityTokens {
+            override val inputFieldStackSpace = 6.dp
+            override val inputFieldInlineSpace = 16.dp
+            override val inputFieldLabelFontSize = 16.sp
+            override val inputFieldHeightSize = 36.dp
             override val inputFieldLabelLineHeight = 16.sp
+        }
+        object CompactDefault : DensityTokens {
+            override val inputFieldStackSpace = 8.dp
+            override val inputFieldInlineSpace = 16.dp
+            override val inputFieldLabelFontSize = 17.sp
+            override val inputFieldHeightSize = 40.dp
+            override val inputFieldLabelLineHeight = 17.sp
+        }
+        object CompactSpacious : DensityTokens {
+            override val inputFieldStackSpace = 12.dp
+            override val inputFieldInlineSpace = 16.dp
+            override val inputFieldLabelFontSize = 19.sp
+            override val inputFieldHeightSize = 48.dp
+            override val inputFieldLabelLineHeight = 19.sp
+        }
+        object MediumDense : DensityTokens {
+            override val inputFieldStackSpace = 6.dp
+            override val inputFieldInlineSpace = 16.dp
+            override val inputFieldLabelFontSize = 16.sp
+            override val inputFieldHeightSize = 36.dp
+            override val inputFieldLabelLineHeight = 16.sp
+        }
+        object MediumDefault : DensityTokens {
+            override val inputFieldStackSpace = 8.dp
+            override val inputFieldInlineSpace = 16.dp
+            override val inputFieldLabelFontSize = 17.sp
+            override val inputFieldHeightSize = 40.dp
+            override val inputFieldLabelLineHeight = 17.sp
+        }
+        object MediumSpacious : DensityTokens {
+            override val inputFieldStackSpace = 12.dp
+            override val inputFieldInlineSpace = 16.dp
+            override val inputFieldLabelFontSize = 19.sp
+            override val inputFieldHeightSize = 48.dp
+            override val inputFieldLabelLineHeight = 19.sp
+        }
+        object ExpandedDense : DensityTokens {
+            override val inputFieldStackSpace = 6.dp
+            override val inputFieldInlineSpace = 16.dp
+            override val inputFieldLabelFontSize = 16.sp
+            override val inputFieldHeightSize = 36.dp
+            override val inputFieldLabelLineHeight = 16.sp
+        }
+        object ExpandedDefault : DensityTokens {
+            override val inputFieldStackSpace = 8.dp
+            override val inputFieldInlineSpace = 16.dp
+            override val inputFieldLabelFontSize = 17.sp
+            override val inputFieldHeightSize = 40.dp
+            override val inputFieldLabelLineHeight = 17.sp
+        }
+        object ExpandedSpacious : DensityTokens {
+            override val inputFieldStackSpace = 12.dp
+            override val inputFieldInlineSpace = 16.dp
+            override val inputFieldLabelFontSize = 19.sp
+            override val inputFieldHeightSize = 48.dp
+            override val inputFieldLabelLineHeight = 19.sp
         }
     }
 

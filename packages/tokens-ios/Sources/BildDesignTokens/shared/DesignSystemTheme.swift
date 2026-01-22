@@ -120,6 +120,16 @@ public protocol DesignColorScheme: Sendable {
     var iconColorPrimaryInverse: Color { get }
     var iconColorSecondaryInverse: Color { get }
     var iconColorInverseHighContrast: Color { get }
+    var shadowColorSoftAmbientSm: Color { get }
+    var shadowColorSoftAmbientMd: Color { get }
+    var shadowColorSoftAmbientLg: Color { get }
+    var shadowColorSoftAmbientXl: Color { get }
+    var shadowColorSoftKeytXl: Color { get }
+    var shadowColorSoftKeySm: Color { get }
+    var shadowColorSoftKeyMd: Color { get }
+    var shadowColorSoftKeyLg: Color { get }
+    var shadowColorHardKey: Color { get }
+    var shadowColorHardAmbient: Color { get }
 }
 
 /// Unified sizing scheme protocol for all content brands

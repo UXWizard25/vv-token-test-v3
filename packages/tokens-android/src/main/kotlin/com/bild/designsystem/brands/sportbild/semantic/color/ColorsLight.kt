@@ -21,7 +21,7 @@ import com.bild.designsystem.shared.DesignColorScheme
 /**
  * Color scheme interface for Sportbild
  * Extends DesignColorScheme for Dual-Axis theming compatibility
- * Provides type-safe access to all 102 color tokens
+ * Provides type-safe access to all 112 color tokens
  */
 @Stable
 interface SportbildColorScheme : DesignColorScheme {
@@ -127,6 +127,16 @@ interface SportbildColorScheme : DesignColorScheme {
     override val iconColorPrimaryInverse: Color
     override val iconColorSecondaryInverse: Color
     override val iconColorInverseHighContrast: Color
+    override val shadowColorSoftAmbientSm: Color
+    override val shadowColorSoftAmbientMd: Color
+    override val shadowColorSoftAmbientLg: Color
+    override val shadowColorSoftAmbientXl: Color
+    override val shadowColorSoftKeytXl: Color
+    override val shadowColorSoftKeySm: Color
+    override val shadowColorSoftKeyMd: Color
+    override val shadowColorSoftKeyLg: Color
+    override val shadowColorHardKey: Color
+    override val shadowColorHardAmbient: Color
 }
 
 /**
@@ -236,4 +246,14 @@ object SportbildLightColors : SportbildColorScheme {
     override val iconColorPrimaryInverse = Color(0xFFD6E1F2)
     override val iconColorSecondaryInverse = Color(0xFF8FACDB)
     override val iconColorInverseHighContrast = Color(0xFFFFFFFF)
+    override val shadowColorSoftAmbientSm = Color(0x0D000000)
+    override val shadowColorSoftAmbientMd = Color(0x08000000)
+    override val shadowColorSoftAmbientLg = Color(0x08000000)
+    override val shadowColorSoftAmbientXl = Color(0x0D000000)
+    override val shadowColorSoftKeytXl = Color(0x1A000000)
+    override val shadowColorSoftKeySm = Color(0x12000000)
+    override val shadowColorSoftKeyMd = Color(0x12000000)
+    override val shadowColorSoftKeyLg = Color(0x12000000)
+    override val shadowColorHardKey = Color(0x33000000)
+    override val shadowColorHardAmbient = Color(0x1A000000)
 }

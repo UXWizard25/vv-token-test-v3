@@ -144,4 +144,14 @@ interface DesignColorScheme {
     val iconColorPrimaryInverse: Color
     val iconColorSecondaryInverse: Color
     val iconColorInverseHighContrast: Color
+    val shadowColorSoftAmbientSm: Color
+    val shadowColorSoftAmbientMd: Color
+    val shadowColorSoftAmbientLg: Color
+    val shadowColorSoftAmbientXl: Color
+    val shadowColorSoftKeytXl: Color
+    val shadowColorSoftKeySm: Color
+    val shadowColorSoftKeyMd: Color
+    val shadowColorSoftKeyLg: Color
+    val shadowColorHardKey: Color
+    val shadowColorHardAmbient: Color
 }

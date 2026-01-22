@@ -217,6 +217,16 @@ public protocol SportbildColorScheme: Sendable {
     var iconColorSecondaryInverse: Color { get }
     /// High contrast inverse icon for maximum visibility on inverted surfaces. Behavior: Inverted — swaps light and dark values.
     var iconColorInverseHighContrast: Color { get }
+    var shadowColorSoftAmbientSm: Color { get }
+    var shadowColorSoftAmbientMd: Color { get }
+    var shadowColorSoftAmbientLg: Color { get }
+    var shadowColorSoftAmbientXl: Color { get }
+    var shadowColorSoftKeytXl: Color { get }
+    var shadowColorSoftKeySm: Color { get }
+    var shadowColorSoftKeyMd: Color { get }
+    var shadowColorSoftKeyLg: Color { get }
+    var shadowColorHardKey: Color { get }
+    var shadowColorHardAmbient: Color { get }
     /// Layer opacity value at 5% for transparency effects (e.g., overlays, fade effects). Behavior: Static — same value in light and dark mode.
     var layerOpacity05: Double { get }
     /// Layer opacity value at 10% for transparency effects (e.g., overlays, fade effects). Behavior: Static — same value in light and dark mode.
@@ -350,6 +360,16 @@ public struct SportbildLightColors: SportbildColorScheme, DesignColorScheme {
     public let iconColorPrimaryInverse: Color = Color(hex: 0xD6E1F2)
     public let iconColorSecondaryInverse: Color = Color(hex: 0x8FACDB)
     public let iconColorInverseHighContrast: Color = Color(hex: 0xFFFFFF)
+    public let shadowColorSoftAmbientSm: Color = Color(hex: 0x000000, alpha: 0.05)
+    public let shadowColorSoftAmbientMd: Color = Color(hex: 0x000000, alpha: 0.03)
+    public let shadowColorSoftAmbientLg: Color = Color(hex: 0x000000, alpha: 0.03)
+    public let shadowColorSoftAmbientXl: Color = Color(hex: 0x000000, alpha: 0.05)
+    public let shadowColorSoftKeytXl: Color = Color(hex: 0x000000, alpha: 0.10)
+    public let shadowColorSoftKeySm: Color = Color(hex: 0x000000, alpha: 0.07)
+    public let shadowColorSoftKeyMd: Color = Color(hex: 0x000000, alpha: 0.07)
+    public let shadowColorSoftKeyLg: Color = Color(hex: 0x000000, alpha: 0.07)
+    public let shadowColorHardKey: Color = Color(hex: 0x000000, alpha: 0.20)
+    public let shadowColorHardAmbient: Color = Color(hex: 0x000000, alpha: 0.10)
     public let layerOpacity05: Double = 0.05
     public let layerOpacity10: Double = 0.1
     public let layerOpacity20: Double = 0.2

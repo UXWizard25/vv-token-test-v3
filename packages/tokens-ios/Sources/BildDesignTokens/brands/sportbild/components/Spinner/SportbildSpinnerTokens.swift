@@ -29,7 +29,7 @@ public enum SportbildSpinnerTokens {
     public protocol SportbildSpinnerSizingTokens: Sendable {
         var videoSpinnerSize: CGFloat { get }
         var videoSpinnerStrokeSize: CGFloat { get }
-        var videoSpinnerSize05x: CGFloat { get }
+        var videoSpinnerSize0p5x: CGFloat { get }
     }
 
     /// Size class accessor
@@ -47,7 +47,7 @@ public enum SportbildSpinnerTokens {
             private init() {}
             public let videoSpinnerSize: CGFloat = 40
             public let videoSpinnerStrokeSize: CGFloat = 2
-            public let videoSpinnerSize05x: CGFloat = 20
+            public let videoSpinnerSize0p5x: CGFloat = 20
         }
 
         public struct Regular: SportbildSpinnerSizingTokens {
@@ -55,7 +55,7 @@ public enum SportbildSpinnerTokens {
             private init() {}
             public let videoSpinnerSize: CGFloat = 80
             public let videoSpinnerStrokeSize: CGFloat = 4
-            public let videoSpinnerSize05x: CGFloat = 40
+            public let videoSpinnerSize0p5x: CGFloat = 40
         }
     }
 }
