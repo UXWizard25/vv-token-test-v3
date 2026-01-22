@@ -1981,71 +1981,126 @@ async function optimizeComponentEffectsCSS() {
   let skippedCount = 0;
 
   /**
-   * Parse effects CSS file and extract class rules
-   * Returns: Map<className, ruleContent>
+   * Parse effects CSS file and extract both custom properties and class rules
+   * Returns: { customProps: Map<varName, value>, classRules: Map<className, ruleContent> }
    *
-   * Handles Dual-Selector format with :host() for Shadow DOM compatibility:
-   * [data-color-brand="..."][data-theme="..."] .class-name,
-   * :host([data-color-brand="..."][data-theme="..."]) .class-name {
-   *   box-shadow: ...;
+   * Handles new format with CSS Custom Properties block + Classes using var():
+   *
+   * [data-color-brand="..."][data-theme="..."],
+   * :host([data-color-brand="..."][data-theme="..."]) {
+   *   --shadow-soft-sm: 0px 1px 4px ...;
+   *   --shadow-soft-md: 0px 2px 16px ...;
+   * }
+   *
+   * [data-color-brand="..."][data-theme="..."] .shadow-soft-sm,
+   * :host([data-color-brand="..."][data-theme="..."]) .shadow-soft-sm {
+   *   box-shadow: var(--shadow-soft-sm);
    * }
    */
   function parseEffectsCssFile(cssContent) {
-    const rules = new Map();
+    const customProps = new Map();
+    const classRules = new Map();
 
-    // Match: [data-color-brand="..."][data-theme="..."] .class-name followed by
-    // optional ",\n:host(...)" dual-selector part, then { content }
-    // The (?:,[\s\S]*?)? handles the optional :host() line (non-greedy)
-    const ruleRegex = /\[data-color-brand="[^"]+"\]\[data-theme="[^"]+"\]\s+\.([a-z0-9-]+)(?:,[\s\S]*?)?\s*\{([^}]+)\}/gi;
-    let match;
+    // 1. Parse Custom Properties Block
+    // Match selector block WITHOUT a class selector (contains custom properties)
+    // Pattern: [data-color-brand="..."][data-theme="..."], :host(...) { --var: value; ... }
+    const propsBlockRegex = /\[data-color-brand="[^"]+"\]\[data-theme="[^"]+"\](?:,\s*:host\([^)]+\))?\s*\{([^}]+)\}/g;
+    let propsMatch;
 
-    while ((match = ruleRegex.exec(cssContent)) !== null) {
-      const className = match[1];
-      const ruleContent = match[2].trim();
-      rules.set(className, ruleContent);
+    while ((propsMatch = propsBlockRegex.exec(cssContent)) !== null) {
+      const blockContent = propsMatch[1];
+      // Check if this block contains custom properties (--) and NOT box-shadow directly
+      // Custom props blocks have multiple --var: value; lines
+      if (blockContent.includes('--') && !blockContent.trim().startsWith('box-shadow')) {
+        // Extract individual custom properties
+        const propRegex = /--([\w-]+):\s*([^;]+);/g;
+        let propMatch;
+        while ((propMatch = propRegex.exec(blockContent)) !== null) {
+          const varName = propMatch[1];
+          const value = propMatch[2].trim();
+          customProps.set(varName, value);
+        }
+      }
     }
 
-    return rules;
+    // 2. Parse Class Rules
+    // Match: [data-color-brand="..."][data-theme="..."] .class-name followed by
+    // optional ",\n:host(...)" dual-selector part, then { content }
+    const ruleRegex = /\[data-color-brand="[^"]+"\]\[data-theme="[^"]+"\]\s+\.([a-z0-9-]+)(?:,[\s\S]*?)?\s*\{([^}]+)\}/gi;
+    let ruleMatch;
+
+    while ((ruleMatch = ruleRegex.exec(cssContent)) !== null) {
+      const className = ruleMatch[1];
+      const ruleContent = ruleMatch[2].trim();
+      classRules.set(className, ruleContent);
+    }
+
+    return { customProps, classRules };
   }
 
   /**
-   * Check if all rules are identical between light and dark
+   * Helper: Compare two Maps for equality
    */
-  function areEffectsIdentical(lightRules, darkRules) {
-    // Guard: Empty maps should not be considered "identical"
+  function mapsAreEqual(map1, map2) {
+    if (map1.size !== map2.size) return false;
+    for (const [key, value] of map1) {
+      if (map2.get(key) !== value) return false;
+    }
+    return true;
+  }
+
+  /**
+   * Check if all custom properties AND class rules are identical between light and dark
+   */
+  function areEffectsIdentical(lightParsed, darkParsed) {
+    // Guard: Empty results should not be considered "identical"
     // This prevents silent failures when parsing fails
-    if (lightRules.size === 0 && darkRules.size === 0) {
+    const lightTotal = lightParsed.customProps.size + lightParsed.classRules.size;
+    const darkTotal = darkParsed.customProps.size + darkParsed.classRules.size;
+
+    if (lightTotal === 0 && darkTotal === 0) {
       return false;
     }
 
-    if (lightRules.size !== darkRules.size) {
+    // Compare custom properties
+    if (!mapsAreEqual(lightParsed.customProps, darkParsed.customProps)) {
       return false;
     }
 
-    for (const [className, lightContent] of lightRules) {
-      const darkContent = darkRules.get(className);
-      if (!darkContent || lightContent !== darkContent) {
-        return false;
-      }
+    // Compare class rules
+    if (!mapsAreEqual(lightParsed.classRules, darkParsed.classRules)) {
+      return false;
     }
 
     return true;
   }
 
   /**
-   * Generate mode-agnostic effects CSS
+   * Generate mode-agnostic effects CSS with custom properties and classes
    * Uses dual selectors for Shadow DOM compatibility
    */
-  function generateModeAgnosticCss(header, brand, rules) {
+  function generateModeAgnosticCss(header, brand, parsed) {
     const updatedHeader = header.replace(
       /Context: Mode: \w+/,
       'Context: Effects (Mode-agnostic)'
     );
 
     let output = updatedHeader + '\n\n';
+    const baseSelector = `[data-color-brand="${brand}"]`;
 
-    for (const [className, ruleContent] of rules) {
-      const dualSelector = buildDualSelector(`[data-color-brand="${brand}"]`, `.${className}`);
+    // 1. Custom Properties Block (if any)
+    if (parsed.customProps.size > 0) {
+      const dualSelectorProps = buildDualSelector(baseSelector, '');
+      output += `${dualSelectorProps} {\n`;
+      for (const [varName, value] of parsed.customProps) {
+        output += `  --${varName}: ${value};\n`;
+      }
+      output += `}\n\n`;
+    }
+
+    // 2. Class Rules
+    for (const [className, ruleContent] of parsed.classRules) {
+      const dualSelector = buildDualSelector(baseSelector, `.${className}`);
       output += `${dualSelector} {\n`;
       output += `  ${ruleContent}\n`;
       output += `}\n\n`;
@@ -2082,12 +2137,12 @@ async function optimizeComponentEffectsCSS() {
         const lightCss = fs.readFileSync(lightFile, 'utf8');
         const darkCss = fs.readFileSync(darkFile, 'utf8');
 
-        // Parse rules
-        const lightRules = parseEffectsCssFile(lightCss);
-        const darkRules = parseEffectsCssFile(darkCss);
+        // Parse both custom properties and class rules
+        const lightParsed = parseEffectsCssFile(lightCss);
+        const darkParsed = parseEffectsCssFile(darkCss);
 
-        // Check if identical
-        if (!areEffectsIdentical(lightRules, darkRules)) {
+        // Check if identical (both custom props and class rules)
+        if (!areEffectsIdentical(lightParsed, darkParsed)) {
           skippedCount++;
           continue;
         }
@@ -2096,8 +2151,8 @@ async function optimizeComponentEffectsCSS() {
         const headerMatch = lightCss.match(/^\/\*\*[\s\S]*?\*\//);
         const header = headerMatch ? headerMatch[0] : '';
 
-        // Generate optimized CSS
-        const optimizedCss = generateModeAgnosticCss(header, brand, lightRules);
+        // Generate optimized CSS with both custom properties and classes
+        const optimizedCss = generateModeAgnosticCss(header, brand, lightParsed);
 
         // Write optimized file
         fs.writeFileSync(optimizedFile, optimizedCss);

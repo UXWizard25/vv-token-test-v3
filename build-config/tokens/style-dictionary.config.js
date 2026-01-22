@@ -1237,11 +1237,75 @@ const cssEffectClassesFormat = ({ dictionary, options }) => {
   const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
 
   // Build data-attribute selector for Dual-Axis Architecture (ColorBrand + theme)
-  // Uses dual selector for Shadow DOM compatibility (applied per class below)
+  // Uses dual selector for Shadow DOM compatibility
   const brandLowercase = brand.toLowerCase();
   const brandAttr = getBrandAttribute('theme'); // Effects use ColorBrand axis
   const attrSelector = `[${brandAttr}="${brandLowercase}"][data-theme="${colorMode}"]`;
 
+  // Helper: Convert shadow token to CSS box-shadow value string
+  const formatShadowValue = (token) => {
+    const aliases = token.$aliases || [];
+    return token.$value.map((effect, index) => {
+      if (effect.type === 'dropShadow') {
+        const aliasEntry = aliases.find(a => a.index === index);
+        let colorValue = effect.color;
+        if (aliasEntry?.color?.token) {
+          const varName = nameTransformers.kebab(aliasEntry.color.token);
+          colorValue = `var(--${varName}, ${effect.color})`;
+        }
+        return `${effect.offsetX}px ${effect.offsetY}px ${effect.radius}px ${effect.spread}px ${colorValue}`;
+      }
+      return null;
+    }).filter(Boolean).join(', ');
+  };
+
+  // Helper: Get kebab-case token name for CSS
+  const getTokenName = (token) => {
+    let name = nameTransformers.kebab(token.path[token.path.length - 1]);
+    if (name.startsWith('.')) name = name.substring(1);
+    return name;
+  };
+
+  // ========================================================================
+  // SECTION 1: CSS CUSTOM PROPERTIES
+  // All shadow tokens as CSS custom properties in one selector block
+  // ========================================================================
+  output += `/* ============================================\n`;
+  output += `   CSS CUSTOM PROPERTIES\n`;
+  output += `   ============================================ */\n\n`;
+
+  const dualSelectorProps = buildDualSelector(attrSelector, '');
+  output += `${dualSelectorProps} {\n`;
+
+  // Iterate through all groups to output custom properties with comments
+  Object.keys(hierarchicalGroups).forEach(topLevel => {
+    const subGroups = hierarchicalGroups[topLevel];
+    output += `  /* ${topLevel} */\n`;
+
+    Object.keys(subGroups).forEach(subLevel => {
+      const tokens = subGroups[subLevel];
+      if (subLevel) {
+        output += `  /* ${topLevel} - ${subLevel} */\n`;
+      }
+
+      tokens.forEach(token => {
+        if (token.$type === 'shadow' && Array.isArray(token.$value)) {
+          const tokenName = getTokenName(token);
+          const shadowValue = formatShadowValue(token);
+          if (shadowValue) {
+            output += `  --${tokenName}: ${shadowValue};\n`;
+          }
+        }
+      });
+    });
+  });
+
+  output += `}\n\n`;
+
+  // ========================================================================
+  // SECTION 2: CSS CLASSES (using var() references)
+  // Convenience classes that reference the custom properties
+  // ========================================================================
   let isFirstTopLevel = true;
   Object.keys(hierarchicalGroups).forEach(topLevel => {
     const subGroups = hierarchicalGroups[topLevel];
@@ -1251,7 +1315,7 @@ const cssEffectClassesFormat = ({ dictionary, options }) => {
       output += `\n`;
     }
     output += `/* ============================================\n`;
-    output += `   ${topLevel.toUpperCase()}\n`;
+    output += `   ${topLevel.toUpperCase()} (Classes)\n`;
     output += `   ============================================ */\n\n`;
     isFirstTopLevel = false;
 
@@ -1265,44 +1329,16 @@ const cssEffectClassesFormat = ({ dictionary, options }) => {
 
       tokens.forEach(token => {
         if (token.$type === 'shadow' && Array.isArray(token.$value)) {
-          const aliases = token.$aliases || [];
-
-          // Use only the last path segment as class name, convert to kebab-case for CSS
-          let className = nameTransformers.kebab(token.path[token.path.length - 1]);
-          // Remove leading dot if present (token names may already include it)
-          if (className.startsWith('.')) {
-            className = className.substring(1);
-          }
+          const tokenName = getTokenName(token);
 
           if (token.comment && options.showDescriptions !== false) {
             output += `/* ${token.comment} */\n`;
           }
 
           // Wrap class selector with dual selector for Shadow DOM compatibility
-          const dualSelector = buildDualSelector(attrSelector, `.${className}`);
+          const dualSelector = buildDualSelector(attrSelector, `.${tokenName}`);
           output += `${dualSelector} {\n`;
-
-          // Convert to CSS box-shadow with var() references for colors
-          const shadows = token.$value.map((effect, index) => {
-            if (effect.type === 'dropShadow') {
-              // Check if there's an alias for this effect's color
-              const aliasEntry = aliases.find(a => a.index === index);
-              let colorValue = effect.color;
-
-              if (aliasEntry?.color?.token) {
-                const varName = nameTransformers.kebab(aliasEntry.color.token);
-                colorValue = `var(--${varName}, ${effect.color})`;
-              }
-
-              return `${effect.offsetX}px ${effect.offsetY}px ${effect.radius}px ${effect.spread}px ${colorValue}`;
-            }
-            return null;
-          }).filter(Boolean);
-
-          if (shadows.length > 0) {
-            output += `  box-shadow: ${shadows.join(', ')};\n`;
-          }
-
+          output += `  box-shadow: var(--${tokenName});\n`;
           output += `}\n\n`;
         }
       });
