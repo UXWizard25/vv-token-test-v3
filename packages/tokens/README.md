@@ -85,13 +85,20 @@ Tokens use `var()` references to maintain the alias chain from Figma:
 --density-xs-stack-space-resp-md: var(--space-1-p-5-x, 12px);
                                        ↓
 --space-1-p-5-x: 12px;
+
+/* Shadow Effects: Mode-agnostic with var() for all properties */
+[data-color-brand="bild"] .shadow-soft-sm {
+  box-shadow: var(--size-0-x, 0px) var(--size-0-p-25-x, 2px) ... var(--shadow-color-soft-key-sm);
+}
+/* Colors are theme-aware, dimensions are constant */
 ```
 
 This enables:
 - **Theme switching** without recompiling (change primitives = change all)
 - **Brand switching** via data attributes
 - **Density switching** via `data-density` attribute (default/dense/spacious)
-- **Fallback values** for robustness
+- **Mode-agnostic shadows** with theme-aware colors via var()
+- **Conditional fallbacks** (primitives get fallbacks, semantics don't)
 
 ### Pipeline Flow
 

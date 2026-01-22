@@ -657,6 +657,79 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 
 ---
 
+## Shadow Effects CSS Architecture
+
+Shadow effects use a **mode-agnostic CSS architecture** with full `var()` support for all shadow properties.
+
+### How It Works
+
+Shadow tokens output CSS Custom Properties for **all** shadow properties (color, offsetX, offsetY, radius, spread), enabling runtime theming:
+
+```css
+/* Semantic shadow color tokens (theme-aware) */
+[data-color-brand="bild"][data-theme="light"] {
+  --shadow-color-soft-key-sm: var(--color-neutral-0-a-7);
+  --shadow-color-soft-ambient-sm: var(--color-neutral-0-a-10);
+}
+
+[data-color-brand="bild"][data-theme="dark"] {
+  --shadow-color-soft-key-sm: var(--color-neutral-0-a-20);
+  --shadow-color-soft-ambient-sm: var(--color-neutral-0-a-30);
+}
+
+/* Mode-agnostic shadow effect (references semantic colors) */
+[data-color-brand="bild"] .shadow-soft-sm {
+  box-shadow:
+    var(--size-0-x, 0px) var(--size-0-p-25-x, 2px) var(--size-0-p-5-x, 4px) var(--size-0-x, 0px) var(--shadow-color-soft-key-sm),
+    var(--size-0-x, 0px) var(--size-0-p-125-x, 1px) var(--size-0-p-375-x, 3px) var(--size-0-p-125-x, 1px) var(--shadow-color-soft-ambient-sm);
+}
+```
+
+### Why Mode-Agnostic?
+
+The shadow structure (offsetX, offsetY, blur, spread) is **identical** between light and dark modes - only the **color** changes. By separating:
+
+1. **Semantic shadow colors** → Theme-aware (`[data-theme="light"]` / `[data-theme="dark"]`)
+2. **Shadow effects** → Mode-agnostic (`[data-color-brand]` only)
+
+We achieve:
+- **Smaller CSS output** (no duplicate shadow definitions)
+- **Runtime theming** via CSS Custom Properties
+- **Consistent structure** across all themes
+
+### Fallback Strategy
+
+The pipeline uses a **conditional fallback strategy** based on token type:
+
+| Reference Type | Fallback? | Rationale |
+|----------------|-----------|-----------|
+| **Primitive → Primitive** | ✅ Yes | Protects against missing `primitives.css` in split-loading |
+| **Semantic → Primitive** | ✅ Yes | Same reason - split-loading safety |
+| **Component → Semantic** | ❌ No | Missing `data-theme` should fail visibly, not silently degrade |
+| **Effects Color → Semantic** | ❌ No | Same reason - config errors should be visible |
+| **Effects Dimension → Primitive** | ✅ Yes | Split-loading safety |
+
+```css
+/* With fallback (primitive reference) */
+--shadow-color-soft-key-sm: var(--color-neutral-0-a-7, rgba(0,0,0,0.07));
+
+/* Without fallback (semantic reference - fail visible) */
+--button-primary-bg: var(--bg-color-brand-solid);
+```
+
+**Philosophy:** File-loading errors (missing `primitives.css`) get fallbacks for degraded-but-functional rendering. Configuration errors (missing `data-theme`) fail visibly so developers notice immediately.
+
+### Implementation Files
+
+| File | Function | Purpose |
+|------|----------|---------|
+| `preprocess.js` | `boundVariables` extraction | Captures all shadow property aliases |
+| `style-dictionary.config.js` | `formatShadowValue()` | Generates `var()` with conditional fallbacks |
+| `build.js` | `optimizeSemanticEffectsCSS()` | Consolidates identical light/dark effects |
+| `bundles.js` | `buildBrandTheme()` | Handles consolidated `effects.css` files |
+
+---
+
 ## Icon Pipeline
 
 The design system includes a **multi-platform icon pipeline** that generates optimized icons for SVG, React, Android, and iOS from a single source.
@@ -1198,7 +1271,7 @@ Advertorial has spacing and typography tokens but **no color tokens** (uses BILD
 |----------|-----------|
 | **Layer 0-3 numbering** | Matches Figma structure: Primitives (0) → Mapping (1) → Semantic (2) → Components (3) |
 | **@media over data-breakpoint** | Native browser support, no JS required, SSR-compatible |
-| **var() with fallbacks** | Robustness if variables missing, easier debugging |
+| **var() with conditional fallbacks** | Primitive refs get fallbacks (split-loading safety), semantic refs don't (fail visible for config errors) |
 | **Separate mode files** | Lazy loading, better caching, easier debugging |
 | **Dual-Axis architecture** | Enables Advertorial + brand colors combination (all platforms: CSS, iOS, Android, JS) |
 | **Unified interfaces** | Polymorphic access, type-safety, runtime brand switching |
@@ -1208,7 +1281,7 @@ Advertorial has spacing and typography tokens but **no color tokens** (uses BILD
 | **JS React ThemeProvider** | Consistent pattern across platforms, Dual-Axis support |
 | **CSS token-level split** | Mode-agnostic tokens separate from light/dark-specific for smaller bundle size |
 | **CSS cascade optimization** | Only output @media when value changes from previous breakpoint |
-| **CSS effects consolidation** | Identical light/dark shadows merged into single mode-agnostic output |
+| **CSS effects consolidation** | Mode-agnostic shadows with full var() support - color varies by theme, structure stays constant |
 | **CSS Dual-Axis selectors** | `data-color-brand` for colors/effects, `data-content-brand` for typography/sizing |
 | **Format-agnostic naming** | Transformers normalize any input format (camelCase, kebab-case, snake_case) to consistent output |
 | **SCSS Token Maps** | Flat maps per mode (`$colors-light`, `$colors-dark`) instead of per-file variables - single import, better DX |

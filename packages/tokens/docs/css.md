@@ -520,26 +520,44 @@ Usage:
 <span class="button-label">Click Me</span>
 ```
 
-### Effect Classes
+### Effect Classes (Mode-Agnostic with var() Support)
 
-Shadows are output as CSS classes under **ColorBrand**:
+Shadow effects use a **mode-agnostic architecture** where the shadow structure is constant but colors adapt to the theme via CSS Custom Properties:
 
 ```css
-/* Semantic effects */
-[data-color-brand="bild"][data-theme="light"] .shadow-soft-md {
-  box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.03), ...;
+/* Step 1: Semantic shadow colors (theme-aware) */
+[data-color-brand="bild"][data-theme="light"] {
+  --shadow-color-soft-key-sm: var(--color-neutral-0-a-7, rgba(0,0,0,0.07));
+  --shadow-color-soft-ambient-sm: var(--color-neutral-0-a-10, rgba(0,0,0,0.1));
 }
 
-/* Component effects */
-[data-color-brand="bild"] .alert-shadow-down {
-  box-shadow: 0px 6px 10px 0px var(--alpha-black-20, rgba(0, 0, 0, 0.2));
+[data-color-brand="bild"][data-theme="dark"] {
+  --shadow-color-soft-key-sm: var(--color-neutral-0-a-20, rgba(0,0,0,0.2));
+  --shadow-color-soft-ambient-sm: var(--color-neutral-0-a-30, rgba(0,0,0,0.3));
+}
+
+/* Step 2: Mode-agnostic shadow effect (no [data-theme] needed!) */
+[data-color-brand="bild"] .shadow-soft-sm {
+  box-shadow:
+    var(--size-0-x, 0px) var(--size-0-p-25-x, 2px) var(--size-0-p-5-x, 4px) var(--size-0-x, 0px) var(--shadow-color-soft-key-sm),
+    var(--size-0-x, 0px) var(--size-0-p-125-x, 1px) var(--size-0-p-375-x, 3px) var(--size-0-p-125-x, 1px) var(--shadow-color-soft-ambient-sm);
 }
 ```
+
+**Why this architecture?**
+- Shadow **dimensions** (offset, blur, spread) are identical between light/dark modes
+- Only **colors** change per theme
+- Results in **smaller CSS** (no duplicate shadow definitions)
+- Full **var() support** enables runtime theming
+
+**Fallback Strategy:**
+- Dimension properties (`--size-*`) get fallbacks (primitive references)
+- Color properties (`--shadow-color-*`) don't get fallbacks (semantic references should fail visibly if theme not set)
 
 Usage:
 ```html
 <div class="shadow-soft-md">Elevated card</div>
-<div class="alert-shadow-down">Alert with shadow</div>
+<div class="shadow-hard-lg">Strong shadow</div>
 ```
 
 ---
@@ -889,12 +907,24 @@ CSS Custom Properties are supported in all modern browsers:
 - Safari 9.1+
 - Edge 15+
 
-For legacy browser support, fallback values are included:
+### Conditional Fallback Strategy
+
+Fallback values are included **conditionally** based on reference type:
 
 ```css
+/* ✅ WITH fallback: Primitive references (split-loading safety) */
 --text-color-primary: var(--color-neutral-15, #232629);
-/*                                            ↑ fallback value */
+--grid-space-resp-base: var(--space-1-p-5-x, 12px);
+
+/* ❌ WITHOUT fallback: Semantic references (fail visible) */
+--button-primary-bg: var(--bg-color-brand-solid);
 ```
+
+**Rationale:**
+- **Primitive references** get fallbacks → protects against missing `primitives.css` in split-file loading
+- **Semantic references** don't get fallbacks → missing `data-theme` should fail visibly, not silently degrade
+
+> See [CLAUDE.md](../../CLAUDE.md#shadow-effects-css-architecture) for detailed fallback architecture.
 
 ---
 
