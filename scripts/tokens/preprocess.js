@@ -2269,107 +2269,156 @@ function saveComponentTokens(componentOutputs) {
 /**
  * Enriches lineHeight tokens with pre-calculated unitless ratios for CSS output.
  *
- * Strategy:
- * 1. Build ratio map from Typography Composites (variableId → ratio)
- *    - Each composite has $aliases.lineHeight.variableId and $value.fontSize/$value.lineHeight
- * 2. Walk breakpoint tokens: match lineHeight tokens via variableId
- * 3. Walk component density tokens: match via name pattern (LineHeight ↔ FontSize)
+ * Enrichment Fallback Cascade (priority order):
+ * 1. variableId-Match: Build ratio map from ALL Typography Composites (semantic + component),
+ *    then match standalone lineHeight tokens via their variableId
+ * 2. Name-Match: *LineHeight → *FontSize in same file (all component modes: breakpoint + density)
+ * 3. Composite-Value-Match: Match unmatched lineHeight values against component composites
+ *    in the same brand×breakpoint context (only if unique match)
+ * 4. px-Fallback: Tokens that can't be resolved stay as px (caught by custom/size/px filter)
  *
  * The $lineHeightRatio property is used by the lineHeight/unitless Style Dictionary transform.
  * Tokens with $alias referencing density/semantic collections (var() references) are skipped.
+ *
+ * Enrichment Fallback Cascade (priority order):
+ * 1. variableId-Match: Typography Composite aliases (semantic + component)
+ * 2. Name-Match: *LineHeight → *FontSize in same file (all component modes)
+ * 3. Composite-Value-Match: Match lineHeight value against component composites
+ * 4. px-Fallback: Tokens that can't be resolved stay as px (caught by custom/size/px filter)
  */
-function enrichLineHeightTokensWithRatio(brandSpecificTokens, typographyOutputs, componentTokens) {
+function enrichLineHeightTokensWithRatio(brandSpecificTokens, semanticTypography, componentTypography, componentTokens) {
   console.log('\n📐 Enriching lineHeight tokens with unitless ratios:\n');
 
   let enrichedSemantic = 0;
-  let enrichedComponent = 0;
+  let enrichedComponentVarId = 0;
+  let enrichedComponentName = 0;
+  let enrichedComponentValue = 0;
   let skippedVarRef = 0;
-
-  // --- Stage 1: Build ratio map from Typography Composites ---
-  // Key: variableId of the lineHeight alias, Value: { ratio, fontSize, lineHeight }
-  // Organized per brand×breakpoint context
-  // Conflict detection: if the same variableId appears with different ratios,
-  // it means the lineHeight token is shared across composites with different fontSizes.
-  // In that case, we cannot determine a single unitless ratio, so we skip enrichment
-  // and fall back to px output.
-  const ratioMaps = {};
   let conflictCount = 0;
+  const pxFallbacks = []; // Track tokens that couldn't be resolved
 
-  Object.entries(typographyOutputs).forEach(([key, data]) => {
-    // key = "bild-xs", data = { tokens, brand, breakpoint }
-    const ratioMap = {};
-    const conflicts = new Set(); // Track variableIds with conflicting ratios
+  // --- Stage 1: Build ratio map from ALL Typography Composites ---
+  // Includes both semantic (Layer 2) and component (Layer 3) composites.
+  // Key: variableId of the lineHeight alias, Value: { ratio, fontSize, lineHeight }
+  // Conflict detection: if the same variableId appears with different ratios,
+  // the token falls back to px output.
+  const ratioMaps = {}; // Per brand×breakpoint: { variableId → { ratio, fontSize, lineHeight } }
 
-    // Recursively collect typography tokens
-    const collectTypography = (obj, tokenPath = '') => {
-      if (!obj || typeof obj !== 'object') return;
-      if (obj.$type === 'typography' && obj.$value && obj.$aliases) {
-        const fontSize = obj.$value.fontSize;
-        const lineHeight = obj.$value.lineHeight;
-        const lineHeightAlias = obj.$aliases.lineHeight;
+  // Helper: Process a set of typography composites into a ratioMap
+  const processComposites = (obj, ratioMap, conflicts, contextKey) => {
+    if (!obj || typeof obj !== 'object') return;
+    if (obj.$type === 'typography' && obj.$value && obj.$aliases) {
+      const fontSize = obj.$value.fontSize;
+      const lineHeight = obj.$value.lineHeight;
+      const lineHeightAlias = obj.$aliases.lineHeight;
 
-        if (fontSize && lineHeight && lineHeightAlias?.variableId) {
-          const variableId = lineHeightAlias.variableId;
-          const ratio = lineHeight / fontSize;
+      if (fontSize && lineHeight && lineHeightAlias?.variableId) {
+        const variableId = lineHeightAlias.variableId;
+        const ratio = lineHeight / fontSize;
 
-          if (conflicts.has(variableId)) {
-            // Already conflicted, skip
+        if (conflicts.has(variableId)) return;
+
+        if (ratioMap[variableId]) {
+          const existing = ratioMap[variableId];
+          if (Math.abs(existing.ratio - ratio) > 0.0001) {
+            conflicts.add(variableId);
+            delete ratioMap[variableId];
+            conflictCount++;
+            console.log(`  ⚠️  Conflict in [${contextKey}]: variableId ${variableId} has ratio ${existing.ratio.toFixed(4)} (${existing.lineHeight}/${existing.fontSize}) vs ${ratio.toFixed(4)} (${lineHeight}/${fontSize}) — px fallback`);
             return;
           }
-
-          if (ratioMap[variableId]) {
-            // Check if ratio differs (using small epsilon for floating point)
-            const existing = ratioMap[variableId];
-            if (Math.abs(existing.ratio - ratio) > 0.0001) {
-              // Conflict: same lineHeight variable used with different fontSizes
-              conflicts.add(variableId);
-              delete ratioMap[variableId];
-              conflictCount++;
-              console.log(`  ⚠️  Conflict in [${key}]: lineHeight variable ${variableId} has ratio ${existing.ratio.toFixed(4)} (${existing.lineHeight}/${existing.fontSize}) vs ${ratio.toFixed(4)} (${lineHeight}/${fontSize}) — falling back to px`);
-              return;
-            }
-          }
-
-          ratioMap[variableId] = {
-            ratio,
-            fontSize,
-            lineHeight
-          };
         }
-        return; // Don't recurse into token internals
-      }
-      Object.entries(obj).forEach(([k, v]) => collectTypography(v, tokenPath ? `${tokenPath}.${k}` : k));
-    };
 
-    collectTypography(data.tokens);
-    ratioMaps[key] = ratioMap;
+        ratioMap[variableId] = { ratio, fontSize, lineHeight };
+      }
+      return;
+    }
+    Object.values(obj).forEach(v => processComposites(v, ratioMap, conflicts, contextKey));
+  };
+
+  // Stage 1a: Semantic typography composites
+  Object.entries(semanticTypography).forEach(([key, data]) => {
+    if (!ratioMaps[key]) ratioMaps[key] = {};
+    const conflicts = new Set();
+    processComposites(data.tokens, ratioMaps[key], conflicts, key);
   });
 
-  // --- Stage 2: Enrich semantic breakpoint lineHeight tokens ---
+  // Stage 1b: Component typography composites (merged into componentTokens under typography-* keys)
+  // Only ADDS new entries — does not conflict with or override semantic entries from Stage 1a.
+  // Component composites may use the same variableId with different ratios (e.g., Teaser headline
+  // uses the same lineHeight variable with different fontSizes), but the semantic ratio is authoritative.
+  Object.entries(componentTokens).forEach(([brand, components]) => {
+    Object.entries(components).forEach(([componentName, modes]) => {
+      Object.entries(modes).forEach(([modeKey, tokens]) => {
+        if (!modeKey.startsWith('typography-')) return;
+        const breakpoint = modeKey.replace('typography-', '');
+        const mapKey = `${brand}-${breakpoint}`;
+        if (!ratioMaps[mapKey]) ratioMaps[mapKey] = {};
+
+        // Process component composites with separate conflict tracking
+        // Only add entries that don't already exist in the ratioMap (semantic takes priority)
+        const componentConflicts = new Set();
+        const existingIds = new Set(Object.keys(ratioMaps[mapKey])); // Preserve semantic entries
+
+        const processComponentComposite = (obj) => {
+          if (!obj || typeof obj !== 'object') return;
+          if (obj.$type === 'typography' && obj.$value && obj.$aliases) {
+            const fontSize = obj.$value.fontSize;
+            const lineHeight = obj.$value.lineHeight;
+            const lineHeightAlias = obj.$aliases.lineHeight;
+
+            if (fontSize && lineHeight && lineHeightAlias?.variableId) {
+              const variableId = lineHeightAlias.variableId;
+              const ratio = lineHeight / fontSize;
+
+              // Skip if already set by semantic composites (Stage 1a)
+              if (existingIds.has(variableId)) return;
+              if (componentConflicts.has(variableId)) return;
+
+              if (ratioMaps[mapKey][variableId]) {
+                const existing = ratioMaps[mapKey][variableId];
+                if (Math.abs(existing.ratio - ratio) > 0.0001) {
+                  componentConflicts.add(variableId);
+                  delete ratioMaps[mapKey][variableId];
+                  conflictCount++;
+                  console.log(`  ⚠️  Conflict in [${mapKey}/${componentName}]: variableId ${variableId} has ratio ${existing.ratio.toFixed(4)} vs ${ratio.toFixed(4)} — px fallback`);
+                  return;
+                }
+              }
+
+              ratioMaps[mapKey][variableId] = { ratio, fontSize, lineHeight };
+            }
+            return;
+          }
+          Object.values(obj).forEach(v => processComponentComposite(v));
+        };
+
+        processComponentComposite(tokens);
+      });
+    });
+  });
+
+  // --- Stage 2: variableId matching in ALL lineHeight tokens ---
+  // Processes both semantic breakpoint tokens AND component breakpoint tokens
+
+  // Stage 2a: Semantic breakpoint tokens
   Object.entries(brandSpecificTokens).forEach(([brand, categories]) => {
     if (!categories.breakpoints) return;
 
     Object.entries(categories.breakpoints).forEach(([modeName, tokens]) => {
-      // Determine the typography key for this brand×breakpoint
-      const typographyKey = `${brand}-${modeName.split('-')[0]}`; // e.g., "xs-320px" → "xs"
+      const typographyKey = `${brand}-${modeName.split('-')[0]}`;
       const ratioMap = ratioMaps[typographyKey];
-
       if (!ratioMap) return;
 
-      // Recursively find and enrich lineHeight tokens
       const enrichTokens = (obj) => {
         if (!obj || typeof obj !== 'object') return;
-
         Object.values(obj).forEach(value => {
           if (value && typeof value === 'object') {
             if (value.$type === 'lineHeight' && typeof value.$value === 'number') {
-              // Skip tokens that alias to density/semantic collections (var() references)
               if (value.$alias && ['density', 'semantic', 'component-breakpoint'].includes(value.$alias.collectionType)) {
                 skippedVarRef++;
                 return;
               }
-
-              // Match via variableId from Typography Composite
               const variableId = value.$extensions?.['com.figma']?.variableId;
               if (variableId && ratioMap[variableId]) {
                 value.$lineHeightRatio = ratioMap[variableId].ratio;
@@ -2377,43 +2426,177 @@ function enrichLineHeightTokensWithRatio(brandSpecificTokens, typographyOutputs,
                 return;
               }
             }
-            // Recurse deeper
             enrichTokens(value);
           }
         });
       };
-
       enrichTokens(tokens);
     });
   });
 
-  // --- Stage 3: Enrich component density lineHeight tokens ---
+  // Helper: Collect all leaf tokens (those with $type) from nested structures into flat map
+  // Handles both flat tokens ({ tokenName: { $type, $value } }) and
+  // grouped tokens ({ GroupName: { tokenName: { $type, $value } } })
+  const collectFlatTokens = (tokens) => {
+    const flat = {};
+    Object.entries(tokens).forEach(([key, value]) => {
+      if (!value || typeof value !== 'object') return;
+      if (value.$type) {
+        // Leaf token (has $type directly)
+        flat[key] = value;
+      } else {
+        // Group: recurse one level deeper
+        Object.entries(value).forEach(([subKey, subValue]) => {
+          if (subValue && typeof subValue === 'object' && subValue.$type) {
+            flat[subKey] = subValue;
+          }
+        });
+      }
+    });
+    return flat;
+  };
+
+  // Stage 2b: Component breakpoint tokens (variableId matching)
   Object.entries(componentTokens).forEach(([brand, components]) => {
     Object.entries(components).forEach(([componentName, modes]) => {
       Object.entries(modes).forEach(([modeKey, tokens]) => {
-        // Only process density files (not breakpoint or typography files)
-        if (!modeKey.startsWith('density-')) return;
+        if (!modeKey.startsWith('breakpoint-') && !modeKey.startsWith('density-')) return;
         if (!tokens || typeof tokens !== 'object') return;
 
-        // Collect all fontSize tokens in this file for name-matching
+        // Determine ratioMap key
+        let breakpoint;
+        if (modeKey.startsWith('breakpoint-')) {
+          breakpoint = modeKey.split('-')[1]; // "breakpoint-xs-320px" → "xs"
+        } else {
+          breakpoint = 'xs'; // density tokens don't have breakpoint context, use xs as default
+        }
+        const mapKey = `${brand}-${breakpoint}`;
+        const ratioMap = ratioMaps[mapKey];
+        if (!ratioMap) return;
+
+        const flatTokens = collectFlatTokens(tokens);
+        Object.entries(flatTokens).forEach(([tokenName, tokenValue]) => {
+          if (tokenValue.$type !== 'lineHeight') return;
+          if (typeof tokenValue.$value !== 'number') return;
+          if (tokenValue.$lineHeightRatio) return; // Already enriched
+          if (tokenValue.$alias && ['density', 'semantic', 'component-breakpoint'].includes(tokenValue.$alias.collectionType)) {
+            skippedVarRef++;
+            return;
+          }
+
+          const variableId = tokenValue.$extensions?.['com.figma']?.variableId;
+          if (variableId && ratioMap[variableId]) {
+            tokenValue.$lineHeightRatio = ratioMap[variableId].ratio;
+            enrichedComponentVarId++;
+          }
+        });
+      });
+    });
+  });
+
+  // --- Stage 3: Name-matching in ALL component mode files ---
+  // Matches *LineHeight → *FontSize tokens in the same file (breakpoint + density)
+  // Handles both flat and grouped token structures
+  Object.entries(componentTokens).forEach(([brand, components]) => {
+    Object.entries(components).forEach(([componentName, modes]) => {
+      Object.entries(modes).forEach(([modeKey, tokens]) => {
+        // Process breakpoint and density files (skip typography/color/effect files)
+        if (!modeKey.startsWith('breakpoint-') && !modeKey.startsWith('density-')) return;
+        if (!tokens || typeof tokens !== 'object') return;
+
+        const flatTokens = collectFlatTokens(tokens);
+
+        // Collect all fontSize tokens for name-matching
         const fontSizeMap = {};
-        Object.entries(tokens).forEach(([tokenName, tokenValue]) => {
-          if (tokenValue && tokenValue.$type === 'fontSize' && typeof tokenValue.$value === 'number') {
+        Object.entries(flatTokens).forEach(([tokenName, tokenValue]) => {
+          if (tokenValue.$type === 'fontSize' && typeof tokenValue.$value === 'number') {
             fontSizeMap[tokenName] = tokenValue.$value;
           }
         });
 
-        // Find lineHeight tokens and match by name
-        Object.entries(tokens).forEach(([tokenName, tokenValue]) => {
-          if (!tokenValue || tokenValue.$type !== 'lineHeight') return;
+        // Find lineHeight tokens not yet enriched and match by name
+        Object.entries(flatTokens).forEach(([tokenName, tokenValue]) => {
+          if (tokenValue.$type !== 'lineHeight') return;
           if (typeof tokenValue.$value !== 'number') return;
+          if (tokenValue.$lineHeightRatio) return; // Already enriched by Stage 2
 
           // Name-matching: replace "LineHeight" with "FontSize" in token name
           const fontSizeTokenName = tokenName.replace(/LineHeight$/i, 'FontSize');
           if (fontSizeMap[fontSizeTokenName]) {
             const fontSize = fontSizeMap[fontSizeTokenName];
             tokenValue.$lineHeightRatio = tokenValue.$value / fontSize;
-            enrichedComponent++;
+            enrichedComponentName++;
+          }
+        });
+      });
+    });
+  });
+
+  // --- Stage 4: Composite-Value-Match for remaining unmatched tokens ---
+  // For lineHeight tokens still without ratio, try matching their value against
+  // component typography composites in the same brand×breakpoint context.
+  // Only matches if the lineHeight value is UNIQUE within that context.
+  Object.entries(componentTokens).forEach(([brand, components]) => {
+    Object.entries(components).forEach(([componentName, modes]) => {
+      Object.entries(modes).forEach(([modeKey, tokens]) => {
+        if (!modeKey.startsWith('breakpoint-')) return;
+        if (!tokens || typeof tokens !== 'object') return;
+
+        // Find still-unmatched lineHeight tokens (handle nested groups)
+        const flatTokens = collectFlatTokens(tokens);
+        const unmatchedTokens = [];
+        Object.entries(flatTokens).forEach(([tokenName, tokenValue]) => {
+          if (tokenValue.$type !== 'lineHeight') return;
+          if (typeof tokenValue.$value !== 'number') return;
+          if (tokenValue.$lineHeightRatio) return; // Already enriched
+          if (tokenValue.$alias) return; // var() reference
+          unmatchedTokens.push({ tokenName, tokenValue });
+        });
+
+        if (unmatchedTokens.length === 0) return;
+
+        // Extract breakpoint from modeKey: "breakpoint-xs-320px" → "xs"
+        const breakpoint = modeKey.split('-')[1];
+
+        // Build a value→ratio map from ALL component typography composites in this brand×breakpoint
+        // Search across ALL components (not just current one — handles cross-component references)
+        const valueRatioMap = {}; // lineHeight value → { ratio, count, compositeName }
+        Object.entries(components).forEach(([compName, compModes]) => {
+          const typoKey = `typography-${breakpoint}`;
+          if (!compModes[typoKey]) return;
+          Object.entries(compModes[typoKey]).forEach(([styleName, composite]) => {
+            if (!composite || composite.$type !== 'typography') return;
+            const fs = composite.$value?.fontSize;
+            const lh = composite.$value?.lineHeight;
+            if (!fs || !lh || typeof fs !== 'number' || typeof lh !== 'number') return;
+
+            const key = lh.toString();
+            if (!valueRatioMap[key]) {
+              valueRatioMap[key] = { ratio: lh / fs, fontSize: fs, lineHeight: lh, count: 1, compositeName: `${compName}/${styleName}` };
+            } else {
+              // Check if same ratio (compatible)
+              const existing = valueRatioMap[key];
+              const newRatio = lh / fs;
+              if (Math.abs(existing.ratio - newRatio) > 0.0001) {
+                // Different ratios for same lineHeight value — ambiguous, mark as unusable
+                existing.count++;
+                existing.ambiguous = true;
+              } else {
+                existing.count++;
+              }
+            }
+          });
+        });
+
+        // Try to match unmatched tokens by value
+        unmatchedTokens.forEach(({ tokenName, tokenValue }) => {
+          const key = tokenValue.$value.toString();
+          const match = valueRatioMap[key];
+          if (match && !match.ambiguous) {
+            tokenValue.$lineHeightRatio = match.ratio;
+            enrichedComponentValue++;
+          } else {
+            pxFallbacks.push({ brand, component: componentName, mode: modeKey, token: tokenName, value: tokenValue.$value });
           }
         });
       });
@@ -2421,10 +2604,18 @@ function enrichLineHeightTokensWithRatio(brandSpecificTokens, typographyOutputs,
   });
 
   console.log(`  ✅ Semantic lineHeight tokens enriched: ${enrichedSemantic}`);
-  console.log(`  ✅ Component density lineHeight tokens enriched: ${enrichedComponent}`);
+  console.log(`  ✅ Component tokens via variableId: ${enrichedComponentVarId}`);
+  console.log(`  ✅ Component tokens via name-match: ${enrichedComponentName}`);
+  console.log(`  ✅ Component tokens via value-match: ${enrichedComponentValue}`);
   console.log(`  ⏭️  Skipped (var() references): ${skippedVarRef}`);
   if (conflictCount > 0) {
     console.log(`  ⚠️  Conflicts detected (fallback to px): ${conflictCount}`);
+  }
+  if (pxFallbacks.length > 0) {
+    console.log(`  ⚠️  Remaining px-fallbacks: ${pxFallbacks.length}`);
+    pxFallbacks.forEach(({ brand, component, mode, token, value }) => {
+      console.log(`     → ${brand}/${component} [${mode}]: ${token} = ${value}px`);
+    });
   }
 }
 
@@ -2485,7 +2676,7 @@ function main() {
   });
 
   // Enrich lineHeight tokens with unitless ratios (for CSS output)
-  enrichLineHeightTokensWithRatio(brandSpecificTokens, typographyResults.semantic, componentTokens);
+  enrichLineHeightTokensWithRatio(brandSpecificTokens, typographyResults.semantic, typographyResults.component, componentTokens);
 
   // Generate Breakpoint × Density matrix (ID-based resolution)
   const breakpointDensityMatrix = generateBreakpointDensityMatrix(pluginData.collections, aliasLookup);
