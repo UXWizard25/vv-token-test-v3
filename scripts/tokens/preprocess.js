@@ -2288,14 +2288,20 @@ function enrichLineHeightTokensWithRatio(brandSpecificTokens, typographyOutputs,
   // --- Stage 1: Build ratio map from Typography Composites ---
   // Key: variableId of the lineHeight alias, Value: { ratio, fontSize, lineHeight }
   // Organized per brand×breakpoint context
+  // Conflict detection: if the same variableId appears with different ratios,
+  // it means the lineHeight token is shared across composites with different fontSizes.
+  // In that case, we cannot determine a single unitless ratio, so we skip enrichment
+  // and fall back to px output.
   const ratioMaps = {};
+  let conflictCount = 0;
 
   Object.entries(typographyOutputs).forEach(([key, data]) => {
     // key = "bild-xs", data = { tokens, brand, breakpoint }
     const ratioMap = {};
+    const conflicts = new Set(); // Track variableIds with conflicting ratios
 
     // Recursively collect typography tokens
-    const collectTypography = (obj) => {
+    const collectTypography = (obj, tokenPath = '') => {
       if (!obj || typeof obj !== 'object') return;
       if (obj.$type === 'typography' && obj.$value && obj.$aliases) {
         const fontSize = obj.$value.fontSize;
@@ -2303,8 +2309,28 @@ function enrichLineHeightTokensWithRatio(brandSpecificTokens, typographyOutputs,
         const lineHeightAlias = obj.$aliases.lineHeight;
 
         if (fontSize && lineHeight && lineHeightAlias?.variableId) {
+          const variableId = lineHeightAlias.variableId;
           const ratio = lineHeight / fontSize;
-          ratioMap[lineHeightAlias.variableId] = {
+
+          if (conflicts.has(variableId)) {
+            // Already conflicted, skip
+            return;
+          }
+
+          if (ratioMap[variableId]) {
+            // Check if ratio differs (using small epsilon for floating point)
+            const existing = ratioMap[variableId];
+            if (Math.abs(existing.ratio - ratio) > 0.0001) {
+              // Conflict: same lineHeight variable used with different fontSizes
+              conflicts.add(variableId);
+              delete ratioMap[variableId];
+              conflictCount++;
+              console.log(`  ⚠️  Conflict in [${key}]: lineHeight variable ${variableId} has ratio ${existing.ratio.toFixed(4)} (${existing.lineHeight}/${existing.fontSize}) vs ${ratio.toFixed(4)} (${lineHeight}/${fontSize}) — falling back to px`);
+              return;
+            }
+          }
+
+          ratioMap[variableId] = {
             ratio,
             fontSize,
             lineHeight
@@ -2312,7 +2338,7 @@ function enrichLineHeightTokensWithRatio(brandSpecificTokens, typographyOutputs,
         }
         return; // Don't recurse into token internals
       }
-      Object.values(obj).forEach(v => collectTypography(v));
+      Object.entries(obj).forEach(([k, v]) => collectTypography(v, tokenPath ? `${tokenPath}.${k}` : k));
     };
 
     collectTypography(data.tokens);
@@ -2397,6 +2423,9 @@ function enrichLineHeightTokensWithRatio(brandSpecificTokens, typographyOutputs,
   console.log(`  ✅ Semantic lineHeight tokens enriched: ${enrichedSemantic}`);
   console.log(`  ✅ Component density lineHeight tokens enriched: ${enrichedComponent}`);
   console.log(`  ⏭️  Skipped (var() references): ${skippedVarRef}`);
+  if (conflictCount > 0) {
+    console.log(`  ⚠️  Conflicts detected (fallback to px): ${conflictCount}`);
+  }
 }
 
 /**
