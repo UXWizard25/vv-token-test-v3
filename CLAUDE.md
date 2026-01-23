@@ -1024,11 +1024,27 @@ The PR comment includes an **Affected Stencil Components** section that shows wh
 
 | File | Purpose |
 |------|---------|
-| `scripts/tokens/preprocess.js` | Figma JSON → Style Dictionary format |
+| `scripts/tokens/preprocess.js` | Figma JSON → Style Dictionary format + lineHeight ratio enrichment |
 | `scripts/tokens/build.js` | Orchestrates Style Dictionary builds + JS output generation + CSS optimizations |
-| `build-config/tokens/style-dictionary.config.js` | Custom transforms & formats |
+| `build-config/tokens/style-dictionary.config.js` | Custom transforms & formats + `FONT_SIZE_UNIT` toggle (`'px'`/`'rem'`) |
 | `scripts/tokens/bundles.js` | CSS bundle generation |
 | `scripts/tokens/generate-docs.js` | Auto-generates Storybook MDX documentation from token JSON files |
+
+### CSS Output Configuration
+
+| Setting | Location | Current | Options | Affects |
+|---------|----------|---------|---------|---------|
+| `FONT_SIZE_UNIT` | `style-dictionary.config.js` | `'px'` | `'px'` / `'rem'` | CSS font-size values + fallbacks |
+
+**CSS Typography Unit Behavior:**
+
+| Property | CSS Output | Example | Controlled By |
+|----------|-----------|---------|---------------|
+| `font-size` | px or rem (configurable) | `21px` or `1.3125rem` | `FONT_SIZE_UNIT` |
+| `line-height` | Unitless ratio (always) | `1.33` | Pre-calculated from Typography Composites |
+| `letter-spacing` | px (always) | `0.5px` | `custom/size/px` transform |
+
+> **Note:** `line-height` uses unitless ratios (lineHeight ÷ fontSize) which is CSS best practice — they scale proportionally with font-size regardless of the `FONT_SIZE_UNIT` setting. Native platforms (iOS/Android) always output absolute point/dp values and are unaffected by these settings.
 
 ### CSS Optimization Functions (in build.js)
 
@@ -1287,6 +1303,8 @@ Advertorial has spacing and typography tokens but **no color tokens** (uses BILD
 | **SCSS Token Maps** | Flat maps per mode (`$colors-light`, `$colors-dark`) instead of per-file variables - single import, better DX |
 | **SCSS @use/@forward** | Modern SCSS module system instead of deprecated @import - namespacing, encapsulation |
 | **SCSS helper functions** | `get-color()`, `get-spacing()` with fallback warnings - safer map access, debugging |
+| **CSS lineHeight unitless** | Unitless ratios (e.g., `1.33`) instead of px - CSS best practice, scales proportionally with font-size |
+| **FONT_SIZE_UNIT toggle** | `style-dictionary.config.js` constant (`'px'`/`'rem'`) controls CSS font-size output unit; lineHeight stays unitless in both modes |
 
 ---
 
@@ -1356,6 +1374,8 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 | Add new breakpoint | `preprocess.js`, `build.js` |
 | Add new density mode | `preprocess.js`, `build.js`, `bundles.js` |
 | Enable/disable platform | `build.js` (toggle flags) |
+| Switch CSS font-size unit (px/rem) | `style-dictionary.config.js` → `FONT_SIZE_UNIT` constant (`'px'` or `'rem'`) |
+| Modify CSS lineHeight ratio enrichment | `preprocess.js` → `enrichLineHeightTokensWithRatio()` |
 | Modify component token pattern | `style-dictionary.config.js` |
 | Change JS type mapping | `build.js` → `flattenTokens()` function |
 | Modify React bindings | `build.js` → `generateReactBindings()` function |

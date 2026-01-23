@@ -505,15 +505,17 @@ Typography tokens are output as CSS classes under **ContentBrand**:
 ```css
 [data-content-brand="bild"] {
   .button-label {
-    font-family: var(--font-family-gotham-xnarrow, Gotham XNarrow);
+    font-family: var(--label-font-family);
     font-weight: 700;
-    font-size: var(--button-label-font-size, 15px);
-    line-height: var(--button-label-line-height, 15px);
-    letter-spacing: var(--letter-space-0-p-5, 0.5px);
+    font-size: var(--button-label-font-size);
+    line-height: var(--button-label-line-height);
+    letter-spacing: var(--letter-space-positive-sm);
     text-transform: uppercase;
   }
 }
 ```
+
+> **Note:** `font-size` is output in px by default (configurable via `FONT_SIZE_UNIT` in `style-dictionary.config.js`). `line-height` is always unitless (ratio-based, e.g., `1.33`).
 
 Usage:
 ```html
