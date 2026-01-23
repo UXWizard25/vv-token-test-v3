@@ -2267,6 +2267,139 @@ function saveComponentTokens(componentOutputs) {
 }
 
 /**
+ * Enriches lineHeight tokens with pre-calculated unitless ratios for CSS output.
+ *
+ * Strategy:
+ * 1. Build ratio map from Typography Composites (variableId → ratio)
+ *    - Each composite has $aliases.lineHeight.variableId and $value.fontSize/$value.lineHeight
+ * 2. Walk breakpoint tokens: match lineHeight tokens via variableId
+ * 3. Walk component density tokens: match via name pattern (LineHeight ↔ FontSize)
+ *
+ * The $lineHeightRatio property is used by the lineHeight/unitless Style Dictionary transform.
+ * Tokens with $alias referencing density/semantic collections (var() references) are skipped.
+ */
+function enrichLineHeightTokensWithRatio(brandSpecificTokens, typographyOutputs, componentTokens) {
+  console.log('\n📐 Enriching lineHeight tokens with unitless ratios:\n');
+
+  let enrichedSemantic = 0;
+  let enrichedComponent = 0;
+  let skippedVarRef = 0;
+
+  // --- Stage 1: Build ratio map from Typography Composites ---
+  // Key: variableId of the lineHeight alias, Value: { ratio, fontSize, lineHeight }
+  // Organized per brand×breakpoint context
+  const ratioMaps = {};
+
+  Object.entries(typographyOutputs).forEach(([key, data]) => {
+    // key = "bild-xs", data = { tokens, brand, breakpoint }
+    const ratioMap = {};
+
+    // Recursively collect typography tokens
+    const collectTypography = (obj) => {
+      if (!obj || typeof obj !== 'object') return;
+      if (obj.$type === 'typography' && obj.$value && obj.$aliases) {
+        const fontSize = obj.$value.fontSize;
+        const lineHeight = obj.$value.lineHeight;
+        const lineHeightAlias = obj.$aliases.lineHeight;
+
+        if (fontSize && lineHeight && lineHeightAlias?.variableId) {
+          const ratio = lineHeight / fontSize;
+          ratioMap[lineHeightAlias.variableId] = {
+            ratio,
+            fontSize,
+            lineHeight
+          };
+        }
+        return; // Don't recurse into token internals
+      }
+      Object.values(obj).forEach(v => collectTypography(v));
+    };
+
+    collectTypography(data.tokens);
+    ratioMaps[key] = ratioMap;
+  });
+
+  // --- Stage 2: Enrich semantic breakpoint lineHeight tokens ---
+  Object.entries(brandSpecificTokens).forEach(([brand, categories]) => {
+    if (!categories.breakpoints) return;
+
+    Object.entries(categories.breakpoints).forEach(([modeName, tokens]) => {
+      // Determine the typography key for this brand×breakpoint
+      const typographyKey = `${brand}-${modeName.split('-')[0]}`; // e.g., "xs-320px" → "xs"
+      const ratioMap = ratioMaps[typographyKey];
+
+      if (!ratioMap) return;
+
+      // Recursively find and enrich lineHeight tokens
+      const enrichTokens = (obj) => {
+        if (!obj || typeof obj !== 'object') return;
+
+        Object.values(obj).forEach(value => {
+          if (value && typeof value === 'object') {
+            if (value.$type === 'lineHeight' && typeof value.$value === 'number') {
+              // Skip tokens that alias to density/semantic collections (var() references)
+              if (value.$alias && ['density', 'semantic', 'component-breakpoint'].includes(value.$alias.collectionType)) {
+                skippedVarRef++;
+                return;
+              }
+
+              // Match via variableId from Typography Composite
+              const variableId = value.$extensions?.['com.figma']?.variableId;
+              if (variableId && ratioMap[variableId]) {
+                value.$lineHeightRatio = ratioMap[variableId].ratio;
+                enrichedSemantic++;
+                return;
+              }
+            }
+            // Recurse deeper
+            enrichTokens(value);
+          }
+        });
+      };
+
+      enrichTokens(tokens);
+    });
+  });
+
+  // --- Stage 3: Enrich component density lineHeight tokens ---
+  Object.entries(componentTokens).forEach(([brand, components]) => {
+    Object.entries(components).forEach(([componentName, modes]) => {
+      Object.entries(modes).forEach(([modeKey, tokens]) => {
+        // Only process density files (not breakpoint or typography files)
+        if (!modeKey.startsWith('density-')) return;
+        if (!tokens || typeof tokens !== 'object') return;
+
+        // Collect all fontSize tokens in this file for name-matching
+        const fontSizeMap = {};
+        Object.entries(tokens).forEach(([tokenName, tokenValue]) => {
+          if (tokenValue && tokenValue.$type === 'fontSize' && typeof tokenValue.$value === 'number') {
+            fontSizeMap[tokenName] = tokenValue.$value;
+          }
+        });
+
+        // Find lineHeight tokens and match by name
+        Object.entries(tokens).forEach(([tokenName, tokenValue]) => {
+          if (!tokenValue || tokenValue.$type !== 'lineHeight') return;
+          if (typeof tokenValue.$value !== 'number') return;
+
+          // Name-matching: replace "LineHeight" with "FontSize" in token name
+          const fontSizeTokenName = tokenName.replace(/LineHeight$/i, 'FontSize');
+          if (fontSizeMap[fontSizeTokenName]) {
+            const fontSize = fontSizeMap[fontSizeTokenName];
+            tokenValue.$lineHeightRatio = tokenValue.$value / fontSize;
+            enrichedComponent++;
+          }
+        });
+      });
+    });
+  });
+
+  console.log(`  ✅ Semantic lineHeight tokens enriched: ${enrichedSemantic}`);
+  console.log(`  ✅ Component density lineHeight tokens enriched: ${enrichedComponent}`);
+  console.log(`  ⏭️  Skipped (var() references): ${skippedVarRef}`);
+}
+
+/**
  * Main function
  */
 function main() {
@@ -2321,6 +2454,9 @@ function main() {
       });
     }
   });
+
+  // Enrich lineHeight tokens with unitless ratios (for CSS output)
+  enrichLineHeightTokensWithRatio(brandSpecificTokens, typographyResults.semantic, componentTokens);
 
   // Generate Breakpoint × Density matrix (ID-based resolution)
   const breakpointDensityMatrix = generateBreakpointDensityMatrix(pluginData.collections, aliasLookup);

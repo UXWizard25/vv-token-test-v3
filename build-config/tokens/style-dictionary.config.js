@@ -504,9 +504,9 @@ const sizePxTransform = {
     const value = token.$value || token.value;
 
     // Only match if type is dimension-related AND value is numeric
-    // Includes lineHeight and letterSpacing which also need px units in CSS
     // Note: fontSize is handled separately by fontSize/rem transform for CSS
-    const isMatchingType = ['spacing', 'size', 'dimension', 'lineHeight', 'letterSpacing'].includes(type);
+    // Note: lineHeight is handled separately by lineHeight/unitless transform for CSS
+    const isMatchingType = ['spacing', 'size', 'dimension', 'letterSpacing'].includes(type);
     const isNumeric = typeof value === 'number';
 
     return isMatchingType && isNumeric;
@@ -555,7 +555,8 @@ const sizeRemTransform = {
  *
  * This transform is separate from custom/size/px to allow:
  * - fontSize: rem (for accessibility/scaling)
- * - lineHeight, letterSpacing, dimension: px (for precision)
+ * - lineHeight: unitless ratio (for proportional scaling)
+ * - letterSpacing, dimension: px (for precision)
  */
 const fontSizeRemTransform = {
   name: 'fontSize/rem',
@@ -572,6 +573,30 @@ const fontSizeRemTransform = {
     // Round to max 4 decimal places, remove trailing zeros
     const rounded = roundValue(remValue);
     return `${rounded}rem`;
+  }
+};
+
+/**
+ * Transform: lineHeight to unitless ratio (CSS only)
+ * Converts lineHeight values from px to unitless using pre-calculated ratio from preprocess.js
+ * Only applies to tokens with $type: "lineHeight" that have a $lineHeightRatio property
+ *
+ * This produces CSS-best-practice unitless line-heights (e.g., 1.33 instead of 28px)
+ * which scale proportionally with font-size changes.
+ */
+const lineHeightUnitlessTransform = {
+  name: 'lineHeight/unitless',
+  type: 'value',
+  filter: (token) => {
+    const type = token.$type || token.type;
+    const ratio = token.$lineHeightRatio;
+    return type === 'lineHeight' && typeof ratio === 'number';
+  },
+  transform: (token) => {
+    const ratio = token.$lineHeightRatio;
+    // Round to max 4 decimal places, remove trailing zeros
+    const rounded = roundValue(ratio);
+    return `${rounded}`;
   }
 };
 
@@ -1240,7 +1265,13 @@ const cssTypographyClassesFormat = ({ dictionary, options }) => {
           if (style.fontFamily) output += `  font-family: ${getValueWithAlias('fontFamily', style.fontFamily)};\n`;
           if (style.fontWeight) output += `  font-weight: ${getValueWithAlias('fontWeight', style.fontWeight)};\n`;
           if (style.fontSize) output += `  font-size: ${getValueWithAlias('fontSize', style.fontSize, 'rem')};\n`;
-          if (style.lineHeight) output += `  line-height: ${getValueWithAlias('lineHeight', style.lineHeight, 'px')};\n`;
+          if (style.lineHeight && style.fontSize) {
+            // Calculate unitless ratio (CSS best practice - scales with font-size)
+            const ratio = roundValue(style.lineHeight / style.fontSize);
+            output += `  line-height: ${getValueWithAlias('lineHeight', ratio, '')};\n`;
+          } else if (style.lineHeight) {
+            output += `  line-height: ${style.lineHeight}px;\n`;
+          }
           if (style.letterSpacing) output += `  letter-spacing: ${getValueWithAlias('letterSpacing', style.letterSpacing, 'px')};\n`;
           if (style.fontStyle && style.fontStyle !== 'null') output += `  font-style: ${style.fontStyle.toLowerCase()};\n`;
           if (style.textCase && style.textCase !== 'ORIGINAL') {
@@ -2095,8 +2126,8 @@ const scssOptimizedComponentTokensFormat = ({ dictionary, options }) => {
  * AFTER all other transforms (color conversion, size conversion, etc.)
  */
 const customTransformGroups = {
-  'custom/css': ['name/custom/kebab', 'color/css', 'custom/size/px', 'fontSize/rem', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
-  'custom/scss': ['name/custom/kebab', 'color/css', 'custom/size/px', 'fontSize/rem', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/css': ['name/custom/kebab', 'color/css', 'custom/size/px', 'fontSize/rem', 'lineHeight/unitless', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/scss': ['name/custom/kebab', 'color/css', 'custom/size/px', 'fontSize/rem', 'lineHeight/unitless', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/js': ['name/custom/js', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/ios-swift': ['name/custom/ios-swift', 'custom/color/UIColor', 'custom/size/ios-points', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/compose': ['name/custom/compose', 'color/custom/compose', 'size/custom/compose', 'custom/opacity', 'custom/fontWeight', 'custom/number']
@@ -4939,6 +4970,7 @@ module.exports = {
     'custom/size/ios-points': sizeIosPointsTransform,
     'size/rem': sizeRemTransform,
     'fontSize/rem': fontSizeRemTransform,
+    'lineHeight/unitless': lineHeightUnitlessTransform,
     'custom/opacity': opacityTransform,
     'custom/fontWeight': fontWeightTransform,
     'custom/number': numberTransform,
