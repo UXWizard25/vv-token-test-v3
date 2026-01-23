@@ -210,8 +210,8 @@ Figma token types (`$type`) are automatically mapped to platform-specific types:
 | Figma `$type` | CSS | Swift (iOS) | Kotlin (Android) |
 |---------------|-----|-------------|------------------|
 | `dimension` | `var(--token)` (px) | `CGFloat` | `Dp` (.dp) |
-| `fontSize` | `var(--token)` (px) | `CGFloat` | `TextUnit` (.sp) |
-| `lineHeight` | `var(--token)` (px) | `CGFloat` | `TextUnit` (.sp) |
+| `fontSize` | `var(--token)` (px¹) | `CGFloat` | `TextUnit` (.sp) |
+| `lineHeight` | `var(--token)` (unitless²) | `CGFloat` | `TextUnit` (.sp) |
 | `letterSpacing` | `var(--token)` (px) | `CGFloat` | `TextUnit` (.sp) |
 | `fontWeight` | `var(--token)` | `FontWeight` | `FontWeight` |
 | `number` | `var(--token)` | `CGFloat` | `Float` |
@@ -222,6 +222,9 @@ Figma token types (`$type`) are automatically mapped to platform-specific types:
 | `color` | `var(--token)` (hex/rgba) | `Color` | `Color` |
 | `shadow` | `box-shadow` | `ShadowStyle` | `ShadowStyle` |
 | `typography` | CSS classes | `TextStyle` | `DesignTextStyle` |
+
+> ¹ `fontSize` CSS unit is configurable via `FONT_SIZE_UNIT` in `style-dictionary.config.js` (`'px'` or `'rem'`). Default: `'px'`.
+> ² `lineHeight` CSS output is always unitless (ratio = lineHeight ÷ fontSize, e.g., `1.33`). Scales proportionally with font-size.
 
 ### Token Type Distribution
 
@@ -604,9 +607,11 @@ The pipeline applies these transformations to token names:
 
 | Platform | Format | Example |
 |----------|--------|---------|
-| CSS | `Xpx` | `16px` |
+| CSS | `Xpx` (or `Xrem` for fontSize) | `16px`, `1rem` |
 | iOS Swift | `CGFloat` number | `16` |
 | Android Compose | `X.dp` | `16.dp` |
+
+> **Note:** CSS `lineHeight` tokens are unitless ratios (e.g., `1.33`), not px. CSS `fontSize` unit is controlled by `FONT_SIZE_UNIT` setting (default: `px`).
 
 #### Typography (Compose)
 
@@ -755,8 +760,8 @@ Compose output is optimized for Android development:
 
 | Scope | Assigned Type | Output Format |
 |-------|---------------|---------------|
-| `FONT_SIZE` | `fontSize` | px (CSS), `.sp` (Compose) |
-| `LINE_HEIGHT` | `lineHeight` | px (CSS), `.sp` (Compose) |
+| `FONT_SIZE` | `fontSize` | px/rem (CSS), `.sp` (Compose) |
+| `LINE_HEIGHT` | `lineHeight` | unitless (CSS), `.sp` (Compose) |
 | `LETTER_SPACING` | `letterSpacing` | px (CSS), `.sp` (Compose) |
 | `FONT_WEIGHT` | `fontWeight` | Unitless integer (100-900) |
 | `FONT_FAMILY` | `fontFamily` | String |
