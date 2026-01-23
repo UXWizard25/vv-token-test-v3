@@ -519,11 +519,17 @@ const sizePxTransform = {
 
     // Only match if type is dimension-related AND value is numeric
     // Note: fontSize is conditionally included here (px mode) or handled by fontSize/rem (rem mode)
-    // Note: lineHeight is handled separately by lineHeight/unitless transform for CSS
+    // Note: lineHeight is normally handled by lineHeight/unitless transform,
+    //       but tokens without $lineHeightRatio (e.g., due to conflict detection) fall back to px here.
     const dimensionTypes = ['spacing', 'size', 'dimension', 'letterSpacing'];
     if (FONT_SIZE_UNIT === 'px') dimensionTypes.push('fontSize');
     const isMatchingType = dimensionTypes.includes(type);
     const isNumeric = typeof value === 'number';
+
+    // Fallback: lineHeight tokens without a ratio get px unit
+    if (type === 'lineHeight' && isNumeric && !token.$lineHeightRatio) {
+      return true;
+    }
 
     return isMatchingType && isNumeric;
   },
