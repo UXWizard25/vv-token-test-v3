@@ -10,6 +10,20 @@ const tokensPackageJson = require('../../packages/tokens/package.json');
 const rootPackageJson = require('../../package.json');
 
 // ============================================================================
+// CSS OUTPUT CONFIGURATION
+// ============================================================================
+
+/**
+ * Controls the CSS font-size output unit.
+ * - 'px': Outputs font-size as px values (e.g., "21px") — traditional approach
+ * - 'rem': Outputs font-size as rem values (e.g., "1.3125rem") — accessibility-friendly scaling
+ *
+ * Note: lineHeight is always unitless (ratio-based), independent of this setting.
+ * Note: Native platforms (iOS/Android) are unaffected by this setting.
+ */
+const FONT_SIZE_UNIT = 'px';
+
+// ============================================================================
 // FILE HEADER GENERATORS
 // ============================================================================
 
@@ -504,9 +518,11 @@ const sizePxTransform = {
     const value = token.$value || token.value;
 
     // Only match if type is dimension-related AND value is numeric
-    // Note: fontSize is handled separately by fontSize/rem transform for CSS
+    // Note: fontSize is conditionally included here (px mode) or handled by fontSize/rem (rem mode)
     // Note: lineHeight is handled separately by lineHeight/unitless transform for CSS
-    const isMatchingType = ['spacing', 'size', 'dimension', 'letterSpacing'].includes(type);
+    const dimensionTypes = ['spacing', 'size', 'dimension', 'letterSpacing'];
+    if (FONT_SIZE_UNIT === 'px') dimensionTypes.push('fontSize');
+    const isMatchingType = dimensionTypes.includes(type);
     const isNumeric = typeof value === 'number';
 
     return isMatchingType && isNumeric;
@@ -1264,7 +1280,7 @@ const cssTypographyClassesFormat = ({ dictionary, options }) => {
           output += `${dualSelector} {\n`;
           if (style.fontFamily) output += `  font-family: ${getValueWithAlias('fontFamily', style.fontFamily)};\n`;
           if (style.fontWeight) output += `  font-weight: ${getValueWithAlias('fontWeight', style.fontWeight)};\n`;
-          if (style.fontSize) output += `  font-size: ${getValueWithAlias('fontSize', style.fontSize, 'rem')};\n`;
+          if (style.fontSize) output += `  font-size: ${getValueWithAlias('fontSize', style.fontSize, FONT_SIZE_UNIT)};\n`;
           if (style.lineHeight && style.fontSize) {
             // Calculate unitless ratio (CSS best practice - scales with font-size)
             const ratio = roundValue(style.lineHeight / style.fontSize);
@@ -2126,8 +2142,8 @@ const scssOptimizedComponentTokensFormat = ({ dictionary, options }) => {
  * AFTER all other transforms (color conversion, size conversion, etc.)
  */
 const customTransformGroups = {
-  'custom/css': ['name/custom/kebab', 'color/css', 'custom/size/px', 'fontSize/rem', 'lineHeight/unitless', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
-  'custom/scss': ['name/custom/kebab', 'color/css', 'custom/size/px', 'fontSize/rem', 'lineHeight/unitless', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/css': ['name/custom/kebab', 'color/css', 'custom/size/px', ...(FONT_SIZE_UNIT === 'rem' ? ['fontSize/rem'] : []), 'lineHeight/unitless', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
+  'custom/scss': ['name/custom/kebab', 'color/css', 'custom/size/px', ...(FONT_SIZE_UNIT === 'rem' ? ['fontSize/rem'] : []), 'lineHeight/unitless', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/js': ['name/custom/js', 'color/css', 'custom/size/px', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/ios-swift': ['name/custom/ios-swift', 'custom/color/UIColor', 'custom/size/ios-points', 'custom/opacity', 'custom/fontWeight', 'custom/number', 'value/round'],
   'custom/compose': ['name/custom/compose', 'color/custom/compose', 'size/custom/compose', 'custom/opacity', 'custom/fontWeight', 'custom/number']
