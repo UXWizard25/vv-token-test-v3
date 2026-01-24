@@ -65,6 +65,7 @@ module.exports = {
      * Figma Variable Mode IDs
      * These map mode names to Figma's internal mode identifiers.
      * They change if modes are renamed or recreated in Figma.
+     * ⚠️  Keys must NOT contain hyphens — same constraint as modes/brands sections.
      */
     modes: {
       brands: {
@@ -101,9 +102,14 @@ module.exports = {
 
   // ═══════════════════════════════════════════════════════════════════════════
   // BRANDS — Which brands does this design system support?
+  //
+  // ⚠️  NAMING CONSTRAINT: Brand names must NOT contain hyphens ('-').
+  //     Use camelCase or single words (e.g., 'sportbild', 'myBrand').
+  //     Reason: Brand names become CSS custom property segments
+  //     (e.g., --density-{brand}-...). Hyphens make parsing ambiguous.
   // ═══════════════════════════════════════════════════════════════════════════
   brands: {
-    /** All brands (superset) */
+    /** All brands (superset) — no hyphens allowed in names */
     all: ['bild', 'sportbild', 'advertorial'],
     /** ColorBrand axis: brands with own colors + effects */
     colorBrands: ['bild', 'sportbild'],
@@ -117,11 +123,21 @@ module.exports = {
 
   // ═══════════════════════════════════════════════════════════════════════════
   // MODES — Which modes/variants does the system support?
+  //
+  // ⚠️  NAMING CONSTRAINT: All mode names and breakpoint keys must NOT contain
+  //     hyphens ('-'). Use camelCase or single words.
+  //     Examples: 'light', 'dark', 'highContrast' (NOT 'high-contrast')
+  //              'xs', 'sm', 'extraLarge' (NOT 'extra-large')
+  //              'default', 'extraDense' (NOT 'extra-dense')
+  //     Reason: Mode names are embedded in CSS custom property names
+  //     (e.g., --density-{mode}-stack-space-resp-md). Hyphens in mode names
+  //     make it impossible to distinguish mode boundaries from token segments.
+  //     They also break camelCase conversion for JS/Swift/Kotlin output.
   // ═══════════════════════════════════════════════════════════════════════════
   modes: {
-    /** Color modes (theme) */
+    /** Color modes (theme) — no hyphens allowed */
     color: ['light', 'dark'],
-    /** Density modes */
+    /** Density modes — no hyphens allowed */
     density: ['default', 'dense', 'spacious'],
     /** Display names for density modes (UI labels, Storybook toolbar) */
     densityDisplayNames: { default: 'Default', dense: 'Dense', spacious: 'Spacious' },
@@ -132,6 +148,7 @@ module.exports = {
      * The first breakpoint (xs) is the base — no @media query generated.
      * All subsequent breakpoints generate @media (min-width: Npx) queries.
      * deviceName is used in documentation and release notes.
+     * ⚠️  Keys must NOT contain hyphens (same constraint as mode names).
      */
     breakpoints: {
       xs: { minWidth: 320, deviceName: 'Mobile (default)' },

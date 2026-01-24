@@ -54,6 +54,21 @@ function assertNumber(val, path, min = 0) {
   if (val < min) return error(`${path}: must be >= ${min}`);
 }
 
+/**
+ * Validates that a name does not contain hyphens.
+ *
+ * Hyphens are forbidden in mode/brand names because they are used as segments
+ * in CSS custom property names (e.g., --density-{mode}-stack-space-resp-md).
+ * A hyphenated mode name like "extra-large" would make it impossible to
+ * distinguish mode boundaries from token name segments in the generated output.
+ * It also breaks camelCase conversion for JS/Swift/Kotlin platforms.
+ */
+function assertNoHyphens(val, path) {
+  if (typeof val === 'string' && val.includes('-')) {
+    error(`${path}: must not contain hyphens ('-'). Use camelCase or single words (e.g., 'extraLarge' instead of 'extra-large'). Hyphens in mode/brand names break CSS custom property parsing and native camelCase conversion.`);
+  }
+}
+
 // ─── Section Validators ──────────────────────────────────────────────────────
 
 function validateIdentity(config) {
@@ -113,6 +128,28 @@ function validateSource(config, checkPaths) {
     assertObject(src.modes.breakpoints, 'source.modes.breakpoints');
     assertObject(src.modes.colorModes, 'source.modes.colorModes');
     assertObject(src.modes.densityModes, 'source.modes.densityModes');
+
+    // Validate no hyphens in mode keys
+    if (src.modes.brands) {
+      for (const key of Object.keys(src.modes.brands)) {
+        assertNoHyphens(key, `source.modes.brands: key '${key}'`);
+      }
+    }
+    if (src.modes.breakpoints) {
+      for (const key of Object.keys(src.modes.breakpoints)) {
+        assertNoHyphens(key, `source.modes.breakpoints: key '${key}'`);
+      }
+    }
+    if (src.modes.colorModes) {
+      for (const key of Object.keys(src.modes.colorModes)) {
+        assertNoHyphens(key, `source.modes.colorModes: key '${key}'`);
+      }
+    }
+    if (src.modes.densityModes) {
+      for (const key of Object.keys(src.modes.densityModes)) {
+        assertNoHyphens(key, `source.modes.densityModes: key '${key}'`);
+      }
+    }
   }
 
   // Validate pathConventions
@@ -146,6 +183,13 @@ function validateBrands(config) {
   assertArray(brands.contentBrands, 'brands.contentBrands');
   assertString(brands.defaultBrand, 'brands.defaultBrand');
   assertObject(brands.displayNames, 'brands.displayNames');
+
+  // Validate no hyphens in brand names
+  if (brands.all && Array.isArray(brands.all)) {
+    for (const b of brands.all) {
+      assertNoHyphens(b, `brands.all: '${b}'`);
+    }
+  }
 
   // Cross-reference checks
   if (brands.all && brands.defaultBrand) {
@@ -200,10 +244,26 @@ function validateModes(config) {
   assertArray(modes.density, 'modes.density', 1);
   assertObject(modes.breakpoints, 'modes.breakpoints');
 
+  // Validate no hyphens in mode names
+  if (modes.color && Array.isArray(modes.color)) {
+    for (const c of modes.color) {
+      assertNoHyphens(c, `modes.color: '${c}'`);
+    }
+  }
+  if (modes.density && Array.isArray(modes.density)) {
+    for (const d of modes.density) {
+      assertNoHyphens(d, `modes.density: '${d}'`);
+    }
+  }
+
   // Validate breakpoints structure
   if (modes.breakpoints) {
     const bpKeys = Object.keys(modes.breakpoints);
     if (bpKeys.length < 2) error('modes.breakpoints: need at least 2 breakpoints');
+
+    for (const key of bpKeys) {
+      assertNoHyphens(key, `modes.breakpoints: key '${key}'`);
+    }
 
     let prevWidth = 0;
     for (const [key, bp] of Object.entries(modes.breakpoints)) {
