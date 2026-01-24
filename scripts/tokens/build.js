@@ -32,6 +32,10 @@ const BRANDS = pipelineConfig.brands.all;
 const COLOR_BRANDS = pipelineConfig.brands.colorBrands;
 const CONTENT_BRANDS = pipelineConfig.brands.contentBrands;
 const BREAKPOINTS = Object.keys(pipelineConfig.modes.breakpoints);
+const NON_BASE_BREAKPOINTS = BREAKPOINTS.slice(1); // All except first (mobile-first base)
+const BREAKPOINT_VALUES = Object.fromEntries(
+  Object.entries(pipelineConfig.modes.breakpoints).map(([key, bp]) => [key, bp.minWidth])
+); // e.g. { xs: 320, sm: 390, md: 600, lg: 1024 }
 const COLOR_MODES = pipelineConfig.modes.color;
 const DENSITY_MODES = pipelineConfig.modes.density;
 
@@ -155,10 +159,20 @@ function isConstantAcrossBreakpoints(tokenValues) {
   const firstBp = tokenValues[breakpoints[0]];
   return breakpoints.every(bp => {
     const bpValues = tokenValues[bp];
-    return bpValues.default === firstBp.default &&
-           bpValues.dense === firstBp.dense &&
-           bpValues.spacious === firstBp.spacious;
+    return DENSITY_MODES.every(dm => bpValues[dm] === firstBp[dm]);
   });
+}
+
+/**
+ * Resolves a breakpoint value with fallback chain (falls back to smaller breakpoints).
+ * E.g., for target 'md', tries v.md, then v.sm, then v.xs.
+ */
+function resolveBreakpointFallback(values, targetBp) {
+  const idx = BREAKPOINTS.indexOf(targetBp);
+  for (let i = idx; i >= 0; i--) {
+    if (values[BREAKPOINTS[i]]) return values[BREAKPOINTS[i]];
+  }
+  return values[BREAKPOINTS[0]];
 }
 
 /**
@@ -205,14 +219,15 @@ function generateAndroidDensityResolvers() {
   if (constantTokens.length > 0) {
     output += '    // Constant spacing tokens (same value across all breakpoints)\n\n';
     for (const token of constantTokens) {
-      const values = token.values.xs; // All breakpoints have same values
+      const values = token.values[BREAKPOINTS[0]]; // All breakpoints have same values
       output += `    /** ${token.name} - constant spacing, varies only by density mode */
     val ${token.name}: Dp
-        @Composable @ReadOnlyComposable get() = when (density) {
-            Density.Dense -> ${values.dense}.dp
-            Density.Default -> ${values.default}.dp
-            Density.Spacious -> ${values.spacious}.dp
-        }
+        @Composable @ReadOnlyComposable get() = when (density) {\n`;
+      for (const dm of DENSITY_MODES) {
+        const enumName = dm.charAt(0).toUpperCase() + dm.slice(1);
+        output += `            Density.${enumName} -> ${values[dm]}.dp\n`;
+      }
+      output += `        }
 
 `;
     }
@@ -221,32 +236,24 @@ function generateAndroidDensityResolvers() {
   // Generate responsive token resolvers (varies by breakpoint AND density)
   if (responsiveTokens.length > 0) {
     output += '    // Responsive spacing tokens (resolved by WindowSizeClass × Density)\n\n';
+    const androidSizeClasses = Object.entries(pipelineConfig.platforms.android.sizeClasses);
     for (const token of responsiveTokens) {
       const v = token.values;
-      // Map WindowSizeClass: Compact→sm, Medium→md, Expanded→lg
-      const sm = v.sm || v.xs;
-      const md = v.md || v.sm || v.xs;
-      const lg = v.lg || v.md || v.sm || v.xs;
 
       output += `    /** ${token.name} - responsive spacing, varies by WindowSizeClass and density mode */
     val ${token.name}: Dp
-        @Composable @ReadOnlyComposable get() = when (sizeClass) {
-            WindowSizeClass.Compact -> when (density) {
-                Density.Dense -> ${sm.dense}.dp
-                Density.Default -> ${sm.default}.dp
-                Density.Spacious -> ${sm.spacious}.dp
-            }
-            WindowSizeClass.Medium -> when (density) {
-                Density.Dense -> ${md.dense}.dp
-                Density.Default -> ${md.default}.dp
-                Density.Spacious -> ${md.spacious}.dp
-            }
-            WindowSizeClass.Expanded -> when (density) {
-                Density.Dense -> ${lg.dense}.dp
-                Density.Default -> ${lg.default}.dp
-                Density.Spacious -> ${lg.spacious}.dp
-            }
+        @Composable @ReadOnlyComposable get() = when (sizeClass) {\n`;
+      for (const [sizeClassName, bp] of androidSizeClasses) {
+        const resolved = resolveBreakpointFallback(v, bp);
+        const scPascal = sizeClassName.charAt(0).toUpperCase() + sizeClassName.slice(1);
+        output += `            WindowSizeClass.${scPascal} -> when (density) {\n`;
+        for (const dm of DENSITY_MODES) {
+          const enumName = dm.charAt(0).toUpperCase() + dm.slice(1);
+          output += `                Density.${enumName} -> ${resolved[dm]}.dp\n`;
         }
+        output += `            }\n`;
+      }
+      output += `        }
 
 `;
     }
@@ -297,14 +304,14 @@ function generateiOSDensityResolvers() {
   if (constantTokens.length > 0) {
     output += '    // Constant spacing tokens (same value across all breakpoints)\n\n';
     for (const token of constantTokens) {
-      const values = token.values.xs; // All breakpoints have same values
+      const values = token.values[BREAKPOINTS[0]]; // All breakpoints have same values
       output += `    /// ${token.name} - constant spacing, varies only by density mode
     public var ${token.name}: CGFloat {
-        switch density {
-        case .dense: return ${values.dense}
-        case .default: return ${values.default}
-        case .spacious: return ${values.spacious}
-        }
+        switch density {\n`;
+      for (const dm of DENSITY_MODES) {
+        output += `        case .${dm}: return ${values[dm]}\n`;
+      }
+      output += `        }
     }
 
 `;
@@ -314,28 +321,32 @@ function generateiOSDensityResolvers() {
   // Generate responsive token resolvers (varies by breakpoint AND density)
   if (responsiveTokens.length > 0) {
     output += '    // Responsive spacing tokens (resolved by SizeClass × Density)\n\n';
+    const iosSizeClasses = Object.entries(pipelineConfig.platforms.ios.sizeClasses);
     for (const token of responsiveTokens) {
       const v = token.values;
-      // Map SizeClass: compact→sm, regular→lg
-      const sm = v.sm || v.xs;
-      const lg = v.lg || v.md || v.sm || v.xs;
 
       output += `    /// ${token.name} - responsive spacing, varies by SizeClass and density mode
-    public var ${token.name}: CGFloat {
-        if sizeClass == .compact {
-            switch density {
-            case .dense: return ${sm.dense}
-            case .default: return ${sm.default}
-            case .spacious: return ${sm.spacious}
-            }
-        } else {
-            switch density {
-            case .dense: return ${lg.dense}
-            case .default: return ${lg.default}
-            case .spacious: return ${lg.spacious}
-            }
-        }
-    }
+    public var ${token.name}: CGFloat {\n`;
+      // iOS uses if/else for exactly 2 size classes
+      const [firstSC, ...restSC] = iosSizeClasses;
+      const firstResolved = resolveBreakpointFallback(v, firstSC[1]);
+      output += `        if sizeClass == .${firstSC[0]} {\n`;
+      output += `            switch density {\n`;
+      for (const dm of DENSITY_MODES) {
+        output += `            case .${dm}: return ${firstResolved[dm]}\n`;
+      }
+      output += `            }\n`;
+      output += `        } else {\n`;
+      // Use the last size class for the else branch
+      const lastSC = iosSizeClasses[iosSizeClasses.length - 1];
+      const lastResolved = resolveBreakpointFallback(v, lastSC[1]);
+      output += `            switch density {\n`;
+      for (const dm of DENSITY_MODES) {
+        output += `            case .${dm}: return ${lastResolved[dm]}\n`;
+      }
+      output += `            }\n`;
+      output += `        }\n`;
+      output += `    }
 
 `;
     }
@@ -1182,10 +1193,9 @@ function createSharedDensityConfig(densityMode) {
 async function buildSharedDensityTokens() {
   console.log('\n🎛️  Building Shared Density Tokens:\n');
 
-  const densityModes = ['default', 'dense', 'spacious'];
   let successful = 0;
 
-  for (const mode of densityModes) {
+  for (const mode of DENSITY_MODES) {
     const config = createSharedDensityConfig(mode);
 
     if (!config) {
@@ -1204,7 +1214,7 @@ async function buildSharedDensityTokens() {
     }
   }
 
-  return { total: densityModes.length, successful };
+  return { total: DENSITY_MODES.length, successful };
 }
 
 /**
@@ -2668,7 +2678,7 @@ async function generateResponsiveFile(dir, baseName, brand, breakpointConfig, op
 
   // Media queries for SM, MD, LG - skip if using var() references (Typography)
   if (!skipMediaQueries) {
-    for (const bp of ['sm', 'md', 'lg']) {
+    for (const bp of NON_BASE_BREAKPOINTS) {
       if (breakpointClasses[bp] && breakpointClasses[bp].length > 0 && breakpointConfig[bp]) {
         output += `@media (min-width: ${breakpointConfig[bp]}) {\n`;
         for (const cls of breakpointClasses[bp]) {
@@ -2741,7 +2751,7 @@ async function generateResponsiveBreakpointFile(dir, brand, breakpointConfig) {
 
   // Media queries for SM, MD, LG - only output CHANGED values
   // Use cascade optimization: compare each breakpoint to the previous one
-  const breakpointOrder = ['sm', 'md', 'lg'];
+  const breakpointOrder = NON_BASE_BREAKPOINTS;
   let previousVars = baseVars; // Start with XS as the "previous"
 
   for (const bp of breakpointOrder) {
@@ -2841,7 +2851,7 @@ async function generateComponentBreakpointResponsive(dir, componentName, brand, 
 
   // Media queries for SM, MD, LG - only output CHANGED values
   // Use cascade optimization: compare each breakpoint to the previous one
-  const breakpointOrder = ['sm', 'md', 'lg'];
+  const breakpointOrder = NON_BASE_BREAKPOINTS;
   let previousVars = baseVars; // Start with XS as the "previous"
 
   for (const bp of breakpointOrder) {
@@ -3137,7 +3147,7 @@ async function aggregateComposeComponents() {
         const tokenGroups = {
           colors: { light: [], dark: [] },
           sizing: { compact: [], medium: [], expanded: [] },
-          density: { default: [], dense: [], spacious: [] },
+          density: Object.fromEntries(DENSITY_MODES.map(dm => [dm, []])),
           typography: { compact: [], medium: [], expanded: [] },
           effects: { light: [], dark: [] }
         };
@@ -3158,12 +3168,9 @@ async function aggregateComposeComponents() {
             tokenGroups.sizing.medium = tokens;
           } else if (lowerFile.includes('sizingexpanded')) {
             tokenGroups.sizing.expanded = tokens;
-          } else if (lowerFile.includes('densitydense')) {
-            tokenGroups.density.dense = tokens;
-          } else if (lowerFile.includes('densitydefault')) {
-            tokenGroups.density.default = tokens;
-          } else if (lowerFile.includes('densityspacious')) {
-            tokenGroups.density.spacious = tokens;
+          } else if (lowerFile.includes('density')) {
+            const matchedDm = DENSITY_MODES.find(dm => lowerFile.includes(`density${dm}`));
+            if (matchedDm) tokenGroups.density[matchedDm] = tokens;
           } else if (lowerFile.includes('typographycompact')) {
             tokenGroups.typography.compact = tokens;
           } else if (lowerFile.includes('typographymedium')) {
@@ -3295,9 +3302,7 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
     ...filteredSizing.compact,
     ...filteredSizing.medium,
     ...filteredSizing.expanded,
-    ...tokenGroups.density.dense,
-    ...tokenGroups.density.default,
-    ...tokenGroups.density.spacious,
+    ...DENSITY_MODES.flatMap(dm => tokenGroups.density[dm]),
     ...tokenGroups.typography.compact,
     ...tokenGroups.typography.medium,
     ...tokenGroups.typography.expanded,
@@ -3309,9 +3314,7 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   const hasDp = allTokens.some(t => t.value.includes('.dp'));
   const hasSp = allTokens.some(t => t.value.includes('.sp'));
   const hasFontStyle = allTokens.some(t => t.value.includes('FontStyle.'));
-  const hasDensityTokens = tokenGroups.density.dense.length > 0 ||
-      tokenGroups.density.default.length > 0 ||
-      tokenGroups.density.spacious.length > 0;
+  const hasDensityTokens = DENSITY_MODES.some(dm => tokenGroups.density[dm].length > 0);
   const hasMatrixDensityTokens = matrixTokenNames.length > 0;
   const hasColorTokens = tokenGroups.colors.light.length > 0 || tokenGroups.colors.dark.length > 0;
   const hasSizingTokens = filteredSizing.compact.length > 0 ||
@@ -3484,9 +3487,7 @@ object ${componentName}Tokens {
          */
         @Composable
         fun current(): SizingTokens = when (DesignSystemTheme.sizeClass) {
-            WindowSizeClass.Compact -> Compact
-            WindowSizeClass.Medium -> Medium
-            WindowSizeClass.Expanded -> Expanded
+${Object.keys(pipelineConfig.platforms.android.sizeClasses).map(sc => { const p = sc.charAt(0).toUpperCase() + sc.slice(1); return `            WindowSizeClass.${p} -> ${p}`; }).join('\n')}
         }
 
         /**
@@ -3570,7 +3571,7 @@ object ${componentName}Tokens {
     // Collect token info for interface
     const tokenInfo = new Map();
     matrixTokens.forEach(([name, data]) => {
-      const sampleValue = data.values.sm?.default ?? data.values.xs?.default ?? 0;
+      const sampleValue = data.values[BREAKPOINTS[1]]?.[DENSITY_MODES[0]] ?? data.values[BREAKPOINTS[0]]?.[DENSITY_MODES[0]] ?? 0;
       const formattedValue = formatKotlinValue(sampleValue, name);
       tokenInfo.set(name, getKotlinType(formattedValue));
     });
@@ -3592,21 +3593,14 @@ object ${componentName}Tokens {
             val sizeClass = DesignSystemTheme.sizeClass
             val density = DesignSystemTheme.density
             return when (sizeClass) {
-                WindowSizeClass.Compact -> when (density) {
-                    ${ANDROID_PKG}.shared.Density.Dense -> CompactDense
-                    ${ANDROID_PKG}.shared.Density.Default -> CompactDefault
-                    ${ANDROID_PKG}.shared.Density.Spacious -> CompactSpacious
-                }
-                WindowSizeClass.Medium -> when (density) {
-                    ${ANDROID_PKG}.shared.Density.Dense -> MediumDense
-                    ${ANDROID_PKG}.shared.Density.Default -> MediumDefault
-                    ${ANDROID_PKG}.shared.Density.Spacious -> MediumSpacious
-                }
-                WindowSizeClass.Expanded -> when (density) {
-                    ${ANDROID_PKG}.shared.Density.Dense -> ExpandedDense
-                    ${ANDROID_PKG}.shared.Density.Default -> ExpandedDefault
-                    ${ANDROID_PKG}.shared.Density.Spacious -> ExpandedSpacious
-                }
+${Object.keys(pipelineConfig.platforms.android.sizeClasses).map(sc => {
+  const scPascal = sc.charAt(0).toUpperCase() + sc.slice(1);
+  const densityLines = DENSITY_MODES.map(dm => {
+    const dmPascal = dm.charAt(0).toUpperCase() + dm.slice(1);
+    return `                    ${ANDROID_PKG}.shared.Density.${dmPascal} -> ${scPascal}${dmPascal}`;
+  }).join('\n');
+  return `                WindowSizeClass.${scPascal} -> when (density) {\n${densityLines}\n                }`;
+}).join('\n')}
             }
         }
 
@@ -3622,24 +3616,19 @@ object ${componentName}Tokens {
 
 `;
 
-    // Android WindowSizeClass mapping: Compact→sm, Medium→md, Expanded→lg
-    const androidBreakpointMap = {
-      Compact: 'sm',
-      Medium: 'md',
-      Expanded: 'lg'
-    };
-    const densityModes = ['Dense', 'Default', 'Spacious'];
-    const densityModeKeys = { Dense: 'dense', Default: 'default', Spacious: 'spacious' };
+    // Android WindowSizeClass × Density matrix (dynamic from config)
+    const androidBreakpointMap = pipelineConfig.platforms.android.sizeClasses;
 
-    // Generate 9 objects (3 WindowSizeClasses × 3 DensityModes)
+    // Generate N×M objects (WindowSizeClasses × DensityModes)
     for (const [sizeClassName, breakpointKey] of Object.entries(androidBreakpointMap)) {
-      for (const densityMode of densityModes) {
-        const objectName = `${sizeClassName}${densityMode}`;
-        const densityKey = densityModeKeys[densityMode];
+      const sizeClassPascal = sizeClassName.charAt(0).toUpperCase() + sizeClassName.slice(1);
+      for (const densityKey of DENSITY_MODES) {
+        const densityPascal = densityKey.charAt(0).toUpperCase() + densityKey.slice(1);
+        const objectName = `${sizeClassPascal}${densityPascal}`;
 
         output += `        object ${objectName} : DensityTokens {\n`;
         matrixTokens.forEach(([tokenName, tokenData]) => {
-          const value = tokenData.values[breakpointKey]?.[densityKey] ?? tokenData.values.xs?.[densityKey] ?? 0;
+          const value = tokenData.values[breakpointKey]?.[densityKey] ?? tokenData.values[BREAKPOINTS[0]]?.[densityKey] ?? 0;
           const formattedValue = formatKotlinValue(value, tokenName);
           output += `            override val ${tokenName} = ${formattedValue}\n`;
         });
@@ -3650,7 +3639,7 @@ object ${componentName}Tokens {
   } else if (hasDensityTokens) {
     // Fallback: density-only resolution (no WindowSizeClass dimension)
     const densityTokenNames = new Map();
-    [...tokenGroups.density.dense, ...tokenGroups.density.default, ...tokenGroups.density.spacious].forEach(t => {
+    DENSITY_MODES.flatMap(dm => tokenGroups.density[dm]).forEach(t => {
       if (!densityTokenNames.has(t.name)) {
         densityTokenNames.set(t.name, t.value);
       }
@@ -3670,9 +3659,10 @@ object ${componentName}Tokens {
          */
         @Composable
         fun current(): DensityTokens = when (DesignSystemTheme.density) {
-            ${ANDROID_PKG}.shared.Density.Dense -> Dense
-            ${ANDROID_PKG}.shared.Density.Default -> Default
-            ${ANDROID_PKG}.shared.Density.Spacious -> Spacious
+${DENSITY_MODES.map(dm => {
+  const dmPascal = dm.charAt(0).toUpperCase() + dm.slice(1);
+  return `            ${ANDROID_PKG}.shared.Density.${dmPascal} -> ${dmPascal}`;
+}).join('\n')}
         }
 
         /**
@@ -3695,26 +3685,15 @@ object ${componentName}Tokens {
     output += `        }
 
 `;
-    if (tokenGroups.density.dense.length > 0) {
-      output += `        object Dense : DensityTokens {\n`;
-      tokenGroups.density.dense.forEach(t => {
-        output += `            override val ${t.name} = ${t.value}\n`;
-      });
-      output += `        }\n`;
-    }
-    if (tokenGroups.density.default.length > 0) {
-      output += `        object Default : DensityTokens {\n`;
-      tokenGroups.density.default.forEach(t => {
-        output += `            override val ${t.name} = ${t.value}\n`;
-      });
-      output += `        }\n`;
-    }
-    if (tokenGroups.density.spacious.length > 0) {
-      output += `        object Spacious : DensityTokens {\n`;
-      tokenGroups.density.spacious.forEach(t => {
-        output += `            override val ${t.name} = ${t.value}\n`;
-      });
-      output += `        }\n`;
+    for (const dm of DENSITY_MODES) {
+      if (tokenGroups.density[dm].length > 0) {
+        const dmPascal = dm.charAt(0).toUpperCase() + dm.slice(1);
+        output += `        object ${dmPascal} : DensityTokens {\n`;
+        tokenGroups.density[dm].forEach(t => {
+          output += `            override val ${t.name} = ${t.value}\n`;
+        });
+        output += `        }\n`;
+      }
     }
     output += `    }\n`;
   }
@@ -3743,9 +3722,7 @@ object ${componentName}Tokens {
          */
         @Composable
         fun current(): TypographyTokens = when (DesignSystemTheme.sizeClass) {
-            WindowSizeClass.Compact -> Compact
-            WindowSizeClass.Medium -> Medium
-            WindowSizeClass.Expanded -> Expanded
+${Object.keys(pipelineConfig.platforms.android.sizeClasses).map(sc => { const p = sc.charAt(0).toUpperCase() + sc.slice(1); return `            WindowSizeClass.${p} -> ${p}`; }).join('\n')}
         }
 
         /**
@@ -3913,7 +3890,7 @@ async function aggregateSwiftUIComponents() {
         const tokenGroups = {
           colors: { light: [], dark: [] },
           sizing: { compact: [], regular: [] },
-          density: { default: [], dense: [], spacious: [] },
+          density: Object.fromEntries(DENSITY_MODES.map(dm => [dm, []])),
           typography: { compact: [], regular: [] },
           effects: { light: [], dark: [] }
         };
@@ -3940,12 +3917,9 @@ async function aggregateSwiftUIComponents() {
             tokenGroups.sizing.compact = tokens;
           } else if (lowerFile.includes('sizingregular')) {
             tokenGroups.sizing.regular = tokens;
-          } else if (lowerFile.includes('densitydense')) {
-            tokenGroups.density.dense = tokens;
-          } else if (lowerFile.includes('densitydefault')) {
-            tokenGroups.density.default = tokens;
-          } else if (lowerFile.includes('densityspacious')) {
-            tokenGroups.density.spacious = tokens;
+          } else if (lowerFile.includes('density')) {
+            const matchedDm = DENSITY_MODES.find(dm => lowerFile.includes(`density${dm}`));
+            if (matchedDm) tokenGroups.density[matchedDm] = tokens;
           } else if (lowerFile.includes('effectslight') || lowerFile.includes('effectlight')) {
             tokenGroups.effects.light = tokens;
           } else if (lowerFile.includes('effectsdark') || lowerFile.includes('effectdark')) {
@@ -4045,9 +4019,7 @@ function generateAggregatedSwiftComponentFile(brand, componentName, tokenGroups)
   const hasColorTokens = tokenGroups.colors.light.length > 0 || tokenGroups.colors.dark.length > 0;
   const hasSizingTokens = filteredSizing.compact.length > 0 || filteredSizing.regular.length > 0;
   const hasMatrixDensityTokens = matrixTokenNames.length > 0;
-  const hasDensityTokens = tokenGroups.density.dense.length > 0 ||
-      tokenGroups.density.default.length > 0 ||
-      tokenGroups.density.spacious.length > 0;
+  const hasDensityTokens = DENSITY_MODES.some(dm => tokenGroups.density[dm].length > 0);
   const hasTypographyTokens = tokenGroups.typography.compact.length > 0 || tokenGroups.typography.regular.length > 0;
   const hasEffectsTokens = tokenGroups.effects && (tokenGroups.effects.light.length > 0 || tokenGroups.effects.dark.length > 0);
 
@@ -4213,7 +4185,7 @@ public enum ${tokenClassName} {
     // Collect token info for protocol
     const tokenInfo = new Map();
     matrixTokens.forEach(([name, data]) => {
-      const sampleValue = data.values.sm?.default ?? data.values.xs?.default ?? 0;
+      const sampleValue = data.values[BREAKPOINTS[1]]?.[DENSITY_MODES[0]] ?? data.values[BREAKPOINTS[0]]?.[DENSITY_MODES[0]] ?? 0;
       tokenInfo.set(name, getSwiftType(sampleValue, name));
     });
 
@@ -4236,29 +4208,26 @@ public enum ${tokenClassName} {
         /// Returns density tokens resolved by SizeClass × DensityMode
         public static func current(for sizeClass: SizeClass, density: Density) -> any ${densityProtocolName} {
             switch (sizeClass, density) {
-            case (.compact, .dense): return CompactDense.shared
-            case (.compact, .default): return CompactDefault.shared
-            case (.compact, .spacious): return CompactSpacious.shared
-            case (.regular, .dense): return RegularDense.shared
-            case (.regular, .default): return RegularDefault.shared
-            case (.regular, .spacious): return RegularSpacious.shared
+${Object.keys(pipelineConfig.platforms.ios.sizeClasses).flatMap(sc =>
+  DENSITY_MODES.map(dm => {
+    const scPascal = sc.charAt(0).toUpperCase() + sc.slice(1);
+    const dmPascal = dm.charAt(0).toUpperCase() + dm.slice(1);
+    return `            case (.${sc}, .${dm}): return ${scPascal}${dmPascal}.shared`;
+  })
+).join('\n')}
             }
         }
 `;
 
-    // iOS SizeClass mapping: compact→sm, regular→lg
-    const iosSizeClassMap = {
-      Compact: 'sm',
-      Regular: 'lg'
-    };
-    const densityModes = ['Dense', 'Default', 'Spacious'];
-    const densityModeKeys = { Dense: 'dense', Default: 'default', Spacious: 'spacious' };
+    // iOS SizeClass × Density matrix (dynamic from config)
+    const iosSizeClassMap = pipelineConfig.platforms.ios.sizeClasses;
 
-    // Generate 6 structs (2 SizeClasses × 3 DensityModes)
-    for (const [sizeClassName, breakpointKey] of Object.entries(iosSizeClassMap)) {
-      for (const densityMode of densityModes) {
-        const structName = `${sizeClassName}${densityMode}`;
-        const densityKey = densityModeKeys[densityMode];
+    // Generate N×M structs (SizeClasses × DensityModes)
+    for (const [sizeClassKey, breakpointKey] of Object.entries(iosSizeClassMap)) {
+      const sizeClassName = sizeClassKey.charAt(0).toUpperCase() + sizeClassKey.slice(1);
+      for (const densityKey of DENSITY_MODES) {
+        const densityPascal = densityKey.charAt(0).toUpperCase() + densityKey.slice(1);
+        const structName = `${sizeClassName}${densityPascal}`;
 
         output += `
         public struct ${structName}: ${densityProtocolName} {
@@ -4266,7 +4235,7 @@ public enum ${tokenClassName} {
             private init() {}
 `;
         matrixTokens.forEach(([tokenName, tokenData]) => {
-          const value = tokenData.values[breakpointKey]?.[densityKey] ?? tokenData.values.xs?.[densityKey] ?? 0;
+          const value = tokenData.values[breakpointKey]?.[densityKey] ?? tokenData.values[BREAKPOINTS[0]]?.[densityKey] ?? 0;
           output += `            public let ${tokenName}: CGFloat = ${value}\n`;
         });
         output += `        }\n`;
@@ -4276,7 +4245,7 @@ public enum ${tokenClassName} {
   } else if (hasDensityTokens) {
     // Fallback: density-only resolution
     const densityTokenNames = new Map();
-    [...tokenGroups.density.dense, ...tokenGroups.density.default, ...tokenGroups.density.spacious].forEach(t => {
+    DENSITY_MODES.flatMap(dm => tokenGroups.density[dm]).forEach(t => {
       if (!densityTokenNames.has(t.name)) {
         densityTokenNames.set(t.name, { type: t.type, value: t.value });
       }
@@ -4301,51 +4270,33 @@ public enum ${tokenClassName} {
         /// Returns density tokens for the specified density mode
         public static func current(for density: Density) -> any ${densityFallbackProtocolName} {
             switch density {
-            case .dense: return Dense.shared
-            case .default: return Default.shared
-            case .spacious: return Spacious.shared
+${DENSITY_MODES.map(dm => {
+  const dmPascal = dm.charAt(0).toUpperCase() + dm.slice(1);
+  return `            case .${dm}: return ${dmPascal}.shared`;
+}).join('\n')}
             }
         }
 
-        public static var dense: Dense { Dense.shared }
-        public static var \`default\`: Default { Default.shared }
-        public static var spacious: Spacious { Spacious.shared }
+${DENSITY_MODES.map(dm => {
+  const dmPascal = dm.charAt(0).toUpperCase() + dm.slice(1);
+  const varName = dm === 'default' ? '`default`' : dm;
+  return `        public static var ${varName}: ${dmPascal} { ${dmPascal}.shared }`;
+}).join('\n')}
 `;
 
-    if (tokenGroups.density.dense.length > 0) {
-      output += `
-        public struct Dense: ${densityFallbackProtocolName} {
-            public static let shared = Dense()
+    for (const dm of DENSITY_MODES) {
+      if (tokenGroups.density[dm].length > 0) {
+        const dmPascal = dm.charAt(0).toUpperCase() + dm.slice(1);
+        output += `
+        public struct ${dmPascal}: ${densityFallbackProtocolName} {
+            public static let shared = ${dmPascal}()
             private init() {}
 `;
-      tokenGroups.density.dense.forEach(t => {
-        output += `            public let ${t.name}: ${t.type} = ${t.value}\n`;
-      });
-      output += `        }\n`;
-    }
-
-    if (tokenGroups.density.default.length > 0) {
-      output += `
-        public struct Default: ${densityFallbackProtocolName} {
-            public static let shared = Default()
-            private init() {}
-`;
-      tokenGroups.density.default.forEach(t => {
-        output += `            public let ${t.name}: ${t.type} = ${t.value}\n`;
-      });
-      output += `        }\n`;
-    }
-
-    if (tokenGroups.density.spacious.length > 0) {
-      output += `
-        public struct Spacious: ${densityFallbackProtocolName} {
-            public static let shared = Spacious()
-            private init() {}
-`;
-      tokenGroups.density.spacious.forEach(t => {
-        output += `            public let ${t.name}: ${t.type} = ${t.value}\n`;
-      });
-      output += `        }\n`;
+        tokenGroups.density[dm].forEach(t => {
+          output += `            public let ${t.name}: ${t.type} = ${t.value}\n`;
+        });
+        output += `        }\n`;
+      }
     }
     output += `    }\n`;
   }
@@ -5597,9 +5548,8 @@ function generateSharedDesignDensitySchemeFile() {
     const responsiveTokens = tokens.filter(t => !t.toLowerCase().includes('const'));
 
     // Group responsive tokens by breakpoint (normalized names use lowercase breakpoints)
-    const breakpoints = ['xs', 'sm', 'md', 'lg'];
     const respByBreakpoint = {};
-    breakpoints.forEach(bp => {
+    BREAKPOINTS.forEach(bp => {
       // Match tokens that start with 'density' followed by breakpoint (e.g., 'densityXs...')
       respByBreakpoint[bp] = responsiveTokens.filter(t => {
         const regex = new RegExp(`^density${bp.charAt(0).toUpperCase() + bp.slice(1)}`, 'i');
@@ -5618,7 +5568,7 @@ function generateSharedDesignDensitySchemeFile() {
     // Generate responsive properties grouped by breakpoint
     if (responsiveTokens.length > 0) {
       interfaceProperties += '\n    // Responsive spacing (per breakpoint)\n';
-      breakpoints.forEach(bp => {
+      BREAKPOINTS.forEach(bp => {
         const bpTokens = respByBreakpoint[bp];
         if (bpTokens.length > 0) {
           interfaceProperties += `    // ${bp.toUpperCase()} breakpoint\n`;
@@ -5716,33 +5666,34 @@ import ${ANDROID_PKG}.shared.DensitySpacious`;
     return `        ColorBrand.${brandPascal} -> if (darkTheme) ${brandPascal}DarkColors else ${brandPascal}LightColors`;
   }).join('\n');
 
-  // Generate sizing selection cases (Material 3: Compact, Medium, Expanded)
+  // Generate sizing selection cases (dynamic from Android sizeClasses config)
+  const androidSizeClassNames = Object.keys(pipelineConfig.platforms.android.sizeClasses);
   const sizingCases = CONTENT_BRANDS.map(brand => {
     const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-    return `        ContentBrand.${brandPascal} -> when (sizeClass) {
-            WindowSizeClass.Compact -> ${brandPascal}SizingCompact
-            WindowSizeClass.Medium -> ${brandPascal}SizingMedium
-            WindowSizeClass.Expanded -> ${brandPascal}SizingExpanded
-        }`;
+    const sizeClassLines = androidSizeClassNames.map(sc => {
+      const scPascal = sc.charAt(0).toUpperCase() + sc.slice(1);
+      return `            WindowSizeClass.${scPascal} -> ${brandPascal}Sizing${scPascal}`;
+    }).join('\n');
+    return `        ContentBrand.${brandPascal} -> when (sizeClass) {\n${sizeClassLines}\n        }`;
   }).join('\n');
 
-  // Generate typography selection cases (Material 3: Compact, Medium, Expanded)
+  // Generate typography selection cases (dynamic from Android sizeClasses config)
   const typographyCases = CONTENT_BRANDS.map(brand => {
     const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-    return `        ContentBrand.${brandPascal} -> when (sizeClass) {
-            WindowSizeClass.Compact -> ${brandPascal}TypographyCompact
-            WindowSizeClass.Medium -> ${brandPascal}TypographyMedium
-            WindowSizeClass.Expanded -> ${brandPascal}TypographyExpanded
-        }`;
+    const sizeClassLines = androidSizeClassNames.map(sc => {
+      const scPascal = sc.charAt(0).toUpperCase() + sc.slice(1);
+      return `            WindowSizeClass.${scPascal} -> ${brandPascal}Typography${scPascal}`;
+    }).join('\n');
+    return `        ContentBrand.${brandPascal} -> when (sizeClass) {\n${sizeClassLines}\n        }`;
   }).join('\n');
 
   // Density spacing is brand-independent (like Effects)
   // Simple when on density mode only, no ContentBrand needed
-  const densitySelection = `when (density) {
-        Density.Default -> DensityDefault
-        Density.Dense -> DensityDense
-        Density.Spacious -> DensitySpacious
-    }`;
+  const densityLines = DENSITY_MODES.map(dm => {
+    const enumName = dm.charAt(0).toUpperCase() + dm.slice(1);
+    return `        Density.${enumName} -> Density${enumName}`;
+  }).join('\n');
+  const densitySelection = `when (density) {\n${densityLines}\n    }`;
 
   let output = generateFileHeader({
     fileName: 'DesignSystemTheme.kt',
@@ -6819,6 +6770,43 @@ public extension View {
 
   const densityPropertyDeclarations = densityProperties.map(prop => `    var ${prop}: CGFloat { get }`).join('\n');
 
+  // Generate dynamic switch cases for the iOS DesignSystemTheme
+  const iosSizeClassEntries = Object.entries(pipelineConfig.platforms.ios.sizeClasses);
+  const firstIOSSizeClass = iosSizeClassEntries[0][0]; // e.g. 'compact'
+  const lastIOSSizeClass = iosSizeClassEntries[iosSizeClassEntries.length - 1][0]; // e.g. 'regular'
+  const firstIOSSCPascal = firstIOSSizeClass.charAt(0).toUpperCase() + firstIOSSizeClass.slice(1);
+  const lastIOSSCPascal = lastIOSSizeClass.charAt(0).toUpperCase() + lastIOSSizeClass.slice(1);
+
+  // Colors switch: colorBrand → light/dark colors
+  const iosColorsCases = COLOR_BRANDS.map(brand => {
+    const bp = brand.charAt(0).toUpperCase() + brand.slice(1);
+    return `        case .${brand}:\n            return isDarkTheme ? ${bp}DarkColors.shared : ${bp}LightColors.shared`;
+  }).join('\n');
+
+  // Effects switch: colorBrand → light/dark effects
+  const iosEffectsCases = COLOR_BRANDS.map(brand => {
+    const bp = brand.charAt(0).toUpperCase() + brand.slice(1);
+    return `        case .${brand}:\n            return isDarkTheme ? ${bp}EffectsDark.shared : ${bp}EffectsLight.shared`;
+  }).join('\n');
+
+  // Sizing switch: contentBrand → compact/regular sizing
+  const iosSizingCases = CONTENT_BRANDS.map(brand => {
+    const bp = brand.charAt(0).toUpperCase() + brand.slice(1);
+    return `        case .${brand}:\n            return sizeClass == .${firstIOSSizeClass} ? ${bp}Sizing${firstIOSSCPascal}.shared : ${bp}Sizing${lastIOSSCPascal}.shared`;
+  }).join('\n');
+
+  // Typography switch: contentBrand → compact/regular typography
+  const iosTypographyCases = CONTENT_BRANDS.map(brand => {
+    const bp = brand.charAt(0).toUpperCase() + brand.slice(1);
+    return `        case .${brand}:\n            return sizeClass == .${firstIOSSizeClass} ? ${bp}Typography${firstIOSSCPascal}.shared : ${bp}Typography${lastIOSSCPascal}.shared`;
+  }).join('\n');
+
+  // Density switch: density → DensityDefault/Dense/Spacious
+  const iosDensityCases = DENSITY_MODES.map(dm => {
+    const dmPascal = dm.charAt(0).toUpperCase() + dm.slice(1);
+    return `        case .${dm}: return Density${dmPascal}.shared`;
+  }).join('\n');
+
   const designSystemThemeContent = generateFileHeader({
     fileName: 'DesignSystemTheme.swift',
     commentStyle: 'line',
@@ -6917,20 +6905,14 @@ public final class DesignSystemTheme: @unchecked Sendable {
     /// Current color scheme based on colorBrand and isDarkTheme
     public var colors: any DesignColorScheme {
         switch colorBrand {
-        case .bild:
-            return isDarkTheme ? BildDarkColors.shared : BildLightColors.shared
-        case .sportbild:
-            return isDarkTheme ? SportbildDarkColors.shared : SportbildLightColors.shared
+${iosColorsCases}
         }
     }
 
     /// Current effects scheme based on colorBrand and isDarkTheme
     public var effects: any DesignEffectsScheme {
         switch colorBrand {
-        case .bild:
-            return isDarkTheme ? BildEffectsDark.shared : BildEffectsLight.shared
-        case .sportbild:
-            return isDarkTheme ? SportbildEffectsDark.shared : SportbildEffectsLight.shared
+${iosEffectsCases}
         }
     }
 
@@ -6939,12 +6921,7 @@ public final class DesignSystemTheme: @unchecked Sendable {
     /// Current sizing scheme based on contentBrand and sizeClass
     public var sizing: any DesignSizingScheme {
         switch contentBrand {
-        case .bild:
-            return sizeClass == .compact ? BildSizingCompact.shared : BildSizingRegular.shared
-        case .sportbild:
-            return sizeClass == .compact ? SportbildSizingCompact.shared : SportbildSizingRegular.shared
-        case .advertorial:
-            return sizeClass == .compact ? AdvertorialSizingCompact.shared : AdvertorialSizingRegular.shared
+${iosSizingCases}
         }
     }
 
@@ -6953,12 +6930,7 @@ public final class DesignSystemTheme: @unchecked Sendable {
     /// Current typography scheme based on contentBrand and sizeClass
     public var typography: any DesignTypographyScheme {
         switch contentBrand {
-        case .bild:
-            return sizeClass == .compact ? BildTypographyCompact.shared : BildTypographyRegular.shared
-        case .sportbild:
-            return sizeClass == .compact ? SportbildTypographyCompact.shared : SportbildTypographyRegular.shared
-        case .advertorial:
-            return sizeClass == .compact ? AdvertorialTypographyCompact.shared : AdvertorialTypographyRegular.shared
+${iosTypographyCases}
         }
     }
 
@@ -6969,9 +6941,7 @@ public final class DesignSystemTheme: @unchecked Sendable {
     /// which automatically resolve based on SizeClass and DensityMode.
     internal var densitySpacing: any DesignDensityScheme {
         switch density {
-        case .default: return DensityDefault.shared
-        case .dense: return DensityDense.shared
-        case .spacious: return DensitySpacious.shared
+${iosDensityCases}
         }
     }
 
@@ -7488,9 +7458,9 @@ async function buildOptimizedJSOutput() {
     let densityOutput = getJsFileHeader() + `// Brand: ${brand}\n\n`;
     densityOutput += `export const density = ${JSON.stringify(density, null, 2)};\n\n`;
     DENSITY_MODES.forEach(m => { densityOutput += `export const ${m === 'default' ? 'defaultDensity' : m} = density.${m};\n`; });
-    densityOutput += `\n// Flat exports (default density) for tree-shaking\n`;
-    if (density.default) {
-      Object.entries(density.default).forEach(([name, value]) => {
+    densityOutput += `\n// Flat exports (${DENSITY_MODES[0]} density) for tree-shaking\n`;
+    if (density[DENSITY_MODES[0]]) {
+      Object.entries(density[DENSITY_MODES[0]]).forEach(([name, value]) => {
         densityOutput += `export const ${name} = ${formatJsValue(value)};\n`;
       });
     }
@@ -7569,7 +7539,7 @@ async function buildOptimizedJSOutput() {
 
         let compOutput = getJsFileHeader() + `// Component: ${comp}\n// Brand: ${brand}\n\n`;
         compOutput += `export const ${comp} = ${JSON.stringify(component, null, 2)};\n\n`;
-        compOutput += `export const get${comp}Tokens = (colorMode = 'light', breakpoint = 'md', density = 'default') => ({\n`;
+        compOutput += `export const get${comp}Tokens = (colorMode = 'light', breakpoint = '${BREAKPOINTS[Math.floor(BREAKPOINTS.length / 2)]}', density = '${DENSITY_MODES[0]}') => ({\n`;
         compOutput += `  ...${comp}.colors?.[colorMode],\n  ...${comp}.sizing?.[breakpoint],\n`;
         compOutput += `  ...${comp}.density?.[density],\n  ...${comp}.typography?.[breakpoint],\n`;
         compOutput += `  ...${comp}.effects?.[colorMode]\n});\n\n`;
@@ -7586,8 +7556,8 @@ async function buildOptimizedJSOutput() {
             compOutput += `export const ${name} = ${formatJsValue(value)};\n`;
           });
         }
-        if (component.density?.default) {
-          Object.entries(component.density.default).forEach(([name, value]) => {
+        if (component.density?.[DENSITY_MODES[0]]) {
+          Object.entries(component.density[DENSITY_MODES[0]]).forEach(([name, value]) => {
             compOutput += `export const ${name} = ${formatJsValue(value)};\n`;
           });
         }
@@ -7830,9 +7800,9 @@ export type SizeValue = string;
     densityTypes += `}\n\n`;
     densityTypes += `export declare const density: DensityTokens;\n`;
     DENSITY_MODES.forEach(m => { densityTypes += `export declare const ${m === 'default' ? 'defaultDensity' : m}: DensityTokens['${m}'];\n`; });
-    densityTypes += `\n// Flat exports (default density)\n`;
-    if (densityData.default) {
-      Object.keys(densityData.default).forEach(name => {
+    densityTypes += `\n// Flat exports (${DENSITY_MODES[0]} density)\n`;
+    if (densityData[DENSITY_MODES[0]]) {
+      Object.keys(densityData[DENSITY_MODES[0]]).forEach(name => {
         densityTypes += `export declare const ${name}: SizeValue;\n`;
       });
     }
@@ -8074,17 +8044,17 @@ export function createTheme(config = {}) {
   if (!['bild', 'sportbild', 'advertorial'].includes(brand)) {
     throw new Error(\`Invalid brand: \${brand}. Must be one of: bild, sportbild, advertorial\`);
   }
-  if (!['bild', 'sportbild'].includes(effectiveColorBrand)) {
-    throw new Error(\`Invalid colorBrand: \${effectiveColorBrand}. Must be one of: bild, sportbild\`);
+  if (![${COLOR_BRANDS.map(b => `'${b}'`).join(', ')}].includes(effectiveColorBrand)) {
+    throw new Error(\`Invalid colorBrand: \${effectiveColorBrand}. Must be one of: ${COLOR_BRANDS.join(', ')}\`);
   }
-  if (!['light', 'dark'].includes(colorMode)) {
-    throw new Error(\`Invalid colorMode: \${colorMode}. Must be one of: light, dark\`);
+  if (![${COLOR_MODES.map(m => `'${m}'`).join(', ')}].includes(colorMode)) {
+    throw new Error(\`Invalid colorMode: \${colorMode}. Must be one of: ${COLOR_MODES.join(', ')}\`);
   }
-  if (!['xs', 'sm', 'md', 'lg'].includes(breakpoint)) {
-    throw new Error(\`Invalid breakpoint: \${breakpoint}. Must be one of: xs, sm, md, lg\`);
+  if (![${BREAKPOINTS.map(bp => `'${bp}'`).join(', ')}].includes(breakpoint)) {
+    throw new Error(\`Invalid breakpoint: \${breakpoint}. Must be one of: ${BREAKPOINTS.join(', ')}\`);
   }
-  if (!['default', 'dense', 'spacious'].includes(density)) {
-    throw new Error(\`Invalid density: \${density}. Must be one of: default, dense, spacious\`);
+  if (![${DENSITY_MODES.map(d => `'${d}'`).join(', ')}].includes(density)) {
+    throw new Error(\`Invalid density: \${density}. Must be one of: ${DENSITY_MODES.join(', ')}\`);
   }
 
   return {
@@ -8116,17 +8086,17 @@ export const colorBrands = ['bild', 'sportbild'];
 /**
  * Available color modes
  */
-export const colorModes = ['light', 'dark'];
+export const colorModes = [${COLOR_MODES.map(m => `'${m}'`).join(', ')}];
 
 /**
  * Available breakpoints
  */
-export const breakpoints = ['xs', 'sm', 'md', 'lg'];
+export const breakpoints = [${BREAKPOINTS.map(bp => `'${bp}'`).join(', ')}];
 
 /**
  * Available density modes
  */
-export const densityModes = ['default', 'dense', 'spacious'];
+export const densityModes = [${DENSITY_MODES.map(d => `'${d}'`).join(', ')}];
 
 /**
  * Get token data for a specific combination (lower-level API)
@@ -8146,8 +8116,10 @@ export function getTokens(type, key1, key2) {
 
       // Read actual token data
       const colorsData = readTokenFile(path.join(TOKENS_DIR, 'brands', colorBrand, 'color', `colormode-${colorMode}.json`));
+      const representativeBp = BREAKPOINTS[Math.floor(BREAKPOINTS.length / 2)]; // Middle breakpoint as representative
+      const representativeBpMin = BREAKPOINT_VALUES[representativeBp];
       const spacingData = readTokenFile(path.join(TOKENS_DIR, 'brands', colorBrand, 'breakpoints',
-        fs.readdirSync(path.join(TOKENS_DIR, 'brands', colorBrand, 'breakpoints')).find(f => f.startsWith('breakpoint-md')) || 'breakpoint-md-600px.json'));
+        fs.readdirSync(path.join(TOKENS_DIR, 'brands', colorBrand, 'breakpoints')).find(f => f.startsWith(`breakpoint-${representativeBp}`)) || `breakpoint-${representativeBp}-${representativeBpMin}px.json`));
       const typographyData = readTokenFile(path.join(TOKENS_DIR, 'brands', colorBrand, 'semantic', 'typography', 'typography-md.json'));
       const effectsData = readTokenFile(path.join(TOKENS_DIR, 'brands', colorBrand, 'semantic', 'effects', `effects-${colorMode}.json`));
       const densityData = readTokenFile(path.join(TOKENS_DIR, 'brands', colorBrand, 'density', 'density-default.json'));
@@ -8351,11 +8323,11 @@ export default ${themeName};
   themesIdxDts += `}\n\n`;
   themesIdxDts += `export declare function createTheme(config?: ThemeConfig): Theme;\n`;
   themesIdxDts += `export declare function getTokens(type: 'colors' | 'spacing' | 'typography' | 'effects' | 'density', key1: string, key2: string): Record<string, any>;\n`;
-  themesIdxDts += `export declare const availableBrands: readonly ['bild', 'sportbild', 'advertorial'];\n`;
-  themesIdxDts += `export declare const colorBrands: readonly ['bild', 'sportbild'];\n`;
-  themesIdxDts += `export declare const colorModes: readonly ['light', 'dark'];\n`;
-  themesIdxDts += `export declare const breakpoints: readonly ['xs', 'sm', 'md', 'lg'];\n`;
-  themesIdxDts += `export declare const densityModes: readonly ['default', 'dense', 'spacious'];\n\n`;
+  themesIdxDts += `export declare const availableBrands: readonly [${BRANDS.map(b => `'${b}'`).join(', ')}];\n`;
+  themesIdxDts += `export declare const colorBrands: readonly [${COLOR_BRANDS.map(b => `'${b}'`).join(', ')}];\n`;
+  themesIdxDts += `export declare const colorModes: readonly [${COLOR_MODES.map(m => `'${m}'`).join(', ')}];\n`;
+  themesIdxDts += `export declare const breakpoints: readonly [${BREAKPOINTS.map(bp => `'${bp}'`).join(', ')}];\n`;
+  themesIdxDts += `export declare const densityModes: readonly [${DENSITY_MODES.map(d => `'${d}'`).join(', ')}];\n\n`;
   themesIdxDts += `// Pre-built themes\n`;
   presetThemes.forEach(t => { themesIdxDts += `export declare const ${t.name}: Theme;\n`; });
   themesIdxDts += `\nexport declare const themes: Record<string, Theme>;\n`;
@@ -8420,10 +8392,7 @@ export default useTheme;
 import { useState, useEffect } from 'react';
 
 const BREAKPOINTS = {
-  xs: 320,
-  sm: 390,
-  md: 600,
-  lg: 1024
+${BREAKPOINTS.map(bp => `  ${bp}: ${BREAKPOINT_VALUES[bp]}`).join(',\n')}
 };
 
 function detectBreakpoint() {
@@ -8466,13 +8435,13 @@ export function useIsBreakpoint(target) {
 
 export function useIsBreakpointUp(target) {
   const current = useBreakpoint();
-  const order = ['xs', 'sm', 'md', 'lg'];
+  const order = [${BREAKPOINTS.map(bp => `'${bp}'`).join(', ')}];
   return order.indexOf(current) >= order.indexOf(target);
 }
 
 export function useIsBreakpointDown(target) {
   const current = useBreakpoint();
-  const order = ['xs', 'sm', 'md', 'lg'];
+  const order = [${BREAKPOINTS.map(bp => `'${bp}'`).join(', ')}];
   return order.indexOf(current) <= order.indexOf(target);
 }
 
@@ -8490,10 +8459,7 @@ import { ThemeContext } from './ThemeContext.js';
 import { createTheme } from '../themes/createTheme.js';
 
 const BREAKPOINT_VALUES = {
-  xs: 320,
-  sm: 390,
-  md: 600,
-  lg: 1024
+${BREAKPOINTS.map(bp => `  ${bp}: ${BREAKPOINT_VALUES[bp]}`).join(',\n')}
 };
 
 function detectBreakpoint() {
@@ -8645,10 +8611,7 @@ export interface ThemeProviderProps {
 
 // Breakpoints constant
 export declare const BREAKPOINTS: {
-  xs: 320;
-  sm: 390;
-  md: 600;
-  lg: 1024;
+${BREAKPOINTS.map(bp => `  ${bp}: ${BREAKPOINT_VALUES[bp]};`).join('\n')}
 };
 
 // Context

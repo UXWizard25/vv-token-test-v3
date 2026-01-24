@@ -39,11 +39,15 @@ const DENSITY_MODES = pipelineConfig.source.modes.densityModes;
 // Collection IDs (from config)
 const COLLECTION_IDS = pipelineConfig.source.collections;
 
+// Component token path prefix (from config, e.g. 'Component/')
+const COMPONENT_PREFIX = pipelineConfig.source.pathConventions.componentPrefix;
+const COMPONENT_PREFIX_SEGMENT = COMPONENT_PREFIX.replace(/\/$/, ''); // 'Component' (without trailing slash)
+
 /**
  * Checks if a token path represents a component token
  */
 function isComponentToken(tokenPath) {
-  return tokenPath.startsWith(pipelineConfig.source.pathConventions.componentPrefix);
+  return tokenPath.startsWith(COMPONENT_PREFIX);
 }
 
 /**
@@ -52,7 +56,7 @@ function isComponentToken(tokenPath) {
  */
 function getComponentName(tokenPath) {
   const parts = tokenPath.split('/');
-  if (parts[0] === 'Component' && parts.length >= 2) {
+  if (parts[0] === COMPONENT_PREFIX_SEGMENT && parts.length >= 2) {
     return parts[1];
   }
   return null;
@@ -313,7 +317,7 @@ function getDeepAliasInfo(variableId, aliasLookup, collections, context = {}, op
     const tokenPath = variable.name || '';
     // Component tokens are identified by path prefix - they should NOT be treated as semantic endpoints
     // Everything else in ColorMode/BreakpointMode collections IS the semantic level
-    const isComponentToken = tokenPath.startsWith('Component/');
+    const isComponent = isComponentToken(tokenPath);
 
     // Check if we've reached a primitive - ALWAYS endpoint
     if (isPrimitiveCollection(variable.collectionId)) {
@@ -328,8 +332,8 @@ function getDeepAliasInfo(variableId, aliasLookup, collections, context = {}, op
       };
     }
 
-    // BreakpointMode collection = Semantic level (except Component/ tokens)
-    if (acceptSemanticEndpoint && variable.collectionId === COLLECTION_IDS.BREAKPOINT_MODE && !isComponentToken) {
+    // BreakpointMode collection = Semantic level (except component tokens)
+    if (acceptSemanticEndpoint && variable.collectionId === COLLECTION_IDS.BREAKPOINT_MODE && !isComponent) {
       const collection = collections.find(c => c.id === variable.collectionId);
       const tokenName = variable.name.split('/').pop();
 
@@ -342,7 +346,7 @@ function getDeepAliasInfo(variableId, aliasLookup, collections, context = {}, op
     }
 
     // BreakpointMode Component tokens - endpoint if flag set (for typography composite fontSize/lineHeight)
-    if (acceptComponentEndpoint && variable.collectionId === COLLECTION_IDS.BREAKPOINT_MODE && isComponentToken) {
+    if (acceptComponentEndpoint && variable.collectionId === COLLECTION_IDS.BREAKPOINT_MODE && isComponent) {
       const collection = collections.find(c => c.id === variable.collectionId);
       const tokenName = variable.name.split('/').pop();
 
@@ -354,8 +358,8 @@ function getDeepAliasInfo(variableId, aliasLookup, collections, context = {}, op
       };
     }
 
-    // ColorMode collection = Semantic level (except Component/ tokens)
-    if (acceptColorModeEndpoint && variable.collectionId === COLLECTION_IDS.COLOR_MODE && !isComponentToken) {
+    // ColorMode collection = Semantic level (except component tokens)
+    if (acceptColorModeEndpoint && variable.collectionId === COLLECTION_IDS.COLOR_MODE && !isComponent) {
       const collection = collections.find(c => c.id === variable.collectionId);
       const tokenName = variable.name.split('/').pop();
 
@@ -1386,8 +1390,8 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
   };
 
   // Separate component and semantic typography
-  const semanticTextStyles = textStyles.filter(ts => !ts.name.startsWith('Component/'));
-  const componentTextStyles = textStyles.filter(ts => ts.name.startsWith('Component/'));
+  const semanticTextStyles = textStyles.filter(ts => !isComponentToken(ts.name));
+  const componentTextStyles = textStyles.filter(ts => isComponentToken(ts.name));
 
   console.log(`  ℹ️  ${semanticTextStyles.length} semantic styles, ${componentTextStyles.length} component styles`);
 
@@ -1637,8 +1641,8 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
           // Pattern: "buttonLabel" → "buttonLabelFontSize", "buttonLabelLineHeight"
           if (!aliases.fontSize || !aliases.lineHeight) {
             const baseStyleName = styleName.replace(/\//g, '');
-            const fontSizeVarName = `Component/${componentName}/${baseStyleName}FontSize`;
-            const lineHeightVarName = `Component/${componentName}/${baseStyleName}LineHeight`;
+            const fontSizeVarName = `${COMPONENT_PREFIX}${componentName}/${baseStyleName}FontSize`;
+            const lineHeightVarName = `${COMPONENT_PREFIX}${componentName}/${baseStyleName}LineHeight`;
 
             // Search for matching variables in BreakpointMode collection
             for (const [varId, variable] of aliasLookup) {
@@ -1699,8 +1703,8 @@ function processEffectTokens(effectStyles, aliasLookup, collections) {
   };
 
   // Separate component and semantic effects
-  const semanticEffectStyles = effectStyles.filter(es => !es.name.startsWith('Component/'));
-  const componentEffectStyles = effectStyles.filter(es => es.name.startsWith('Component/'));
+  const semanticEffectStyles = effectStyles.filter(es => !isComponentToken(es.name));
+  const componentEffectStyles = effectStyles.filter(es => isComponentToken(es.name));
 
   console.log(`  ℹ️  ${semanticEffectStyles.length} semantic styles, ${componentEffectStyles.length} component styles`);
 

@@ -18,6 +18,7 @@ const pipelineConfig = require('../../build-config/tokens/pipeline.config.js');
 const COLOR_MODES = pipelineConfig.modes.color;
 const BREAKPOINT_KEYS = Object.keys(pipelineConfig.modes.breakpoints);
 const DENSITY_MODES = pipelineConfig.modes.density;
+const COMPONENT_PREFIX = pipelineConfig.source.pathConventions.componentPrefix;
 const COLOR_MODES_PATTERN = COLOR_MODES.join('|');
 const BREAKPOINT_PATTERN = BREAKPOINT_KEYS.join('|');
 const DENSITY_PATTERN = DENSITY_MODES.join('|');
@@ -406,7 +407,7 @@ function parseSourceFile(sourcePath) {
     // Parse textStyles (Typography)
     if (data.textStyles && Array.isArray(data.textStyles)) {
       data.textStyles.forEach(style => {
-        const layer = style.name.startsWith('Component/') ? 'component' : 'semantic';
+        const layer = style.name.startsWith(COMPONENT_PREFIX) ? 'component' : 'semantic';
         styles.set(style.id, {
           id: style.id,
           name: style.name,
@@ -423,7 +424,7 @@ function parseSourceFile(sourcePath) {
     // Parse effectStyles (Effects/Shadows)
     if (data.effectStyles && Array.isArray(data.effectStyles)) {
       data.effectStyles.forEach(style => {
-        const layer = style.name.startsWith('Component/') ? 'component' : 'semantic';
+        const layer = style.name.startsWith(COMPONENT_PREFIX) ? 'component' : 'semantic';
         styles.set(style.id, {
           id: style.id,
           name: style.name,
