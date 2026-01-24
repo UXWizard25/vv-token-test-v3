@@ -15,12 +15,14 @@
 
 const fs = require('fs');
 const path = require('path');
+const pipelineConfig = require('../../build-config/tokens/pipeline.config.js');
 
 // =============================================================================
 // CONSTANTS
 // =============================================================================
 
-const DEFAULT_COMPONENTS_DIR = path.join(__dirname, '../../packages/components/core/src');
+const COMPONENT_PREFIX = pipelineConfig.components.prefix;
+const DEFAULT_COMPONENTS_DIR = path.join(__dirname, '../../', pipelineConfig.components.srcDir);
 
 // =============================================================================
 // SCANNER FUNCTIONS
@@ -67,7 +69,7 @@ function findComponentCSSFiles(componentsDir) {
 
   for (const entry of entries) {
     if (!entry.isDirectory()) continue;
-    if (!entry.name.startsWith('ds-')) continue; // Only ds-* components
+    if (!entry.name.startsWith(COMPONENT_PREFIX)) continue; // Only prefixed components
 
     const componentDir = path.join(componentsDir, entry.name);
     const cssFileName = `${entry.name}.css`;

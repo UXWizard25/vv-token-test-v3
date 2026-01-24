@@ -14,7 +14,9 @@
 
 const fs = require('fs');
 const path = require('path');
+const pipelineConfig = require('../build-config/tokens/pipeline.config.js');
 
+const COMPONENTS_PKG = pipelineConfig.packages.components.npm;
 const VUE_COMPONENTS_FILE = path.join(__dirname, '../packages/components/vue/src/components.ts');
 
 function fixVueImports() {
@@ -28,8 +30,8 @@ function fixVueImports() {
   let content = fs.readFileSync(VUE_COMPONENTS_FILE, 'utf-8');
 
   // Fix the incorrect import path
-  const incorrectImport = `from '@marioschmidt/design-system-components/dist/components'`;
-  const correctImport = `from '@marioschmidt/design-system-components'`;
+  const incorrectImport = `from '${COMPONENTS_PKG}/dist/components'`;
+  const correctImport = `from '${COMPONENTS_PKG}'`;
 
   if (content.includes(incorrectImport)) {
     content = content.replace(incorrectImport, correctImport);

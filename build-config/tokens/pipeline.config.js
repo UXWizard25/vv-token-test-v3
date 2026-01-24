@@ -111,6 +111,8 @@ module.exports = {
     contentBrands: ['bild', 'sportbild', 'advertorial'],
     /** Default brand for fallbacks and CompositionLocal defaults */
     defaultBrand: 'bild',
+    /** Display names for UI (toolbar labels, documentation) */
+    displayNames: { bild: 'BILD', sportbild: 'SportBILD', advertorial: 'Advertorial' },
   },
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -121,16 +123,21 @@ module.exports = {
     color: ['light', 'dark'],
     /** Density modes */
     density: ['default', 'dense', 'spacious'],
+    /** Display names for density modes (UI labels, Storybook toolbar) */
+    densityDisplayNames: { default: 'Default', dense: 'Dense', spacious: 'Spacious' },
+    /** Display names for color modes (release notes, documentation) */
+    colorDisplayNames: { light: 'Light', dark: 'Dark' },
     /**
      * Breakpoints with min-width values in px.
      * The first breakpoint (xs) is the base — no @media query generated.
      * All subsequent breakpoints generate @media (min-width: Npx) queries.
+     * deviceName is used in documentation and release notes.
      */
     breakpoints: {
-      xs: { minWidth: 320 },
-      sm: { minWidth: 390 },
-      md: { minWidth: 600 },
-      lg: { minWidth: 1024 },
+      xs: { minWidth: 320, deviceName: 'Mobile (default)' },
+      sm: { minWidth: 390, deviceName: 'Large Mobile' },
+      md: { minWidth: 600, deviceName: 'Tablet' },
+      lg: { minWidth: 1024, deviceName: 'Desktop' },
     },
   },
 
@@ -202,6 +209,8 @@ module.exports = {
       enabled: true,
       /** Kotlin package namespace */
       packageName: 'com.bild.designsystem',
+      /** Maven group:artifact ID for publishing */
+      mavenCoordinates: 'de.bild.design:tokens',
       /** Output directory for generated Kotlin files (relative to repo root) */
       outputDir: 'packages/tokens-android/src/main/kotlin/com/bild/designsystem/',
       /**
@@ -236,5 +245,63 @@ module.exports = {
     },
     /** Include boolean/visibility tokens in output? */
     booleanTokens: false,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PACKAGES — npm/Maven/SPM package identifiers
+  // ═══════════════════════════════════════════════════════════════════════════
+  packages: {
+    tokens: {
+      /** npm package name for web tokens */
+      npm: '@marioschmidt/design-system-tokens',
+    },
+    components: {
+      /** npm package name for Stencil Web Components */
+      npm: '@marioschmidt/design-system-components',
+    },
+    react: {
+      /** npm package name for React wrappers */
+      npm: '@marioschmidt/design-system-react',
+    },
+    vue: {
+      /** npm package name for Vue 3 wrappers */
+      npm: '@marioschmidt/design-system-vue',
+    },
+    icons: {
+      /** npm package name for SVG icons */
+      npm: '@marioschmidt/design-system-icons',
+    },
+    iconsReact: {
+      /** npm package name for React icon components */
+      npm: '@marioschmidt/design-system-icons-react',
+    },
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // STENCIL — Web Component library configuration
+  // ═══════════════════════════════════════════════════════════════════════════
+  stencil: {
+    /** Web Component namespace (used as tag prefix: <bds-button>, loader name, etc.) */
+    namespace: 'bds',
+    /** Dev server port for Stencil */
+    devServerPort: 3333,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // COMPONENTS — Component library structure
+  // ═══════════════════════════════════════════════════════════════════════════
+  components: {
+    /** Tag prefix for web components (e.g., 'ds-' → <ds-button>) */
+    prefix: 'ds-',
+    /** Source directory for component source files (relative to repo root) */
+    srcDir: 'packages/components/core/src',
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // DEPLOYMENT — Hosting and URL configuration
+  // ═══════════════════════════════════════════════════════════════════════════
+  deployment: {
+    /** Base path for Storybook on GitHub Pages (must match repo name) */
+    storybookBasePath: '/bild-design-system/',
   },
 };

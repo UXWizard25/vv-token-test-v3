@@ -2,8 +2,11 @@ import type { StorybookConfig } from '@storybook/web-components-vite';
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import react from '@vitejs/plugin-react';
+import { createRequire } from 'module';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
+const pipelineConfig = require('../tokens/pipeline.config.js');
 
 /**
  * Resolve package path helper (ESM-compatible for Storybook 10)
@@ -57,7 +60,7 @@ const config: StorybookConfig = {
     // Set base path for GitHub Pages production builds
     // In development, base is '/', in production it's '/bild-design-system/'
     const isProduction = configType === 'PRODUCTION';
-    const basePath = isProduction ? '/bild-design-system/' : '/';
+    const basePath = isProduction ? pipelineConfig.deployment.storybookBasePath : '/';
     // Custom plugin to fix file:// URLs in MDX imports
     const fixMdxImportsPlugin = {
       name: 'fix-mdx-imports',
