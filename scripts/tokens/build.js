@@ -6800,38 +6800,25 @@ public extension View {
   }
   const typographyPropertyDeclarations = typographyProperties.map(prop => `    var ${prop}: TextStyle { get }`).join('\n');
 
-  // Dynamically read density properties from SOURCE JSON (not generated files)
-  // This ensures scalability - new tokens in Figma automatically appear in the protocol
-  const densitySourcePath = path.join(TOKENS_DIR, 'brands', 'bild', 'density', 'density-default.json');
+  // Dynamically read density properties from GENERATED files (matches implementation exactly)
+  // Same pattern as Colors, Sizing, Effects, Typography — guarantees protocol-implementation sync
+  const densityDefaultPath = path.join(IOS_DIST_DIR, 'shared', 'DensityDefault.swift');
   let densityProperties = [];
 
-  if (fs.existsSync(densitySourcePath)) {
-    const densityData = JSON.parse(fs.readFileSync(densitySourcePath, 'utf8'));
-
-    // Recursively extract all token names from the JSON structure
-    function extractDensityTokens(obj) {
-      const tokens = [];
-      for (const [key, value] of Object.entries(obj)) {
-        if (value && typeof value === 'object') {
-          if (value.$type === 'dimension' || value.type === 'float') {
-            tokens.push(key);
-          } else {
-            tokens.push(...extractDensityTokens(value));
-          }
-        }
-      }
-      return tokens;
+  if (fs.existsSync(densityDefaultPath)) {
+    const content = fs.readFileSync(densityDefaultPath, 'utf8');
+    const propsMatch = content.matchAll(/public\s+let\s+(\w+):\s*CGFloat/gm);
+    for (const match of propsMatch) {
+      densityProperties.push(match[1]);
     }
-
-    densityProperties = extractDensityTokens(densityData);
   }
 
   if (densityProperties.length === 0) {
-    console.warn('No density tokens found in source JSON for iOS protocol');
+    densityProperties = ['densityStackSpaceConstXs', 'densityStackSpaceConstSm', 'densityStackSpaceConstMd', 'densityStackSpaceConstLg'];
+    console.warn('DensityDefault.swift not found, using fallback density properties');
   }
 
-  // Apply toCamelCase to match Style Dictionary's naming (e.g., 3Xs → 3xs)
-  const densityPropertyDeclarations = densityProperties.map(prop => `    var ${toCamelCase(prop)}: CGFloat { get }`).join('\n');
+  const densityPropertyDeclarations = densityProperties.map(prop => `    var ${prop}: CGFloat { get }`).join('\n');
 
   const designSystemThemeContent = generateFileHeader({
     fileName: 'DesignSystemTheme.swift',
@@ -9381,7 +9368,7 @@ function flattenTokensForSCSS(obj, prefix = '') {
       if (value && typeof value === 'object') {
         if (value.$value !== undefined || value.value !== undefined) {
           // This is a token
-          const tokenName = toCamelCase(path.length > 0 ? path[path.length - 1] + key.charAt(0).toUpperCase() + key.slice(1) : key);
+          const tokenName = scssToCamelCase(path.length > 0 ? path[path.length - 1] + key.charAt(0).toUpperCase() + key.slice(1) : key);
           const kebabName = toKebabCase(tokenName);
           let tokenValue = value.$value !== undefined ? value.$value : value.value;
           const tokenType = value.$type || value.type;
@@ -9580,9 +9567,11 @@ function toKebabCase(str) {
 }
 
 /**
- * Convert string to camelCase
+ * Convert string to camelCase (simple version for SCSS token flattening)
+ * Note: Does NOT handle digit-letter transitions (e.g., 3-xs → 3Xs instead of 3xs).
+ * For correct digit-aware camelCase, use the main toCamelCase() above.
  */
-function toCamelCase(str) {
+function scssToCamelCase(str) {
   return str
     .replace(/[-_\s]+(.)?/g, (_, c) => c ? c.toUpperCase() : '')
     .replace(/^[A-Z]/, c => c.toLowerCase());
