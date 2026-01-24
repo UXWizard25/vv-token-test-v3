@@ -1024,7 +1024,7 @@ The PR comment includes an **Affected Stencil Components** section that shows wh
 
 | File | Purpose |
 |------|---------|
-| `scripts/tokens/preprocess.js` | Figma JSON → Style Dictionary format + lineHeight ratio enrichment |
+| `scripts/tokens/preprocess.js` | Figma JSON → Style Dictionary format + direct lineHeight resolution (PIXELS/PERCENT/AUTO) + lineHeight ratio enrichment |
 | `scripts/tokens/build.js` | Orchestrates Style Dictionary builds + JS output generation + CSS optimizations |
 | `build-config/tokens/style-dictionary.config.js` | Custom transforms & formats + `FONT_SIZE_UNIT` toggle (`'px'`/`'rem'`) |
 | `scripts/tokens/bundles.js` | CSS bundle generation |
@@ -1041,10 +1041,23 @@ The PR comment includes an **Affected Stencil Components** section that shows wh
 | Property | CSS Output | Example | Controlled By |
 |----------|-----------|---------|---------------|
 | `font-size` | px or rem (configurable) | `21px` or `1.3125rem` | `FONT_SIZE_UNIT` |
-| `line-height` | Unitless ratio (always) | `1.33` | Pre-calculated from Typography Composites |
+| `line-height` | Unitless ratio (always) | `1.33` | Pre-calculated from Typography Composites + `resolveDirectLineHeight()` |
 | `letter-spacing` | px (always) | `0.5px` | `custom/size/px` transform |
 
 > **Note:** `line-height` uses unitless ratios (lineHeight ÷ fontSize) which is CSS best practice — they scale proportionally with font-size regardless of the `FONT_SIZE_UNIT` setting. Native platforms (iOS/Android) always output absolute point/dp values and are unaffected by these settings.
+
+**Direct lineHeight Resolution (Typography Composites):**
+
+Figma textStyles can define lineHeight in three ways. The `resolveDirectLineHeight()` function in `preprocess.js` handles all formats and converts them to absolute px values before ratio enrichment:
+
+| Figma Format | Example | Resolution | CSS Output | Native Output |
+|--------------|---------|------------|------------|---------------|
+| `VARIABLE_ALIAS` (in boundVariables) | `{ id: "VariableID:..." }` | Resolved via alias chain | Unitless ratio | Absolute sp/pt |
+| `{ unit: "PIXELS", value: N }` | `{ unit: "PIXELS", value: 32 }` | Direct value (rounded) | Unitless ratio (32/fontSize) | `32.sp` / `32` |
+| `{ unit: "PERCENT", value: N }` | `{ unit: "PERCENT", value: 140 }` | `fontSize × (N / 100)` | Unitless ratio (1.4) | `(fontSize×1.4).sp` |
+| `{ unit: "AUTO" }` | `{ unit: "AUTO" }` | `null` (no line-height) | Property omitted | Fallback to fontSize |
+
+> **Fallback Priority:** `boundVariables.fontSize` → `textStyle.fontSize` (direct) → then `boundVariables.lineHeight` → `textStyle.lineHeight` (direct via `resolveDirectLineHeight()`). fontSize is resolved first because PERCENT lineHeight depends on it.
 
 ### CSS Optimization Functions (in build.js)
 
@@ -1376,6 +1389,7 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 | Enable/disable platform | `build.js` (toggle flags) |
 | Switch CSS font-size unit (px/rem) | `style-dictionary.config.js` → `FONT_SIZE_UNIT` constant (`'px'` or `'rem'`) |
 | Modify CSS lineHeight ratio enrichment | `preprocess.js` → `enrichLineHeightTokensWithRatio()` |
+| Modify direct lineHeight resolution (PIXELS/PERCENT/AUTO) | `preprocess.js` → `resolveDirectLineHeight()` |
 | Modify component token pattern | `style-dictionary.config.js` |
 | Change JS type mapping | `build.js` → `flattenTokens()` function |
 | Modify React bindings | `build.js` → `generateReactBindings()` function |
