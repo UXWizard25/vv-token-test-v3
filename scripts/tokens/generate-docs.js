@@ -748,7 +748,7 @@ Typography scales automatically based on viewport width:
  */
 function generateSpacingDocs() {
   // Load semantic spacing tokens from breakpoints (xs is base reference)
-  const spacingPath = path.join(TOKENS_DIR, 'brands/bild/breakpoints/breakpoint-xs-320px.json');
+  const spacingPath = path.join(TOKENS_DIR, 'brands/bild/breakpoints/breakpoint-xs.json');
   const spacingData = loadTokens(spacingPath);
 
   if (!spacingData || !spacingData.Semantic || !spacingData.Semantic.Space) {
