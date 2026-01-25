@@ -117,8 +117,10 @@ This enables:
                         ↓
 ┌─────────────────────────────────────────────────┐
 │ Preprocessing (scripts/tokens/preprocess.js)    │
+│ • 🔍 Auto-discover modes from Figma collections │
+│   (brands, color modes, density, breakpoints)   │
 │ • Scope-based type determination                │
-│ • Alias resolution                              │
+│ • Alias resolution per brand × mode context     │
 │ • Component token detection                     │
 └───────────────────────┬─────────────────────────┘
                         ↓
@@ -141,6 +143,8 @@ This enables:
 │ • NOT tracked in Git (CI artifacts)             │
 └─────────────────────────────────────────────────┘
 ```
+
+> **Note:** Mode information (brands, color modes, density modes, breakpoints) is **automatically discovered** from the Figma source at build time. Only collection IDs and breakpoint pixel values need manual configuration. See [CONFIGURATION.md](../../build-config/tokens/CONFIGURATION.md) for details.
 
 ## Installation
 
@@ -756,6 +760,26 @@ Compose output is optimized for Android development:
 
 ## 🔗 Figma Integration & Dependencies
 
+### Auto-Discovery from Figma
+
+The pipeline **automatically extracts** mode information from the Figma source:
+
+| Discovered | Source Collection | Example |
+|------------|-------------------|---------|
+| Brand names | BrandTokenMapping, BrandColorMapping | BILD, SportBILD, Advertorial |
+| ColorBrands list | BrandColorMapping modes | bild, sportbild |
+| ContentBrands list | BrandTokenMapping modes | bild, sportbild, advertorial |
+| Default brand | BrandTokenMapping `defaultModeId` | bild |
+| Color modes | ColorMode collection | light, dark |
+| Density modes | Density collection | default, dense, spacious |
+| Breakpoint keys | BreakpointMode collection | xs, sm, md, lg |
+
+Only **semantic values not in Figma** require manual configuration in `pipeline.config.js`:
+- Breakpoint min-width pixel values (CSS @media queries)
+- Collection IDs (stable Figma references)
+
+> **Configuration Documentation:** See [build-config/tokens/CONFIGURATION.md](../../build-config/tokens/CONFIGURATION.md)
+
 ### Supported Figma Scopes
 
 | Scope | Assigned Type | Output Format |
@@ -802,6 +826,9 @@ Android Compose uses type-safe units. The pipeline automatically maps token type
 | Edit value | Updated | Yes |
 | Add scope | Better typing | Yes |
 | New component | Folder created | Yes |
+| New brand mode | Auto-discovered | Yes |
+| New color/density mode | Auto-discovered | Yes |
+| New breakpoint mode | Auto-discovered | Yes (add minWidth to config) |
 
 ### Unstable Changes
 

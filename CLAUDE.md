@@ -4,6 +4,45 @@
 
 ---
 
+## Development Principles
+
+> **IMPORTANT:** When implementing new features or modifying the pipeline, always prefer **dynamic, discoverable approaches** over hardcoded values.
+
+### Prefer Dynamic Over Hardcoded
+
+| ❌ Avoid | ✅ Prefer |
+|----------|----------|
+| Hardcoded brand lists in config | Auto-discover from Figma collections |
+| Hardcoded mode IDs in config | Extract from Figma source at build time |
+| Manual mode name mappings | Derive keys from Figma mode names |
+| Duplicate information in multiple places | Single source of truth with discovery |
+
+### Why This Matters
+
+1. **Reduces maintenance burden** — Changes in Figma automatically propagate
+2. **Prevents sync issues** — No manual config updates when Figma changes
+3. **Enables flexibility** — Adding brands/modes requires only Figma changes
+4. **Self-documenting** — Build output shows what was discovered
+
+### Current Auto-Discovery
+
+The pipeline automatically extracts from Figma source:
+- Brand names and lists (COLOR_BRANDS, CONTENT_BRANDS)
+- Default brand (from `defaultModeId`)
+- Color modes (light, dark)
+- Density modes (default, dense, spacious)
+- Breakpoint keys (xs, sm, md, lg)
+- All mode IDs
+
+Only **semantic values not in Figma** require manual configuration:
+- Breakpoint min-width pixel values (CSS @media queries)
+- Collection IDs (stable Figma references)
+- Platform-specific mappings (iOS SizeClass, Android WindowSizeClass)
+
+See `build-config/tokens/CONFIGURATION.md` for full configuration documentation.
+
+---
+
 ## Monorepo Structure
 
 This repository uses **npm workspaces** to manage multiple packages:
@@ -629,6 +668,8 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 │  packages/tokens/src/bild-design-system-raw-data.json (~1MB)                │
 │              │                                                              │
 │              │ preprocess.js                                                │
+│              │ • 🔍 Auto-discover modes from Figma collections              │
+│              │   (brands, color modes, density modes, breakpoints)          │
 │              │ • Parse Figma JSON structure                                 │
 │              │ • Resolve aliases per brand × mode context                   │
 │              │ • Detect component tokens from naming                        │
@@ -645,7 +686,7 @@ For polymorphic brand access, all brand-specific implementations conform to unif
 │              ▼                                                              │
 │  PLATFORM OUTPUTS:                                                          │
 │  ├── packages/tokens/dist/           (Web: npm package)                     │
-│  │   ├── css/, json/ (scss/, js/ deaktiviert)                               │
+│  │   ├── css/, json/ (scss/, js/ disabled)                                  │
 │  │   └── bundles/                    (Convenience CSS bundles)              │
 │  ├── packages/tokens-ios/Sources/    (iOS: SPM package)                     │
 │  │   └── BildDesignTokens/           (169 Swift files)                      │
@@ -1024,7 +1065,9 @@ The PR comment includes an **Affected Stencil Components** section that shows wh
 
 | File | Purpose |
 |------|---------|
-| `scripts/tokens/preprocess.js` | Figma JSON → Style Dictionary format + direct lineHeight resolution (PIXELS/PERCENT/AUTO) + lineHeight ratio enrichment |
+| `build-config/tokens/pipeline.config.js` | Pipeline configuration (collection IDs, breakpoint pixels, platform settings) |
+| `build-config/tokens/CONFIGURATION.md` | Configuration documentation (Figma dependencies, what to configure) |
+| `scripts/tokens/preprocess.js` | Figma JSON → Style Dictionary format + **auto-discovery of modes** + lineHeight resolution |
 | `scripts/tokens/build.js` | Orchestrates Style Dictionary builds + JS output generation + CSS optimizations |
 | `build-config/tokens/style-dictionary.config.js` | Custom transforms & formats + `FONT_SIZE_UNIT` toggle (`'px'`/`'rem'`) |
 | `scripts/tokens/bundles.js` | CSS bundle generation |
@@ -1383,9 +1426,10 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 | Modify density alias endpoints | `preprocess.js` → `getDeepAliasInfo()` with `acceptDensityEndpoint` option |
 | Add semantic density to bundle | `bundles.js` → `buildBrandTokens()` |
 | Modify native density token filter | `build.js` → `nativeTokenFilter()` (controls which tokens are in SizingScheme) |
-| Add new brand | `build.js` (BRANDS arrays, lines 27-29), `preprocess.js`, `bundles.js`. See "Native Platform Code Generation" section below |
-| Add new breakpoint | `preprocess.js`, `build.js` |
-| Add new density mode | `preprocess.js`, `build.js`, `bundles.js` |
+| Add new brand | **In Figma only** — add mode to BrandTokenMapping and/or BrandColorMapping collection. Auto-discovered at build time. |
+| Add new color/density mode | **In Figma only** — add mode to ColorMode or Density collection. Auto-discovered at build time. |
+| Add new breakpoint | **In Figma + config** — add mode to BreakpointMode collection, then add minWidth to `pipeline.config.js` |
+| Change collection IDs | `pipeline.config.js` → `source.collections` (when Figma collections are recreated) |
 | Enable/disable platform | `build.js` (toggle flags) |
 | Switch CSS font-size unit (px/rem) | `style-dictionary.config.js` → `FONT_SIZE_UNIT` constant (`'px'` or `'rem'`) |
 | Modify CSS lineHeight ratio enrichment | `preprocess.js` → `enrichLineHeightTokensWithRatio()` |
