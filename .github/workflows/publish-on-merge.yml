@@ -70,14 +70,14 @@ jobs:
         run: |
           echo "📋 Reading pipeline configuration..."
           CONFIG="build-config/tokens/pipeline.config.js"
-          echo "tokens_npm=$(node -p "require('./$CONFIG').packages.tokens.npm")" >> $GITHUB_OUTPUT
-          echo "components_npm=$(node -p "require('./$CONFIG').packages.components.npm")" >> $GITHUB_OUTPUT
-          echo "react_npm=$(node -p "require('./$CONFIG').packages.react.npm")" >> $GITHUB_OUTPUT
-          echo "vue_npm=$(node -p "require('./$CONFIG').packages.vue.npm")" >> $GITHUB_OUTPUT
-          echo "android_maven=$(node -p "require('./$CONFIG').platforms.android.mavenCoordinates")" >> $GITHUB_OUTPUT
+          echo "tokens_npm=$(node -p "require('./$CONFIG').packages.tokens")" >> $GITHUB_OUTPUT
+          echo "components_npm=$(node -p "require('./$CONFIG').packages.components")" >> $GITHUB_OUTPUT
+          echo "react_npm=$(node -p "require('./$CONFIG').packages.react")" >> $GITHUB_OUTPUT
+          echo "vue_npm=$(node -p "require('./$CONFIG').packages.vue")" >> $GITHUB_OUTPUT
+          echo "android_maven=de.bild.design:tokens" >> $GITHUB_OUTPUT
           echo "ios_module=$(node -p "require('./$CONFIG').platforms.ios.moduleName")" >> $GITHUB_OUTPUT
-          echo "source_file=$(node -p "require('./$CONFIG').source.inputFile")" >> $GITHUB_OUTPUT
-          echo "ios_output_dir=$(node -p "require('./$CONFIG').platforms.ios.outputDir")" >> $GITHUB_OUTPUT
+          echo "source_file=$(node -p "require('./$CONFIG').figma.inputFile")" >> $GITHUB_OUTPUT
+          echo "ios_output_dir=$(node -p "require('./$CONFIG').paths.iosOutput")" >> $GITHUB_OUTPUT
           echo "✅ Config loaded"
 
       # 4b. Dependencies installieren
