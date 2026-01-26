@@ -14,6 +14,7 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const { PATHS: SHARED_PATHS } = require('./paths');
+const config = require('../../build-config/tokens/pipeline.config.js');
 
 // ============================================================================
 // CONFIGURATION
@@ -87,7 +88,7 @@ async function main() {
 
     // Generate package.json for the react directory with proper exports
     const packageJson = {
-      name: '@marioschmidt/design-system-icons-react',
+      name: config.packages.iconsReact.npm,
       private: true,
       type: 'module',
       main: './index.js',

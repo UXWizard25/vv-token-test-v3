@@ -90,6 +90,18 @@ const buildSteps = [
     output: 'ios',
     required: false,
   },
+  {
+    name: 'iOS Package.swift',
+    script: './generate-ios-package.js',
+    output: 'ios-package',
+    required: false,
+  },
+  {
+    name: 'Android build.gradle.kts',
+    script: './generate-android-gradle.js',
+    output: 'android-gradle',
+    required: false,
+  },
 ];
 
 // ============================================================================

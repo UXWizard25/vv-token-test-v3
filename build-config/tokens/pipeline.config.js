@@ -29,8 +29,16 @@ module.exports = {
     shortName: 'bild',
     /** Copyright holder for generated file headers */
     copyright: 'Axel Springer Deutschland GmbH',
+    /** Author/team name for package.json and Maven POM */
+    author: 'BILD Design System Team',
+    /** SPDX license identifier */
+    license: 'MIT',
     /** Repository URL for documentation links */
     repositoryUrl: 'https://github.com/UXWizard25/bild-design-system',
+    /** Git repository URL (for package.json and Maven SCM) */
+    gitUrl: 'https://github.com/UXWizard25/bild-design-system.git',
+    /** Issues URL for bug reports */
+    issuesUrl: 'https://github.com/UXWizard25/bild-design-system/issues',
   },
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -276,22 +284,47 @@ module.exports = {
     icons: {
       /** npm package name for SVG icons */
       npm: '@marioschmidt/design-system-icons',
+      /** npm package description */
+      description: 'BILD Design System Icons - Optimized SVG Assets',
       /** iOS Swift Package Manager configuration */
       ios: {
         packageName: 'BildDesignSystemIcons',
         productName: 'BildIcons',
         targetName: 'BildIcons',
+        /** Minimum Swift tools version for Package.swift */
+        swiftToolsVersion: '5.9',
+        /** Minimum iOS deployment target */
+        iosVersion: '15.0',
       },
       /** Android configuration for Gradle/Maven */
       android: {
         namespace: 'de.bild.design.icons',
         mavenGroupId: 'de.bild.design',
         mavenArtifactId: 'icons',
+        /** Maven POM name */
+        mavenName: 'BILD Design System Icons',
+        /** Maven POM description */
+        mavenDescription: 'Vector drawable icons for Android from the BILD Design System',
+        /** Android SDK versions */
+        compileSdk: 34,
+        minSdk: 21,
+        /** Kotlin compiler extension version for Compose */
+        kotlinCompilerExtensionVersion: '1.5.8',
+        /** Dependency versions */
+        versions: {
+          androidGradlePlugin: '8.2.0',
+          kotlinGradlePlugin: '1.9.22',
+          composeUi: '1.6.0',
+          composeMaterial3: '1.2.0',
+          composeFoundation: '1.6.0',
+        },
       },
     },
     iconsReact: {
       /** npm package name for React icon components */
       npm: '@marioschmidt/design-system-icons-react',
+      /** npm package description */
+      description: 'BILD Design System Icons - React Components',
     },
   },
 

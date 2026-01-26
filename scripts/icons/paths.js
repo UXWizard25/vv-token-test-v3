@@ -6,10 +6,18 @@
  */
 
 const path = require('path');
+const config = require('../../build-config/tokens/pipeline.config.js');
 
 // Base paths
 const ROOT = path.resolve(__dirname, '../..');
 const ICONS_ROOT = path.join(ROOT, 'packages/icons');
+
+// Extract config values for path construction
+const androidNamespace = config.packages.icons.android.namespace;
+const iosProductName = config.packages.icons.ios.productName;
+
+// Convert namespace to path (de.bild.design.icons → de/bild/design/icons)
+const androidNamespacePath = androidNamespace.replace(/\./g, '/');
 
 /**
  * All paths used by the icon build pipeline
@@ -49,14 +57,14 @@ const PATHS = {
   /** Android values (attrs.xml) */
   androidValues: path.join(ICONS_ROOT, 'android/src/main/res/values'),
 
-  /** Android Kotlin source files */
-  androidKotlin: path.join(ICONS_ROOT, 'android/src/main/kotlin/de/bild/design/icons'),
+  /** Android Kotlin source files (path derived from namespace) */
+  androidKotlin: path.join(ICONS_ROOT, `android/src/main/kotlin/${androidNamespacePath}`),
 
-  /** iOS Asset Catalog */
-  ios: path.join(ICONS_ROOT, 'ios/Sources/BildIcons/Resources/Assets.xcassets/Icons'),
+  /** iOS Asset Catalog (path derived from product name) */
+  ios: path.join(ICONS_ROOT, `ios/Sources/${iosProductName}/Resources/Assets.xcassets/Icons`),
 
-  /** iOS Swift source files */
-  iosSwift: path.join(ICONS_ROOT, 'ios/Sources/BildIcons'),
+  /** iOS Swift source files (path derived from product name) */
+  iosSwift: path.join(ICONS_ROOT, `ios/Sources/${iosProductName}`),
 
   // ============================================
   // LEGACY PATHS (for migration compatibility)
