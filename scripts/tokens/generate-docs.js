@@ -12,9 +12,23 @@
 
 const fs = require('fs');
 const path = require('path');
+const pipelineConfig = require('../../build-config/tokens/pipeline.config.js');
 
-const TOKENS_DIR = path.join(__dirname, '../../packages/tokens/.tokens');
+const TOKENS_DIR = path.join(__dirname, '../../', pipelineConfig.source.outputDir);
 const DOCS_DIR = path.join(__dirname, '../../apps/docs/stories/foundations');
+const DEFAULT_BRAND = pipelineConfig.brands.defaultBrand;
+const BREAKPOINTS = pipelineConfig.modes.breakpoints;
+
+/**
+ * Generate breakpoint table rows from config
+ */
+function generateBreakpointTableRows() {
+  return Object.entries(BREAKPOINTS).map(([key, bp]) => `    <tr>
+      <td><code>${key}</code></td>
+      <td>${bp.minWidth}px</td>
+      <td>${bp.deviceName || key}</td>
+    </tr>`).join('\n');
+}
 
 /**
  * Convert camelCase token name to kebab-case CSS variable name
@@ -127,7 +141,7 @@ function generateColorTableRows(tokens) {
  */
 function generateColorsDocs() {
   // Load semantic color tokens
-  const lightTokensPath = path.join(TOKENS_DIR, 'brands/bild/color/colormode-light.json');
+  const lightTokensPath = path.join(TOKENS_DIR, `brands/${DEFAULT_BRAND}/color/colormode-light.json`);
   const lightTokens = loadTokens(lightTokensPath);
 
   if (!lightTokens || !lightTokens.Semantic) {
@@ -429,7 +443,7 @@ ${semanticSections}
  */
 function generateTypographyDocs() {
   // Load typography tokens (use xs breakpoint as base reference)
-  const typographyPath = path.join(TOKENS_DIR, 'brands/bild/semantic/typography/typography-xs.json');
+  const typographyPath = path.join(TOKENS_DIR, `brands/${DEFAULT_BRAND}/semantic/typography/typography-xs.json`);
   const typography = loadTokens(typographyPath);
 
   if (!typography) {
@@ -690,26 +704,7 @@ Typography scales automatically based on viewport width:
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td><code>xs</code></td>
-      <td>320px</td>
-      <td>Mobile (default)</td>
-    </tr>
-    <tr>
-      <td><code>sm</code></td>
-      <td>390px</td>
-      <td>Large Mobile</td>
-    </tr>
-    <tr>
-      <td><code>md</code></td>
-      <td>600px</td>
-      <td>Tablet</td>
-    </tr>
-    <tr>
-      <td><code>lg</code></td>
-      <td>1024px</td>
-      <td>Desktop</td>
-    </tr>
+${generateBreakpointTableRows()}
   </tbody>
 </table>
 
@@ -748,7 +743,8 @@ Typography scales automatically based on viewport width:
  */
 function generateSpacingDocs() {
   // Load semantic spacing tokens from breakpoints (xs is base reference)
-  const spacingPath = path.join(TOKENS_DIR, 'brands/bild/breakpoints/breakpoint-xs-320px.json');
+  const firstBp = Object.keys(BREAKPOINTS)[0];
+  const spacingPath = path.join(TOKENS_DIR, `brands/${DEFAULT_BRAND}/breakpoints/breakpoint-${firstBp}.json`);
   const spacingData = loadTokens(spacingPath);
 
   if (!spacingData || !spacingData.Semantic || !spacingData.Semantic.Space) {
@@ -991,26 +987,7 @@ Spacing tokens adapt to viewport width via CSS \`@media\` queries:
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td><code>xs</code></td>
-      <td>320px</td>
-      <td>Mobile (default)</td>
-    </tr>
-    <tr>
-      <td><code>sm</code></td>
-      <td>390px</td>
-      <td>Large Mobile</td>
-    </tr>
-    <tr>
-      <td><code>md</code></td>
-      <td>600px</td>
-      <td>Tablet</td>
-    </tr>
-    <tr>
-      <td><code>lg</code></td>
-      <td>1024px</td>
-      <td>Desktop</td>
-    </tr>
+${generateBreakpointTableRows()}
   </tbody>
 </table>
 
@@ -1052,7 +1029,7 @@ Spacing tokens adapt to viewport width via CSS \`@media\` queries:
  */
 function generateEffectsDocs() {
   // Load semantic effects tokens
-  const effectsPath = path.join(TOKENS_DIR, 'brands/bild/semantic/effects/effects-light.json');
+  const effectsPath = path.join(TOKENS_DIR, `brands/${DEFAULT_BRAND}/semantic/effects/effects-light.json`);
   const effects = loadTokens(effectsPath);
 
   if (!effects) {

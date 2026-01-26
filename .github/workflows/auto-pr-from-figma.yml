@@ -32,7 +32,17 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      # 3. Dependencies installieren
+      # 3. Load pipeline configuration
+      - name: Load Pipeline Config
+        id: config
+        run: |
+          echo "📋 Reading pipeline configuration..."
+          CONFIG="build-config/tokens/pipeline.config.js"
+          echo "source_file=$(node -p "require('./$CONFIG').source.inputFile")" >> $GITHUB_OUTPUT
+          echo "source_dir=$(node -p "require('./$CONFIG').source.inputDir")" >> $GITHUB_OUTPUT
+          echo "✅ Config loaded"
+
+      # 4. Dependencies installieren
       - name: Install Dependencies
         run: |
           echo "📦 Installing dependencies..."
@@ -80,7 +90,7 @@ jobs:
           echo "  dist-new/ files: $(find dist-new -type f 2>/dev/null | wc -l)"
 
           # Sichere neue Source-Datei
-          cp packages/tokens/src/bild-design-system-raw-data.json /tmp/new-source.json
+          cp ${{ steps.config.outputs.source_dir }}${{ steps.config.outputs.source_file }} /tmp/new-source.json
           echo "  new-source.json: $(ls -la /tmp/new-source.json | awk '{print $5}') bytes"
 
           # Hole Source von main Branch
@@ -88,7 +98,7 @@ jobs:
           echo ""
           echo "🔍 Fetching main branch source..."
 
-          if git show origin/main:packages/tokens/src/bild-design-system-raw-data.json > /tmp/old-source.json 2>/dev/null; then
+          if git show origin/main:${{ steps.config.outputs.source_dir }}${{ steps.config.outputs.source_file }} > /tmp/old-source.json 2>/dev/null; then
             echo "✅ Main branch source loaded: $(ls -la /tmp/old-source.json | awk '{print $5}') bytes"
 
             # Prüfe ob Source-Dateien unterschiedlich sind
@@ -99,7 +109,7 @@ jobs:
             fi
 
             # Kopiere main source für Build
-            cp /tmp/old-source.json packages/tokens/src/bild-design-system-raw-data.json
+            cp /tmp/old-source.json ${{ steps.config.outputs.source_dir }}${{ steps.config.outputs.source_file }}
 
             # Build mit main Source
             echo ""
@@ -133,7 +143,7 @@ jobs:
           fi
 
           # Stelle neue Source und Builds wieder her
-          mv /tmp/new-source.json packages/tokens/src/bild-design-system-raw-data.json
+          mv /tmp/new-source.json ${{ steps.config.outputs.source_dir }}${{ steps.config.outputs.source_file }}
           mkdir -p packages/tokens
           mv tokens-new/ packages/tokens/.tokens/
           mv dist-new/ packages/tokens/dist/
@@ -163,7 +173,7 @@ jobs:
 
           echo "=== Source files ==="
           echo "  /tmp/old-source.json: $(ls -la /tmp/old-source.json 2>/dev/null | awk '{print $5}' || echo 'not found') bytes"
-          echo "  new source: $(ls -la packages/tokens/src/bild-design-system-raw-data.json 2>/dev/null | awk '{print $5}' || echo 'not found') bytes"
+          echo "  new source: $(ls -la ${{ steps.config.outputs.source_dir }}${{ steps.config.outputs.source_file }} 2>/dev/null | awk '{print $5}' || echo 'not found') bytes"
           echo ""
 
           # === Workflow Output Status ===
@@ -190,7 +200,7 @@ jobs:
               --old dist-old/ \
               --new packages/tokens/dist/ \
               --source-old /tmp/old-source.json \
-              --source-new packages/tokens/src/bild-design-system-raw-data.json \
+              --source-new ${{ steps.config.outputs.source_dir }}${{ steps.config.outputs.source_file }} \
               --output dist-diff.json
           else
             echo "  → Without source files (no rename detection)"

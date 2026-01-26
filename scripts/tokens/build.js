@@ -16,57 +16,60 @@ const path = require('path');
 // Import custom config
 const customConfig = require('../../build-config/tokens/style-dictionary.config.js');
 
-const TOKENS_DIR = path.join(__dirname, '../../packages/tokens/.tokens');
-const DIST_DIR = path.join(__dirname, '../../packages/tokens/dist');
+// Pipeline Configuration
+const pipelineConfig = require('../../build-config/tokens/pipeline.config.js');
 
-// Native platform output directories (separate packages for SPM/Maven distribution)
-const IOS_DIST_DIR = path.join(__dirname, '../../packages/tokens-ios/Sources/BildDesignTokens');
-const ANDROID_DIST_DIR = path.join(__dirname, '../../packages/tokens-android/src/main/kotlin/com/bild/designsystem');
+// Paths (derived from config)
+const TOKENS_DIR = path.join(__dirname, '../..', pipelineConfig.source.outputDir);
+const DIST_DIR = path.join(__dirname, '../..', pipelineConfig.output.distDir);
 
-// Brands and breakpoints
-const BRANDS = ['bild', 'sportbild', 'advertorial'];
-const COLOR_BRANDS = ['bild', 'sportbild'];  // Brands with their own color tokens
-const CONTENT_BRANDS = ['bild', 'sportbild', 'advertorial'];  // All brands (for sizing/typography)
-const BREAKPOINTS = ['xs', 'sm', 'md', 'lg'];
-const COLOR_MODES = ['light', 'dark'];
-const DENSITY_MODES = ['default', 'dense', 'spacious'];
+// Native platform output directories (derived from config)
+const IOS_DIST_DIR = path.join(__dirname, '../..', pipelineConfig.platforms.ios.outputDir);
+const ANDROID_DIST_DIR = path.join(__dirname, '../..', pipelineConfig.platforms.android.outputDir);
 
-// Platform output toggles - set to false to disable output generation
-const COMPOSE_ENABLED = true;
-const SWIFTUI_ENABLED = true;       // SwiftUI output in dist/ios/
-const SCSS_ENABLED = false;         // SCSS output in dist/scss/
-const JS_ENABLED = false;           // JS/ESM output in dist/js/ and dist/js.min/
+// Brands and breakpoints (derived from config)
+const BRANDS = pipelineConfig.brands.all;
+const COLOR_BRANDS = pipelineConfig.brands.colorBrands;
+const CONTENT_BRANDS = pipelineConfig.brands.contentBrands;
+const BREAKPOINTS = Object.keys(pipelineConfig.modes.breakpoints);
+const NON_BASE_BREAKPOINTS = BREAKPOINTS.slice(1); // All except first (mobile-first base)
+const BREAKPOINT_VALUES = Object.fromEntries(
+  Object.entries(pipelineConfig.modes.breakpoints).map(([key, bp]) => [key, bp.minWidth])
+); // e.g. { xs: 320, sm: 390, md: 600, lg: 1024 }
+const COLOR_MODES = pipelineConfig.modes.color;
+const DENSITY_MODES = pipelineConfig.modes.density;
 
-// Token type toggles - set to false to exclude from all platform outputs
-const BOOLEAN_TOKENS_ENABLED = false;
+// Platform output toggles (derived from config)
+const COMPOSE_ENABLED = pipelineConfig.platforms.android.enabled;
+const SWIFTUI_ENABLED = pipelineConfig.platforms.ios.enabled;
+const SCSS_ENABLED = pipelineConfig.platforms.scss.enabled;
+const JS_ENABLED = pipelineConfig.platforms.js.enabled;
 
-// Figma description comment toggles per platform
-// Controls whether token.comment (from Figma descriptions) is output as code comments
-// Does NOT affect: file headers, section comments, or structural comments
-const SHOW_DESCRIPTIONS = {
-  css: false,      // Disabled - cleaner CSS output
-  scss: true,      // Enabled for SCSS
-  js: true,        // Enabled for JS
-  ios: true,       // Enabled for iOS/Swift
-  android: true    // Enabled for Android/Kotlin
-};
+// CSS data-attribute names (derived from config)
+const DATA_ATTRS = pipelineConfig.platforms.css.dataAttributes;
 
-// iOS: Uses 2 size classes (Apple HIG)
-// Maps sm (390px) → compact, lg (1024px) → regular
-const IOS_BREAKPOINTS = ['sm', 'lg'];
-const IOS_SIZE_CLASS_MAPPING = {
-  sm: 'compact',
-  lg: 'regular'
-};
+// Token type toggles (derived from config)
+const BOOLEAN_TOKENS_ENABLED = pipelineConfig.output.booleanTokens;
 
-// Android: Uses 3 size classes (Material 3 WindowSizeClass)
-// Maps sm (390px) → Compact (<600dp), md (600px) → Medium (600-839dp), lg (1024px) → Expanded (≥840dp)
-const ANDROID_BREAKPOINTS = ['sm', 'md', 'lg'];
-const ANDROID_SIZE_CLASS_MAPPING = {
-  sm: 'compact',
-  md: 'medium',
-  lg: 'expanded'
-};
+// Figma description comment toggles per platform (derived from config)
+const SHOW_DESCRIPTIONS = pipelineConfig.output.showDescriptions;
+
+// iOS: Size class mapping (derived from config)
+// Invert config (sizeClass→breakpoint) to get (breakpoint→sizeClass)
+const IOS_SIZE_CLASS_MAPPING = Object.fromEntries(
+  Object.entries(pipelineConfig.platforms.ios.sizeClasses).map(([sc, bp]) => [bp, sc])
+);
+const IOS_BREAKPOINTS = Object.keys(IOS_SIZE_CLASS_MAPPING);
+
+// Android package name shorthand (derived from config)
+const ANDROID_PKG = pipelineConfig.platforms.android.packageName;
+
+// Android: Size class mapping (derived from config)
+// Invert config (sizeClass→breakpoint) to get (breakpoint→sizeClass)
+const ANDROID_SIZE_CLASS_MAPPING = Object.fromEntries(
+  Object.entries(pipelineConfig.platforms.android.sizeClasses).map(([sc, bp]) => [bp, sc])
+);
+const ANDROID_BREAKPOINTS = Object.keys(ANDROID_SIZE_CLASS_MAPPING);
 
 // Package.json references for dynamic header generation
 const tokensPackageJson = require('../../packages/tokens/package.json');
@@ -156,10 +159,21 @@ function isConstantAcrossBreakpoints(tokenValues) {
   const firstBp = tokenValues[breakpoints[0]];
   return breakpoints.every(bp => {
     const bpValues = tokenValues[bp];
-    return bpValues.default === firstBp.default &&
-           bpValues.dense === firstBp.dense &&
-           bpValues.spacious === firstBp.spacious;
+    return DENSITY_MODES.every(dm => bpValues[dm] === firstBp[dm]);
   });
+}
+
+/**
+ * Resolves a breakpoint value with fallback chain (falls back to smaller breakpoints).
+ * E.g., for target 'md', tries v.md, then v.sm, then v.xs.
+ */
+function resolveBreakpointFallback(values, targetBp) {
+  const idx = BREAKPOINTS.indexOf(targetBp);
+  for (let i = idx; i >= 0; i--) {
+    const v = values[BREAKPOINTS[i]];
+    if (v && typeof v === 'object' && Object.keys(v).length > 0) return v;
+  }
+  return values[BREAKPOINTS[0]];
 }
 
 /**
@@ -206,14 +220,15 @@ function generateAndroidDensityResolvers() {
   if (constantTokens.length > 0) {
     output += '    // Constant spacing tokens (same value across all breakpoints)\n\n';
     for (const token of constantTokens) {
-      const values = token.values.xs; // All breakpoints have same values
+      const values = token.values[BREAKPOINTS[0]]; // All breakpoints have same values
       output += `    /** ${token.name} - constant spacing, varies only by density mode */
     val ${token.name}: Dp
-        @Composable @ReadOnlyComposable get() = when (density) {
-            Density.Dense -> ${values.dense}.dp
-            Density.Default -> ${values.default}.dp
-            Density.Spacious -> ${values.spacious}.dp
-        }
+        @Composable @ReadOnlyComposable get() = when (density) {\n`;
+      for (const dm of DENSITY_MODES) {
+        const enumName = dm.charAt(0).toUpperCase() + dm.slice(1);
+        output += `            Density.${enumName} -> ${values[dm]}.dp\n`;
+      }
+      output += `        }
 
 `;
     }
@@ -222,32 +237,24 @@ function generateAndroidDensityResolvers() {
   // Generate responsive token resolvers (varies by breakpoint AND density)
   if (responsiveTokens.length > 0) {
     output += '    // Responsive spacing tokens (resolved by WindowSizeClass × Density)\n\n';
+    const androidSizeClasses = Object.entries(pipelineConfig.platforms.android.sizeClasses);
     for (const token of responsiveTokens) {
       const v = token.values;
-      // Map WindowSizeClass: Compact→sm, Medium→md, Expanded→lg
-      const sm = v.sm || v.xs;
-      const md = v.md || v.sm || v.xs;
-      const lg = v.lg || v.md || v.sm || v.xs;
 
       output += `    /** ${token.name} - responsive spacing, varies by WindowSizeClass and density mode */
     val ${token.name}: Dp
-        @Composable @ReadOnlyComposable get() = when (sizeClass) {
-            WindowSizeClass.Compact -> when (density) {
-                Density.Dense -> ${sm.dense}.dp
-                Density.Default -> ${sm.default}.dp
-                Density.Spacious -> ${sm.spacious}.dp
-            }
-            WindowSizeClass.Medium -> when (density) {
-                Density.Dense -> ${md.dense}.dp
-                Density.Default -> ${md.default}.dp
-                Density.Spacious -> ${md.spacious}.dp
-            }
-            WindowSizeClass.Expanded -> when (density) {
-                Density.Dense -> ${lg.dense}.dp
-                Density.Default -> ${lg.default}.dp
-                Density.Spacious -> ${lg.spacious}.dp
-            }
+        @Composable @ReadOnlyComposable get() = when (sizeClass) {\n`;
+      for (const [sizeClassName, bp] of androidSizeClasses) {
+        const resolved = resolveBreakpointFallback(v, bp);
+        const scPascal = sizeClassName.charAt(0).toUpperCase() + sizeClassName.slice(1);
+        output += `            WindowSizeClass.${scPascal} -> when (density) {\n`;
+        for (const dm of DENSITY_MODES) {
+          const enumName = dm.charAt(0).toUpperCase() + dm.slice(1);
+          output += `                Density.${enumName} -> ${resolved[dm]}.dp\n`;
         }
+        output += `            }\n`;
+      }
+      output += `        }
 
 `;
     }
@@ -298,14 +305,14 @@ function generateiOSDensityResolvers() {
   if (constantTokens.length > 0) {
     output += '    // Constant spacing tokens (same value across all breakpoints)\n\n';
     for (const token of constantTokens) {
-      const values = token.values.xs; // All breakpoints have same values
+      const values = token.values[BREAKPOINTS[0]]; // All breakpoints have same values
       output += `    /// ${token.name} - constant spacing, varies only by density mode
     public var ${token.name}: CGFloat {
-        switch density {
-        case .dense: return ${values.dense}
-        case .default: return ${values.default}
-        case .spacious: return ${values.spacious}
-        }
+        switch density {\n`;
+      for (const dm of DENSITY_MODES) {
+        output += `        case .${dm}: return ${values[dm]}\n`;
+      }
+      output += `        }
     }
 
 `;
@@ -315,28 +322,32 @@ function generateiOSDensityResolvers() {
   // Generate responsive token resolvers (varies by breakpoint AND density)
   if (responsiveTokens.length > 0) {
     output += '    // Responsive spacing tokens (resolved by SizeClass × Density)\n\n';
+    const iosSizeClasses = Object.entries(pipelineConfig.platforms.ios.sizeClasses);
     for (const token of responsiveTokens) {
       const v = token.values;
-      // Map SizeClass: compact→sm, regular→lg
-      const sm = v.sm || v.xs;
-      const lg = v.lg || v.md || v.sm || v.xs;
 
       output += `    /// ${token.name} - responsive spacing, varies by SizeClass and density mode
-    public var ${token.name}: CGFloat {
-        if sizeClass == .compact {
-            switch density {
-            case .dense: return ${sm.dense}
-            case .default: return ${sm.default}
-            case .spacious: return ${sm.spacious}
-            }
-        } else {
-            switch density {
-            case .dense: return ${lg.dense}
-            case .default: return ${lg.default}
-            case .spacious: return ${lg.spacious}
-            }
-        }
-    }
+    public var ${token.name}: CGFloat {\n`;
+      // iOS uses if/else for exactly 2 size classes
+      const [firstSC, ...restSC] = iosSizeClasses;
+      const firstResolved = resolveBreakpointFallback(v, firstSC[1]);
+      output += `        if sizeClass == .${firstSC[0]} {\n`;
+      output += `            switch density {\n`;
+      for (const dm of DENSITY_MODES) {
+        output += `            case .${dm}: return ${firstResolved[dm]}\n`;
+      }
+      output += `            }\n`;
+      output += `        } else {\n`;
+      // Use the last size class for the else branch
+      const lastSC = iosSizeClasses[iosSizeClasses.length - 1];
+      const lastResolved = resolveBreakpointFallback(v, lastSC[1]);
+      output += `            switch density {\n`;
+      for (const dm of DENSITY_MODES) {
+        output += `            case .${dm}: return ${lastResolved[dm]}\n`;
+      }
+      output += `            }\n`;
+      output += `        }\n`;
+      output += `    }
 
 `;
     }
@@ -364,7 +375,7 @@ function generateFileHeader({ fileName, commentStyle, platform, brand, context }
   const lines = [
     'Do not edit directly, this file was auto-generated.',
     '',
-    `BILD Design System Tokens v${version}`,
+    `${pipelineConfig.identity.name} Tokens v${version}`,
     `Generated by Style Dictionary v${sdVersion}`,
     ''
   ];
@@ -384,7 +395,7 @@ function generateFileHeader({ fileName, commentStyle, platform, brand, context }
     lines.push('');
   }
 
-  lines.push(`Copyright (c) ${currentYear} Axel Springer Deutschland GmbH`);
+  lines.push(`Copyright (c) ${currentYear} ${pipelineConfig.identity.copyright}`);
   lines.push('Proprietary and confidential. All rights reserved.');
   lines.push('');
   lines.push(`Documentation: ${docsUrl}`);
@@ -729,7 +740,7 @@ function createStandardPlatformConfig(buildPath, fileName, cssOptions = {}) {
           options: {
             outputReferences: false,
             packageName: (() => {
-              const basePkg = 'com.bild.designsystem';
+              const basePkg = ANDROID_PKG;
               if (buildPath.includes('/shared/')) {
                 return `${basePkg}.shared`;
               }
@@ -1032,7 +1043,7 @@ function createTypographyConfig(brand, breakpoint) {
             destination: `Typography${getSizeClassName(breakpoint, 'android').charAt(0).toUpperCase() + getSizeClassName(breakpoint, 'android').slice(1)}.kt`,
             format: 'compose/typography-scheme',
             options: {
-              packageName: `com.bild.designsystem.brands.${brand}.semantic.typography`,
+              packageName: `${ANDROID_PKG}.brands.${brand}.semantic.typography`,
               brand: brandName,
               breakpoint,
               sizeClass: getSizeClassName(breakpoint, 'android'),
@@ -1147,7 +1158,7 @@ function createSharedDensityConfig(densityMode) {
             destination: `Density${modePascal}.kt`,
             format: 'compose/shared-density',
             options: {
-              packageName: 'com.bild.designsystem.shared',
+              packageName: `${ANDROID_PKG}.shared`,
               densityMode: modePascal,
               showDescriptions: SHOW_DESCRIPTIONS.android
             }
@@ -1183,10 +1194,9 @@ function createSharedDensityConfig(densityMode) {
 async function buildSharedDensityTokens() {
   console.log('\n🎛️  Building Shared Density Tokens:\n');
 
-  const densityModes = ['default', 'dense', 'spacious'];
   let successful = 0;
 
-  for (const mode of densityModes) {
+  for (const mode of DENSITY_MODES) {
     const config = createSharedDensityConfig(mode);
 
     if (!config) {
@@ -1205,7 +1215,7 @@ async function buildSharedDensityTokens() {
     }
   }
 
-  return { total: densityModes.length, successful };
+  return { total: DENSITY_MODES.length, successful };
 }
 
 /**
@@ -1516,7 +1526,7 @@ function createComponentTypographyConfig(sourceFile, brand, componentName, fileN
             destination: `${componentName}Typography${getSizeClassName(breakpoint, 'android').charAt(0).toUpperCase() + getSizeClassName(breakpoint, 'android').slice(1)}.kt`,
             format: 'compose/typography',
             options: {
-              packageName: `com.bild.designsystem.brands.${brand}.components.${componentName.toLowerCase()}`,
+              packageName: `${ANDROID_PKG}.brands.${brand}.components.${componentName.toLowerCase()}`,
               brand: brand,
               mode: getSizeClassName(breakpoint, 'android'),
               componentName,
@@ -1904,7 +1914,7 @@ async function optimizeComponentColorCSS() {
         // Write output files (Dual-Axis: Color tokens use data-color-brand)
         // Uses dual selectors for Shadow DOM compatibility
         if (optimizedVars.length > 0) {
-          const colorSelector = buildDualSelector(`[data-color-brand="${brand}"]`);
+          const colorSelector = buildDualSelector(`[${DATA_ATTRS.colorBrand}="${brand}"]`);
           const optimizedContent = generateCssContent(
             lightCss.header,
             colorSelector,
@@ -1924,7 +1934,7 @@ async function optimizeComponentColorCSS() {
           // Partial optimization - update light/dark files with remaining tokens
           // Uses dual selectors for Shadow DOM compatibility
           if (lightOnlyVars.length > 0) {
-            const lightSelector = buildDualSelector(`[data-color-brand="${brand}"][data-theme="light"]`);
+            const lightSelector = buildDualSelector(`[${DATA_ATTRS.colorBrand}="${brand}"][${DATA_ATTRS.theme}="light"]`);
             const lightContent = generateCssContent(
               lightCss.header,
               lightSelector,
@@ -1937,7 +1947,7 @@ async function optimizeComponentColorCSS() {
           }
 
           if (darkOnlyVars.length > 0) {
-            const darkSelector = buildDualSelector(`[data-color-brand="${brand}"][data-theme="dark"]`);
+            const darkSelector = buildDualSelector(`[${DATA_ATTRS.colorBrand}="${brand}"][${DATA_ATTRS.theme}="dark"]`);
             const darkContent = generateCssContent(
               darkCss.header,
               darkSelector,
@@ -2003,8 +2013,7 @@ async function optimizeComponentEffectsCSS() {
 
     // 1. Parse Custom Properties Block
     // Match selector block WITHOUT a class selector (contains custom properties)
-    // Pattern: [data-color-brand="..."][data-theme="..."], :host(...) { --var: value; ... }
-    const propsBlockRegex = /\[data-color-brand="[^"]+"\]\[data-theme="[^"]+"\](?:,\s*:host\([^)]+\))?\s*\{([^}]+)\}/g;
+    const propsBlockRegex = new RegExp(`\\[${DATA_ATTRS.colorBrand}="[^"]+"]\\[${DATA_ATTRS.theme}="[^"]+"](?:,\\s*:host\\([^)]+\\))?\\s*\\{([^}]+)\\}`, 'g');
     let propsMatch;
 
     while ((propsMatch = propsBlockRegex.exec(cssContent)) !== null) {
@@ -2024,9 +2033,9 @@ async function optimizeComponentEffectsCSS() {
     }
 
     // 2. Parse Class Rules
-    // Match: [data-color-brand="..."][data-theme="..."] .class-name followed by
+    // Match: [colorBrand="..."][theme="..."] .class-name followed by
     // optional ",\n:host(...)" dual-selector part, then { content }
-    const ruleRegex = /\[data-color-brand="[^"]+"\]\[data-theme="[^"]+"\]\s+\.([a-z0-9-]+)(?:,[\s\S]*?)?\s*\{([^}]+)\}/gi;
+    const ruleRegex = new RegExp(`\\[${DATA_ATTRS.colorBrand}="[^"]+"]\\[${DATA_ATTRS.theme}="[^"]+"]\\s+\\.([a-z0-9-]+)(?:,[\\s\\S]*?)?\\s*\\{([^}]+)\\}`, 'gi');
     let ruleMatch;
 
     while ((ruleMatch = ruleRegex.exec(cssContent)) !== null) {
@@ -2086,7 +2095,7 @@ async function optimizeComponentEffectsCSS() {
     );
 
     let output = updatedHeader + '\n\n';
-    const baseSelector = `[data-color-brand="${brand}"]`;
+    const baseSelector = `[${DATA_ATTRS.colorBrand}="${brand}"]`;
 
     // 1. Custom Properties Block (if any)
     if (parsed.customProps.size > 0) {
@@ -2196,7 +2205,7 @@ async function optimizeSemanticEffectsCSS() {
     const classRules = new Map();
 
     // Parse Custom Properties Block
-    const propsBlockRegex = /\[data-color-brand="[^"]+"\]\[data-theme="[^"]+"\](?:,\s*:host\([^)]+\))?\s*\{([^}]+)\}/g;
+    const propsBlockRegex = new RegExp(`\\[${DATA_ATTRS.colorBrand}="[^"]+"]\\[${DATA_ATTRS.theme}="[^"]+"](?:,\\s*:host\\([^)]+\\))?\\s*\\{([^}]+)\\}`, 'g');
     let propsMatch;
 
     while ((propsMatch = propsBlockRegex.exec(cssContent)) !== null) {
@@ -2211,7 +2220,7 @@ async function optimizeSemanticEffectsCSS() {
     }
 
     // Parse Class Rules
-    const ruleRegex = /\[data-color-brand="[^"]+"\]\[data-theme="[^"]+"\]\s+\.([a-z0-9-]+)(?:,[\s\S]*?)?\s*\{([^}]+)\}/gi;
+    const ruleRegex = new RegExp(`\\[${DATA_ATTRS.colorBrand}="[^"]+"]\\[${DATA_ATTRS.theme}="[^"]+"]\\s+\\.([a-z0-9-]+)(?:,[\\s\\S]*?)?\\s*\\{([^}]+)\\}`, 'gi');
     let ruleMatch;
 
     while ((ruleMatch = ruleRegex.exec(cssContent)) !== null) {
@@ -2282,7 +2291,7 @@ async function optimizeSemanticEffectsCSS() {
     );
 
     let output = updatedHeader + '\n\n';
-    const baseSelector = `[data-color-brand="${brand}"]`;
+    const baseSelector = `[${DATA_ATTRS.colorBrand}="${brand}"]`;
 
     // Custom Properties Block
     if (parsed.customProps.size > 0) {
@@ -2437,12 +2446,13 @@ async function buildEffectTokens() {
 async function convertToResponsiveCSS() {
   console.log('\n📱 Converting to Responsive CSS with Media Queries:\n');
 
-  const breakpointConfig = {
-    xs: null,           // base, no media query
-    sm: '390px',
-    md: '600px',
-    lg: '1024px'
-  };
+  // Build breakpoint config from pipeline config
+  // First breakpoint is the base (no media query), rest get min-width values
+  const breakpointConfig = {};
+  const bpKeys = Object.keys(pipelineConfig.modes.breakpoints);
+  bpKeys.forEach((bp, i) => {
+    breakpointConfig[bp] = i === 0 ? null : `${pipelineConfig.modes.breakpoints[bp].minWidth}px`;
+  });
 
   let totalConversions = 0;
   let successfulConversions = 0;
@@ -2498,8 +2508,10 @@ async function convertToResponsiveCSS() {
     // Process semantic breakpoints
     const semanticBreakpointsDir = path.join(brandDir, 'semantic', 'breakpoints');
     if (fs.existsSync(semanticBreakpointsDir)) {
+      // Use first breakpoint from config (dynamic) and match both filename formats
+      const firstBp = BREAKPOINTS[0];
       const breakpointFiles = fs.readdirSync(semanticBreakpointsDir)
-        .filter(f => f.includes('-xs-') && f.endsWith('.css'));
+        .filter(f => (f.includes(`-${firstBp}-`) || f.includes(`-${firstBp}.`)) && f.endsWith('.css'));
 
       for (const baseFile of breakpointFiles) {
         totalConversions++;
@@ -2637,8 +2649,8 @@ async function generateResponsiveFile(dir, baseName, brand, breakpointConfig, op
     throw new Error('No breakpoint files found');
   }
 
-  // Extract header from first file
-  const firstFile = breakpointFiles.xs || breakpointFiles.sm || breakpointFiles.md || breakpointFiles.lg;
+  // Extract header from first available file
+  const firstFile = BREAKPOINTS.map(bp => breakpointFiles[bp]).find(f => f);
   const headerMatch = firstFile.match(/^\/\*\*[\s\S]*?\*\//);
   const header = headerMatch ? headerMatch[0].replace(/Breakpoint: \w+/, 'Responsive (Media Queries)') : '';
 
@@ -2653,7 +2665,7 @@ async function generateResponsiveFile(dir, baseName, brand, breakpointConfig, op
 
   // Generate responsive CSS with media queries (Dual-Axis: Typography uses ContentBrand)
   // Uses dual selectors for Shadow DOM compatibility (flat, non-nested for browser compatibility)
-  const attrSelector = `[data-content-brand="${brand}"]`;
+  const attrSelector = `[${DATA_ATTRS.contentBrand}="${brand}"]`;
 
   // Base styles (XS) - use flat dual selectors (no CSS nesting)
   if (breakpointClasses.xs && breakpointClasses.xs.length > 0) {
@@ -2669,7 +2681,7 @@ async function generateResponsiveFile(dir, baseName, brand, breakpointConfig, op
 
   // Media queries for SM, MD, LG - skip if using var() references (Typography)
   if (!skipMediaQueries) {
-    for (const bp of ['sm', 'md', 'lg']) {
+    for (const bp of NON_BASE_BREAKPOINTS) {
       if (breakpointClasses[bp] && breakpointClasses[bp].length > 0 && breakpointConfig[bp]) {
         output += `@media (min-width: ${breakpointConfig[bp]}) {\n`;
         for (const cls of breakpointClasses[bp]) {
@@ -2693,9 +2705,9 @@ async function generateResponsiveFile(dir, baseName, brand, breakpointConfig, op
 async function generateResponsiveBreakpointFile(dir, brand, breakpointConfig) {
   const breakpointFiles = {};
 
-  // Read all breakpoint files
+  // Read all breakpoint files (match both formats: -bp- and -bp.)
   for (const bp of BREAKPOINTS) {
-    const files = fs.readdirSync(dir).filter(f => f.includes(`-${bp}-`) && f.endsWith('.css'));
+    const files = fs.readdirSync(dir).filter(f => (f.includes(`-${bp}-`) || f.includes(`-${bp}.`)) && f.endsWith('.css'));
     if (files.length > 0) {
       const filePath = path.join(dir, files[0]);
       if (fs.existsSync(filePath)) {
@@ -2708,8 +2720,8 @@ async function generateResponsiveBreakpointFile(dir, brand, breakpointConfig) {
     throw new Error('No breakpoint files found');
   }
 
-  // Extract header from first file
-  const firstFile = breakpointFiles.xs || breakpointFiles.sm || breakpointFiles.md || breakpointFiles.lg;
+  // Extract header from first available file
+  const firstFile = BREAKPOINTS.map(bp => breakpointFiles[bp]).find(f => f);
   const headerMatch = firstFile.match(/^\/\*\*[\s\S]*?\*\//);
   let header = headerMatch ? headerMatch[0] : '';
   header = header.replace(/Breakpoint: \w+/, 'Responsive (Media Queries)');
@@ -2723,12 +2735,12 @@ async function generateResponsiveBreakpointFile(dir, brand, breakpointConfig) {
     breakpointVarMaps[bp] = parseVariablesToMap(extractRootVariables(content));
   }
 
-  // Get base values (XS)
-  const baseVars = breakpointVarMaps.xs || breakpointVarMaps.sm || breakpointVarMaps.md || breakpointVarMaps.lg;
+  // Get base values (first breakpoint)
+  const baseVars = BREAKPOINTS.map(bp => breakpointVarMaps[bp]).find(v => v);
 
   // Generate responsive CSS with media queries (Dual-Axis: Breakpoints use ContentBrand)
   // Uses dual selectors for Shadow DOM compatibility
-  const attrSelector = `[data-content-brand="${brand}"]`;
+  const attrSelector = `[${DATA_ATTRS.contentBrand}="${brand}"]`;
   const dualSelector = buildDualSelector(attrSelector);
   const dualSelectorIndented = buildDualSelector(attrSelector, '', '  '); // For @media blocks
 
@@ -2742,7 +2754,7 @@ async function generateResponsiveBreakpointFile(dir, brand, breakpointConfig) {
 
   // Media queries for SM, MD, LG - only output CHANGED values
   // Use cascade optimization: compare each breakpoint to the previous one
-  const breakpointOrder = ['sm', 'md', 'lg'];
+  const breakpointOrder = NON_BASE_BREAKPOINTS;
   let previousVars = baseVars; // Start with XS as the "previous"
 
   for (const bp of breakpointOrder) {
@@ -2776,27 +2788,18 @@ async function generateResponsiveBreakpointFile(dir, brand, breakpointConfig) {
  */
 async function generateComponentBreakpointResponsive(dir, componentName, brand, breakpointConfig) {
   const breakpointFiles = {};
-  const fileMapping = {
-    xs: null,
-    sm: null,
-    md: null,
-    lg: null
-  };
 
-  // Find breakpoint files by pattern
+  // Find breakpoint files by pattern (dynamic from config)
   const files = fs.readdirSync(dir).filter(f => f.includes('-breakpoint-') && f.endsWith('.css'));
 
-  for (const file of files) {
-    if (file.includes('-xs-')) fileMapping.xs = file;
-    else if (file.includes('-sm-')) fileMapping.sm = file;
-    else if (file.includes('-md-')) fileMapping.md = file;
-    else if (file.includes('-lg-')) fileMapping.lg = file;
-  }
-
-  // Read all breakpoint files
-  for (const [bp, fileName] of Object.entries(fileMapping)) {
-    if (fileName) {
-      const filePath = path.join(dir, fileName);
+  for (const bp of BREAKPOINTS) {
+    // Match both "-{bp}.css" (new format) and "-{bp}-..." (legacy format)
+    const bpFile = files.find(f => {
+      const match = f.match(new RegExp(`-breakpoint-${bp}(?:[.-]|$)`));
+      return match !== null;
+    });
+    if (bpFile) {
+      const filePath = path.join(dir, bpFile);
       if (fs.existsSync(filePath)) {
         breakpointFiles[bp] = fs.readFileSync(filePath, 'utf-8');
       }
@@ -2807,8 +2810,8 @@ async function generateComponentBreakpointResponsive(dir, componentName, brand, 
     throw new Error('No breakpoint files found');
   }
 
-  // Extract header from first file
-  const firstFile = breakpointFiles.xs || breakpointFiles.sm || breakpointFiles.md || breakpointFiles.lg;
+  // Extract header from first available file
+  const firstFile = BREAKPOINTS.map(bp => breakpointFiles[bp]).find(f => f);
   const headerMatch = firstFile.match(/^\/\*\*[\s\S]*?\*\//);
   let header = headerMatch ? headerMatch[0] : '';
   header = header.replace(/breakpoint: \w+/i, 'Responsive (Media Queries)');
@@ -2822,12 +2825,12 @@ async function generateComponentBreakpointResponsive(dir, componentName, brand, 
     breakpointVarMaps[bp] = parseVariablesToMap(extractRootVariables(content));
   }
 
-  // Get base values (XS)
-  const baseVars = breakpointVarMaps.xs || breakpointVarMaps.sm || breakpointVarMaps.md || breakpointVarMaps.lg;
+  // Get base values (first breakpoint)
+  const baseVars = BREAKPOINTS.map(bp => breakpointVarMaps[bp]).find(v => v);
 
   // Generate responsive CSS with media queries (Dual-Axis: Component breakpoints use ContentBrand)
   // Uses dual selectors for Shadow DOM compatibility
-  const attrSelector = `[data-content-brand="${brand}"]`;
+  const attrSelector = `[${DATA_ATTRS.contentBrand}="${brand}"]`;
   const dualSelector = buildDualSelector(attrSelector);
   const dualSelectorIndented = buildDualSelector(attrSelector, '', '  '); // For @media blocks
 
@@ -2842,7 +2845,7 @@ async function generateComponentBreakpointResponsive(dir, componentName, brand, 
 
   // Media queries for SM, MD, LG - only output CHANGED values
   // Use cascade optimization: compare each breakpoint to the previous one
-  const breakpointOrder = ['sm', 'md', 'lg'];
+  const breakpointOrder = NON_BASE_BREAKPOINTS;
   let previousVars = baseVars; // Start with XS as the "previous"
 
   for (const bp of breakpointOrder) {
@@ -2880,7 +2883,7 @@ function extractRootVariables(content) {
   // 2. [data-content-brand="..."][data-breakpoint="..."],\n:host(...) { ... } (dual selector)
   // 3. :root { ... }
   // 4. :root,\n:host { ... } (dual selector)
-  const selectorMatch = content.match(/(?:\[data-content-brand="[^"]+"\]\[data-breakpoint="[^"]+"\](?:,\s*:host\([^)]+\))?|:root(?:,\s*:host)?)\s*\{([\s\S]*)\}/);
+  const selectorMatch = content.match(new RegExp(`(?:\\[${DATA_ATTRS.contentBrand}="[^"]+"]\\[data-breakpoint="[^"]+"](?:,\\s*:host\\([^)]+\\))?|:root(?:,\\s*:host)?)\\s*\\{([\\s\\S]*)\\}`));
   if (selectorMatch) {
     const selectorContent = selectorMatch[1];
 
@@ -2960,7 +2963,7 @@ function getChangedVariables(baseVars, compareVars, previousBpVars = null) {
  */
 function extractClasses(content, brand, breakpoint) {
   const classes = [];
-  const selector = `[data-content-brand="${brand}"][data-breakpoint="${breakpoint}"]`;
+  const selector = `[${DATA_ATTRS.contentBrand}="${brand}"][data-breakpoint="${breakpoint}"]`;
   const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
   // Check if content uses data-attribute selectors (Dual-Axis: Typography uses ContentBrand)
@@ -3138,7 +3141,7 @@ async function aggregateComposeComponents() {
         const tokenGroups = {
           colors: { light: [], dark: [] },
           sizing: { compact: [], medium: [], expanded: [] },
-          density: { default: [], dense: [], spacious: [] },
+          density: Object.fromEntries(DENSITY_MODES.map(dm => [dm, []])),
           typography: { compact: [], medium: [], expanded: [] },
           effects: { light: [], dark: [] }
         };
@@ -3159,12 +3162,9 @@ async function aggregateComposeComponents() {
             tokenGroups.sizing.medium = tokens;
           } else if (lowerFile.includes('sizingexpanded')) {
             tokenGroups.sizing.expanded = tokens;
-          } else if (lowerFile.includes('densitydense')) {
-            tokenGroups.density.dense = tokens;
-          } else if (lowerFile.includes('densitydefault')) {
-            tokenGroups.density.default = tokens;
-          } else if (lowerFile.includes('densityspacious')) {
-            tokenGroups.density.spacious = tokens;
+          } else if (lowerFile.includes('density')) {
+            const matchedDm = DENSITY_MODES.find(dm => lowerFile.includes(`density${dm}`));
+            if (matchedDm) tokenGroups.density[matchedDm] = tokens;
           } else if (lowerFile.includes('typographycompact')) {
             tokenGroups.typography.compact = tokens;
           } else if (lowerFile.includes('typographymedium')) {
@@ -3296,9 +3296,7 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
     ...filteredSizing.compact,
     ...filteredSizing.medium,
     ...filteredSizing.expanded,
-    ...tokenGroups.density.dense,
-    ...tokenGroups.density.default,
-    ...tokenGroups.density.spacious,
+    ...DENSITY_MODES.flatMap(dm => tokenGroups.density[dm]),
     ...tokenGroups.typography.compact,
     ...tokenGroups.typography.medium,
     ...tokenGroups.typography.expanded,
@@ -3310,9 +3308,7 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   const hasDp = allTokens.some(t => t.value.includes('.dp'));
   const hasSp = allTokens.some(t => t.value.includes('.sp'));
   const hasFontStyle = allTokens.some(t => t.value.includes('FontStyle.'));
-  const hasDensityTokens = tokenGroups.density.dense.length > 0 ||
-      tokenGroups.density.default.length > 0 ||
-      tokenGroups.density.spacious.length > 0;
+  const hasDensityTokens = DENSITY_MODES.some(dm => tokenGroups.density[dm].length > 0);
   const hasMatrixDensityTokens = matrixTokenNames.length > 0;
   const hasColorTokens = tokenGroups.colors.light.length > 0 || tokenGroups.colors.dark.length > 0;
   const hasSizingTokens = filteredSizing.compact.length > 0 ||
@@ -3331,13 +3327,13 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   const imports = ['import androidx.compose.runtime.Immutable'];
   if (needsComposable) {
     imports.push('import androidx.compose.runtime.Composable');
-    imports.push('import com.bild.designsystem.shared.DesignSystemTheme');
+    imports.push(`import ${ANDROID_PKG}.shared.DesignSystemTheme`);
   }
   if (hasDensityTokens) {
-    imports.push('import com.bild.designsystem.shared.Density');
+    imports.push(`import ${ANDROID_PKG}.shared.Density`);
   }
   if (needsWindowSizeClass) {
-    imports.push('import com.bild.designsystem.shared.WindowSizeClass');
+    imports.push(`import ${ANDROID_PKG}.shared.WindowSizeClass`);
   }
   if (hasColor) imports.push('import androidx.compose.ui.graphics.Color');
   if (hasFontStyle) imports.push('import androidx.compose.ui.text.font.FontStyle');
@@ -3351,14 +3347,14 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   if (hasDesignTextStyle || hasTypographyTokens) {
     imports.push('import androidx.compose.ui.text.font.FontWeight');
     imports.push('import androidx.compose.ui.text.style.TextDecoration');
-    imports.push('import com.bild.designsystem.shared.DesignTextStyle');
-    imports.push('import com.bild.designsystem.shared.DesignTextCase');
+    imports.push(`import ${ANDROID_PKG}.shared.DesignTextStyle`);
+    imports.push(`import ${ANDROID_PKG}.shared.DesignTextCase`);
   }
 
   // Check if effects use ShadowStyle
   if (hasEffectsTokens) {
-    imports.push('import com.bild.designsystem.shared.ShadowStyle');
-    imports.push('import com.bild.designsystem.shared.DropShadow');
+    imports.push(`import ${ANDROID_PKG}.shared.ShadowStyle`);
+    imports.push(`import ${ANDROID_PKG}.shared.DropShadow`);
   }
 
   let output = generateFileHeader({
@@ -3370,7 +3366,7 @@ function generateAggregatedComponentFile(brand, componentName, tokenGroups) {
   });
 
   output += `
-package com.bild.designsystem.brands.${brand}.components.${componentName.toLowerCase()}
+package ${ANDROID_PKG}.brands.${brand}.components.${componentName.toLowerCase()}
 
 ${imports.join('\n')}
 
@@ -3485,9 +3481,7 @@ object ${componentName}Tokens {
          */
         @Composable
         fun current(): SizingTokens = when (DesignSystemTheme.sizeClass) {
-            WindowSizeClass.Compact -> Compact
-            WindowSizeClass.Medium -> Medium
-            WindowSizeClass.Expanded -> Expanded
+${Object.keys(pipelineConfig.platforms.android.sizeClasses).map(sc => { const p = sc.charAt(0).toUpperCase() + sc.slice(1); return `            WindowSizeClass.${p} -> ${p}`; }).join('\n')}
         }
 
         /**
@@ -3571,7 +3565,7 @@ object ${componentName}Tokens {
     // Collect token info for interface
     const tokenInfo = new Map();
     matrixTokens.forEach(([name, data]) => {
-      const sampleValue = data.values.sm?.default ?? data.values.xs?.default ?? 0;
+      const sampleValue = data.values[BREAKPOINTS[1]]?.[DENSITY_MODES[0]] ?? data.values[BREAKPOINTS[0]]?.[DENSITY_MODES[0]] ?? 0;
       const formattedValue = formatKotlinValue(sampleValue, name);
       tokenInfo.set(name, getKotlinType(formattedValue));
     });
@@ -3593,21 +3587,14 @@ object ${componentName}Tokens {
             val sizeClass = DesignSystemTheme.sizeClass
             val density = DesignSystemTheme.density
             return when (sizeClass) {
-                WindowSizeClass.Compact -> when (density) {
-                    com.bild.designsystem.shared.Density.Dense -> CompactDense
-                    com.bild.designsystem.shared.Density.Default -> CompactDefault
-                    com.bild.designsystem.shared.Density.Spacious -> CompactSpacious
-                }
-                WindowSizeClass.Medium -> when (density) {
-                    com.bild.designsystem.shared.Density.Dense -> MediumDense
-                    com.bild.designsystem.shared.Density.Default -> MediumDefault
-                    com.bild.designsystem.shared.Density.Spacious -> MediumSpacious
-                }
-                WindowSizeClass.Expanded -> when (density) {
-                    com.bild.designsystem.shared.Density.Dense -> ExpandedDense
-                    com.bild.designsystem.shared.Density.Default -> ExpandedDefault
-                    com.bild.designsystem.shared.Density.Spacious -> ExpandedSpacious
-                }
+${Object.keys(pipelineConfig.platforms.android.sizeClasses).map(sc => {
+  const scPascal = sc.charAt(0).toUpperCase() + sc.slice(1);
+  const densityLines = DENSITY_MODES.map(dm => {
+    const dmPascal = dm.charAt(0).toUpperCase() + dm.slice(1);
+    return `                    ${ANDROID_PKG}.shared.Density.${dmPascal} -> ${scPascal}${dmPascal}`;
+  }).join('\n');
+  return `                WindowSizeClass.${scPascal} -> when (density) {\n${densityLines}\n                }`;
+}).join('\n')}
             }
         }
 
@@ -3623,24 +3610,19 @@ object ${componentName}Tokens {
 
 `;
 
-    // Android WindowSizeClass mapping: Compact→sm, Medium→md, Expanded→lg
-    const androidBreakpointMap = {
-      Compact: 'sm',
-      Medium: 'md',
-      Expanded: 'lg'
-    };
-    const densityModes = ['Dense', 'Default', 'Spacious'];
-    const densityModeKeys = { Dense: 'dense', Default: 'default', Spacious: 'spacious' };
+    // Android WindowSizeClass × Density matrix (dynamic from config)
+    const androidBreakpointMap = pipelineConfig.platforms.android.sizeClasses;
 
-    // Generate 9 objects (3 WindowSizeClasses × 3 DensityModes)
+    // Generate N×M objects (WindowSizeClasses × DensityModes)
     for (const [sizeClassName, breakpointKey] of Object.entries(androidBreakpointMap)) {
-      for (const densityMode of densityModes) {
-        const objectName = `${sizeClassName}${densityMode}`;
-        const densityKey = densityModeKeys[densityMode];
+      const sizeClassPascal = sizeClassName.charAt(0).toUpperCase() + sizeClassName.slice(1);
+      for (const densityKey of DENSITY_MODES) {
+        const densityPascal = densityKey.charAt(0).toUpperCase() + densityKey.slice(1);
+        const objectName = `${sizeClassPascal}${densityPascal}`;
 
         output += `        object ${objectName} : DensityTokens {\n`;
         matrixTokens.forEach(([tokenName, tokenData]) => {
-          const value = tokenData.values[breakpointKey]?.[densityKey] ?? tokenData.values.xs?.[densityKey] ?? 0;
+          const value = tokenData.values[breakpointKey]?.[densityKey] ?? tokenData.values[BREAKPOINTS[0]]?.[densityKey] ?? 0;
           const formattedValue = formatKotlinValue(value, tokenName);
           output += `            override val ${tokenName} = ${formattedValue}\n`;
         });
@@ -3651,7 +3633,7 @@ object ${componentName}Tokens {
   } else if (hasDensityTokens) {
     // Fallback: density-only resolution (no WindowSizeClass dimension)
     const densityTokenNames = new Map();
-    [...tokenGroups.density.dense, ...tokenGroups.density.default, ...tokenGroups.density.spacious].forEach(t => {
+    DENSITY_MODES.flatMap(dm => tokenGroups.density[dm]).forEach(t => {
       if (!densityTokenNames.has(t.name)) {
         densityTokenNames.set(t.name, t.value);
       }
@@ -3671,9 +3653,10 @@ object ${componentName}Tokens {
          */
         @Composable
         fun current(): DensityTokens = when (DesignSystemTheme.density) {
-            com.bild.designsystem.shared.Density.Dense -> Dense
-            com.bild.designsystem.shared.Density.Default -> Default
-            com.bild.designsystem.shared.Density.Spacious -> Spacious
+${DENSITY_MODES.map(dm => {
+  const dmPascal = dm.charAt(0).toUpperCase() + dm.slice(1);
+  return `            ${ANDROID_PKG}.shared.Density.${dmPascal} -> ${dmPascal}`;
+}).join('\n')}
         }
 
         /**
@@ -3696,26 +3679,15 @@ object ${componentName}Tokens {
     output += `        }
 
 `;
-    if (tokenGroups.density.dense.length > 0) {
-      output += `        object Dense : DensityTokens {\n`;
-      tokenGroups.density.dense.forEach(t => {
-        output += `            override val ${t.name} = ${t.value}\n`;
-      });
-      output += `        }\n`;
-    }
-    if (tokenGroups.density.default.length > 0) {
-      output += `        object Default : DensityTokens {\n`;
-      tokenGroups.density.default.forEach(t => {
-        output += `            override val ${t.name} = ${t.value}\n`;
-      });
-      output += `        }\n`;
-    }
-    if (tokenGroups.density.spacious.length > 0) {
-      output += `        object Spacious : DensityTokens {\n`;
-      tokenGroups.density.spacious.forEach(t => {
-        output += `            override val ${t.name} = ${t.value}\n`;
-      });
-      output += `        }\n`;
+    for (const dm of DENSITY_MODES) {
+      if (tokenGroups.density[dm].length > 0) {
+        const dmPascal = dm.charAt(0).toUpperCase() + dm.slice(1);
+        output += `        object ${dmPascal} : DensityTokens {\n`;
+        tokenGroups.density[dm].forEach(t => {
+          output += `            override val ${t.name} = ${t.value}\n`;
+        });
+        output += `        }\n`;
+      }
     }
     output += `    }\n`;
   }
@@ -3744,9 +3716,7 @@ object ${componentName}Tokens {
          */
         @Composable
         fun current(): TypographyTokens = when (DesignSystemTheme.sizeClass) {
-            WindowSizeClass.Compact -> Compact
-            WindowSizeClass.Medium -> Medium
-            WindowSizeClass.Expanded -> Expanded
+${Object.keys(pipelineConfig.platforms.android.sizeClasses).map(sc => { const p = sc.charAt(0).toUpperCase() + sc.slice(1); return `            WindowSizeClass.${p} -> ${p}`; }).join('\n')}
         }
 
         /**
@@ -3914,7 +3884,7 @@ async function aggregateSwiftUIComponents() {
         const tokenGroups = {
           colors: { light: [], dark: [] },
           sizing: { compact: [], regular: [] },
-          density: { default: [], dense: [], spacious: [] },
+          density: Object.fromEntries(DENSITY_MODES.map(dm => [dm, []])),
           typography: { compact: [], regular: [] },
           effects: { light: [], dark: [] }
         };
@@ -3941,12 +3911,9 @@ async function aggregateSwiftUIComponents() {
             tokenGroups.sizing.compact = tokens;
           } else if (lowerFile.includes('sizingregular')) {
             tokenGroups.sizing.regular = tokens;
-          } else if (lowerFile.includes('densitydense')) {
-            tokenGroups.density.dense = tokens;
-          } else if (lowerFile.includes('densitydefault')) {
-            tokenGroups.density.default = tokens;
-          } else if (lowerFile.includes('densityspacious')) {
-            tokenGroups.density.spacious = tokens;
+          } else if (lowerFile.includes('density')) {
+            const matchedDm = DENSITY_MODES.find(dm => lowerFile.includes(`density${dm}`));
+            if (matchedDm) tokenGroups.density[matchedDm] = tokens;
           } else if (lowerFile.includes('effectslight') || lowerFile.includes('effectlight')) {
             tokenGroups.effects.light = tokens;
           } else if (lowerFile.includes('effectsdark') || lowerFile.includes('effectdark')) {
@@ -4046,9 +4013,7 @@ function generateAggregatedSwiftComponentFile(brand, componentName, tokenGroups)
   const hasColorTokens = tokenGroups.colors.light.length > 0 || tokenGroups.colors.dark.length > 0;
   const hasSizingTokens = filteredSizing.compact.length > 0 || filteredSizing.regular.length > 0;
   const hasMatrixDensityTokens = matrixTokenNames.length > 0;
-  const hasDensityTokens = tokenGroups.density.dense.length > 0 ||
-      tokenGroups.density.default.length > 0 ||
-      tokenGroups.density.spacious.length > 0;
+  const hasDensityTokens = DENSITY_MODES.some(dm => tokenGroups.density[dm].length > 0);
   const hasTypographyTokens = tokenGroups.typography.compact.length > 0 || tokenGroups.typography.regular.length > 0;
   const hasEffectsTokens = tokenGroups.effects && (tokenGroups.effects.light.length > 0 || tokenGroups.effects.dark.length > 0);
 
@@ -4214,7 +4179,7 @@ public enum ${tokenClassName} {
     // Collect token info for protocol
     const tokenInfo = new Map();
     matrixTokens.forEach(([name, data]) => {
-      const sampleValue = data.values.sm?.default ?? data.values.xs?.default ?? 0;
+      const sampleValue = data.values[BREAKPOINTS[1]]?.[DENSITY_MODES[0]] ?? data.values[BREAKPOINTS[0]]?.[DENSITY_MODES[0]] ?? 0;
       tokenInfo.set(name, getSwiftType(sampleValue, name));
     });
 
@@ -4237,29 +4202,26 @@ public enum ${tokenClassName} {
         /// Returns density tokens resolved by SizeClass × DensityMode
         public static func current(for sizeClass: SizeClass, density: Density) -> any ${densityProtocolName} {
             switch (sizeClass, density) {
-            case (.compact, .dense): return CompactDense.shared
-            case (.compact, .default): return CompactDefault.shared
-            case (.compact, .spacious): return CompactSpacious.shared
-            case (.regular, .dense): return RegularDense.shared
-            case (.regular, .default): return RegularDefault.shared
-            case (.regular, .spacious): return RegularSpacious.shared
+${Object.keys(pipelineConfig.platforms.ios.sizeClasses).flatMap(sc =>
+  DENSITY_MODES.map(dm => {
+    const scPascal = sc.charAt(0).toUpperCase() + sc.slice(1);
+    const dmPascal = dm.charAt(0).toUpperCase() + dm.slice(1);
+    return `            case (.${sc}, .${dm}): return ${scPascal}${dmPascal}.shared`;
+  })
+).join('\n')}
             }
         }
 `;
 
-    // iOS SizeClass mapping: compact→sm, regular→lg
-    const iosSizeClassMap = {
-      Compact: 'sm',
-      Regular: 'lg'
-    };
-    const densityModes = ['Dense', 'Default', 'Spacious'];
-    const densityModeKeys = { Dense: 'dense', Default: 'default', Spacious: 'spacious' };
+    // iOS SizeClass × Density matrix (dynamic from config)
+    const iosSizeClassMap = pipelineConfig.platforms.ios.sizeClasses;
 
-    // Generate 6 structs (2 SizeClasses × 3 DensityModes)
-    for (const [sizeClassName, breakpointKey] of Object.entries(iosSizeClassMap)) {
-      for (const densityMode of densityModes) {
-        const structName = `${sizeClassName}${densityMode}`;
-        const densityKey = densityModeKeys[densityMode];
+    // Generate N×M structs (SizeClasses × DensityModes)
+    for (const [sizeClassKey, breakpointKey] of Object.entries(iosSizeClassMap)) {
+      const sizeClassName = sizeClassKey.charAt(0).toUpperCase() + sizeClassKey.slice(1);
+      for (const densityKey of DENSITY_MODES) {
+        const densityPascal = densityKey.charAt(0).toUpperCase() + densityKey.slice(1);
+        const structName = `${sizeClassName}${densityPascal}`;
 
         output += `
         public struct ${structName}: ${densityProtocolName} {
@@ -4267,7 +4229,7 @@ public enum ${tokenClassName} {
             private init() {}
 `;
         matrixTokens.forEach(([tokenName, tokenData]) => {
-          const value = tokenData.values[breakpointKey]?.[densityKey] ?? tokenData.values.xs?.[densityKey] ?? 0;
+          const value = tokenData.values[breakpointKey]?.[densityKey] ?? tokenData.values[BREAKPOINTS[0]]?.[densityKey] ?? 0;
           output += `            public let ${tokenName}: CGFloat = ${value}\n`;
         });
         output += `        }\n`;
@@ -4277,7 +4239,7 @@ public enum ${tokenClassName} {
   } else if (hasDensityTokens) {
     // Fallback: density-only resolution
     const densityTokenNames = new Map();
-    [...tokenGroups.density.dense, ...tokenGroups.density.default, ...tokenGroups.density.spacious].forEach(t => {
+    DENSITY_MODES.flatMap(dm => tokenGroups.density[dm]).forEach(t => {
       if (!densityTokenNames.has(t.name)) {
         densityTokenNames.set(t.name, { type: t.type, value: t.value });
       }
@@ -4302,51 +4264,33 @@ public enum ${tokenClassName} {
         /// Returns density tokens for the specified density mode
         public static func current(for density: Density) -> any ${densityFallbackProtocolName} {
             switch density {
-            case .dense: return Dense.shared
-            case .default: return Default.shared
-            case .spacious: return Spacious.shared
+${DENSITY_MODES.map(dm => {
+  const dmPascal = dm.charAt(0).toUpperCase() + dm.slice(1);
+  return `            case .${dm}: return ${dmPascal}.shared`;
+}).join('\n')}
             }
         }
 
-        public static var dense: Dense { Dense.shared }
-        public static var \`default\`: Default { Default.shared }
-        public static var spacious: Spacious { Spacious.shared }
+${DENSITY_MODES.map(dm => {
+  const dmPascal = dm.charAt(0).toUpperCase() + dm.slice(1);
+  const varName = dm === 'default' ? '`default`' : dm;
+  return `        public static var ${varName}: ${dmPascal} { ${dmPascal}.shared }`;
+}).join('\n')}
 `;
 
-    if (tokenGroups.density.dense.length > 0) {
-      output += `
-        public struct Dense: ${densityFallbackProtocolName} {
-            public static let shared = Dense()
+    for (const dm of DENSITY_MODES) {
+      if (tokenGroups.density[dm].length > 0) {
+        const dmPascal = dm.charAt(0).toUpperCase() + dm.slice(1);
+        output += `
+        public struct ${dmPascal}: ${densityFallbackProtocolName} {
+            public static let shared = ${dmPascal}()
             private init() {}
 `;
-      tokenGroups.density.dense.forEach(t => {
-        output += `            public let ${t.name}: ${t.type} = ${t.value}\n`;
-      });
-      output += `        }\n`;
-    }
-
-    if (tokenGroups.density.default.length > 0) {
-      output += `
-        public struct Default: ${densityFallbackProtocolName} {
-            public static let shared = Default()
-            private init() {}
-`;
-      tokenGroups.density.default.forEach(t => {
-        output += `            public let ${t.name}: ${t.type} = ${t.value}\n`;
-      });
-      output += `        }\n`;
-    }
-
-    if (tokenGroups.density.spacious.length > 0) {
-      output += `
-        public struct Spacious: ${densityFallbackProtocolName} {
-            public static let shared = Spacious()
-            private init() {}
-`;
-      tokenGroups.density.spacious.forEach(t => {
-        output += `            public let ${t.name}: ${t.type} = ${t.value}\n`;
-      });
-      output += `        }\n`;
+        tokenGroups.density[dm].forEach(t => {
+          output += `            public let ${t.name}: ${t.type} = ${t.value}\n`;
+        });
+        output += `        }\n`;
+      }
     }
     output += `    }\n`;
   }
@@ -4679,14 +4623,14 @@ function generateThemeProviderFile(brand, hasColors = true) {
 
   // For brands without colors, we need to use a shared color scheme (BildColorScheme)
   const colorImports = hasColors
-    ? `import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}ColorScheme
-import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}LightColors
-import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}DarkColors`
+    ? `import ${ANDROID_PKG}.brands.${brand}.semantic.${brandPascal}ColorScheme
+import ${ANDROID_PKG}.brands.${brand}.semantic.${brandPascal}LightColors
+import ${ANDROID_PKG}.brands.${brand}.semantic.${brandPascal}DarkColors`
     : `// ${brandPascal} uses shared color schemes from other brands (e.g., Bild, Sportbild)
 // Import the color scheme you want to use:
-import com.bild.designsystem.bild.semantic.BildColorScheme
-import com.bild.designsystem.bild.semantic.BildLightColors
-import com.bild.designsystem.bild.semantic.BildDarkColors`;
+import ${ANDROID_PKG}.bild.semantic.BildColorScheme
+import ${ANDROID_PKG}.bild.semantic.BildLightColors
+import ${ANDROID_PKG}.bild.semantic.BildDarkColors`;
 
   const colorSchemeType = hasColors ? `${brandPascal}ColorScheme` : 'BildColorScheme';
   const defaultLightColors = hasColors ? `${brandPascal}LightColors` : 'BildLightColors';
@@ -4707,7 +4651,7 @@ import com.bild.designsystem.bild.semantic.BildDarkColors`;
   });
 
   output += `
-package com.bild.designsystem.brands.${brand}.theme`;
+package ${ANDROID_PKG}.brands.${brand}.theme`;
 
   return output + `
 
@@ -4717,11 +4661,11 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 ${colorImports}
-import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}SizingScheme
-import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}SizingCompact
-import com.bild.designsystem.brands.${brand}.semantic.${brandPascal}SizingRegular
-import com.bild.designsystem.shared.Density
-import com.bild.designsystem.shared.WindowSizeClass
+import ${ANDROID_PKG}.brands.${brand}.semantic.${brandPascal}SizingScheme
+import ${ANDROID_PKG}.brands.${brand}.semantic.${brandPascal}SizingCompact
+import ${ANDROID_PKG}.brands.${brand}.semantic.${brandPascal}SizingRegular
+import ${ANDROID_PKG}.shared.Density
+import ${ANDROID_PKG}.shared.WindowSizeClass
 
 // ══════════════════════════════════════════════════════════════════════════════
 // COMPOSITION LOCALS
@@ -4877,6 +4821,18 @@ object ${brandPascal}Theme {
 }
 
 /**
+ * Generates dynamic Density enum body from config
+ */
+function generateAndroidDensityEnum() {
+  const entries = DENSITY_MODES.map(mode => {
+    const modePascal = mode.charAt(0).toUpperCase() + mode.slice(1);
+    return `    /** ${modePascal} UI spacing */\n    ${modePascal}`;
+  }).join(',\n');
+  return `enum class Density {\n${entries}\n}`;
+}
+
+
+/**
  * Generates the shared Density enum file
  * Creates: dist/android/compose/shared/Density.kt
  */
@@ -4889,7 +4845,7 @@ function generateSharedDensityFile() {
   });
 
   output += `
-package com.bild.designsystem.shared
+package ${ANDROID_PKG}.shared
 
 /**
  * UI density for spacing adjustments`;
@@ -4908,14 +4864,7 @@ package com.bild.designsystem.shared
  * }
  * \`\`\`
  */
-enum class Density {
-    /** Dense UI with reduced padding and spacing */
-    Dense,
-    /** Standard/default spacing */
-    Default,
-    /** Spacious UI with increased padding and spacing */
-    Spacious
-}
+${generateAndroidDensityEnum()}
 `;
 }
 
@@ -4933,7 +4882,7 @@ function generateSharedWindowSizeClassFile() {
   });
 
   output += `
-package com.bild.designsystem.shared
+package ${ANDROID_PKG}.shared
 
 /**
  * Window size class for responsive layouts (Material 3 compliant)`;
@@ -4968,11 +4917,11 @@ package com.bild.designsystem.shared
  * @see <a href="https://developer.android.com/develop/ui/compose/layouts/adaptive/use-window-size-classes">Material 3 Window Size Classes</a>
  */
 enum class WindowSizeClass {
-    /** Phones in portrait mode (width < 600dp, maps to sm: 390px breakpoint) */
+    /** Phones in portrait mode (width < 600dp) */
     Compact,
-    /** Small tablets, foldables in portrait (600dp ≤ width < 840dp, maps to md: 600px breakpoint) */
+    /** Small tablets, foldables in portrait (600dp ≤ width < 840dp) */
     Medium,
-    /** Large tablets, desktops (width ≥ 840dp, maps to lg: 1024px breakpoint) */
+    /** Large tablets, desktops (width ≥ 840dp) */
     Expanded
 }
 `;
@@ -4998,10 +4947,10 @@ function generateColorBrandEnumFile() {
   });
 
   output += `
-package com.bild.designsystem.shared
+package ${ANDROID_PKG}.shared
 
 /**
- * Color brands in the BILD Design System`;
+ * Color brands in the ${pipelineConfig.identity.name}`;
 
   return output + `
  *
@@ -5047,10 +4996,10 @@ function generateContentBrandEnumFile() {
   });
 
   output += `
-package com.bild.designsystem.shared
+package ${ANDROID_PKG}.shared
 
 /**
- * Content brands in the BILD Design System`;
+ * Content brands in the ${pipelineConfig.identity.name}`;
 
   return output + `
  *
@@ -5118,13 +5067,13 @@ function generateDesignColorSchemeFile() {
   });
 
   output += `
-package com.bild.designsystem.shared
+package ${ANDROID_PKG}.shared
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
 
 /**
- * Unified color scheme interface for the BILD Design System`;
+ * Unified color scheme interface for the ${pipelineConfig.identity.name}`;
 
   return output + `
  *
@@ -5196,14 +5145,14 @@ function generateDesignSizingSchemeFile() {
   });
 
   return output + `
-package com.bild.designsystem.shared
+package ${ANDROID_PKG}.shared
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 
 /**
- * Unified sizing scheme interface for the BILD Design System
+ * Unified sizing scheme interface for the ${pipelineConfig.identity.name}
  *
  * All content brands (BILD, SportBILD, Advertorial) implement this interface,
  * enabling polymorphic sizing access across brands.
@@ -5228,7 +5177,7 @@ function generateSharedDesignTextStyleFile() {
   });
 
   return output + `
-package com.bild.designsystem.shared
+package ${ANDROID_PKG}.shared
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.text.TextStyle
@@ -5341,12 +5290,12 @@ function generateSharedDesignTypographySchemeFile() {
   });
 
   return output + `
-package com.bild.designsystem.shared
+package ${ANDROID_PKG}.shared
 
 import androidx.compose.runtime.Stable
 
 /**
- * Unified typography scheme interface for the BILD Design System
+ * Unified typography scheme interface for the ${pipelineConfig.identity.name}
  *
  * All content brands (BILD, SportBILD, Advertorial) implement this interface,
  * enabling polymorphic typography access across brands.
@@ -5383,7 +5332,7 @@ function generateSharedDropShadowFile() {
   });
 
   return output + `
-package com.bild.designsystem.shared
+package ${ANDROID_PKG}.shared
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
@@ -5424,7 +5373,7 @@ function generateSharedShadowStyleFile() {
   });
 
   return output + `
-package com.bild.designsystem.shared
+package ${ANDROID_PKG}.shared
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
@@ -5503,12 +5452,12 @@ function generateSharedDesignEffectsSchemeFile() {
   });
 
   return output + `
-package com.bild.designsystem.shared
+package ${ANDROID_PKG}.shared
 
 import androidx.compose.runtime.Stable
 
 /**
- * Unified effects scheme interface for the BILD Design System
+ * Unified effects scheme interface for the ${pipelineConfig.identity.name}
  *
  * Effects (shadows) are brand-independent and only vary by color mode (light/dark).
  * This interface is implemented by EffectsLight and EffectsDark.
@@ -5598,9 +5547,8 @@ function generateSharedDesignDensitySchemeFile() {
     const responsiveTokens = tokens.filter(t => !t.toLowerCase().includes('const'));
 
     // Group responsive tokens by breakpoint (normalized names use lowercase breakpoints)
-    const breakpoints = ['xs', 'sm', 'md', 'lg'];
     const respByBreakpoint = {};
-    breakpoints.forEach(bp => {
+    BREAKPOINTS.forEach(bp => {
       // Match tokens that start with 'density' followed by breakpoint (e.g., 'densityXs...')
       respByBreakpoint[bp] = responsiveTokens.filter(t => {
         const regex = new RegExp(`^density${bp.charAt(0).toUpperCase() + bp.slice(1)}`, 'i');
@@ -5619,7 +5567,7 @@ function generateSharedDesignDensitySchemeFile() {
     // Generate responsive properties grouped by breakpoint
     if (responsiveTokens.length > 0) {
       interfaceProperties += '\n    // Responsive spacing (per breakpoint)\n';
-      breakpoints.forEach(bp => {
+      BREAKPOINTS.forEach(bp => {
         const bpTokens = respByBreakpoint[bp];
         if (bpTokens.length > 0) {
           interfaceProperties += `    // ${bp.toUpperCase()} breakpoint\n`;
@@ -5643,13 +5591,13 @@ function generateSharedDesignDensitySchemeFile() {
   });
 
   return output + `
-package com.bild.designsystem.shared
+package ${ANDROID_PKG}.shared
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.unit.Dp
 
 /**
- * Unified density scheme interface for the BILD Design System
+ * Unified density scheme interface for the ${pipelineConfig.identity.name}
  *
  * Internal semantic density tokens (Global/StackSpace) that vary by density mode.
  * This interface is implemented by DensityDefault, DensityDense, DensitySpacious.
@@ -5683,33 +5631,33 @@ function generateDesignSystemThemeFile() {
   // Files are in semantic/color/ directory so package includes .color
   const colorImports = COLOR_BRANDS.map(brand => {
     const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-    return `import com.bild.designsystem.brands.${brand}.semantic.color.${brandPascal}LightColors
-import com.bild.designsystem.brands.${brand}.semantic.color.${brandPascal}DarkColors`;
+    return `import ${ANDROID_PKG}.brands.${brand}.semantic.color.${brandPascal}LightColors
+import ${ANDROID_PKG}.brands.${brand}.semantic.color.${brandPascal}DarkColors`;
   }).join('\n');
 
   // Generate sizing imports for all content brands (Material 3: Compact, Medium, Expanded)
   // Files are in semantic/sizeclass/ directory so package includes .sizeclass
   const sizingImports = CONTENT_BRANDS.map(brand => {
     const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-    return `import com.bild.designsystem.brands.${brand}.semantic.sizeclass.${brandPascal}SizingCompact
-import com.bild.designsystem.brands.${brand}.semantic.sizeclass.${brandPascal}SizingMedium
-import com.bild.designsystem.brands.${brand}.semantic.sizeclass.${brandPascal}SizingExpanded`;
+    return `import ${ANDROID_PKG}.brands.${brand}.semantic.sizeclass.${brandPascal}SizingCompact
+import ${ANDROID_PKG}.brands.${brand}.semantic.sizeclass.${brandPascal}SizingMedium
+import ${ANDROID_PKG}.brands.${brand}.semantic.sizeclass.${brandPascal}SizingExpanded`;
   }).join('\n');
 
   // Generate typography imports for all content brands (Material 3: Compact, Medium, Expanded)
   // Files are in semantic/typography/ directory so package includes .typography
   const typographyImports = CONTENT_BRANDS.map(brand => {
     const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-    return `import com.bild.designsystem.brands.${brand}.semantic.typography.${brandPascal}TypographyCompact
-import com.bild.designsystem.brands.${brand}.semantic.typography.${brandPascal}TypographyMedium
-import com.bild.designsystem.brands.${brand}.semantic.typography.${brandPascal}TypographyExpanded`;
+    return `import ${ANDROID_PKG}.brands.${brand}.semantic.typography.${brandPascal}TypographyCompact
+import ${ANDROID_PKG}.brands.${brand}.semantic.typography.${brandPascal}TypographyMedium
+import ${ANDROID_PKG}.brands.${brand}.semantic.typography.${brandPascal}TypographyExpanded`;
   }).join('\n');
 
   // Density imports (brand-independent, like Effects)
   const densityImports = `// Density is brand-independent (same values across all brands)
-import com.bild.designsystem.shared.DensityDefault
-import com.bild.designsystem.shared.DensityDense
-import com.bild.designsystem.shared.DensitySpacious`;
+import ${ANDROID_PKG}.shared.DensityDefault
+import ${ANDROID_PKG}.shared.DensityDense
+import ${ANDROID_PKG}.shared.DensitySpacious`;
 
   // Generate color selection cases
   const colorCases = COLOR_BRANDS.map(brand => {
@@ -5717,33 +5665,34 @@ import com.bild.designsystem.shared.DensitySpacious`;
     return `        ColorBrand.${brandPascal} -> if (darkTheme) ${brandPascal}DarkColors else ${brandPascal}LightColors`;
   }).join('\n');
 
-  // Generate sizing selection cases (Material 3: Compact, Medium, Expanded)
+  // Generate sizing selection cases (dynamic from Android sizeClasses config)
+  const androidSizeClassNames = Object.keys(pipelineConfig.platforms.android.sizeClasses);
   const sizingCases = CONTENT_BRANDS.map(brand => {
     const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-    return `        ContentBrand.${brandPascal} -> when (sizeClass) {
-            WindowSizeClass.Compact -> ${brandPascal}SizingCompact
-            WindowSizeClass.Medium -> ${brandPascal}SizingMedium
-            WindowSizeClass.Expanded -> ${brandPascal}SizingExpanded
-        }`;
+    const sizeClassLines = androidSizeClassNames.map(sc => {
+      const scPascal = sc.charAt(0).toUpperCase() + sc.slice(1);
+      return `            WindowSizeClass.${scPascal} -> ${brandPascal}Sizing${scPascal}`;
+    }).join('\n');
+    return `        ContentBrand.${brandPascal} -> when (sizeClass) {\n${sizeClassLines}\n        }`;
   }).join('\n');
 
-  // Generate typography selection cases (Material 3: Compact, Medium, Expanded)
+  // Generate typography selection cases (dynamic from Android sizeClasses config)
   const typographyCases = CONTENT_BRANDS.map(brand => {
     const brandPascal = brand.charAt(0).toUpperCase() + brand.slice(1);
-    return `        ContentBrand.${brandPascal} -> when (sizeClass) {
-            WindowSizeClass.Compact -> ${brandPascal}TypographyCompact
-            WindowSizeClass.Medium -> ${brandPascal}TypographyMedium
-            WindowSizeClass.Expanded -> ${brandPascal}TypographyExpanded
-        }`;
+    const sizeClassLines = androidSizeClassNames.map(sc => {
+      const scPascal = sc.charAt(0).toUpperCase() + sc.slice(1);
+      return `            WindowSizeClass.${scPascal} -> ${brandPascal}Typography${scPascal}`;
+    }).join('\n');
+    return `        ContentBrand.${brandPascal} -> when (sizeClass) {\n${sizeClassLines}\n        }`;
   }).join('\n');
 
   // Density spacing is brand-independent (like Effects)
   // Simple when on density mode only, no ContentBrand needed
-  const densitySelection = `when (density) {
-        Density.Default -> DensityDefault
-        Density.Dense -> DensityDense
-        Density.Spacious -> DensitySpacious
-    }`;
+  const densityLines = DENSITY_MODES.map(dm => {
+    const enumName = dm.charAt(0).toUpperCase() + dm.slice(1);
+    return `        Density.${enumName} -> Density${enumName}`;
+  }).join('\n');
+  const densitySelection = `when (density) {\n${densityLines}\n    }`;
 
   let output = generateFileHeader({
     fileName: 'DesignSystemTheme.kt',
@@ -5753,7 +5702,7 @@ import com.bild.designsystem.shared.DensitySpacious`;
   });
 
   return output + `
-package com.bild.designsystem.shared
+package ${ANDROID_PKG}.shared
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
@@ -6088,7 +6037,7 @@ async function consolidateComposePrimitives() {
   });
 
   output += `
-package com.bild.designsystem.shared
+package ${ANDROID_PKG}.shared
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -6259,7 +6208,7 @@ async function aggregateComposeSemantics() {
       });
 
       output += `
-package com.bild.designsystem.brands.${brand}.semantic
+package ${ANDROID_PKG}.brands.${brand}.semantic
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -6472,6 +6421,31 @@ async function generateSwiftUISharedFiles() {
   let successful = 0;
 
   // Generate Enums.swift (Density, SizeClass, ColorBrand, ContentBrand)
+  // All enum cases are dynamically generated from pipeline.config.js
+
+  // Generate Density enum cases from config
+  const densityCases = DENSITY_MODES
+    .map(d => d === 'default' ? '    case `default`' : `    case ${d}`)
+    .join('\n');
+
+  // SizeClass is an Apple HIG constant (compact/regular) - not design-system-specific
+  const sizeClassCases = '    case compact\n    case regular';
+
+  // Generate ColorBrand enum cases from config
+  const colorBrandCases = COLOR_BRANDS
+    .map(b => `    case ${b}`)
+    .join('\n');
+
+  // Generate ContentBrand enum cases from config
+  const contentBrandCases = CONTENT_BRANDS
+    .map(b => `    case ${b}`)
+    .join('\n');
+
+  // Generate Brand (all) enum cases from config
+  const allBrandCases = BRANDS
+    .map(b => `    case ${b}`)
+    .join('\n');
+
   const enumsContent = generateFileHeader({
     fileName: 'Enums.swift',
     commentStyle: 'line',
@@ -6480,42 +6454,33 @@ async function generateSwiftUISharedFiles() {
   }) + `
 import Foundation
 
-/// UI density modes for the BILD Design System
+/// UI density modes for the ${pipelineConfig.identity.name}
 public enum Density: String, CaseIterable, Sendable {
-    case dense
-    case \`default\`
-    case spacious
+${densityCases}
 }
 
 /// Size class for responsive layouts
 /// Maps to iOS UITraitCollection.horizontalSizeClass
 public enum SizeClass: String, CaseIterable, Sendable {
-    case compact   // Phones (Portrait), small screens - maps to xs/sm breakpoints
-    case regular   // Tablets, Phones (Landscape) - maps to md/lg breakpoints
+${sizeClassCases}
 }
 
 /// Color brands - defines the color palette and effects
 /// Only brands with their own color schemes are included
 public enum ColorBrand: String, CaseIterable, Sendable {
-    case bild
-    case sportbild
-    // Note: Advertorial uses BILD or SportBILD colors
+${colorBrandCases}
 }
 
 /// Content brands - defines sizing, typography, and layout tokens
 /// All brands including those without own color schemes
 public enum ContentBrand: String, CaseIterable, Sendable {
-    case bild
-    case sportbild
-    case advertorial
+${contentBrandCases}
 }
 
 /// Legacy: Combined brand enum for backwards compatibility
 @available(*, deprecated, message: "Use ColorBrand and ContentBrand for dual-axis theming")
 public enum Brand: String, CaseIterable, Sendable {
-    case bild
-    case sportbild
-    case advertorial
+${allBrandCases}
 }
 `;
   fs.writeFileSync(path.join(sharedDir, 'Enums.swift'), enumsContent, 'utf8');
@@ -6820,6 +6785,43 @@ public extension View {
 
   const densityPropertyDeclarations = densityProperties.map(prop => `    var ${prop}: CGFloat { get }`).join('\n');
 
+  // Generate dynamic switch cases for the iOS DesignSystemTheme
+  const iosSizeClassEntries = Object.entries(pipelineConfig.platforms.ios.sizeClasses);
+  const firstIOSSizeClass = iosSizeClassEntries[0][0]; // e.g. 'compact'
+  const lastIOSSizeClass = iosSizeClassEntries[iosSizeClassEntries.length - 1][0]; // e.g. 'regular'
+  const firstIOSSCPascal = firstIOSSizeClass.charAt(0).toUpperCase() + firstIOSSizeClass.slice(1);
+  const lastIOSSCPascal = lastIOSSizeClass.charAt(0).toUpperCase() + lastIOSSizeClass.slice(1);
+
+  // Colors switch: colorBrand → light/dark colors
+  const iosColorsCases = COLOR_BRANDS.map(brand => {
+    const bp = brand.charAt(0).toUpperCase() + brand.slice(1);
+    return `        case .${brand}:\n            return isDarkTheme ? ${bp}DarkColors.shared : ${bp}LightColors.shared`;
+  }).join('\n');
+
+  // Effects switch: colorBrand → light/dark effects
+  const iosEffectsCases = COLOR_BRANDS.map(brand => {
+    const bp = brand.charAt(0).toUpperCase() + brand.slice(1);
+    return `        case .${brand}:\n            return isDarkTheme ? ${bp}EffectsDark.shared : ${bp}EffectsLight.shared`;
+  }).join('\n');
+
+  // Sizing switch: contentBrand → compact/regular sizing
+  const iosSizingCases = CONTENT_BRANDS.map(brand => {
+    const bp = brand.charAt(0).toUpperCase() + brand.slice(1);
+    return `        case .${brand}:\n            return sizeClass == .${firstIOSSizeClass} ? ${bp}Sizing${firstIOSSCPascal}.shared : ${bp}Sizing${lastIOSSCPascal}.shared`;
+  }).join('\n');
+
+  // Typography switch: contentBrand → compact/regular typography
+  const iosTypographyCases = CONTENT_BRANDS.map(brand => {
+    const bp = brand.charAt(0).toUpperCase() + brand.slice(1);
+    return `        case .${brand}:\n            return sizeClass == .${firstIOSSizeClass} ? ${bp}Typography${firstIOSSCPascal}.shared : ${bp}Typography${lastIOSSCPascal}.shared`;
+  }).join('\n');
+
+  // Density switch: density → DensityDefault/Dense/Spacious
+  const iosDensityCases = DENSITY_MODES.map(dm => {
+    const dmPascal = dm.charAt(0).toUpperCase() + dm.slice(1);
+    return `        case .${dm}: return Density${dmPascal}.shared`;
+  }).join('\n');
+
   const designSystemThemeContent = generateFileHeader({
     fileName: 'DesignSystemTheme.swift',
     commentStyle: 'line',
@@ -6918,20 +6920,14 @@ public final class DesignSystemTheme: @unchecked Sendable {
     /// Current color scheme based on colorBrand and isDarkTheme
     public var colors: any DesignColorScheme {
         switch colorBrand {
-        case .bild:
-            return isDarkTheme ? BildDarkColors.shared : BildLightColors.shared
-        case .sportbild:
-            return isDarkTheme ? SportbildDarkColors.shared : SportbildLightColors.shared
+${iosColorsCases}
         }
     }
 
     /// Current effects scheme based on colorBrand and isDarkTheme
     public var effects: any DesignEffectsScheme {
         switch colorBrand {
-        case .bild:
-            return isDarkTheme ? BildEffectsDark.shared : BildEffectsLight.shared
-        case .sportbild:
-            return isDarkTheme ? SportbildEffectsDark.shared : SportbildEffectsLight.shared
+${iosEffectsCases}
         }
     }
 
@@ -6940,12 +6936,7 @@ public final class DesignSystemTheme: @unchecked Sendable {
     /// Current sizing scheme based on contentBrand and sizeClass
     public var sizing: any DesignSizingScheme {
         switch contentBrand {
-        case .bild:
-            return sizeClass == .compact ? BildSizingCompact.shared : BildSizingRegular.shared
-        case .sportbild:
-            return sizeClass == .compact ? SportbildSizingCompact.shared : SportbildSizingRegular.shared
-        case .advertorial:
-            return sizeClass == .compact ? AdvertorialSizingCompact.shared : AdvertorialSizingRegular.shared
+${iosSizingCases}
         }
     }
 
@@ -6954,12 +6945,7 @@ public final class DesignSystemTheme: @unchecked Sendable {
     /// Current typography scheme based on contentBrand and sizeClass
     public var typography: any DesignTypographyScheme {
         switch contentBrand {
-        case .bild:
-            return sizeClass == .compact ? BildTypographyCompact.shared : BildTypographyRegular.shared
-        case .sportbild:
-            return sizeClass == .compact ? SportbildTypographyCompact.shared : SportbildTypographyRegular.shared
-        case .advertorial:
-            return sizeClass == .compact ? AdvertorialTypographyCompact.shared : AdvertorialTypographyRegular.shared
+${iosTypographyCases}
         }
     }
 
@@ -6970,9 +6956,7 @@ public final class DesignSystemTheme: @unchecked Sendable {
     /// which automatically resolve based on SizeClass and DensityMode.
     internal var densitySpacing: any DesignDensityScheme {
         switch density {
-        case .default: return DensityDefault.shared
-        case .dense: return DensityDense.shared
-        case .spacious: return DensitySpacious.shared
+${iosDensityCases}
         }
     }
 
@@ -7489,9 +7473,9 @@ async function buildOptimizedJSOutput() {
     let densityOutput = getJsFileHeader() + `// Brand: ${brand}\n\n`;
     densityOutput += `export const density = ${JSON.stringify(density, null, 2)};\n\n`;
     DENSITY_MODES.forEach(m => { densityOutput += `export const ${m === 'default' ? 'defaultDensity' : m} = density.${m};\n`; });
-    densityOutput += `\n// Flat exports (default density) for tree-shaking\n`;
-    if (density.default) {
-      Object.entries(density.default).forEach(([name, value]) => {
+    densityOutput += `\n// Flat exports (${DENSITY_MODES[0]} density) for tree-shaking\n`;
+    if (density[DENSITY_MODES[0]]) {
+      Object.entries(density[DENSITY_MODES[0]]).forEach(([name, value]) => {
         densityOutput += `export const ${name} = ${formatJsValue(value)};\n`;
       });
     }
@@ -7570,7 +7554,7 @@ async function buildOptimizedJSOutput() {
 
         let compOutput = getJsFileHeader() + `// Component: ${comp}\n// Brand: ${brand}\n\n`;
         compOutput += `export const ${comp} = ${JSON.stringify(component, null, 2)};\n\n`;
-        compOutput += `export const get${comp}Tokens = (colorMode = 'light', breakpoint = 'md', density = 'default') => ({\n`;
+        compOutput += `export const get${comp}Tokens = (colorMode = 'light', breakpoint = '${BREAKPOINTS[Math.floor(BREAKPOINTS.length / 2)]}', density = '${DENSITY_MODES[0]}') => ({\n`;
         compOutput += `  ...${comp}.colors?.[colorMode],\n  ...${comp}.sizing?.[breakpoint],\n`;
         compOutput += `  ...${comp}.density?.[density],\n  ...${comp}.typography?.[breakpoint],\n`;
         compOutput += `  ...${comp}.effects?.[colorMode]\n});\n\n`;
@@ -7587,8 +7571,8 @@ async function buildOptimizedJSOutput() {
             compOutput += `export const ${name} = ${formatJsValue(value)};\n`;
           });
         }
-        if (component.density?.default) {
-          Object.entries(component.density.default).forEach(([name, value]) => {
+        if (component.density?.[DENSITY_MODES[0]]) {
+          Object.entries(component.density[DENSITY_MODES[0]]).forEach(([name, value]) => {
             compOutput += `export const ${name} = ${formatJsValue(value)};\n`;
           });
         }
@@ -7622,7 +7606,7 @@ async function buildOptimizedJSOutput() {
   writeJsFile(path.join(jsDistDir, 'brands', 'index.js'), brandsIdx);
 
   // Root index
-  let rootIdx = getJsFileHeader() + `// BILD Design System Tokens\n\n`;
+  let rootIdx = getJsFileHeader() + `// ${pipelineConfig.identity.name} Tokens\n\n`;
   rootIdx += `export * as primitives from './primitives/index.js';\n`;
   rootIdx += `export * as brands from './brands/index.js';\n\n`;
   BRANDS.forEach(b => { rootIdx += `export * as ${b} from './brands/${b}/index.js';\n`; });
@@ -7635,7 +7619,7 @@ async function buildOptimizedJSOutput() {
 
   // Type definitions header
   const TS_HEADER = `/**
- * TypeScript definitions for BILD Design System Tokens
+ * TypeScript definitions for ${pipelineConfig.identity.name} Tokens
  * Auto-generated - Do not edit directly
  */
 
@@ -7831,9 +7815,9 @@ export type SizeValue = string;
     densityTypes += `}\n\n`;
     densityTypes += `export declare const density: DensityTokens;\n`;
     DENSITY_MODES.forEach(m => { densityTypes += `export declare const ${m === 'default' ? 'defaultDensity' : m}: DensityTokens['${m}'];\n`; });
-    densityTypes += `\n// Flat exports (default density)\n`;
-    if (densityData.default) {
-      Object.keys(densityData.default).forEach(name => {
+    densityTypes += `\n// Flat exports (${DENSITY_MODES[0]} density)\n`;
+    if (densityData[DENSITY_MODES[0]]) {
+      Object.keys(densityData[DENSITY_MODES[0]]).forEach(name => {
         densityTypes += `export declare const ${name}: SizeValue;\n`;
       });
     }
@@ -8042,7 +8026,7 @@ export type SizeValue = string;
   }
 
   // createTheme utility with embedded token data
-  let createThemeJs = getJsFileHeader() + `// Theme factory for BILD Design System
+  let createThemeJs = getJsFileHeader() + `// Theme factory for ${pipelineConfig.identity.name}
 // Supports multi-brand, multi-mode token combinations
 
 // Embedded token data for all brand/mode combinations
@@ -8075,17 +8059,17 @@ export function createTheme(config = {}) {
   if (!['bild', 'sportbild', 'advertorial'].includes(brand)) {
     throw new Error(\`Invalid brand: \${brand}. Must be one of: bild, sportbild, advertorial\`);
   }
-  if (!['bild', 'sportbild'].includes(effectiveColorBrand)) {
-    throw new Error(\`Invalid colorBrand: \${effectiveColorBrand}. Must be one of: bild, sportbild\`);
+  if (![${COLOR_BRANDS.map(b => `'${b}'`).join(', ')}].includes(effectiveColorBrand)) {
+    throw new Error(\`Invalid colorBrand: \${effectiveColorBrand}. Must be one of: ${COLOR_BRANDS.join(', ')}\`);
   }
-  if (!['light', 'dark'].includes(colorMode)) {
-    throw new Error(\`Invalid colorMode: \${colorMode}. Must be one of: light, dark\`);
+  if (![${COLOR_MODES.map(m => `'${m}'`).join(', ')}].includes(colorMode)) {
+    throw new Error(\`Invalid colorMode: \${colorMode}. Must be one of: ${COLOR_MODES.join(', ')}\`);
   }
-  if (!['xs', 'sm', 'md', 'lg'].includes(breakpoint)) {
-    throw new Error(\`Invalid breakpoint: \${breakpoint}. Must be one of: xs, sm, md, lg\`);
+  if (![${BREAKPOINTS.map(bp => `'${bp}'`).join(', ')}].includes(breakpoint)) {
+    throw new Error(\`Invalid breakpoint: \${breakpoint}. Must be one of: ${BREAKPOINTS.join(', ')}\`);
   }
-  if (!['default', 'dense', 'spacious'].includes(density)) {
-    throw new Error(\`Invalid density: \${density}. Must be one of: default, dense, spacious\`);
+  if (![${DENSITY_MODES.map(d => `'${d}'`).join(', ')}].includes(density)) {
+    throw new Error(\`Invalid density: \${density}. Must be one of: ${DENSITY_MODES.join(', ')}\`);
   }
 
   return {
@@ -8117,17 +8101,17 @@ export const colorBrands = ['bild', 'sportbild'];
 /**
  * Available color modes
  */
-export const colorModes = ['light', 'dark'];
+export const colorModes = [${COLOR_MODES.map(m => `'${m}'`).join(', ')}];
 
 /**
  * Available breakpoints
  */
-export const breakpoints = ['xs', 'sm', 'md', 'lg'];
+export const breakpoints = [${BREAKPOINTS.map(bp => `'${bp}'`).join(', ')}];
 
 /**
  * Available density modes
  */
-export const densityModes = ['default', 'dense', 'spacious'];
+export const densityModes = [${DENSITY_MODES.map(d => `'${d}'`).join(', ')}];
 
 /**
  * Get token data for a specific combination (lower-level API)
@@ -8147,8 +8131,10 @@ export function getTokens(type, key1, key2) {
 
       // Read actual token data
       const colorsData = readTokenFile(path.join(TOKENS_DIR, 'brands', colorBrand, 'color', `colormode-${colorMode}.json`));
+      const representativeBp = BREAKPOINTS[Math.floor(BREAKPOINTS.length / 2)]; // Middle breakpoint as representative
+      const representativeBpMin = BREAKPOINT_VALUES[representativeBp];
       const spacingData = readTokenFile(path.join(TOKENS_DIR, 'brands', colorBrand, 'breakpoints',
-        fs.readdirSync(path.join(TOKENS_DIR, 'brands', colorBrand, 'breakpoints')).find(f => f.startsWith('breakpoint-md')) || 'breakpoint-md-600px.json'));
+        fs.readdirSync(path.join(TOKENS_DIR, 'brands', colorBrand, 'breakpoints')).find(f => f.startsWith(`breakpoint-${representativeBp}`)) || `breakpoint-${representativeBp}-${representativeBpMin}px.json`));
       const typographyData = readTokenFile(path.join(TOKENS_DIR, 'brands', colorBrand, 'semantic', 'typography', 'typography-md.json'));
       const effectsData = readTokenFile(path.join(TOKENS_DIR, 'brands', colorBrand, 'semantic', 'effects', `effects-${colorMode}.json`));
       const densityData = readTokenFile(path.join(TOKENS_DIR, 'brands', colorBrand, 'density', 'density-default.json'));
@@ -8352,18 +8338,18 @@ export default ${themeName};
   themesIdxDts += `}\n\n`;
   themesIdxDts += `export declare function createTheme(config?: ThemeConfig): Theme;\n`;
   themesIdxDts += `export declare function getTokens(type: 'colors' | 'spacing' | 'typography' | 'effects' | 'density', key1: string, key2: string): Record<string, any>;\n`;
-  themesIdxDts += `export declare const availableBrands: readonly ['bild', 'sportbild', 'advertorial'];\n`;
-  themesIdxDts += `export declare const colorBrands: readonly ['bild', 'sportbild'];\n`;
-  themesIdxDts += `export declare const colorModes: readonly ['light', 'dark'];\n`;
-  themesIdxDts += `export declare const breakpoints: readonly ['xs', 'sm', 'md', 'lg'];\n`;
-  themesIdxDts += `export declare const densityModes: readonly ['default', 'dense', 'spacious'];\n\n`;
+  themesIdxDts += `export declare const availableBrands: readonly [${BRANDS.map(b => `'${b}'`).join(', ')}];\n`;
+  themesIdxDts += `export declare const colorBrands: readonly [${COLOR_BRANDS.map(b => `'${b}'`).join(', ')}];\n`;
+  themesIdxDts += `export declare const colorModes: readonly [${COLOR_MODES.map(m => `'${m}'`).join(', ')}];\n`;
+  themesIdxDts += `export declare const breakpoints: readonly [${BREAKPOINTS.map(bp => `'${bp}'`).join(', ')}];\n`;
+  themesIdxDts += `export declare const densityModes: readonly [${DENSITY_MODES.map(d => `'${d}'`).join(', ')}];\n\n`;
   themesIdxDts += `// Pre-built themes\n`;
   presetThemes.forEach(t => { themesIdxDts += `export declare const ${t.name}: Theme;\n`; });
   themesIdxDts += `\nexport declare const themes: Record<string, Theme>;\n`;
   writeJsFile(path.join(themesDir, 'index.d.ts'), themesIdxDts);
 
   // Update root index to include themes
-  rootIdx = getJsFileHeader() + `// BILD Design System Tokens\n\n`;
+  rootIdx = getJsFileHeader() + `// ${pipelineConfig.identity.name} Tokens\n\n`;
   rootIdx += `export * as primitives from './primitives/index.js';\n`;
   rootIdx += `export * as brands from './brands/index.js';\n`;
   rootIdx += `export * as themes from './themes/index.js';\n`;
@@ -8382,7 +8368,7 @@ export default ${themeName};
   fs.mkdirSync(reactDir, { recursive: true });
 
   // ThemeContext.js
-  const themeContextJs = getJsFileHeader() + `// React Context for BILD Design System Theme
+  const themeContextJs = getJsFileHeader() + `// React Context for ${pipelineConfig.identity.name} Theme
 
 import { createContext } from 'react';
 
@@ -8421,10 +8407,7 @@ export default useTheme;
 import { useState, useEffect } from 'react';
 
 const BREAKPOINTS = {
-  xs: 320,
-  sm: 390,
-  md: 600,
-  lg: 1024
+${BREAKPOINTS.map(bp => `  ${bp}: ${BREAKPOINT_VALUES[bp]}`).join(',\n')}
 };
 
 function detectBreakpoint() {
@@ -8467,13 +8450,13 @@ export function useIsBreakpoint(target) {
 
 export function useIsBreakpointUp(target) {
   const current = useBreakpoint();
-  const order = ['xs', 'sm', 'md', 'lg'];
+  const order = [${BREAKPOINTS.map(bp => `'${bp}'`).join(', ')}];
   return order.indexOf(current) >= order.indexOf(target);
 }
 
 export function useIsBreakpointDown(target) {
   const current = useBreakpoint();
-  const order = ['xs', 'sm', 'md', 'lg'];
+  const order = [${BREAKPOINTS.map(bp => `'${bp}'`).join(', ')}];
   return order.indexOf(current) <= order.indexOf(target);
 }
 
@@ -8484,17 +8467,14 @@ export default useBreakpoint;
   writeJsFile(path.join(reactDir, 'useBreakpoint.js'), useBreakpointJs);
 
   // ThemeProvider.js
-  const themeProviderJs = getJsFileHeader() + `// ThemeProvider component for BILD Design System
+  const themeProviderJs = getJsFileHeader() + `// ThemeProvider component for ${pipelineConfig.identity.name}
 
 import { createElement, useState, useMemo, useEffect } from 'react';
 import { ThemeContext } from './ThemeContext.js';
 import { createTheme } from '../themes/createTheme.js';
 
 const BREAKPOINT_VALUES = {
-  xs: 320,
-  sm: 390,
-  md: 600,
-  lg: 1024
+${BREAKPOINTS.map(bp => `  ${bp}: ${BREAKPOINT_VALUES[bp]}`).join(',\n')}
 };
 
 function detectBreakpoint() {
@@ -8570,7 +8550,7 @@ export default ThemeProvider;
   writeJsFile(path.join(reactDir, 'ThemeProvider.js'), themeProviderJs);
 
   // React index.js
-  const reactIndexJs = getJsFileHeader() + `// React bindings for BILD Design System
+  const reactIndexJs = getJsFileHeader() + `// React bindings for ${pipelineConfig.identity.name}
 
 export { ThemeContext } from './ThemeContext.js';
 export { ThemeProvider } from './ThemeProvider.js';
@@ -8587,7 +8567,7 @@ export {
 
   // React TypeScript definitions
   const reactIndexDts = `/**
- * TypeScript definitions for BILD Design System React bindings
+ * TypeScript definitions for ${pipelineConfig.identity.name} React bindings
  * Auto-generated - Do not edit directly
  */
 
@@ -8646,10 +8626,7 @@ export interface ThemeProviderProps {
 
 // Breakpoints constant
 export declare const BREAKPOINTS: {
-  xs: 320;
-  sm: 390;
-  md: 600;
-  lg: 1024;
+${BREAKPOINTS.map(bp => `  ${bp}: ${BREAKPOINT_VALUES[bp]};`).join('\n')}
 };
 
 // Context
@@ -9056,7 +9033,7 @@ async function generateSCSSMixinsAndFunctions() {
   const scssDir = path.join(DIST_DIR, 'scss');
 
   // Generate _functions.scss
-  const functionsContent = `// BILD Design System - SCSS Functions
+  const functionsContent = `// ${pipelineConfig.identity.name} - SCSS Functions
 // Auto-generated - Do not edit directly
 
 @use 'sass:map';
@@ -9123,7 +9100,7 @@ async function generateSCSSMixinsAndFunctions() {
   fs.writeFileSync(path.join(scssDir, '_functions.scss'), functionsContent);
 
   // Generate _mixins.scss
-  const mixinsContent = `// BILD Design System - SCSS Mixins
+  const mixinsContent = `// ${pipelineConfig.identity.name} - SCSS Mixins
 // Auto-generated - Do not edit directly
 
 @use 'sass:map';
@@ -9217,21 +9194,19 @@ async function generateSCSSMixinsAndFunctions() {
 
   // Generate abstracts/_breakpoints.scss
   const abstractsDir = path.join(scssDir, 'abstracts');
-  const breakpointsContent = `// BILD Design System - Breakpoint Configuration
+  // Generate SCSS breakpoint variables from config
+  const bpEntries = Object.entries(pipelineConfig.modes.breakpoints);
+  const bpVarsStr = bpEntries.map(([name, { minWidth }]) => `$breakpoint-${name}: ${minWidth}px;`).join('\n');
+  const bpMapStr = bpEntries.map(([name]) => `  ${name}: $breakpoint-${name},`).join('\n');
+  const breakpointsContent = `// ${pipelineConfig.identity.name} - Breakpoint Configuration
 // Auto-generated - Do not edit directly
 
 // Breakpoint values
-$breakpoint-xs: 320px;
-$breakpoint-sm: 390px;
-$breakpoint-md: 600px;
-$breakpoint-lg: 1024px;
+${bpVarsStr}
 
 // Breakpoints map
 $breakpoints: (
-  xs: $breakpoint-xs,
-  sm: $breakpoint-sm,
-  md: $breakpoint-md,
-  lg: $breakpoint-lg,
+${bpMapStr}
 );
 `;
 
@@ -9247,7 +9222,7 @@ async function generateSCSSBundles() {
   for (const brand of BRANDS) {
     const isColorBrand = COLOR_BRANDS.includes(brand);
 
-    let bundleContent = `// BILD Design System - ${brand.charAt(0).toUpperCase() + brand.slice(1)} Bundle
+    let bundleContent = `// ${pipelineConfig.identity.name} - ${brand.charAt(0).toUpperCase() + brand.slice(1)} Bundle
 // Auto-generated - Do not edit directly
 //
 // Usage:
@@ -9302,7 +9277,7 @@ async function generateSCSSBundles() {
 async function generateSCSSIndex() {
   const scssDir = path.join(DIST_DIR, 'scss');
 
-  const indexContent = `// BILD Design System - SCSS Tokens
+  const indexContent = `// ${pipelineConfig.identity.name} - SCSS Tokens
 // Auto-generated - Do not edit directly
 //
 // Usage (recommended - use brand bundle):
@@ -9342,7 +9317,7 @@ function generateSCSSFileHeader(fileName, brand, context) {
   const lines = [
     'Do not edit directly, this file was auto-generated.',
     '',
-    `BILD Design System Tokens v${version}`,
+    `${pipelineConfig.identity.name} Tokens v${version}`,
   ];
 
   if (brand) {
@@ -9582,7 +9557,7 @@ function scssToCamelCase(str) {
  */
 async function main() {
   console.log('🎨 ============================================');
-  console.log('   BILD Design System - Token Build v2');
+  console.log(`   ${pipelineConfig.identity.name} - Token Build v2`);
   console.log('   ============================================\n');
 
   // Clean dist

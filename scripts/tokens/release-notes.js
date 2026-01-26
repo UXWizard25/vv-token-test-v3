@@ -19,6 +19,7 @@ const {
   findAffectedComponents,
   DEFAULT_COMPONENTS_DIR
 } = require('./scan-component-refs');
+const pipelineConfig = require('../../build-config/tokens/pipeline.config.js');
 
 // =============================================================================
 // CONSTANTS
@@ -996,10 +997,10 @@ function generateBreakingChangesSection(diff, options = {}) {
 // LAYER 3: VISUAL CHANGES (Modified Tokens with Diff Metrics)
 // =============================================================================
 
-// Known brands and modes for matrix display
-const KNOWN_BRANDS = ['bild', 'sportbild', 'advertorial'];
-const KNOWN_MODES = ['light', 'dark'];
-const KNOWN_BREAKPOINTS = ['xs', 'sm', 'md', 'lg'];
+// Known brands and modes for matrix display (from pipeline config)
+const KNOWN_BRANDS = pipelineConfig.brands.all;
+const KNOWN_MODES = pipelineConfig.modes.color;
+const KNOWN_BREAKPOINTS = Object.keys(pipelineConfig.modes.breakpoints);
 
 /**
  * Format a color change with inline delta
@@ -1865,8 +1866,10 @@ function generateDynamicChecklist(diff, options = {}) {
   if (hasModified || hasAdded) {
     md += '### 👁️ Visual Review\n\n';
     if (changedCategories.has('colors')) {
-      md += '- [ ] Color changes verified in **Light** mode\n';
-      md += '- [ ] Color changes verified in **Dark** mode\n';
+      for (const mode of KNOWN_MODES) {
+        const displayName = pipelineConfig.modes.colorDisplayNames[mode] || mode;
+        md += `- [ ] Color changes verified in **${displayName}** mode\n`;
+      }
     }
     if (changedCategories.has('typography')) {
       md += '- [ ] Typography changes reviewed across breakpoints\n';
@@ -1897,7 +1900,7 @@ function generateDynamicChecklist(diff, options = {}) {
 
 function generateTechnicalDetails(diff, options = {}) {
   const { runId = '' } = options;
-  const repo = process.env.GITHUB_REPOSITORY || 'UXWizard25/bild-design-system';
+  const repo = process.env.GITHUB_REPOSITORY || pipelineConfig.identity.repositoryUrl.replace('https://github.com/', '');
 
   let md = '## ⚙️ Technical Details\n\n';
 
@@ -2010,7 +2013,7 @@ function generatePRComment(diff, options = {}) {
   md += generateTechnicalDetails(diff, options);
 
   // Footer
-  const repo = process.env.GITHUB_REPOSITORY || 'UXWizard25/bild-design-system';
+  const repo = process.env.GITHUB_REPOSITORY || pipelineConfig.identity.repositoryUrl.replace('https://github.com/', '');
   md += `---\n\n`;
   md += `**Questions?** [Documentation](https://github.com/${repo}#readme) | [Create Issue](https://github.com/${repo}/issues)\n`;
 
@@ -2103,7 +2106,7 @@ function generateConsoleOutput(diff) {
  */
 function generateGitHubRelease(diff, options = {}) {
   const { version = 'latest', packageSize = '', successfulBuilds = 0, totalBuilds = 0 } = options;
-  const repo = process.env.GITHUB_REPOSITORY || 'UXWizard25/bild-design-system';
+  const repo = process.env.GITHUB_REPOSITORY || pipelineConfig.identity.repositoryUrl.replace('https://github.com/', '');
 
   let md = `## 🎨 Design System v${version}\n\n`;
 
@@ -2111,12 +2114,12 @@ function generateGitHubRelease(diff, options = {}) {
   md += '### 📦 Installation\n\n';
   md += '```bash\n';
   md += '# Design Tokens (CSS, JS, iOS, Android)\n';
-  md += `npm install @marioschmidt/design-system-tokens@${version}\n\n`;
+  md += `npm install ${pipelineConfig.packages.tokens.npm}@${version}\n\n`;
   md += '# Web Components (Stencil)\n';
-  md += `npm install @marioschmidt/design-system-components@${version}\n\n`;
+  md += `npm install ${pipelineConfig.packages.components.npm}@${version}\n\n`;
   md += '# React / Vue Wrappers\n';
-  md += `npm install @marioschmidt/design-system-react@${version}\n`;
-  md += `npm install @marioschmidt/design-system-vue@${version}\n`;
+  md += `npm install ${pipelineConfig.packages.react.npm}@${version}\n`;
+  md += `npm install ${pipelineConfig.packages.vue.npm}@${version}\n`;
   md += '```\n\n';
 
   // Get grouped data
@@ -2360,14 +2363,14 @@ function generateGitHubRelease(diff, options = {}) {
     md += `| Package Size | ${packageSize} |\n`;
   }
   md += '| Platforms | CSS, SCSS, JS, Swift, Kotlin, JSON |\n';
-  md += '| Brands | BILD, SportBILD, Advertorial |\n';
+  md += `| Brands | ${pipelineConfig.brands.all.map(b => pipelineConfig.brands.displayNames[b] || b).join(', ')} |\n`;
   md += '\n';
 
   // Links
   md += '### 🔗 Links\n\n';
   md += `- [📖 Documentation](https://github.com/${repo}#readme)\n`;
-  md += `- [📦 Tokens on npm](https://www.npmjs.com/package/@marioschmidt/design-system-tokens)\n`;
-  md += `- [📦 Components on npm](https://www.npmjs.com/package/@marioschmidt/design-system-components)\n`;
+  md += `- [📦 Tokens on npm](https://www.npmjs.com/package/${pipelineConfig.packages.tokens.npm})\n`;
+  md += `- [📦 Components on npm](https://www.npmjs.com/package/${pipelineConfig.packages.components.npm})\n`;
   md += `- [🐛 Report Issue](https://github.com/${repo}/issues)\n`;
 
   return md;

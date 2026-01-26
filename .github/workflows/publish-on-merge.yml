@@ -64,7 +64,23 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
 
-      # 4. Dependencies installieren
+      # 4a. Load pipeline configuration values
+      - name: Load Pipeline Config
+        id: config
+        run: |
+          echo "📋 Reading pipeline configuration..."
+          CONFIG="build-config/tokens/pipeline.config.js"
+          echo "tokens_npm=$(node -p "require('./$CONFIG').packages.tokens.npm")" >> $GITHUB_OUTPUT
+          echo "components_npm=$(node -p "require('./$CONFIG').packages.components.npm")" >> $GITHUB_OUTPUT
+          echo "react_npm=$(node -p "require('./$CONFIG').packages.react.npm")" >> $GITHUB_OUTPUT
+          echo "vue_npm=$(node -p "require('./$CONFIG').packages.vue.npm")" >> $GITHUB_OUTPUT
+          echo "android_maven=$(node -p "require('./$CONFIG').platforms.android.mavenCoordinates")" >> $GITHUB_OUTPUT
+          echo "ios_module=$(node -p "require('./$CONFIG').platforms.ios.moduleName")" >> $GITHUB_OUTPUT
+          echo "source_file=$(node -p "require('./$CONFIG').source.inputFile")" >> $GITHUB_OUTPUT
+          echo "ios_output_dir=$(node -p "require('./$CONFIG').platforms.ios.outputDir")" >> $GITHUB_OUTPUT
+          echo "✅ Config loaded"
+
+      # 4b. Dependencies installieren
       - name: Install Dependencies
         run: |
           echo "📦 Installing dependencies..."
@@ -108,7 +124,7 @@ jobs:
           cp -r packages/tokens/dist/ dist-new/
 
           # Aktuelle Source-Datei speichern (für Rename-Detection)
-          cp packages/tokens/src/bild-design-system-raw-data.json source-new.json
+          cp packages/tokens/src/${{ steps.config.outputs.source_file }} source-new.json
           echo "✅ Saved current source file"
 
           # Vorherigen Tag für Baseline
@@ -118,7 +134,7 @@ jobs:
             echo "Building baseline from $LATEST_TAG..."
 
             # Source-Datei vom vorherigen Tag holen (für Rename-Detection)
-            git show "$LATEST_TAG:packages/tokens/src/bild-design-system-raw-data.json" > source-old.json 2>/dev/null || true
+            git show "$LATEST_TAG:packages/tokens/src/${{ steps.config.outputs.source_file }}" > source-old.json 2>/dev/null || true
             if [ -f "source-old.json" ] && [ -s "source-old.json" ]; then
               echo "✅ Saved baseline source file from $LATEST_TAG"
               echo "has_source_baseline=true" >> $GITHUB_OUTPUT
@@ -354,32 +370,32 @@ jobs:
       # 16. Packages veröffentlichen
       - name: Publish Tokens to npmjs.org
         run: |
-          echo "📦 Publishing @marioschmidt/design-system-tokens@${{ steps.version.outputs.new }} to npmjs.org..."
-          npm publish -w @marioschmidt/design-system-tokens --access public
+          echo "📦 Publishing ${{ steps.config.outputs.tokens_npm }}@${{ steps.version.outputs.new }} to npmjs.org..."
+          npm publish -w ${{ steps.config.outputs.tokens_npm }} --access public
           echo "✅ Tokens package published successfully!"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish Components to npmjs.org
         run: |
-          echo "📦 Publishing @marioschmidt/design-system-components@${{ steps.version.outputs.new }} to npmjs.org..."
-          npm publish -w @marioschmidt/design-system-components --access public
+          echo "📦 Publishing ${{ steps.config.outputs.components_npm }}@${{ steps.version.outputs.new }} to npmjs.org..."
+          npm publish -w ${{ steps.config.outputs.components_npm }} --access public
           echo "✅ Components package published successfully!"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish React Wrappers to npmjs.org
         run: |
-          echo "📦 Publishing @marioschmidt/design-system-react@${{ steps.version.outputs.new }} to npmjs.org..."
-          npm publish -w @marioschmidt/design-system-react --access public
+          echo "📦 Publishing ${{ steps.config.outputs.react_npm }}@${{ steps.version.outputs.new }} to npmjs.org..."
+          npm publish -w ${{ steps.config.outputs.react_npm }} --access public
           echo "✅ React package published successfully!"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish Vue Wrappers to npmjs.org
         run: |
-          echo "📦 Publishing @marioschmidt/design-system-vue@${{ steps.version.outputs.new }} to npmjs.org..."
-          npm publish -w @marioschmidt/design-system-vue --access public
+          echo "📦 Publishing ${{ steps.config.outputs.vue_npm }}@${{ steps.version.outputs.new }} to npmjs.org..."
+          npm publish -w ${{ steps.config.outputs.vue_npm }} --access public
           echo "✅ Vue package published successfully!"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -402,7 +418,7 @@ jobs:
       - name: Publish Android Tokens to GitHub Packages
         id: android_publish
         run: |
-          echo "📦 Publishing de.bild.design:tokens@${{ steps.version.outputs.new }} to GitHub Packages..."
+          echo "📦 Publishing ${{ steps.config.outputs.android_maven }}@${{ steps.version.outputs.new }} to GitHub Packages..."
           cd packages/tokens-android
 
           # Debug: Show environment
@@ -436,7 +452,7 @@ jobs:
           echo "📝 Committing generated native files..."
 
           # Add generated iOS files
-          git add packages/tokens-ios/Sources/BildDesignTokens/ || true
+          git add ${{ steps.config.outputs.ios_output_dir }} || true
 
           # Add generated Android files
           git add packages/tokens-android/src/main/kotlin/ || true
@@ -474,16 +490,16 @@ jobs:
               echo ""
               echo '```bash'
               echo "# Design Tokens (CSS, JS, iOS, Android)"
-              echo "npm install @marioschmidt/design-system-tokens@${{ steps.version.outputs.new }}"
+              echo "npm install ${{ steps.config.outputs.tokens_npm }}@${{ steps.version.outputs.new }}"
               echo ""
               echo "# Web Components (Stencil)"
-              echo "npm install @marioschmidt/design-system-components@${{ steps.version.outputs.new }}"
+              echo "npm install ${{ steps.config.outputs.components_npm }}@${{ steps.version.outputs.new }}"
               echo ""
               echo "# React Wrappers"
-              echo "npm install @marioschmidt/design-system-react@${{ steps.version.outputs.new }}"
+              echo "npm install ${{ steps.config.outputs.react_npm }}@${{ steps.version.outputs.new }}"
               echo ""
               echo "# Vue Wrappers"
-              echo "npm install @marioschmidt/design-system-vue@${{ steps.version.outputs.new }}"
+              echo "npm install ${{ steps.config.outputs.vue_npm }}@${{ steps.version.outputs.new }}"
               echo '```'
               echo ""
               echo "### 📋 Build Info"
@@ -498,10 +514,10 @@ jobs:
               echo "### 🔗 Links"
               echo ""
               echo "- [📖 Documentation](https://github.com/${{ github.repository }}#readme)"
-              echo "- [📦 Tokens on npm](https://www.npmjs.com/package/@marioschmidt/design-system-tokens)"
-              echo "- [📦 Components on npm](https://www.npmjs.com/package/@marioschmidt/design-system-components)"
-              echo "- [📦 React on npm](https://www.npmjs.com/package/@marioschmidt/design-system-react)"
-              echo "- [📦 Vue on npm](https://www.npmjs.com/package/@marioschmidt/design-system-vue)"
+              echo "- [📦 Tokens on npm](https://www.npmjs.com/package/${{ steps.config.outputs.tokens_npm }})"
+              echo "- [📦 Components on npm](https://www.npmjs.com/package/${{ steps.config.outputs.components_npm }})"
+              echo "- [📦 React on npm](https://www.npmjs.com/package/${{ steps.config.outputs.react_npm }})"
+              echo "- [📦 Vue on npm](https://www.npmjs.com/package/${{ steps.config.outputs.vue_npm }})"
             } > release-notes.md
           fi
 
@@ -527,17 +543,17 @@ jobs:
           echo "## 🚀 Packages Published Successfully!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**npm Packages:**" >> $GITHUB_STEP_SUMMARY
-          echo "- \`@marioschmidt/design-system-tokens\`" >> $GITHUB_STEP_SUMMARY
-          echo "- \`@marioschmidt/design-system-components\`" >> $GITHUB_STEP_SUMMARY
-          echo "- \`@marioschmidt/design-system-react\`" >> $GITHUB_STEP_SUMMARY
-          echo "- \`@marioschmidt/design-system-vue\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`${{ steps.config.outputs.tokens_npm }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`${{ steps.config.outputs.components_npm }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`${{ steps.config.outputs.react_npm }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`${{ steps.config.outputs.vue_npm }}\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Native Packages:**" >> $GITHUB_STEP_SUMMARY
-          echo "- \`BildDesignTokens\` (iOS/SPM via Git tag)" >> $GITHUB_STEP_SUMMARY
+          echo "- \`${{ steps.config.outputs.ios_module }}\` (iOS/SPM via Git tag)" >> $GITHUB_STEP_SUMMARY
           if [ "${{ steps.android_publish.outputs.success }}" = "true" ]; then
-            echo "- ✅ \`de.bild.design:tokens\` (Android/Maven)" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ \`${{ steps.config.outputs.android_maven }}\` (Android/Maven)" >> $GITHUB_STEP_SUMMARY
           else
-            echo "- ⚠️ \`de.bild.design:tokens\` (Android/Maven) - **Publishing failed**" >> $GITHUB_STEP_SUMMARY
+            echo "- ⚠️ \`${{ steps.config.outputs.android_maven }}\` (Android/Maven) - **Publishing failed**" >> $GITHUB_STEP_SUMMARY
           fi
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Previous Version:** \`${{ steps.version.outputs.current }}\`" >> $GITHUB_STEP_SUMMARY
@@ -558,23 +574,23 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
           echo "# Design Tokens" >> $GITHUB_STEP_SUMMARY
-          echo "npm install @marioschmidt/design-system-tokens@${{ steps.version.outputs.new }}" >> $GITHUB_STEP_SUMMARY
+          echo "npm install ${{ steps.config.outputs.tokens_npm }}@${{ steps.version.outputs.new }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "# Web Components (Stencil)" >> $GITHUB_STEP_SUMMARY
-          echo "npm install @marioschmidt/design-system-components@${{ steps.version.outputs.new }}" >> $GITHUB_STEP_SUMMARY
+          echo "npm install ${{ steps.config.outputs.components_npm }}@${{ steps.version.outputs.new }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "# React Wrappers" >> $GITHUB_STEP_SUMMARY
-          echo "npm install @marioschmidt/design-system-react@${{ steps.version.outputs.new }}" >> $GITHUB_STEP_SUMMARY
+          echo "npm install ${{ steps.config.outputs.react_npm }}@${{ steps.version.outputs.new }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "# Vue Wrappers" >> $GITHUB_STEP_SUMMARY
-          echo "npm install @marioschmidt/design-system-vue@${{ steps.version.outputs.new }}" >> $GITHUB_STEP_SUMMARY
+          echo "npm install ${{ steps.config.outputs.vue_npm }}@${{ steps.version.outputs.new }}" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 🔗 Links" >> $GITHUB_STEP_SUMMARY
-          echo "- [📦 Tokens on npm](https://www.npmjs.com/package/@marioschmidt/design-system-tokens)" >> $GITHUB_STEP_SUMMARY
-          echo "- [📦 Components on npm](https://www.npmjs.com/package/@marioschmidt/design-system-components)" >> $GITHUB_STEP_SUMMARY
-          echo "- [📦 React on npm](https://www.npmjs.com/package/@marioschmidt/design-system-react)" >> $GITHUB_STEP_SUMMARY
-          echo "- [📦 Vue on npm](https://www.npmjs.com/package/@marioschmidt/design-system-vue)" >> $GITHUB_STEP_SUMMARY
+          echo "- [📦 Tokens on npm](https://www.npmjs.com/package/${{ steps.config.outputs.tokens_npm }})" >> $GITHUB_STEP_SUMMARY
+          echo "- [📦 Components on npm](https://www.npmjs.com/package/${{ steps.config.outputs.components_npm }})" >> $GITHUB_STEP_SUMMARY
+          echo "- [📦 React on npm](https://www.npmjs.com/package/${{ steps.config.outputs.react_npm }})" >> $GITHUB_STEP_SUMMARY
+          echo "- [📦 Vue on npm](https://www.npmjs.com/package/${{ steps.config.outputs.vue_npm }})" >> $GITHUB_STEP_SUMMARY
           echo "- [📋 Release Notes](https://github.com/${{ github.repository }}/releases/tag/v${{ steps.version.outputs.new }})" >> $GITHUB_STEP_SUMMARY
           echo "- [🎨 Pull Requests](https://github.com/${{ github.repository }}/pulls?q=is%3Apr+is%3Amerged)" >> $GITHUB_STEP_SUMMARY
 

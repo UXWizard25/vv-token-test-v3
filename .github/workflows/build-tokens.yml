@@ -73,7 +73,16 @@ jobs:
           echo "🧹 Cleaning previous build artifacts..."
           rm -rf node_modules dist tokens
 
-      # 4. Dependencies installieren
+      # 4a. Load pipeline configuration
+      - name: Load Pipeline Config
+        id: config
+        run: |
+          echo "📋 Reading pipeline configuration..."
+          CONFIG="build-config/tokens/pipeline.config.js"
+          echo "default_brand=$(node -p "require('./$CONFIG').brands.defaultBrand")" >> $GITHUB_OUTPUT
+          echo "✅ Config loaded"
+
+      # 4b. Dependencies installieren
       - name: Install Dependencies
         run: |
           echo "📦 Installing dependencies..."
@@ -140,7 +149,7 @@ jobs:
 
           echo "#### Brand Tokens" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          ls -1 packages/tokens/dist/css/brands/bild/semantic/color/*.css 2>/dev/null | head -5 || echo "No files generated"
+          ls -1 packages/tokens/dist/css/brands/${{ steps.config.outputs.default_brand }}/semantic/color/*.css 2>/dev/null | head -5 || echo "No files generated"
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 

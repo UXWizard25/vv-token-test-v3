@@ -4,6 +4,20 @@ import { addons } from 'storybook/preview-api';
 import { DARK_MODE_EVENT_NAME } from '@vueless/storybook-dark-mode';
 import { bildLightTheme, bildDarkTheme } from './themes';
 import { DocsContainer } from './DocsContainer';
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+const pipelineConfig = require('../tokens/pipeline.config.js');
+
+// Derived config values
+const DATA_ATTRS = pipelineConfig.platforms.css.dataAttributes;
+const COLOR_BRANDS = pipelineConfig.brands.colorBrands;
+const CONTENT_BRANDS = pipelineConfig.brands.contentBrands;
+const DENSITY_MODES = pipelineConfig.modes.density;
+const DEFAULT_BRAND = pipelineConfig.brands.defaultBrand;
+const DISPLAY_NAMES = pipelineConfig.brands.displayNames;
+const DENSITY_DISPLAY_NAMES = pipelineConfig.modes.densityDisplayNames;
+const COLOR_MODES = pipelineConfig.modes.color;
 
 // Stencil components are loaded via script tag in preview-head.html
 // This ensures they're available before stories render
@@ -16,10 +30,10 @@ function initializeGlobalAttributes() {
   if (typeof document !== 'undefined' && document.documentElement) {
     // Set initial values - these will be updated by the decorator for stories
     // and by the dark mode channel for theme
-    document.documentElement.setAttribute('data-theme', 'light');
-    document.documentElement.setAttribute('data-color-brand', 'bild');
-    document.documentElement.setAttribute('data-content-brand', 'bild');
-    document.documentElement.setAttribute('data-density', 'default');
+    document.documentElement.setAttribute(DATA_ATTRS.theme, COLOR_MODES[0]);
+    document.documentElement.setAttribute(DATA_ATTRS.colorBrand, DEFAULT_BRAND);
+    document.documentElement.setAttribute(DATA_ATTRS.contentBrand, DEFAULT_BRAND);
+    document.documentElement.setAttribute(DATA_ATTRS.density, DENSITY_MODES[0]);
   }
 
   // Set icons base path for GitHub Pages and other subpath deployments
@@ -40,7 +54,7 @@ initializeGlobalAttributes();
 const channel = addons.getChannel();
 channel.on(DARK_MODE_EVENT_NAME, (isDark: boolean) => {
   if (typeof document !== 'undefined' && document.documentElement) {
-    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    document.documentElement.setAttribute(DATA_ATTRS.theme, isDark ? COLOR_MODES[1] : COLOR_MODES[0]);
   }
 });
 
@@ -51,9 +65,9 @@ channel.on(DARK_MODE_EVENT_NAME, (isDark: boolean) => {
 channel.on('updateGlobals', (args: { globals: Record<string, string> }) => {
   if (typeof document !== 'undefined' && document.documentElement && args.globals) {
     const { colorBrand, contentBrand, density } = args.globals;
-    if (colorBrand) document.documentElement.setAttribute('data-color-brand', colorBrand);
-    if (contentBrand) document.documentElement.setAttribute('data-content-brand', contentBrand);
-    if (density) document.documentElement.setAttribute('data-density', density);
+    if (colorBrand) document.documentElement.setAttribute(DATA_ATTRS.colorBrand, colorBrand);
+    if (contentBrand) document.documentElement.setAttribute(DATA_ATTRS.contentBrand, contentBrand);
+    if (density) document.documentElement.setAttribute(DATA_ATTRS.density, density);
   }
 });
 
@@ -75,9 +89,9 @@ const withDesignTokens = (Story: () => unknown, context: { globals: Record<strin
   // Set attributes on document.documentElement (html) for CSS selector matching
   // Note: data-theme is controlled by storybook-dark-mode addon channel
   if (typeof document !== 'undefined' && document.documentElement) {
-    document.documentElement.setAttribute('data-color-brand', colorBrand);
-    document.documentElement.setAttribute('data-content-brand', contentBrand);
-    document.documentElement.setAttribute('data-density', density);
+    document.documentElement.setAttribute(DATA_ATTRS.colorBrand, colorBrand);
+    document.documentElement.setAttribute(DATA_ATTRS.contentBrand, contentBrand);
+    document.documentElement.setAttribute(DATA_ATTRS.density, density);
   }
 
   return html`
@@ -100,10 +114,7 @@ const preview: Preview = {
       toolbar: {
         title: 'Color Brand',
         icon: 'paintbrush',
-        items: [
-          { value: 'bild', title: 'BILD', icon: 'circle' },
-          { value: 'sportbild', title: 'SportBILD', icon: 'circle' },
-        ],
+        items: COLOR_BRANDS.map(b => ({ value: b, title: DISPLAY_NAMES[b] || b, icon: 'circle' })),
         dynamicTitle: true,
       },
     },
@@ -112,11 +123,7 @@ const preview: Preview = {
       toolbar: {
         title: 'Content Brand',
         icon: 'document',
-        items: [
-          { value: 'bild', title: 'BILD' },
-          { value: 'sportbild', title: 'SportBILD' },
-          { value: 'advertorial', title: 'Advertorial' },
-        ],
+        items: CONTENT_BRANDS.map(b => ({ value: b, title: DISPLAY_NAMES[b] || b })),
         dynamicTitle: true,
       },
     },
@@ -125,11 +132,7 @@ const preview: Preview = {
       toolbar: {
         title: 'Density',
         icon: 'component',
-        items: [
-          { value: 'default', title: 'Default' },
-          { value: 'dense', title: 'Dense' },
-          { value: 'spacious', title: 'Spacious' },
-        ],
+        items: DENSITY_MODES.map(d => ({ value: d, title: DENSITY_DISPLAY_NAMES[d] || d })),
         dynamicTitle: true,
       },
     },
@@ -137,9 +140,9 @@ const preview: Preview = {
 
   // Initial global values
   initialGlobals: {
-    colorBrand: 'bild',
-    contentBrand: 'bild',
-    density: 'default',
+    colorBrand: DEFAULT_BRAND,
+    contentBrand: DEFAULT_BRAND,
+    density: DENSITY_MODES[0],
   },
 
   // Default parameters

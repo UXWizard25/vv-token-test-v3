@@ -17,53 +17,37 @@
 const fs = require('fs');
 const path = require('path');
 
-// Paths
-const INPUT_JSON_PATH = path.join(__dirname, '../../packages/tokens/src/bild-design-system-raw-data.json');
-const OUTPUT_DIR = path.join(__dirname, '../../packages/tokens/.tokens');
+// Pipeline Configuration
+const pipelineConfig = require('../../build-config/tokens/pipeline.config.js');
 
-// Brand and mode mappings
-const BRANDS = {
-  BILD: '18038:0',
-  SportBILD: '18094:0',
-  Advertorial: '18094:1'
-};
+// Paths (derived from config)
+const INPUT_JSON_PATH = path.join(__dirname, '../..', pipelineConfig.source.inputDir, pipelineConfig.source.inputFile);
+const OUTPUT_DIR = path.join(__dirname, '../..', pipelineConfig.source.outputDir);
 
-const BREAKPOINTS = {
-  xs: '7017:0',
-  sm: '16706:1',
-  md: '7015:1',
-  lg: '7015:2'
-};
+// Brand and mode mappings (derived from config)
+// BRANDS maps Figma display names → mode IDs (used for collection mode matching)
+const BRANDS = Object.fromEntries(
+  Object.entries(pipelineConfig.source.modes.brands).map(([key, { figmaName, modeId }]) => [figmaName, modeId])
+);
 
-const COLOR_MODES = {
-  light: '588:0',
-  dark: '592:1'
-};
+const BREAKPOINTS = pipelineConfig.source.modes.breakpoints;
 
-const DENSITY_MODES = {
-  default: '5695:2',
-  dense: '5695:1',
-  spacious: '5695:3'
-};
+const COLOR_MODES = pipelineConfig.source.modes.colorModes;
 
-// Collection IDs (stable)
-const COLLECTION_IDS = {
-  FONT_PRIMITIVE: 'VariableCollectionId:470:1450',
-  COLOR_PRIMITIVE: 'VariableCollectionId:539:2238',
-  SIZE_PRIMITIVE: 'VariableCollectionId:4072:1817',
-  SPACE_PRIMITIVE: 'VariableCollectionId:2726:12077',
-  DENSITY: 'VariableCollectionId:5695:5841',
-  BRAND_TOKEN_MAPPING: 'VariableCollectionId:18038:10593',
-  BRAND_COLOR_MAPPING: 'VariableCollectionId:18212:14495',
-  BREAKPOINT_MODE: 'VariableCollectionId:7017:25696',
-  COLOR_MODE: 'VariableCollectionId:588:1979'
-};
+const DENSITY_MODES = pipelineConfig.source.modes.densityModes;
+
+// Collection IDs (from config)
+const COLLECTION_IDS = pipelineConfig.source.collections;
+
+// Component token path prefix (from config, e.g. 'Component/')
+const COMPONENT_PREFIX = pipelineConfig.source.pathConventions.componentPrefix;
+const COMPONENT_PREFIX_SEGMENT = COMPONENT_PREFIX.replace(/\/$/, ''); // 'Component' (without trailing slash)
 
 /**
  * Checks if a token path represents a component token
  */
 function isComponentToken(tokenPath) {
-  return tokenPath.startsWith('Component/');
+  return tokenPath.startsWith(COMPONENT_PREFIX);
 }
 
 /**
@@ -72,7 +56,7 @@ function isComponentToken(tokenPath) {
  */
 function getComponentName(tokenPath) {
   const parts = tokenPath.split('/');
-  if (parts[0] === 'Component' && parts.length >= 2) {
+  if (parts[0] === COMPONENT_PREFIX_SEGMENT && parts.length >= 2) {
     return parts[1];
   }
   return null;
@@ -333,7 +317,7 @@ function getDeepAliasInfo(variableId, aliasLookup, collections, context = {}, op
     const tokenPath = variable.name || '';
     // Component tokens are identified by path prefix - they should NOT be treated as semantic endpoints
     // Everything else in ColorMode/BreakpointMode collections IS the semantic level
-    const isComponentToken = tokenPath.startsWith('Component/');
+    const isComponent = isComponentToken(tokenPath);
 
     // Check if we've reached a primitive - ALWAYS endpoint
     if (isPrimitiveCollection(variable.collectionId)) {
@@ -348,8 +332,8 @@ function getDeepAliasInfo(variableId, aliasLookup, collections, context = {}, op
       };
     }
 
-    // BreakpointMode collection = Semantic level (except Component/ tokens)
-    if (acceptSemanticEndpoint && variable.collectionId === COLLECTION_IDS.BREAKPOINT_MODE && !isComponentToken) {
+    // BreakpointMode collection = Semantic level (except component tokens)
+    if (acceptSemanticEndpoint && variable.collectionId === COLLECTION_IDS.BREAKPOINT_MODE && !isComponent) {
       const collection = collections.find(c => c.id === variable.collectionId);
       const tokenName = variable.name.split('/').pop();
 
@@ -362,7 +346,7 @@ function getDeepAliasInfo(variableId, aliasLookup, collections, context = {}, op
     }
 
     // BreakpointMode Component tokens - endpoint if flag set (for typography composite fontSize/lineHeight)
-    if (acceptComponentEndpoint && variable.collectionId === COLLECTION_IDS.BREAKPOINT_MODE && isComponentToken) {
+    if (acceptComponentEndpoint && variable.collectionId === COLLECTION_IDS.BREAKPOINT_MODE && isComponent) {
       const collection = collections.find(c => c.id === variable.collectionId);
       const tokenName = variable.name.split('/').pop();
 
@@ -374,8 +358,8 @@ function getDeepAliasInfo(variableId, aliasLookup, collections, context = {}, op
       };
     }
 
-    // ColorMode collection = Semantic level (except Component/ tokens)
-    if (acceptColorModeEndpoint && variable.collectionId === COLLECTION_IDS.COLOR_MODE && !isComponentToken) {
+    // ColorMode collection = Semantic level (except component tokens)
+    if (acceptColorModeEndpoint && variable.collectionId === COLLECTION_IDS.COLOR_MODE && !isComponent) {
       const collection = collections.find(c => c.id === variable.collectionId);
       const tokenName = variable.name.split('/').pop();
 
@@ -971,11 +955,15 @@ function processBrandSpecificTokens(collections, aliasLookup) {
     COLLECTION_IDS.COLOR_MODE
   ];
 
-  const outputs = {
-    bild: { density: {}, breakpoints: {}, color: {} },
-    sportbild: { density: {}, breakpoints: {}, color: {} },
-    advertorial: { density: {}, breakpoints: {} } // Advertorial has no BrandColorMapping
-  };
+  // Dynamically build outputs from pipeline config
+  const colorBrandsSet = new Set(pipelineConfig.brands.colorBrands);
+  const outputs = {};
+  for (const brand of pipelineConfig.brands.all) {
+    outputs[brand] = { density: {}, breakpoints: {} };
+    if (colorBrandsSet.has(brand)) {
+      outputs[brand].color = {};
+    }
+  }
 
   collections.forEach(collection => {
     if (!brandCollectionIds.includes(collection.id)) return;
@@ -988,17 +976,30 @@ function processBrandSpecificTokens(collections, aliasLookup) {
     else if (collection.id === COLLECTION_IDS.BREAKPOINT_MODE) category = 'breakpoints';
     else if (collection.id === COLLECTION_IDS.COLOR_MODE) category = 'color';
 
-    // For each brand
-    Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
-      const brandKey = brandName.toLowerCase();
+    // For each brand (iterate config brands with Figma mode data)
+    Object.entries(pipelineConfig.source.modes.brands).forEach(([brandKey, { figmaName, modeId: brandModeId }]) => {
+      // Only process brands that are in the configured brand list
+      if (!pipelineConfig.brands.all.includes(brandKey)) return;
 
       // Skip ColorMode for brands without BrandColorMapping
-      if (category === 'color' && !hasBrandColorMapping(collections, brandName)) {
+      if (category === 'color' && !hasBrandColorMapping(collections, figmaName)) {
         return;
       }
 
-      // For each mode in this collection
-      collection.modes.forEach(mode => {
+      // Build mode entries from config (not raw Figma collection modes)
+      // This ensures only configured modes are processed and output names match config keys
+      let modeEntries;
+      if (collection.id === COLLECTION_IDS.DENSITY) {
+        modeEntries = Object.entries(DENSITY_MODES).map(([key, modeId]) => ({ name: key, modeId }));
+      } else if (collection.id === COLLECTION_IDS.BREAKPOINT_MODE) {
+        modeEntries = Object.entries(BREAKPOINTS).map(([key, modeId]) => ({ name: key, modeId }));
+      } else {
+        // ColorMode - use config-defined color modes
+        modeEntries = Object.entries(COLOR_MODES).map(([key, modeId]) => ({ name: key, modeId }));
+      }
+
+      // For each configured mode
+      modeEntries.forEach(mode => {
         const tokens = {};
 
         collection.variables.forEach(variable => {
@@ -1017,7 +1018,7 @@ function processBrandSpecificTokens(collections, aliasLookup) {
             if (modeValue.type === 'VARIABLE_ALIAS') {
               // Context with Brand + Mode (needed for both alias resolution and deep alias info)
               const context = {
-                brandName,
+                brandName: figmaName,
                 brandModeId,
                 breakpointModeId: collection.id === COLLECTION_IDS.BREAKPOINT_MODE ? mode.modeId : undefined,
                 colorModeModeId: collection.id === COLLECTION_IDS.COLOR_MODE ? mode.modeId : undefined,
@@ -1077,16 +1078,8 @@ function processBrandSpecificTokens(collections, aliasLookup) {
           }
         });
 
-        // Save brand-specific output
-        const cleanModeName = mode.name
-          .toLowerCase()
-          .replace(/\s+/g, '-')
-          .replace(/[()]/g, '')
-          .replace(/[^a-z0-9-]/g, '-')
-          .replace(/--+/g, '-')
-          .replace(/^-|-$/g, '');
-
-        outputs[brandKey][category][cleanModeName] = tokens;
+        // Use config key as output name (already clean lowercase)
+        outputs[brandKey][category][mode.name] = tokens;
       });
 
       console.log(`     ✅ ${brandKey} (${Object.keys(outputs[brandKey][category]).length} modes)`);
@@ -1108,23 +1101,24 @@ function processBrandOverrides(collections, aliasLookup) {
     COLLECTION_IDS.BRAND_COLOR_MAPPING
   ];
 
-  const outputs = {
-    bild: {},
-    sportbild: {},
-    advertorial: {}
-  };
+  // Dynamically build outputs from pipeline config
+  const outputs = {};
+  for (const brand of pipelineConfig.brands.all) {
+    outputs[brand] = {};
+  }
 
   collections.forEach(collection => {
     if (!overrideCollectionIds.includes(collection.id)) return;
 
     console.log(`  📦 ${collection.name}`);
 
-    // Each mode is a brand - match by mode name instead of mode ID
-    Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
-      const brandKey = brandName.toLowerCase();
+    // Each mode is a brand - match by Figma display name
+    Object.entries(pipelineConfig.source.modes.brands).forEach(([brandKey, { figmaName, modeId: brandModeId }]) => {
+      // Only process brands in the configured brand list
+      if (!pipelineConfig.brands.all.includes(brandKey)) return;
 
-      // Find mode by name (not ID), since each collection has its own mode IDs
-      const mode = collection.modes.find(m => m.name === brandName);
+      // Find mode by Figma display name (not ID), since each collection has its own mode IDs
+      const mode = collection.modes.find(m => m.name === figmaName);
 
       if (!mode) {
         // Brand doesn't exist in this collection (e.g. Advertorial in BrandColorMapping)
@@ -1141,9 +1135,9 @@ function processBrandOverrides(collections, aliasLookup) {
           let processedValue;
 
           if (modeValue.type === 'VARIABLE_ALIAS') {
-            // Use the GLOBAL brand mode ID (from BRANDS) for alias resolution
+            // Use the GLOBAL brand mode ID for alias resolution
             // since aliases can point to other collections (e.g. BrandTokenMapping)
-            const context = { brandName, brandModeId };
+            const context = { brandName: figmaName, brandModeId };
             processedValue = resolveAliasWithContext(modeValue.id, aliasLookup, context, new Set(), collections);
           } else {
             processedValue = processDirectValue(modeValue, variable.resolvedType, variable.name);
@@ -1215,11 +1209,10 @@ function processComponentTokens(collections, aliasLookup) {
   ];
 
   // Structure: { brand: { componentName: { type-mode: tokens } } }
-  const componentOutputs = {
-    bild: {},
-    sportbild: {},
-    advertorial: {}
-  };
+  const componentOutputs = {};
+  for (const brand of pipelineConfig.brands.all) {
+    componentOutputs[brand] = {};
+  }
 
   collections.forEach(collection => {
     if (!componentCollectionIds.includes(collection.id)) return;
@@ -1230,11 +1223,12 @@ function processComponentTokens(collections, aliasLookup) {
     console.log(`  📦 ${collection.name} (type: ${collectionType})`);
 
     // For each brand
-    Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
-      const brandKey = brandName.toLowerCase();
+    Object.entries(pipelineConfig.source.modes.brands).forEach(([brandKey, { figmaName, modeId: brandModeId }]) => {
+      // Only process brands in the configured brand list
+      if (!pipelineConfig.brands.all.includes(brandKey)) return;
 
       // Skip ColorMode for brands without BrandColorMapping
-      if (collectionType === 'color' && !hasBrandColorMapping(collections, brandName)) {
+      if (collectionType === 'color' && !hasBrandColorMapping(collections, figmaName)) {
         return;
       }
 
@@ -1246,8 +1240,18 @@ function processComponentTokens(collections, aliasLookup) {
       if (collectionType === 'brand-override') {
         return; // Skip - mapping layers are exported separately in overrides/ folder
       } else {
+        // Build mode entries from config (not raw Figma collection modes)
+        let modeEntries;
+        if (collection.id === COLLECTION_IDS.DENSITY) {
+          modeEntries = Object.entries(DENSITY_MODES).map(([key, modeId]) => ({ name: key, modeId }));
+        } else if (collection.id === COLLECTION_IDS.BREAKPOINT_MODE) {
+          modeEntries = Object.entries(BREAKPOINTS).map(([key, modeId]) => ({ name: key, modeId }));
+        } else {
+          modeEntries = Object.entries(COLOR_MODES).map(([key, modeId]) => ({ name: key, modeId }));
+        }
+
         // For mode-based collections (ColorMode, Density, Breakpoint)
-        collection.modes.forEach(mode => {
+        modeEntries.forEach(mode => {
           const tokens = {};
 
           collection.variables.forEach(variable => {
@@ -1266,7 +1270,7 @@ function processComponentTokens(collections, aliasLookup) {
               if (modeValue.type === 'VARIABLE_ALIAS') {
                 // Context with Brand + Mode (needed for both alias resolution and deep alias info)
                 const context = {
-                  brandName,
+                  brandName: figmaName,
                   brandModeId,
                   breakpointModeId: collection.id === COLLECTION_IDS.BREAKPOINT_MODE ? mode.modeId : undefined,
                   colorModeModeId: collection.id === COLLECTION_IDS.COLOR_MODE ? mode.modeId : undefined,
@@ -1330,15 +1334,7 @@ function processComponentTokens(collections, aliasLookup) {
 
           // Save tokens for this component + mode
           if (Object.keys(tokens).length > 0 && tokens.Component) {
-            const cleanModeName = mode.name
-              .toLowerCase()
-              .replace(/\s+/g, '-')
-              .replace(/[()]/g, '')
-              .replace(/[^a-z0-9-]/g, '-')
-              .replace(/--+/g, '-')
-              .replace(/^-|-$/g, '');
-
-            const modeKey = `${collectionType}-${cleanModeName}`;
+            const modeKey = `${collectionType}-${mode.name}`;
 
             // Group by component (note: "Component" is capitalized in the token structure)
             Object.keys(tokens.Component || {}).forEach(componentName => {
@@ -1399,27 +1395,25 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
   console.log('\n✍️  Processing Typography Composite Tokens:\n');
 
   const typographyOutputs = {};
-  const componentTypographyOutputs = {
-    bild: {},
-    sportbild: {},
-    advertorial: {}
-  };
+  const componentTypographyOutputs = {};
+  pipelineConfig.brands.all.forEach(brand => { componentTypographyOutputs[brand] = {}; });
 
   // Separate component and semantic typography
-  const semanticTextStyles = textStyles.filter(ts => !ts.name.startsWith('Component/'));
-  const componentTextStyles = textStyles.filter(ts => ts.name.startsWith('Component/'));
+  const semanticTextStyles = textStyles.filter(ts => !isComponentToken(ts.name));
+  const componentTextStyles = textStyles.filter(ts => isComponentToken(ts.name));
 
   console.log(`  ℹ️  ${semanticTextStyles.length} semantic styles, ${componentTextStyles.length} component styles`);
 
   // Process semantic typography (existing logic)
   // For each brand
-  Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
-    console.log(`  🏷️  Brand: ${brandName}`);
+  Object.entries(pipelineConfig.source.modes.brands).forEach(([brandKey, { figmaName, modeId: brandModeId }]) => {
+    if (!pipelineConfig.brands.all.includes(brandKey)) return;
+    console.log(`  🏷️  Brand: ${brandKey}`);
 
     // For each breakpoint
     Object.entries(BREAKPOINTS).forEach(([breakpointName, breakpointModeId]) => {
       const context = {
-        brandName,
+        brandName: figmaName,
         brandModeId,
         breakpointModeId
       };
@@ -1525,10 +1519,10 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
         setNestedPath(tokens, pathArray, tokenObject);
       });
 
-      const key = `${brandName.toLowerCase()}-${breakpointName}`;
+      const key = `${brandKey}-${breakpointName}`;
       typographyOutputs[key] = {
         tokens,
-        brand: brandName,
+        brand: brandKey,
         breakpoint: breakpointName,
         brandModeId,
         breakpointModeId
@@ -1542,13 +1536,13 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
   if (componentTextStyles.length > 0) {
     console.log('\n  🧩 Processing Component Typography:\n');
 
-    Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
-      const brandKey = brandName.toLowerCase();
-      console.log(`  🏷️  Brand: ${brandName}`);
+    Object.entries(pipelineConfig.source.modes.brands).forEach(([brandKey, { figmaName, modeId: brandModeId }]) => {
+      if (!pipelineConfig.brands.all.includes(brandKey)) return;
+      console.log(`  🏷️  Brand: ${brandKey}`);
 
       Object.entries(BREAKPOINTS).forEach(([breakpointName, breakpointModeId]) => {
         const context = {
-          brandName,
+          brandName: figmaName,
           brandModeId,
           breakpointModeId
         };
@@ -1657,8 +1651,8 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
           // Pattern: "buttonLabel" → "buttonLabelFontSize", "buttonLabelLineHeight"
           if (!aliases.fontSize || !aliases.lineHeight) {
             const baseStyleName = styleName.replace(/\//g, '');
-            const fontSizeVarName = `Component/${componentName}/${baseStyleName}FontSize`;
-            const lineHeightVarName = `Component/${componentName}/${baseStyleName}LineHeight`;
+            const fontSizeVarName = `${COMPONENT_PREFIX}${componentName}/${baseStyleName}FontSize`;
+            const lineHeightVarName = `${COMPONENT_PREFIX}${componentName}/${baseStyleName}LineHeight`;
 
             // Search for matching variables in BreakpointMode collection
             for (const [varId, variable] of aliasLookup) {
@@ -1712,34 +1706,31 @@ function processEffectTokens(effectStyles, aliasLookup, collections) {
   console.log('\n🎨 Processing Effect Composite Tokens:\n');
 
   const effectOutputs = {};
-  const componentEffectOutputs = {
-    bild: {},
-    sportbild: {},
-    advertorial: {}
-  };
+  const componentEffectOutputs = {};
+  pipelineConfig.brands.all.forEach(brand => { componentEffectOutputs[brand] = {}; });
 
   // Separate component and semantic effects
-  const semanticEffectStyles = effectStyles.filter(es => !es.name.startsWith('Component/'));
-  const componentEffectStyles = effectStyles.filter(es => es.name.startsWith('Component/'));
+  const semanticEffectStyles = effectStyles.filter(es => !isComponentToken(es.name));
+  const componentEffectStyles = effectStyles.filter(es => isComponentToken(es.name));
 
   console.log(`  ℹ️  ${semanticEffectStyles.length} semantic styles, ${componentEffectStyles.length} component styles`);
 
   // Process semantic effects (existing logic)
   // For each brand (only ColorBrands - skip Advertorial)
-  Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
-    // Skip brands without BrandColorMapping (Advertorial)
-    // Effects belong to ColorBrand axis, not ContentBrand
-    if (!hasBrandColorMapping(collections, brandName)) {
-      console.log(`  ⏭️  ${brandName}: Skipped (no ColorBrand - effects inherited from parent)`);
+  Object.entries(pipelineConfig.source.modes.brands).forEach(([brandKey, { figmaName, modeId: brandModeId }]) => {
+    if (!pipelineConfig.brands.all.includes(brandKey)) return;
+    // Skip brands without colors (effects belong to ColorBrand axis)
+    if (!pipelineConfig.brands.colorBrands.includes(brandKey)) {
+      console.log(`  ⏭️  ${brandKey}: Skipped (no ColorBrand - effects inherited from parent)`);
       return;
     }
 
-    console.log(`  🏷️  Brand: ${brandName}`);
+    console.log(`  🏷️  Brand: ${brandKey}`);
 
     // For each ColorMode
     Object.entries(COLOR_MODES).forEach(([modeName, colorModeModeId]) => {
       const context = {
-        brandName,
+        brandName: figmaName,
         brandModeId,
         colorModeModeId,
         modeName  // Add modeName for ColorMode deep alias resolution (Light/Dark)
@@ -1848,10 +1839,10 @@ function processEffectTokens(effectStyles, aliasLookup, collections) {
         setNestedPath(tokens, pathArray, tokenObject);
       });
 
-      const key = `${brandName.toLowerCase()}-${modeName}`;
+      const key = `${brandKey}-${modeName}`;
       effectOutputs[key] = {
         tokens,
-        brand: brandName,
+        brand: brandKey,
         colorMode: modeName,
         brandModeId,
         colorModeModeId
@@ -1865,20 +1856,19 @@ function processEffectTokens(effectStyles, aliasLookup, collections) {
   if (componentEffectStyles.length > 0) {
     console.log('\n  🧩 Processing Component Effects:\n');
 
-    Object.entries(BRANDS).forEach(([brandName, brandModeId]) => {
-      // Skip brands without BrandColorMapping (Advertorial)
-      // Component effects belong to ColorBrand axis, not ContentBrand
-      if (!hasBrandColorMapping(collections, brandName)) {
-        console.log(`  ⏭️  ${brandName}: Skipped (no ColorBrand)`);
+    Object.entries(pipelineConfig.source.modes.brands).forEach(([brandKey, { figmaName, modeId: brandModeId }]) => {
+      if (!pipelineConfig.brands.all.includes(brandKey)) return;
+      // Skip brands without colors (component effects belong to ColorBrand axis)
+      if (!pipelineConfig.brands.colorBrands.includes(brandKey)) {
+        console.log(`  ⏭️  ${brandKey}: Skipped (no ColorBrand)`);
         return;
       }
 
-      const brandKey = brandName.toLowerCase();
-      console.log(`  🏷️  Brand: ${brandName}`);
+      console.log(`  🏷️  Brand: ${brandKey}`);
 
       Object.entries(COLOR_MODES).forEach(([modeName, colorModeModeId]) => {
         const context = {
-          brandName,
+          brandName: figmaName,
           brandModeId,
           colorModeModeId,
           modeName  // Add modeName for ColorMode deep alias resolution (Light/Dark)
@@ -2130,7 +2120,7 @@ function saveBreakpointDensityMatrix(matrixData) {
   console.log(`   ✅ Semantic: ${path.relative(process.cwd(), semanticFilePath)}`);
 
   // Save component matrices (per brand, per component)
-  const brands = ['bild', 'sportbild', 'advertorial'];
+  const brands = pipelineConfig.brands.all;
   for (const brand of brands) {
     for (const [componentName, componentMatrix] of Object.entries(components)) {
       const componentDir = path.join(OUTPUT_DIR, 'brands', brand, 'components', componentName);

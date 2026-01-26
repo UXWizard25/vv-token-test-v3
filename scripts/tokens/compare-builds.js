@@ -12,6 +12,16 @@
 
 const fs = require('fs');
 const path = require('path');
+const pipelineConfig = require('../../build-config/tokens/pipeline.config.js');
+
+// Derive dynamic patterns from config
+const COLOR_MODES = pipelineConfig.modes.color;
+const BREAKPOINT_KEYS = Object.keys(pipelineConfig.modes.breakpoints);
+const DENSITY_MODES = pipelineConfig.modes.density;
+const COMPONENT_PREFIX = pipelineConfig.source.pathConventions.componentPrefix;
+const COLOR_MODES_PATTERN = COLOR_MODES.join('|');
+const BREAKPOINT_PATTERN = BREAKPOINT_KEYS.join('|');
+const DENSITY_PATTERN = DENSITY_MODES.join('|');
 
 // =============================================================================
 // CACHING FOR PERFORMANCE
@@ -397,7 +407,7 @@ function parseSourceFile(sourcePath) {
     // Parse textStyles (Typography)
     if (data.textStyles && Array.isArray(data.textStyles)) {
       data.textStyles.forEach(style => {
-        const layer = style.name.startsWith('Component/') ? 'component' : 'semantic';
+        const layer = style.name.startsWith(COMPONENT_PREFIX) ? 'component' : 'semantic';
         styles.set(style.id, {
           id: style.id,
           name: style.name,
@@ -414,7 +424,7 @@ function parseSourceFile(sourcePath) {
     // Parse effectStyles (Effects/Shadows)
     if (data.effectStyles && Array.isArray(data.effectStyles)) {
       data.effectStyles.forEach(style => {
-        const layer = style.name.startsWith('Component/') ? 'component' : 'semantic';
+        const layer = style.name.startsWith(COMPONENT_PREFIX) ? 'component' : 'semantic';
         styles.set(style.id, {
           id: style.id,
           name: style.name,
@@ -1029,15 +1039,17 @@ function extractFileMetadata(filePath) {
 
   // Extract color mode from filename
   // Patterns: color-light.css, color-dark.css, effects-light.css, *-light.json, etc.
-  if (/[-_](light|dark)\b/i.test(fileNameLower) || /^(light|dark)\./i.test(fileNameLower)) {
-    const modeMatch = fileNameLower.match(/[-_]?(light|dark)/i);
+  const colorModeFileRegex = new RegExp(`[-_](${COLOR_MODES_PATTERN})\\b`, 'i');
+  const colorModeStartRegex = new RegExp(`^(${COLOR_MODES_PATTERN})\\.`, 'i');
+  if (colorModeFileRegex.test(fileNameLower) || colorModeStartRegex.test(fileNameLower)) {
+    const modeMatch = fileNameLower.match(new RegExp(`[-_]?(${COLOR_MODES_PATTERN})`, 'i'));
     if (modeMatch) {
       metadata.mode = modeMatch[1].toLowerCase();
     }
   }
   // Also check path for colormode folder
   if (parts.includes('colormode') || parts.some(p => /colormode/i.test(p))) {
-    const modeMatch = fileNameLower.match(/(light|dark)/i);
+    const modeMatch = fileNameLower.match(new RegExp(`(${COLOR_MODES_PATTERN})`, 'i'));
     if (modeMatch) {
       metadata.mode = modeMatch[1].toLowerCase();
     }
@@ -1045,14 +1057,15 @@ function extractFileMetadata(filePath) {
 
   // Extract breakpoint from filename
   // Patterns: typography-xs.css, typography-lg.css, breakpoint-md.css, sizing-sm.json
-  const breakpointMatch = fileNameLower.match(/[-_](xs|sm|md|lg)\b/i);
+  const breakpointFileRegex = new RegExp(`[-_](${BREAKPOINT_PATTERN})\\b`, 'i');
+  const breakpointMatch = fileNameLower.match(breakpointFileRegex);
   if (breakpointMatch) {
     metadata.breakpoint = breakpointMatch[1].toLowerCase();
   }
   // Also check path for breakpoint/breakpointmode folder
   if (parts.includes('breakpoint') || parts.includes('breakpointmode') ||
       parts.some(p => /breakpoint/i.test(p))) {
-    const bpMatch = fileNameLower.match(/(xs|sm|md|lg)/i);
+    const bpMatch = fileNameLower.match(new RegExp(`(${BREAKPOINT_PATTERN})`, 'i'));
     if (bpMatch) {
       metadata.breakpoint = bpMatch[1].toLowerCase();
     }
@@ -1060,13 +1073,14 @@ function extractFileMetadata(filePath) {
 
   // Extract density from filename
   // Patterns: density-dense.css, density-spacious.css, *-dense.json
-  const densityMatch = fileNameLower.match(/[-_](default|dense|spacious)\b/i);
+  const densityFileRegex = new RegExp(`[-_](${DENSITY_PATTERN})\\b`, 'i');
+  const densityMatch = fileNameLower.match(densityFileRegex);
   if (densityMatch) {
     metadata.density = densityMatch[1].toLowerCase();
   }
   // Also check path for density folder
   if (parts.includes('density')) {
-    const denMatch = fileNameLower.match(/(default|dense|spacious)/i);
+    const denMatch = fileNameLower.match(new RegExp(`(${DENSITY_PATTERN})`, 'i'));
     if (denMatch) {
       metadata.density = denMatch[1].toLowerCase();
     }

@@ -1,7 +1,13 @@
 import { create } from 'storybook/theming';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pipelineConfig = require('../tokens/pipeline.config.js');
+
+const BRAND_TITLE = pipelineConfig.identity.name;
+const BRAND_URL = pipelineConfig.identity.repositoryUrl;
+
 /**
- * BILD Design System - Custom Storybook UI Themes
+ * Custom Storybook UI Themes
  *
  * Defines light and dark themes for the Storybook UI (sidebar, toolbar, docs)
  * Used by storybook-dark-mode addon for automatic theme switching.
@@ -9,13 +15,13 @@ import { create } from 'storybook/theming';
  * This file is separate from manager.ts to allow importing themes in preview context.
  */
 
-// Light theme based on BILD design tokens
+// Light theme based on design tokens
 export const bildLightTheme = create({
   base: 'light',
 
   // Brand
-  brandTitle: 'BILD Design System',
-  brandUrl: 'https://github.com/UXWizard25/bild-design-system',
+  brandTitle: BRAND_TITLE,
+  brandUrl: BRAND_URL,
 
   // Colors - based on BILD color primitives
   colorPrimary: '#DD0000', // --color-bild-red-50
@@ -51,10 +57,10 @@ export const bildDarkTheme = create({
   base: 'dark',
 
   // Brand
-  brandTitle: 'BILD Design System',
-  brandUrl: 'https://github.com/UXWizard25/bild-design-system',
+  brandTitle: BRAND_TITLE,
+  brandUrl: BRAND_URL,
 
-  // Colors - based on BILD color primitives
+  // Colors - based on design token primitives
   colorPrimary: '#DD0000', // --color-bild-red-50
   colorSecondary: '#DD0000', // --color-bild-red-50
 
