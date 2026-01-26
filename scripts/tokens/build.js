@@ -7098,9 +7098,7 @@ async function generateSwiftUIThemeProviders() {
   const packageJson = require('../../packages/tokens/package.json');
   const version = packageJson.version;
 
-  // Only generate theme providers for color brands (those with their own color tokens)
-  const COLOR_BRANDS = ['bild', 'sportbild'];
-
+  // Use global COLOR_BRANDS from pipeline config (brands with axes: ['color', ...])
   for (const brand of COLOR_BRANDS) {
     totalThemes++;
     const brandDir = path.join(iosDir, brand);
@@ -8113,8 +8111,8 @@ export function createTheme(config = {}) {
   const effectiveColorBrand = colorBrand || (brand === 'advertorial' ? 'bild' : brand);
 
   // Validate inputs
-  if (!['bild', 'sportbild', 'advertorial'].includes(brand)) {
-    throw new Error(\`Invalid brand: \${brand}. Must be one of: bild, sportbild, advertorial\`);
+  if (![${BRANDS.map(b => `'${b}'`).join(', ')}].includes(brand)) {
+    throw new Error(\`Invalid brand: \${brand}. Must be one of: ${BRANDS.join(', ')}\`);
   }
   if (![${COLOR_BRANDS.map(b => `'${b}'`).join(', ')}].includes(effectiveColorBrand)) {
     throw new Error(\`Invalid colorBrand: \${effectiveColorBrand}. Must be one of: ${COLOR_BRANDS.join(', ')}\`);
@@ -8148,12 +8146,12 @@ export function createTheme(config = {}) {
 /**
  * Available brands
  */
-export const availableBrands = ['bild', 'sportbild', 'advertorial'];
+export const availableBrands = [${BRANDS.map(b => `'${b}'`).join(', ')}];
 
 /**
  * Available color brands (brands with own colors)
  */
-export const colorBrands = ['bild', 'sportbild'];
+export const colorBrands = [${COLOR_BRANDS.map(b => `'${b}'`).join(', ')}];
 
 /**
  * Available color modes
