@@ -3,7 +3,7 @@
 /* auto-generated vue proxies */
 import { defineContainer, type StencilVueComponent } from '@stencil/vue-output-target/runtime';
 
-import type { JSX } from '@marioschmidt/design-system-components';
+import type { JSX } from '@marioschmidt/design-system-components/dist/components';
 
 import { defineCustomElement as defineDsButton } from '@marioschmidt/design-system-components/dist/components/ds-button.js';
 import { defineCustomElement as defineDsCard } from '@marioschmidt/design-system-components/dist/components/ds-card.js';
