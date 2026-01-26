@@ -1,10 +1,10 @@
 import { create } from 'storybook/theming';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const pipelineConfig = require('../tokens/pipeline.config.js');
-
-const BRAND_TITLE = pipelineConfig.identity.name;
-const BRAND_URL = pipelineConfig.identity.repositoryUrl;
+// These values come from pipeline.config.js but are inlined here because
+// themes.ts is bundled for browser (manager context) where Node.js modules don't work.
+// Keep in sync with: build-config/tokens/pipeline.config.js → identity
+const BRAND_TITLE = 'BILD Design System';
+const BRAND_URL = 'https://github.com/UXWizard25/bild-design-system';
 
 /**
  * Custom Storybook UI Themes

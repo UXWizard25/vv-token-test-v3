@@ -4,20 +4,23 @@ import { addons } from 'storybook/preview-api';
 import { DARK_MODE_EVENT_NAME } from '@vueless/storybook-dark-mode';
 import { bildLightTheme, bildDarkTheme } from './themes';
 import { DocsContainer } from './DocsContainer';
-import { createRequire } from 'module';
 
-const require = createRequire(import.meta.url);
-const pipelineConfig = require('../tokens/pipeline.config.js');
-
-// Derived config values
-const DATA_ATTRS = pipelineConfig.platforms.css.dataAttributes;
-const COLOR_BRANDS = pipelineConfig.brands.colorBrands;
-const CONTENT_BRANDS = pipelineConfig.brands.contentBrands;
-const DENSITY_MODES = pipelineConfig.modes.density;
-const DEFAULT_BRAND = pipelineConfig.brands.defaultBrand;
-const DISPLAY_NAMES = pipelineConfig.brands.displayNames;
-const DENSITY_DISPLAY_NAMES = pipelineConfig.modes.densityDisplayNames;
-const COLOR_MODES = pipelineConfig.modes.color;
+// Pipeline config values inlined for browser context.
+// Keep in sync with: build-config/tokens/pipeline.config.js
+// (preview.ts runs in browser where Node.js 'module' package is unavailable)
+const DATA_ATTRS = {
+  colorBrand: 'data-color-brand',
+  contentBrand: 'data-content-brand',
+  theme: 'data-theme',
+  density: 'data-density',
+};
+const COLOR_BRANDS = ['bild', 'sportbild'];
+const CONTENT_BRANDS = ['bild', 'sportbild', 'advertorial'];
+const DENSITY_MODES = ['default', 'dense', 'spacious'];
+const DEFAULT_BRAND = 'bild';
+const DISPLAY_NAMES: Record<string, string> = { bild: 'BILD', sportbild: 'SportBILD', advertorial: 'Advertorial' };
+const DENSITY_DISPLAY_NAMES: Record<string, string> = { default: 'Default', dense: 'Dense', spacious: 'Spacious' };
+const COLOR_MODES = ['light', 'dark'];
 
 // Stencil components are loaded via script tag in preview-head.html
 // This ensures they're available before stories render
