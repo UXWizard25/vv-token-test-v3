@@ -7,9 +7,10 @@
 | Pipeline | Status | Konfigurationsnutzung |
 |----------|--------|----------------------|
 | **Icon-Pipeline** | ✅ Vollständig dynamisch | Verwendet `pipeline.config.js` durchgängig |
-| **Token-Pipeline** | ❌ Noch hardcodiert | Verwendet `pipeline.config.js` NICHT |
+| **Token-Pipeline** | ✅ Vollständig dynamisch | Verwendet `pipeline.config.js` durchgängig |
 
-Die `pipeline.config.js` ist bereits umfangreich und gut strukturiert, wird aber von der Token-Pipeline noch nicht verwendet.
+Beide Pipelines sind nun vollständig auf die zentrale `pipeline.config.js` umgestellt.
+Um das Design-System für ein anderes Projekt zu verwenden, muss nur diese Datei angepasst werden.
 
 ---
 
@@ -39,177 +40,152 @@ Die `pipeline.config.js` ist bereits umfangreich und gut strukturiert, wird aber
 - ✅ Package-Namen (npm, SPM, Maven)
 - ✅ Android Gradle-Versionen
 
-**Fazit Icon-Pipeline:** Kann sofort für andere Design-Systeme verwendet werden - nur `pipeline.config.js` anpassen.
+---
+
+## 2. Token-Pipeline: Vollständig Dynamisch ✅
+
+### Dateien mit korrekter Konfigurationsnutzung
+
+| Datei | Verwendet pipeline.config.js |
+|-------|------------------------------|
+| `scripts/tokens/preprocess.js` | ✅ Ja |
+| `scripts/tokens/build.js` | ✅ Ja |
+| `scripts/tokens/bundles.js` | ✅ Ja |
+| `scripts/tokens/release-notes.js` | ✅ Ja |
+| `build-config/tokens/style-dictionary.config.js` | ✅ Ja |
+
+### Konfigurierbare Werte (aus pipeline.config.js)
+
+- ✅ Brand-Namen (ColorBrands, ContentBrands)
+- ✅ Default-Brand für Fallbacks
+- ✅ Mode-ID Mappings (Figma → Pipeline)
+- ✅ Collection IDs (Figma Variable Collections)
+- ✅ Breakpoints (xs, sm, md, lg mit minWidth)
+- ✅ Color Modes (light, dark)
+- ✅ Density Modes (default, dense, spacious)
+- ✅ Android Package-Name (`com.bild.designsystem`)
+- ✅ iOS Module-Name (`BildDesignTokens`)
+- ✅ Output-Pfade (CSS, iOS, Android)
+- ✅ Platform-Toggles (CSS, SCSS, JS, iOS, Android enabled/disabled)
+- ✅ CSS font-size unit (px/rem)
+- ✅ CSS data-attributes (data-color-brand, data-content-brand, etc.)
+- ✅ iOS SizeClass Mapping
+- ✅ Android WindowSizeClass Mapping
 
 ---
 
-## 2. Token-Pipeline: Noch Hardcodiert ❌
+## 3. pipeline.config.js: Zentrale Konfiguration
 
-### Problem: pipeline.config.js wird nicht verwendet
-
-Die Token-Pipeline-Dateien importieren `pipeline.config.js` überhaupt nicht:
-
-```bash
-# Keine Matches in Token-Skripten:
-scripts/tokens/preprocess.js  → ❌ Kein Import
-scripts/tokens/build.js       → ❌ Kein Import
-scripts/tokens/bundles.js     → ❌ Kein Import
-build-config/tokens/style-dictionary.config.js → ❌ Kein Import
-```
-
-### Hardcodierte Werte pro Datei
-
-#### 2.1 `scripts/tokens/preprocess.js`
-
-| Zeile | Hardcodierter Wert | Sollte aus Config kommen |
-|-------|-------------------|--------------------------|
-| 25-40 | `BRANDS` Mode-ID Mappings | `config.modes.brands` |
-| 50-60 | `COLLECTION_IDS` | `config.source.collections` |
-| 66 | `'Component/'` Prefix | `config.source.pathConventions.componentPrefix` |
-
-#### 2.2 `scripts/tokens/build.js`
-
-| Zeile | Hardcodierter Wert | Sollte aus Config kommen |
-|-------|-------------------|--------------------------|
-| 27 | `BRANDS = ['bild', 'sportbild', 'advertorial']` | `Object.values(config.modes.brands.content)` |
-| 28 | `COLOR_BRANDS = ['bild', 'sportbild']` | `Object.values(config.modes.brands.color)` |
-| 29 | `CONTENT_BRANDS` | `Object.values(config.modes.brands.content)` |
-| 30 | `BREAKPOINTS = ['xs', 'sm', 'md', 'lg']` | `Object.values(config.modes.breakpoints).map(b => b.key)` |
-| 31 | `COLOR_MODES = ['light', 'dark']` | `Object.values(config.modes.colorModes)` |
-| 32 | `DENSITY_MODES` | `Object.values(config.modes.densityModes)` |
-| 732+ | `com.bild.designsystem` (50+ Vorkommen) | `config.platforms.android.packageName` |
-
-**Android Package-Referenzen (kritisch):**
-```javascript
-// 50+ hardcodierte Stellen wie:
-const basePkg = 'com.bild.designsystem';  // Zeile 732
-package com.bild.designsystem.shared      // Zeile 4892, 4936, 5001, ...
-import com.bild.designsystem.brands.${brand}  // Zeile 4682-4689
-```
-
-#### 2.3 `scripts/tokens/bundles.js`
-
-| Zeile | Hardcodierter Wert | Sollte aus Config kommen |
-|-------|-------------------|--------------------------|
-| 41 | `BRANDS = ['bild', 'sportbild', 'advertorial']` | Dupliziert von build.js |
-
-#### 2.4 `build-config/tokens/style-dictionary.config.js`
-
-| Stelle | Hardcodierter Wert | Problem |
-|--------|-------------------|---------|
-| ~2504-2505 | Brand-Name Formatierung (`'sportbild' → 'Sportbild'`) | String-Vergleiche |
-| ~2984-2986 | Swift Enum Cases | Hardcodierte Brand-Namen |
-
----
-
-## 3. pipeline.config.js: Bereits vorhandene Konfiguration
-
-Die Config-Datei ist bereits gut strukturiert mit allen benötigten Werten:
+Die Config-Datei enthält alle systemspezifischen Werte:
 
 ```javascript
 module.exports = {
-  identity: { name, shortName, copyright, ... },
+  identity: { name, shortName, copyright, author, license, ... },
   source: {
-    collections: { FONT_PRIMITIVE, COLOR_PRIMITIVE, ... },  // ✅ Vorhanden
-    pathConventions: { componentPrefix: 'Component/' },      // ✅ Vorhanden
+    inputFile: 'bild-design-system-raw-data.json',
+    inputDir: 'packages/tokens/src/',
+    outputDir: 'packages/tokens/.tokens/',
+    collections: { FONT_PRIMITIVE, COLOR_PRIMITIVE, ... },
+    pathConventions: { componentPrefix: 'Component/' },
   },
   modes: {
     brands: {
-      color: { '18212:0': 'bild', '18212:1': 'sportbild' },  // ✅ Vorhanden
-      content: { '18038:0': 'bild', ... },                   // ✅ Vorhanden
+      color: { '18212:0': 'bild', '18212:1': 'sportbild' },
+      content: { '18038:0': 'bild', '18094:0': 'sportbild', '18094:1': 'advertorial' },
+      default: 'bild',  // Fallback-Brand
     },
-    colorModes: { '588:0': 'light', '592:1': 'dark' },       // ✅ Vorhanden
-    densityModes: { ... },                                    // ✅ Vorhanden
-    breakpoints: { ... },                                     // ✅ Vorhanden
+    colorModes: { '588:0': 'light', '592:1': 'dark' },
+    densityModes: { '5695:2': 'default', '5695:1': 'dense', '5695:3': 'spacious' },
+    breakpoints: {
+      '7017:0': { key: 'xs', minWidth: 320, deviceName: 'Mobile (default)' },
+      // ...
+    },
   },
   platforms: {
-    android: {
-      packageName: 'com.bild.designsystem',  // ✅ Vorhanden, aber nicht genutzt!
-      outputDir: 'packages/tokens-android/...',
-    },
-    ios: {
-      moduleName: 'BildDesignTokens',
-      outputDir: 'packages/tokens-ios/...',
-    },
+    css: { enabled: true, fontSizeUnit: 'px', dataAttributes: { ... } },
+    scss: { enabled: false },
+    js: { enabled: false },
+    ios: { enabled: true, moduleName: 'BildDesignTokens', sizeClasses: { ... } },
+    android: { enabled: true, packageName: 'com.bild.designsystem', sizeClasses: { ... } },
   },
+  output: { distDir: 'packages/tokens/dist/', showDescriptions: { ... } },
+  packages: { tokens: { npm: '@marioschmidt/design-system-tokens' }, ... },
+  stencil: { namespace: 'bds', devServerPort: 3333 },
+  components: { prefix: 'ds-', srcDir: '...' },
+  deployment: { storybookBasePath: '/bild-design-system/' },
+  icons: { naming: { prefix: 'Bild', ... }, sizing: { ... }, platforms: { ... } },
 };
 ```
 
 ---
 
-## 4. Empfehlungen zur Dynamisierung
+## 4. Migrierte Änderungen (Commit c1e59528)
 
-### Priorität 1: Kritisch (blockiert Wiederverwendung)
+### 4.1 preprocess.js
 
-| Aufgabe | Aufwand | Impact |
-|---------|---------|--------|
-| **4.1** `preprocess.js` → Config importieren | Niedrig | Hoch |
-| **4.2** `build.js` → Config importieren | Mittel | Hoch |
-| **4.3** `bundles.js` → Config importieren | Niedrig | Mittel |
-| **4.4** Android Package-Name dynamisieren | Mittel | Hoch |
+- ✅ Config Import hinzugefügt
+- ✅ `BRANDS` aus `config.modes.brands.content` abgeleitet
+- ✅ `COLLECTION_IDS` aus `config.source.collections`
+- ✅ `COMPONENT_PREFIX` aus `config.source.pathConventions.componentPrefix`
+- ✅ Breakpoint-Density-Matrix Brand-Liste dynamisch
 
-### Priorität 2: Hoch (verbessert Flexibilität)
+### 4.2 build.js
 
-| Aufgabe | Aufwand | Impact |
-|---------|---------|--------|
-| **4.5** `style-dictionary.config.js` → Config nutzen | Mittel | Mittel |
-| **4.6** Brand-Name Formatierung zentralisieren | Niedrig | Niedrig |
+- ✅ Config Import hinzugefügt
+- ✅ `COLOR_BRANDS`, `CONTENT_BRANDS`, `BRANDS` aus Config
+- ✅ `DEFAULT_BRAND` aus `config.modes.brands.default`
+- ✅ `BREAKPOINTS`, `COLOR_MODES`, `DENSITY_MODES` aus Config
+- ✅ Platform-Toggles (`COMPOSE_ENABLED`, `SWIFTUI_ENABLED`, etc.)
+- ✅ iOS/Android SizeClass Mappings
+- ✅ Android Package-Name via `androidPkg()` Hilfsfunktion
+- ✅ Alle Fallback-Pfade verwenden `DEFAULT_BRAND`
+- ✅ iOS Interface-Pfade mit dynamischem PascalCase Brand-Prefix
+- ✅ JS Output (createTheme, exports) vollständig dynamisch
+- ✅ TypeScript-Typen dynamisch generiert
+- ✅ React ThemeProvider mit dynamischen Breakpoint-Werten
+- ✅ Content-Only Brand Themes (Advertorial, etc.) dynamisch iteriert
 
-### Priorität 3: Nice-to-have
+### 4.3 bundles.js
 
-| Aufgabe | Aufwand | Impact |
-|---------|---------|--------|
-| **4.7** Automatische Mode-ID Discovery aus Figma JSON | Hoch | Mittel |
-| **4.8** Validierung: Collection IDs existieren | Mittel | Niedrig |
+- ✅ Config Import hinzugefügt
+- ✅ `BRANDS`, `COLOR_BRANDS`, `CONTENT_BRANDS` aus Config
+- ✅ `DIST_DIR` aus `config.output.distDir`
+
+### 4.4 style-dictionary.config.js
+
+- ✅ Config Import hinzugefügt
+- ✅ `FONT_SIZE_UNIT` aus `config.platforms.css.fontSizeUnit`
+- ✅ `DATA_ATTR` aus `config.platforms.css.dataAttributes`
+
+### 4.5 release-notes.js
+
+- ✅ Config Import hinzugefügt
+- ✅ `KNOWN_BRANDS` aus Config (COLOR + CONTENT Brands)
+- ✅ `KNOWN_MODES` aus `config.modes.colorModes`
+- ✅ `KNOWN_BREAKPOINTS` aus `config.modes.breakpoints`
 
 ---
 
-## 5. Implementierungs-Vorschlag
+## 5. Checkliste für Neues Design-System ✅
 
-### 5.1 preprocess.js Migration
+Um das Design-System für ein anderes Projekt zu verwenden, muss nur `pipeline.config.js` angepasst werden:
 
-```javascript
-// VORHER (hardcodiert):
-const COLLECTION_IDS = {
-  FONT_PRIMITIVE: 'VariableCollectionId:470:1450',
-  // ...
-};
-
-// NACHHER (dynamisch):
-const config = require('../../build-config/tokens/pipeline.config.js');
-const COLLECTION_IDS = config.source.collections;
-```
-
-### 5.2 build.js Migration
-
-```javascript
-// VORHER:
-const BRANDS = ['bild', 'sportbild', 'advertorial'];
-const COLOR_BRANDS = ['bild', 'sportbild'];
-const basePkg = 'com.bild.designsystem';
-
-// NACHHER:
-const config = require('../build-config/tokens/pipeline.config.js');
-const BRANDS = [...new Set([
-  ...Object.values(config.modes.brands.color),
-  ...Object.values(config.modes.brands.content)
-])];
-const COLOR_BRANDS = Object.values(config.modes.brands.color);
-const basePkg = config.platforms.android.packageName;
-```
-
-### 5.3 Android Package-Name Substitution
-
-```javascript
-// Hilfsfunktion für Package-Namen:
-function getAndroidPackage(subpackage = '') {
-  const base = config.platforms.android.packageName;
-  return subpackage ? `${base}.${subpackage}` : base;
-}
-
-// Verwendung:
-package ${getAndroidPackage('shared')}  // statt: package com.bild.designsystem.shared
-```
+- [ ] `identity.name` - Design-System Name
+- [ ] `identity.shortName` - Kurzname für Pfade
+- [ ] `identity.copyright` - Copyright-Inhaber
+- [ ] `source.inputFile` - Figma Export Dateiname
+- [ ] `source.collections.*` - Figma Collection IDs
+- [ ] `modes.brands.color` - Figma Mode IDs → Color Brand Keys
+- [ ] `modes.brands.content` - Figma Mode IDs → Content Brand Keys
+- [ ] `modes.brands.default` - Default Brand für Fallbacks
+- [ ] `modes.colorModes` - Light/Dark Mode IDs
+- [ ] `modes.densityModes` - Density Mode IDs
+- [ ] `modes.breakpoints` - Breakpoint Mode IDs + minWidth + deviceName
+- [ ] `platforms.android.packageName` - Kotlin Package
+- [ ] `platforms.ios.moduleName` - Swift Package Name
+- [ ] `packages.*` - npm/Maven/SPM Package-Namen
+- [ ] `icons.naming.prefix` - Icon Prefix (PascalCase)
+- [ ] Figma Export JSON ersetzen
 
 ---
 
@@ -217,47 +193,33 @@ package ${getAndroidPackage('shared')}  // statt: package com.bild.designsystem.
 
 | Aspekt | Icon-Pipeline | Token-Pipeline |
 |--------|---------------|----------------|
-| Config Import | ✅ Alle Dateien | ❌ Keine Datei |
-| Brand-Namen | ✅ Aus Config | ❌ Hardcodiert |
-| Package-Namen | ✅ Aus Config | ❌ Hardcodiert |
-| Pfade | ✅ Aus Config | ❌ Hardcodiert |
-| Mode-IDs | N/A | ⚠️ Config vorhanden, nicht genutzt |
-| Wiederverwendbar | ✅ Ja | ❌ Nein |
+| Config Import | ✅ Alle Dateien | ✅ Alle Dateien |
+| Brand-Namen | ✅ Aus Config | ✅ Aus Config |
+| Package-Namen | ✅ Aus Config | ✅ Aus Config |
+| Pfade | ✅ Aus Config | ✅ Aus Config |
+| Mode-IDs | N/A | ✅ Aus Config |
+| Wiederverwendbar | ✅ Ja | ✅ Ja |
 
 ---
 
 ## 7. Fazit
 
-**Icon-Pipeline:** Vorbildlich implementiert. Kann als Template für die Token-Pipeline dienen.
+Beide Pipelines sind nun **vollständig dynamisch** und können für andere Design-Systeme wiederverwendet werden.
 
-**Token-Pipeline:** Benötigt Refactoring. Die Konfiguration existiert bereits in `pipeline.config.js`, wird aber nicht genutzt. Die Änderungen sind überschaubar:
+**Architektur-Invarianten** (nicht konfigurierbar):
+- 4-Layer Hierarchy (Primitives → Mapping → Semantic → Components)
+- Dual-Axis Architecture (ColorBrand + ContentBrand)
+- Shadow DOM Support (:host() Selectors)
+- Effects sind brand-independent (nur light/dark)
+- Density ist brand-independent
+- Typography Composite Structure
+- var() Reference Chains mit conditional Fallbacks
+- @media Queries für responsive Breakpoints
 
-1. Import von `pipeline.config.js` in 3-4 Dateien hinzufügen
-2. Hardcodierte Arrays durch Config-Werte ersetzen
-3. Android Package-Name (~50 Stellen) durch Hilfsfunktion ersetzen
-
-**Geschätzter Aufwand:** 2-4 Stunden für vollständige Dynamisierung.
-
----
-
-## 8. Checkliste für Neues Design-System
-
-Nach Dynamisierung sollte nur noch `pipeline.config.js` angepasst werden:
-
-- [ ] `identity.name` - Design-System Name
-- [ ] `identity.shortName` - Kurzname für Pfade
-- [ ] `identity.copyright` - Copyright-Inhaber
-- [ ] `source.collections.*` - Figma Collection IDs
-- [ ] `modes.brands.*` - Figma Mode IDs → Brand-Keys
-- [ ] `modes.colorModes` - Light/Dark Mode IDs
-- [ ] `modes.densityModes` - Density Mode IDs
-- [ ] `modes.breakpoints` - Breakpoint Mode IDs
-- [ ] `platforms.android.packageName` - Kotlin Package
-- [ ] `platforms.ios.moduleName` - Swift Package Name
-- [ ] `packages.*` - npm/Maven/SPM Package-Namen
-- [ ] Figma Export JSON ersetzen
+Diese Invarianten sind in der Architektur verankert und werden in `pipeline.config.js` dokumentiert (Kommentare).
 
 ---
 
 *Analyse erstellt am: 2026-01-26*
-*Branch: claude/analyze-design-system-59kP7*
+*Branch: claude/analyze-design-system-ZWWUG*
+*Migration abgeschlossen: Commits 494a22b1, 9eb7b066, c1e59528*
