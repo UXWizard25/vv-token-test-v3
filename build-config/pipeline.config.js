@@ -399,6 +399,9 @@ const rawConfig = {
      * Used to identify component CSS files: ds-button.css, ds-card.css
      */
     componentPrefix: 'ds-',
+
+    /** Dev server port for Stencil development */
+    devServerPort: 3333,
   },
 
   // ===========================================================================
