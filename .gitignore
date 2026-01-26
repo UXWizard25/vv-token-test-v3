@@ -17,6 +17,10 @@ packages/tokens/.tokens/
 # Root dist (Storybook output)
 dist/
 
+# Storybook static build
+storybook-static/
+**/storybook-static/
+
 # Icon build comparison
 dist-icons-old/
 icons-diff.json
