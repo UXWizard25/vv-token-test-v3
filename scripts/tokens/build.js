@@ -27,17 +27,35 @@ const DIST_DIR = path.join(__dirname, '../..', pipelineConfig.paths.tokensDist);
 const IOS_DIST_DIR = path.join(__dirname, '../..', pipelineConfig.paths.iosOutput);
 const ANDROID_DIST_DIR = path.join(__dirname, '../..', pipelineConfig.paths.androidOutput);
 
-// Load metadata from preprocess.js (contains derived colorBrands/contentBrands from Figma)
-const metadataPath = path.join(TOKENS_DIR, 'metadata.json');
-let METADATA = { colorBrands: [], contentBrands: [], allBrands: [] };
-if (fs.existsSync(metadataPath)) {
-  METADATA = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
-}
-
-// Brands and breakpoints (derived from config + metadata)
+// Brands from config (using dual-axis architecture)
+// - COLOR_BRANDS: brands with axes: ['color', ...] - have own colors/effects
+// - CONTENT_BRANDS: brands with axes: ['content', ...] - have own sizing/typography
 const BRANDS = pipelineConfig.allBrands;
-const COLOR_BRANDS = METADATA.colorBrands.length > 0 ? METADATA.colorBrands : BRANDS.filter(b => b !== 'advertorial');
-const CONTENT_BRANDS = METADATA.contentBrands.length > 0 ? METADATA.contentBrands : BRANDS;
+const COLOR_BRANDS = pipelineConfig.colorBrands;
+const CONTENT_BRANDS = pipelineConfig.contentBrands;
+
+// Validate against metadata.json if it exists (written by preprocess.js from Figma data)
+const metadataPath = path.join(TOKENS_DIR, 'metadata.json');
+if (fs.existsSync(metadataPath)) {
+  const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
+  // Warn if config doesn't match Figma data
+  const configColorSet = new Set(COLOR_BRANDS);
+  const figmaColorSet = new Set(metadata.colorBrands || []);
+  const configContentSet = new Set(CONTENT_BRANDS);
+  const figmaContentSet = new Set(metadata.contentBrands || []);
+
+  const colorMismatch = COLOR_BRANDS.length !== metadata.colorBrands?.length ||
+    !COLOR_BRANDS.every(b => figmaColorSet.has(b));
+  const contentMismatch = CONTENT_BRANDS.length !== metadata.contentBrands?.length ||
+    !CONTENT_BRANDS.every(b => figmaContentSet.has(b));
+
+  if (colorMismatch) {
+    console.warn(`⚠️  Config colorBrands [${COLOR_BRANDS.join(', ')}] differs from Figma [${metadata.colorBrands?.join(', ') || 'none'}]`);
+  }
+  if (contentMismatch) {
+    console.warn(`⚠️  Config contentBrands [${CONTENT_BRANDS.join(', ')}] differs from Figma [${metadata.contentBrands?.join(', ') || 'none'}]`);
+  }
+}
 const BREAKPOINTS = pipelineConfig.breakpoints;
 const BASE_BREAKPOINT = pipelineConfig.baseBreakpoint;
 const NON_BASE_BREAKPOINTS = BREAKPOINTS.filter(bp => bp !== BASE_BREAKPOINT);

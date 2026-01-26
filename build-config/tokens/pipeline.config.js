@@ -44,8 +44,25 @@ const rawConfig = {
   },
 
   // ===========================================================================
-  // BRANDS
-  // Each key becomes a brand identifier used in:
+  // BRANDS - Dual-Axis Architecture
+  //
+  // The design system uses TWO INDEPENDENT AXES for brand selection:
+  //
+  //   ColorBrand axis (data-color-brand)
+  //   └── Controls: colors, effects, shadows
+  //   └── Figma: BrandColorMapping collection
+  //   └── Options: bild, sportbild
+  //
+  //   ContentBrand axis (data-content-brand)
+  //   └── Controls: sizing, typography, spacing
+  //   └── Figma: BrandTokenMapping collection
+  //   └── Options: bild, sportbild, advertorial
+  //
+  // This enables combinations like:
+  //   data-color-brand="bild" + data-content-brand="advertorial"
+  //   → Advertorial content styled with BILD colors
+  //
+  // Each brand key becomes an identifier used in:
   // - File paths: brands/{key}/...
   // - CSS selectors: [data-color-brand="{key}"], [data-content-brand="{key}"]
   // - Native enums: ColorBrand.{Key}, ContentBrand.{Key}
@@ -58,7 +75,8 @@ const rawConfig = {
   // ===========================================================================
   brands: {
     /**
-     * BILD - Main brand
+     * BILD - Main brand (supports both axes)
+     *
      * @property {string} figmaName - Exact mode name in Figma (case-sensitive).
      *           Used to match modes across BrandTokenMapping and BrandColorMapping
      *           collections. Must match exactly what appears in Figma.
@@ -66,26 +84,39 @@ const rawConfig = {
      *           - Native CompositionLocal/Environment defaults
      *           - JS createTheme() fallback brand
      *           - Default selection in Storybook toolbar
+     * @property {string[]} axes - Which axes this brand supports:
+     *           - 'color': Has entry in BrandColorMapping (own colors/effects)
+     *           - 'content': Has entry in BrandTokenMapping (own sizing/typography)
+     *           Note: These are validated against Figma data at build time.
      */
     bild: {
       figmaName: 'BILD',
       isDefault: true,
+      axes: ['color', 'content'],
     },
 
     /**
-     * SportBILD - Sports brand variant
+     * SportBILD - Sports brand variant (supports both axes)
      */
     sportbild: {
       figmaName: 'SportBILD',
+      axes: ['color', 'content'],
     },
 
     /**
-     * Advertorial - Advertising content brand
-     * Note: This brand has NO entry in BrandColorMapping (uses parent colors).
-     * The pipeline automatically detects this from Figma data.
+     * Advertorial - Advertising content brand (content axis only)
+     *
+     * This brand has NO entry in BrandColorMapping - it inherits colors
+     * from the ColorBrand axis (either BILD or SportBILD colors).
+     * It has its OWN sizing/typography in BrandTokenMapping.
+     *
+     * Usage example:
+     *   data-color-brand="bild" data-content-brand="advertorial"
+     *   → Advertorial sizing with BILD red colors
      */
     advertorial: {
       figmaName: 'Advertorial',
+      axes: ['content'],
     },
   },
 
@@ -396,6 +427,22 @@ const derived = {
   /** Default brand key (has isDefault: true) */
   defaultBrand: allBrands.find(b => rawConfig.brands[b].isDefault) || allBrands[0],
 
+  /**
+   * ColorBrands - Brands that support the COLOR axis (own colors/effects)
+   * Derived from brands with axes: ['color', ...] in config.
+   * These brands have entries in BrandColorMapping in Figma.
+   * @example ['bild', 'sportbild']
+   */
+  colorBrands: allBrands.filter(b => rawConfig.brands[b].axes?.includes('color')),
+
+  /**
+   * ContentBrands - Brands that support the CONTENT axis (own sizing/typography)
+   * Derived from brands with axes: ['content', ...] in config.
+   * These brands have entries in BrandTokenMapping in Figma.
+   * @example ['bild', 'sportbild', 'advertorial']
+   */
+  contentBrands: allBrands.filter(b => rawConfig.brands[b].axes?.includes('content')),
+
   /** Brand key → Figma display name mapping */
   brandToFigmaName: Object.fromEntries(
     allBrands.map(key => [key, rawConfig.brands[key].figmaName])
@@ -474,13 +521,32 @@ const derived = {
 
 // =============================================================================
 // RUNTIME FUNCTIONS - Require Figma collection data
-// These functions derive colorBrands/contentBrands from actual Figma data.
+//
+// These functions derive and VALIDATE colorBrands/contentBrands from Figma data.
+//
+// The pipeline uses TWO sources for axis membership:
+//
+// 1. STATIC (from config): derived.colorBrands, derived.contentBrands
+//    - Derived from brands[].axes property in rawConfig
+//    - Available immediately without Figma data
+//    - Used by scripts that run without Figma context (build.js, bundles.js)
+//
+// 2. RUNTIME (from Figma): deriveColorBrands(), deriveContentBrands()
+//    - Validates against actual BrandColorMapping/BrandTokenMapping collections
+//    - Used by preprocess.js which has Figma data
+//    - Writes to metadata.json for downstream scripts
+//
+// This dual approach enables:
+// - Clear documentation in config (which axes each brand should support)
+// - Runtime validation (detect mismatches between config and Figma)
+// - Safe fallbacks when Figma data isn't available
 // =============================================================================
 
 /**
- * Derives colorBrands from Figma collections.
- * ColorBrands are brands that have their own entry in BrandColorMapping.
- * Brands without BrandColorMapping inherit colors from a parent brand.
+ * Derives colorBrands from Figma collections (RUNTIME VALIDATION).
+ * Validates which brands actually have entries in BrandColorMapping.
+ *
+ * Use case: preprocess.js validates that config.axes matches Figma structure.
  *
  * @param {Array} collections - Figma collections array from plugin export
  * @returns {string[]} Brand keys that exist in BrandColorMapping
@@ -498,9 +564,10 @@ function deriveColorBrands(collections) {
 }
 
 /**
- * Derives contentBrands from Figma collections.
- * ContentBrands are brands that have their own entry in BrandTokenMapping.
- * These brands have their own sizing/typography definitions.
+ * Derives contentBrands from Figma collections (RUNTIME VALIDATION).
+ * Validates which brands actually have entries in BrandTokenMapping.
+ *
+ * Use case: preprocess.js validates that config.axes matches Figma structure.
  *
  * @param {Array} collections - Figma collections array from plugin export
  * @returns {string[]} Brand keys that exist in BrandTokenMapping
