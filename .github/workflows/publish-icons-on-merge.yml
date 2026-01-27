@@ -215,11 +215,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Publishing de.bild.design:icons to GitHub Packages..."
+
           # Generate gradle wrapper if missing (first-time setup)
           if [ ! -f "gradle/wrapper/gradle-wrapper.jar" ]; then
             echo "Generating Gradle wrapper..."
-            gradle wrapper --gradle-version=8.5
+            gradle wrapper --gradle-version=8.5 --no-daemon
           fi
+
+          # Stop all Gradle daemons to avoid version conflicts between system Gradle and wrapper
+          gradle --stop 2>/dev/null || true
+          pkill -f "GradleDaemon" 2>/dev/null || true
+
           chmod +x gradlew
           ./gradlew publish -PVERSION=${{ steps.version.outputs.version }} --no-daemon
 
