@@ -1131,19 +1131,35 @@ function createEffectConfig(brand, colorMode) {
   return {
     source: [sourceFile],
     platforms: {
-      // CSS: Custom format for Effect classes
+      // CSS: Custom format for Effect tokens
+      // Generates two files: variables-only and classes-only for utilities separation
       css: {
         transforms: ['attribute/cti'],
         buildPath: `${DIST_DIR}/css/brands/${brand}/semantic/effects/`,
-        files: [{
-          destination: `${fileName}.css`,
-          format: 'css/effect-classes',
-          options: {
-            brand: brandName,
-            colorMode,
-            showDescriptions: SHOW_DESCRIPTIONS.css
+        files: [
+          // File 1: Only CSS Custom Properties (for theme.css)
+          {
+            destination: `${fileName}.css`,
+            format: 'css/effect-classes',
+            options: {
+              brand: brandName,
+              colorMode,
+              outputMode: 'variables',
+              showDescriptions: SHOW_DESCRIPTIONS.css
+            }
+          },
+          // File 2: Only CSS Classes (for utilities.css)
+          {
+            destination: `${fileName}-classes.css`,
+            format: 'css/effect-classes',
+            options: {
+              brand: brandName,
+              colorMode,
+              outputMode: 'classes',
+              showDescriptions: SHOW_DESCRIPTIONS.css
+            }
           }
-        }]
+        ]
       },
 
       // JSON: Standard JSON
@@ -1610,19 +1626,36 @@ function createComponentEffectsConfig(sourceFile, brand, componentName, fileName
   return {
     source: [sourceFile],
     platforms: {
+      // CSS: Generates two files for utilities separation
       css: {
         transforms: ['attribute/cti'],
         buildPath: `${DIST_DIR}/css/brands/${brand}/components/${componentName}/`,
-        files: [{
-          destination: `${fileName}.css`,
-          format: 'css/effect-classes',
-          options: {
-            brand: brandName,
-            colorMode: colorMode || 'default',
-            componentName,
-            showDescriptions: SHOW_DESCRIPTIONS.css
+        files: [
+          // File 1: Only CSS Custom Properties
+          {
+            destination: `${fileName}.css`,
+            format: 'css/effect-classes',
+            options: {
+              brand: brandName,
+              colorMode: colorMode || 'default',
+              componentName,
+              outputMode: 'variables',
+              showDescriptions: SHOW_DESCRIPTIONS.css
+            }
+          },
+          // File 2: Only CSS Classes (for component utilities)
+          {
+            destination: `${fileName}-classes.css`,
+            format: 'css/effect-classes',
+            options: {
+              brand: brandName,
+              colorMode: colorMode || 'default',
+              componentName,
+              outputMode: 'classes',
+              showDescriptions: SHOW_DESCRIPTIONS.css
+            }
           }
-        }]
+        ]
       },
       json: {
         transformGroup: 'js',
@@ -2189,55 +2222,63 @@ async function optimizeComponentEffectsCSS() {
     for (const componentName of componentNames) {
       const cssDir = path.join(cssComponentsDir, componentName);
 
-      // Find effects CSS files
-      const lightFile = path.join(cssDir, `${componentName.toLowerCase()}-effects-light.css`);
-      const darkFile = path.join(cssDir, `${componentName.toLowerCase()}-effects-dark.css`);
-      const optimizedFile = path.join(cssDir, `${componentName.toLowerCase()}-effects.css`);
+      // Process both variable files and class files
+      // File pairs: [lightSuffix, darkSuffix, outputSuffix, description]
+      const filePairs = [
+        ['effects-light.css', 'effects-dark.css', 'effects.css', 'variables'],
+        ['effects-light-classes.css', 'effects-dark-classes.css', 'effects-classes.css', 'classes']
+      ];
 
-      // Both files must exist
-      if (!fs.existsSync(lightFile) || !fs.existsSync(darkFile)) {
-        continue;
-      }
+      for (const [lightSuffix, darkSuffix, outputSuffix, description] of filePairs) {
+        const lightFile = path.join(cssDir, `${componentName.toLowerCase()}-${lightSuffix}`);
+        const darkFile = path.join(cssDir, `${componentName.toLowerCase()}-${darkSuffix}`);
+        const optimizedFile = path.join(cssDir, `${componentName.toLowerCase()}-${outputSuffix}`);
 
-      try {
-        // Read CSS files
-        const lightCss = fs.readFileSync(lightFile, 'utf8');
-        const darkCss = fs.readFileSync(darkFile, 'utf8');
-
-        // Parse both custom properties and class rules
-        const lightParsed = parseEffectsCssFile(lightCss);
-        const darkParsed = parseEffectsCssFile(darkCss);
-
-        // Check if identical (both custom props and class rules)
-        if (!areEffectsIdentical(lightParsed, darkParsed)) {
-          skippedCount++;
+        // Both files must exist
+        if (!fs.existsSync(lightFile) || !fs.existsSync(darkFile)) {
           continue;
         }
 
-        // Extract header from light file
-        const headerMatch = lightCss.match(/^\/\*\*[\s\S]*?\*\//);
-        const header = headerMatch ? headerMatch[0] : '';
+        try {
+          // Read CSS files
+          const lightCss = fs.readFileSync(lightFile, 'utf8');
+          const darkCss = fs.readFileSync(darkFile, 'utf8');
 
-        // Generate optimized CSS with both custom properties and classes
-        const optimizedCss = generateModeAgnosticCss(header, brand, lightParsed);
+          // Parse both custom properties and class rules
+          const lightParsed = parseEffectsCssFile(lightCss);
+          const darkParsed = parseEffectsCssFile(darkCss);
 
-        // Write optimized file
-        fs.writeFileSync(optimizedFile, optimizedCss);
+          // Check if identical (both custom props and class rules)
+          if (!areEffectsIdentical(lightParsed, darkParsed)) {
+            skippedCount++;
+            continue;
+          }
 
-        // Delete original files
-        fs.unlinkSync(lightFile);
-        fs.unlinkSync(darkFile);
+          // Extract header from light file
+          const headerMatch = lightCss.match(/^\/\*\*[\s\S]*?\*\//);
+          const header = headerMatch ? headerMatch[0] : '';
 
-        optimizedCount++;
-        console.log(`     ✅ ${brand}/${componentName}: Consolidated to mode-agnostic effects`);
+          // Generate optimized CSS with both custom properties and classes
+          const optimizedCss = generateModeAgnosticCss(header, brand, lightParsed);
 
-      } catch (e) {
-        console.log(`     ❌ ${componentName}: Error optimizing effects - ${e.message}`);
+          // Write optimized file
+          fs.writeFileSync(optimizedFile, optimizedCss);
+
+          // Delete original files
+          fs.unlinkSync(lightFile);
+          fs.unlinkSync(darkFile);
+
+          optimizedCount++;
+          console.log(`     ✅ ${brand}/${componentName}: Consolidated ${description} to mode-agnostic`);
+
+        } catch (e) {
+          console.log(`     ❌ ${componentName}: Error optimizing ${description} - ${e.message}`);
+        }
       }
     }
   }
 
-  console.log(`\n   📊 Summary: ${optimizedCount} components optimized, ${skippedCount} skipped (different effects)`);
+  console.log(`\n   📊 Summary: ${optimizedCount} file pairs optimized, ${skippedCount} skipped (different effects)`);
 
   return { optimizedCount, skippedCount };
 }
@@ -2377,48 +2418,57 @@ async function optimizeSemanticEffectsCSS() {
 
     if (!fs.existsSync(effectsDir)) continue;
 
-    const lightFile = path.join(effectsDir, 'effects-light.css');
-    const darkFile = path.join(effectsDir, 'effects-dark.css');
-    const optimizedFile = path.join(effectsDir, 'effects.css');
+    // Process both variable files and class files
+    // File pairs: [lightSuffix, darkSuffix, outputSuffix, description]
+    const filePairs = [
+      ['effects-light.css', 'effects-dark.css', 'effects.css', 'variables'],
+      ['effects-light-classes.css', 'effects-dark-classes.css', 'effects-classes.css', 'classes']
+    ];
 
-    if (!fs.existsSync(lightFile) || !fs.existsSync(darkFile)) continue;
+    for (const [lightSuffix, darkSuffix, outputSuffix, description] of filePairs) {
+      const lightFile = path.join(effectsDir, lightSuffix);
+      const darkFile = path.join(effectsDir, darkSuffix);
+      const optimizedFile = path.join(effectsDir, outputSuffix);
 
-    try {
-      const lightCss = fs.readFileSync(lightFile, 'utf8');
-      const darkCss = fs.readFileSync(darkFile, 'utf8');
+      if (!fs.existsSync(lightFile) || !fs.existsSync(darkFile)) continue;
 
-      const lightParsed = parseEffectsCss(lightCss);
-      const darkParsed = parseEffectsCss(darkCss);
+      try {
+        const lightCss = fs.readFileSync(lightFile, 'utf8');
+        const darkCss = fs.readFileSync(darkFile, 'utf8');
 
-      if (!areEffectsIdentical(lightParsed, darkParsed)) {
-        console.log(`     ⏭️  ${brand}: Light/dark effects differ, keeping separate files`);
-        skippedCount++;
-        continue;
+        const lightParsed = parseEffectsCss(lightCss);
+        const darkParsed = parseEffectsCss(darkCss);
+
+        if (!areEffectsIdentical(lightParsed, darkParsed)) {
+          console.log(`     ⏭️  ${brand}: Light/dark ${description} differ, keeping separate files`);
+          skippedCount++;
+          continue;
+        }
+
+        // Extract header from light file
+        const headerMatch = lightCss.match(/^\/\*\*[\s\S]*?\*\//);
+        const header = headerMatch ? headerMatch[0] : '';
+
+        // Generate optimized CSS
+        const optimizedCss = generateModeAgnosticCss(header, brand, lightParsed);
+
+        // Write optimized file
+        fs.writeFileSync(optimizedFile, optimizedCss);
+
+        // Delete original files
+        fs.unlinkSync(lightFile);
+        fs.unlinkSync(darkFile);
+
+        optimizedCount++;
+        console.log(`     ✅ ${brand}: Consolidated ${description} to mode-agnostic`);
+
+      } catch (e) {
+        console.log(`     ❌ ${brand}: Error optimizing ${description} - ${e.message}`);
       }
-
-      // Extract header from light file
-      const headerMatch = lightCss.match(/^\/\*\*[\s\S]*?\*\//);
-      const header = headerMatch ? headerMatch[0] : '';
-
-      // Generate optimized CSS
-      const optimizedCss = generateModeAgnosticCss(header, brand, lightParsed);
-
-      // Write optimized file
-      fs.writeFileSync(optimizedFile, optimizedCss);
-
-      // Delete original files
-      fs.unlinkSync(lightFile);
-      fs.unlinkSync(darkFile);
-
-      optimizedCount++;
-      console.log(`     ✅ ${brand}: Consolidated to mode-agnostic effects`);
-
-    } catch (e) {
-      console.log(`     ❌ ${brand}: Error - ${e.message}`);
     }
   }
 
-  console.log(`\n   📊 Summary: ${optimizedCount} brands optimized, ${skippedCount} kept separate`);
+  console.log(`\n   📊 Summary: ${optimizedCount} file pairs optimized, ${skippedCount} kept separate`);
 
   return { optimizedCount, skippedCount };
 }

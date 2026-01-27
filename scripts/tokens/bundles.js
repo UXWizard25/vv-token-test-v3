@@ -95,10 +95,13 @@ function generateHeader(brand, bundleType, customDescription = null) {
 
   const typeDescriptions = {
     'primitives': 'Primitives (Base values: space, size, colors, fonts)',
-    'theme': 'Theme (Color tokens + Effects for light/dark mode)',
-    'tokens': 'Tokens (Responsive breakpoints + Typography + Density)',
+    'theme': 'Theme (Color tokens + Effects variables for light/dark mode)',
+    'tokens': 'Tokens (Responsive breakpoints + Density)',
+    'utilities': 'Utilities (Typography + Effect classes)',
     'component': 'Component Bundle (Component-specific tokens)',
+    'component-utilities': 'Component Utilities (Typography + Effect classes)',
     'full': 'Full Bundle (Primitives + Theme + Tokens + Components)',
+    'full-utilities': 'Full Utilities Bundle (All Typography + Effect classes)',
   };
 
   const description = customDescription || typeDescriptions[bundleType] || 'CSS Bundle';
@@ -325,7 +328,8 @@ async function buildBrandTheme(brand) {
 }
 
 // ============================================================================
-// BUILD BRAND TOKENS (Breakpoints + Typography + Density)
+// BUILD BRAND TOKENS (Breakpoints + Density)
+// Note: Typography classes moved to utilities.css
 // ============================================================================
 
 async function buildBrandTokens(brand) {
@@ -337,6 +341,7 @@ async function buildBrandTokens(brand) {
 
   // Note: Component density tokens are now ONLY in component bundles, not here.
   // This avoids duplication between tokens.css and component files.
+  // Note: Typography classes moved to utilities.css
 
   // 1. Responsive breakpoint tokens
   const breakpointResponsive = path.join(brandSourceDir, 'semantic', 'breakpoints', 'breakpoint-responsive.css');
@@ -348,17 +353,7 @@ async function buildBrandTokens(brand) {
     }
   }
 
-  // 2. Responsive typography
-  const typographyResponsive = path.join(brandSourceDir, 'semantic', 'typography', 'typography-responsive.css');
-  if (fs.existsSync(typographyResponsive)) {
-    content += '/* === RESPONSIVE TYPOGRAPHY === */\n\n';
-    const fileContent = readAndStripHeader(typographyResponsive);
-    if (fileContent) {
-      content += fileContent + '\n\n';
-    }
-  }
-
-  // 3. Semantic Density tokens (Global/StackSpace - referenced by breakpoint tokens)
+  // 2. Semantic Density tokens (Global/StackSpace - referenced by breakpoint tokens)
   const densityDir = path.join(brandSourceDir, 'density');
   if (fs.existsSync(densityDir)) {
     const densityFiles = await glob(`${densityDir}/*.css`);
@@ -381,6 +376,7 @@ async function buildBrandTokens(brand) {
 
 // ============================================================================
 // BUILD BRAND COMPONENTS
+// Note: Typography and Effect classes moved to component-utilities.css
 // ============================================================================
 
 async function buildBrandComponents(brand) {
@@ -391,7 +387,7 @@ async function buildBrandComponents(brand) {
 
   const componentsSourceDir = path.join(brandSourceDir, 'components');
   if (!fs.existsSync(componentsSourceDir)) {
-    return { count: 0, content: '' };
+    return { count: 0, content: '', utilitiesContent: '' };
   }
 
   const componentDirs = fs.readdirSync(componentsSourceDir).filter(name => {
@@ -400,7 +396,9 @@ async function buildBrandComponents(brand) {
   });
 
   let allComponentsContent = '';
+  let allUtilitiesContent = '';
   let componentCount = 0;
+  let utilitiesCount = 0;
 
   for (const componentName of componentDirs.sort()) {
     const componentDir = path.join(componentsSourceDir, componentName);
@@ -408,23 +406,34 @@ async function buildBrandComponents(brand) {
 
     if (files.length === 0) continue;
 
+    // ========================================================================
+    // PART 1: Component Tokens (variables only, no classes)
+    // ========================================================================
     let componentContent = generateHeader(brand, 'component', `${componentName} Component Tokens`);
 
     // Group files by type for better organization
     const colorLightFiles = files.filter(f => f.includes('color-light')).sort();
     const colorDarkFiles = files.filter(f => f.includes('color-dark')).sort();
     const densityFiles = files.filter(f => f.includes('density')).sort();
-    // For typography: prefer responsive file over individual breakpoint files
-    const typographyResponsiveFile = files.find(f => f.includes('typography') && f.includes('-responsive'));
-    const typographyFiles = typographyResponsiveFile
-      ? [typographyResponsiveFile]
-      : files.filter(f => f.includes('typography')).sort();
     const breakpointFiles = files.filter(f => f.includes('breakpoint')).sort();
+
+    // Effects: Only variable files (not -classes.css)
+    // Look for consolidated effects.css first, then light/dark variable files
+    const effectsConsolidated = files.find(f => f.endsWith('-effects.css') && !f.includes('-classes'));
+    const effectsLightVar = files.find(f => f.includes('-effects-light.css') && !f.includes('-classes'));
+    const effectsDarkVar = files.find(f => f.includes('-effects-dark.css') && !f.includes('-classes'));
+    const effectsVariableFiles = effectsConsolidated
+      ? [effectsConsolidated]
+      : [effectsLightVar, effectsDarkVar].filter(Boolean);
+
+    // Other files: exclude typography, effects (all), and -classes.css files
     const otherFiles = files.filter(f =>
       !f.includes('color-') &&
       !f.includes('density') &&
       !f.includes('typography') &&
-      !f.includes('breakpoint')
+      !f.includes('breakpoint') &&
+      !f.includes('effects') &&
+      !f.endsWith('-classes.css')
     ).sort();
 
     // Color tokens (Light)
@@ -454,10 +463,10 @@ async function buildBrandComponents(brand) {
       }
     }
 
-    // Typography tokens
-    if (typographyFiles.length > 0) {
-      componentContent += '/* === TYPOGRAPHY TOKENS === */\n\n';
-      for (const file of typographyFiles) {
+    // Effects variables (NOT classes)
+    if (effectsVariableFiles.length > 0) {
+      componentContent += '/* === EFFECTS VARIABLES === */\n\n';
+      for (const file of effectsVariableFiles) {
         const fileContent = readAndStripHeader(file);
         if (fileContent) componentContent += fileContent + '\n\n';
       }
@@ -487,9 +496,152 @@ async function buildBrandComponents(brand) {
 
     allComponentsContent += componentContent;
     componentCount++;
+
+    // ========================================================================
+    // PART 2: Component Utilities (typography + effect classes only)
+    // ========================================================================
+
+    // Typography: prefer responsive file over individual breakpoint files
+    const typographyResponsiveFile = files.find(f => f.includes('typography') && f.includes('-responsive'));
+    const typographyFiles = typographyResponsiveFile
+      ? [typographyResponsiveFile]
+      : files.filter(f => f.includes('typography') && !f.endsWith('-classes.css')).sort();
+
+    // Effects classes: look for consolidated -effects-classes.css or light/dark class files
+    const effectsClassesConsolidated = files.find(f => f.endsWith('-effects-classes.css'));
+    const effectsLightClasses = files.find(f => f.includes('-effects-light-classes.css'));
+    const effectsDarkClasses = files.find(f => f.includes('-effects-dark-classes.css'));
+    const effectsClassFiles = effectsClassesConsolidated
+      ? [effectsClassesConsolidated]
+      : [effectsLightClasses, effectsDarkClasses].filter(Boolean);
+
+    // Only create utilities file if there are typography or effect classes
+    if (typographyFiles.length > 0 || effectsClassFiles.length > 0) {
+      let utilitiesContent = generateHeader(brand, 'component-utilities', `${componentName} Utility Classes`);
+
+      // Typography classes
+      if (typographyFiles.length > 0) {
+        utilitiesContent += '/* === TYPOGRAPHY CLASSES === */\n\n';
+        for (const file of typographyFiles) {
+          const fileContent = readAndStripHeader(file);
+          if (fileContent) utilitiesContent += fileContent + '\n\n';
+        }
+      }
+
+      // Effects classes
+      if (effectsClassFiles.length > 0) {
+        utilitiesContent += '/* === EFFECT CLASSES === */\n\n';
+        for (const file of effectsClassFiles) {
+          const fileContent = readAndStripHeader(file);
+          if (fileContent) utilitiesContent += fileContent + '\n\n';
+        }
+      }
+
+      // Write component utilities file
+      const utilitiesPath = path.join(componentsOutputDir, `${componentName.toLowerCase()}-utilities.css`);
+      fs.writeFileSync(utilitiesPath, utilitiesContent.trim() + '\n');
+
+      allUtilitiesContent += utilitiesContent;
+      utilitiesCount++;
+    }
   }
 
-  return { count: componentCount, content: allComponentsContent };
+  return {
+    count: componentCount,
+    content: allComponentsContent,
+    utilitiesCount,
+    utilitiesContent: allUtilitiesContent
+  };
+}
+
+// ============================================================================
+// BUILD BRAND UTILITIES (Semantic Typography + Effect Classes)
+// ============================================================================
+
+async function buildBrandUtilities(brand) {
+  const brandSourceDir = path.join(CSS_DIR, 'brands', brand);
+  const brandOutputDir = path.join(CSS_DIR, brand);
+  ensureDir(brandOutputDir);
+
+  let content = generateHeader(brand, 'utilities');
+
+  // 1. Typography classes (from typography-responsive.css)
+  const typographyResponsive = path.join(brandSourceDir, 'semantic', 'typography', 'typography-responsive.css');
+  if (fs.existsSync(typographyResponsive)) {
+    content += '/* === TYPOGRAPHY CLASSES === */\n\n';
+    const fileContent = readAndStripHeader(typographyResponsive);
+    if (fileContent) {
+      content += fileContent + '\n\n';
+    }
+  }
+
+  // 2. Effects classes (from effects-classes.css or effects-light-classes.css + effects-dark-classes.css)
+  const effectsDir = path.join(brandSourceDir, 'semantic', 'effects');
+  if (fs.existsSync(effectsDir)) {
+    // Prefer consolidated mode-agnostic file
+    const consolidatedClasses = path.join(effectsDir, 'effects-classes.css');
+
+    if (fs.existsSync(consolidatedClasses)) {
+      content += '/* === EFFECT CLASSES (Mode-agnostic) === */\n\n';
+      const fileContent = readAndStripHeader(consolidatedClasses);
+      if (fileContent) content += fileContent + '\n\n';
+    } else {
+      // Fallback: Separate light/dark class files
+      const lightClasses = path.join(effectsDir, 'effects-light-classes.css');
+      const darkClasses = path.join(effectsDir, 'effects-dark-classes.css');
+
+      if (fs.existsSync(lightClasses)) {
+        content += '/* === EFFECT CLASSES (Light) === */\n\n';
+        const fileContent = readAndStripHeader(lightClasses);
+        if (fileContent) content += fileContent + '\n\n';
+      }
+      if (fs.existsSync(darkClasses)) {
+        content += '/* === EFFECT CLASSES (Dark) === */\n\n';
+        const fileContent = readAndStripHeader(darkClasses);
+        if (fileContent) content += fileContent + '\n\n';
+      }
+    }
+  }
+
+  const outputPath = path.join(brandOutputDir, 'utilities.css');
+  fs.writeFileSync(outputPath, content.trim() + '\n');
+
+  return content;
+}
+
+// ============================================================================
+// BUILD UTILITIES BUNDLE (Semantic + Component Utilities)
+// ============================================================================
+
+async function buildUtilitiesBundle(brand, semanticUtilitiesContent, componentUtilitiesContent) {
+  const bundlesDir = path.join(CSS_DIR, 'bundles');
+  ensureDir(bundlesDir);
+
+  let content = generateHeader(brand, 'full-utilities');
+
+  // Add semantic utilities (without header)
+  if (semanticUtilitiesContent) {
+    content += '/* ============================================================\n';
+    content += '   SEMANTIC UTILITIES (Typography + Effects Classes)\n';
+    content += '   ============================================================ */\n\n';
+    const body = semanticUtilitiesContent.replace(/^\/\*\*[\s\S]*?\*\/\s*/, '');
+    content += body + '\n\n';
+  }
+
+  // Add component utilities (without headers)
+  if (componentUtilitiesContent) {
+    content += '/* ============================================================\n';
+    content += '   COMPONENT UTILITIES\n';
+    content += '   ============================================================ */\n\n';
+    // Strip all headers from component utilities
+    const body = componentUtilitiesContent.replace(/\/\*\*[\s\S]*?\*\/\s*/g, '');
+    content += body + '\n\n';
+  }
+
+  const outputPath = path.join(bundlesDir, `${brand}-utilities.css`);
+  fs.writeFileSync(outputPath, content.trim() + '\n');
+
+  return content;
 }
 
 // ============================================================================
@@ -566,21 +718,29 @@ async function buildAllBundles() {
   for (const brand of BRANDS) {
     console.log(`\n  📦 ${brand.toUpperCase()}:`);
 
-    // Theme (Light/Dark + Effects)
+    // Theme (Light/Dark + Effects variables)
     const themeContent = await buildBrandTheme(brand);
     console.log(`     ✅ theme.css (${getFileSize(themeContent)} KB)`);
 
-    // Tokens (Density + Breakpoints + Typography)
+    // Tokens (Density + Breakpoints) - NO typography classes
     const tokensContent = await buildBrandTokens(brand);
     console.log(`     ✅ tokens.css (${getFileSize(tokensContent)} KB)`);
 
-    // Components
-    const { count: componentCount, content: componentsContent } = await buildBrandComponents(brand);
-    console.log(`     ✅ components/ (${componentCount} components)`);
+    // Utilities (Typography + Effect classes)
+    const utilitiesContent = await buildBrandUtilities(brand);
+    console.log(`     ✅ utilities.css (${getFileSize(utilitiesContent)} KB)`);
 
-    // Full bundle
+    // Components (tokens + utilities)
+    const { count: componentCount, content: componentsContent, utilitiesCount, utilitiesContent: componentUtilitiesContent } = await buildBrandComponents(brand);
+    console.log(`     ✅ components/ (${componentCount} components, ${utilitiesCount} utility files)`);
+
+    // Full bundle (tokens only, no classes)
     const fullContent = await buildFullBundle(brand, primitivesContent, themeContent, tokensContent, componentsContent);
     console.log(`     ✅ bundles/${brand}.css (${getFileSize(fullContent)} KB)`);
+
+    // Full utilities bundle (all classes combined)
+    const fullUtilitiesContent = await buildUtilitiesBundle(brand, utilitiesContent, componentUtilitiesContent);
+    console.log(`     ✅ bundles/${brand}-utilities.css (${getFileSize(fullUtilitiesContent)} KB)`);
   }
 
   // 3. Cleanup legacy/intermediate directories
@@ -597,13 +757,17 @@ async function buildAllBundles() {
   console.log('   │   └── primitives.css');
   for (const brand of BRANDS) {
     console.log(`   ├── ${brand}/`);
-    console.log('   │   ├── theme.css');
-    console.log('   │   ├── tokens.css');
+    console.log('   │   ├── theme.css          (colors + effects variables)');
+    console.log('   │   ├── tokens.css         (density + breakpoints)');
+    console.log('   │   ├── utilities.css      (typography + effect classes)');
     console.log('   │   └── components/');
+    console.log('   │       ├── {component}.css           (tokens)');
+    console.log('   │       └── {component}-utilities.css (classes)');
   }
   console.log('   └── bundles/');
   for (const brand of BRANDS) {
-    console.log(`       ├── ${brand}.css`);
+    console.log(`       ├── ${brand}.css            (full tokens bundle)`);
+    console.log(`       └── ${brand}-utilities.css  (full utilities bundle)`);
   }
 }
 

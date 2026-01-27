@@ -1314,14 +1314,18 @@ const cssTypographyClassesFormat = ({ dictionary, options }) => {
  * Generiert fertige CSS-Klassen für Effect Composite Tokens
  */
 const cssEffectClassesFormat = ({ dictionary, options }) => {
-  const { brand, colorMode } = options;
+  const { brand, colorMode, outputMode = 'both' } = options;
+  // outputMode: 'variables' | 'classes' | 'both'
+
+  // Determine filename suffix based on outputMode
+  const fileNameSuffix = outputMode === 'classes' ? '-classes' : '';
 
   let output = generateFileHeader({
-    fileName: `effects-${colorMode}.css`,
+    fileName: `effects-${colorMode}${fileNameSuffix}.css`,
     commentStyle: 'block',
     platform: 'css',
     brand: brand,
-    context: `Mode: ${colorMode}`
+    context: `Mode: ${colorMode}${outputMode !== 'both' ? ` | Output: ${outputMode}` : ''}`
   });
 
   const hierarchicalGroups = groupTokensHierarchically(dictionary.allTokens);
@@ -1381,81 +1385,87 @@ const cssEffectClassesFormat = ({ dictionary, options }) => {
   // ========================================================================
   // SECTION 1: CSS CUSTOM PROPERTIES
   // All shadow tokens as CSS custom properties in one selector block
+  // Only output when outputMode is 'variables' or 'both'
   // ========================================================================
-  output += `/* ============================================\n`;
-  output += `   CSS CUSTOM PROPERTIES\n`;
-  output += `   ============================================ */\n\n`;
+  if (outputMode === 'variables' || outputMode === 'both') {
+    output += `/* ============================================\n`;
+    output += `   CSS CUSTOM PROPERTIES\n`;
+    output += `   ============================================ */\n\n`;
 
-  const dualSelectorProps = buildDualSelector(attrSelector, '');
-  output += `${dualSelectorProps} {\n`;
+    const dualSelectorProps = buildDualSelector(attrSelector, '');
+    output += `${dualSelectorProps} {\n`;
 
-  // Iterate through all groups to output custom properties with comments
-  Object.keys(hierarchicalGroups).forEach(topLevel => {
-    const subGroups = hierarchicalGroups[topLevel];
-    output += `  /* ${topLevel} */\n`;
+    // Iterate through all groups to output custom properties with comments
+    Object.keys(hierarchicalGroups).forEach(topLevel => {
+      const subGroups = hierarchicalGroups[topLevel];
+      output += `  /* ${topLevel} */\n`;
 
-    Object.keys(subGroups).forEach(subLevel => {
-      const tokens = subGroups[subLevel];
-      if (subLevel) {
-        output += `  /* ${topLevel} - ${subLevel} */\n`;
-      }
-
-      tokens.forEach(token => {
-        if (token.$type === 'shadow' && Array.isArray(token.$value)) {
-          const tokenName = getTokenName(token);
-          const shadowValue = formatShadowValue(token);
-          if (shadowValue) {
-            output += `  --${tokenName}: ${shadowValue};\n`;
-          }
+      Object.keys(subGroups).forEach(subLevel => {
+        const tokens = subGroups[subLevel];
+        if (subLevel) {
+          output += `  /* ${topLevel} - ${subLevel} */\n`;
         }
+
+        tokens.forEach(token => {
+          if (token.$type === 'shadow' && Array.isArray(token.$value)) {
+            const tokenName = getTokenName(token);
+            const shadowValue = formatShadowValue(token);
+            if (shadowValue) {
+              output += `  --${tokenName}: ${shadowValue};\n`;
+            }
+          }
+        });
       });
     });
-  });
 
-  output += `}\n\n`;
+    output += `}\n\n`;
+  }
 
   // ========================================================================
   // SECTION 2: CSS CLASSES (using var() references)
   // Convenience classes that reference the custom properties
+  // Only output when outputMode is 'classes' or 'both'
   // ========================================================================
-  let isFirstTopLevel = true;
-  Object.keys(hierarchicalGroups).forEach(topLevel => {
-    const subGroups = hierarchicalGroups[topLevel];
+  if (outputMode === 'classes' || outputMode === 'both') {
+    let isFirstTopLevel = true;
+    Object.keys(hierarchicalGroups).forEach(topLevel => {
+      const subGroups = hierarchicalGroups[topLevel];
 
-    // Add top-level header
-    if (!isFirstTopLevel) {
-      output += `\n`;
-    }
-    output += `/* ============================================\n`;
-    output += `   ${topLevel.toUpperCase()} (Classes)\n`;
-    output += `   ============================================ */\n\n`;
-    isFirstTopLevel = false;
-
-    Object.keys(subGroups).forEach(subLevel => {
-      const tokens = subGroups[subLevel];
-
-      // Add sub-level header if exists
-      if (subLevel) {
-        output += `/* ${topLevel} - ${subLevel} */\n`;
+      // Add top-level header
+      if (!isFirstTopLevel) {
+        output += `\n`;
       }
+      output += `/* ============================================\n`;
+      output += `   ${topLevel.toUpperCase()} (Classes)\n`;
+      output += `   ============================================ */\n\n`;
+      isFirstTopLevel = false;
 
-      tokens.forEach(token => {
-        if (token.$type === 'shadow' && Array.isArray(token.$value)) {
-          const tokenName = getTokenName(token);
+      Object.keys(subGroups).forEach(subLevel => {
+        const tokens = subGroups[subLevel];
 
-          if (token.comment && options.showDescriptions !== false) {
-            output += `/* ${token.comment} */\n`;
-          }
-
-          // Wrap class selector with dual selector for Shadow DOM compatibility
-          const dualSelector = buildDualSelector(attrSelector, `.${tokenName}`);
-          output += `${dualSelector} {\n`;
-          output += `  box-shadow: var(--${tokenName});\n`;
-          output += `}\n\n`;
+        // Add sub-level header if exists
+        if (subLevel) {
+          output += `/* ${topLevel} - ${subLevel} */\n`;
         }
+
+        tokens.forEach(token => {
+          if (token.$type === 'shadow' && Array.isArray(token.$value)) {
+            const tokenName = getTokenName(token);
+
+            if (token.comment && options.showDescriptions !== false) {
+              output += `/* ${token.comment} */\n`;
+            }
+
+            // Wrap class selector with dual selector for Shadow DOM compatibility
+            const dualSelector = buildDualSelector(attrSelector, `.${tokenName}`);
+            output += `${dualSelector} {\n`;
+            output += `  box-shadow: var(--${tokenName});\n`;
+            output += `}\n\n`;
+          }
+        });
       });
     });
-  });
+  }
 
   return output;
 };
