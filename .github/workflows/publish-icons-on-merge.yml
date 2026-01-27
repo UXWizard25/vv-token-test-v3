@@ -12,10 +12,11 @@
 #
 # Workflow:
 #   1. Detect icon changes in merge commit
-#   2. Bump version in both package.json files (synchronized)
+#   2. Bump version in all package files (synchronized: npm + gradle)
 #   3. Build fresh icon assets for all platforms
-#   4. Publish npm packages
-#   5. Create GitHub release (triggers iOS SPM update)
+#   4. Publish npm packages (SVG, React)
+#   5. Publish Android package to GitHub Packages (Maven)
+#   6. Create GitHub release (triggers iOS SPM update)
 #
 # ============================================================================
 
@@ -62,6 +63,15 @@ jobs:
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Setup Java (for Android)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
       - name: Install dependencies
         run: npm ci
 
@@ -93,9 +103,12 @@ jobs:
 
           echo "New version: $NEW_VERSION"
 
-          # Update both package.json files (synchronized versions)
+          # Update all package files (synchronized versions)
+          # npm packages
           sed -i "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$NEW_VERSION\"/" packages/icons/svg/package.json
           sed -i "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$NEW_VERSION\"/" packages/icons/react/package.json
+          # Android gradle.properties
+          sed -i "s/^VERSION=.*/VERSION=$NEW_VERSION/" packages/icons/android/gradle.properties
 
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
           echo "previous_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
@@ -171,6 +184,26 @@ jobs:
           npm publish -w @marioschmidt/design-system-icons-react --access public || echo "React package publish failed or already exists"
 
       # ========================================
+      # Publish Android package
+      # ========================================
+
+      - name: Publish Android package to Maven
+        if: steps.count.outputs.android_count != '0'
+        working-directory: packages/icons/android
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Publishing de.bild.design:icons to GitHub Packages..."
+          # Generate gradle wrapper if missing (first-time setup)
+          if [ ! -f "gradle/wrapper/gradle-wrapper.jar" ]; then
+            echo "Generating Gradle wrapper..."
+            gradle wrapper --gradle-version=8.5
+          fi
+          chmod +x gradlew
+          ./gradlew publish -PVERSION=${{ steps.version.outputs.version }} --no-daemon
+
+      # ========================================
       # Commit & Tag
       # ========================================
 
@@ -180,7 +213,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add packages/icons/svg/package.json packages/icons/react/package.json
+          # Add all versioned files (npm + gradle)
+          git add packages/icons/svg/package.json packages/icons/react/package.json packages/icons/android/gradle.properties
+          # Also add gradle wrapper if it was generated
+          git add packages/icons/android/gradle/wrapper/ packages/icons/android/gradlew packages/icons/android/gradlew.bat 2>/dev/null || true
           git commit -m "chore(icons): bump version to ${{ steps.version.outputs.version }}" || true
           git push || true
 
@@ -208,14 +244,37 @@ jobs:
 
             const body = `## Icon Packages v${version}
 
-            ### npm Packages
-            \`\`\`bash
-            # SVG icons
-            npm install @marioschmidt/design-system-icons@${version}
+            ### Installation
 
-            # React components
+            **npm (SVG + React):**
+            \`\`\`bash
+            npm install @marioschmidt/design-system-icons@${version}
             npm install @marioschmidt/design-system-icons-react@${version}
             \`\`\`
+
+            **Android (Maven via GitHub Packages):**
+            \`\`\`kotlin
+            // settings.gradle.kts
+            dependencyResolutionManagement {
+                repositories {
+                    maven {
+                        url = uri("https://maven.pkg.github.com/UXWizard25/bild-design-system")
+                        credentials {
+                            username = providers.gradleProperty("gpr.user").get()
+                            password = providers.gradleProperty("gpr.token").get()
+                        }
+                    }
+                }
+            }
+
+            // build.gradle.kts
+            dependencies {
+                implementation("de.bild.design:icons:${version}")
+            }
+            \`\`\`
+
+            **iOS (Swift Package Manager):**
+            Add \`https://github.com/UXWizard25/bild-design-system.git\` in Xcode with tag \`icons-v${version}\`
 
             ### Platform Contents
             | Platform | Package | Count |
@@ -235,23 +294,26 @@ jobs:
             <IconMenu aria-label="Open menu" />
             \`\`\`
 
-            **SVG (direct import):**
-            \`\`\`js
-            import addIcon from '@marioschmidt/design-system-icons/svg/icon-add.svg';
+            **Android (Jetpack Compose):**
+            \`\`\`kotlin
+            import de.bild.design.icons.BildIcons
+            import de.bild.design.icons.BildIcon
+
+            BildIcon(BildIcons.Add, contentDescription = "Add")
             \`\`\`
 
-            **Android:**
+            **Android (XML):**
             \`\`\`xml
             <ImageView
                 android:src="@drawable/ic_add"
                 app:tint="?attr/colorOnSurface" />
             \`\`\`
 
-            **iOS (Swift Package Manager):**
+            **iOS (SwiftUI):**
             \`\`\`swift
             import BildIcons
 
-            Image(BildIcon.add.rawValue, bundle: .module)
+            BildIcon.add.icon(size: .md)
             \`\`\`
             `;
 

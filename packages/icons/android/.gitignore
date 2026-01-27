@@ -1,0 +1,13 @@
+# Gradle build outputs
+.gradle/
+build/
+
+# Local configuration
+local.properties
+
+# IDE
+.idea/
+*.iml
+
+# Note: gradlew, gradlew.bat, and gradle/wrapper/ are intentionally tracked
+# They are required for reproducible builds in CI/CD
