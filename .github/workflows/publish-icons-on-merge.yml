@@ -213,21 +213,27 @@ jobs:
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Force no-daemon mode and increase memory
+          GRADLE_OPTS: "-Dorg.gradle.daemon=false -Xmx2048m"
         run: |
           echo "Publishing de.bild.design:icons to GitHub Packages..."
+
+          # Clean Gradle caches to avoid stale daemon issues
+          rm -rf ~/.gradle/daemon 2>/dev/null || true
+          rm -rf .gradle 2>/dev/null || true
 
           # Generate gradle wrapper if missing (first-time setup)
           if [ ! -f "gradle/wrapper/gradle-wrapper.jar" ]; then
             echo "Generating Gradle wrapper..."
-            gradle wrapper --gradle-version=8.5 --no-daemon
+            gradle wrapper --gradle-version=8.7 --no-daemon
           fi
 
-          # Stop all Gradle daemons to avoid version conflicts between system Gradle and wrapper
+          # Stop all Gradle daemons
           gradle --stop 2>/dev/null || true
           pkill -f "GradleDaemon" 2>/dev/null || true
 
           chmod +x gradlew
-          ./gradlew publish -PVERSION=${{ steps.version.outputs.version }} --no-daemon
+          ./gradlew publish -PVERSION=${{ steps.version.outputs.version }} --no-daemon --info
 
       # ========================================
       # Commit & Tag
