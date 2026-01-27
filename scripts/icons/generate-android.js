@@ -13,6 +13,7 @@
 const fs = require('fs');
 const path = require('path');
 const { PATHS: SHARED_PATHS } = require('./paths');
+const pipelineConfig = require('../../build-config/pipeline.config.js');
 
 // ============================================================================
 // CONFIGURATION
@@ -25,13 +26,14 @@ const PATHS = {
 };
 
 const ANDROID_CONFIG = {
-  // Default size in dp
-  width: 24,
-  height: 24,
+  // Default size in dp (from config)
+  width: pipelineConfig.icons.defaultSize,
+  height: pipelineConfig.icons.defaultSize,
   // Use black as default - apps should override via app:tint or Compose tint parameter
   // Note: ?attr/colorOnSurface doesn't work with AAPT2 during build time
+  // HARDCODED: Required for AAPT2 compatibility
   fillColor: '#000000',
-  // Float precision
+  // Float precision - HARDCODED: Optimal balance between file size and quality
   floatPrecision: 2,
 };
 
@@ -286,10 +288,20 @@ function generateAttrsXml() {
 }
 
 /**
- * Generate BildIcons.kt for Jetpack Compose
+ * Generate Kotlin file for Jetpack Compose
  * Provides type-safe access to icons following Material Icons convention.
+ * All names are derived from pipeline.config.js
  */
 function generateKotlinExtension(icons) {
+  // Get config values
+  const packageName = pipelineConfig.androidIconPackage;
+  const objectName = pipelineConfig.iconObjectName;
+  const iconFnName = pipelineConfig.iosIconEnumName; // BildIcon (singular)
+  const sizeObjectName = `${iconFnName}Size`;
+  const systemName = pipelineConfig.identity.name;
+  const defaultSize = pipelineConfig.icons.defaultSize;
+  const sizePresets = pipelineConfig.icons.sizePresets;
+
   const iconProperties = icons
     .filter(i => i.success)
     .map(i => {
@@ -309,13 +321,33 @@ function generateKotlinExtension(icons) {
     .map(i => `        ${toComposeName(i.originalName)}`)
     .join(',\n');
 
+  // Size preset full names for documentation
+  const sizeFullNames = {
+    xs: 'Extra small',
+    sm: 'Small',
+    md: 'Medium',
+    lg: 'Large',
+    xl: 'Extra large',
+  };
+
+  // Generate size presets from config
+  const sizePresetEntries = Object.entries(sizePresets)
+    .map(([key, value]) => {
+      const isDefault = value === defaultSize;
+      const comment = isDefault ? ` - Default` : '';
+      const fullName = sizeFullNames[key] || key.charAt(0).toUpperCase() + key.slice(1);
+      return `    /** ${fullName} icon (${value}dp)${comment} */
+    val ${key.toUpperCase()}: Dp = ${value}.dp`;
+    })
+    .join('\n');
+
   const kotlinContent = `// GENERATED CODE - DO NOT MODIFY BY HAND
 // Generated at: ${new Date().toISOString()}
 //
-// BILD Design System Icons - Jetpack Compose Extension
+// ${systemName} Icons - Jetpack Compose Extension
 // To regenerate, run: npm run build:icons:android
 
-package de.bild.design.icons
+package ${packageName}
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -331,7 +363,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /**
- * BILD Design System Icons for Jetpack Compose
+ * ${systemName} Icons for Jetpack Compose
  *
  * Provides type-safe access to all design system icons following
  * the Material Icons naming convention (PascalCase).
@@ -339,27 +371,27 @@ import androidx.compose.ui.unit.dp
  * Usage:
  * \`\`\`kotlin
  * // Simple usage with convenience function
- * BildIcon(BildIcons.Add, contentDescription = "Add item")
+ * ${iconFnName}(${objectName}.Add, contentDescription = "Add item")
  *
  * // With custom size and color
- * BildIcon(
- *     icon = BildIcons.ArrowLeft,
+ * ${iconFnName}(
+ *     icon = ${objectName}.ArrowLeft,
  *     contentDescription = "Go back",
  *     size = 32.dp,
  *     tint = MaterialTheme.colorScheme.primary
  * )
  *
  * // Decorative icon (no content description)
- * BildIcon(BildIcons.Decoration, contentDescription = null)
+ * ${iconFnName}(${objectName}.Decoration, contentDescription = null)
  *
  * // Direct ImageVector usage for custom composables
  * Icon(
- *     imageVector = BildIcons.Menu,
+ *     imageVector = ${objectName}.Menu,
  *     contentDescription = "Menu"
  * )
  * \`\`\`
  */
-object BildIcons {
+object ${objectName} {
 ${iconProperties}
 
     /**
@@ -379,54 +411,45 @@ ${iconList}
 /**
  * Standard icon sizes following Material Design guidelines
  */
-object BildIconSize {
-    /** Extra small icon (16dp) */
-    val XS: Dp = 16.dp
-    /** Small icon (20dp) */
-    val SM: Dp = 20.dp
-    /** Medium icon (24dp) - Default */
-    val MD: Dp = 24.dp
-    /** Large icon (32dp) */
-    val LG: Dp = 32.dp
-    /** Extra large icon (48dp) */
-    val XL: Dp = 48.dp
+object ${sizeObjectName} {
+${sizePresetEntries}
 }
 
 /**
- * BILD Design System Icon composable with convenience parameters.
+ * ${systemName} Icon composable with convenience parameters.
  *
  * This is the recommended way to use icons in your Compose UI.
  * It provides consistent sizing, coloring, and accessibility handling.
  *
- * @param icon The icon to display from [BildIcons]
+ * @param icon The icon to display from [${objectName}]
  * @param contentDescription Text for accessibility. Pass null for decorative icons.
  * @param modifier Modifier to be applied to the icon
- * @param size Icon size (default: 24.dp)
+ * @param size Icon size (default: ${defaultSize}.dp)
  * @param tint Icon color (default: LocalContentColor)
  *
  * Example:
  * \`\`\`kotlin
  * // Semantic icon (has meaning)
- * BildIcon(BildIcons.Add, contentDescription = "Add item")
+ * ${iconFnName}(${objectName}.Add, contentDescription = "Add item")
  *
  * // Decorative icon (purely visual)
- * BildIcon(BildIcons.Star, contentDescription = null)
+ * ${iconFnName}(${objectName}.Star, contentDescription = null)
  *
  * // With custom styling
- * BildIcon(
- *     icon = BildIcons.Heart,
+ * ${iconFnName}(
+ *     icon = ${objectName}.Heart,
  *     contentDescription = "Favorite",
- *     size = BildIconSize.LG,
+ *     size = ${sizeObjectName}.LG,
  *     tint = Color.Red
  * )
  * \`\`\`
  */
 @Composable
-fun BildIcon(
+fun ${iconFnName}(
     icon: ImageVector,
     contentDescription: String?,
     modifier: Modifier = Modifier,
-    size: Dp = BildIconSize.MD,
+    size: Dp = ${sizeObjectName}.MD,
     tint: Color = LocalContentColor.current
 ) {
     Icon(
@@ -438,34 +461,34 @@ fun BildIcon(
 }
 
 /**
- * BILD Design System Icon button convenience composable.
+ * ${systemName} Icon button convenience composable.
  *
  * Wraps an icon in a clickable IconButton with proper accessibility.
  *
- * @param icon The icon to display from [BildIcons]
+ * @param icon The icon to display from [${objectName}]
  * @param contentDescription Text for accessibility (required for buttons)
  * @param onClick Action to perform when clicked
  * @param modifier Modifier to be applied to the button
- * @param size Icon size (default: 24.dp)
+ * @param size Icon size (default: ${defaultSize}.dp)
  * @param tint Icon color (default: LocalContentColor)
  * @param enabled Whether the button is enabled
  *
  * Example:
  * \`\`\`kotlin
- * BildIconButton(
- *     icon = BildIcons.Close,
+ * ${iconFnName}Button(
+ *     icon = ${objectName}.Close,
  *     contentDescription = "Close dialog",
  *     onClick = { onDismiss() }
  * )
  * \`\`\`
  */
 @Composable
-fun BildIconButton(
+fun ${iconFnName}Button(
     icon: ImageVector,
     contentDescription: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    size: Dp = BildIconSize.MD,
+    size: Dp = ${sizeObjectName}.MD,
     tint: Color = LocalContentColor.current,
     enabled: Boolean = true
 ) {
@@ -474,7 +497,7 @@ fun BildIconButton(
         modifier = modifier,
         enabled = enabled
     ) {
-        BildIcon(
+        ${iconFnName}(
             icon = icon,
             contentDescription = contentDescription,
             size = size,
@@ -489,7 +512,7 @@ fun BildIconButton(
     fs.mkdirSync(PATHS.kotlin, { recursive: true });
   }
 
-  const kotlinPath = path.join(PATHS.kotlin, 'BildIcons.kt');
+  const kotlinPath = path.join(PATHS.kotlin, `${objectName}.kt`);
   fs.writeFileSync(kotlinPath, kotlinContent, 'utf8');
   return kotlinPath;
 }

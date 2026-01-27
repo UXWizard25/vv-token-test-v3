@@ -6,10 +6,14 @@
  */
 
 const path = require('path');
+const pipelineConfig = require('../../build-config/pipeline.config.js');
 
 // Base paths
 const ROOT = path.resolve(__dirname, '../..');
 const ICONS_ROOT = path.join(ROOT, 'packages/icons');
+
+// Android Kotlin package path (derived from config)
+const ANDROID_KOTLIN_PACKAGE_PATH = pipelineConfig.androidIconPackage.replace(/\./g, '/');
 
 /**
  * All paths used by the icon build pipeline
@@ -49,8 +53,8 @@ const PATHS = {
   /** Android values (attrs.xml) */
   androidValues: path.join(ICONS_ROOT, 'android/src/main/res/values'),
 
-  /** Android Kotlin source files */
-  androidKotlin: path.join(ICONS_ROOT, 'android/src/main/kotlin/de/bild/design/icons'),
+  /** Android Kotlin source files (path derived from config) */
+  androidKotlin: path.join(ICONS_ROOT, 'android/src/main/kotlin', ANDROID_KOTLIN_PACKAGE_PATH),
 
   /** iOS Asset Catalog */
   ios: path.join(ICONS_ROOT, 'ios/Sources/BildIcons/Resources/Assets.xcassets/Icons'),
