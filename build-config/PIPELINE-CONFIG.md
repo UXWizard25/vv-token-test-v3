@@ -14,6 +14,8 @@
 - [Configuration Reference](#configuration-reference)
   - [Validation Flow](#validation-flow)
   - [Validation Configuration](#validation-configuration)
+- [Icon Pipeline Configuration](#icon-pipeline-configuration)
+- [Quick Reference](#quick-reference)
 
 ---
 
@@ -38,6 +40,7 @@ The configuration file is divided into three sections:
 │   │  - paths                │    (input/output directories)                 │
 │   │  - packages             │    (npm/Maven package names)                  │
 │   │  - stencil              │    (Web Components config)                    │
+│   │  - icons                │    (icon pipeline settings)                   │
 │   │  - deployment           │    (Storybook base path)                      │
 │   │  - validation           │    (strict mode, warnings)                    │
 │   └────────────┬────────────┘                                               │
@@ -54,6 +57,9 @@ The configuration file is divided into three sections:
 │   │  - breakpoints          │                                               │
 │   │  - *ModeIds             │                                               │
 │   │  - *DisplayNames        │                                               │
+│   │  - iosIconEnumName      │    (icon enum names derived from shortName)   │
+│   │  - iconObjectName       │                                               │
+│   │  - androidIconPackage   │                                               │
 │   └────────────┬────────────┘                                               │
 │                │                                                            │
 │                ▼ uses                                                       │
@@ -509,6 +515,120 @@ validation: {
 
 ---
 
+## Icon Pipeline Configuration
+
+The icon pipeline follows the same **single-source-of-truth** principle as tokens. All settings are in `rawConfig.icons`.
+
+### Configuration Options
+
+```javascript
+icons: {
+  /** Master switch - set to false to skip icon builds entirely */
+  enabled: true,
+
+  /** Default icon size in dp/pt (used as default prop value) */
+  defaultSize: 24,
+
+  /** Prefix removed from source SVG files (icon-add.svg → add) */
+  sourceFilePrefix: 'icon-',
+
+  /** Size presets available on all platforms */
+  sizePresets: {
+    xs: 16,
+    sm: 20,
+    md: 24,  // Should match defaultSize
+    lg: 32,
+    xl: 48,
+  },
+
+  /** Platform-specific settings */
+  platforms: {
+    svg: { enabled: true },
+    react: {
+      enabled: true,
+      componentPrefix: 'Icon',  // add → IconAdd
+    },
+    android: { enabled: true },
+    ios: { enabled: true },
+  },
+},
+```
+
+### Derived Values
+
+These values are **automatically computed** from `identity.shortName`:
+
+| Derived Property | Formula | Example (shortName: `'bild'`) |
+|------------------|---------|-------------------------------|
+| `iosIconEnumName` | `{ShortName}Icon` | `'BildIcon'` |
+| `iconObjectName` | `{ShortName}Icons` | `'BildIcons'` |
+| `androidIconPackage` | `de.{shortName}.design.icons` | `'de.bild.design.icons'` |
+| `iconAssetAuthor` | `{shortName}-design-system-icons` | `'bild-design-system-icons'` |
+
+### Usage in Build Scripts
+
+All icon generation scripts read from `pipeline.config.js`:
+
+```javascript
+// Example: scripts/icons/generate-ios.js
+const pipelineConfig = require('../../build-config/pipeline.config.js');
+
+const enumName = pipelineConfig.iosIconEnumName;        // 'BildIcon'
+const defaultSize = pipelineConfig.icons.defaultSize;  // 24
+const sizePresets = pipelineConfig.icons.sizePresets;  // { xs: 16, ... }
+```
+
+### Adapting for Another Design System
+
+To use the icon pipeline for a different design system:
+
+```javascript
+// pipeline.config.js
+identity: {
+  shortName: 'acme',  // → AcmeIcon, AcmeIcons, de.acme.design.icons
+},
+icons: {
+  enabled: true,
+  defaultSize: 20,               // Different default
+  sourceFilePrefix: 'icon-',     // Same convention
+  sizePresets: {
+    sm: 16,
+    md: 20,
+    lg: 28,
+  },
+  platforms: {
+    svg: { enabled: true },
+    react: {
+      enabled: true,
+      componentPrefix: 'Acme',   // add → AcmeAdd
+    },
+    android: { enabled: true },
+    ios: { enabled: false },     // Disable iOS if not needed
+  },
+},
+```
+
+### Icon-Related Build Commands
+
+| Command | Description |
+|---------|-------------|
+| `npm run build:icons` | Build all enabled platforms |
+| `npm run build:icons:svg` | SVG optimization only |
+| `npm run build:icons:react` | React components only |
+| `npm run build:icons:android` | Android Vector Drawables only |
+| `npm run build:icons:ios` | iOS Asset Catalog only |
+
+### Icon Output Locations
+
+| Platform | Output Path |
+|----------|-------------|
+| SVG | `packages/icons/svg/dist/` |
+| React | `packages/icons/react/dist/` |
+| Android | `packages/icons/android/src/main/` |
+| iOS | `packages/icons/ios/Sources/BildIcons/` |
+
+---
+
 ## Quick Reference
 
 ### Commonly Used Paths
@@ -524,6 +644,10 @@ validation: {
 | `css.fontSizeUnit` | `'px'` or `'rem'` |
 | `platforms.ios.enabled` | Enable/disable iOS output |
 | `platforms.android.enabled` | Enable/disable Android output |
+| `icons.enabled` | Enable/disable icon pipeline |
+| `icons.defaultSize` | Default icon size (dp/pt) |
+| `icons.sizePresets` | Size preset map (xs, sm, md, lg, xl) |
+| `icons.platforms.{platform}.enabled` | Enable/disable specific icon platform |
 | `validation.strict` | Abort build on critical errors |
 | `validation.warnUnknownFigmaModes` | Warn about unconfigured Figma modes |
 

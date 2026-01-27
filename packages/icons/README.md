@@ -18,6 +18,7 @@ Multi-platform icon transformation pipeline for the BILD Design System.
 - [🚀 Usage](#-usage)
 - [📁 File Structure](#-file-structure)
 - [⚙️ Build Commands](#️-build-commands)
+- [⚙️ Configuration](#️-configuration)
 - [➕ Adding New Icons](#-adding-new-icons)
 - [📝 Naming Conventions](#-naming-conventions)
 - [✅ SVG Requirements](#-svg-requirements)
@@ -361,6 +362,83 @@ npm run build:icons:ios      # Only iOS assets
 # Clean build output
 npm run clean:icons
 ```
+
+---
+
+## ⚙️ Configuration
+
+All icon pipeline settings are centralized in **`build-config/pipeline.config.js`**, following the same single-source-of-truth principle as the token pipeline.
+
+### Configuration Settings
+
+```javascript
+// build-config/pipeline.config.js
+icons: {
+  enabled: true,                    // Master switch for icon pipeline
+  defaultSize: 24,                  // Default icon size in dp/pt
+  sourceFilePrefix: 'icon-',        // Prefix removed from source files
+  sizePresets: {                    // Size presets for all platforms
+    xs: 16,
+    sm: 20,
+    md: 24,
+    lg: 32,
+    xl: 48,
+  },
+  platforms: {
+    svg: { enabled: true },
+    react: {
+      enabled: true,
+      componentPrefix: 'Icon',      // add → IconAdd
+    },
+    android: { enabled: true },
+    ios: { enabled: true },
+  },
+},
+```
+
+### Derived Values
+
+These values are **automatically computed** from `identity.shortName` in the config:
+
+| Property | Example (shortName: `'bild'`) | Usage |
+|----------|-------------------------------|-------|
+| `iosIconEnumName` | `'BildIcon'` | Swift enum name |
+| `iconObjectName` | `'BildIcons'` | Kotlin object / SPM module name |
+| `androidIconPackage` | `'de.bild.design.icons'` | Kotlin package name |
+| `iconAssetAuthor` | `'bild-design-system-icons'` | Asset catalog author string |
+
+### Adapting for a Different Design System
+
+To adapt the icon pipeline for a different design system, modify `pipeline.config.js`:
+
+```javascript
+// Example: ACME Design System
+identity: {
+  shortName: 'acme',  // → AcmeIcon, AcmeIcons, de.acme.design.icons
+},
+icons: {
+  defaultSize: 20,                  // Different default size
+  sourceFilePrefix: 'icon-',        // Same prefix convention
+  sizePresets: {
+    sm: 16,
+    md: 20,
+    lg: 24,
+  },
+  platforms: {
+    svg: { enabled: true },
+    react: {
+      enabled: true,
+      componentPrefix: 'Acme',      // add → AcmeAdd
+    },
+    android: { enabled: true },
+    ios: { enabled: false },        // Disable iOS output
+  },
+},
+```
+
+All scripts read from this configuration—no hardcoded values in build scripts.
+
+📖 **Full documentation:** See `build-config/PIPELINE-CONFIG.md`
 
 ---
 

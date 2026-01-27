@@ -105,6 +105,7 @@ All configurable values are centralized in **`build-config/pipeline.config.js`**
 | **Figma** | Collection IDs, input file, component prefix |
 | **CSS** | `fontSizeUnit` (`px`/`rem`), data-attribute names |
 | **Platforms** | iOS/Android enable/disable, size class mappings |
+| **Icons** | Default size, size presets, platform enable flags, source file prefix |
 | **Paths** | Input/output directories |
 | **Packages** | npm/Maven package names |
 | **Validation** | Strict mode, warning settings |
@@ -853,6 +854,49 @@ packages/icons/
 | `generate-android.js` | `scripts/icons/` | Vector Drawables + Kotlin |
 | `generate-ios.js` | `scripts/icons/` | Asset Catalog + Swift |
 
+### Icon Pipeline Configuration
+
+All icon pipeline settings are centralized in `build-config/pipeline.config.js`. This follows the same **single-source-of-truth** principle as the token pipeline.
+
+**Configuration in `rawConfig.icons`:**
+
+| Setting | Type | Default | Purpose |
+|---------|------|---------|---------|
+| `enabled` | boolean | `true` | Master switch for icon pipeline |
+| `defaultSize` | number | `24` | Default icon size in dp/pt (all platforms) |
+| `sourceFilePrefix` | string | `'icon-'` | Prefix removed from source files (`icon-add.svg` → `add`) |
+| `sizePresets` | object | `{xs:16, sm:20, md:24, lg:32, xl:48}` | Size presets for all platforms |
+| `platforms.svg.enabled` | boolean | `true` | Enable SVG output |
+| `platforms.react.enabled` | boolean | `true` | Enable React component output |
+| `platforms.react.componentPrefix` | string | `'Icon'` | React component name prefix (`add` → `IconAdd`) |
+| `platforms.android.enabled` | boolean | `true` | Enable Android Vector Drawable output |
+| `platforms.ios.enabled` | boolean | `true` | Enable iOS Asset Catalog output |
+
+**Derived Values (auto-computed from `identity.shortName`):**
+
+| Property | Example (shortName: `'bild'`) | Usage |
+|----------|-------------------------------|-------|
+| `iosIconEnumName` | `'BildIcon'` | Swift enum name |
+| `iconObjectName` | `'BildIcons'` | Kotlin object / SPM module name |
+| `androidIconPackage` | `'de.bild.design.icons'` | Kotlin package name |
+| `iconAssetAuthor` | `'bild-design-system-icons'` | Asset catalog author string |
+
+**Example: Adapting for a different design system**
+
+```javascript
+// pipeline.config.js
+identity: {
+  shortName: 'acme',  // → AcmeIcon, AcmeIcons, de.acme.design.icons
+},
+icons: {
+  defaultSize: 20,
+  sizePresets: { sm: 16, md: 20, lg: 24 },
+  platforms: {
+    ios: { enabled: false },  // Disable iOS output
+  },
+},
+```
+
 ### SVGO Configuration
 
 Located in `build-config/icons/svgo.config.js`:
@@ -1579,6 +1623,11 @@ shadowSoftSm         →  .shadow-soft-sm  →  shadowSoftSm
 | Change component scan directory | `scripts/tokens/scan-component-refs.js` → `DEFAULT_COMPONENTS_DIR` |
 | Modify icon SVGO optimization | `build-config/icons/svgo.config.js` |
 | Change icon ID prefixing | `build-config/icons/svgo.config.js` → `prefixIds` plugin |
+| Change icon default size | `pipeline.config.js` → `icons.defaultSize` |
+| Change icon size presets | `pipeline.config.js` → `icons.sizePresets` |
+| Change icon source file prefix | `pipeline.config.js` → `icons.sourceFilePrefix` |
+| Enable/disable icon platform | `pipeline.config.js` → `icons.platforms.{svg/react/android/ios}.enabled` |
+| Change React icon component prefix | `pipeline.config.js` → `icons.platforms.react.componentPrefix` |
 | Modify React icon generation | `scripts/icons/generate-react.js` |
 | Modify iOS icon generation | `scripts/icons/generate-ios.js` |
 | Modify Android icon generation | `scripts/icons/generate-android.js` |
