@@ -12,7 +12,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { PATHS: SHARED_PATHS, ensureDir } = require('./paths');
+const { PATHS: SHARED_PATHS, ensureDir, isIconPipelineEnabled } = require('./paths');
 const pipelineConfig = require('../../build-config/pipeline.config.js');
 
 // ============================================================================
@@ -244,6 +244,12 @@ function generateManifest(results) {
 // ============================================================================
 
 async function main() {
+  // Master switch check
+  if (!isIconPipelineEnabled()) {
+    log.warn('Icon pipeline disabled in config - skipping SVG optimization');
+    return { success: true, count: 0, skipped: true };
+  }
+
   console.log('\n========================================');
   console.log('  SVG Icon Optimization (SVGO)');
   console.log('========================================\n');

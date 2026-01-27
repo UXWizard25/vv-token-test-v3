@@ -12,7 +12,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { PATHS: SHARED_PATHS } = require('./paths');
+const { PATHS: SHARED_PATHS, isIconPipelineEnabled } = require('./paths');
 const pipelineConfig = require('../../build-config/pipeline.config.js');
 
 // ============================================================================
@@ -522,6 +522,12 @@ fun ${iconFnName}Button(
 // ============================================================================
 
 async function main() {
+  // Master switch check
+  if (!isIconPipelineEnabled()) {
+    log.warn('Icon pipeline disabled in config - skipping Android generation');
+    return { success: true, count: 0, skipped: true };
+  }
+
   console.log('\n========================================');
   console.log('  Android Vector Drawable Generation');
   console.log('========================================\n');

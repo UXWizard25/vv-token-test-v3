@@ -95,8 +95,18 @@ function cleanDir(dirPath) {
   return dirPath;
 }
 
+/**
+ * Check if the icon pipeline is enabled in config
+ * Returns true if enabled or if the setting is undefined (backwards compatibility)
+ * @returns {boolean}
+ */
+function isIconPipelineEnabled() {
+  return pipelineConfig.icons.enabled !== false;
+}
+
 module.exports = {
   PATHS,
   ensureDir,
   cleanDir,
+  isIconPipelineEnabled,
 };

@@ -16,7 +16,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { PATHS: SHARED_PATHS } = require('./paths');
+const { PATHS: SHARED_PATHS, isIconPipelineEnabled } = require('./paths');
 const pipelineConfig = require('../../build-config/pipeline.config.js');
 
 // ============================================================================
@@ -442,6 +442,12 @@ struct ${enumName}SizePreviews: PreviewProvider {
 // ============================================================================
 
 async function main() {
+  // Master switch check
+  if (!isIconPipelineEnabled()) {
+    log.warn('Icon pipeline disabled in config - skipping iOS generation');
+    return { success: true, count: 0, skipped: true };
+  }
+
   console.log('\n========================================');
   console.log('  iOS SVG Asset Generation');
   console.log('========================================\n');

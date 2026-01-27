@@ -19,7 +19,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { PATHS: SHARED_PATHS, cleanDir, ensureDir } = require('./paths');
+const { PATHS: SHARED_PATHS, cleanDir, ensureDir, isIconPipelineEnabled } = require('./paths');
 const pipelineConfig = require('../../build-config/pipeline.config.js');
 
 // ============================================================================
@@ -220,6 +220,13 @@ export type IconName = typeof ICON_NAMES[number];
 
 async function main() {
   const startTime = Date.now();
+
+  // Master switch check - skip entire pipeline if disabled
+  if (!isIconPipelineEnabled()) {
+    log.info('Icon pipeline disabled in config (icons.enabled: false)');
+    log.info('To enable, set icons.enabled: true in build-config/pipeline.config.js');
+    return { success: true, message: 'Icon pipeline disabled', skipped: true };
+  }
 
   log.header('BILD Design System - Icon Build Pipeline');
 
