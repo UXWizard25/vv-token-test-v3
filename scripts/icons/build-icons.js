@@ -20,6 +20,7 @@
 const fs = require('fs');
 const path = require('path');
 const { PATHS: SHARED_PATHS, cleanDir, ensureDir } = require('./paths');
+const pipelineConfig = require('../../build-config/pipeline.config.js');
 
 // ============================================================================
 // CONFIGURATION
@@ -64,30 +65,35 @@ const buildSteps = [
     script: './optimize-svg.js',
     output: 'svg',
     required: true,
+    enabled: pipelineConfig.icons.platforms.svg.enabled,
   },
   {
     name: 'React Components (TSX)',
     script: './generate-react.js',
     output: 'react-src',
     required: false,
+    enabled: pipelineConfig.icons.platforms.react.enabled,
   },
   {
     name: 'React Compilation (JS)',
     script: './compile-react.js',
     output: 'react',
     required: false,
+    enabled: pipelineConfig.icons.platforms.react.enabled,
   },
   {
     name: 'Android Vector Drawables',
     script: './generate-android.js',
     output: 'android',
     required: false,
+    enabled: pipelineConfig.icons.platforms.android.enabled,
   },
   {
     name: 'iOS Assets',
     script: './generate-ios.js',
     output: 'ios',
     required: false,
+    enabled: pipelineConfig.icons.platforms.ios.enabled,
   },
 ];
 
@@ -255,6 +261,13 @@ async function main() {
   let hasErrors = false;
 
   for (const step of buildSteps) {
+    // Skip disabled platforms
+    if (!step.enabled) {
+      log.info(`Skipping ${step.name} (disabled in config)`);
+      results[step.output] = { success: true, count: 0, skipped: true };
+      continue;
+    }
+
     log.header(step.name);
 
     const result = await runBuildStep(step);

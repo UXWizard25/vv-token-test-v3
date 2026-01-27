@@ -13,6 +13,7 @@
 const fs = require('fs');
 const path = require('path');
 const { PATHS: SHARED_PATHS } = require('./paths');
+const pipelineConfig = require('../../build-config/pipeline.config.js');
 
 // ============================================================================
 // CONFIGURATION
@@ -41,11 +42,12 @@ const log = {
 // ============================================================================
 
 /**
- * Convert kebab-case to PascalCase with Icon prefix
- * add -> IconAdd
+ * Convert kebab-case to PascalCase with configurable prefix
+ * add -> IconAdd (with prefix 'Icon')
  * arrow-left -> IconArrowLeft
  * 2-liga-logo -> Icon2LigaLogo
  *
+ * Prefix is configurable via pipeline.config.js
  * Following Heroicons naming convention (industry best practice)
  * for clarity and to avoid naming collisions with other components.
  */
@@ -55,10 +57,9 @@ function toPascalCase(str) {
     .map(part => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
     .join('');
 
-  // Always prefix with 'Icon' for clarity and consistency
-  // This follows the Heroicons naming convention (e.g., ArrowLeftIcon)
-  // but uses prefix instead of suffix for better IDE autocomplete grouping
-  return 'Icon' + pascalCase;
+  // Prefix from config for clarity and consistency
+  const prefix = pipelineConfig.icons.platforms.react.componentPrefix;
+  return prefix + pascalCase;
 }
 
 /**
@@ -130,9 +131,11 @@ async function loadSvgr() {
  * Generate React component template
  */
 function generateComponentTemplate(componentName, svgContent) {
+  const defaultSize = pipelineConfig.icons.defaultSize;
+
   // Extract viewBox from SVG
   const viewBoxMatch = svgContent.match(/viewBox="([^"]+)"/);
-  const viewBox = viewBoxMatch ? viewBoxMatch[1] : '0 0 24 24';
+  const viewBox = viewBoxMatch ? viewBoxMatch[1] : `0 0 ${defaultSize} ${defaultSize}`;
 
   // Extract inner content (everything inside <svg>...</svg>)
   const innerMatch = svgContent.match(/<svg[^>]*>([\s\S]*?)<\/svg>/);
@@ -146,7 +149,7 @@ function generateComponentTemplate(componentName, svgContent) {
 export interface ${componentName}Props extends Omit<React.SVGProps<SVGSVGElement>, 'color'> {
   /**
    * Icon size (width and height)
-   * @default 24
+   * @default ${defaultSize}
    */
   size?: number | string;
   /**
@@ -174,7 +177,7 @@ export interface ${componentName}Props extends Omit<React.SVGProps<SVGSVGElement
 const ${componentName} = React.forwardRef<SVGSVGElement, ${componentName}Props>(
   (
     {
-      size = 24,
+      size = ${defaultSize},
       color = 'currentColor',
       'aria-label': ariaLabel,
       'aria-hidden': ariaHidden = true,

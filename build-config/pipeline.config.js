@@ -405,6 +405,42 @@ const rawConfig = {
   },
 
   // ===========================================================================
+  // ICONS
+  // Icon pipeline configuration for multi-platform icon generation.
+  // ===========================================================================
+  icons: {
+    /** Master-Switch für Icon-Pipeline */
+    enabled: true,
+
+    /** Standardgröße für Icons in dp/pt (alle Plattformen) */
+    defaultSize: 24,
+
+    /** Prefix der in Quelldateien entfernt wird (icon-add.svg → add) */
+    sourceFilePrefix: 'icon-',
+
+    /** Größen-Presets für alle Plattformen (dp/pt) */
+    sizePresets: {
+      xs: 16,
+      sm: 20,
+      md: 24,
+      lg: 32,
+      xl: 48,
+    },
+
+    /** Plattform-spezifische Einstellungen */
+    platforms: {
+      svg: { enabled: true },
+      react: {
+        enabled: true,
+        /** Prefix für Komponentennamen: add → IconAdd */
+        componentPrefix: 'Icon',
+      },
+      android: { enabled: true },
+      ios: { enabled: true },
+    },
+  },
+
+  // ===========================================================================
   // DEPLOYMENT
   // Hosting and deployment configuration.
   // ===========================================================================
@@ -570,6 +606,24 @@ const derived = {
   breakpointMinWidths: Object.fromEntries(
     breakpoints.map(key => [key, rawConfig.modes.breakpoints[key].minWidth])
   ),
+
+  // ---------------------------------------------------------------------------
+  // Icon-derived values (dynamisch aus identity.shortName)
+  // ---------------------------------------------------------------------------
+
+  /** iOS Swift Enum Name: 'bild' → 'BildIcon' */
+  iosIconEnumName: rawConfig.identity.shortName.charAt(0).toUpperCase() +
+                   rawConfig.identity.shortName.slice(1) + 'Icon',
+
+  /** iOS/Android Module/Object Name: 'bild' → 'BildIcons' */
+  iconObjectName: rawConfig.identity.shortName.charAt(0).toUpperCase() +
+                  rawConfig.identity.shortName.slice(1) + 'Icons',
+
+  /** Android Kotlin Package: 'bild' → 'de.bild.design.icons' */
+  androidIconPackage: `de.${rawConfig.identity.shortName}.design.icons`,
+
+  /** Asset Author String: 'bild' → 'bild-design-system-icons' */
+  iconAssetAuthor: `${rawConfig.identity.shortName}-design-system-icons`,
 };
 
 // =============================================================================
