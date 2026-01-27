@@ -8,8 +8,8 @@
  * │   └── primitives.css          ← All primitives (space, size, color, font)
  * │
  * ├── bild/
- * │   ├── theme.css               ← Light/Dark colors + effects (data-color-brand)
- * │   ├── tokens.css              ← Breakpoints + Typography + Density (data-content-brand)
+ * │   ├── colors.css              ← Light/Dark colors + effects (data-color-brand)
+ * │   ├── sizing.css              ← Breakpoints + Density (data-content-brand)
  * │   └── components/
  * │       └── button.css          ← All button tokens combined
  * │
@@ -95,12 +95,12 @@ function generateHeader(brand, bundleType, customDescription = null) {
 
   const typeDescriptions = {
     'primitives': 'Primitives (Base values: space, size, colors, fonts)',
-    'theme': 'Theme (Color tokens + Effects variables for light/dark mode)',
-    'tokens': 'Tokens (Responsive breakpoints + Density)',
+    'colors': 'Colors (Color tokens + Effects variables for light/dark mode)',
+    'sizing': 'Sizing (Responsive breakpoints + Density)',
     'utilities': 'Utilities (Typography + Effect classes)',
     'component': 'Component Bundle (Component-specific tokens)',
     'component-utilities': 'Component Utilities (Typography + Effect classes)',
-    'full': 'Full Bundle (Primitives + Theme + Tokens + Components)',
+    'full': 'Full Bundle (Primitives + Colors + Sizing + Components)',
     'full-utilities': 'Full Utilities Bundle (All Typography + Effect classes)',
   };
 
@@ -241,10 +241,10 @@ async function buildSharedPrimitives() {
 }
 
 // ============================================================================
-// BUILD BRAND THEME (Light/Dark + Effects)
+// BUILD BRAND COLORS (Light/Dark + Effects)
 // ============================================================================
 
-async function buildBrandTheme(brand) {
+async function buildBrandColors(brand) {
   const brandSourceDir = path.join(CSS_DIR, 'brands', brand);
   const brandOutputDir = path.join(CSS_DIR, brand);
   ensureDir(brandOutputDir);
@@ -253,7 +253,7 @@ async function buildBrandTheme(brand) {
   const colorDir = path.join(brandSourceDir, 'semantic', 'color');
   const effectsDir = path.join(brandSourceDir, 'semantic', 'effects');
 
-  let content = generateHeader(brand, 'theme');
+  let content = generateHeader(brand, 'colors');
 
   // Process color files (light first, then dark)
   if (fs.existsSync(colorDir)) {
@@ -321,26 +321,26 @@ async function buildBrandTheme(brand) {
     }
   }
 
-  const outputPath = path.join(brandOutputDir, 'theme.css');
+  const outputPath = path.join(brandOutputDir, 'colors.css');
   fs.writeFileSync(outputPath, content.trim() + '\n');
 
   return content;
 }
 
 // ============================================================================
-// BUILD BRAND TOKENS (Breakpoints + Density)
+// BUILD BRAND SIZING (Breakpoints + Density)
 // Note: Typography classes moved to utilities.css
 // ============================================================================
 
-async function buildBrandTokens(brand) {
+async function buildBrandSizing(brand) {
   const brandSourceDir = path.join(CSS_DIR, 'brands', brand);
   const brandOutputDir = path.join(CSS_DIR, brand);
   ensureDir(brandOutputDir);
 
-  let content = generateHeader(brand, 'tokens');
+  let content = generateHeader(brand, 'sizing');
 
   // Note: Component density tokens are now ONLY in component bundles, not here.
-  // This avoids duplication between tokens.css and component files.
+  // This avoids duplication between sizing.css and component files.
   // Note: Typography classes moved to utilities.css
 
   // 1. Responsive breakpoint tokens
@@ -368,7 +368,7 @@ async function buildBrandTokens(brand) {
     }
   }
 
-  const outputPath = path.join(brandOutputDir, 'tokens.css');
+  const outputPath = path.join(brandOutputDir, 'sizing.css');
   fs.writeFileSync(outputPath, content.trim() + '\n');
 
   return content;
@@ -648,7 +648,7 @@ async function buildUtilitiesBundle(brand, semanticUtilitiesContent, componentUt
 // BUILD FULL BRAND BUNDLE
 // ============================================================================
 
-async function buildFullBundle(brand, primitivesContent, themeContent, tokensContent, componentsContent) {
+async function buildFullBundle(brand, primitivesContent, colorsContent, sizingContent, componentsContent) {
   const bundlesDir = path.join(CSS_DIR, 'bundles');
   ensureDir(bundlesDir);
 
@@ -664,22 +664,22 @@ async function buildFullBundle(brand, primitivesContent, themeContent, tokensCon
     content += primitivesBody + '\n\n';
   }
 
-  // Add theme (without header)
-  if (themeContent) {
+  // Add colors (without header)
+  if (colorsContent) {
     content += '/* ============================================================\n';
-    content += '   THEME (COLORS + EFFECTS)\n';
+    content += '   COLORS (COLOR TOKENS + EFFECTS)\n';
     content += '   ============================================================ */\n\n';
-    const themeBody = themeContent.replace(/^\/\*\*[\s\S]*?\*\/\s*/, '');
-    content += themeBody + '\n\n';
+    const colorsBody = colorsContent.replace(/^\/\*\*[\s\S]*?\*\/\s*/, '');
+    content += colorsBody + '\n\n';
   }
 
-  // Add tokens (without header)
-  if (tokensContent) {
+  // Add sizing (without header)
+  if (sizingContent) {
     content += '/* ============================================================\n';
-    content += '   TOKENS (DENSITY + BREAKPOINTS + TYPOGRAPHY)\n';
+    content += '   SIZING (DENSITY + BREAKPOINTS)\n';
     content += '   ============================================================ */\n\n';
-    const tokensBody = tokensContent.replace(/^\/\*\*[\s\S]*?\*\/\s*/, '');
-    content += tokensBody + '\n\n';
+    const sizingBody = sizingContent.replace(/^\/\*\*[\s\S]*?\*\/\s*/, '');
+    content += sizingBody + '\n\n';
   }
 
   // Add components (without headers)
@@ -718,13 +718,13 @@ async function buildAllBundles() {
   for (const brand of BRANDS) {
     console.log(`\n  📦 ${brand.toUpperCase()}:`);
 
-    // Theme (Light/Dark + Effects variables)
-    const themeContent = await buildBrandTheme(brand);
-    console.log(`     ✅ theme.css (${getFileSize(themeContent)} KB)`);
+    // Colors (Light/Dark + Effects variables)
+    const colorsContent = await buildBrandColors(brand);
+    console.log(`     ✅ colors.css (${getFileSize(colorsContent)} KB)`);
 
-    // Tokens (Density + Breakpoints) - NO typography classes
-    const tokensContent = await buildBrandTokens(brand);
-    console.log(`     ✅ tokens.css (${getFileSize(tokensContent)} KB)`);
+    // Sizing (Density + Breakpoints) - NO typography classes
+    const sizingContent = await buildBrandSizing(brand);
+    console.log(`     ✅ sizing.css (${getFileSize(sizingContent)} KB)`);
 
     // Utilities (Typography + Effect classes)
     const utilitiesContent = await buildBrandUtilities(brand);
@@ -735,7 +735,7 @@ async function buildAllBundles() {
     console.log(`     ✅ components/ (${componentCount} components, ${utilitiesCount} utility files)`);
 
     // Full bundle (tokens only, no classes)
-    const fullContent = await buildFullBundle(brand, primitivesContent, themeContent, tokensContent, componentsContent);
+    const fullContent = await buildFullBundle(brand, primitivesContent, colorsContent, sizingContent, componentsContent);
     console.log(`     ✅ bundles/${brand}.css (${getFileSize(fullContent)} KB)`);
 
     // Full utilities bundle (all classes combined)
@@ -757,8 +757,8 @@ async function buildAllBundles() {
   console.log('   │   └── primitives.css');
   for (const brand of BRANDS) {
     console.log(`   ├── ${brand}/`);
-    console.log('   │   ├── theme.css          (colors + effects variables)');
-    console.log('   │   ├── tokens.css         (density + breakpoints)');
+    console.log('   │   ├── colors.css         (colors + effects variables)');
+    console.log('   │   ├── sizing.css         (density + breakpoints)');
     console.log('   │   ├── utilities.css      (typography + effect classes)');
     console.log('   │   └── components/');
     console.log('   │       ├── {component}.css           (tokens)');
