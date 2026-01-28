@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastModified": "2026-01-24T09:00:42.269Z",
+  "lastModified": "2026-01-28T11:15:20.482Z",
   "figmaFileKey": "unknown",
   "figmaFileName": "BILD Design System",
   "collections": [
@@ -81,7 +81,29 @@
         "VariableID:22354:63",
         "VariableID:22354:66",
         "VariableID:22354:67",
-        "VariableID:22354:68"
+        "VariableID:22354:68",
+        "VariableID:22459:12931",
+        "VariableID:22459:12932",
+        "VariableID:22459:12933",
+        "VariableID:22459:12934",
+        "VariableID:22459:12935",
+        "VariableID:22459:12936",
+        "VariableID:22459:12937",
+        "VariableID:22459:12938",
+        "VariableID:22459:12939",
+        "VariableID:22459:12940",
+        "VariableID:22459:12941",
+        "VariableID:22459:12942",
+        "VariableID:22459:12943",
+        "VariableID:22459:12944",
+        "VariableID:22459:12945",
+        "VariableID:22459:12946",
+        "VariableID:22459:12947",
+        "VariableID:22459:12948",
+        "VariableID:22459:12949",
+        "VariableID:22459:12950",
+        "VariableID:22459:12951",
+        "VariableID:22459:12952"
       ],
       "variables": [
         {
@@ -859,6 +881,270 @@
           "resolvedType": "FLOAT",
           "valuesByMode": {
             "470:0": 26
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12931",
+          "name": "LineHeight/lineHeight1p25x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 10
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12932",
+          "name": "LineHeight/lineHeight1p5x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 12
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12933",
+          "name": "LineHeight/lineHeight1p75x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 14
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12934",
+          "name": "LineHeight/lineHeight2x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 16
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12935",
+          "name": "LineHeight/lineHeight2p25x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 18
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12936",
+          "name": "LineHeight/lineHeight2p5x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 20
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12937",
+          "name": "LineHeight/lineHeight2p625x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 21
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12938",
+          "name": "LineHeight/lineHeight2p75x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 22
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12939",
+          "name": "LineHeight/lineHeight3x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 24
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12940",
+          "name": "LineHeight/lineHeight3p25x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 26
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12941",
+          "name": "LineHeight/lineHeight3p5x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 28
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12942",
+          "name": "LineHeight/lineHeight3p75x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 30
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12943",
+          "name": "LineHeight/lineHeight4x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 32
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12944",
+          "name": "LineHeight/lineHeight4p5x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 36
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12945",
+          "name": "LineHeight/lineHeight5x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 40
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12946",
+          "name": "LineHeight/lineHeight5p25x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 42
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12947",
+          "name": "LineHeight/lineHeight6x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 48
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12948",
+          "name": "LineHeight/lineHeight8x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 64
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12949",
+          "name": "LineHeight/lineHeight9x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 72
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12950",
+          "name": "LineHeight/lineHeight10x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 80
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12951",
+          "name": "LineHeight/lineHeight12p5x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 100
+          },
+          "scopes": [],
+          "hiddenFromPublishing": true,
+          "variableCollectionId": "VariableCollectionId:470:1450"
+        },
+        {
+          "id": "VariableID:22459:12952",
+          "name": "LineHeight/lineHeight15x",
+          "description": "",
+          "resolvedType": "FLOAT",
+          "valuesByMode": {
+            "470:0": 120
           },
           "scopes": [],
           "hiddenFromPublishing": true,
@@ -2987,7 +3273,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -4000,7 +4287,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -4064,7 +4352,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -4106,7 +4395,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -4302,7 +4592,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -4323,7 +4614,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -4758,7 +5050,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -6118,7 +6411,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -6139,7 +6433,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -6182,7 +6477,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -6552,7 +6848,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -6595,7 +6892,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -6616,7 +6914,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -6637,7 +6936,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -6658,7 +6958,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -7015,7 +7316,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -7036,7 +7338,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -7057,7 +7360,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -7315,7 +7619,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -7358,7 +7663,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -7379,7 +7685,8 @@
             }
           },
           "scopes": [
-            "STROKE_COLOR"
+            "STROKE_COLOR",
+            "EFFECT_COLOR"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:588:1979"
@@ -16620,7 +16927,8 @@
           },
           "scopes": [
             "WIDTH_HEIGHT",
-            "STROKE_FLOAT"
+            "STROKE_FLOAT",
+            "EFFECT_FLOAT"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:7017:25696"
@@ -16650,7 +16958,8 @@
           },
           "scopes": [
             "WIDTH_HEIGHT",
-            "STROKE_FLOAT"
+            "STROKE_FLOAT",
+            "EFFECT_FLOAT"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:7017:25696"
@@ -21569,7 +21878,8 @@
           },
           "scopes": [
             "WIDTH_HEIGHT",
-            "STROKE_FLOAT"
+            "STROKE_FLOAT",
+            "EFFECT_FLOAT"
           ],
           "hiddenFromPublishing": false,
           "variableCollectionId": "VariableCollectionId:7017:25696"
@@ -26090,7 +26400,7 @@
             },
             "18094:0": {
               "type": "VARIABLE_ALIAS",
-              "id": "VariableID:4197:5112"
+              "id": "VariableID:22354:39"
             },
             "18094:1": {
               "type": "VARIABLE_ALIAS",
@@ -30603,38 +30913,6 @@
         "fontWeight": {
           "type": "VARIABLE_ALIAS",
           "id": "VariableID:17091:45977"
-        }
-      }
-    },
-    {
-      "id": "S:1435a977f4fdc51953ed747420f546f45df2326c,",
-      "name": "Global/Quote/testStyle",
-      "description": "",
-      "type": "TEXT",
-      "fontName": {
-        "family": "Gotham XNarrow",
-        "style": "Book"
-      },
-      "lineHeight": {
-        "unit": "PIXELS",
-        "value": 1.2000000476837158
-      },
-      "letterSpacing": {
-        "unit": "PERCENT",
-        "value": 0
-      },
-      "paragraphSpacing": 0,
-      "paragraphIndent": 0,
-      "textCase": "ORIGINAL",
-      "textDecoration": "NONE",
-      "boundVariables": {
-        "fontFamily": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:7426:415987"
-        },
-        "fontSize": {
-          "type": "VARIABLE_ALIAS",
-          "id": "VariableID:7426:415991"
         }
       }
     },
