@@ -1012,6 +1012,48 @@ function normalizeTypographyStyle(resolvedStyle) {
 }
 
 /**
+ * Remaps fontStyle alias to fontWeight when the bound variable is semantically a fontWeight
+ *
+ * Figma Limitation: STRING fontWeight variables can only be bound to boundVariables.fontStyle
+ * (because boundVariables.fontWeight only accepts FLOAT/NUMBER types)
+ *
+ * This function detects such cases by checking:
+ * 1. aliases.fontStyle exists AND aliases.fontWeight does not exist
+ * 2. The bound variable name contains "fontWeight" (case-insensitive)
+ *
+ * When detected, the alias is moved from fontStyle to fontWeight.
+ * fontStyle values ('italic', 'normal') are derived from the string value,
+ * not token references - they don't need aliases.
+ *
+ * @param {Object} aliases - The aliases object { property: aliasInfo }
+ * @param {Map} aliasLookup - Variable lookup map
+ * @param {Object} boundVariables - The textStyle.boundVariables object
+ */
+function remapFontStyleAliasToFontWeight(aliases, aliasLookup, boundVariables) {
+  // Only process if fontStyle alias exists and fontWeight doesn't
+  if (!aliases.fontStyle || aliases.fontWeight) {
+    return;
+  }
+
+  // Check if fontStyle is bound
+  const fontStyleBinding = boundVariables?.fontStyle;
+  if (!fontStyleBinding || fontStyleBinding.type !== 'VARIABLE_ALIAS') {
+    return;
+  }
+
+  // Get the bound variable name
+  const variable = aliasLookup.get(fontStyleBinding.id);
+  const variableName = variable?.name || '';
+
+  // Check if this is a fontWeight variable bound to fontStyle
+  if (/fontweight/i.test(variableName)) {
+    // Move alias from fontStyle to fontWeight
+    aliases.fontWeight = aliases.fontStyle;
+    delete aliases.fontStyle;
+  }
+}
+
+/**
  * Converts fontWeight string primitives to numeric values
  *
  * Problem: Figma stores some fontWeights as STRING (e.g., "Bold Italic")
@@ -1704,6 +1746,10 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
           });
         }
 
+        // Remap fontStyle alias to fontWeight if the bound variable is a fontWeight
+        // This fixes Figma limitation where STRING fontWeight vars must bind to fontStyle
+        remapFontStyleAliasToFontWeight(aliases, aliasLookup, textStyle.boundVariables);
+
         // Fallback to direct values from fontName
         if (textStyle.fontName) {
           if (!resolvedStyle.fontFamily) {
@@ -1832,6 +1878,10 @@ function processTypographyTokens(textStyles, aliasLookup, collections) {
               }
             });
           }
+
+          // Remap fontStyle alias to fontWeight if the bound variable is a fontWeight
+          // This fixes Figma limitation where STRING fontWeight vars must bind to fontStyle
+          remapFontStyleAliasToFontWeight(aliases, aliasLookup, textStyle.boundVariables);
 
           // Fallback to direct values from fontName
           if (textStyle.fontName) {
