@@ -1,12 +1,17 @@
 <!--
   BILD Design System - Storybook Preview Head
 
-  1. CSS Bundles (Dual-Axis Architecture):
-     - bild.css: BILD colors + BILD content tokens
+  1. CSS Token Bundles (Dual-Axis Architecture):
+     - bild.css: BILD colors + BILD content tokens (CSS Custom Properties only)
      - sportbild.css: SportBILD colors + SportBILD content tokens
      - advertorial.css: Advertorial content tokens only (uses parent color brand)
 
-  2. Stencil Components:
+  2. CSS Utilities Bundles (Typography + Effect Classes):
+     - bild-utilities.css: Typography classes (.display-1, .headline-1, etc.) + Effect classes
+     - sportbild-utilities.css: SportBILD typography + effect classes
+     - advertorial-utilities.css: Advertorial typography + effect classes
+
+  3. Stencil Components:
      - Loaded via ESM module for custom element registration
 
   IMPORTANT: All data attributes are set on document.documentElement (html element)
@@ -18,6 +23,11 @@
 <link rel="stylesheet" href="./css/bundles/bild.css" />
 <link rel="stylesheet" href="./css/bundles/sportbild.css" />
 <link rel="stylesheet" href="./css/bundles/advertorial.css" />
+
+<!-- Utilities Bundles (Typography + Effect Classes - separated from token bundles) -->
+<link rel="stylesheet" href="./css/bundles/bild-utilities.css" />
+<link rel="stylesheet" href="./css/bundles/sportbild-utilities.css" />
+<link rel="stylesheet" href="./css/bundles/advertorial-utilities.css" />
 
 <!-- Stencil Web Components -->
 <script type="module" src="./stencil/bds/bds.esm.js"></script>
