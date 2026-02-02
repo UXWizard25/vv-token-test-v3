@@ -52,7 +52,7 @@
   "author": "BILD Design System Team",
   "license": "MIT",
   "devDependencies": {
-    "@stencil/core": "^4.41.3",
+    "@stencil/core": "^4.42.0",
     "@stencil/react-output-target": "^1.4.0",
     "@stencil/vue-output-target": "^0.13.0",
     "@svgr/core": "^8.1.0",
