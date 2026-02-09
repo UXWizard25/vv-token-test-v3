@@ -21,7 +21,7 @@
     "@marioschmidt/design-system-components": "^1.0.0"
   },
   "devDependencies": {
-    "@types/react": "^19.2.8",
+    "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
     "typescript": "^5.0.0",
     "react": "^19.2.0"
