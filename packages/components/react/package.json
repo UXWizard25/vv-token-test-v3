@@ -13,7 +13,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@stencil/react-output-target": "^1.2.0"
+    "@stencil/react-output-target": "^1.4.1"
   },
   "peerDependencies": {
     "react": ">=17",

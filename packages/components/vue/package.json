@@ -13,7 +13,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@stencil/vue-output-target": "^0.11.8"
+    "@stencil/vue-output-target": "^0.13.0"
   },
   "peerDependencies": {
     "vue": ">=3",
